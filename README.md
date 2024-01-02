@@ -24,7 +24,7 @@ The compilation procedure is identical to the repository for BeepBox. I will inc
 
 So, if this is your first time compiling the source code, then here's the rundown.
 
-# Step 1.) Setup!
+## Step 1.) Setup!
 
 Before we compile we need three things:
 Node.js, which can be found here: (https://nodejs.org/en), The reccomended version is suggested as it's what I used to compile AbyssBox,
@@ -36,7 +36,7 @@ The third thing you'll also need is called git, which can be found here: (https:
 
 If you've installed Git and Node.Js and you extracted the zip file for the source code of npm (if that's what you did), Then it's time for the next step!
 
-# Step 2.) Running the commands!
+## Step 2.) Running the commands!
 
 Once all of the previous step has been completed, you need to open Git Bash. Which is one of the apps you installed when you got Git. Once you've opened up Git Bash, you'll need to use these commands:
 
