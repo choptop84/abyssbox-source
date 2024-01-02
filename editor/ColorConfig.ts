@@ -15,7 +15,7 @@ export class ColorConfig {
     public static colorLookup: Map<number, ChannelColors> = new Map<number, ChannelColors>();
 
     public static readonly themes: { [name: string]: string } = {
-      "AbyssBox": `
+      "AbyssBox Classic": `
 			:root { 		
 			--page-margin: #1e0915; 		
 			--editor-background: #1e0915; 		

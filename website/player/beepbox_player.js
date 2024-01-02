@@ -1970,7 +1970,7 @@ var beepbox = (function (exports) {
     }
     ColorConfig.colorLookup = new Map();
     ColorConfig.themes = {
-        "AbyssBox": `
+        "AbyssBox Classic": `
 			:root { 		
 			--page-margin: #1e0915; 		
 			--editor-background: #1e0915; 		

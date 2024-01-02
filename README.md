@@ -1,7 +1,7 @@
 # AbyssBox
 
 AbyssBox is an online tool for sketching and sharing instrumental music.
-You can find it [here](https://ultraabox.github.io).
+You can find it [here](https://choptop84.github.io/abyssbox/).
 This mod is a modification of Ultrabox, which is a modification of Goldbox, which itself is a modification of JummBox, which inturn is a modification of the [original BeepBox](https://beepbox.co).
 
 The goal of AbyssBox is not quite as simple as Ultrabox's...
