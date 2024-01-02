@@ -11,6 +11,8 @@ const { button, div, h2, select, option } = HTML;
 export class ThemePrompt implements Prompt {
 	private readonly _themeSelect: HTMLSelectElement = select({ style: "width: 100%;" },
 			option({ value: "AbyssBox Classic"}, "AbyssBox Classic"),
+			option({ value: "AbyssBox Competative"}, "AbyssBox Competative"),
+			option({ value: "AbyssBox Light"}, "AbyssBox Light"),
 			option({ value: "dark classic" }, "BeepBox Dark"),
 			option({ value: "light classic" }, "BeepBox Light"),
 			option({ value: "dark competition" }, "BeepBox Competition Dark"),
