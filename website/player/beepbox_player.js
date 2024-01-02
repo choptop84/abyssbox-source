@@ -2230,31 +2230,31 @@ var beepbox = (function (exports) {
 			`,
         "AbyssBox Light": `
 			:root { 		
-			--page-margin: #000000; 		
-			--editor-background: #000000; 		
+			--page-margin: #e8bcc9; 		
+			--editor-background: #e8bcc9; 		
 			--hover-preview: white; 		
 			--playhead: rgba(255, 255, 255, 0.9); 		
-			--primary-text: white; 		
-			--secondary-text: #ffcedd; 		
-			--inverted-text: black;	 		
+			--primary-text: #c763a0; 		
+			--secondary-text: #c763a0; 		
+			--inverted-text:  #e8bcc9;	 		
 			--text-selection: rgba(119,68,255,0.99); 		
 			--box-selection-fill: #bf2c5d; 		
-			--loop-accent: #873a51; 		
-			--link-accent: #df88ff; 		
-			--ui-widget-background: #581b3e; 		
-			--ui-widget-focus: #000000; 		
-			--pitch-background: #240f15; 		
-			--tonic: #a34b65; 		
+			--loop-accent: #8c346a; 		
+			--link-accent: #8c346a; 		
+			--ui-widget-background: #f5e9f0;		
+			--ui-widget-focus: #8c346a; 		
+			--pitch-background: #eddadf; 		
+			--tonic: #f2e6e9; 		
 			--fifth-note: #75001e; 		
 			--white-piano-key: #cca5c7; 		
 			--black-piano-key: #402f2f; 		
 			--use-color-formula: true; 		
-			--track-editor-bg-pitch: #571c40; 		
-			--track-editor-bg-pitch-dim: #290d0d; 		
-			--track-editor-bg-noise: #571131; 		
-			--track-editor-bg-noise-dim: #330a28; 		
-			--track-editor-bg-mod: #54083c; 		
-			--track-editor-bg-mod-dim: #360426; 		
+			--track-editor-bg-pitch: #decad8; 		
+			--track-editor-bg-pitch-dim: #bfb0bb; 		
+			--track-editor-bg-noise: #d6a3ca; 		
+			--track-editor-bg-noise-dim: #b389a9; 		
+			--track-editor-bg-mod: #b0649e; 		
+			--track-editor-bg-mod-dim: #915683; 		
 			--multiplicative-mod-slider: #9f6082; 		
 			--overwriting-mod-slider: #9e3470; 		
 			--indicator-primary: #b3498f; 		
@@ -2271,28 +2271,28 @@ var beepbox = (function (exports) {
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 43; 		
 			--pitch-secondary-channel-sat-scale: 0.1; 		
-			--pitch-secondary-channel-lum: 40; 		
+			--pitch-secondary-channel-lum: 20; 		
 			--pitch-secondary-channel-lum-scale: 0.05; 
 		
 			--pitch-primary-channel-hue: -53; 		
 			--pitch-primary-channel-hue-scale: 6.1; 		
 			--pitch-primary-channel-sat: 75; 		
 			--pitch-primary-channel-sat-scale: 0.1; 		
-			--pitch-primary-channel-lum: 67.5; 		
+			--pitch-primary-channel-lum: 47.5; 		
 			--pitch-primary-channel-lum-scale: 0.05; 	
 	
 			--pitch-secondary-note-hue: -34; 		
 			--pitch-secondary-note-hue-scale: 6.1; 		
 			--pitch-secondary-note-sat: 93.9; 		
 			--pitch-secondary-note-sat-scale: 0.1; 		
-			--pitch-secondary-note-lum: 25; 		
+			--pitch-secondary-note-lum: 15; 		
 			--pitch-secondary-note-lum-scale: 0.05; 
 		
 			--pitch-primary-note-hue: -53; 		
 			--pitch-primary-note-hue-scale: 6.1; 		
-			--pitch-primary-note-sat: 100; 		
+			--pitch-primary-note-sat: 45; 		
 			--pitch-primary-note-sat-scale: 0.05; 		
-			--pitch-primary-note-lum: 85.6; 		
+			--pitch-primary-note-lum: 45.6; 		
 			--pitch-primary-note-lum-scale: 0.025; 
 		
 			--noise-secondary-channel-hue: 0; 		
@@ -2318,7 +2318,7 @@ var beepbox = (function (exports) {
 	
 			--noise-primary-note-hue: 24; 		
 			--noise-primary-note-hue-scale: 2; 		
-			--noise-primary-note-sat: 100; 		
+			--noise-primary-note-sat: 75; 		
 			--noise-primary-note-sat-scale: 1; 		
 			--noise-primary-note-lum: 60; 		
 			--noise-primary-note-lum-scale: 1; 	
