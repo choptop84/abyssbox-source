@@ -2093,10 +2093,8 @@ var beepbox = (function (exports) {
 			--mod-primary-note-lum: 85; 		
 			--mod-primary-note-lum-scale: 0; 	
 				}
-		/* sets cursor */ // Thanks whoever made this lmao
-		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
-		}
+		
 
 			`,
         "AbyssBox Competative": `
