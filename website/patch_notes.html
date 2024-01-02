@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel='shortcut icon' type='image/x-icon' href='./favicon.ico' /> 
+    <!-- CDN for jQuery and select2 -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UltraBox Patch Notes</title>
+    <meta name="application-name" content="UltraBox" />
+    <meta name="apple-mobile-web-app-title" content="UltraBox">
+    <meta name="description" content="UltraBox is an online tool for sketching and sharing instrumental music." />
+    <meta name="keywords" content="chiptune, instrumental, music, song, melody, composition, tool, free, square wave, NES, NSF, JummBox, jummbox, BeepBox, beepbox, GoldBox, goldBox" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="theme-color" content="#444" />
+    <meta name="msapplication-TileColor" content="#dba600" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icon_32.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icon_32.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link href="https://fonts.googleapis.com/css?family=B612" rel="stylesheet" media="none" onload="if (this.media != 'all') this.media='all';" /> <!-- this is a trick to load CSS asynchronously. -->
+    <style type="text/css">
+
+        html {
+            background: var(--page-margin, black);
+            overflow-x: hidden;
+            font-size: large;
+            font-family: 'B612', sans-serif;
+            line-height: 1.3;
+            color: var(--primary-text, white);
+        }
+
+        body {
+            margin: auto;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            align-content: center;
+        }
+
+        #beepboxEditorContainer {
+            min-height: 645px;
+            overflow: auto;
+            background: var(--editor-background, black);
+            width: 100%;
+			max-width: 710px;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+
+        #text-content {
+            overflow: auto;
+            background: var(--editor-background, black);
+            width: 100%;
+			max-width: 710px;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+
+        h1 {
+            font-size: 1.7rem;
+            text-align: center;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+            -webkit-text-stroke-width: 0;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            text-align: center;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+            -webkit-text-stroke-width: 0;
+        }
+
+		h3 {
+            font-size: 1.2rem;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+            -webkit-text-stroke-width: 0;
+        }
+
+        .centerDiv {
+			margin: 0px auto;
+		}
+
+        a {
+            color: var(--link-accent, #98f);
+        }
+
+        .donation form {
+            display: inline;
+        }
+
+        .donation input[type="submit"] {
+            -webkit-appearance: none;
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-size: inherit;
+            color: var(--link-accent, #98f);
+            text-decoration: underline;
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* wide screen */
+		@media (min-width: 711px) {
+            html {
+                width: 100%;
+            }
+
+            body {
+                width: 100%;
+            }
+
+            .column-container {
+				width: 710px;
+                display: flex;
+				gap: 25px;
+            }
+
+            .instructions-column {
+				min-width: 0;
+            }
+
+            .twitter-column {
+                width: 300px;
+				flex-shrink: 0;
+            }
+        }
+
+        /* narrow screen */
+		@media (max-width: 710px) {
+            body {
+                width: 100%;
+            }
+
+            p, .donation {
+                margin: 1em 0.5em;
+            }
+
+            .column-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+  </body>
+	  <h1>
+<font color="#9c64f7">Patch Notes (in reverse chronological order);</font>
+</h1>
+
+<h2>Version 2.2</h2>
+	<h3> <ul>
+	<li>Ported over the latest jummbox update</li>
+		<ul>
+		<li></li>
+		</ul>
+	<li>Added custom unisons</li>
+		<ul>
+		<li></li>
+		</ul>
+	<li>The "Basic Noise" instrument type can now be used in pitch channels</li>
+		<ul>
+		<li>Because of this, the custom instrument section has been reworked</li>
+		</ul>
+	<li>"Unison" is now a valid envelope target in custom chip</li>
+	<li>The PWM Decimal Offset setting now exports in json</li>
+	<!-- reword the line below maybe possibly -->
+	<li>Renamed pink noise and brownian noise to pink and brownian respectively</li>
+	<li>Certain themes now loop like they did in their original mod (reword)</li>
+		<ul>
+		<li>The effected themes include: Modbox, </li>
+		</ul>
+	<li>Added the Dogebox2 theme and renamed "Blubox 1.0" to "Blubox"</li>
+	<li>Change logos and images and such (CLARIFIY BEFORE REALEASEFfff)</li>
+	</ul> </h3>
+	<p>1/?/2024</p>
+	<!-- figure out if you want to port --plant-color from midbox or not -->
+
+<h2>Version 2.1.2</h2>
+	<h3>
+	<ul>
+	<li>Added the decimal offset slider</li>
+		<ul>
+		<li>You can use this for creating pulse width values like 12.5% or 6.25%</li>
+		</ul>
+	<li>Added four shortcuts </li>
+		<ul>
+		<li>` - open song recovery prompt</li>
+		<li>Shift+` - create blank new song</li>
+		<li>Shift+P - open in song player</li>
+		<li>X - copy and then cut pattern (like in modbox)</li>
+		</ul>
+	<li>Removed all of the themes that don't come from other beepmods</li>
+		<ul>
+		<li>These can now be found on <a href="https://docs.google.com/spreadsheets/d/1dGjEcLgJrPwzBExPmwA9pbE_KVQ3jNrnTBrd46d2IKo/edit#gid=1467448411&fvid=1621178910">Mel's theme sheet</a></li>
+		<li>You can use them by importing them as a custom theme</li>
+		</ul>
+	<li>The oscilloscope and mod title colors can be customized in themes</li>
+		<ul>
+		<li>-oscilloscope-line-L/R and --mod-title respectively </li>
+		</ul>
+	<li>Fixed the 6op feedback names</li>
+	<li>The index.html has been edited: it now includes a link to the Beepbox Discord!</li>
+	<li>Made some changes to the credits</li>
+		<ul>
+		<li>Ultrabox now has <a href="./archives/">archives</a> of a few defunct beepmods</li>
+		</ul>
+	<li>Edited the sample instructions prompt (it now suggests using catbox instead of discord)</li>
+	</ul>
+	</h3>
+	<p>11/24/2023</p>
+
+<h2>Version 2.1.1</h2>
+	<h3>
+	<ul>
+	<li>Added the Paandorasbox, Midbox, and Azur Lane theme</li>
+		<ul>
+		<li>Thanks to becuzwhynot and LeoV for helping Nep make her idea a reality!</li>
+		</ul>
+	<li>Tweaked the Mainbox Reimagined and Neapolitan themes</li>
+	<li>Added several new "plants"</li>
+	<li>Changed several mentions of Jummbox and GoldBox to properly refer to UltraBox</li>
+	</h3>
+	<p>10/9/2023</p>
+
+	<h2>Version 2.1.0</h2>
+	<h3>
+	<ul>
+	<li>Various quality of life changes were made to the UI:</li>
+		<ul>
+		<li>Added new prompt when adding samples</li>
+		<li>Added loop controls prompt, to visually set the loop region or start offset</li>
+		<li>Added loading bar and loading status prompt for custom samples</li>
+		<li>Custom sample presets now appear at the top of the instrument list</li>
+		<li>Added a reset button for custom themes</li>
+		<li>Added the ability to show/hide the oscilloscope and the sample loading bar</li>
+		</ul>
+	<li>Added loop control options for custom sample presets</li>
+	<li>Added a new loop mode ("Play Loop Once")</li>
+	<li>Changed the offset to not be flipped anymore when playing samples backwards</li>
+	<li>Added nintaribox and paintbox samples</li>
+	<ul>
+	<li>Use <code>nintariboxSamples</code> and <code>marioPaintboxSamples</code> respectively as URLs in the "Add Samples" prompt to load them</li>
+	</ul>
+	<li>Various custom sample-related bugfixes:</li>
+		<ul>
+		<li>Fixed custom samples not saving in json</li>
+		<li>Fixed ping-pong loop mode not inverting the sample when going backwards while anti-aliased</li>
+		<li>Fixed clicking when playing samples that end with non-zero values once</li>
+		<li>Fixed ping-pong loop mode getting stuck when changing to another loop mode during playback</li>
+		<li>Legacy samples no longer load in when they aren't needed</li>
+			<ul>
+			<li>This should improve load times</li>
+			</ul>
+		</ul>
+	<li>And finally, various misc additions:</li>
+		<ul>
+		<li>Added MicroBox theme and made changes to the Wackybox theme</li>
+		<li>Fixed nes white and nes ping presets (again)</li>
+		<li>Renamed the Blackbox presets for consistency</li>
+		<li>Added song octave option</li>
+		<ul>
+			<li>The <code>"C+"</code>, <code>"G- (actually F#-)"</code>, <code>"C-"</code>, and <code>"oh no (F-)"</code> keys were obsoleted with this addition, so they have been removed, and will be converted to the right key and octave settings on load</li>
+		</ul>
+			</ul>
+	</ul> </h3>
+	<p>8/24/2023</p>
+	
+	<h2>Version 2.0.2</h2>
+	<h3>
+<ul>
+	<li>Slightly increased the custom sample volume</li>
+	<li>Decreased clicking on looped custom samples</li>
+</ul> </h3>
+	<p>7/29/2023</p>
+	
+	<h2>Version 2.0.1</h2>
+	<h3>
+<ul>
+	<li>Renamed "twelveth notes" to "twelfth notes"</li>
+	<li>Fixed euclidean rhythm generator prompt showing up in live play mode</li>
+	<li>Removed the twitter column</li>
+</ul> </h3>
+	<p>7/28/2023</p>
+	
+	<h2>Version 2.0.0</h2>
+	<h3>
+<ul>
+	<li>Added custom sampling, chip wave looping, and a sample extractor (thank LeoV for all of these features!)</li>
+	<ul>
+	<li>Custom sampling</li>
+	<ul>
+	<li>Samples are loaded by typing a url into the custom sample prompt, which can be found by scrolling to the bottom of the edit tab</li>
+	<li>The old built-in samples can be added by typing "legacySamples" into the custom sample prompt</li>
+	</ul>
+	<li>Chip wave looping</li>
+	<ul>
+	<li>Chip wave looping can be enabling by clicking on the "Loop Controls" box</li>
+	</ul>
+	<li>Soundfont sample extractor</li>
+	<ul>
+	<li>You can extract samples from soundfonts with this tool</li>
+	<li>There are instructions on the page itself on how, so I won't repeat it here</li>
+	<li><a href="./sample_extractor.html">https://ultraabox.github.io/sample_extractor</a></li>
+	</ul>
+	</ul>
+	<li>Added todbox 1/3 and 1/5 wave, and removed the zefbox squaretooth wave</li>
+	<ul>
+	<li>Old songs using the zefbox squaretooth wave will automatically switch to the modbox squaretooth wave</li>
+	</ul>
+	<li>Added pink and brownian noise types</li>
+	<li>Added some presets from blackbox, also added "obama why" as a preset (beepcord inside joke)</li>
+	<li>Renamed all of the rhythms, and removed the song corrupter rhythm</li>
+	<li>Fixed fm frequencies not porting over correctly</li>
+	<li>Improved/fixed the beachcoming theme (thanks Mel!) and the terminal theme</li>
+	<li>UltraBox now has a new logo, made by pixelzwithaz!</li>
+</ul> </h3>
+	<p>7/28/2023</p>
+	<h2>Version 1.2.1</h2>
+	<h3>
+<ul>
+	<li>Added LeoV's euclidean rhythm generator</li>
+	<li>Fixed a bug relating to autoplay on load</li>
+</ul> </h3>
+	<p>6/30/2023</p>
+	
+	<h2>Version 1.2.0</h2>
+	<h3>
+<ul>
+	<li>Added WeebBox custom themes/images feature</li>
+	<li>Dynamic tempo now works when importing midis (thanks LeoV!)</li>
+	<li>Added super saw 2 preset</li>
+	<li>Fixed nes ping preset (for real this time)</li>
+	<li>Fixed custom chip sometimes being way too low pitch</li>
+	<li>Added two batches of bugfixes (ported from jummbox):</li>
+	<ul>
+		<li><a href="https://github.com/AurySystem/goldbox/commit/44e7bdb472d3dfcdc333755132edd07dca7b6e0a">https://github.com/AurySystem/goldbox/commit/44e7bdb472d3dfcdc333755132edd07dca7b6e0a</a></li>
+		<li><a href="https://github.com/AurySystem/goldbox/commit/dd05827f7802b56829b4b7da9d73603a804d72d8">https://github.com/AurySystem/goldbox/commit/dd05827f7802b56829b4b7da9d73603a804d72d8</a></li>
+	</ul>
+</ul> </h3>
+	<p>6/28/2023</p>
+	<h2>Version 1.1.3</h2>
+	<h3>
+<ul>
+  <li>Improved json importing from other mods (ex. importing a json with a wave named viola will now set it to modbox viola)</li>
+  <li>Made pitch and drum channel notes copy-pasteable to each other (thanks LeoV!)</li>
+  <li>Fixed a bug relating to exporting .mid files while using advanced fm</li>
+	<li>Fixed the ultrabox nes white and nes ping presets</li>
+	<li>Updated the brucebox and shitbox 3.0 themes</li>
+	<li>Added the wackybox, terminal, and upside-down beepbox themes</li>
+</ul>  
+	</h3>
+	<p>06/17/2023</p>
+	<!--changed the rhythm names because people hated them	-->
+	<h2>Version 1.1.2</h2>
+	<h3><ul>
+  <li>Fixed a small inconsistency with the song player relating to fm</li>
+  <li>Improved the dogebox theme, and removed the ultrabox foggy and 69420 themes</li>
+	</ul></h3>
+	<p>06/11/2023</p>
+	<h2>Version 1.1.1</h2>
+	<h3><ul><li>Improved the Mainbox and Todbox Dark Mode themes</li>
+		<li>Removed the unneccessary standarddrumsamples.js and plok_samples.js files, which should slightly improved load times</li>
+		<li>Basically just an extension of the last update</li>
+	</ul></h3>
+	<p>06/08/2023</p>	
+<h2>Version 1.1</h2>
+	<h3><ul><li>Added the slushie, 69420, nerdbox, zefbox, and foxbox themes, and fixed the cardboardbox theme</li>
+		<li>Don't ask why I changed the version to 1.1 when it should have been 1.0.1, idk why</li>
+	</ul></h3>
+	<p>06/08/2023</p>
+<!--a few bug patch updates happened between version 1.0 and 1.1 but they aren't very important	-->
+<h2>Version 1.0</h2>
+	<h3><ul><li>First release</li></ul></h3>
+	<p>06/04/2023</p>
+  
+</body>
+</html>
