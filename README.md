@@ -26,13 +26,13 @@ So, if this is your first time compiling the source code, then here's the rundow
 
 # Step 1.) Setup!
 
-Before we compile we need two things:
+Before we compile we need three things:
 Node.js, which can be found here: (https://nodejs.org/en), The reccomended version is suggested as it's what I used to compile AbyssBox,
 
-You'll also need npm, which can be found here: (https://www.npmjs.com/get-npm)
+The second thing you'll need is npm, which can be found here: (https://www.npmjs.com/get-npm)
 Though if you want to do it simple, you can always go straight to the github page for it: (https://github.com/npm/documentation)
 
-You'll also need git, which can be found here: (https://gitforwindows.org/)
+The third thing you'll also need is called git, which can be found here: (https://gitforwindows.org/)
 
 If you've installed Git and Node.Js and you extracted the zip file for the source code of npm (if that's what you did), Then it's time for the next step!
 
@@ -60,7 +60,7 @@ So in my example, it would look something like this:
 Of course your command directory won't look exactly like this, but for me all my source code is contained inside of github-choptop84-abyssbox~!
 
 
-once your command directory leads to your source code, then it's suggested but not required to make a dupe of your mod.
+Once your command directory leads to your source code, then it's suggested but not required to make a dupe of your mod.
 ```git clone https://github.com/ultraabox/ultrabox_typescript```
 Especially if you're making big changes, if you make a big change to the code but it doesn't work. You'll need a failsafe for when that eventuallity comes, if you didn't clone your code, then it's possible that your broken code isn't going to be easily removed by any means!
 
