@@ -40,9 +40,10 @@ If you've installed Git and Node.Js and you extracted the zip file for the sourc
 
 Once all of the previous step has been completed, you need to open Git Bash. Which is one of the apps you installed when you got Git. Once you've opened up Git Bash, you'll need to use these commands:
 
-```
-cd [[File location]] // I'll need to explain this, if you don't know how commands work. Then you'll need to know that the cd command allows you to change the directory of where the commands happen. As an example, you'll be able to see that above the $ there is an orange ~, if you put cd downloads, the text will then change to ~/downloads. That is your command director. After that if your beepbox mod is inside of the downloads folder, you just run 'cd' again but this time change it to the name of the folder that contains the beepbox source code. Though it's worth noting that if your source code is inside another folder that you're command directory is not in, the commands simply will not work. So make sure that the directory leads to where the source code is exactly!
-```
+
+`cd [[File location]]` 
+I'll need to explain this, if you don't know how commands work. Then you'll need to know that the cd command allows you to change the directory of where the commands happen. As an example, you'll be able to see that above the $ there is an orange ~, if you put cd downloads, the text will then change to ~/downloads. That is your command director. After that if your beepbox mod is inside of the downloads folder, you just run 'cd' again but this time change it to the name of the folder that contains the beepbox source code. Though it's worth noting that if your source code is inside another folder that you're command directory is not in, the commands simply will not work. So make sure that the directory leads to where the source code is exactly!
+
 once your command directory leads to your source code, then it's suggested but not required to make a dupe of your mod.
 ```git clone https://github.com/ultraabox/ultrabox_typescript```
 Especially if you're making big changes, if you make a big change to the code but it doesn't work. You'll need a failsafe for when that eventuallity comes, if you didn't clone your code, then it's possible that your broken code isn't going to be easily removed by any means!
