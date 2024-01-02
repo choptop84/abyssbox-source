@@ -42,7 +42,23 @@ Once all of the previous step has been completed, you need to open Git Bash. Whi
 
 
 `cd [[File location]]` 
-I'll need to explain this, if you don't know how commands work. Then you'll need to know that the cd command allows you to change the directory of where the commands happen. As an example, you'll be able to see that above the $ there is an orange ~, if you put cd downloads, the text will then change to ~/downloads. That is your command director. After that if your beepbox mod is inside of the downloads folder, you just run 'cd' again but this time change it to the name of the folder that contains the beepbox source code. Though it's worth noting that if your source code is inside another folder that you're command directory is not in, the commands simply will not work. So make sure that the directory leads to where the source code is exactly!
+I'll need to explain this, if you don't know how commands work. Then you'll need to know that the cd command allows you to change the directory of where the commands happen. Basically, when you use the 'cd' command, where the next command will happen is dependent on what you put in the 'cd' command.
+As an example look at this:
+```
+~
+$ cd downloads
+[[You won't see this but the command runs]]
+~/downloads
+$
+```
+You'll notice that the `~` changed to `~/downloads`. Now when you run your command, it'll try to use the files present to run commands.
+
+The commands won't try to search inside of folders though, which is why you need to make the "command directory" match where the source code is exactly.
+So in my example, it would look something like this:
+`~/downloads/abyssbox/github-choptop84-abyssbox`
+
+Of course your command directory won't look exactly like this, but for me all my source code is contained inside of github-choptop84-abyssbox~!
+
 
 once your command directory leads to your source code, then it's suggested but not required to make a dupe of your mod.
 ```git clone https://github.com/ultraabox/ultrabox_typescript```
