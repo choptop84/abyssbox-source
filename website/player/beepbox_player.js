@@ -1971,7 +1971,7 @@ var beepbox = (function (exports) {
     ColorConfig.colorLookup = new Map();
     ColorConfig.themes = {
         "AbyssBox Classic": `
-			:root { 		
+			:root {		
 			--page-margin: #1e0915; 		
 			--editor-background: #1e0915; 		
 			--hover-preview: white; 		
@@ -2096,6 +2096,17 @@ var beepbox = (function (exports) {
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
 		}
+
+			@font-face {
+		   font-family: "AbyssType";
+		   src:
+ 		   url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
+			}
+
+			html {
+ 		   font-family: 'AbyssType';
+			}
+
 
 			`,
         "AbyssBox Competative": `
@@ -2225,6 +2236,16 @@ var beepbox = (function (exports) {
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
 		}
+			@font-face {
+		   font-family: "AbyssType";
+		   src:
+ 		   url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
+			}
+
+			html {
+ 		   font-family: 'AbyssType';
+			}
+
 
 			`,
         "AbyssBox Light": `
@@ -2354,6 +2375,16 @@ var beepbox = (function (exports) {
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
 		}
+			@font-face {
+		   font-family: "AbyssType";
+		   src:
+ 		   url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
+			}
+
+			html {
+ 		   font-family: 'AbyssType';
+			}
+
 
 			`,
         "dark classic": `

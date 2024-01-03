@@ -4,14 +4,6 @@ import { BeepBoxOption, DictionaryArray, toNameMap, Config } from "../synth/Synt
 import { Song } from "../synth/synth";
 import { HTML } from "imperative-html/dist/esm/elements-strict";
 
-@font-face {
-  font-family: "AbyssType";
-  src:
-    local("AbyssType"),
-    url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
-}
-
-
 export interface ChannelColors extends BeepBoxOption {
     readonly secondaryChannel: string;
     readonly primaryChannel: string;
@@ -149,6 +141,13 @@ export class ColorConfig {
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
 		}
+
+			@font-face {
+		   font-family: "AbyssType";
+		   src:
+ 		   url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
+			}
+
 			html {
  		   font-family: 'AbyssType';
 			}
@@ -282,6 +281,12 @@ export class ColorConfig {
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
 		}
+			@font-face {
+		   font-family: "AbyssType";
+		   src:
+ 		   url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
+			}
+
 			html {
  		   font-family: 'AbyssType';
 			}
@@ -415,6 +420,16 @@ export class ColorConfig {
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
 		}
+			@font-face {
+		   font-family: "AbyssType";
+		   src:
+ 		   url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
+			}
+
+			html {
+ 		   font-family: 'AbyssType';
+			}
+
 
 			`,
       "dark classic": `
