@@ -129,6 +129,7 @@ document.head.appendChild(HTML.style({ type: "text/css" }, `
 			<path d="M -1 76 L 30 76 L 30 1 L 33 -1 L 33 80 L -1 80 z" fill="rgba(0,0,0,0.7)"/> \
 			<rect x="-1" y="-1" width="19" height="80" fill="url(%23shadow)"/> \
 		</svg>');
+		--track-font: "sans-serif"
 }
 
 

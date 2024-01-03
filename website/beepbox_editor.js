@@ -2480,7 +2480,9 @@ var beepbox = (function (exports) {
 			--mod-primary-note-sat: 96; 		
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
-			--mod-primary-note-lum-scale: 0; 	
+			--mod-primary-note-lum-scale: 0; 
+
+			--track-font: 'AbyssType';	
 				}
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
@@ -2619,7 +2621,9 @@ var beepbox = (function (exports) {
 			--mod-primary-note-sat: 96; 		
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
-			--mod-primary-note-lum-scale: 0; 	
+			--mod-primary-note-lum-scale: 0;
+
+			--track-font: 'AbyssType'; 	
 				}
 		/* sets cursor */ 
 		* {
@@ -2759,6 +2763,8 @@ var beepbox = (function (exports) {
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
 			--mod-primary-note-lum-scale: 0; 	
+				
+			--track-font: 'AbyssType';
 				}
 		/* sets cursor */ 
 		* {
@@ -9103,6 +9109,7 @@ var beepbox = (function (exports) {
 			<path d="M -1 76 L 30 76 L 30 1 L 33 -1 L 33 80 L -1 80 z" fill="rgba(0,0,0,0.7)"/> \
 			<rect x="-1" y="-1" width="19" height="80" fill="url(%23shadow)"/> \
 		</svg>');
+		--track-font: "sans-serif"
 }
 
 
@@ -30925,13 +30932,7 @@ You should be redirected to the song at:<br /><br />
 						<rect x="21.5" y="2" width="2.5" height="16" fill="currentColor"/>
 						<rect x="7" y="2" width="10" height="16" fill="currentColor"/>
 					</svg>
-				`), div$d("Wide (JB)")), label$1({ class: "layout-option" }, input$a({ type: "radio", name: "layout", value: "focus" }), SVG(`\
-					<svg viewBox="-1 -1 28 22">
-						<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
-						<rect x="2" y="2" width="22" height="11" fill="currentColor"/>
-						<rect x="2" y="14" width="22" height="4" fill="currentColor"/>
-					</svg>
-				`), div$d("Focus (AB)")), label$1({ class: "layout-option" }, input$a({ type: "radio", name: "layout", value: "AbyssBox Special" }), SVG(`\
+				`), div$d("Wide (JB)")), label$1({ class: "layout-option" }, input$a({ type: "radio", name: "layout", value: "AbyssBox Special" }), SVG(`\
 					<svg viewBox="-1 -1 28 22">
 						<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
 						<rect x="2" y="2" width="22" height="2" fill="currentColor"/>
@@ -35881,7 +35882,7 @@ You should be redirected to the song at:<br /><br />
             this._x = _x;
             this._y = _y;
             this._text = document.createTextNode("1");
-            this._label = SVG.text({ "font-family": "inherit", "font-size": 20, "text-anchor": "middle", "font-weight": "bold", fill: "red" }, this._text);
+            this._label = SVG.text({ "font-family": "--track-font", "font-size": 20, "text-anchor": "middle", "font-weight": "bold", fill: "red" }, this._text);
             this._rect = SVG.rect({ x: 1, y: 1 });
             this.container = SVG.svg(this._rect, this._label);
             this._renderedIndex = 1;
