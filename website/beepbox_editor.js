@@ -29714,7 +29714,7 @@ You should be redirected to the song at:<br /><br />
 					height: 100vh;
 					grid-template-columns: minmax(0, 1fr) minmax(0,1fr);
 					grid-template-rows: minmax(481px, 1fr) minmax(0, min-content) minmax(0, min-content);
-					grid-template-areas: "pattern-area" "track-area track-area" "settings-area";
+					grid-template-areas: "pattern-area" "track-area track-area settings-area";
 				}
 				.beepboxEditor .pattern-area {
 					width: 100%;
@@ -35881,7 +35881,7 @@ You should be redirected to the song at:<br /><br />
             this._x = _x;
             this._y = _y;
             this._text = document.createTextNode("1");
-            this._label = SVG.text({ "font-family": "sans-serif", "font-size": 20, "text-anchor": "middle", "font-weight": "bold", fill: "red" }, this._text);
+            this._label = SVG.text({ "font-family": "inherit", "font-size": 20, "text-anchor": "middle", "font-weight": "bold", fill: "red" }, this._text);
             this._rect = SVG.rect({ x: 1, y: 1 });
             this.container = SVG.svg(this._rect, this._label);
             this._renderedIndex = 1;
