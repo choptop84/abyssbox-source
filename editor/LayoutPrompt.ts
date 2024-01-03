@@ -81,7 +81,7 @@ export class LayoutPrompt implements Prompt {
 						<rect x="2" y="2" width="22" height="2" fill="currentColor"/>
 						<rect x="2" y="5" width="4" height="8" fill="currentColor"/>
 						<rect x="7" y="5" width="17" height="8" fill="currentColor"/>
-						<rect x="2" y="13" width="22" height="5" fill="currentColor"/>
+						<rect x="2" y="14" width="22" height="4" fill="currentColor"/>
 					</svg>
 				`),
 				div("Special (AB)"),
