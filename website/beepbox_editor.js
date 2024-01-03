@@ -35876,7 +35876,7 @@ You should be redirected to the song at:<br /><br />
             this._x = _x;
             this._y = _y;
             this._text = document.createTextNode("1");
-            this._label = SVG.text({ "font-family": "--track-font", "font-size": 20, "text-anchor": "middle", "font-weight": "bold", fill: "red" }, this._text);
+            this._label = SVG.text({ "font-family": "var(--track-font)", "font-size": 20, "text-anchor": "middle", "font-weight": "bold", fill: "red" }, this._text);
             this._rect = SVG.rect({ x: 1, y: 1 });
             this.container = SVG.svg(this._rect, this._label);
             this._renderedIndex = 1;

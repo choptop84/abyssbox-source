@@ -10,7 +10,7 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 
 class Box {
 	private readonly _text: Text = document.createTextNode("1");
-		private readonly _label: SVGTextElement = SVG.text({"font-family": "--track-font", "font-size": 20, "text-anchor": "middle", "font-weight": "bold", fill: "red"}, this._text);
+		private readonly _label: SVGTextElement = SVG.text({"font-family": "var(--track-font)", "font-size": 20, "text-anchor": "middle", "font-weight": "bold", fill: "red"}, this._text);
 		private readonly _rect: SVGRectElement = SVG.rect({x: 1, y: 1});
 	public readonly container: SVGSVGElement = SVG.svg(this._rect, this._label);
 	private _renderedIndex: number = 1;
