@@ -2480,9 +2480,7 @@ var beepbox = (function (exports) {
 			--mod-primary-note-sat: 96; 		
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
-			--mod-primary-note-lum-scale: 0; 
-
-			--track-font: 'AbyssType';	
+			--mod-primary-note-lum-scale: 0; 	
 				}
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
@@ -2497,7 +2495,7 @@ var beepbox = (function (exports) {
 			html {
  		   font-family: 'AbyssType';
 			}
-
+		  --track-font: 'AbyssType';
 
 			`,
         "AbyssBox Competative": `
@@ -2621,9 +2619,7 @@ var beepbox = (function (exports) {
 			--mod-primary-note-sat: 96; 		
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
-			--mod-primary-note-lum-scale: 0;
-
-			--track-font: 'AbyssType'; 	
+			--mod-primary-note-lum-scale: 0; 	
 				}
 		/* sets cursor */ 
 		* {
@@ -2638,7 +2634,7 @@ var beepbox = (function (exports) {
 			html {
  		   font-family: 'AbyssType';
 			}
-
+		   --track-font: 'AbyssType';
 
 			`,
         "AbyssBox Light": `
@@ -2763,7 +2759,6 @@ var beepbox = (function (exports) {
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
 			--mod-primary-note-lum-scale: 0; 	
-				
 			--track-font: 'AbyssType';
 				}
 		/* sets cursor */ 
@@ -2779,7 +2774,6 @@ var beepbox = (function (exports) {
 			html {
  		   font-family: 'AbyssType';
 			}
-
 
 			`,
         "dark classic": `
