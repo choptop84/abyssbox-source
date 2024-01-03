@@ -29644,7 +29644,7 @@ You should be redirected to the song at:<br /><br />
 				}
 				.beepboxEditor .instrument-settings-area {
 					overflow-y: auto;
-					position: 0;
+					position: relative;
 				}
 				.beepboxEditor .instrument-settings-area > .editor-controls {
 					position: absolute;

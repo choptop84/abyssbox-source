@@ -307,7 +307,7 @@ export class Layout {
 				}
 				.beepboxEditor .instrument-settings-area {
 					overflow-y: auto;
-					position: 0;
+					position: relative;
 				}
 				.beepboxEditor .instrument-settings-area > .editor-controls {
 					position: absolute;
