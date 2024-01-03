@@ -29622,7 +29622,7 @@ You should be redirected to the song at:<br /><br />
 				.beepboxEditor {
 					width: 100%;
 					height: 100vh;
-					grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+					grid-template-columns: 390px minmax(0, 1fr);
 					grid-template-rows: minmax(481px, 1fr) minmax(0, min-content);
 					grid-template-areas: "settings-area pattern-area" "track-area track-area";
 				}
@@ -29655,7 +29655,7 @@ You should be redirected to the song at:<br /><br />
 				}
 				
 				.beepboxEditor .settings-area {
-					width: 390px/2;
+					width: 390px;
 					grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 					grid-template-rows: auto auto auto minmax(0, 1fr);
 					grid-template-areas:
@@ -30928,7 +30928,7 @@ You should be redirected to the song at:<br /><br />
 				`), div$d("Wide (JB)")), label$1({ class: "layout-option" }, input$a({ type: "radio", name: "layout", value: "focus" }), SVG(`\
 					<svg viewBox="-1 -1 28 22">
 						<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
-						<rect x="2" y="2" width="22" height="12" fill="currentColor"/>
+						<rect x="2" y="2" width="22" height="11" fill="currentColor"/>
 						<rect x="2" y="14" width="22" height="4" fill="currentColor"/>
 					</svg>
 				`), div$d("Focus (AB)")), label$1({ class: "layout-option" }, input$a({ type: "radio", name: "layout", value: "AbyssBox Special" }), SVG(`\
@@ -30936,8 +30936,8 @@ You should be redirected to the song at:<br /><br />
 						<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
 						<rect x="2" y="2" width="22" height="2" fill="currentColor"/>
 						<rect x="2" y="5" width="4" height="8" fill="currentColor"/>
-						<rect x="7" y="5" width="15" height="8" fill="currentColor"/>
-						<rect x="2" y="14" width="22" height="4" fill="currentColor"/>
+						<rect x="7" y="5" width="17" height="8" fill="currentColor"/>
+						<rect x="2" y="13" width="22" height="5" fill="currentColor"/>
 					</svg>
 				`), div$d("Special (AB)")));
             this.container = div$d({ class: "prompt noSelection", style: "width: 300px;" }, h2$c("Layout"), this._form, div$d({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
