@@ -209,7 +209,7 @@ export class Layout {
 				}
 				.beepboxEditor .pattern-area {
 					width: 100%;
-					height: 100%;
+					height: 80%;
 				}
 				.beepboxEditor .track-area {
 					width: 100%;
