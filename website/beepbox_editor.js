@@ -29622,7 +29622,7 @@ You should be redirected to the song at:<br /><br />
 				.beepboxEditor {
 					width: 100%;
 					height: 100vh;
-					grid-template-columns: minmax(0, 1fr) 390px; /* minmax(0, 1fr) min-content; Chrome 80 grid layout regression. https://bugs.chromium.org/p/chromium/issues/detail?id=1050307 */
+					grid-template-columns: minmax(0, 1fr) 1fr;
 					grid-template-rows: minmax(481px, 1fr) minmax(0, min-content);
 					grid-template-areas: "settings-area pattern-area" "track-area track-area";
 				}
