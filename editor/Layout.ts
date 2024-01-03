@@ -287,7 +287,7 @@ export class Layout {
 					height: 100vh;
 					grid-template-columns: minmax(0, 1fr) 390px; /* minmax(0, 1fr) min-content; Chrome 80 grid layout regression. https://bugs.chromium.org/p/chromium/issues/detail?id=1050307 */
 					grid-template-rows: minmax(481px, 1fr) minmax(0, min-content);
-					grid-template-areas: "pattern-area settings-area" "track-area track-area";
+					grid-template-areas: "settings-area pattern-area" "track-area track-area";
 				}
 				.beepboxEditor .pattern-area {
 					width: 100%;
