@@ -62,6 +62,19 @@ export class LayoutPrompt implements Prompt {
 				`),
 				div("Wide (JB)"),
 			),
+			label({class: "layout-option"},
+				input({type: "radio", name: "layout", value: "AbyssBox Special"}),
+				SVG(`\
+					<svg viewBox="-1 -1 28 22">
+						<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
+						<rect x="2" y="2" width="4" height="16" fill="currentColor"/>
+						<rect x="18" y="2" width="2.5" height="16" fill="currentColor"/>
+						<rect x="21.5" y="2" width="2.5" height="16" fill="currentColor"/>
+						<rect x="7" y="2" width="10" height="16" fill="currentColor"/>
+					</svg>
+				`),
+				div("AbyssBox (Sp)"),
+			),
 		);
 	
 	public readonly container: HTMLDivElement = div({class: "prompt noSelection", style: "width: 300px;"},
