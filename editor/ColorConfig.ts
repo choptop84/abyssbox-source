@@ -136,8 +136,7 @@ export class ColorConfig {
 			--mod-primary-note-sat: 96; 		
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
-			--mod-primary-note-lum-scale: 0; 
-			--track-font: "AbyssType";	
+			--mod-primary-note-lum-scale: 0; 	
 				}
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
@@ -146,12 +145,20 @@ export class ColorConfig {
 			@font-face {
 		   font-family: "AbyssType";
 		   src:
+ 		   url("abysstype.otf") format("opentype") tech(color-COLRv1),
+			}
+
+			@font-face {
+		   font-family: "AbyssType_small";
+		   src:
  		   url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
 			}
 
 			html {
- 		   font-family: 'AbyssType';
+ 		   font-family: 'AbyssType_small';
 			}
+
+		   var(--track-font): 'AbyssType';
 
 			`,
   "AbyssBox Competative": `
@@ -285,12 +292,19 @@ export class ColorConfig {
 			@font-face {
 		   font-family: "AbyssType";
 		   src:
+ 		   url("abysstype.otf") format("opentype") tech(color-COLRv1),
+			}
+
+			@font-face {
+		   font-family: "AbyssType_small";
+		   src:
  		   url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
 			}
 
 			html {
- 		   font-family: 'AbyssType';
+ 		   font-family: 'AbyssType_small';
 			}
+		   var(--track-font): 'AbyssType';
 
 			`,
   "AbyssBox Light": `
@@ -424,12 +438,19 @@ export class ColorConfig {
 			@font-face {
 		   font-family: "AbyssType";
 		   src:
+ 		   url("abysstype.otf") format("opentype") tech(color-COLRv1),
+			}
+
+			@font-face {
+		   font-family: "AbyssType_small";
+		   src:
  		   url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
 			}
 
 			html {
- 		   font-family: 'AbyssType';
+ 		   font-family: 'AbyssType_small';
 			}
+		   var(--track-font): 'AbyssType';
 
 			`,
       "dark classic": `
