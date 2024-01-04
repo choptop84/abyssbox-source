@@ -309,8 +309,8 @@ export class ColorConfig {
 			`,
   "AbyssBox Light": `
 			:root { 		
-			--page-margin: #e8bcc9; 		
-			--editor-background: #e8bcc9; 		
+			--page-margin: #e0adbc; 		
+			--editor-background: #e0adbc; 		
 			--hover-preview: white; 		
 			--playhead: rgba(255, 255, 255, 0.9); 		
 			--primary-text: #c763a0; 		
@@ -323,7 +323,7 @@ export class ColorConfig {
 			--ui-widget-background: #f5e9f0;		
 			--ui-widget-focus: #8c346a; 		
 			--pitch-background: #eddadf; 		
-			--tonic: #f2e6e9; 		
+			--tonic: #f5f0f1; 		
 			--fifth-note: #75001e; 		
 			--white-piano-key: #cca5c7; 		
 			--black-piano-key: #402f2f; 		
