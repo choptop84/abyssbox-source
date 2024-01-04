@@ -364,9 +364,9 @@ export class Layout {
 				}
 			}
 		`,
-"Focus": `\
+		"focus": `\
 
-            	/* Focus layout */
+			/* focus layout */
 			@media (min-width: 711px) {
 				#beepboxEditorContainer {
 					max-width: initial;
@@ -375,9 +375,9 @@ export class Layout {
 				.beepboxEditor {
 					width: 100%;
 					height: 100vh;
-					grid-template-columns: minmax(0, 1fr) minmax(0,1fr);
-					grid-template-rows: minmax(481px, 1fr) minmax(0, min-content) minmax(0, min-content);
-					grid-template-areas: "pattern-area" "track-area track-area settings-area";
+					grid-template-columns: minmax(0, 1fr) 390px; /* minmax(0, 1fr) min-content; Chrome 80 grid layout regression. https://bugs.chromium.org/p/chromium/issues/detail?id=1050307 */
+					grid-template-rows: minmax(481px, 1fr) minmax(0, min-content);
+					grid-template-areas: "pattern-area settings-area" "track-area track-area";
 				}
 				.beepboxEditor .pattern-area {
 					width: 100%;
@@ -394,28 +394,6 @@ export class Layout {
 					flex: 1;
 					overflow: auto;
 					max-height: 97.5vh;
-				}
-				.beepboxEditor .instrument-settings-area {
-					overflow-y: auto;
-					position: relative;
-				}
-				.beepboxEditor .instrument-settings-area > .editor-controls {
-					position: absolute;
-					width: 100%;
-				}
-				.beepboxEditor .song-settings-area {
-					overflow-y: auto;
-				}
-				
-				.beepboxEditor .settings-area {
-					width: 390px;
-					grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-					grid-template-rows: auto auto auto minmax(0, 1fr);
-					grid-template-areas:
-						"instrument-settings-area version-area"
-						"instrument-settings-area play-pause-area"
-						"instrument-settings-area menu-area"
-						"instrument-settings-area song-settings-area";
 				}
 				
 				.beepboxEditor .barScrollBar {

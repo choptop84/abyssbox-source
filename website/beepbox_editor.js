@@ -29723,9 +29723,9 @@ You should be redirected to the song at:<br /><br />
 				}
 			}
 		`,
-        "Focus": `\
+        "focus": `\
 
-            	/* Focus layout */
+			/* focus layout */
 			@media (min-width: 711px) {
 				#beepboxEditorContainer {
 					max-width: initial;
@@ -29734,9 +29734,9 @@ You should be redirected to the song at:<br /><br />
 				.beepboxEditor {
 					width: 100%;
 					height: 100vh;
-					grid-template-columns: minmax(0, 1fr) minmax(0,1fr);
-					grid-template-rows: minmax(481px, 1fr) minmax(0, min-content) minmax(0, min-content);
-					grid-template-areas: "pattern-area" "track-area track-area settings-area";
+					grid-template-columns: minmax(0, 1fr) 390px; /* minmax(0, 1fr) min-content; Chrome 80 grid layout regression. https://bugs.chromium.org/p/chromium/issues/detail?id=1050307 */
+					grid-template-rows: minmax(481px, 1fr) minmax(0, min-content);
+					grid-template-areas: "pattern-area settings-area" "track-area track-area";
 				}
 				.beepboxEditor .pattern-area {
 					width: 100%;
@@ -29753,28 +29753,6 @@ You should be redirected to the song at:<br /><br />
 					flex: 1;
 					overflow: auto;
 					max-height: 97.5vh;
-				}
-				.beepboxEditor .instrument-settings-area {
-					overflow-y: auto;
-					position: relative;
-				}
-				.beepboxEditor .instrument-settings-area > .editor-controls {
-					position: absolute;
-					width: 100%;
-				}
-				.beepboxEditor .song-settings-area {
-					overflow-y: auto;
-				}
-				
-				.beepboxEditor .settings-area {
-					width: 390px;
-					grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-					grid-template-rows: auto auto auto minmax(0, 1fr);
-					grid-template-areas:
-						"instrument-settings-area version-area"
-						"instrument-settings-area play-pause-area"
-						"instrument-settings-area menu-area"
-						"instrument-settings-area song-settings-area";
 				}
 				
 				.beepboxEditor .barScrollBar {
@@ -30955,7 +30933,14 @@ You should be redirected to the song at:<br /><br />
 						<rect x="7" y="5" width="17" height="8" fill="currentColor"/>
 						<rect x="2" y="14" width="22" height="4" fill="currentColor"/>
 					</svg>
-				`), div$d("Special (AB)")));
+				`), div$d("Special (AB)")), label$1({ class: "layout-option" }, input$a({ type: "radio", name: "layout", value: "AbyssBox Special" }), SVG(`\
+					<svg viewBox="-1 -1 28 22">
+						<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
+						<rect x="2" y="2" width="19" height="10" fill="currentColor"/>
+						<rect x="20" y="2" width="4" height="16" fill="currentColor"/>
+						<rect x="2" y="13" width="19" height="5" fill="currentColor"/>
+					</svg>
+				`), div$d("Focus (AB)")));
             this.container = div$d({ class: "prompt noSelection", style: "width: 300px;" }, h2$c("Layout"), this._form, div$d({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
             this._close = () => {
                 this._doc.undo();
