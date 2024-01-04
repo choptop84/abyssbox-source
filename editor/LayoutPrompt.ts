@@ -76,7 +76,7 @@ export class LayoutPrompt implements Prompt {
 				div("Special (AB)"),
 			),
 			label({class: "layout-option"},
-				input({type: "radio", name: "layout", value: "AbyssBox Special"}),
+				input({type: "radio", name: "layout", value: "focus"}),
 				SVG(`\
 					<svg viewBox="-1 -1 28 22">
 						<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
