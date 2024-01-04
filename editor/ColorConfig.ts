@@ -155,7 +155,7 @@ export class ColorConfig {
 			}
 
 			html {
- 		   font-family: 'AbyssType_small';
+ 		   font-family: 'AbyssType';
 			}
 
 		   var(--track-font): 'AbyssType';

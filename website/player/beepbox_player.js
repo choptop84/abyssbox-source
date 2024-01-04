@@ -2110,7 +2110,7 @@ var beepbox = (function (exports) {
 			}
 
 			html {
- 		   font-family: 'AbyssType_small';
+ 		   font-family: 'AbyssType';
 			}
 
 		   var(--track-font): 'AbyssType';
