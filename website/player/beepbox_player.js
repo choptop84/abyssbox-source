@@ -1980,7 +1980,7 @@ var beepbox = (function (exports) {
 			--secondary-text: #ffcedd; 		
 			--inverted-text: black;	 		
 			--text-selection: rgba(119,68,255,0.99); 		
-			--box-selection-fill: #bf2c5d; 		
+			--box-selection-fill: #1e0915; 		
 			--loop-accent: #873a51; 		
 			--link-accent: #df88ff; 		
 			--ui-widget-background: #581b3e; 		
