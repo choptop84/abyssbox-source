@@ -45,30 +45,38 @@ export class AddSamplesPrompt {
         this._addSampleButton,
         this._addMultipleSamplesButton
     );
-    private readonly _instructionsLink: HTMLAnchorElement = a({ href: "#" }, "Here's more information and some instructions on how to use custom samples in UltraBox.");
+    private readonly _instructionsLink: HTMLAnchorElement = a({ href: "#" }, "Wanna add your own samples? Click here!");
     private readonly _description: HTMLDivElement = div(
         div({ style: "margin-bottom: 0.5em; -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; cursor: text;" },
-            "In order to use the old UltraBox samples, you should add ",
-            code("legacySamples"),
-            " as an URL. You can also use ",
-            code("nintariboxSamples"),
-            " and ",
-            code("marioPaintboxSamples"),
-            " for more built-in sample packs."
+            "Before you ask: ",
+        ),
+	div({ style: "margin-bottom: 0.5em; -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; cursor: text;" },
+            "legacySamples",
+            " = Pandoras Box's Samples "
+        ),
+	div({ style: "margin-bottom: 0.5em; -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; cursor: text;" },
+            "nintariboxSamples",
+            " = nintaribox's Samples "
+        ),
+	div({ style: "margin-bottom: 0.5em; -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; cursor: text;" },
+            "marioPaintboxSamples",
+            " = MarioPaintBox's Samples."
         ),
         div({ style: "margin-bottom: 0.5em;" },
-            "The order of these samples is important - if you change it you'll break your song!"
-        ),
+            "The order of these samples is important - if you change it you'll break your song!",
+	    "Since they're sorted by which ones you added first, changing the position of the sample in the list will",
+            "change your instruments' sample to a different sample!"
+	),
         div({ style: "margin-bottom: 0.5em;" },
             this._instructionsLink,
-        )
+        ),
     );
     private readonly _closeInstructionsButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); width: 100%;" }, "Close instructions");
     private readonly _instructionsArea: HTMLDivElement = div(
         { style: "display: none; margin-top: 0; -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; cursor: text; overflow-y: auto;" },
         h2("Add Samples"),
         div({ style: "margin-top: 0.5em; margin-bottom: 0.5em;" },
-            "In UltraBox, custom samples are loaded from arbitrary URLs.",
+            "In UB and in turn AB, custom samples are loaded from arbitrary URLs.",
         ),
         div({ style: `margin-top: 0.5em; margin-bottom: 0.5em; color: ${ColorConfig.secondaryText};` },
             "(Technically, the web server behind the URL needs to support ",
@@ -103,7 +111,7 @@ export class AddSamplesPrompt {
         div({ style: "margin-top: 0.5em; margin-bottom: 1em;" },
             "Finally, if have a soundfont you'd like to get samples from, consider using this ",
             a({ href: "./sample_extractor.html", target: "_blank" }, "sample extractor"),
-            "."
+            "!"
         ),
         div({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between; margin-top: 0.5em;" }, this._closeInstructionsButton)
     );
