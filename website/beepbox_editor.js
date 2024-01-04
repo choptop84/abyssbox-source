@@ -29758,24 +29758,20 @@ You should be redirected to the song at:<br /><br />
 					width: 100%;
 				}
 				
-				.beepboxEditor .instrument-settings-area > .editor-controls {
-					position: absolute;
-					width: 100%;
+				.beepboxEditor .song-settings-area {
+					overflow-y: auto;
 				}
 				
 				.beepboxEditor .settings-area {
-					width: 192px;
-					position: relative;
-					overflow-y: auto;
-					grid-template-columns: minmax(0, 1fr);
-					grid-template-rows: auto auto auto auto minmax(0, 1fr);
+					width: 30em;
+					grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+					grid-template-rows: auto auto auto minmax(0, 1fr);
 					grid-template-areas:
-						"version-area"
-						"play-pause-area"
-						"menu-area"
-						"song-settings-area"
-						"instrument-settings-area";
-				}
+						"instrument-settings-area version-area"
+						"instrument-settings-area play-pause-area"
+						"instrument-settings-area menu-area"
+						"instrument-settings-area song-settings-area";
+				}				
 				.beepboxEditor .barScrollBar {
 					display: none;
 				}
@@ -29847,19 +29843,23 @@ You should be redirected to the song at:<br /><br />
 					width: 100%;
 				}
 				
-				.beepboxEditor .song-settings-area {
-					overflow-y: auto;
+				.beepboxEditor .instrument-settings-area > .editor-controls {
+					position: absolute;
+					width: 100%;
 				}
 				
 				.beepboxEditor .settings-area {
-					width: 30em;
-					grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-					grid-template-rows: auto auto auto minmax(0, 1fr);
+					width: 192px;
+					position: relative;
+					overflow-y: auto;
+					grid-template-columns: minmax(0, 1fr);
+					grid-template-rows: auto auto auto auto minmax(0, 1fr);
 					grid-template-areas:
-						"instrument-settings-area version-area"
-						"instrument-settings-area play-pause-area"
-						"instrument-settings-area menu-area"
-						"instrument-settings-area song-settings-area";
+						"version-area"
+						"play-pause-area"
+						"menu-area"
+						"song-settings-area"
+						"instrument-settings-area";
 				}
 				.beepboxEditor .barScrollBar {
 					display: none;
