@@ -460,7 +460,7 @@ export class Layout {
 				.beepboxEditor {
 					width: 100%;
 					height: 100vh;
-					grid-template-columns: minmax(0, 1fr) 205px; 
+					grid-template-columns: minmax(0, 1fr) 235px; 
 					grid-template-rows: minmax(481px, 1fr) minmax(0, min-content);
 					grid-template-areas: "pattern-area settings-area" "track-area";
 				}
