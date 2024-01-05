@@ -73,7 +73,7 @@ export class LayoutPrompt implements Prompt {
 						<rect x="2" y="14" width="22" height="4" fill="currentColor"/>
 					</svg>
 				`),
-				div("Special (AB)"),
+				div("Flipped (AB)"),
 			),
 			label({class: "layout-option"},
 				input({type: "radio", name: "layout", value: "focus"}),
