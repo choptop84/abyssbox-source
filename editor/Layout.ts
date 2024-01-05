@@ -318,12 +318,13 @@ export class Layout {
 				}
 				
 				.beepboxEditor .settings-area {
-					width: 390px;
-					grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-					grid-template-rows: auto auto auto minmax(0, 1fr);
-					grid-template-areas:
-						"version-area play-pause-area menu-area"
-						"instrument-settings-area song-settings-area";
+  				 width: 100%;
+   				 position: relative;
+   				 overflow-y: auto;
+  				 display: grid;
+  				 grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+   				 grid-template-rows: auto;
+  				 gap: 8px; /* You can adjust the gap between the settings items */
 				}
 				
 				.beepboxEditor .barScrollBar {
