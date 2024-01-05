@@ -13,7 +13,7 @@ export class ThemePrompt implements Prompt {
 			option({ value: "AbyssBox Classic"}, "AbyssBox Classic"),
 			option({ value: "AbyssBox Competative"}, "AbyssBox Competative"),
 			option({ value: "AbyssBox Light"}, "AbyssBox Light"),
-			option({ value: "Half-Life"}, "Half Life"),
+			option({ value: "Half-Life"}, "Half-Life"),
 			option({ value: "dark classic" }, "BeepBox Dark"),
 			option({ value: "light classic" }, "BeepBox Light"),
 			option({ value: "dark competition" }, "BeepBox Competition Dark"),

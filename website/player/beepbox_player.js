@@ -2408,7 +2408,7 @@ var beepbox = (function (exports) {
 		   var(--track-font): 'AbyssType';
 
 			`,
-        "Half Life": `
+        "Half-Life": `
 			:root { 		
 			--page-margin: #0c1012; 		
 			--editor-background: #0c1012; 		
