@@ -490,7 +490,7 @@ export class Layout {
 				}
 				
 				.beepboxEditor .settings-area {
-					width: 192px;
+					width: 100%;
 					position: relative;
 					overflow-y: auto;
 					grid-template-columns: minmax(0, 1fr);
