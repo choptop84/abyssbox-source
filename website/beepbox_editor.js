@@ -29409,7 +29409,7 @@ You should be redirected to the song at:<br /><br />
 				}
 				
 				.beepboxEditor .settings-area {
-					width: 390px;
+					width: 420px;
 					grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 					grid-template-rows: auto auto auto minmax(0, 1fr);
 					grid-template-areas:
