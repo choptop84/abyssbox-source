@@ -29646,7 +29646,7 @@ You should be redirected to the song at:<br /><br />
 					height: 100vh;
 					grid-template-columns: 390px minmax(0, 1fr);
 					grid-template-rows: minmax(481px, 1fr) minmax(0, min-content);
-					grid-template-areas: "settings-area pattern-area" "track-area track-area";
+					grid-template-areas: "settings-area" "instrument-settings-area pattern-area" "track-area track-area";
 				}
 				.beepboxEditor .pattern-area {
 					width: 100%;
@@ -29676,15 +29676,13 @@ You should be redirected to the song at:<br /><br />
 					overflow-y: auto;
 				}
 				
-.beepboxEditor .settings-area {
-    width: 100%;
-    position: relative;
-    overflow-y: auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    grid-template-areas: "version-area play-pause-area menu-area song-settings-area instrument-settings-area";
-    gap: 8px; /* You can adjust the gap between the settings items */
-}
+				.beepboxEditor .settings-area {
+					width: 30em;
+					grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+					grid-template-rows: auto auto auto minmax(0, 1fr);
+					grid-template-areas:
+						"version-area play-pause-area menu-area song-settings-area";
+				}
 				
 				.beepboxEditor .barScrollBar {
 					display: none;
