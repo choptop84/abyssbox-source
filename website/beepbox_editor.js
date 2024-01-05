@@ -2927,7 +2927,8 @@ var beepbox = (function (exports) {
 		.instructions-column > section:first-of-type > p:first-of-type:after {
 		display: block;
 		content: url("wide-gordon.png");
-		width: 100%;
+		width: 50%;
+		height: 50%;
 		text-align: center;
 		margin-top: 25px;
 		}
@@ -2940,7 +2941,6 @@ var beepbox = (function (exports) {
 			}
 			/* make editor background transparent */
 		#beepboxEditorContainer, .beepboxEditor, #text-content {
-		background: #0400257d !important;
 		}
 
 			@font-face {
