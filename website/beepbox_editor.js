@@ -29681,9 +29681,7 @@ You should be redirected to the song at:<br /><br />
 					grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 					grid-template-rows: auto auto auto minmax(0, 1fr);
 					grid-template-areas:
-						"instrument-settings-area version-area"
-						"instrument-settings-area play-pause-area"
-						"instrument-settings-area menu-area"
+						"version-area play-pause-area menu-area"
 						"instrument-settings-area song-settings-area";
 				}
 				
