@@ -317,15 +317,15 @@ export class Layout {
 					overflow-y: auto;
 				}
 				
-				.beepboxEditor .settings-area {
-  				 width: 100%;
-   				 position: relative;
-   				 overflow-y: auto;
-  				 display: grid;
-  				 grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-   				 grid-template-rows: auto;
-  				 gap: 8px; /* You can adjust the gap between the settings items */
-				}
+.beepboxEditor .settings-area {
+    width: 100%;
+    position: relative;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-areas: "version-area play-pause-area menu-area song-settings-area instrument-settings-area";
+    gap: 8px; /* You can adjust the gap between the settings items */
+}
 				
 				.beepboxEditor .barScrollBar {
 					display: none;
