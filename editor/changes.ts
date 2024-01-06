@@ -773,6 +773,7 @@ export class ChangeRandomGeneratedInstrument extends Change {
 			const type: InstrumentType = selectWeightedRandom([
                 { item: InstrumentType.chip, weight: 4 },
                 { item: InstrumentType.pwm, weight: 4 },
+		        { item: InstrumentType.supersaw, weight: 5},
                 { item: InstrumentType.harmonics, weight: 5 },
                 { item: InstrumentType.pickedString, weight: 5 },
                 { item: InstrumentType.spectrum, weight: 1 },
@@ -1004,6 +1005,184 @@ export class ChangeRandomGeneratedInstrument extends Change {
 					])].index);
 				}
 				} break;
+				case InstrumentType.supersaw: {
+					if (type == InstrumentType.supersaw) {
+						instrument.supersawDynamism = selectCurvedDistribution(0, Config.supersawDynamismMax, Config.supersawDynamismMax, 2);
+						instrument.supersawSpread = selectCurvedDistribution(0, Config.supersawSpreadMax, Math.ceil(Config.supersawSpreadMax / 3), 4);
+						instrument.supersawShape = selectCurvedDistribution(0, Config.supersawShapeMax, 0, 4);
+					}
+					
+					instrument.pulseWidth = selectCurvedDistribution(0, Config.pulseWidthRange - 1, Config.pulseWidthRange - 1, 2);
+					
+					if (Math.random() < 0.6) {
+						instrument.addEnvelope(Config.instrumentAutomationTargets.dictionary["pulseWidth"].index, 0, Config.envelopes.dictionary[selectWeightedRandom([
+							{item: "punch"   , weight: 6},
+                        				{ item: "flare -1", weight: 1 },
+							{item: "flare 1" , weight: 2},
+							{item: "flare 2" , weight: 4},
+							{item: "flare 3" , weight: 2},
+                      					{ item: "twang -1", weight: 1 },
+							{item: "twang 1" , weight: 2},
+							{item: "twang 2" , weight: 4},
+							{item: "twang 3" , weight: 4},
+                        				{ item: "swell -1", weight: 4 },
+							{item: "swell 1" , weight: 4},
+							{item: "swell 2" , weight: 2},
+							{item: "swell 3" , weight: 1},
+                        				{ item: "tremolo0", weight: 1 },
+							{item: "tremolo1", weight: 1},
+							{item: "tremolo2", weight: 1},
+							{item: "tremolo3", weight: 1},
+							{item: "tremolo4", weight: 1},
+							{item: "tremolo5", weight: 1},
+							{item: "tremolo6", weight: 1},
+                      					{ item: "decay -1", weight: 1 },
+							{item: "decay 1" , weight: 1},
+							{item: "decay 2" , weight: 2},
+							{item: "decay 3" , weight: 2},
+                     					{ item: "wibble-1", weight: 2 },
+                        				{ item: "wibble 1", weight: 4 },
+                        				{ item: "wibble 2", weight: 4 },
+                        				{ item: "wibble 3", weight: 4 },
+                        				{ item: "linear-2", weight: 1 },
+                        				{ item: "linear-1", weight: 1 },
+                        				{ item: "linear 1", weight: 2 },
+                        				{ item: "linear 2", weight: 3 },
+                       					{ item: "linear 3", weight: 2 },
+                        				{ item: "rise -2", weight: 4 },
+                        				{ item: "rise -1", weight: 4 },
+                        				{ item: "rise 1", weight: 3 },
+                        				{ item: "rise 2", weight: 2 },
+                        				{ item: "rise 3", weight: 1 },
+						])].index);
+					}
+                    if (instrument.envelopeCount < Config.maxEnvelopeCount && Math.random() < 0.3) {
+                        instrument.addEnvelope(Config.instrumentAutomationTargets.dictionary["supersawDynamism"].index, 0, Config.envelopes.dictionary[selectWeightedRandom([
+							{item: "punch"   , weight: 6},
+                        				{ item: "flare -1", weight: 1 },
+							{item: "flare 1" , weight: 2},
+							{item: "flare 2" , weight: 4},
+							{item: "flare 3" , weight: 2},
+                      					{ item: "twang -1", weight: 1 },
+							{item: "twang 1" , weight: 2},
+							{item: "twang 2" , weight: 4},
+							{item: "twang 3" , weight: 4},
+                        				{ item: "swell -1", weight: 4 },
+							{item: "swell 1" , weight: 4},
+							{item: "swell 2" , weight: 2},
+							{item: "swell 3" , weight: 1},
+                        				{ item: "tremolo0", weight: 1 },
+							{item: "tremolo1", weight: 1},
+							{item: "tremolo2", weight: 1},
+							{item: "tremolo3", weight: 1},
+							{item: "tremolo4", weight: 1},
+							{item: "tremolo5", weight: 1},
+							{item: "tremolo6", weight: 1},
+                      					{ item: "decay -1", weight: 1 },
+							{item: "decay 1" , weight: 1},
+							{item: "decay 2" , weight: 2},
+							{item: "decay 3" , weight: 2},
+                     					{ item: "wibble-1", weight: 2 },
+                        				{ item: "wibble 1", weight: 4 },
+                        				{ item: "wibble 2", weight: 4 },
+                        				{ item: "wibble 3", weight: 4 },
+                        				{ item: "linear-2", weight: 1 },
+                        				{ item: "linear-1", weight: 1 },
+                        				{ item: "linear 1", weight: 2 },
+                        				{ item: "linear 2", weight: 3 },
+                       					{ item: "linear 3", weight: 2 },
+                        				{ item: "rise -2", weight: 4 },
+                        				{ item: "rise -1", weight: 4 },
+                        				{ item: "rise 1", weight: 3 },
+                        				{ item: "rise 2", weight: 2 },
+                        				{ item: "rise 3", weight: 1 },
+                        ])].index);
+                    }
+                    if (instrument.envelopeCount < Config.maxEnvelopeCount && Math.random() < 0.3) {
+                        instrument.addEnvelope(Config.instrumentAutomationTargets.dictionary["supersawShape"].index, 0, Config.envelopes.dictionary[selectWeightedRandom([
+							{item: "punch"   , weight: 6},
+                        				{ item: "flare -1", weight: 1 },
+							{item: "flare 1" , weight: 2},
+							{item: "flare 2" , weight: 4},
+							{item: "flare 3" , weight: 2},
+                      					{ item: "twang -1", weight: 1 },
+							{item: "twang 1" , weight: 2},
+							{item: "twang 2" , weight: 4},
+							{item: "twang 3" , weight: 4},
+                        				{ item: "swell -1", weight: 4 },
+							{item: "swell 1" , weight: 4},
+							{item: "swell 2" , weight: 2},
+							{item: "swell 3" , weight: 1},
+                        				{ item: "tremolo0", weight: 1 },
+							{item: "tremolo1", weight: 1},
+							{item: "tremolo2", weight: 1},
+							{item: "tremolo3", weight: 1},
+							{item: "tremolo4", weight: 1},
+							{item: "tremolo5", weight: 1},
+							{item: "tremolo6", weight: 1},
+                      					{ item: "decay -1", weight: 1 },
+							{item: "decay 1" , weight: 1},
+							{item: "decay 2" , weight: 2},
+							{item: "decay 3" , weight: 2},
+                     					{ item: "wibble-1", weight: 2 },
+                        				{ item: "wibble 1", weight: 4 },
+                        				{ item: "wibble 2", weight: 4 },
+                        				{ item: "wibble 3", weight: 4 },
+                        				{ item: "linear-2", weight: 1 },
+                        				{ item: "linear-1", weight: 1 },
+                        				{ item: "linear 1", weight: 2 },
+                        				{ item: "linear 2", weight: 3 },
+                       					{ item: "linear 3", weight: 2 },
+                        				{ item: "rise -2", weight: 4 },
+                        				{ item: "rise -1", weight: 4 },
+                        				{ item: "rise 1", weight: 3 },
+                        				{ item: "rise 2", weight: 2 },
+                        				{ item: "rise 3", weight: 1 },
+                        ])].index);
+                    }
+                    if (instrument.envelopeCount < Config.maxEnvelopeCount && Math.random() < 0.3) {
+                        instrument.addEnvelope(Config.instrumentAutomationTargets.dictionary["supersawSpread"].index, 0, Config.envelopes.dictionary[selectWeightedRandom([
+							{item: "punch"   , weight: 6},
+                        				{ item: "flare -1", weight: 1 },
+							{item: "flare 1" , weight: 2},
+							{item: "flare 2" , weight: 4},
+							{item: "flare 3" , weight: 2},
+                      					{ item: "twang -1", weight: 1 },
+							{item: "twang 1" , weight: 2},
+							{item: "twang 2" , weight: 4},
+							{item: "twang 3" , weight: 4},
+                        	{ item: "swell -1", weight: 4 },
+							{item: "swell 1" , weight: 4},
+							{item: "swell 2" , weight: 2},
+							{item: "swell 3" , weight: 1},
+                        	{ item: "tremolo0", weight: 1 },
+							{item: "tremolo1", weight: 1},
+							{item: "tremolo2", weight: 1},
+							{item: "tremolo3", weight: 1},
+							{item: "tremolo4", weight: 1},
+							{item: "tremolo5", weight: 1},
+							{item: "tremolo6", weight: 1},
+                      		{ item: "decay -1", weight: 1 },
+							{item: "decay 1" , weight: 1},
+							{item: "decay 2" , weight: 2},
+							{item: "decay 3" , weight: 2},
+                     		{ item: "wibble-1", weight: 2 },
+                        	{ item: "wibble 1", weight: 4 },
+                        	{ item: "wibble 2", weight: 4 },
+                        	{ item: "wibble 3", weight: 4 },
+                        	{ item: "linear-2", weight: 1 },
+                        	{ item: "linear-1", weight: 1 },
+                        	{ item: "linear 1", weight: 2 },
+                        	{ item: "linear 2", weight: 3 },
+                       		{ item: "linear 3", weight: 2 },
+                        	{ item: "rise -2", weight: 4 },
+                        	{ item: "rise -1", weight: 4 },
+                        	{ item: "rise 1", weight: 3 },
+                        	{ item: "rise 2", weight: 2 },
+                        	{ item: "rise 3", weight: 1 },
+                        ])].index);
+                    }
+                } break;
 				case InstrumentType.pickedString:
                 case InstrumentType.harmonics: {
                     if (type == InstrumentType.pickedString) {
@@ -1919,6 +2098,31 @@ export class ChangePulseWidth extends ChangeInstrumentSlider {
         doc.notifier.changed();
         if (oldValue != newValue) this._didSomething();
     }
+}
+
+export class ChangeSupersawDynamism extends ChangeInstrumentSlider {
+	constructor(doc: SongDocument, oldValue: number, newValue: number) {
+		super(doc);
+		this._instrument.supersawDynamism = newValue;
+		doc.notifier.changed();
+		if (oldValue != newValue) this._didSomething();
+	}
+}
+export class ChangeSupersawSpread extends ChangeInstrumentSlider {
+	constructor(doc: SongDocument, oldValue: number, newValue: number) {
+		super(doc);
+		this._instrument.supersawSpread = newValue;
+		doc.notifier.changed();
+		if (oldValue != newValue) this._didSomething();
+	}
+}
+export class ChangeSupersawShape extends ChangeInstrumentSlider {
+	constructor(doc: SongDocument, oldValue: number, newValue: number) {
+		super(doc);
+		this._instrument.supersawShape = newValue;
+		doc.notifier.changed();
+		if (oldValue != newValue) this._didSomething();
+	}
 }
 
 export class ChangeDecimalOffset extends ChangeInstrumentSlider {

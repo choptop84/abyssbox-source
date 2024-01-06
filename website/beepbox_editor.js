@@ -22,7 +22,7 @@ var beepbox = (function (exports) {
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
     */
-    const TypePresets = ["chip", "FM", "noise", "spectrum", "drumset", "harmonics", "pulse width", "picked string", "chip (custom)", "mod", "FM (6-op)"];
+    const TypePresets = ["chip", "FM", "noise", "spectrum", "drumset", "harmonics", "pulse width", "picked string", "chip (custom)", "mod", "FM (6-op)", "supersaw"];
     function getSampleLoadingStatusName(status) {
         switch (status) {
             case 0: return "loading";
@@ -492,7 +492,7 @@ var beepbox = (function (exports) {
         { name: "÷12 (twelfth notes)", stepsPerBeat: 12, roundUpThresholds: null },
         { name: "freehand", stepsPerBeat: 24, roundUpThresholds: null },
     ]);
-    Config.instrumentTypeNames = ["chip", "FM", "noise", "spectrum", "drumset", "harmonics", "PWM", "Picked String", "custom chip", "mod", "FM6op"];
+    Config.instrumentTypeNames = ["chip", "FM", "noise", "spectrum", "drumset", "harmonics", "PWM", "Picked String", "custom chip", "mod", "FM6op", "supersaw"];
     Config.instrumentTypeHasSpecialInterval = [true, true, false, false, false, true, false, false, false, false];
     Config.chipBaseExpression = 0.03375;
     Config.fmBaseExpression = 0.03;
@@ -501,6 +501,7 @@ var beepbox = (function (exports) {
     Config.drumsetBaseExpression = 0.45;
     Config.harmonicsBaseExpression = 0.025;
     Config.pwmBaseExpression = 0.04725;
+    Config.supersawBaseExpression = 0.061425;
     Config.pickedStringBaseExpression = 0.025;
     Config.distortionBaseVolume = 0.011;
     Config.bitcrusherBaseVolume = 0.010;
@@ -927,6 +928,10 @@ var beepbox = (function (exports) {
     Config.harmonicsWavelength = 1 << 11;
     Config.pulseWidthRange = 50;
     Config.pulseWidthStepPower = 0.5;
+    Config.supersawVoiceCount = 7;
+    Config.supersawDynamismMax = 6;
+    Config.supersawSpreadMax = 12;
+    Config.supersawShapeMax = 6;
     Config.pitchChannelCountMin = 1;
     Config.pitchChannelCountMax = 60;
     Config.noiseChannelCountMin = 0;
@@ -978,6 +983,9 @@ var beepbox = (function (exports) {
         { name: "noteFilterAllFreqs", computeIndex: 1, displayName: "n. filter freqs", interleave: false, isFilter: true, maxCount: 1, effect: 5, compatibleInstruments: null },
         { name: "noteFilterFreq", computeIndex: 21, displayName: "n. filter # freq", interleave: false, isFilter: true, maxCount: Config.filterMaxPoints, effect: 5, compatibleInstruments: null },
         { name: "decimalOffset", computeIndex: 37, displayName: "decimal offset", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [6] },
+        { name: "supersawDynamism", computeIndex: 38, displayName: "dynamism", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [11] },
+        { name: "supersawSpread", computeIndex: 39, displayName: "spread", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [11] },
+        { name: "supersawShape", computeIndex: 40, displayName: "saw↔pulse", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [11] },
     ]);
     Config.operatorWaves = toNameMap([
         { name: "sine", samples: Config.sineWave },
@@ -1473,6 +1481,7 @@ var beepbox = (function (exports) {
                 { name: TypePresets[2], customType: 2 },
                 { name: TypePresets[3], customType: 3 },
                 { name: TypePresets[4], customType: 4 },
+                { name: TypePresets[11], customType: 11 },
                 { name: TypePresets[5], customType: 5 },
                 { name: TypePresets[6], customType: 6 },
                 { name: TypePresets[7], customType: 7 },
@@ -12635,6 +12644,9 @@ li.select2-results__option[role=group] > strong:hover {
             this.clicklessTransition = false;
             this.aliases = false;
             this.pulseWidth = Config.pulseWidthRange;
+            this.supersawDynamism = Config.supersawDynamismMax;
+            this.supersawSpread = Math.ceil(Config.supersawSpreadMax / 2.0);
+            this.supersawShape = 0;
             this.decimalOffset = 0;
             this.stringSustain = 10;
             this.distortion = 0;
@@ -12839,6 +12851,13 @@ li.select2-results__option[role=group] > strong:hover {
                         this.invalidModulators[mod] = false;
                         this.modFilterTypes[mod] = 0;
                     }
+                    break;
+                case 11:
+                    this.chord = Config.chords.dictionary["arpeggio"].index;
+                    this.supersawDynamism = Config.supersawDynamismMax;
+                    this.supersawSpread = Math.ceil(Config.supersawSpreadMax / 2.0);
+                    this.supersawShape = 0;
+                    this.pulseWidth = Config.pulseWidthRange - 1;
                     break;
                 default:
                     throw new Error("Unrecognized instrument type: " + type);
@@ -13074,6 +13093,12 @@ li.select2-results__option[role=group] > strong:hover {
             else if (this.type == 6) {
                 instrumentObject["pulseWidth"] = this.pulseWidth;
                 instrumentObject["decimalOffset"] = this.decimalOffset;
+            }
+            else if (this.type == 11) {
+                instrumentObject["pulseWidth"] = Math.round(getPulseWidthRatio(this.pulseWidth) * 100 * 100000) / 100000;
+                instrumentObject["dynamism"] = Math.round(100 * this.supersawDynamism / Config.supersawDynamismMax);
+                instrumentObject["spread"] = Math.round(100 * this.supersawSpread / Config.supersawSpreadMax);
+                instrumentObject["shape"] = Math.round(100 * this.supersawShape / Config.supersawShapeMax);
             }
             else if (this.type == 7) {
                 instrumentObject["unison"] = this.unison == Config.unisons.length ? "custom" : Config.unisons[this.unison].name;
@@ -13361,6 +13386,24 @@ li.select2-results__option[role=group] > strong:hover {
             }
             else {
                 this.pulseWidth = Config.pulseWidthRange;
+            }
+            if (instrumentObject["dynamism"] != undefined) {
+                this.supersawDynamism = clamp(0, Config.supersawDynamismMax + 1, Math.round(Config.supersawDynamismMax * (instrumentObject["dynamism"] | 0) / 100));
+            }
+            else {
+                this.supersawDynamism = Config.supersawDynamismMax;
+            }
+            if (instrumentObject["spread"] != undefined) {
+                this.supersawSpread = clamp(0, Config.supersawSpreadMax + 1, Math.round(Config.supersawSpreadMax * (instrumentObject["spread"] | 0) / 100));
+            }
+            else {
+                this.supersawSpread = Math.ceil(Config.supersawSpreadMax / 2.0);
+            }
+            if (instrumentObject["shape"] != undefined) {
+                this.supersawShape = clamp(0, Config.supersawShapeMax + 1, Math.round(Config.supersawShapeMax * (instrumentObject["shape"] | 0) / 100));
+            }
+            else {
+                this.supersawShape = 0;
             }
             if (instrumentObject["decimalOffset"] != undefined) {
                 this.decimalOffset = clamp(0, 99 + 1, Math.round(instrumentObject["decimalOffset"]));
@@ -14249,6 +14292,10 @@ li.select2-results__option[role=group] > strong:hover {
                         buffer.push(87, base64IntToCharCode[instrument.pulseWidth]);
                         buffer.push(base64IntToCharCode[instrument.decimalOffset >> 6], base64IntToCharCode[instrument.decimalOffset & 0x3f]);
                     }
+                    else if (instrument.type == 11) {
+                        buffer.push(120, base64IntToCharCode[instrument.supersawDynamism], base64IntToCharCode[instrument.supersawSpread], base64IntToCharCode[instrument.supersawShape]);
+                        buffer.push(87, base64IntToCharCode[instrument.pulseWidth]);
+                    }
                     else if (instrument.type == 7) {
                         buffer.push(104, base64IntToCharCode[instrument.unison]);
                         if (instrument.unison == Config.unisons.length)
@@ -14891,7 +14938,7 @@ li.select2-results__option[role=group] > strong:hover {
                             }
                             validateRange(0, this.channels.length - 1, instrumentChannelIterator);
                             const instrument = this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator];
-                            let instrumentType = validateRange(0, 11 - 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                            let instrumentType = validateRange(0, 12 - 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                             if ((fromJummBox && beforeFive) || (beforeFour && fromGoldBox)) {
                                 if (instrumentType == 7) {
                                     instrumentType = 8;
@@ -15241,6 +15288,14 @@ li.select2-results__option[role=group] > strong:hover {
                                 const instrument = this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator];
                                 instrument.decimalOffset = clamp(0, 99 + 1, (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << 6) + base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                             }
+                        }
+                        break;
+                    case 120:
+                        {
+                            const instrument = this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator];
+                            instrument.supersawDynamism = clamp(0, Config.supersawDynamismMax + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                            instrument.supersawSpread = clamp(0, Config.supersawSpreadMax + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                            instrument.supersawShape = clamp(0, Config.supersawShapeMax + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                         }
                         break;
                     case 73:
@@ -17461,7 +17516,7 @@ li.select2-results__option[role=group] > strong:hover {
             this._modifiedEnvelopeIndices = [];
             this._modifiedEnvelopeCount = 0;
             this.lowpassCutoffDecayVolumeCompensation = 1.0;
-            const length = 38;
+            const length = 41;
             for (let i = 0; i < length; i++) {
                 this.envelopeStarts[i] = 1.0;
                 this.envelopeEnds[i] = 1.0;
@@ -17721,6 +17776,16 @@ li.select2-results__option[role=group] > strong:hover {
             this.pulseWidth = 0.0;
             this.pulseWidthDelta = 0.0;
             this.decimalOffset = 0.0;
+            this.supersawDynamism = 0.0;
+            this.supersawDynamismDelta = 0.0;
+            this.supersawUnisonDetunes = [];
+            this.supersawShape = 0.0;
+            this.supersawShapeDelta = 0.0;
+            this.supersawDelayLength = 0.0;
+            this.supersawDelayLengthDelta = 0.0;
+            this.supersawDelayLine = null;
+            this.supersawDelayIndex = -1;
+            this.supersawPrevPhaseDelta = null;
             this.pickedStrings = [];
             this.noteFilters = [];
             this.noteFilterCount = 0;
@@ -17764,12 +17829,14 @@ li.select2-results__option[role=group] > strong:hover {
             this.initialNoteFilterInput1 = 0.0;
             this.initialNoteFilterInput2 = 0.0;
             this.liveInputSamplesHeld = 0;
+            this.supersawDelayIndex = -1;
             for (const pickedString of this.pickedStrings) {
                 pickedString.reset();
             }
             this.envelopeComputer.reset();
             this.prevVibrato = null;
             this.prevStringDecay = null;
+            this.supersawPrevPhaseDelta = null;
             this.drumsetPitch = null;
         }
     }
@@ -18624,6 +18691,7 @@ li.select2-results__option[role=group] > strong:hover {
                     const str = Config.modulators[instrument.modulators[mod]].name;
                     if (!((Config.modulators[instrument.modulators[mod]].associatedEffect != 12 && !(tgtInstrument.effects & (1 << Config.modulators[instrument.modulators[mod]].associatedEffect)))
                         || ((tgtInstrument.type != 1 && tgtInstrument.type != 10) && (str == "fm slider 1" || str == "fm slider 2" || str == "fm slider 3" || str == "fm slider 4" || str == "fm feedback"))
+                        || ((tgtInstrument.type != 6 && tgtInstrument.type != 11) && (str == "pulse width"))
                         || tgtInstrument.type != 10 && (str == "fm slider 5" || str == "fm slider 6")
                         || (tgtInstrument.type != 6 && (str == "pulse width"))
                         || (!tgtInstrument.getChord().arpeggiates && (str == "arp speed" || str == "reset arp"))
@@ -20133,6 +20201,9 @@ li.select2-results__option[role=group] > strong:hover {
             else if (instrument.type == 6) {
                 baseExpression = Config.pwmBaseExpression;
             }
+            else if (instrument.type == 11) {
+                baseExpression = Config.supersawBaseExpression;
+            }
             else if (instrument.type == 7) {
                 baseExpression = Config.pickedStringBaseExpression;
             }
@@ -20568,7 +20639,8 @@ li.select2-results__option[role=group] > strong:hover {
                 tone.feedbackDelta = (feedbackEnd - feedbackStart) / roundedSamplesPerTick;
             }
             else {
-                const basePhaseDeltaScale = Math.pow(2.0, ((intervalEnd - intervalStart) * intervalScale / 12.0) / roundedSamplesPerTick);
+                const freqEndRatio = Math.pow(2.0, (intervalEnd - intervalStart) * intervalScale / 12.0);
+                const basePhaseDeltaScale = Math.pow(freqEndRatio, 1.0 / roundedSamplesPerTick);
                 let pitch = tone.pitches[0];
                 if (tone.pitchCount > 1 && (chord.arpeggiates || chord.customInterval)) {
                     const arpeggio = Math.floor(instrument.arpTime / Config.ticksPerArpeggio);
@@ -20653,8 +20725,128 @@ li.select2-results__option[role=group] > strong:hover {
                     tone.phaseDeltas[0] = startFreq * sampleTime;
                     tone.phaseDeltaScales[0] = basePhaseDeltaScale;
                 }
-                let expressionStart = settingsExpressionMult * fadeExpressionStart * chordExpressionStart * pitchExpressionStart * envelopeStarts[0];
-                let expressionEnd = settingsExpressionMult * fadeExpressionEnd * chordExpressionEnd * pitchExpressionEnd * envelopeEnds[0];
+                let supersawExpressionStart = 1.0;
+                let supersawExpressionEnd = 1.0;
+                if (instrument.type == 11) {
+                    const minFirstVoiceAmplitude = 1.0 / Math.sqrt(Config.supersawVoiceCount);
+                    let baseDynamismSliderStart = instrument.supersawDynamism / Config.supersawDynamismMax;
+                    let baseDynamismSliderEnd = instrument.supersawDynamism / Config.supersawDynamismMax;
+                    if (this.isModActive(Config.modulators.dictionary["dynamism"].index, channelIndex, tone.instrumentIndex)) {
+                        baseDynamismSliderStart = Math.max(0.0, this.getModValue(Config.modulators.dictionary["dynamism"].index, channelIndex, tone.instrumentIndex, false) / Config.supersawDynamismMax);
+                        baseDynamismSliderEnd = Math.max(0.0, this.getModValue(Config.modulators.dictionary["dynamism"].index, channelIndex, tone.instrumentIndex, true) / Config.supersawDynamismMax);
+                    }
+                    const curvedDynamismStart = 1.0 - Math.pow(Math.max(0.0, 1.0 - baseDynamismSliderStart * envelopeStarts[38]), 0.2);
+                    const curvedDynamismEnd = 1.0 - Math.pow(Math.max(0.0, 1.0 - baseDynamismSliderEnd * envelopeEnds[38]), 0.2);
+                    const firstVoiceAmplitudeStart = Math.pow(2.0, Math.log2(minFirstVoiceAmplitude) * curvedDynamismStart);
+                    const firstVoiceAmplitudeEnd = Math.pow(2.0, Math.log2(minFirstVoiceAmplitude) * curvedDynamismEnd);
+                    let dynamismStart = Math.sqrt((1.0 / Math.pow(firstVoiceAmplitudeStart, 2.0) - 1.0) / (Config.supersawVoiceCount - 1.0));
+                    let dynamismEnd = Math.sqrt((1.0 / Math.pow(firstVoiceAmplitudeEnd, 2.0) - 1.0) / (Config.supersawVoiceCount - 1.0));
+                    tone.supersawDynamism = dynamismStart;
+                    tone.supersawDynamismDelta = (dynamismEnd - dynamismStart) / roundedSamplesPerTick;
+                    const initializeSupersaw = (tone.supersawDelayIndex == -1);
+                    if (initializeSupersaw) {
+                        let accumulator = 0.0;
+                        for (let i = 0; i < Config.supersawVoiceCount; i++) {
+                            tone.phases[i] = accumulator;
+                            accumulator += -Math.log(Math.random());
+                        }
+                        const amplitudeSum = 1.0 + (Config.supersawVoiceCount - 1.0) * dynamismStart;
+                        const slope = amplitudeSum;
+                        let sample = 0.0;
+                        for (let i = 0; i < Config.supersawVoiceCount; i++) {
+                            const amplitude = (i == 0) ? 1.0 : dynamismStart;
+                            const normalizedPhase = tone.phases[i] / accumulator;
+                            tone.phases[i] = normalizedPhase;
+                            sample += (normalizedPhase - 0.5) * amplitude;
+                        }
+                        let zeroCrossingPhase = 1.0;
+                        let prevDrop = 0.0;
+                        for (let i = Config.supersawVoiceCount - 1; i >= 0; i--) {
+                            const nextDrop = 1.0 - tone.phases[i];
+                            const phaseDelta = nextDrop - prevDrop;
+                            if (sample < 0.0) {
+                                const distanceToZeroCrossing = -sample / slope;
+                                if (distanceToZeroCrossing < phaseDelta) {
+                                    zeroCrossingPhase = prevDrop + distanceToZeroCrossing;
+                                    break;
+                                }
+                            }
+                            const amplitude = (i == 0) ? 1.0 : dynamismStart;
+                            sample += phaseDelta * slope - amplitude;
+                            prevDrop = nextDrop;
+                        }
+                        for (let i = 0; i < Config.supersawVoiceCount; i++) {
+                            tone.phases[i] += zeroCrossingPhase;
+                        }
+                        for (let i = 1; i < Config.supersawVoiceCount - 1; i++) {
+                            const swappedIndex = i + Math.floor(Math.random() * (Config.supersawVoiceCount - i));
+                            const temp = tone.phases[i];
+                            tone.phases[i] = tone.phases[swappedIndex];
+                            tone.phases[swappedIndex] = temp;
+                        }
+                    }
+                    const baseSpreadSlider = instrument.supersawSpread / Config.supersawSpreadMax;
+                    let spreadSliderStart = Math.max(0.0, baseSpreadSlider * envelopeStarts[39]);
+                    let spreadSliderEnd = Math.max(0.0, baseSpreadSlider * envelopeEnds[39]);
+                    if (this.isModActive(Config.modulators.dictionary["spread"].index, channelIndex, tone.instrumentIndex)) {
+                        spreadSliderStart = Math.max(0.0, this.getModValue(Config.modulators.dictionary["spread"].index, channelIndex, tone.instrumentIndex, false) / Config.supersawSpreadMax);
+                        spreadSliderEnd = Math.max(0.0, this.getModValue(Config.modulators.dictionary["spread"].index, channelIndex, tone.instrumentIndex, true) / Config.supersawSpreadMax);
+                    }
+                    const averageSpreadSlider = (spreadSliderStart + spreadSliderEnd) * 0.5;
+                    const curvedSpread = Math.pow(1.0 - Math.sqrt(Math.max(0.0, 1.0 - averageSpreadSlider)), 1.75);
+                    for (let i = 0; i < Config.supersawVoiceCount; i++) {
+                        const offset = (i == 0) ? 0.0 : Math.pow((((i + 1) >> 1) - 0.5 + 0.025 * ((i & 2) - 1)) / (Config.supersawVoiceCount >> 1), 1.1) * ((i & 1) * 2 - 1);
+                        tone.supersawUnisonDetunes[i] = Math.pow(2.0, curvedSpread * offset / 12.0);
+                    }
+                    const baseShape = instrument.supersawShape / Config.supersawShapeMax;
+                    let shapeStart = baseShape * envelopeStarts[40];
+                    let shapeEnd = baseShape * envelopeEnds[40];
+                    if (this.isModActive(Config.modulators.dictionary["shape"].index, channelIndex, tone.instrumentIndex)) {
+                        shapeStart = Math.max(0.0, this.getModValue(Config.modulators.dictionary["shape"].index, channelIndex, tone.instrumentIndex, false) / Config.supersawShapeMax);
+                        shapeEnd = Math.max(0.0, this.getModValue(Config.modulators.dictionary["shape"].index, channelIndex, tone.instrumentIndex, true) / Config.supersawShapeMax);
+                    }
+                    tone.supersawShape = shapeStart;
+                    tone.supersawShapeDelta = (shapeEnd - shapeStart) / roundedSamplesPerTick;
+                    const basePulseWidth = getPulseWidthRatio(instrument.pulseWidth);
+                    let pulseWidthModStart = basePulseWidth;
+                    let pulseWidthModEnd = basePulseWidth;
+                    if (this.isModActive(Config.modulators.dictionary["pulse width"].index, channelIndex, tone.instrumentIndex)) {
+                        pulseWidthModStart = Math.max(0.0, this.getModValue(Config.modulators.dictionary["pulse width"].index, channelIndex, tone.instrumentIndex, false) / (Config.pulseWidthRange * 2));
+                        pulseWidthModEnd = Math.max(0.0, this.getModValue(Config.modulators.dictionary["pulse width"].index, channelIndex, tone.instrumentIndex, true) / (Config.pulseWidthRange * 2));
+                    }
+                    const pulseWidthStart = pulseWidthModStart * envelopeStarts[2];
+                    const pulseWidthEnd = pulseWidthModEnd * envelopeEnds[2];
+                    const phaseDeltaStart = (tone.supersawPrevPhaseDelta != null) ? tone.supersawPrevPhaseDelta : startFreq * sampleTime;
+                    const phaseDeltaEnd = startFreq * sampleTime * freqEndRatio;
+                    tone.supersawPrevPhaseDelta = phaseDeltaEnd;
+                    const delayLengthStart = pulseWidthStart / phaseDeltaStart;
+                    const delayLengthEnd = pulseWidthEnd / phaseDeltaEnd;
+                    tone.supersawDelayLength = delayLengthStart;
+                    tone.supersawDelayLengthDelta = (delayLengthEnd - delayLengthStart) / roundedSamplesPerTick;
+                    const minBufferLength = Math.ceil(Math.max(delayLengthStart, delayLengthEnd)) + 2;
+                    if (tone.supersawDelayLine == null || tone.supersawDelayLine.length <= minBufferLength) {
+                        const likelyMaximumLength = Math.ceil(0.5 * this.samplesPerSecond / Instrument.frequencyFromPitch(24));
+                        const newDelayLine = new Float32Array(Synth.fittingPowerOfTwo(Math.max(likelyMaximumLength, minBufferLength)));
+                        if (!initializeSupersaw && tone.supersawDelayLine != null) {
+                            const oldDelayBufferMask = (tone.supersawDelayLine.length - 1) >> 0;
+                            const startCopyingFromIndex = tone.supersawDelayIndex;
+                            for (let i = 0; i < tone.supersawDelayLine.length; i++) {
+                                newDelayLine[i] = tone.supersawDelayLine[(startCopyingFromIndex + i) & oldDelayBufferMask];
+                            }
+                        }
+                        tone.supersawDelayLine = newDelayLine;
+                        tone.supersawDelayIndex = tone.supersawDelayLine.length;
+                    }
+                    else if (initializeSupersaw) {
+                        tone.supersawDelayLine.fill(0.0);
+                        tone.supersawDelayIndex = tone.supersawDelayLine.length;
+                    }
+                    const pulseExpressionRatio = Config.pwmBaseExpression / Config.supersawBaseExpression;
+                    supersawExpressionStart *= (1.0 + (pulseExpressionRatio - 1.0) * shapeStart) / Math.sqrt(1.0 + (Config.supersawVoiceCount - 1.0) * dynamismStart * dynamismStart);
+                    supersawExpressionEnd *= (1.0 + (pulseExpressionRatio - 1.0) * shapeEnd) / Math.sqrt(1.0 + (Config.supersawVoiceCount - 1.0) * dynamismEnd * dynamismEnd);
+                }
+                let expressionStart = settingsExpressionMult * fadeExpressionStart * chordExpressionStart * pitchExpressionStart * envelopeStarts[0] * supersawExpressionStart;
+                let expressionEnd = settingsExpressionMult * fadeExpressionEnd * chordExpressionEnd * pitchExpressionEnd * envelopeEnds[0] * supersawExpressionEnd;
                 if (this.isModActive(Config.modulators.dictionary["note volume"].index, channelIndex, tone.instrumentIndex)) {
                     const startVal = this.getModValue(Config.modulators.dictionary["note volume"].index, channelIndex, tone.instrumentIndex, false);
                     const endVal = this.getModValue(Config.modulators.dictionary["note volume"].index, channelIndex, tone.instrumentIndex, true);
@@ -20762,6 +20954,9 @@ li.select2-results__option[role=group] > strong:hover {
             }
             else if (instrument.type == 6) {
                 return Synth.pulseWidthSynth;
+            }
+            else if (instrument.type == 11) {
+                return Synth.supersawSynth;
             }
             else if (instrument.type == 7) {
                 return Synth.pickedStringSynth;
@@ -22020,6 +22215,88 @@ li.select2-results__option[role=group] > strong:hover {
             tone.initialNoteFilterInput1 = initialFilterInput1;
             tone.initialNoteFilterInput2 = initialFilterInput2;
         }
+        static supersawSynth(synth, bufferIndex, runLength, tone, instrumentState) {
+            const data = synth.tempMonoInstrumentSampleBuffer;
+            const voiceCount = Config.supersawVoiceCount | 0;
+            let phaseDelta = tone.phaseDeltas[0];
+            const phaseDeltaScale = +tone.phaseDeltaScales[0];
+            let expression = +tone.expression;
+            const expressionDelta = +tone.expressionDelta;
+            let phases = tone.phases;
+            let dynamism = +tone.supersawDynamism;
+            const dynamismDelta = +tone.supersawDynamismDelta;
+            const unisonDetunes = tone.supersawUnisonDetunes;
+            let shape = +tone.supersawShape;
+            const shapeDelta = +tone.supersawShapeDelta;
+            let delayLength = +tone.supersawDelayLength;
+            const delayLengthDelta = +tone.supersawDelayLengthDelta;
+            const delayLine = tone.supersawDelayLine;
+            const delayBufferMask = (delayLine.length - 1) >> 0;
+            let delayIndex = tone.supersawDelayIndex | 0;
+            delayIndex = (delayIndex & delayBufferMask) + delayLine.length;
+            const filters = tone.noteFilters;
+            const filterCount = tone.noteFilterCount | 0;
+            let initialFilterInput1 = +tone.initialNoteFilterInput1;
+            let initialFilterInput2 = +tone.initialNoteFilterInput2;
+            const applyFilters = Synth.applyFilters;
+            const stopIndex = bufferIndex + runLength;
+            for (let sampleIndex = bufferIndex; sampleIndex < stopIndex; sampleIndex++) {
+                let phase = (phases[0] + phaseDelta) % 1.0;
+                let supersawSample = phase - 0.5 * (1.0 + (voiceCount - 1.0) * dynamism);
+                if (phase < phaseDelta) {
+                    var t = phase / phaseDelta;
+                    supersawSample -= (t + t - t * t - 1) * 0.5;
+                }
+                else if (phase > 1.0 - phaseDelta) {
+                    var t = (phase - 1.0) / phaseDelta;
+                    supersawSample -= (t + t + t * t + 1) * 0.5;
+                }
+                phases[0] = phase;
+                for (let i = 1; i < voiceCount; i++) {
+                    const detunedPhaseDelta = phaseDelta * unisonDetunes[i];
+                    let phase = (phases[i] + detunedPhaseDelta) % 1.0;
+                    supersawSample += phase * dynamism;
+                    if (phase < detunedPhaseDelta) {
+                        const t = phase / detunedPhaseDelta;
+                        supersawSample -= (t + t - t * t - 1) * 0.5 * dynamism;
+                    }
+                    else if (phase > 1.0 - detunedPhaseDelta) {
+                        const t = (phase - 1.0) / detunedPhaseDelta;
+                        supersawSample -= (t + t + t * t + 1) * 0.5 * dynamism;
+                    }
+                    phases[i] = phase;
+                }
+                delayLine[delayIndex & delayBufferMask] = supersawSample;
+                const delaySampleTime = delayIndex - delayLength;
+                const lowerIndex = delaySampleTime | 0;
+                const upperIndex = lowerIndex + 1;
+                const delayRatio = delaySampleTime - lowerIndex;
+                const prevDelaySample = delayLine[lowerIndex & delayBufferMask];
+                const nextDelaySample = delayLine[upperIndex & delayBufferMask];
+                const delaySample = prevDelaySample + (nextDelaySample - prevDelaySample) * delayRatio;
+                delayIndex++;
+                const inputSample = supersawSample - delaySample * shape;
+                const sample = applyFilters(inputSample, initialFilterInput1, initialFilterInput2, filterCount, filters);
+                initialFilterInput2 = initialFilterInput1;
+                initialFilterInput1 = inputSample;
+                phaseDelta *= phaseDeltaScale;
+                dynamism += dynamismDelta;
+                shape += shapeDelta;
+                delayLength += delayLengthDelta;
+                const output = sample * expression;
+                expression += expressionDelta;
+                data[sampleIndex] += output;
+            }
+            tone.phaseDeltas[0] = phaseDelta;
+            tone.expression = expression;
+            tone.supersawDynamism = dynamism;
+            tone.supersawShape = shape;
+            tone.supersawDelayLength = delayLength;
+            tone.supersawDelayIndex = delayIndex;
+            synth.sanitizeFilters(filters);
+            tone.initialNoteFilterInput1 = initialFilterInput1;
+            tone.initialNoteFilterInput2 = initialFilterInput2;
+        }
         static noiseSynth(synth, bufferIndex, runLength, tone, instrumentState) {
             const data = synth.tempMonoInstrumentSampleBuffer;
             const wave = instrumentState.wave;
@@ -23271,6 +23548,7 @@ li.select2-results__option[role=group] > strong:hover {
                 const type = selectWeightedRandom([
                     { item: 0, weight: 4 },
                     { item: 6, weight: 4 },
+                    { item: 11, weight: 5 },
                     { item: 5, weight: 5 },
                     { item: 7, weight: 5 },
                     { item: 3, weight: 1 },
@@ -23449,6 +23727,184 @@ li.select2-results__option[role=group] > strong:hover {
                             instrument.decimalOffset = 0;
                             if (Math.random() < 0.6) {
                                 instrument.addEnvelope(Config.instrumentAutomationTargets.dictionary["pulseWidth"].index, 0, Config.envelopes.dictionary[selectWeightedRandom([
+                                    { item: "punch", weight: 6 },
+                                    { item: "flare -1", weight: 1 },
+                                    { item: "flare 1", weight: 2 },
+                                    { item: "flare 2", weight: 4 },
+                                    { item: "flare 3", weight: 2 },
+                                    { item: "twang -1", weight: 1 },
+                                    { item: "twang 1", weight: 2 },
+                                    { item: "twang 2", weight: 4 },
+                                    { item: "twang 3", weight: 4 },
+                                    { item: "swell -1", weight: 4 },
+                                    { item: "swell 1", weight: 4 },
+                                    { item: "swell 2", weight: 2 },
+                                    { item: "swell 3", weight: 1 },
+                                    { item: "tremolo0", weight: 1 },
+                                    { item: "tremolo1", weight: 1 },
+                                    { item: "tremolo2", weight: 1 },
+                                    { item: "tremolo3", weight: 1 },
+                                    { item: "tremolo4", weight: 1 },
+                                    { item: "tremolo5", weight: 1 },
+                                    { item: "tremolo6", weight: 1 },
+                                    { item: "decay -1", weight: 1 },
+                                    { item: "decay 1", weight: 1 },
+                                    { item: "decay 2", weight: 2 },
+                                    { item: "decay 3", weight: 2 },
+                                    { item: "wibble-1", weight: 2 },
+                                    { item: "wibble 1", weight: 4 },
+                                    { item: "wibble 2", weight: 4 },
+                                    { item: "wibble 3", weight: 4 },
+                                    { item: "linear-2", weight: 1 },
+                                    { item: "linear-1", weight: 1 },
+                                    { item: "linear 1", weight: 2 },
+                                    { item: "linear 2", weight: 3 },
+                                    { item: "linear 3", weight: 2 },
+                                    { item: "rise -2", weight: 4 },
+                                    { item: "rise -1", weight: 4 },
+                                    { item: "rise 1", weight: 3 },
+                                    { item: "rise 2", weight: 2 },
+                                    { item: "rise 3", weight: 1 },
+                                ])].index);
+                            }
+                        }
+                        break;
+                    case 11:
+                        {
+                            if (type == 11) {
+                                instrument.supersawDynamism = selectCurvedDistribution(0, Config.supersawDynamismMax, Config.supersawDynamismMax, 2);
+                                instrument.supersawSpread = selectCurvedDistribution(0, Config.supersawSpreadMax, Math.ceil(Config.supersawSpreadMax / 3), 4);
+                                instrument.supersawShape = selectCurvedDistribution(0, Config.supersawShapeMax, 0, 4);
+                            }
+                            instrument.pulseWidth = selectCurvedDistribution(0, Config.pulseWidthRange - 1, Config.pulseWidthRange - 1, 2);
+                            if (Math.random() < 0.6) {
+                                instrument.addEnvelope(Config.instrumentAutomationTargets.dictionary["pulseWidth"].index, 0, Config.envelopes.dictionary[selectWeightedRandom([
+                                    { item: "punch", weight: 6 },
+                                    { item: "flare -1", weight: 1 },
+                                    { item: "flare 1", weight: 2 },
+                                    { item: "flare 2", weight: 4 },
+                                    { item: "flare 3", weight: 2 },
+                                    { item: "twang -1", weight: 1 },
+                                    { item: "twang 1", weight: 2 },
+                                    { item: "twang 2", weight: 4 },
+                                    { item: "twang 3", weight: 4 },
+                                    { item: "swell -1", weight: 4 },
+                                    { item: "swell 1", weight: 4 },
+                                    { item: "swell 2", weight: 2 },
+                                    { item: "swell 3", weight: 1 },
+                                    { item: "tremolo0", weight: 1 },
+                                    { item: "tremolo1", weight: 1 },
+                                    { item: "tremolo2", weight: 1 },
+                                    { item: "tremolo3", weight: 1 },
+                                    { item: "tremolo4", weight: 1 },
+                                    { item: "tremolo5", weight: 1 },
+                                    { item: "tremolo6", weight: 1 },
+                                    { item: "decay -1", weight: 1 },
+                                    { item: "decay 1", weight: 1 },
+                                    { item: "decay 2", weight: 2 },
+                                    { item: "decay 3", weight: 2 },
+                                    { item: "wibble-1", weight: 2 },
+                                    { item: "wibble 1", weight: 4 },
+                                    { item: "wibble 2", weight: 4 },
+                                    { item: "wibble 3", weight: 4 },
+                                    { item: "linear-2", weight: 1 },
+                                    { item: "linear-1", weight: 1 },
+                                    { item: "linear 1", weight: 2 },
+                                    { item: "linear 2", weight: 3 },
+                                    { item: "linear 3", weight: 2 },
+                                    { item: "rise -2", weight: 4 },
+                                    { item: "rise -1", weight: 4 },
+                                    { item: "rise 1", weight: 3 },
+                                    { item: "rise 2", weight: 2 },
+                                    { item: "rise 3", weight: 1 },
+                                ])].index);
+                            }
+                            if (instrument.envelopeCount < Config.maxEnvelopeCount && Math.random() < 0.3) {
+                                instrument.addEnvelope(Config.instrumentAutomationTargets.dictionary["supersawDynamism"].index, 0, Config.envelopes.dictionary[selectWeightedRandom([
+                                    { item: "punch", weight: 6 },
+                                    { item: "flare -1", weight: 1 },
+                                    { item: "flare 1", weight: 2 },
+                                    { item: "flare 2", weight: 4 },
+                                    { item: "flare 3", weight: 2 },
+                                    { item: "twang -1", weight: 1 },
+                                    { item: "twang 1", weight: 2 },
+                                    { item: "twang 2", weight: 4 },
+                                    { item: "twang 3", weight: 4 },
+                                    { item: "swell -1", weight: 4 },
+                                    { item: "swell 1", weight: 4 },
+                                    { item: "swell 2", weight: 2 },
+                                    { item: "swell 3", weight: 1 },
+                                    { item: "tremolo0", weight: 1 },
+                                    { item: "tremolo1", weight: 1 },
+                                    { item: "tremolo2", weight: 1 },
+                                    { item: "tremolo3", weight: 1 },
+                                    { item: "tremolo4", weight: 1 },
+                                    { item: "tremolo5", weight: 1 },
+                                    { item: "tremolo6", weight: 1 },
+                                    { item: "decay -1", weight: 1 },
+                                    { item: "decay 1", weight: 1 },
+                                    { item: "decay 2", weight: 2 },
+                                    { item: "decay 3", weight: 2 },
+                                    { item: "wibble-1", weight: 2 },
+                                    { item: "wibble 1", weight: 4 },
+                                    { item: "wibble 2", weight: 4 },
+                                    { item: "wibble 3", weight: 4 },
+                                    { item: "linear-2", weight: 1 },
+                                    { item: "linear-1", weight: 1 },
+                                    { item: "linear 1", weight: 2 },
+                                    { item: "linear 2", weight: 3 },
+                                    { item: "linear 3", weight: 2 },
+                                    { item: "rise -2", weight: 4 },
+                                    { item: "rise -1", weight: 4 },
+                                    { item: "rise 1", weight: 3 },
+                                    { item: "rise 2", weight: 2 },
+                                    { item: "rise 3", weight: 1 },
+                                ])].index);
+                            }
+                            if (instrument.envelopeCount < Config.maxEnvelopeCount && Math.random() < 0.3) {
+                                instrument.addEnvelope(Config.instrumentAutomationTargets.dictionary["supersawShape"].index, 0, Config.envelopes.dictionary[selectWeightedRandom([
+                                    { item: "punch", weight: 6 },
+                                    { item: "flare -1", weight: 1 },
+                                    { item: "flare 1", weight: 2 },
+                                    { item: "flare 2", weight: 4 },
+                                    { item: "flare 3", weight: 2 },
+                                    { item: "twang -1", weight: 1 },
+                                    { item: "twang 1", weight: 2 },
+                                    { item: "twang 2", weight: 4 },
+                                    { item: "twang 3", weight: 4 },
+                                    { item: "swell -1", weight: 4 },
+                                    { item: "swell 1", weight: 4 },
+                                    { item: "swell 2", weight: 2 },
+                                    { item: "swell 3", weight: 1 },
+                                    { item: "tremolo0", weight: 1 },
+                                    { item: "tremolo1", weight: 1 },
+                                    { item: "tremolo2", weight: 1 },
+                                    { item: "tremolo3", weight: 1 },
+                                    { item: "tremolo4", weight: 1 },
+                                    { item: "tremolo5", weight: 1 },
+                                    { item: "tremolo6", weight: 1 },
+                                    { item: "decay -1", weight: 1 },
+                                    { item: "decay 1", weight: 1 },
+                                    { item: "decay 2", weight: 2 },
+                                    { item: "decay 3", weight: 2 },
+                                    { item: "wibble-1", weight: 2 },
+                                    { item: "wibble 1", weight: 4 },
+                                    { item: "wibble 2", weight: 4 },
+                                    { item: "wibble 3", weight: 4 },
+                                    { item: "linear-2", weight: 1 },
+                                    { item: "linear-1", weight: 1 },
+                                    { item: "linear 1", weight: 2 },
+                                    { item: "linear 2", weight: 3 },
+                                    { item: "linear 3", weight: 2 },
+                                    { item: "rise -2", weight: 4 },
+                                    { item: "rise -1", weight: 4 },
+                                    { item: "rise 1", weight: 3 },
+                                    { item: "rise 2", weight: 2 },
+                                    { item: "rise 3", weight: 1 },
+                                ])].index);
+                            }
+                            if (instrument.envelopeCount < Config.maxEnvelopeCount && Math.random() < 0.3) {
+                                instrument.addEnvelope(Config.instrumentAutomationTargets.dictionary["supersawSpread"].index, 0, Config.envelopes.dictionary[selectWeightedRandom([
                                     { item: "punch", weight: 6 },
                                     { item: "flare -1", weight: 1 },
                                     { item: "flare 1", weight: 2 },
@@ -24323,6 +24779,33 @@ li.select2-results__option[role=group] > strong:hover {
             super(doc);
             this._instrument.pulseWidth = newValue;
             doc.synth.unsetMod(Config.modulators.dictionary["pulse width"].index, doc.channel, doc.getCurrentInstrument());
+            doc.notifier.changed();
+            if (oldValue != newValue)
+                this._didSomething();
+        }
+    }
+    class ChangeSupersawDynamism extends ChangeInstrumentSlider {
+        constructor(doc, oldValue, newValue) {
+            super(doc);
+            this._instrument.supersawDynamism = newValue;
+            doc.notifier.changed();
+            if (oldValue != newValue)
+                this._didSomething();
+        }
+    }
+    class ChangeSupersawSpread extends ChangeInstrumentSlider {
+        constructor(doc, oldValue, newValue) {
+            super(doc);
+            this._instrument.supersawSpread = newValue;
+            doc.notifier.changed();
+            if (oldValue != newValue)
+                this._didSomething();
+        }
+    }
+    class ChangeSupersawShape extends ChangeInstrumentSlider {
+        constructor(doc, oldValue, newValue) {
+            super(doc);
+            this._instrument.supersawShape = newValue;
             doc.notifier.changed();
             if (oldValue != newValue)
                 this._didSomething();
@@ -29406,7 +29889,7 @@ li.select2-results__option[role=group] > strong:hover {
                                             instrumentProgram = ExportPrompt.midiChipInstruments[instrument.chipWave];
                                         }
                                     }
-                                    else if (instrument.type == 6 || instrument.type == 1 || instrument.type == 10 || instrument.type == 5) {
+                                    else if (instrument.type == 6 || instrument.type == 1 || instrument.type == 10 || instrument.type == 5 || instrument.type == 11) {
                                         instrumentProgram = 81;
                                     }
                                     else if (instrument.type == 7) {
@@ -36003,6 +36486,21 @@ You should be redirected to the song at:<br /><br />
                         message = div$4(h2$3("Noise"), p("UltraBox comes with several basic noise sounds. These do not have any distinct musical pitch, and can be used like drums to create beats and emphasize your song's rhythm."));
                     }
                     break;
+                case "supersawDynamism":
+                    {
+                        message = div$4(h2$3("Supersaw Dynamism"), p("A supersaw is a combination of many sawtooth waves, and this setting controls the contribution of extra sawtooth waves."), p("At the low end of the slider, only the first wave is contributing to the sound, which sounds like an ordinary static sawtooth wave. At the maximum setting, all of the waves are contributing equally and the resulting tone can randomly shift depending on how the waves line up with each other, similar to the \"unison\" and \"chorus\" settings."));
+                    }
+                    break;
+                case "supersawSpread":
+                    {
+                        message = div$4(h2$3("Supersaw Spread"), p("A supersaw is a combination of many sawtooth waves, and this setting controls the distance between their frequencies. The dynamism setting must be used for the extra waves to have any effect."), p("At the low end of the spread slider, all of the voices have the same frequency but random phase, resulting in a different sound every time a note starts. In the middle, the waves all have slightly different frequencies that shift in and out of phase over time similar to the \"unison\" and \"chorus\" settings, creating a classic supersaw sound. At the extreme end, the frequencies are so far apart they sound dissonant."));
+                    }
+                    break;
+                case "supersawShape":
+                    {
+                        message = div$4(h2$3("Supersaw Shape"), p("This supersaw instrument includes an option to change the shape of the waves from sawtooth waves to pulse waves. Use this setting to morph between the two shapes."), p("When a pulse wave shape is used, you can also control the pulse width with a separate setting."));
+                    }
+                    break;
                 case "pulseWidth":
                     {
                         message = div$4(h2$3("Pulse Wave Width"), p("This setting controls the shape and sound of a pulse wave. At the minimum width, it sounds light and buzzy. At the maximum width, it is shaped like a classic square wave."));
@@ -38286,6 +38784,7 @@ You should be redirected to the song at:<br /><br />
             menu.appendChild(option({ value: 6 }, EditorConfig.valueToPreset(6).name));
             menu.appendChild(option({ value: 1 }, EditorConfig.valueToPreset(1).name));
             menu.appendChild(option({ value: 10 }, EditorConfig.instrumentToPreset(10).name));
+            menu.appendChild(option({ value: 11 }, EditorConfig.instrumentToPreset(11).name));
             menu.appendChild(option({ value: 5 }, EditorConfig.valueToPreset(5).name));
             menu.appendChild(option({ value: 7 }, EditorConfig.valueToPreset(7).name));
             menu.appendChild(option({ value: 3 }, EditorConfig.valueToPreset(3).name));
@@ -38895,6 +39394,12 @@ You should be redirected to the song at:<br /><br />
             this._noteFilterEditor = new FilterEditor(this._doc, true);
             this._noteFilterZoom = button({ style: "margin-left:0em; padding-left:0.2em; height:1.5em; max-width: 12px;", onclick: () => this._openPrompt("customNoteFilterSettings") }, "+");
             this._noteFilterRow = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("noteFilter") }, "Note Filt:"), this._noteFilterZoom, this._noteFilterEditor.container);
+            this._supersawDynamismSlider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.supersawDynamismMax, value: "0", step: "1" }), this._doc, (oldValue, newValue) => new ChangeSupersawDynamism(this._doc, oldValue, newValue), false);
+            this._supersawDynamismRow = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("supersawDynamism") }, "Dynamism:"), this._supersawDynamismSlider.container);
+            this._supersawSpreadSlider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.supersawSpreadMax, value: "0", step: "1" }), this._doc, (oldValue, newValue) => new ChangeSupersawSpread(this._doc, oldValue, newValue), false);
+            this._supersawSpreadRow = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("supersawSpread") }, "Spread:"), this._supersawSpreadSlider.container);
+            this._supersawShapeSlider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.supersawShapeMax, value: "0", step: "1" }), this._doc, (oldValue, newValue) => new ChangeSupersawShape(this._doc, oldValue, newValue), false);
+            this._supersawShapeRow = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("supersawShape") }, "Saw↔Pulse:"), this._supersawShapeSlider.container);
             this._noteFilterSimpleCutSlider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.filterSimpleCutRange - 1, value: "6", step: "1" }), this._doc, (oldValue, newValue) => new ChangeNoteFilterSimpleCut(this._doc, oldValue, newValue), false);
             this._noteFilterSimpleCutRow = div({ class: "selectRow", title: "Low-pass Filter Cutoff Frequency" }, span({ class: "tip", onclick: () => this._openPrompt("filterCutoff") }, "Filter Cut:"), this._noteFilterSimpleCutSlider.container);
             this._noteFilterSimplePeakSlider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.filterSimplePeakRange - 1, value: "6", step: "1" }), this._doc, (oldValue, newValue) => new ChangeNoteFilterSimplePeak(this._doc, oldValue, newValue), false);
@@ -38999,7 +39504,7 @@ You should be redirected to the song at:<br /><br />
             this._feedbackAmplitudeSlider = new Slider(input({ type: "range", min: "0", max: Config.operatorAmplitudeMax, value: "0", step: "1", title: "Feedback Amplitude" }), this._doc, (oldValue, newValue) => new ChangeFeedbackAmplitude(this._doc, oldValue, newValue), false);
             this._feedbackRow2 = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("feedbackVolume") }, "Fdback Vol:"), this._feedbackAmplitudeSlider.container);
             this._addEnvelopeButton = button({ type: "button", class: "add-envelope" });
-            this._customInstrumentSettingsGroup = div({ class: "editor-controls" }, this._panSliderRow, this._panDropdownGroup, this._chipWaveSelectRow, this._chipNoiseSelectRow, this._useChipWaveAdvancedLoopControlsRow, this._chipWaveLoopModeSelectRow, this._chipWaveLoopStartRow, this._chipWaveLoopEndRow, this._chipWaveStartOffsetRow, this._chipWavePlayBackwardsRow, this._customWaveDraw, this._eqFilterTypeRow, this._eqFilterRow, this._eqFilterSimpleCutRow, this._eqFilterSimplePeakRow, this._fadeInOutRow, this._algorithmSelectRow, this._algorithm6OpSelectRow, this._phaseModGroup, this._feedbackRow1, this._feedback6OpRow1, this._feedbackRow2, this._spectrumRow, this._harmonicsRow, this._drumsetGroup, this._pulseWidthRow, this._pulseWidthDropdownGroup, this._stringSustainRow, this._unisonSelectRow, this._unisonDropdownGroup, div({ style: `padding: 2px 0; margin-left: 2em; display: flex; align-items: center;` }, span({ style: `flex-grow: 1; text-align: center;` }, span({ class: "tip", onclick: () => this._openPrompt("effects") }, "Effects")), div({ class: "effects-menu" }, this._effectsSelect)), this._transitionRow, this._transitionDropdownGroup, this._chordSelectRow, this._chordDropdownGroup, this._pitchShiftRow, this._detuneSliderRow, this._vibratoSelectRow, this._vibratoDropdownGroup, this._noteFilterTypeRow, this._noteFilterRow, this._noteFilterSimpleCutRow, this._noteFilterSimplePeakRow, this._distortionRow, this._aliasingRow, this._bitcrusherQuantizationRow, this._bitcrusherFreqRow, this._chorusRow, this._echoSustainRow, this._echoDelayRow, this._reverbRow, div({ style: `padding: 2px 0; margin-left: 2em; display: flex; align-items: center;` }, span({ style: `flex-grow: 1; text-align: center;` }, span({ class: "tip", onclick: () => this._openPrompt("envelopes") }, "Envelopes")), this._addEnvelopeButton), this._envelopeEditor.container);
+            this._customInstrumentSettingsGroup = div({ class: "editor-controls" }, this._panSliderRow, this._panDropdownGroup, this._chipWaveSelectRow, this._chipNoiseSelectRow, this._useChipWaveAdvancedLoopControlsRow, this._chipWaveLoopModeSelectRow, this._chipWaveLoopStartRow, this._chipWaveLoopEndRow, this._chipWaveStartOffsetRow, this._chipWavePlayBackwardsRow, this._customWaveDraw, this._eqFilterTypeRow, this._eqFilterRow, this._eqFilterSimpleCutRow, this._eqFilterSimplePeakRow, this._fadeInOutRow, this._algorithmSelectRow, this._algorithm6OpSelectRow, this._phaseModGroup, this._feedbackRow1, this._feedback6OpRow1, this._feedbackRow2, this._spectrumRow, this._harmonicsRow, this._drumsetGroup, this._supersawDynamismRow, this._supersawSpreadRow, this._supersawShapeRow, this._pulseWidthRow, this._pulseWidthDropdownGroup, this._stringSustainRow, this._unisonSelectRow, this._unisonDropdownGroup, div({ style: `padding: 2px 0; margin-left: 2em; display: flex; align-items: center;` }, span({ style: `flex-grow: 1; text-align: center;` }, span({ class: "tip", onclick: () => this._openPrompt("effects") }, "Effects")), div({ class: "effects-menu" }, this._effectsSelect)), this._transitionRow, this._transitionDropdownGroup, this._chordSelectRow, this._chordDropdownGroup, this._pitchShiftRow, this._detuneSliderRow, this._vibratoSelectRow, this._vibratoDropdownGroup, this._noteFilterTypeRow, this._noteFilterRow, this._noteFilterSimpleCutRow, this._noteFilterSimplePeakRow, this._distortionRow, this._aliasingRow, this._bitcrusherQuantizationRow, this._bitcrusherFreqRow, this._chorusRow, this._echoSustainRow, this._echoDelayRow, this._reverbRow, div({ style: `padding: 2px 0; margin-left: 2em; display: flex; align-items: center;` }, span({ style: `flex-grow: 1; text-align: center;` }, span({ class: "tip", onclick: () => this._openPrompt("envelopes") }, "Envelopes")), this._addEnvelopeButton), this._envelopeEditor.container);
             this._instrumentCopyGroup = div({ class: "editor-controls" }, div({ class: "selectRow" }, this._instrumentCopyButton, this._instrumentPasteButton));
             this._instrumentSettingsTextRow = div({ id: "instrumentSettingsText", style: `padding: 3px 0; max-width: 15em; text-align: center; color: ${ColorConfig.secondaryText};` }, "Instrument Settings");
             this._instrumentTypeSelectRow = div({ class: "selectRow", id: "typeSelectRow" }, span({ class: "tip", onclick: () => this._openPrompt("instrumentType") }, "Type:"), div(div({ class: "pitchSelect" }, this._pitchedPresetSelect), div({ class: "drumSelect" }, this._drumPresetSelect)));
@@ -39438,6 +39943,27 @@ You should be redirected to the song at:<br /><br />
                         this._phaseModGroup.style.display = "none";
                         this._feedbackRow1.style.display = "none";
                         this._feedbackRow2.style.display = "none";
+                    }
+                    if (instrument.type == 11) {
+                        this._supersawDynamismRow.style.display = "";
+                        this._supersawSpreadRow.style.display = "";
+                        this._supersawShapeRow.style.display = "";
+                        this._supersawDynamismSlider.updateValue(instrument.supersawDynamism);
+                        this._supersawSpreadSlider.updateValue(instrument.supersawSpread);
+                        this._supersawShapeSlider.updateValue(instrument.supersawShape);
+                    }
+                    else {
+                        this._supersawDynamismRow.style.display = "none";
+                        this._supersawSpreadRow.style.display = "none";
+                        this._supersawShapeRow.style.display = "none";
+                    }
+                    if (instrument.type == 6 || instrument.type == 11) {
+                        this._pulseWidthRow.style.display = "";
+                        this._pulseWidthSlider.input.title = prettyNumber(getPulseWidthRatio(instrument.pulseWidth) * 100) + "%";
+                        this._pulseWidthSlider.updateValue(instrument.pulseWidth);
+                    }
+                    else {
+                        this._pulseWidthRow.style.display = "none";
                     }
                     this._pulseWidthSlider.input.title = prettyNumber(instrument.pulseWidth) + "%";
                     if (effectsIncludeTransition(instrument.effects)) {
