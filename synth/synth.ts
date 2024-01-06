@@ -2686,7 +2686,7 @@ export class Song {
     private static readonly _latestUltraBoxVersion: number = 4;
     // One-character variant detection at the start of URL to distinguish variants such as JummBox, Or Goldbox. "j" and "g" respectively
 	//also "u" is ultrabox lol
-    private static readonly _variant = 0x61; //"a" ~ abyssbox
+    private static readonly _variant = 0x75; //"a" ~ abyssbox
 
     public title: string;
     public scale: number;
