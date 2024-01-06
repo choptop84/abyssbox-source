@@ -971,7 +971,7 @@ var beepbox = (function (exports) {
     Config.instrumentAutomationTargets = toNameMap([
         { name: "none", computeIndex: null, displayName: "none", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: null },
         { name: "noteVolume", computeIndex: 0, displayName: "note volume", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: null },
-        { name: "pulseWidth", computeIndex: 2, displayName: "pulse width", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [6] },
+        { name: "pulseWidth", computeIndex: 2, displayName: "pulse width", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [6, 11] },
         { name: "stringSustain", computeIndex: 3, displayName: "sustain", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [7] },
         { name: "unison", computeIndex: 4, displayName: "unison", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [0, 5, 7, 8] },
         { name: "operatorFrequency", computeIndex: 5, displayName: "fm# freq", interleave: true, isFilter: false, maxCount: Config.operatorCount + 2, effect: null, compatibleInstruments: [1, 10] },
@@ -39924,6 +39924,7 @@ You should be redirected to the song at:<br /><br />
                         this._feedbackRow2.style.display = "none";
                     }
                     if (instrument.type == 11) {
+                        this._chipWaveSelectRow.style.display = "none";
                         this._supersawDynamismRow.style.display = "";
                         this._supersawSpreadRow.style.display = "";
                         this._supersawShapeRow.style.display = "";

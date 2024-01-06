@@ -2403,6 +2403,7 @@ export class SongEditor {
 
 		/* oh god it's the supersaw!!! Hopefully I don't miss any code and accidentally break abyssbox (σ‸σ) */
 		if (instrument.type == InstrumentType.supersaw) {
+			this._chipWaveSelectRow.style.display = "none";
 			this._supersawDynamismRow.style.display = "";
 			this._supersawSpreadRow.style.display = "";
 			this._supersawShapeRow.style.display = "";
