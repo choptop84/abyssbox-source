@@ -18672,7 +18672,6 @@ li.select2-results__option[role=group] > strong:hover {
                         || ((tgtInstrument.type != 1 && tgtInstrument.type != 10) && (str == "fm slider 1" || str == "fm slider 2" || str == "fm slider 3" || str == "fm slider 4" || str == "fm feedback"))
                         || ((tgtInstrument.type != 6 && tgtInstrument.type != 11) && (str == "pulse width"))
                         || tgtInstrument.type != 10 && (str == "fm slider 5" || str == "fm slider 6")
-                        || (tgtInstrument.type != 6 && (str == "pulse width"))
                         || (!tgtInstrument.getChord().arpeggiates && (str == "arp speed" || str == "reset arp"))
                         || (tgtInstrument.eqFilterType && str == "eq filter")
                         || (!tgtInstrument.eqFilterType && (str == "eq filt cut" || str == "eq filt peak"))
@@ -40380,6 +40379,12 @@ You should be redirected to the song at:<br /><br />
                                 }
                                 if (tgtInstrumentTypes.includes(7)) {
                                     settingList.push("sustain");
+                                }
+                                if (tgtInstrumentTypes.includes(11)) {
+                                    settingList.push("pulse width");
+                                    settingList.push("dynamism");
+                                    settingList.push("spread");
+                                    settingList.push("shape");
                                 }
                                 if (anyInstrumentArps) {
                                     settingList.push("arp speed");

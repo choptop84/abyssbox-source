@@ -2934,6 +2934,12 @@ export class SongEditor {
                         if (tgtInstrumentTypes.includes(InstrumentType.pickedString)) {
                             settingList.push("sustain");
                         }
+                        if (tgtInstrumentTypes.includes(InstrumentType.supersaw)) {
+                            settingList.push("pulse width");
+                            settingList.push("dynamism");
+                            settingList.push("spread");
+                            settingList.push("shape");
+                        }
                         if (anyInstrumentArps) {
                             settingList.push("arp speed");
                             settingList.push("reset arp");

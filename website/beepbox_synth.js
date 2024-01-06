@@ -9293,7 +9293,6 @@ var beepbox = (function (exports) {
                         || ((tgtInstrument.type != 1 && tgtInstrument.type != 10) && (str == "fm slider 1" || str == "fm slider 2" || str == "fm slider 3" || str == "fm slider 4" || str == "fm feedback"))
                         || ((tgtInstrument.type != 6 && tgtInstrument.type != 11) && (str == "pulse width"))
                         || tgtInstrument.type != 10 && (str == "fm slider 5" || str == "fm slider 6")
-                        || (tgtInstrument.type != 6 && (str == "pulse width"))
                         || (!tgtInstrument.getChord().arpeggiates && (str == "arp speed" || str == "reset arp"))
                         || (tgtInstrument.eqFilterType && str == "eq filter")
                         || (!tgtInstrument.eqFilterType && (str == "eq filt cut" || str == "eq filt peak"))
