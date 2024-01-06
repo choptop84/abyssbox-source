@@ -60,12 +60,12 @@ export const enum InstrumentType {
     spectrum,
     drumset,
     harmonics,
-    supersaw,
     pwm,
     pickedString,
     customChipWave,
     mod,
 	fm6op,
+    supersaw,
     length,
 }
 
