@@ -14301,6 +14301,7 @@ li.select2-results__option[role=group] > strong:hover {
                     else if (instrument.type == 11) {
                         buffer.push(120, base64IntToCharCode[instrument.supersawDynamism], base64IntToCharCode[instrument.supersawSpread], base64IntToCharCode[instrument.supersawShape]);
                         buffer.push(87, base64IntToCharCode[instrument.pulseWidth]);
+                        buffer.push(base64IntToCharCode[instrument.decimalOffset >> 6], base64IntToCharCode[instrument.decimalOffset & 0x3f]);
                     }
                     else if (instrument.type == 7) {
                         buffer.push(104, base64IntToCharCode[instrument.unison]);
@@ -17328,7 +17329,7 @@ li.select2-results__option[role=group] > strong:hover {
     Song._latestGoldBoxVersion = 4;
     Song._oldestUltraBoxVersion = 1;
     Song._latestUltraBoxVersion = 4;
-    Song._variant = 0x75;
+    Song._variant = 0x61;
     class PickedString {
         constructor() {
             this.delayLine = null;

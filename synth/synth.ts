@@ -2686,7 +2686,7 @@ export class Song {
     private static readonly _latestUltraBoxVersion: number = 4;
     // One-character variant detection at the start of URL to distinguish variants such as JummBox, Or Goldbox. "j" and "g" respectively
 	//also "u" is ultrabox lol
-    private static readonly _variant = 0x75; //"u" ~ ultrabox
+    private static readonly _variant = 0x61; //"a" ~ abyssbox
 
     public title: string;
     public scale: number;
@@ -3264,6 +3264,7 @@ export class Song {
                 } else if (instrument.type == InstrumentType.supersaw) {
 					buffer.push(SongTagCode.supersaw, base64IntToCharCode[instrument.supersawDynamism], base64IntToCharCode[instrument.supersawSpread], base64IntToCharCode[instrument.supersawShape]);
 					buffer.push(SongTagCode.pulseWidth, base64IntToCharCode[instrument.pulseWidth]);
+					buffer.push(base64IntToCharCode[instrument.decimalOffset >> 6], base64IntToCharCode[instrument.decimalOffset & 0x3f]);
                 } else if (instrument.type == InstrumentType.pickedString) {
                     buffer.push(SongTagCode.unison, base64IntToCharCode[instrument.unison]);
                     if (instrument.unison == Config.unisons.length) encodeUnisonSettings(buffer, instrument.unisonVoices, instrument.unisonSpread, instrument.unisonOffset, instrument.unisonExpression, instrument.unisonSign);
