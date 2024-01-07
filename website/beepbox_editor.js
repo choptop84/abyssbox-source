@@ -3253,19 +3253,19 @@ var beepbox = (function (exports) {
 
 			#text-content {
     				border-image-source: url("xptextbg.png");
-    				border-image-slice: 11 fill; /* You can adjust the slice value according to your design */
-   				border-image-width: 11px; /* You can adjust the width value according to your design */
+    				border-image-slice: 11 fill; 
+   				border-image-width: 11px; 
 				border-image-repeat: stretch;
-    				background-color: transparent; /* Set the background color to transparent to allow the border image to be visible */
-    				padding: 11px; /* Adjust the padding to control the content area within the border */
+    				background-color: transparent; 
+    				padding: 11px; 
 				}
-			#beepbox-editor-container {
+			#beepboxEditorContainer {
     				border-image-source: url("xptextbg.png");
-    				border-image-slice: 11 fill; /* You can adjust the slice value according to your design */
-   				border-image-width: 11px; /* You can adjust the width value according to your design */
+    				border-image-slice: 11 fill; 
+   				border-image-width: 11px; 
 				border-image-repeat: stretch;
-    				background-color: transparent; /* Set the background color to transparent to allow the border image to be visible */
-    				padding: 11px; /* Adjust the padding to control the content area within the border */
+    				background-color: transparent; 
+    				padding: 13px; 
 				}
 
 			@font-face {
@@ -3276,6 +3276,7 @@ var beepbox = (function (exports) {
 
 			html {
  		   font-family: 'tahoma';
+		   font-size: 200%
 			}
 
 			`,
