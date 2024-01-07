@@ -2702,7 +2702,20 @@ var beepbox = (function (exports) {
 			--mod-primary-note-lum: 85; 		
 			--mod-primary-note-lum-scale: 0; 	
 				}
-		/* sets background image */
+		
+		/* replaces hotdog (in a hacky way) with an image of the abyssbox logo in a doom like font*/
+		#Hotdog {
+		display: none;
+		}
+		.instructions-column > section:first-of-type > p:first-of-type:after {
+		display: block;
+		content: url("AbyssBox_DOOM.png");
+		width: 100%;
+		text-align: center;
+		margin-top: 25px;
+		}
+				
+				/* sets background image */
 		body {
 		background-image: url("doomsky.png") !important;
 		background-size: cover;
@@ -2712,6 +2725,7 @@ var beepbox = (function (exports) {
 			/* make editor background transparent */
 		#beepboxEditorContainer, .beepboxEditor, #text-content {
 		}
+
 
 			@font-face {
 		   font-family: "doomfont";
