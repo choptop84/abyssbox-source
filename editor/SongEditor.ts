@@ -2419,12 +2419,19 @@ export class SongEditor {
 			this._pulseWidthRow.style.display = "";
 			this._pulseWidthSlider.input.title = prettyNumber(getPulseWidthRatio(instrument.pulseWidth) * 100) + "%";
 			this._pulseWidthSlider.updateValue(instrument.pulseWidth);
+                            this._pulseWidthRow.style.display = "";
+                this._pulseWidthSlider.input.title = prettyNumber(instrument.pulseWidth) + "%";
+                this._pulseWidthSlider.updateValue(instrument.pulseWidth);
+
+                // this._decimalOffsetRow.style.display = "";
+                this._decimalOffsetSlider.input.title = (Number(prettyNumber(instrument.decimalOffset)) / 100) <= 0 ? "none" : "-" + (Number(prettyNumber(instrument.decimalOffset)) / 100) + "%";
+                this._decimalOffsetSlider.updateValue(instrument.decimalOffset);
+
+                // this._pulseWidthDropdownGroup.style.display = "";
+                this._pulseWidthDropdownGroup.style.display = (this._openPulseWidthDropdown ? "" : "none");
 		} else {
 			this._pulseWidthRow.style.display = "none";
 		}
-
-            this._pulseWidthSlider.input.title = prettyNumber(instrument.pulseWidth) + "%";
-
 
             if (effectsIncludeTransition(instrument.effects)) {
                 this._transitionRow.style.display = "";
