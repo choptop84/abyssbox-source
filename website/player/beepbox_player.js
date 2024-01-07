@@ -2703,16 +2703,12 @@ var beepbox = (function (exports) {
 			--mod-primary-note-lum-scale: 0; 	
 				}
 		
-		/* replaces hotdog (in a hacky way) with an image of the abyssbox logo in a doom like font*/
-		#Hotdog {
+			#text-content > section > h1 > font {
 		display: none;
 		}
-		.instructions-column > section:first-of-type > p:first-of-type:after {
-		display: block;
+		#text-content > section > h1 {
+		margin: auto;
 		content: url("AbyssBox_DOOM.png");
-		width: 100%;
-		text-align: center;
-		margin-top: 25px;
 		}
 				
 				/* sets background image */
