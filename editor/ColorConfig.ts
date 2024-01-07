@@ -778,10 +778,10 @@ export class ColorConfig {
 			--box-selection-fill: #1e0915; 		
 			--loop-accent: #003399; 		
 			--link-accent: #003399; 		
-			--ui-widget-background: #f5f3eb; 		
-			--ui-widget-focus: #f5f3eb; 		
-			--pitch-background: #cfcab2; 		
-			--tonic: #9e9a85; 		
+			--ui-widget-background: #cfcab2; 		
+			--ui-widget-focus: #cfcab2; 		
+			--pitch-background: #918d79; 		
+			--tonic: #575344; 		
 			--fifth-note: #b0ac96; 		
 			--white-piano-key: #ebe2ca; 		
 			--black-piano-key: #403a2f; 		
@@ -806,94 +806,110 @@ export class ColorConfig {
 		
 --pitch-secondary-channel-hue: 0;		
 --pitch-secondary-channel-hue-scale: 6.1;		
---pitch-secondary-channel-sat: 83.3;		
+--pitch-secondary-channel-sat: 43.3;		
 --pitch-secondary-channel-sat-scale: 0.1;		
---pitch-secondary-channel-lum: 40;		
---pitch-secondary-channel-lum-scale: 0.05;		
+--pitch-secondary-channel-lum: 20;		
+--pitch-secondary-channel-lum-scale: 0.05;
+		
 --pitch-primary-channel-hue: 0;		
 --pitch-primary-channel-hue-scale: 6.1;		
---pitch-primary-channel-sat: 100;		
+--pitch-primary-channel-sat: 60;		
 --pitch-primary-channel-sat-scale: 0.1;		
---pitch-primary-channel-lum: 67.5;		
---pitch-primary-channel-lum-scale: 0.05;		
+--pitch-primary-channel-lum: 47.5;		
+--pitch-primary-channel-lum-scale: 0.05;
+		
 --pitch-secondary-note-hue: 0;		
 --pitch-secondary-note-hue-scale: 6.1;		
---pitch-secondary-note-sat: 93.9;		
+--pitch-secondary-note-sat: 43.9;		
 --pitch-secondary-note-sat-scale: 0.1;		
 --pitch-secondary-note-lum: 25;		
---pitch-secondary-note-lum-scale: 0.05;		
+--pitch-secondary-note-lum-scale: 0.05;
+		
 --pitch-primary-note-hue: 0;		
 --pitch-primary-note-hue-scale: 6.1;		
---pitch-primary-note-sat: 100;		
+--pitch-primary-note-sat: 60;		
 --pitch-primary-note-sat-scale: 0.05;		
---pitch-primary-note-lum: 85.6;		
---pitch-primary-note-lum-scale: 0.025;		
+--pitch-primary-note-lum: 65.6;		
+--pitch-primary-note-lum-scale: 0.025;
+		
 --noise-secondary-channel-hue: 0;		
 --noise-secondary-channel-hue-scale: 2;		
 --noise-secondary-channel-sat: 25;		
 --noise-secondary-channel-sat-scale: 0;		
---noise-secondary-channel-lum: 42;		
---noise-secondary-channel-lum-scale: 0;		
+--noise-secondary-channel-lum: 22;		
+--noise-secondary-channel-lum-scale: 0;
+		
 --noise-primary-channel-hue: 0;		
 --noise-primary-channel-hue-scale: 2;		
 --noise-primary-channel-sat: 33;		
 --noise-primary-channel-sat-scale: 0;		
---noise-primary-channel-lum: 63.5;		
---noise-primary-channel-lum-scale: 0;		
+--noise-primary-channel-lum: 43.5;		
+--noise-primary-channel-lum-scale: 0;
+		
 --noise-secondary-note-hue: 0;		
 --noise-secondary-note-hue-scale: 2;		
 --noise-secondary-note-sat: 33.5;		
 --noise-secondary-note-sat-scale: 0;		
---noise-secondary-note-lum: 55;		
---noise-secondary-note-lum-scale: 0;		
+--noise-secondary-note-lum: 35;		
+--noise-secondary-note-lum-scale: 0;	
+	
 --noise-primary-note-hue: 0;		
 --noise-primary-note-hue-scale: 2;		
 --noise-primary-note-sat: 46.5;		
 --noise-primary-note-sat-scale: 0;		
---noise-primary-note-lum: 74;		
---noise-primary-note-lum-scale: 0;		
+--noise-primary-note-lum: 54;		
+--noise-primary-note-lum-scale: 0;	
+	
 --mod-secondary-channel-hue: 192;		
 --mod-secondary-channel-hue-scale: 1.5;		
 --mod-secondary-channel-sat: 88;		
 --mod-secondary-channel-sat-scale: 0;		
---mod-secondary-channel-lum: 50;		
---mod-secondary-channel-lum-scale: 0;		
+--mod-secondary-channel-lum: 30;		
+--mod-secondary-channel-lum-scale: 0;	
+	
 --mod-primary-channel-hue: 192;		
 --mod-primary-channel-hue-scale: 1.5;		
---mod-primary-channel-sat: 96;		
+--mod-primary-channel-sat: 56;		
 --mod-primary-channel-sat-scale: 0;		
---mod-primary-channel-lum: 80;		
---mod-primary-channel-lum-scale: 0;		
+--mod-primary-channel-lum: 60;		
+--mod-primary-channel-lum-scale: 0;	
+	
 --mod-secondary-note-hue: 192;		
 --mod-secondary-note-hue-scale: 1.5;		
---mod-secondary-note-sat: 92;		
+--mod-secondary-note-sat: 42;		
 --mod-secondary-note-sat-scale: 0;		
---mod-secondary-note-lum: 45;		
---mod-secondary-note-lum-scale: 0;		
+--mod-secondary-note-lum: 25;		
+--mod-secondary-note-lum-scale: 0;	
+	
 --mod-primary-note-hue: 192;		
 --mod-primary-note-hue-scale: 1.5;		
---mod-primary-note-sat: 96;		
+--mod-primary-note-sat: 56;		
 --mod-primary-note-sat-scale: 0;		
---mod-primary-note-lum: 85;		
+--mod-primary-note-lum: 65;		
 --mod-primary-note-lum-scale: 0;	
 				}
 		* {
-		cursor: url("xpcursor.png"), auto !important;
+		cursor: url("https://choptop84.github.io/abyssbox-app/xpcursor.png"), auto !important;
+		}
+
+			#text-content > section > h1 > font {
+		display: none;
+		}
+		#text-content > section > h1 {
+		margin: auto;
+		content: url("https://choptop84.github.io/abyssbox-app/AbyssBox_XP.png");
 		}
 
 				/* sets background image */
 		body {
-		background-image: url("xphills.png") !important;
+		background-image: url("https://choptop84.github.io/abyssbox-app/xphills.png") !important;
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
 			}
-			/* make editor background transparent */
-		#beepboxEditorContainer, .beepboxEditor, #text-content {
-		}
 
 			#text-content {
-    				border-image-source: url("xptextbg.png");
+    				border-image-source: url("https://choptop84.github.io/abyssbox-app/xptextbg.png");
     				border-image-slice: 11 fill; 
    				border-image-width: 11px; 
 				border-image-repeat: stretch;
@@ -901,23 +917,31 @@ export class ColorConfig {
     				padding: 11px; 
 				}
 			#beepboxEditorContainer {
-    				border-image-source: url("xptextbg.png");
+    				border-image-source: url("https://choptop84.github.io/abyssbox-app/xptextbg.png");
     				border-image-slice: 11 fill; 
    				border-image-width: 11px; 
 				border-image-repeat: stretch;
     				background-color: transparent; 
     				padding: 13px; 
 				}
+			 .beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered {
+    				border-image-source: url("https://choptop84.github.io/abyssbox-app/xpbuttonbg.png") !important;
+    				border-image-slice: 5 fill !important; 
+   				border-image-width: 2px !important; 
+				border-image-repeat: stretch !important;
+    				background-color: transparent !important; 
+    				padding: 7px !important; 
+				}		
 
 			@font-face {
 		   font-family: "tahoma";
 		   src:
- 		   url("tahoma.otf") format("opentype") tech(color-COLRv1),
+ 		   url("https://choptop84.github.io/abyssbox-app/tahoma.otf") format("opentype") tech(color-COLRv1),
 			}
 
 			html {
  		   font-family: 'tahoma';
-		   font-size: 200%
+		   font-size: 125% !important;
 			}
 
 			`,
