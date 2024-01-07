@@ -903,13 +903,14 @@ export class ColorConfig {
 		#beepboxEditorContainer, .beepboxEditor, #text-content {
 		}
 
-				/* sets text background image image */
-		#text-content {
-		background-image: url("xptextbg.png") !important;
-		background-size: scale;
-		background-position: center;
-		background-repeat: no-repeat;
-			}
+			#text-content {
+    				border-image-source: url("xptextbg.png");
+    				border-image-slice: 11 fill; /* You can adjust the slice value according to your design */
+   				border-image-width: 11px; /* You can adjust the width value according to your design */
+				border-image-repeat: stretch;
+    				background-color: transparent; /* Set the background color to transparent to allow the border image to be visible */
+    				padding: 11px; /* Adjust the padding to control the content area within the border */
+				}
 
 			@font-face {
 		   font-family: "tahoma";

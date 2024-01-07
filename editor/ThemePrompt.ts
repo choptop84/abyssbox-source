@@ -15,6 +15,7 @@ export class ThemePrompt implements Prompt {
 			option({ value: "AbyssBox Light"}, "AbyssBox Light"),
 			option({ value: "Half-Life"}, "Half-Life"),
 			option({ value: "Doom 1993"}, "Doom 1993"),
+			option({ value: "Windows Xp"}, "Windows Xp"),
 			option({ value: "dark classic" }, "BeepBox Dark"),
 			option({ value: "light classic" }, "BeepBox Light"),
 			option({ value: "dark competition" }, "BeepBox Competition Dark"),
