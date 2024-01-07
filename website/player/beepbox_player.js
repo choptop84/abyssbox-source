@@ -18927,6 +18927,15 @@ var beepbox = (function (exports) {
                     }
                     const pulseWidthStart = pulseWidthModStart * envelopeStarts[2];
                     const pulseWidthEnd = pulseWidthModEnd * envelopeEnds[2];
+                    tone.pulseWidth = pulseWidthStart;
+                    tone.pulseWidthDelta = (pulseWidthEnd - pulseWidthStart) / roundedSamplesPerTick;
+                    let decimalOffsetModStart = instrument.decimalOffset;
+                    if (this.isModActive(Config.modulators.dictionary["decimal offset"].index, channelIndex, tone.instrumentIndex)) {
+                        decimalOffsetModStart = this.getModValue(Config.modulators.dictionary["decimal offset"].index, channelIndex, tone.instrumentIndex, false);
+                    }
+                    const decimalOffsetStart = decimalOffsetModStart * envelopeStarts[37];
+                    tone.decimalOffset = decimalOffsetStart;
+                    tone.pulseWidth -= (tone.decimalOffset) / 10000;
                     const phaseDeltaStart = (tone.supersawPrevPhaseDelta != null) ? tone.supersawPrevPhaseDelta : startFreq * sampleTime;
                     const phaseDeltaEnd = startFreq * sampleTime * freqEndRatio;
                     tone.supersawPrevPhaseDelta = phaseDeltaEnd;

@@ -10604,6 +10604,19 @@ export class Synth {
 
 				const pulseWidthStart: number = pulseWidthModStart * envelopeStarts[EnvelopeComputeIndex.pulseWidth];
 				const pulseWidthEnd:   number = pulseWidthModEnd * envelopeEnds[  EnvelopeComputeIndex.pulseWidth];
+                tone.pulseWidth = pulseWidthStart;
+                tone.pulseWidthDelta = (pulseWidthEnd - pulseWidthStart) / roundedSamplesPerTick;
+
+                //decimal offset mods
+                let decimalOffsetModStart: number = instrument.decimalOffset;
+                if (this.isModActive(Config.modulators.dictionary["decimal offset"].index, channelIndex, tone.instrumentIndex)) {
+                    decimalOffsetModStart = this.getModValue(Config.modulators.dictionary["decimal offset"].index, channelIndex, tone.instrumentIndex, false);
+                }
+ 
+                const decimalOffsetStart: number = decimalOffsetModStart * envelopeStarts[EnvelopeComputeIndex.decimalOffset];
+                tone.decimalOffset = decimalOffsetStart;
+                
+                tone.pulseWidth -= (tone.decimalOffset) / 10000;
 				const phaseDeltaStart: number = (tone.supersawPrevPhaseDelta != null) ? tone.supersawPrevPhaseDelta : startFreq * sampleTime;
 				const phaseDeltaEnd: number = startFreq * sampleTime * freqEndRatio;
 				tone.supersawPrevPhaseDelta = phaseDeltaEnd;
