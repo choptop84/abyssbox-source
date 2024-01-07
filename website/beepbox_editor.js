@@ -3126,31 +3126,31 @@ var beepbox = (function (exports) {
 			`,
         "Windows Xp": `
 			:root {		
-			--page-margin: #1e0915; 		
-			--editor-background: #1e0915; 		
-			--hover-preview: white; 		
+			--page-margin: #edead9; 		
+			--editor-background: #edead9; 		
+			--hover-preview: black; 		
 			--playhead: rgba(255, 255, 255, 0.9); 		
-			--primary-text: white; 		
-			--secondary-text: #ffcedd; 		
+			--primary-text: #231f20; 		
+			--secondary-text: #231f20; 		
 			--inverted-text: black;	 		
 			--text-selection: rgba(119,68,255,0.99); 		
 			--box-selection-fill: #1e0915; 		
-			--loop-accent: #873a51; 		
-			--link-accent: #df88ff; 		
-			--ui-widget-background: #581b3e; 		
-			--ui-widget-focus: #762b4c; 		
-			--pitch-background: #381d24; 		
-			--tonic: #873a51; 		
-			--fifth-note: #75001e; 		
-			--white-piano-key: #cca5c7; 		
-			--black-piano-key: #402f2f; 		
+			--loop-accent: #003399; 		
+			--link-accent: #003399; 		
+			--ui-widget-background: #f5f3eb; 		
+			--ui-widget-focus: #f5f3eb; 		
+			--pitch-background: #cfcab2; 		
+			--tonic: #9e9a85; 		
+			--fifth-note: #b0ac96; 		
+			--white-piano-key: #ebe2ca; 		
+			--black-piano-key: #403a2f; 		
 			--use-color-formula: true; 		
-			--track-editor-bg-pitch: #571c40; 		
-			--track-editor-bg-pitch-dim: #290d0d; 		
-			--track-editor-bg-noise: #571131; 		
-			--track-editor-bg-noise-dim: #330a28; 		
-			--track-editor-bg-mod: #54083c; 		
-			--track-editor-bg-mod-dim: #360426; 		
+			--track-editor-bg-pitch: #cfcab2; 		
+			--track-editor-bg-pitch-dim: #9c9781; 		
+			--track-editor-bg-noise: #cfcab2; 		
+			--track-editor-bg-noise-dim: #9c9781; 		
+			--track-editor-bg-mod: #cfcab2; 		
+			--track-editor-bg-mod-dim: #9c9781; 		
 			--multiplicative-mod-slider: #9f6082; 		
 			--overwriting-mod-slider: #9e3470; 		
 			--indicator-primary: #b3498f; 		
@@ -3161,91 +3161,80 @@ var beepbox = (function (exports) {
 			--mute-button-mod: #ba364c; 		
 			--mod-label-primary: #541625; 		
 			--mod-label-secondary-text: rgb(120, 87, 86); 
-			--mod-label-primary-text: gray; 
+			--mod-label-primary-text: gray;
 		
-			--pitch-secondary-channel-hue: -80; 		
-			--pitch-secondary-channel-hue-scale 0; 		
-			--pitch-secondary-channel-sat: 43; 		
-			--pitch-secondary-channel-sat-scale: 0.1; 		
-			--pitch-secondary-channel-lum: 40; 		
-			--pitch-secondary-channel-lum-scale: 0.05; 
-		
-			--pitch-primary-channel-hue: -53; 		
-			--pitch-primary-channel-hue-scale: 6.1; 		
-			--pitch-primary-channel-sat: 75; 		
-			--pitch-primary-channel-sat-scale: 0.1; 		
-			--pitch-primary-channel-lum: 67.5; 		
-			--pitch-primary-channel-lum-scale: 0.05; 	
-	
-			--pitch-secondary-note-hue: -34; 		
-			--pitch-secondary-note-hue-scale: 6.1; 		
-			--pitch-secondary-note-sat: 93.9; 		
-			--pitch-secondary-note-sat-scale: 0.1; 		
-			--pitch-secondary-note-lum: 25; 		
-			--pitch-secondary-note-lum-scale: 0.05; 
-		
-			--pitch-primary-note-hue: -53; 		
-			--pitch-primary-note-hue-scale: 6.1; 		
-			--pitch-primary-note-sat: 100; 		
-			--pitch-primary-note-sat-scale: 0.05; 		
-			--pitch-primary-note-lum: 85.6; 		
-			--pitch-primary-note-lum-scale: 0.025; 
-		
-			--noise-secondary-channel-hue: 0; 		
-			--noise-secondary-channel-hue-scale: 2; 		
-			--noise-secondary-channel-sat: 65; 		
-			--noise-secondary-channel-sat-scale: 0; 		
-			--noise-secondary-channel-lum: 42; 		
-			--noise-secondary-channel-lum-scale: 0; 
-		
-			--noise-primary-channel-hue: 0; 		
-			--noise-primary-channel-hue-scale: 1; 		
-			--noise-primary-channel-sat: 100; 		
-			--noise-primary-channel-sat-scale: 1; 		
-			--noise-primary-channel-lum: 63.5; 		
-			--noise-primary-channel-lum-scale: 0; 
-		
-			--noise-secondary-note-hue: 24; 		
-			--noise-secondary-note-hue-scale: 2; 		
-			--noise-secondary-note-sat: 100; 		
-			--noise-secondary-note-sat-scale: 0; 		
-			--noise-secondary-note-lum: 35; 		
-			--noise-secondary-note-lum-scale: 0; 	
-	
-			--noise-primary-note-hue: 24; 		
-			--noise-primary-note-hue-scale: 2; 		
-			--noise-primary-note-sat: 100; 		
-			--noise-primary-note-sat-scale: 1; 		
-			--noise-primary-note-lum: 60; 		
-			--noise-primary-note-lum-scale: 1; 	
-	
-			--mod-secondary-channel-hue: 55; 		
-			--mod-secondary-channel-hue-scale: 1.5; 		
-			--mod-secondary-channel-sat: 100; 		
-			--mod-secondary-channel-sat-scale: 0; 		
-			--mod-secondary-channel-lum: 20; 		
-			--mod-secondary-channel-lum-scale: 0; 
-		
-			--mod-primary-channel-hue: 55; 		
-			--mod-primary-channel-hue-scale: 1.5; 		
-			--mod-primary-channel-sat: 96; 		
-			--mod-primary-channel-sat-scale: 0; 		
-			--mod-primary-channel-lum: 50; 		
-			--mod-primary-channel-lum-scale: 0; 
-		
-			--mod-secondary-note-hue: 55; 		
-			--mod-secondary-note-hue-scale: 1.5; 		
-			--mod-secondary-note-sat: 92; 		
-			--mod-secondary-note-sat-scale: 0; 		
-			--mod-secondary-note-lum: 45; 		
-			--mod-secondary-note-lum-scale: 0; 
-		
-			--mod-primary-note-hue: 55; 		
-			--mod-primary-note-hue-scale: 1.5; 		
-			--mod-primary-note-sat: 96; 		
-			--mod-primary-note-sat-scale: 0; 		
-			--mod-primary-note-lum: 85; 		
-			--mod-primary-note-lum-scale: 0; 	
+--pitch-secondary-channel-hue: 0;		
+--pitch-secondary-channel-hue-scale: 6.1;		
+--pitch-secondary-channel-sat: 83.3;		
+--pitch-secondary-channel-sat-scale: 0.1;		
+--pitch-secondary-channel-lum: 40;		
+--pitch-secondary-channel-lum-scale: 0.05;		
+--pitch-primary-channel-hue: 0;		
+--pitch-primary-channel-hue-scale: 6.1;		
+--pitch-primary-channel-sat: 100;		
+--pitch-primary-channel-sat-scale: 0.1;		
+--pitch-primary-channel-lum: 67.5;		
+--pitch-primary-channel-lum-scale: 0.05;		
+--pitch-secondary-note-hue: 0;		
+--pitch-secondary-note-hue-scale: 6.1;		
+--pitch-secondary-note-sat: 93.9;		
+--pitch-secondary-note-sat-scale: 0.1;		
+--pitch-secondary-note-lum: 25;		
+--pitch-secondary-note-lum-scale: 0.05;		
+--pitch-primary-note-hue: 0;		
+--pitch-primary-note-hue-scale: 6.1;		
+--pitch-primary-note-sat: 100;		
+--pitch-primary-note-sat-scale: 0.05;		
+--pitch-primary-note-lum: 85.6;		
+--pitch-primary-note-lum-scale: 0.025;		
+--noise-secondary-channel-hue: 0;		
+--noise-secondary-channel-hue-scale: 2;		
+--noise-secondary-channel-sat: 25;		
+--noise-secondary-channel-sat-scale: 0;		
+--noise-secondary-channel-lum: 42;		
+--noise-secondary-channel-lum-scale: 0;		
+--noise-primary-channel-hue: 0;		
+--noise-primary-channel-hue-scale: 2;		
+--noise-primary-channel-sat: 33;		
+--noise-primary-channel-sat-scale: 0;		
+--noise-primary-channel-lum: 63.5;		
+--noise-primary-channel-lum-scale: 0;		
+--noise-secondary-note-hue: 0;		
+--noise-secondary-note-hue-scale: 2;		
+--noise-secondary-note-sat: 33.5;		
+--noise-secondary-note-sat-scale: 0;		
+--noise-secondary-note-lum: 55;		
+--noise-secondary-note-lum-scale: 0;		
+--noise-primary-note-hue: 0;		
+--noise-primary-note-hue-scale: 2;		
+--noise-primary-note-sat: 46.5;		
+--noise-primary-note-sat-scale: 0;		
+--noise-primary-note-lum: 74;		
+--noise-primary-note-lum-scale: 0;		
+--mod-secondary-channel-hue: 192;		
+--mod-secondary-channel-hue-scale: 1.5;		
+--mod-secondary-channel-sat: 88;		
+--mod-secondary-channel-sat-scale: 0;		
+--mod-secondary-channel-lum: 50;		
+--mod-secondary-channel-lum-scale: 0;		
+--mod-primary-channel-hue: 192;		
+--mod-primary-channel-hue-scale: 1.5;		
+--mod-primary-channel-sat: 96;		
+--mod-primary-channel-sat-scale: 0;		
+--mod-primary-channel-lum: 80;		
+--mod-primary-channel-lum-scale: 0;		
+--mod-secondary-note-hue: 192;		
+--mod-secondary-note-hue-scale: 1.5;		
+--mod-secondary-note-sat: 92;		
+--mod-secondary-note-sat-scale: 0;		
+--mod-secondary-note-lum: 45;		
+--mod-secondary-note-lum-scale: 0;		
+--mod-primary-note-hue: 192;		
+--mod-primary-note-hue-scale: 1.5;		
+--mod-primary-note-sat: 96;		
+--mod-primary-note-sat-scale: 0;		
+--mod-primary-note-lum: 85;		
+--mod-primary-note-lum-scale: 0;	
 				}
 		* {
 		cursor: url("xpcursor.png"), auto !important;
@@ -3263,6 +3252,14 @@ var beepbox = (function (exports) {
 		}
 
 			#text-content {
+    				border-image-source: url("xptextbg.png");
+    				border-image-slice: 11 fill; /* You can adjust the slice value according to your design */
+   				border-image-width: 11px; /* You can adjust the width value according to your design */
+				border-image-repeat: stretch;
+    				background-color: transparent; /* Set the background color to transparent to allow the border image to be visible */
+    				padding: 11px; /* Adjust the padding to control the content area within the border */
+				}
+			#beepbox-editor-container {
     				border-image-source: url("xptextbg.png");
     				border-image-slice: 11 fill; /* You can adjust the slice value according to your design */
    				border-image-width: 11px; /* You can adjust the width value according to your design */
