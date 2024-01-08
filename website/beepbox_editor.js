@@ -2507,6 +2507,31 @@ var beepbox = (function (exports) {
  		   url("abysstype.otf") format("opentype") tech(color-COLRv1),
 			}
 
+			#text-content {
+    				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png");
+    				border-image-slice: 3 fill; 
+   				border-image-width: 6px; 
+				border-image-repeat: stretch;
+    				background-color: transparent; 
+    				padding: 12px; 
+				}
+			#beepboxEditorContainer {
+    				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png");
+    				border-image-slice: 3 fill; 
+   				border-image-width: 6px; 
+				border-image-repeat: stretch;
+    				background-color: transparent; 
+    				padding: 12px; 
+				}
+			 .beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered {
+    				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png") !important;
+    				border-image-slice: 3 fill !important; 
+   				border-image-width: 2px !important; 
+				border-image-repeat: stretch !important;
+    				background-color: transparent !important; 
+    				padding: 4px !important; 
+				}
+
 			@font-face {
 		   font-family: "AbyssType_small";
 		   src:
