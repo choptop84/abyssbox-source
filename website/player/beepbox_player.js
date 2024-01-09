@@ -2119,27 +2119,45 @@ var beepbox = (function (exports) {
 
 			#text-content {
     				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png");
-    				border-image-slice: 3 fill; 
-   				border-image-width: 6px; 
+    				border-image-slice: 4 fill; 
+   				border-image-width: 8px; 
 				border-image-repeat: stretch;
     				background-color: transparent; 
     				padding: 12px; 
+
+    				image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    				image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    				image-rendering: -o-crisp-edges !important;            /* Opera */
+    				image-rendering: pixelated !important;                 /* Future browsers */
+    				image-rendering: optimizeSpeed !important;             /* IE */
 				}
 			#beepboxEditorContainer {
     				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png");
-    				border-image-slice: 3 fill; 
-   				border-image-width: 6px; 
+    				border-image-slice: 4 fill; 
+   				border-image-width: 8px; 
 				border-image-repeat: stretch;
     				background-color: transparent; 
-    				padding: 12px; 
+    				padding: 12px;
+
+    				image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    				image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    				image-rendering: -o-crisp-edges !important;            /* Opera */
+    				image-rendering: pixelated !important;                 /* Future browsers */
+    				image-rendering: optimizeSpeed !important;             /* IE */ 
 				}
 			 .beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered {
     				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png") !important;
-    				border-image-slice: 3 fill !important; 
-   				border-image-width: 2px !important; 
+    				border-image-slice: 4 fill !important; 
+   				border-image-width: 4px !important; 
 				border-image-repeat: stretch !important;
     				background-color: transparent !important; 
     				padding: 4px !important; 
+
+    				image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    				image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    				image-rendering: -o-crisp-edges !important;            /* Opera */
+    				image-rendering: pixelated !important;                 /* Future browsers */
+    				image-rendering: optimizeSpeed !important;             /* IE */
 				}
 
 			@font-face {
@@ -2149,7 +2167,7 @@ var beepbox = (function (exports) {
 			}
 
 			html {
- 		   font-family: 'AbyssType';
+ 		   	font-family: 'AbyssType';
 			}
 
 		   var(--track-font): 'AbyssType';
