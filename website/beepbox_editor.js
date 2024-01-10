@@ -2511,8 +2511,7 @@ var beepbox = (function (exports) {
     				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png");
     				border-image-slice: 4 fill; 
    				border-image-width: 8px; 
-				border-image-repeat: stretch;
-    				background-color: transparent; 
+				border-image-repeat: stretch; 
     				padding: 12px; 
 
     				image-rendering: -moz-crisp-edges !important;         /* Firefox */
@@ -2526,7 +2525,6 @@ var beepbox = (function (exports) {
     				border-image-slice: 4 fill; 
    				border-image-width: 8px; 
 				border-image-repeat: stretch;
-    				background-color: transparent; 
     				padding: 12px;
 
     				image-rendering: -moz-crisp-edges !important;         /* Firefox */
@@ -2540,7 +2538,6 @@ var beepbox = (function (exports) {
     				border-image-slice: 4 fill !important; 
    				border-image-width: 4px !important; 
 				border-image-repeat: stretch !important;
-    				background-color: transparent !important; 
     				padding: 4px !important; 
 
     				image-rendering: -moz-crisp-edges !important;         /* Firefox */
