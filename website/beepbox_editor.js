@@ -10311,7 +10311,6 @@ var beepbox = (function (exports) {
 .beepboxEditor .layout-option {
 	display: flex;
 	flex-direction: column;
-	flex: 1;
 	cursor: pointer;
 	color: ${ColorConfig.secondaryText};
 }
@@ -32038,23 +32037,23 @@ You should be redirected to the song at:<br /><br />
 					<svg viewBox="-1 -1 28 22">
 						<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
 						<rect x="2" y="2" width="22" height="2" fill="currentColor"/>
-						<rect x="2" y="5" width="4" height="8" fill="currentColor"/>
-						<rect x="7" y="5" width="17" height="8" fill="currentColor"/>
+						<rect x="2" y="5" width="4" height="9" fill="currentColor"/>
+						<rect x="7" y="5" width="17" height="9" fill="currentColor"/>
 						<rect x="2" y="14" width="22" height="4" fill="currentColor"/>
 					</svg>
 				`), div$d("Flipped (AB)")), label$1({ class: "layout-option" }, input$a({ type: "radio", name: "layout", value: "focus" }), SVG(`\
 					<svg viewBox="-1 -1 28 22">
 						<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
-						<rect x="2" y="2" width="19" height="10" fill="currentColor"/>
+						<rect x="2" y="2" width="18" height="10" fill="currentColor"/>
 						<rect x="20" y="2" width="4" height="16" fill="currentColor"/>
-						<rect x="2" y="13" width="19" height="5" fill="currentColor"/>
+						<rect x="2" y="13" width="18" height="5" fill="currentColor"/>
 					</svg>
 				`), div$d("Focus (AB)")), label$1({ class: "layout-option" }, input$a({ type: "radio", name: "layout", value: "long (AB)" }), SVG(`\
 					<svg viewBox="-1 -1 28 22">
 						<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
 						<rect x="2" y="2" width="12" height="10" fill="currentColor"/>
-						<rect x="15" y="2" width="4" height="18" fill="currentColor"/>
-						<rect x="20" y="2" width="4" height="18" fill="currentColor"/>
+						<rect x="15" y="2" width="4" height="16" fill="currentColor"/>
+						<rect x="20" y="2" width="4" height="16" fill="currentColor"/>
 						<rect x="2" y="13" width="12" height="5" fill="currentColor"/>
 					</svg>
 				`), div$d("Long (AB)")));

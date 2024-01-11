@@ -128,35 +128,36 @@ export class CustomPrompt implements Prompt {
 	private readonly _resetButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size);" }, "Reset to defaults");
 
 	public readonly container: HTMLDivElement = div({ class: "prompt noSelection", style: "width: 500px;" },
-		h2("Import"),
-		p({ style: "text-align: left; margin: 0.5em 0;" },
-			"Hello All! This page is currently under work by choptop84! If you would like to continue making your custom themes, then please use the features below.",
-		),
-		p({ style: "text-align: left; margin: 0.5em 0;" },
-			"The first image will become the editor background, and the second image will be tiled across the webpage.",
-		),
-		div(),
-		p({ style: "text-align: left; margin: 0;" },
-			"Editor Background Image:",
-			this._fileInput
-		),
-		p({ style: "text-align: left; margin: 0.5em 0;"},
-			"Website Background Image:",
-			this._fileInput2
-		),
-		div(),
-		p({ style: "text-align: left; margin: 0;"},
-			"If you want to mess with custom color schemes, mess with the hexcodes yourself, I dare you:",
-		),
-		this._colorInput,
-		div({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" },
-			this._resetButton
-		),
-		div({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" },
-			this._okayButton,
-		),
-		this._cancelButton,
-	);
+	h2("Import"),
+	p({ style: "text-align: left; margin: 0.5em 0;" },
+	  "Hello All! This page is currently under work by choptop84! If you would like to continue making your custom themes, then please use the features below.",
+	),
+	p({ style: "text-align: left; margin: 0.5em 0;" },
+	  "The first image will become the editor background, and the second image will be tiled across the webpage.",
+	),
+	div(),
+	p({ style: "text-align: left; margin: 0;" },
+	  "Editor Background Image:",
+	  this._fileInput
+	),
+	p({ style: "text-align: left; margin: 0.5em 0;"},
+	  "Website Background Image:",
+	  this._fileInput2
+	),
+	div(),
+	p({ style: "text-align: left; margin: 0;"},
+	  "If you want to mess with custom color schemes, mess with the hexcodes yourself, I dare you:",
+	),
+	// Replace this line with the color picker input
+	input({ type: "color", id: "colorPicker" }),
+	div({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" },
+	  this._resetButton
+	),
+	div({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" },
+	  this._okayButton,
+	),
+	this._cancelButton,
+  );
 	// private readonly lastTheme: string | null = window.localStorage.getItem("colorTheme")
 
 	constructor(private _doc: SongDocument, private _pattern: PatternEditor, private _pattern2: HTMLDivElement, private _pattern3: HTMLElement) {

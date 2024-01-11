@@ -769,7 +769,6 @@ document.head.appendChild(HTML.style({ type: "text/css" }, `
 .beepboxEditor .layout-option {
 	display: flex;
 	flex-direction: column;
-	flex: 1;
 	cursor: pointer;
 	color: ${ColorConfig.secondaryText};
 }
