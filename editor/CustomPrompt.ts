@@ -151,8 +151,9 @@ export class CustomPrompt implements Prompt {
 		p({ style: "text-align: left; margin: 0;"},
 			"Page margin:", 
 		),
-		input({ type: "color", id: "colorPicker" }),
-		
+		// So this thing is the color picker from what I can tell, it outputs rgb values depending on what you set it as... Only problem is that Idk how to get the value lmaooo
+		input({ type: "color", id: "colorPicker"}),
+
 		this._colorInput,
 		div({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" },
 			this._resetButton
