@@ -1598,15 +1598,17 @@ export class SongEditor {
         this._twoNoteArpBox.addEventListener("input", () => { this._doc.record(new ChangeFastTwoNoteArp(this._doc, this._twoNoteArpBox.checked)) });
         this._clicklessTransitionBox.addEventListener("input", () => { this._doc.record(new ChangeClicklessTransition(this._doc, this._clicklessTransitionBox.checked)) });
         this._aliasingBox.addEventListener("input", () => { this._doc.record(new ChangeAliasing(this._doc, this._aliasingBox.checked)) });
-
-        this._promptContainer.addEventListener("click", (event) => {
-            if (this._doc.prefs.closePromptByClickoff === true) {
+        
+        if (this._doc.prefs.closePromptByClickoff == true) {
+            this._promptContainer.addEventListener("click", (event) => {
+            
                 if (this.prompt != null && this.prompt.gotMouseUp === true ) return;
                 if (event.target == this._promptContainer) {
                  this._doc.undo();
                 } 
-            }
-        });
+            
+            });
+        }
 
         if (isMobile) {
             const autoPlayOption: HTMLOptionElement = <HTMLOptionElement>this._optionsMenu.querySelector("[value=autoPlay]");

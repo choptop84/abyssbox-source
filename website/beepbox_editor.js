@@ -39533,7 +39533,7 @@ You should be redirected to the song at:<br /><br />
             this._volumeBarBox = div({ class: "playback-volume-bar", style: "height: 12px; align-self: center;" }, this._volumeBarContainer);
             this._fileMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "File"), option({ value: "new" }, "+ New Blank Song"), option({ value: "import" }, "↑ Import Song... (" + EditorConfig.ctrlSymbol + "O)"), option({ value: "export" }, "↓ Export Song... (" + EditorConfig.ctrlSymbol + "S)"), option({ value: "copyUrl" }, "⎘ Copy Song URL"), option({ value: "shareUrl" }, "⤳ Share Song URL"), option({ value: "shortenUrl" }, "… Shorten Song URL"), option({ value: "viewPlayer" }, "▶ View in Song Player"), option({ value: "copyEmbed" }, "⎘ Copy HTML Embed Code"), option({ value: "songRecovery" }, "⚠ Recover Recent Song..."));
             this._editMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Edit"), option({ value: "undo" }, "Undo (Z)"), option({ value: "redo" }, "Redo (Y)"), option({ value: "copy" }, "Copy Pattern (C)"), option({ value: "pasteNotes" }, "Paste Pattern Notes (V)"), option({ value: "pasteNumbers" }, "Paste Pattern Numbers (" + EditorConfig.ctrlSymbol + "⇧V)"), option({ value: "insertBars" }, "Insert Bar (⏎)"), option({ value: "deleteBars" }, "Delete Selected Bars (⌫)"), option({ value: "insertChannel" }, "Insert Channel (" + EditorConfig.ctrlSymbol + "⏎)"), option({ value: "deleteChannel" }, "Delete Selected Channels (" + EditorConfig.ctrlSymbol + "⌫)"), option({ value: "selectChannel" }, "Select Channel (⇧A)"), option({ value: "selectAll" }, "Select All (A)"), option({ value: "duplicatePatterns" }, "Duplicate Reused Patterns (D)"), option({ value: "transposeUp" }, "Move Notes Up (+ or ⇧+)"), option({ value: "transposeDown" }, "Move Notes Down (- or ⇧-)"), option({ value: "moveNotesSideways" }, "Move All Notes Sideways... (W)"), option({ value: "generateEuclideanRhythm" }, "Generate Euclidean Rhythm... (E)"), option({ value: "beatsPerBar" }, "Change Beats Per Bar... (B)"), option({ value: "barCount" }, "Change Song Length... (L)"), option({ value: "channelSettings" }, "Channel Settings... (Q)"), option({ value: "limiterSettings" }, "Limiter Settings... (⇧L)"), option({ value: "addExternal" }, "Add Custom Samples... (⇧Q)"));
-            this._optionsMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Preferences"), option({ value: "autoPlay" }, "Auto Play on Load"), option({ value: "autoFollow" }, "Keep Current Pattern Selected"), option({ value: "enableNotePreview" }, "Hear Preview of Added Notes"), option({ value: "showLetters" }, "Show Piano Keys"), option({ value: "showFifth" }, 'Highlight "Fifth" of Song Key'), option({ value: "notesOutsideScale" }, "Allow Adding Notes Not in Scale"), option({ value: "setDefaultScale" }, "Use Current Scale as Default"), option({ value: "showChannels" }, "Show Notes From All Channels"), option({ value: "showScrollBar" }, "Show Octave Scroll Bar"), option({ value: "alwaysFineNoteVol" }, "Always Fine Note Volume"), option({ value: "enableChannelMuting" }, "Enable Channel Muting"), option({ value: "displayBrowserUrl" }, "Display Song Data in URL"), option({ value: "displayVolumeBar" }, "Show Playback Volume"), option({ value: "showOscilloscope" }, "Show Oscilloscope"), option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"), option({ value: "closePromptByClickoff" }, "Close prompts when you click off them"), option({ value: "layout" }, "Set Layout..."), option({ value: "colorTheme" }, "Set Theme..."), option({ value: "customTheme" }, "Custom Theme..."), option({ value: "recordingSetup" }, "Set Up Note Recording..."));
+            this._optionsMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Preferences"), option({ value: "autoPlay" }, "Auto Play on Load"), option({ value: "autoFollow" }, "Keep Current Pattern Selected"), option({ value: "enableNotePreview" }, "Hear Preview of Added Notes"), option({ value: "showLetters" }, "Show Piano Keys"), option({ value: "showFifth" }, 'Highlight "Fifth" of Song Key'), option({ value: "notesOutsideScale" }, "Allow Adding Notes Not in Scale"), option({ value: "setDefaultScale" }, "Use Current Scale as Default"), option({ value: "showChannels" }, "Show Notes From All Channels"), option({ value: "showScrollBar" }, "Show Octave Scroll Bar"), option({ value: "alwaysFineNoteVol" }, "Always Fine Note Volume"), option({ value: "enableChannelMuting" }, "Enable Channel Muting"), option({ value: "displayBrowserUrl" }, "Display Song Data in URL"), option({ value: "displayVolumeBar" }, "Show Playback Volume"), option({ value: "showOscilloscope" }, "Show Oscilloscope"), option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"), option({ value: "closePromptByClickoff" }, "Close prompts on click off"), option({ value: "layout" }, "Set Layout..."), option({ value: "colorTheme" }, "Set Theme..."), option({ value: "customTheme" }, "Custom Theme..."), option({ value: "recordingSetup" }, "Set Up Note Recording..."));
             this._scaleSelect = buildOptions(select(), Config.scales.map(scale => scale.name));
             this._keySelect = buildOptions(select(), Config.keys.map(key => key.name).reverse());
             this._octaveStepper = input({ type: "number", min: Config.octaveMin, max: Config.octaveMax, value: "0" });
@@ -39875,7 +39875,7 @@ You should be redirected to the song at:<br /><br />
                     (prefs.displayVolumeBar ? "✓ " : "　") + "Show Playback Volume",
                     (prefs.showOscilloscope ? "✓ " : "　") + "Show Oscilloscope",
                     (prefs.showSampleLoadingStatus ? "✓ " : "　") + "Show Sample Loading Status",
-                    (prefs.closePromptByClickoff ? "✓ " : "　") + "Close prompts when you click off them",
+                    (prefs.closePromptByClickoff ? "✓ " : "　") + "Close prompts on click off",
                     "　Set Layout...",
                     "　Set Theme...",
                     "　Custom Theme...",
@@ -42263,15 +42263,15 @@ You should be redirected to the song at:<br /><br />
             this._twoNoteArpBox.addEventListener("input", () => { this._doc.record(new ChangeFastTwoNoteArp(this._doc, this._twoNoteArpBox.checked)); });
             this._clicklessTransitionBox.addEventListener("input", () => { this._doc.record(new ChangeClicklessTransition(this._doc, this._clicklessTransitionBox.checked)); });
             this._aliasingBox.addEventListener("input", () => { this._doc.record(new ChangeAliasing(this._doc, this._aliasingBox.checked)); });
-            this._promptContainer.addEventListener("click", (event) => {
-                if (this._doc.prefs.closePromptByClickoff === true) {
+            if (this._doc.prefs.closePromptByClickoff == true) {
+                this._promptContainer.addEventListener("click", (event) => {
                     if (this.prompt != null && this.prompt.gotMouseUp === true)
                         return;
                     if (event.target == this._promptContainer) {
                         this._doc.undo();
                     }
-                }
-            });
+                });
+            }
             if (isMobile) {
                 const autoPlayOption = this._optionsMenu.querySelector("[value=autoPlay]");
                 autoPlayOption.disabled = true;
@@ -43915,7 +43915,7 @@ You should be redirected to the song at:<br /><br />
                     this.layout = "long";
                 window.localStorage.removeItem("fullScreen");
             }
-            this.closePromptByClickoff = window.localStorage.getItem("closePromptByClickoff") != "true";
+            this.closePromptByClickoff = window.localStorage.getItem("closePromptByClickoff") != "false";
         }
         save() {
             window.localStorage.setItem("autoPlay", this.autoPlay ? "true" : "false");
