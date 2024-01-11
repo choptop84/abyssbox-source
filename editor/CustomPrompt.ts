@@ -127,7 +127,7 @@ export class CustomPrompt implements Prompt {
 	private readonly _okayButton: HTMLButtonElement = button({ class: "okayButton", style: "width:45%;" }, "Okay");
 	private readonly _resetButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size);" }, "Reset to defaults");
 
-	public readonly container: HTMLDivElement = div({ class: "prompt noSelection", style: "width: 300px;" },
+	public readonly container: HTMLDivElement = div({ class: "prompt noSelection", style: "width: 500px;" },
 		h2("Import"),
 		p({ style: "text-align: left; margin: 0.5em 0;" },
 			"Hello All! This page is currently under work by choptop84! If you would like to continue making your custom themes, then please use the features below.",
@@ -199,6 +199,7 @@ export class CustomPrompt implements Prompt {
 		doReload = true;
 		this._close();
 	}
+
 	private _whenColorsChanged = (): void => {
 		localStorage.setItem("customColors", this._colorInput.value);
 		window.localStorage.setItem("colorTheme", "custom");
