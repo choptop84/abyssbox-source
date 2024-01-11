@@ -781,6 +781,7 @@ export class SongEditor {
         option({ value: "displayVolumeBar" }, "Show Playback Volume"),
         option({ value: "showOscilloscope" }, "Show Oscilloscope"),
         option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"),
+        option({ value: "closePromptByClickoff" }, "Close prompts on click off"),
         option({ value: "layout" }, "Set Layout..."),
         option({ value: "colorTheme" }, "Set Theme..."),
 	option({ value: "customTheme" }, "Custom Theme..."),
@@ -1599,9 +1600,11 @@ export class SongEditor {
         this._aliasingBox.addEventListener("input", () => { this._doc.record(new ChangeAliasing(this._doc, this._aliasingBox.checked)) });
 
         this._promptContainer.addEventListener("click", (event) => {
-            if (this.prompt != null && this.prompt.gotMouseUp === true) return;
-            if (event.target == this._promptContainer) {
-                this._doc.undo();
+            if (this._doc.prefs.closePromptByClickoff === true) {
+                if (this.prompt != null && this.prompt.gotMouseUp === true ) return;
+                if (event.target == this._promptContainer) {
+                 this._doc.undo();
+                } 
             }
         });
 
@@ -2073,6 +2076,7 @@ export class SongEditor {
             (prefs.displayVolumeBar ? "✓ " : "　") + "Show Playback Volume",
             (prefs.showOscilloscope ? "✓ " : "　") + "Show Oscilloscope",
             (prefs.showSampleLoadingStatus ? "✓ " : "　") + "Show Sample Loading Status",
+            (prefs.closePromptByClickoff ? "✓ " : "　") + "Close prompts on click off",
             "　Set Layout...",
             "　Set Theme...",
 	    "　Custom Theme...",
