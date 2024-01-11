@@ -42026,6 +42026,9 @@ You should be redirected to the song at:<br /><br />
                     case "showSampleLoadingStatus":
                         this._doc.prefs.showSampleLoadingStatus = !this._doc.prefs.showSampleLoadingStatus;
                         break;
+                    case "showOscilloscope":
+                        this._doc.prefs.closePromptByClickoff = !this._doc.prefs.closePromptByClickoff;
+                        break;
                 }
                 this._optionsMenu.selectedIndex = 0;
                 this._doc.notifier.changed();
