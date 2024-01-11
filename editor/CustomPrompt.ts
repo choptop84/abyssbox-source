@@ -130,7 +130,7 @@ export class CustomPrompt implements Prompt {
 	public readonly container: HTMLDivElement = div({ class: "prompt noSelection", style: "width: 300px;" },
 		h2("Import"),
 		p({ style: "text-align: left; margin: 0.5em 0;" },
-			"You can upload images to create a custom theme.",
+			"Hello All! This page is currently under work by choptop84! If you would like to continue making your custom themes, then please use the features below.",
 		),
 		p({ style: "text-align: left; margin: 0.5em 0;" },
 			"The first image will become the editor background, and the second image will be tiled across the webpage.",
