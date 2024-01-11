@@ -82,7 +82,7 @@ export class Preferences {
 			if (window.localStorage.getItem("fullScreen") == "true") this.layout = "long";
 			window.localStorage.removeItem("fullScreen");
 		}
-		this.closePromptByClickoff = window.localStorage.getItem("closePromptByClickoff") != "false";
+		this.closePromptByClickoff = window.localStorage.getItem("closePromptByClickoff") != "true";
 	}
 	
 	public save(): void {

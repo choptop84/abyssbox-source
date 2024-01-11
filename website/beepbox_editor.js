@@ -43912,7 +43912,7 @@ You should be redirected to the song at:<br /><br />
                     this.layout = "long";
                 window.localStorage.removeItem("fullScreen");
             }
-            this.closePromptByClickoff = window.localStorage.getItem("closePromptByClickoff") != "false";
+            this.closePromptByClickoff = window.localStorage.getItem("closePromptByClickoff") != "true";
         }
         save() {
             window.localStorage.setItem("autoPlay", this.autoPlay ? "true" : "false");
