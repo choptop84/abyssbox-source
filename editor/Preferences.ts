@@ -35,7 +35,8 @@ export class Preferences {
 	public metronomeWhileRecording: boolean;
 	public showOscilloscope: boolean;
 	public showSampleLoadingStatus: boolean;
-	
+	public closePromptByClickoff: boolean;
+
 	constructor() {
 		this.reload();
 	}
@@ -81,6 +82,7 @@ export class Preferences {
 			if (window.localStorage.getItem("fullScreen") == "true") this.layout = "long";
 			window.localStorage.removeItem("fullScreen");
 		}
+		this.closePromptByClickoff = window.localStorage.getItem("closePromptByClickoff") != "false";
 	}
 	
 	public save(): void {
@@ -114,5 +116,6 @@ export class Preferences {
                 window.localStorage.setItem("customTheme2", this.customTheme2!);
 		window.localStorage.setItem("volume", String(this.volume));
 		window.localStorage.setItem("visibleOctaves", String(this.visibleOctaves));
+		window.localStorage.setItem("closePromptByClickoff", this.closePromptByClickoff ? "true" : "false");
 	}
 }
