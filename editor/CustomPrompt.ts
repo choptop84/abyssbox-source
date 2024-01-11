@@ -128,11 +128,11 @@ export class CustomPrompt implements Prompt {
 	private readonly _resetButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size);" }, "Reset to defaults");
 
 	public readonly container: HTMLDivElement = div({ class: "prompt noSelection", style: "width: 500px;" },
-		h2("Import"),
+		h2("Custom Theme Editor"),
 		p({ style: "text-align: left; margin: 0.5em 0;" },
 			"Hello All! This page is currently under work by choptop84! If you would like to continue making your custom themes, then please use the features below.",
 		),
-		p({ style: "text-align: left; margin: 0.5em 0;" },
+		/* p({ style: "text-align: left; margin: 0.5em 0;" },
 			"The first image will become the editor background, and the second image will be tiled across the webpage.",
 		),
 		div(),
@@ -146,9 +146,13 @@ export class CustomPrompt implements Prompt {
 		),
 		div(),
 		p({ style: "text-align: left; margin: 0;"},
-			"If you want to mess with custom color schemes, mess with the hexcodes yourself, I dare you:",
+			"If you want to mess with custom color schemes, mess with the hexcodes yourself, I dare you:", 
+		), */
+		p({ style: "text-align: left; margin: 0;"},
+			"Page margin:", 
 		),
 		input({ type: "color", id: "colorPicker" }),
+		
 		this._colorInput,
 		div({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" },
 			this._resetButton
