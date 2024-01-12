@@ -10322,7 +10322,7 @@ var beepbox = (function (exports) {
 	flex-direction: column;
 	cursor: pointer;
 	color: ${ColorConfig.secondaryText};
-	width: 75px;
+	width: 25%;
 }
 
 .beepboxEditor .layout-option input {
@@ -36362,7 +36362,7 @@ You should be redirected to the song at:<br /><br />
             this._pattern3 = _pattern3;
             this._fileInput = input$4({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose editor background image" });
             this._fileInput2 = input$4({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose website background image" });
-            this._colorpicker = input$4({ type: "color", id: "colorPicker", value: (_pageMarginTest), style: "width: 100%; height: 30px; border: 3px" });
+            this._colorpicker = input$4({ type: "color", id: "colorPicker", value: (_pageMarginTest), style: "width: 100%; height: 30px; outline: 2px" });
             this._currentThemeProperty = "--page-margin";
             this._colorMenu = select$4({ style: "width: 100%;" }, option$4({ selected: true, disabled: true, hidden: false }, "Select an asset to change"), option$4({ value: "--page-margin" }, "Page Margin"), option$4({ value: "--editor-background" }, "Editor Background"), option$4({ value: "--primary-text" }, "Primary Text"), option$4({ value: "--secondary-text" }, "Secondary Text"), option$4({ value: "--inverted-text" }, "Inverted Text"), option$4({ value: "--loop-accent" }, "Loop Accent"), option$4({ value: "--link-accent" }, "Link Accent"), option$4({ value: "--ui-widget-background" }, "UI Widget Background"), option$4({ value: "--ui-widget-focus" }, "UI Widget Focus"), option$4({ value: "--pitch-background" }, "Pitch Background"), option$4({ value: "--tonic" }, "Tonic"), option$4({ value: "--fifth-note" }, "Fifth note"), option$4({ value: "--white-piano-key" }, "White Piano Key"), option$4({ value: "--black-piano-key" }, "Black Piano Key"), option$4({ value: "--track-editor-bg-pitch" }, "Track Editor Pitch BG"), option$4({ value: "--track-editor-bg-pitch-dim" }, "Empty Track Editor Pitch BG"), option$4({ value: "--track-editor-bg-noise" }, "Track Editor Noise BG"), option$4({ value: "--track-editor-bg-noise-dim" }, "Empty Track Editor Noise BG"), option$4({ value: "--track-editor-bg-mod" }, "Track Editor Mod BG"), option$4({ value: "--track-editor-bg-mod-dim" }, "Empty Track Editor Mod BG"), option$4({ value: "--multiplicative-mod-slider" }, "Multiplicative Mod Slider"), option$4({ value: "--overwriting-mod-slider" }, "Overwriting Mod Slider"), option$4({ value: "--indicator-primary" }, "Primary Indicator"), option$4({ value: "--indicator-secondary" }, "Secondary Indicator"), option$4({ value: "--select2-opt-group" }, "Preset Catagory Background"), option$4({ value: "--input-box-outline" }, "Input Box Outline"), option$4({ value: "--mute-button-normal" }, "Mute Button (Normal)"), option$4({ value: "--mute-button-mod" }, "Mute Button (Mod)"), option$4({ value: "--mod-label-primary" }, "Mod Label Primary"), option$4({ value: "--mod-label-secondary-text" }, "Mod Label Secondary"), option$4({ value: "--mod-label-primary-text" }, "Mod Label Primary Text"));
             this._colorInput = input$4({ type: "text", value: localStorage.getItem("customColors") || `:root {
