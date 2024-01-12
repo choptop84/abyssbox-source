@@ -36343,7 +36343,7 @@ You should be redirected to the song at:<br /><br />
     }
 
     const { button: button$6, div: div$6, h2: h2$5, input: input$4, p: p$1 } = HTML;
-    const _pageMarginWeb = document.querySelector("--page-margin");
+    let _pageMarginTest = ColorConfig.getComputed("--page-margin");
     let doReload = false;
     class CustomPrompt {
         constructor(_doc, _pattern, _pattern2, _pattern3) {
@@ -36353,7 +36353,7 @@ You should be redirected to the song at:<br /><br />
             this._pattern3 = _pattern3;
             this._fileInput = input$4({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose editor background image" });
             this._fileInput2 = input$4({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose website background image" });
-            this._colorpicker = input$4({ type: "color", id: "colorPicker", value: (_pageMarginWeb) });
+            this._colorpicker = input$4({ type: "color", id: "colorPicker", value: (_pageMarginTest) });
             this._colorInput = input$4({ type: "text", value: localStorage.getItem("customColors") || `:root {
 		--page-margin: #040410;
 		--editor-background: #040410;
@@ -36517,6 +36517,9 @@ You should be redirected to the song at:<br /><br />
                 });
                 reader.readAsDataURL(file);
             };
+            this._whenColorsPicked = () => {
+                document.documentElement.style.setProperty("--page-margin", this._colorpicker.value);
+            };
             this._whenFileSelected2 = () => {
                 const file = this._fileInput2.files[0];
                 if (!file)
@@ -36542,6 +36545,7 @@ You should be redirected to the song at:<br /><br />
             this._okayButton.addEventListener("click", this._close);
             this._cancelButton.addEventListener("click", this._close);
             this._resetButton.addEventListener("click", this._reset);
+            this._colorpicker.addEventListener("change", this._whenColorsPicked);
         }
     }
 
