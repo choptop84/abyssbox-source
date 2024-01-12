@@ -5,6 +5,7 @@ import { Prompt } from "./Prompt";
 import { SongDocument } from "./SongDocument";
 
 import { PatternEditor } from "./PatternEditor";
+
 // import { ColorConfig } from "./ColorConfig";
 
 //namespace beepbox {
@@ -13,7 +14,7 @@ let doReload = false;
 export class CustomPrompt implements Prompt {
 	private readonly _fileInput: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose editor background image"});
 	private readonly _fileInput2: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose website background image" });
-	private readonly _colorpicker: HTMLInputElement = input({ type: "color", id: "colorPicker", name: "Page Margin", value:"--page-margin"});
+	private readonly _colorpicker: HTMLInputElement = input({ type: "color", id: "colorPicker", name: "Page Margin", value:"_pageMarginWeb"});
 	private readonly _colorInput: HTMLInputElement = input({ type: "text", value: localStorage.getItem("customColors") || `:root {
 		--page-margin: #040410;
 		--editor-background: #040410;
@@ -229,6 +230,14 @@ export class CustomPrompt implements Prompt {
 	}
 
 	private _whenColorsPicked = (): void => {
+
+		/*const _pageMarginWeb = document.querySelector("--page-margin");
+		let _pageMarginTest = ColorConfig.getComputed();
+
+		const _pageMargin = getComputedStyle(this._colorInput).getPropertyValue("--page-margin"); */
+		
+		
+
 	}
 
 	private _whenFileSelected2 = (): void => {
