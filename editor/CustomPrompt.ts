@@ -13,6 +13,7 @@ let doReload = false;
 export class CustomPrompt implements Prompt {
 	private readonly _fileInput: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose editor background image"});
 	private readonly _fileInput2: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose website background image" });
+	private readonly _colorpicker: HTMLInputElement = input({ type: "color", id: "colorPicker", name: "Page Margin", value:"page-margin"});
 	private readonly _colorInput: HTMLInputElement = input({ type: "text", value: localStorage.getItem("customColors") || `:root {
 		--page-margin: #040410;
 		--editor-background: #040410;
@@ -148,11 +149,8 @@ export class CustomPrompt implements Prompt {
 		p({ style: "text-align: left; margin: 0;"},
 			"If you want to mess with custom color schemes, mess with the hexcodes yourself, I dare you:", 
 		), */
-		p({ style: "text-align: left; margin: 0;"},
-			"Page margin:", 
-		),
 		// So this thing is the color picker from what I can tell, it outputs rgb values depending on what you set it as... Only problem is that Idk how to get the value lmaooo
-		input({ type: "color", id: "colorPicker"}),
+		this._colorpicker,
 
 		this._colorInput,
 		div({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" },
@@ -172,6 +170,7 @@ export class CustomPrompt implements Prompt {
 		this._okayButton.addEventListener("click", this._close);
 		this._cancelButton.addEventListener("click", this._close);
 		this._resetButton.addEventListener("click", this._reset);
+		this._colorpicker.addEventListener("change", this._whenColorsPicked);
 	}
 
 	private _close = (): void => {
@@ -228,6 +227,10 @@ export class CustomPrompt implements Prompt {
 		});
 		reader.readAsDataURL(file);
 	}
+
+	private _whenColorsPicked = (): void => {
+	}
+
 	private _whenFileSelected2 = (): void => {
 		const file: File = this._fileInput2.files![0];
 		if (!file) return;

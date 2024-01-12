@@ -36351,6 +36351,7 @@ You should be redirected to the song at:<br /><br />
             this._pattern3 = _pattern3;
             this._fileInput = input$4({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose editor background image" });
             this._fileInput2 = input$4({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose website background image" });
+            this._colorpicker = input$4({ type: "color", id: "colorPicker", name: "Page Margin", value: "page-margin" });
             this._colorInput = input$4({ type: "text", value: localStorage.getItem("customColors") || `:root {
 		--page-margin: #040410;
 		--editor-background: #040410;
@@ -36464,7 +36465,7 @@ You should be redirected to the song at:<br /><br />
             this._cancelButton = button$6({ class: "cancelButton" });
             this._okayButton = button$6({ class: "okayButton", style: "width:45%;" }, "Okay");
             this._resetButton = button$6({ style: "height: auto; min-height: var(--button-size);" }, "Reset to defaults");
-            this.container = div$6({ class: "prompt noSelection", style: "width: 500px;" }, h2$5("Custom Theme Editor"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Hello All! This page is currently under work by choptop84! If you would like to continue making your custom themes, then please use the features below."), p$1({ style: "text-align: left; margin: 0;" }, "Page margin:"), input$4({ type: "color", id: "colorPicker" }), this._colorInput, div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._resetButton), div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
+            this.container = div$6({ class: "prompt noSelection", style: "width: 500px;" }, h2$5("Custom Theme Editor"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Hello All! This page is currently under work by choptop84! If you would like to continue making your custom themes, then please use the features below."), this._colorpicker, this._colorInput, div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._resetButton), div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
             this._close = () => {
                 this._doc.prompt = null;
                 this._doc.undo();
@@ -36514,6 +36515,8 @@ You should be redirected to the song at:<br /><br />
                 });
                 reader.readAsDataURL(file);
             };
+            this._whenColorsPicked = () => {
+            };
             this._whenFileSelected2 = () => {
                 const file = this._fileInput2.files[0];
                 if (!file)
@@ -36539,6 +36542,7 @@ You should be redirected to the song at:<br /><br />
             this._okayButton.addEventListener("click", this._close);
             this._cancelButton.addEventListener("click", this._close);
             this._resetButton.addEventListener("click", this._reset);
+            this._colorpicker.addEventListener("change", this._whenColorsPicked);
         }
     }
 
