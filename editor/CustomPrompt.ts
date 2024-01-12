@@ -9,16 +9,58 @@ import { PatternEditor } from "./PatternEditor";
 import { ColorConfig } from "./ColorConfig";
 
 //namespace beepbox {
-const { button, div, h2, input, p} = HTML;
+const { button, div, h2, input, p, option, select} = HTML;
 
 //const _pageMarginWeb = document.querySelector("--page-margin");
-let _pageMarginTest = ColorConfig.getComputed("--page-margin");
+const _pageMarginTest = ColorConfig.getComputed("--page-margin");
 
 let doReload = false;
 export class CustomPrompt implements Prompt {
 	private readonly _fileInput: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose editor background image"});
 	private readonly _fileInput2: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose website background image" });
-	private readonly _colorpicker: HTMLInputElement = input({ type: "color", id: "colorPicker", value:(_pageMarginTest.valueOf)});
+	private readonly _colorpicker: HTMLInputElement = input({ type: "color", id: "colorPicker", value:(_pageMarginTest), style:"width: 100%; height: 30px; border: 3px"});
+
+	private _currentThemeProperty: string = "--page-margin";
+	
+    private readonly _colorMenu: HTMLSelectElement = select({ style: "width: 100%;" },
+        option({ selected: true, disabled: true, hidden: false }, "Select an asset to change"),
+        option({ value: "--page-margin" }, "Page Margin"),
+        option({ value: "--editor-background" }, "Editor Background"),
+        option({ value: "--primary-text" }, "Primary Text"),
+        option({ value: "--secondary-text" }, "Secondary Text"),
+        option({ value: "--inverted-text" }, "Inverted Text"),
+        option({ value: "--loop-accent" }, "Loop Accent"),
+        option({ value: "--link-accent" }, "Link Accent"),
+        option({ value: "--ui-widget-background" }, "UI Widget Background"),
+		option({ value: "--ui-widget-focus" }, "UI Widget Focus"),
+		option({ value: "--pitch-background" }, "Pitch Background"),
+		option({ value: "--tonic" }, "Tonic"),
+		option({ value: "--fifth-note" }, "Fifth note"),
+		option({ value: "--white-piano-key" }, "White Piano Key"),
+		option({ value: "--black-piano-key" }, "Black Piano Key"),
+
+		option({ value: "--track-editor-bg-pitch" }, "Track Editor Pitch BG"),
+		option({ value: "--track-editor-bg-pitch-dim" }, "Empty Track Editor Pitch BG"),
+		option({ value: "--track-editor-bg-noise" }, "Track Editor Noise BG"),
+		option({ value: "--track-editor-bg-noise-dim" }, "Empty Track Editor Noise BG"),
+		option({ value: "--track-editor-bg-mod" }, "Track Editor Mod BG"),
+		option({ value: "--track-editor-bg-mod-dim" }, "Empty Track Editor Mod BG"),
+
+		option({ value: "--multiplicative-mod-slider" }, "Multiplicative Mod Slider"),
+		option({ value: "--overwriting-mod-slider" }, "Overwriting Mod Slider"),
+		option({ value: "--indicator-primary" }, "Primary Indicator"),
+		option({ value: "--indicator-secondary" }, "Secondary Indicator"),
+		option({ value: "--select2-opt-group" }, "Preset Catagory Background"),
+		option({ value: "--input-box-outline" }, "Input Box Outline"),
+
+		option({ value: "--mute-button-normal" }, "Mute Button (Normal)"),
+		option({ value: "--mute-button-mod" }, "Mute Button (Mod)"),
+		option({ value: "--mod-label-primary" }, "Mod Label Primary"),
+		option({ value: "--mod-label-secondary-text" }, "Mod Label Secondary"),
+		option({ value: "--mod-label-primary-text" }, "Mod Label Primary Text"),		
+
+    ); 
+
 	private readonly _colorInput: HTMLInputElement = input({ type: "text", value: localStorage.getItem("customColors") || `:root {
 		--page-margin: #040410;
 		--editor-background: #040410;
@@ -133,11 +175,18 @@ export class CustomPrompt implements Prompt {
 	private readonly _okayButton: HTMLButtonElement = button({ class: "okayButton", style: "width:45%;" }, "Okay");
 	private readonly _resetButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size);" }, "Reset to defaults");
 
-	public readonly container: HTMLDivElement = div({ class: "prompt noSelection", style: "width: 500px;" },
+	public readonly container: HTMLDivElement = div({ class: "prompt noSelection", style: "width: 500px; left: 4;"},
+	
 		h2("Custom Theme Editor"),
 		p({ style: "text-align: left; margin: 0.5em 0;" },
-			"Hello All! This page is currently under work by choptop84! If you would like to continue making your custom themes, then please use the features below.",
+		"Thank you to leoV on discord for basically writing the whole system on how this works, without him this wouldn't be possible!",
 		),
+		p({ style: "text-align: left; margin: 0.5em 0;" },
+		"To create your custom theme, click the dropdown menu labeled 'Select an asset to change.' After choosing the asset, modify its color by clicking the colored square. All adjustments occur once you press Okay, allowing you to instantly see the effects of color changes.",
+		),	
+		p({ style: "text-align: left; margin: 0.5em 0;" },
+		"The website and editor background images are being updated. Soon, you'll only need to copy and paste the theme to automatically include the backgrounds!",
+		),				
 		/* p({ style: "text-align: left; margin: 0.5em 0;" },
 			"The first image will become the editor background, and the second image will be tiled across the webpage.",
 		),
@@ -154,11 +203,14 @@ export class CustomPrompt implements Prompt {
 		p({ style: "text-align: left; margin: 0;"},
 			"If you want to mess with custom color schemes, mess with the hexcodes yourself, I dare you:", 
 		), */
-		// So this thing is the color picker from what I can tell, it outputs rgb values depending on what you set it as... Only problem is that Idk how to get the value lmaooo
-		p({ style: "text-align: left; margin: 0.5em 0;"},
-			"This should be page margin: ",
-			this._colorpicker
+		p({ style: "text-align: center; margin: 1em 0;"},
+		this._colorMenu
 		),
+		p({ style: "text-align: center; margin: 1em 0;"},
+			"Pick a color: ",
+			this._colorpicker,
+		),
+
 		this._colorInput,
 		div({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" },
 			this._resetButton
@@ -169,7 +221,6 @@ export class CustomPrompt implements Prompt {
 		this._cancelButton,
 	);
 	// private readonly lastTheme: string | null = window.localStorage.getItem("colorTheme")
-
 	constructor(private _doc: SongDocument, private _pattern: PatternEditor, private _pattern2: HTMLDivElement, private _pattern3: HTMLElement) {
 		this._fileInput.addEventListener("change", this._whenFileSelected);
 		this._fileInput2.addEventListener("change", this._whenFileSelected2);
@@ -178,6 +229,7 @@ export class CustomPrompt implements Prompt {
 		this._cancelButton.addEventListener("click", this._close);
 		this._resetButton.addEventListener("click", this._reset);
 		this._colorpicker.addEventListener("change", this._whenColorsPicked)
+		this._colorMenu.addEventListener("change", this._whenMenuChanged)
 	}
 
 	private _close = (): void => {
@@ -238,8 +290,15 @@ export class CustomPrompt implements Prompt {
 	private _whenColorsPicked = (): void => {
 
 		//document.documentElement.style.setProperty("--page-margin", this._colorpicker.value)
-		ColorConfig.setThemeProperty("--page-margin", this._colorpicker.value);
+		ColorConfig.setThemeProperty(this._currentThemeProperty, this._colorpicker.value);
 		this._colorInput.value = ColorConfig.getThemeProperties();
+		this._colorInput.dispatchEvent(new Event("change"));
+		
+
+	}
+
+	private _whenMenuChanged = (): void => {
+		this._currentThemeProperty = this._colorMenu.value
 	}
 
 	private _whenFileSelected2 = (): void => {

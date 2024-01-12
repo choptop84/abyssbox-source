@@ -3763,25 +3763,25 @@ var beepbox = (function (exports) {
 					--mod-label-secondary-text: rgb(87, 86, 120);
 					--mod-label-primary-text: white;
 					--pitch-secondary-channel-hue: 0;
-					--pitch-secondary-channel-hue-scale: 6.1;
+					--pitch-secondary-channel-hue-scale: 6.5;
 					--pitch-secondary-channel-sat: 83.3;
 					--pitch-secondary-channel-sat-scale: 0.1;
 					--pitch-secondary-channel-lum: 40;
 					--pitch-secondary-channel-lum-scale: 0.05;
 					--pitch-primary-channel-hue: 0;
-					--pitch-primary-channel-hue-scale: 6.1;
+					--pitch-primary-channel-hue-scale: 6.5;
 					--pitch-primary-channel-sat: 100;
 					--pitch-primary-channel-sat-scale: 0.1;
 					--pitch-primary-channel-lum: 67.5;
 					--pitch-primary-channel-lum-scale: 0.05;
 					--pitch-secondary-note-hue: 0;
-					--pitch-secondary-note-hue-scale: 6.1;
+					--pitch-secondary-note-hue-scale: 6.5;
 					--pitch-secondary-note-sat: 93.9;
 					--pitch-secondary-note-sat-scale: 0.1;
 					--pitch-secondary-note-lum: 25;
 					--pitch-secondary-note-lum-scale: 0.05;
 					--pitch-primary-note-hue: 0;
-					--pitch-primary-note-hue-scale: 6.1;
+					--pitch-primary-note-hue-scale: 6.5;
 					--pitch-primary-note-sat: 100;
 					--pitch-primary-note-sat-scale: 0.05;
 					--pitch-primary-note-lum: 85.6;
@@ -10322,6 +10322,7 @@ var beepbox = (function (exports) {
 	flex-direction: column;
 	cursor: pointer;
 	color: ${ColorConfig.secondaryText};
+	width: 75px;
 }
 
 .beepboxEditor .layout-option input {
@@ -27291,12 +27292,12 @@ li.select2-results__option[role=group] > strong:hover {
         }
     }
 
-    const { button: button$k, div: div$k, span: span$6, h2: h2$j, input: input$f, br: br$3, select: select$9, option: option$9 } = HTML;
+    const { button: button$k, div: div$k, span: span$6, h2: h2$j, input: input$f, br: br$3, select: select$a, option: option$a } = HTML;
     class BeatsPerBarPrompt {
         constructor(_doc) {
             this._doc = _doc;
             this._beatsStepper = input$f({ style: "width: 3em; margin-left: 1em;", type: "number", step: "1" });
-            this._conversionStrategySelect = select$9({ style: "width: 100%;" }, option$9({ value: "splice" }, "Splice beats at end of bars."), option$9({ value: "stretch" }, "Stretch notes to fit in bars."), option$9({ value: "overflow" }, "Overflow notes across bars."));
+            this._conversionStrategySelect = select$a({ style: "width: 100%;" }, option$a({ value: "splice" }, "Splice beats at end of bars."), option$a({ value: "stretch" }, "Stretch notes to fit in bars."), option$a({ value: "overflow" }, "Overflow notes across bars."));
             this._cancelButton = button$k({ class: "cancelButton" });
             this._okayButton = button$k({ class: "okayButton", style: "width:45%;" }, "Okay");
             this.container = div$k({ class: "prompt noSelection", style: "width: 250px;" }, h2$j("Beats Per Bar"), div$k({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$k({ style: "text-align: right;" }, "Beats per bar:", br$3(), span$6({ style: "font-size: smaller; color: ${ColorConfig.secondaryText};" }, "(Multiples of 3 or 4 are recommended)")), this._beatsStepper), div$k({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$k({ class: "selectContainer", style: "width: 100%;" }, this._conversionStrategySelect)), div$k({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
@@ -29633,7 +29634,7 @@ li.select2-results__option[role=group] > strong:hover {
         return Math.pow(volumeMult, 0.25) * 127;
     }
 
-    const { button: button$f, div: div$f, h2: h2$e, input: input$c, select: select$8, option: option$8 } = HTML;
+    const { button: button$f, div: div$f, h2: h2$e, input: input$c, select: select$9, option: option$9 } = HTML;
     function lerp(low, high, t) {
         return low + t * (high - low);
     }
@@ -29666,7 +29667,7 @@ li.select2-results__option[role=group] > strong:hover {
             this._enableIntro = input$c({ type: "checkbox" });
             this._loopDropDown = input$c({ style: "width: 2em;", type: "number", min: "1", max: "4", step: "1" });
             this._enableOutro = input$c({ type: "checkbox" });
-            this._formatSelect = select$8({ style: "width: 100%;" }, option$8({ value: "wav" }, "Export to .wav file."), option$8({ value: "mp3" }, "Export to .mp3 file."), option$8({ value: "midi" }, "Export to .mid file."), option$8({ value: "json" }, "Export to .json file."), option$8({ value: "html" }, "Export to .html file."));
+            this._formatSelect = select$9({ style: "width: 100%;" }, option$9({ value: "wav" }, "Export to .wav file."), option$9({ value: "mp3" }, "Export to .mp3 file."), option$9({ value: "midi" }, "Export to .mid file."), option$9({ value: "json" }, "Export to .json file."), option$9({ value: "html" }, "Export to .html file."));
             this._cancelButton = button$f({ class: "cancelButton" });
             this._exportButton = button$f({ class: "exportButton", style: "width:45%;" }, "Export");
             this._outputProgressBar = div$f({ style: `width: 0%; background: ${ColorConfig.loopAccent}; height: 100%; position: absolute; z-index: 2;` });
@@ -32046,16 +32047,16 @@ You should be redirected to the song at:<br /><br />
 					<svg viewBox="-1 -1 28 22">
 						<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
 						<rect x="2" y="2" width="22" height="2" fill="currentColor"/>
-						<rect x="2" y="5" width="4" height="9" fill="currentColor"/>
-						<rect x="7" y="5" width="17" height="9" fill="currentColor"/>
+						<rect x="2" y="5" width="4" height="8" fill="currentColor"/>
+						<rect x="7" y="5" width="17" height="8" fill="currentColor"/>
 						<rect x="2" y="14" width="22" height="4" fill="currentColor"/>
 					</svg>
 				`), div$d("Flipped (AB)")), label$1({ class: "layout-option" }, input$a({ type: "radio", name: "layout", value: "focus" }), SVG(`\
 					<svg viewBox="-1 -1 28 22">
 						<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
-						<rect x="2" y="2" width="18" height="10" fill="currentColor"/>
+						<rect x="2" y="2" width="17" height="10" fill="currentColor"/>
 						<rect x="20" y="2" width="4" height="16" fill="currentColor"/>
-						<rect x="2" y="13" width="18" height="5" fill="currentColor"/>
+						<rect x="2" y="13" width="17" height="5" fill="currentColor"/>
 					</svg>
 				`), div$d("Focus (AB)")), label$1({ class: "layout-option" }, input$a({ type: "radio", name: "layout", value: "long (AB)" }), SVG(`\
 					<svg viewBox="-1 -1 28 22">
@@ -32944,12 +32945,12 @@ You should be redirected to the song at:<br /><br />
         }
     }
 
-    const { button: button$a, div: div$a, span: span$4, h2: h2$9, input: input$7, br: br$1, select: select$7, option: option$7 } = HTML;
+    const { button: button$a, div: div$a, span: span$4, h2: h2$9, input: input$7, br: br$1, select: select$8, option: option$8 } = HTML;
     class MoveNotesSidewaysPrompt {
         constructor(_doc) {
             this._doc = _doc;
             this._beatsStepper = input$7({ style: "width: 3em; margin-left: 1em;", type: "number", step: "0.01", value: "0" });
-            this._conversionStrategySelect = select$7({ style: "width: 100%;" }, option$7({ value: "overflow" }, "Overflow notes across bars."), option$7({ value: "wrapAround" }, "Wrap notes around within bars."));
+            this._conversionStrategySelect = select$8({ style: "width: 100%;" }, option$8({ value: "overflow" }, "Overflow notes across bars."), option$8({ value: "wrapAround" }, "Wrap notes around within bars."));
             this._cancelButton = button$a({ class: "cancelButton" });
             this._okayButton = button$a({ class: "okayButton", style: "width:45%;" }, "Okay");
             this.container = div$a({ class: "prompt noSelection", style: "width: 250px;" }, h2$9("Move Notes Sideways"), div$a({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$a({ style: "text-align: right;" }, "Beats to move:", br$1(), span$4({ style: `font-size: smaller; color: ${ColorConfig.secondaryText};` }, "(Negative is left, positive is right)")), this._beatsStepper), div$a({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$a({ class: "selectContainer", style: "width: 100%;" }, this._conversionStrategySelect)), div$a({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
@@ -35867,12 +35868,12 @@ You should be redirected to the song at:<br /><br />
         }
     }
 
-    const { button: button$9, div: div$9, span: span$3, h2: h2$8, input: input$6, br, select: select$6, option: option$6 } = HTML;
+    const { button: button$9, div: div$9, span: span$3, h2: h2$8, input: input$6, br, select: select$7, option: option$7 } = HTML;
     class SongDurationPrompt {
         constructor(_doc) {
             this._doc = _doc;
             this._barsStepper = input$6({ style: "width: 3em; margin-left: 1em;", type: "number", step: "1" });
-            this._positionSelect = select$6({ style: "width: 100%;" }, option$6({ value: "end" }, "Apply change at end of song."), option$6({ value: "beginning" }, "Apply change at beginning of song."));
+            this._positionSelect = select$7({ style: "width: 100%;" }, option$7({ value: "end" }, "Apply change at end of song."), option$7({ value: "beginning" }, "Apply change at beginning of song."));
             this._cancelButton = button$9({ class: "cancelButton" });
             this._okayButton = button$9({ class: "okayButton", style: "width:45%;" }, "Okay");
             this.container = div$9({ class: "prompt noSelection", style: "width: 250px;" }, h2$8("Song Length"), div$9({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$9({ style: "display: inline-block; text-align: right;" }, "Bars per song:", br(), span$3({ style: `font-size: smaller; color: ${ColorConfig.secondaryText};` }, "(Multiples of 4 are recommended)")), this._barsStepper), div$9({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$9({ class: "selectContainer", style: "width: 100%;" }, this._positionSelect)), div$9({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
@@ -36055,7 +36056,7 @@ You should be redirected to the song at:<br /><br />
         }
     }
 
-    const { button: button$8, div: div$8, h2: h2$7, p: p$3, select: select$5, option: option$5, iframe } = HTML;
+    const { button: button$8, div: div$8, h2: h2$7, p: p$3, select: select$6, option: option$6, iframe } = HTML;
     class SongRecoveryPrompt {
         constructor(_doc) {
             this._doc = _doc;
@@ -36074,9 +36075,9 @@ You should be redirected to the song at:<br /><br />
                 this._songContainer.appendChild(p$3("There are no recovered songs available yet. Try making a song!"));
             }
             for (const song of songs) {
-                const versionMenu = select$5({ style: "width: 100%;" });
+                const versionMenu = select$6({ style: "width: 100%;" });
                 for (const version of song.versions) {
-                    versionMenu.appendChild(option$5({ value: version.time }, version.name + ": " + new Date(version.time).toLocaleString()));
+                    versionMenu.appendChild(option$6({ value: version.time }, version.name + ": " + new Date(version.time).toLocaleString()));
                 }
                 const player = iframe({ style: "width: 100%; height: 60px; border: none; display: block;" });
                 player.src = "player/#song=" + window.localStorage.getItem(versionToKey(song.versions[0]));
@@ -36091,12 +36092,12 @@ You should be redirected to the song at:<br /><br />
         }
     }
 
-    const { button: button$7, label, div: div$7, p: p$2, a: a$1, h2: h2$6, input: input$5, select: select$4, option: option$4 } = HTML;
+    const { button: button$7, label, div: div$7, p: p$2, a: a$1, h2: h2$6, input: input$5, select: select$5, option: option$5 } = HTML;
     class RecordingSetupPrompt {
         constructor(_doc) {
             this._doc = _doc;
-            this._keyboardMode = select$4({ style: "width: 100%;" }, option$4({ value: "useCapsLockForNotes" }, "simple shortcuts, use caps lock to play notes"), option$4({ value: "pressControlForShortcuts" }, "simple notes, press " + EditorConfig.ctrlName + " for shortcuts"));
-            this._keyboardLayout = select$4({ style: "width: 100%;" }, option$4({ value: "wickiHayden" }, "Wicki-Hayden"), option$4({ value: "songScale" }, "selected song scale"), option$4({ value: "pianoAtC" }, "piano starting at C :)"), option$4({ value: "pianoAtA" }, "piano starting at A :("), option$4({ value: "pianoTransposingC" }, "piano transposing C :) to song key"), option$4({ value: "pianoTransposingA" }, "piano transposing A :( to song key"));
+            this._keyboardMode = select$5({ style: "width: 100%;" }, option$5({ value: "useCapsLockForNotes" }, "simple shortcuts, use caps lock to play notes"), option$5({ value: "pressControlForShortcuts" }, "simple notes, press " + EditorConfig.ctrlName + " for shortcuts"));
+            this._keyboardLayout = select$5({ style: "width: 100%;" }, option$5({ value: "wickiHayden" }, "Wicki-Hayden"), option$5({ value: "songScale" }, "selected song scale"), option$5({ value: "pianoAtC" }, "piano starting at C :)"), option$5({ value: "pianoAtA" }, "piano starting at A :("), option$5({ value: "pianoTransposingC" }, "piano transposing C :) to song key"), option$5({ value: "pianoTransposingA" }, "piano transposing A :( to song key"));
             this._keyboardLayoutPreview = div$7({ style: "display: grid; row-gap: 4px; margin: 4px auto; font-size: 10px;" });
             this._enableMidi = input$5({ style: "width: 2em; margin-left: 1em;", type: "checkbox" });
             this._showRecordButton = input$5({ style: "width: 2em; margin-left: 1em;", type: "checkbox" });
@@ -36350,8 +36351,8 @@ You should be redirected to the song at:<br /><br />
         }
     }
 
-    const { button: button$6, div: div$6, h2: h2$5, input: input$4, p: p$1 } = HTML;
-    let _pageMarginTest = ColorConfig.getComputed("--page-margin");
+    const { button: button$6, div: div$6, h2: h2$5, input: input$4, p: p$1, option: option$4, select: select$4 } = HTML;
+    const _pageMarginTest = ColorConfig.getComputed("--page-margin");
     let doReload = false;
     class CustomPrompt {
         constructor(_doc, _pattern, _pattern2, _pattern3) {
@@ -36361,7 +36362,9 @@ You should be redirected to the song at:<br /><br />
             this._pattern3 = _pattern3;
             this._fileInput = input$4({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose editor background image" });
             this._fileInput2 = input$4({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose website background image" });
-            this._colorpicker = input$4({ type: "color", id: "colorPicker", value: (_pageMarginTest.valueOf) });
+            this._colorpicker = input$4({ type: "color", id: "colorPicker", value: (_pageMarginTest), style: "width: 100%; height: 30px; border: 3px" });
+            this._currentThemeProperty = "--page-margin";
+            this._colorMenu = select$4({ style: "width: 100%;" }, option$4({ selected: true, disabled: true, hidden: false }, "Select an asset to change"), option$4({ value: "--page-margin" }, "Page Margin"), option$4({ value: "--editor-background" }, "Editor Background"), option$4({ value: "--primary-text" }, "Primary Text"), option$4({ value: "--secondary-text" }, "Secondary Text"), option$4({ value: "--inverted-text" }, "Inverted Text"), option$4({ value: "--loop-accent" }, "Loop Accent"), option$4({ value: "--link-accent" }, "Link Accent"), option$4({ value: "--ui-widget-background" }, "UI Widget Background"), option$4({ value: "--ui-widget-focus" }, "UI Widget Focus"), option$4({ value: "--pitch-background" }, "Pitch Background"), option$4({ value: "--tonic" }, "Tonic"), option$4({ value: "--fifth-note" }, "Fifth note"), option$4({ value: "--white-piano-key" }, "White Piano Key"), option$4({ value: "--black-piano-key" }, "Black Piano Key"), option$4({ value: "--track-editor-bg-pitch" }, "Track Editor Pitch BG"), option$4({ value: "--track-editor-bg-pitch-dim" }, "Empty Track Editor Pitch BG"), option$4({ value: "--track-editor-bg-noise" }, "Track Editor Noise BG"), option$4({ value: "--track-editor-bg-noise-dim" }, "Empty Track Editor Noise BG"), option$4({ value: "--track-editor-bg-mod" }, "Track Editor Mod BG"), option$4({ value: "--track-editor-bg-mod-dim" }, "Empty Track Editor Mod BG"), option$4({ value: "--multiplicative-mod-slider" }, "Multiplicative Mod Slider"), option$4({ value: "--overwriting-mod-slider" }, "Overwriting Mod Slider"), option$4({ value: "--indicator-primary" }, "Primary Indicator"), option$4({ value: "--indicator-secondary" }, "Secondary Indicator"), option$4({ value: "--select2-opt-group" }, "Preset Catagory Background"), option$4({ value: "--input-box-outline" }, "Input Box Outline"), option$4({ value: "--mute-button-normal" }, "Mute Button (Normal)"), option$4({ value: "--mute-button-mod" }, "Mute Button (Mod)"), option$4({ value: "--mod-label-primary" }, "Mod Label Primary"), option$4({ value: "--mod-label-secondary-text" }, "Mod Label Secondary"), option$4({ value: "--mod-label-primary-text" }, "Mod Label Primary Text"));
             this._colorInput = input$4({ type: "text", value: localStorage.getItem("customColors") || `:root {
 		--page-margin: #040410;
 		--editor-background: #040410;
@@ -36475,7 +36478,7 @@ You should be redirected to the song at:<br /><br />
             this._cancelButton = button$6({ class: "cancelButton" });
             this._okayButton = button$6({ class: "okayButton", style: "width:45%;" }, "Okay");
             this._resetButton = button$6({ style: "height: auto; min-height: var(--button-size);" }, "Reset to defaults");
-            this.container = div$6({ class: "prompt noSelection", style: "width: 500px;" }, h2$5("Custom Theme Editor"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Hello All! This page is currently under work by choptop84! If you would like to continue making your custom themes, then please use the features below."), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "This should be page margin: ", this._colorpicker), this._colorInput, div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._resetButton), div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
+            this.container = div$6({ class: "prompt noSelection", style: "width: 500px; left: 4;" }, h2$5("Custom Theme Editor"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Thank you to leoV on discord for basically writing the whole system on how this works, without him this wouldn't be possible!"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "To create your custom theme, click the dropdown menu labeled 'Select an asset to change.' After choosing the asset, modify its color by clicking the colored square. All adjustments occur once you press Okay, allowing you to instantly see the effects of color changes."), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "The website and editor background images are being updated. Soon, you'll only need to copy and paste the theme to automatically include the backgrounds!"), p$1({ style: "text-align: center; margin: 1em 0;" }, this._colorMenu), p$1({ style: "text-align: center; margin: 1em 0;" }, "Pick a color: ", this._colorpicker), this._colorInput, div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._resetButton), div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
             this._close = () => {
                 this._doc.prompt = null;
                 this._doc.undo();
@@ -36526,8 +36529,12 @@ You should be redirected to the song at:<br /><br />
                 reader.readAsDataURL(file);
             };
             this._whenColorsPicked = () => {
-                ColorConfig.setThemeProperty("--page-margin", this._colorpicker.value);
+                ColorConfig.setThemeProperty(this._currentThemeProperty, this._colorpicker.value);
                 this._colorInput.value = ColorConfig.getThemeProperties();
+                this._colorInput.dispatchEvent(new Event("change"));
+            };
+            this._whenMenuChanged = () => {
+                this._currentThemeProperty = this._colorMenu.value;
             };
             this._whenFileSelected2 = () => {
                 const file = this._fileInput2.files[0];
@@ -36555,6 +36562,7 @@ You should be redirected to the song at:<br /><br />
             this._cancelButton.addEventListener("click", this._close);
             this._resetButton.addEventListener("click", this._reset);
             this._colorpicker.addEventListener("change", this._whenColorsPicked);
+            this._colorMenu.addEventListener("change", this._whenMenuChanged);
         }
     }
 

@@ -68,8 +68,8 @@ export class LayoutPrompt implements Prompt {
 					<svg viewBox="-1 -1 28 22">
 						<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
 						<rect x="2" y="2" width="22" height="2" fill="currentColor"/>
-						<rect x="2" y="5" width="4" height="9" fill="currentColor"/>
-						<rect x="7" y="5" width="17" height="9" fill="currentColor"/>
+						<rect x="2" y="5" width="4" height="8" fill="currentColor"/>
+						<rect x="7" y="5" width="17" height="8" fill="currentColor"/>
 						<rect x="2" y="14" width="22" height="4" fill="currentColor"/>
 					</svg>
 				`),
@@ -80,9 +80,9 @@ export class LayoutPrompt implements Prompt {
 				SVG(`\
 					<svg viewBox="-1 -1 28 22">
 						<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
-						<rect x="2" y="2" width="18" height="10" fill="currentColor"/>
+						<rect x="2" y="2" width="17" height="10" fill="currentColor"/>
 						<rect x="20" y="2" width="4" height="16" fill="currentColor"/>
-						<rect x="2" y="13" width="18" height="5" fill="currentColor"/>
+						<rect x="2" y="13" width="17" height="5" fill="currentColor"/>
 					</svg>
 				`),
 				div("Focus (AB)"),
