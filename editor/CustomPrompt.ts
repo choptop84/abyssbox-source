@@ -6,15 +6,17 @@ import { SongDocument } from "./SongDocument";
 
 import { PatternEditor } from "./PatternEditor";
 
-// import { ColorConfig } from "./ColorConfig";
+//import { ColorConfig } from "./ColorConfig";
 
 //namespace beepbox {
 const { button, div, h2, input, p} = HTML;
+const _pageMarginWeb = document.querySelector("--page-margin");
+//let _pageMarginTest = ColorConfig.getComputed("custom");
 let doReload = false;
 export class CustomPrompt implements Prompt {
 	private readonly _fileInput: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose editor background image"});
 	private readonly _fileInput2: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose website background image" });
-	private readonly _colorpicker: HTMLInputElement = input({ type: "color", id: "colorPicker", name: "Page Margin", value:"_pageMarginWeb"});
+	private readonly _colorpicker: HTMLInputElement = input({ type: "color", id: "colorPicker", value:(_pageMarginWeb)});
 	private readonly _colorInput: HTMLInputElement = input({ type: "text", value: localStorage.getItem("customColors") || `:root {
 		--page-margin: #040410;
 		--editor-background: #040410;
@@ -151,8 +153,10 @@ export class CustomPrompt implements Prompt {
 			"If you want to mess with custom color schemes, mess with the hexcodes yourself, I dare you:", 
 		), */
 		// So this thing is the color picker from what I can tell, it outputs rgb values depending on what you set it as... Only problem is that Idk how to get the value lmaooo
-		this._colorpicker,
-
+		p({ style: "text-align: left; margin: 0.5em 0;"},
+			"This should be page margin: ",
+			this._colorpicker
+		),
 		this._colorInput,
 		div({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" },
 			this._resetButton
@@ -171,7 +175,6 @@ export class CustomPrompt implements Prompt {
 		this._okayButton.addEventListener("click", this._close);
 		this._cancelButton.addEventListener("click", this._close);
 		this._resetButton.addEventListener("click", this._reset);
-		this._colorpicker.addEventListener("change", this._whenColorsPicked);
 	}
 
 	private _close = (): void => {
@@ -227,17 +230,6 @@ export class CustomPrompt implements Prompt {
 			console.log('done')
 		});
 		reader.readAsDataURL(file);
-	}
-
-	private _whenColorsPicked = (): void => {
-
-		/*const _pageMarginWeb = document.querySelector("--page-margin");
-		let _pageMarginTest = ColorConfig.getComputed();
-
-		const _pageMargin = getComputedStyle(this._colorInput).getPropertyValue("--page-margin"); */
-		
-		
-
 	}
 
 	private _whenFileSelected2 = (): void => {

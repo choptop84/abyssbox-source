@@ -36343,6 +36343,7 @@ You should be redirected to the song at:<br /><br />
     }
 
     const { button: button$6, div: div$6, h2: h2$5, input: input$4, p: p$1 } = HTML;
+    const _pageMarginWeb = document.querySelector("--page-margin");
     let doReload = false;
     class CustomPrompt {
         constructor(_doc, _pattern, _pattern2, _pattern3) {
@@ -36352,7 +36353,7 @@ You should be redirected to the song at:<br /><br />
             this._pattern3 = _pattern3;
             this._fileInput = input$4({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose editor background image" });
             this._fileInput2 = input$4({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose website background image" });
-            this._colorpicker = input$4({ type: "color", id: "colorPicker", name: "Page Margin", value: "_pageMarginWeb" });
+            this._colorpicker = input$4({ type: "color", id: "colorPicker", value: (_pageMarginWeb) });
             this._colorInput = input$4({ type: "text", value: localStorage.getItem("customColors") || `:root {
 		--page-margin: #040410;
 		--editor-background: #040410;
@@ -36466,7 +36467,7 @@ You should be redirected to the song at:<br /><br />
             this._cancelButton = button$6({ class: "cancelButton" });
             this._okayButton = button$6({ class: "okayButton", style: "width:45%;" }, "Okay");
             this._resetButton = button$6({ style: "height: auto; min-height: var(--button-size);" }, "Reset to defaults");
-            this.container = div$6({ class: "prompt noSelection", style: "width: 500px;" }, h2$5("Custom Theme Editor"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Hello All! This page is currently under work by choptop84! If you would like to continue making your custom themes, then please use the features below."), this._colorpicker, this._colorInput, div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._resetButton), div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
+            this.container = div$6({ class: "prompt noSelection", style: "width: 500px;" }, h2$5("Custom Theme Editor"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Hello All! This page is currently under work by choptop84! If you would like to continue making your custom themes, then please use the features below."), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "This should be page margin: ", this._colorpicker), this._colorInput, div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._resetButton), div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
             this._close = () => {
                 this._doc.prompt = null;
                 this._doc.undo();
@@ -36516,8 +36517,6 @@ You should be redirected to the song at:<br /><br />
                 });
                 reader.readAsDataURL(file);
             };
-            this._whenColorsPicked = () => {
-            };
             this._whenFileSelected2 = () => {
                 const file = this._fileInput2.files[0];
                 if (!file)
@@ -36543,7 +36542,6 @@ You should be redirected to the song at:<br /><br />
             this._okayButton.addEventListener("click", this._close);
             this._cancelButton.addEventListener("click", this._close);
             this._resetButton.addEventListener("click", this._reset);
-            this._colorpicker.addEventListener("change", this._whenColorsPicked);
         }
     }
 
@@ -40169,6 +40167,7 @@ You should be redirected to the song at:<br /><br />
                     }
                     if (instrument.type == 11) {
                         this._chipWaveSelectRow.style.display = "none";
+                        this._useChipWaveAdvancedLoopControlsRow.style.display = "none";
                         this._supersawDynamismRow.style.display = "";
                         this._supersawSpreadRow.style.display = "";
                         this._supersawShapeRow.style.display = "";
