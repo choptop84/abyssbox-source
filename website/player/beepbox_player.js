@@ -1967,6 +1967,14 @@ var beepbox = (function (exports) {
                 }
             }
         }
+        static setThemeProperty(name, value) {
+            var _a;
+            ((_a = this._styleElement.sheet) === null || _a === void 0 ? void 0 : _a.cssRules[0]).style.setProperty(name, value);
+        }
+        static getThemeProperties() {
+            var _a;
+            return (_a = this._styleElement.sheet) === null || _a === void 0 ? void 0 : _a.cssRules[0].cssText;
+        }
         static setTheme(name) {
             let theme = this.themes[name];
             if (theme == undefined)

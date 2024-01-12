@@ -237,9 +237,9 @@ export class CustomPrompt implements Prompt {
 
 	private _whenColorsPicked = (): void => {
 
-		document.documentElement.style.setProperty("--page-margin", this._colorpicker.value)
-
-
+		//document.documentElement.style.setProperty("--page-margin", this._colorpicker.value)
+		ColorConfig.setThemeProperty("--page-margin", this._colorpicker.value);
+		this._colorInput.value = ColorConfig.getThemeProperties();
 	}
 
 	private _whenFileSelected2 = (): void => {

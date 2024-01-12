@@ -7546,6 +7546,15 @@ export class ColorConfig {
 
     private static readonly _styleElement: HTMLStyleElement = document.head.appendChild(HTML.style({ type: "text/css" }));
 
+	public static setThemeProperty(name: string, value: string): void {
+		//this._styleElement.sheet?.cssRules[0].style.setProperty(name, value);
+		(this._styleElement.sheet?.cssRules[0] as CSSStyleRule).style.setProperty(name, value);
+	}
+
+	public static getThemeProperties(): string {
+		return this._styleElement.sheet?.cssRules[0].cssText as string;
+	}
+
     public static setTheme(name: string): void {
 		let theme: string = this.themes[name];
 		if (theme == undefined) theme = this.themes["dark classic"];
