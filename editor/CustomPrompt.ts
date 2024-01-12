@@ -18,7 +18,7 @@ let doReload = false;
 export class CustomPrompt implements Prompt {
 	private readonly _fileInput: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose editor background image"});
 	private readonly _fileInput2: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose website background image" });
-	private readonly _colorpicker: HTMLInputElement = input({ type: "color", id: "colorPicker", value:(_pageMarginTest)});
+	private readonly _colorpicker: HTMLInputElement = input({ type: "color", id: "colorPicker", value:(_pageMarginTest.valueOf)});
 	private readonly _colorInput: HTMLInputElement = input({ type: "text", value: localStorage.getItem("customColors") || `:root {
 		--page-margin: #040410;
 		--editor-background: #040410;
