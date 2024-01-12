@@ -36351,7 +36351,7 @@ You should be redirected to the song at:<br /><br />
             this._pattern3 = _pattern3;
             this._fileInput = input$4({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose editor background image" });
             this._fileInput2 = input$4({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose website background image" });
-            this._colorpicker = input$4({ type: "color", id: "colorPicker", name: "Page Margin", value: "page-margin" });
+            this._colorpicker = input$4({ type: "color", id: "colorPicker", name: "Page Margin", value: "--page-margin" });
             this._colorInput = input$4({ type: "text", value: localStorage.getItem("customColors") || `:root {
 		--page-margin: #040410;
 		--editor-background: #040410;
