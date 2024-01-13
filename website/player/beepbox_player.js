@@ -8964,6 +8964,150 @@ var beepbox = (function (exports) {
 }
 
 			`,
+        "Tritanopia": `
+:root { 
+--page-margin: #000000; 
+--editor-background: #000000; 
+--hover-preview: white; 
+--playhead: rgba(255, 255, 255, 0.9); 
+--primary-text: #ffffff; 
+--secondary-text: #e5e5e5; 
+--inverted-text: #000000; 
+--text-selection: rgba(119,68,255,0.99); 
+--box-selection-fill: #044b94; 
+--loop-accent: #ffffff; 
+--link-accent: #8915c8; 
+--ui-widget-background: #676767; 
+--ui-widget-focus: #696969; 
+--pitch-background: #7a7887; 
+--tonic: #313036; 
+--fifth-note: #c3c1db; 
+--white-piano-key: #a6a6a6; 
+--black-piano-key: #484848; 
+--use-color-formula: false; 
+--track-editor-bg-pitch: #666666; 
+--track-editor-bg-pitch-dim: #383838; 
+--track-editor-bg-noise: #438240; 
+--track-editor-bg-noise-dim: #1e361d; 
+--track-editor-bg-mod: #5f419c; 
+--track-editor-bg-mod-dim: #3e2b66; 
+--multiplicative-mod-slider: #b62326; 
+--overwriting-mod-slider: #5f1214; 
+--indicator-primary: #ccffdb; 
+--indicator-secondary: #55dee6; 
+--select2-opt-group: #595959; 
+--input-box-outline: #ffffff; 
+--mute-button-normal: #f11d22; 
+--mute-button-mod: #4b57c2; 
+--mod-label-primary: #0909ff; 
+--mod-label-secondary-text: #ffffff; 
+--mod-label-primary-text: #c8ecfd; 
+				--pitch1-secondary-channel: #9C0000;
+				--pitch1-primary-channel:   #FF0000;
+
+				--pitch1-secondary-note:    #9C0000;
+				--pitch1-primary-note:      #FF0000;
+
+				--pitch2-secondary-channel: #8E009C;
+				--pitch2-primary-channel:   #EB25FF;
+
+				--pitch2-secondary-note:    #8E009C;
+				--pitch2-primary-note:      #EB25FF;
+
+				--pitch3-secondary-channel: #00069C;
+				--pitch3-primary-channel:   #3D45FF;
+
+				--pitch3-secondary-note:    #00069C;
+				--pitch3-primary-note:      #3D45FF;
+
+				--pitch4-secondary-channel: #00829C;
+				--pitch4-primary-channel:   #24DBFF;
+
+				--pitch4-secondary-note:    #00829C;
+				--pitch4-primary-note:      #24DBFF;
+
+				--pitch5-secondary-channel: #009C18;
+				--pitch5-primary-channel:   #70FF86;
+
+				--pitch5-secondary-note:    #009C18;
+				--pitch5-primary-note:      #70FF86;
+
+				--pitch6-secondary-channel: #8E9C00;
+				--pitch6-primary-channel:   #DBEF16;
+
+				--pitch6-secondary-note:    #8E9C00;
+				--pitch6-primary-note:      #DBEF16;
+
+				--pitch7-secondary-channel: #9C6A00;
+				--pitch7-primary-channel:   #F7AC0E;
+
+				--pitch7-secondary-note:    #9C6A00;
+				--pitch7-primary-note:      #F7AC0E;
+
+				--pitch8-secondary-channel: #9C2300;
+				--pitch8-primary-channel:   #F53700;
+
+				--pitch8-secondary-note:    #9C2300;
+				--pitch8-primary-note:      #F53700;
+
+				--pitch9-secondary-channel: #441A0D;
+				--pitch9-primary-channel:   #9E3F22;
+
+				--pitch9-secondary-note:    #441A0D;
+				--pitch9-primary-note:      #9E3F22;
+
+				--pitch10-secondary-channel:#2C0D44;
+				--pitch10-primary-channel:  #7436A4;
+
+				--pitch10-secondary-note:   #2C0D44;
+				--pitch10-primary-note:     #7436A4;
+
+				--noise1-secondary-channel: #6F6F6F;
+				--noise1-primary-channel:   #AAAAAA;
+
+				--noise1-secondary-note:    #A7A7A7;
+				--noise1-primary-note:      #E0E0E0;
+
+				--noise2-secondary-channel: #996633;
+				--noise2-primary-channel:   #DDAA77;
+				--noise2-secondary-note:    #CC9966;
+				--noise2-primary-note:      #F0D0BB;
+				--noise3-secondary-channel: #4A6D8F;
+				--noise3-primary-channel:   #77AADD;
+				--noise3-secondary-note:    #6F9FCF;
+				--noise3-primary-note:      #BBD7FF;
+				--noise4-secondary-channel: #7A4F9A;
+				--noise4-primary-channel:   #AF82D2;
+				--noise4-secondary-note:    #9E71C1;
+				--noise4-primary-note:      #D4C1EA;
+				--noise5-secondary-channel: #607837;
+				--noise5-primary-channel:   #A2BB77;
+				--noise5-secondary-note:    #91AA66;
+				--noise5-primary-note:      #C5E2B2;
+          				--mod1-secondary-channel:   #339955;
+					--mod1-primary-channel:     #77fc55;
+					--mod1-secondary-note:      #77ff8a;
+					--mod1-primary-note:        #cdffee;
+					--mod2-secondary-channel:   #993355;
+					--mod2-primary-channel:     #f04960;
+					--mod2-secondary-note:      #f057a0;
+					--mod2-primary-note:        #ffb8de;
+					--mod3-secondary-channel:   #553399;
+					--mod3-primary-channel:     #8855fc;
+					--mod3-secondary-note:      #aa64ff;
+					--mod3-primary-note:	    #f8ddff;
+					--mod4-secondary-channel:   #a86436;
+					--mod4-primary-channel:     #c8a825;
+					--mod4-secondary-note:      #e8ba46;
+					--mod4-primary-note:        #fff6d3;
+					--mod-label-primary:        #999;
+					--mod-label-secondary-text: #333;
+					--mod-label-primary-text:   black;
+					--disabled-note-primary:    #999;
+					--disabled-note-secondary:  #666;
+}
+
+			`,
         "custom": `${localStorage.getItem("customColors") || `:root {
 				--page-margin: #040410;
 				--editor-background: #040410;
