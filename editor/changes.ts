@@ -2075,6 +2075,20 @@ export class ChangeDrumsetEnvelope extends Change {
     }
 }
 
+export class ChangeSampleSet extends Change {
+    constructor(doc: SongDocument, drumIndex: number, newValue: number) {
+        super();
+        const instrument: Instrument = doc.song.channels[doc.channel].instruments[doc.getCurrentInstrument()];
+        const oldValue: number = instrument.drumsetEnvelopes[drumIndex];
+        if (oldValue != newValue) {
+            instrument.drumsetEnvelopes[drumIndex] = newValue;
+            instrument.preset = instrument.type;
+            doc.notifier.changed();
+            this._didSomething();
+        }
+    }
+}
+
 class ChangeInstrumentSlider extends Change {
     protected _instrument: Instrument;
     constructor(private _doc: SongDocument) {

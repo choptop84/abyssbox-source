@@ -64,6 +64,7 @@ export class ThemePrompt implements Prompt {
 			option({ value: "foxbox" }, "FoxBox"),
 			option({ value: "midbox" }, "Midbox"),
 			option({ value: "dogebox2" }, "Dogebox2"),
+			option({ value: "Deuteranopia"}, "Deuteranopia"),
 			option({ value: "Protanopia"}, "Protanopia"),
 			option({ value: "Tritanopia"}, "Tritanopia"),
 			option({ value: "custom" }, "Custom")

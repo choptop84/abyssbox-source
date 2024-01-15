@@ -1895,6 +1895,18 @@ export class Instrument {
                     "spectrum": spectrum,
                 };
             }
+       /* } else if (this.type == InstrumentType.sampledset) {
+            instrumentObject["drums"] = [];
+            for (let j: number = 0; j < Config.drumCount; j++) {
+                const spectrum: number[] = [];
+                for (let i: number = 0; i < Config.spectrumControlPoints; i++) {
+                    spectrum[i] = Math.round(100 * this.drumsetSpectrumWaves[j].spectrum[i] / Config.spectrumMax);
+                }
+                instrumentObject["drums"][j] = {
+                    "filterEnvelope": this.getDrumsetEnvelope(j).name,
+                    "spectrum": spectrum,
+                };
+            }*/
         } else if (this.type == InstrumentType.chip) {
             instrumentObject["wave"] = Config.chipWaves[this.chipWave].name;
             // should this unison pushing code be turned into a function..?
