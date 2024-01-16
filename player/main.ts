@@ -4,7 +4,6 @@ import { Dictionary, DictionaryArray, EnvelopeType, InstrumentType, Transition, 
 import { ColorConfig } from "../editor/ColorConfig";
 import { NotePin, Note, Pattern, Instrument, Channel, Synth } from "../synth/synth";
 import { oscilascopeCanvas } from "../global/Oscilascope";
-//import { PlayerLayout } from "./PlayerLayouts";
 import "./songstyle";
 import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 
@@ -14,7 +13,7 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 	const isMobile: boolean = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|android|ipad|playbook|silk/i.test(navigator.userAgent);
 
 	const colorTheme: string | null = getLocalStorage("colorTheme");
-	ColorConfig.setTheme(colorTheme === null ? "abyssbox classic" : colorTheme);
+	ColorConfig.setTheme(colorTheme === null ? "AbyssBox Classic" : colorTheme);
 	
 	let prevHash: string | null = null;
 	let id: string = ((Math.random() * 0xffffffff) >>> 0).toString(16);
