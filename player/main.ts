@@ -11,6 +11,7 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 
 	const isMobile: boolean = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|android|ipad|playbook|silk/i.test(navigator.userAgent);
 
+
 	document.head.appendChild(HTML.style({type: "text/css"}, `
 	body {
 		color: ${ColorConfig.primaryText};
@@ -148,7 +149,8 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 		background: ${ColorConfig.primaryText};
 		cursor: pointer;
 	}
-`));
+`)); 
+
 const colorTheme: string | null = getLocalStorage("colorTheme");
 ColorConfig.setTheme(colorTheme === null ? "dark classic" : colorTheme);
 
