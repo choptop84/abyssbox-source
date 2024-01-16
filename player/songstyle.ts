@@ -1,11 +1,9 @@
-import { ColorConfig } from "../editor/ColorConfig";
-import { HTML } from "imperative-html/dist/esm/elements-strict";
+import {ColorConfig} from "../editor/ColorConfig";
+import {HTML} from "imperative-html/dist/esm/elements-strict";
 
-export class PlayerLayout {
-    private static readonly _songLayoutMap: {[K: string]: string} = {
-    "Bottom": "",
-    "Top": `\
-    body {
+
+document.head.appendChild(HTML.style({type: "text/css"}, `
+	body {
 		color: ${ColorConfig.primaryText};
 		background: ${ColorConfig.editorBackground};
 	}
@@ -141,12 +139,4 @@ export class PlayerLayout {
 		background: ${ColorConfig.primaryText};
 		cursor: pointer;
 	}
-`,
-    }
-    
-    private static readonly _styleElement: HTMLStyleElement = document.head.appendChild(HTML.style({type: "text/css"}));
-		
-	public static setLayout(layout: string): void {
-		this._styleElement.textContent = this._songLayoutMap[layout];
-	}
-}
+`)); 

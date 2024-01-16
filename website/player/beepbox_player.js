@@ -21584,9 +21584,6 @@ var beepbox = (function (exports) {
         }
     }
 
-    const { a, button, div, h1, input, canvas } = HTML;
-    const { svg, circle, rect, path } = SVG;
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|android|ipad|playbook|silk/i.test(navigator.userAgent);
     document.head.appendChild(HTML.style({ type: "text/css" }, `
 	body {
 		color: ${ColorConfig.primaryText};
@@ -21725,6 +21722,10 @@ var beepbox = (function (exports) {
 		cursor: pointer;
 	}
 `));
+
+    const { a, button, div, h1, input, canvas } = HTML;
+    const { svg, circle, rect, path } = SVG;
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|android|ipad|playbook|silk/i.test(navigator.userAgent);
     const colorTheme = getLocalStorage("colorTheme");
     ColorConfig.setTheme(colorTheme === null ? "dark classic" : colorTheme);
     let prevHash = null;
