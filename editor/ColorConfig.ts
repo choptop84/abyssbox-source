@@ -198,7 +198,11 @@ export class ColorConfig {
  		   	font-family: 'AbyssType';
 			}
 
-		   var(--track-font): 'AbyssType';
+			.beepboxEditor .trackContainer {
+				--track-font: 'AbyssType_small' !important;
+			}
+
+		   
 
 			`,
   "AbyssBox Competative": `
@@ -342,9 +346,11 @@ export class ColorConfig {
 			}
 
 			html {
- 		   font-family: 'AbyssType_small';
+ 		   font-family: 'AbyssType';
 			}
-		   var(--track-font): 'AbyssType';
+			.beepboxEditor .trackContainer {
+				--track-font: 'AbyssType_small' !important;
+			}
 
 			`,
   "AbyssBox Light": `
@@ -488,9 +494,11 @@ export class ColorConfig {
 			}
 
 			html {
- 		   font-family: 'AbyssType_small';
+ 		   font-family: 'AbyssType';
 			}
-		   var(--track-font): 'AbyssType';
+			.beepboxEditor .trackContainer {
+				--track-font: 'AbyssType_small' !important;
+			}
 
 			`,
 		"Half-Life": `
@@ -648,6 +656,9 @@ export class ColorConfig {
 			html {
  		   font-family: 'trebuc';
 			}
+			.beepboxEditor .trackContainer {
+				--track-font: 'trebuc' !important;
+			}
 
 			`,
 		"Doom 1993": `
@@ -802,6 +813,9 @@ export class ColorConfig {
 
 			html {
  		   font-family: 'doomfont';
+			}
+			.beepboxEditor .trackContainer {
+				--track-font: 'doomfont' !important;
 			}
 
 			`,
@@ -982,6 +996,9 @@ export class ColorConfig {
 			html {
  		   font-family: 'tahoma';
 		   font-size: 125% !important;
+			}
+			.beepboxEditor .trackContainer {
+				--track-font: 'tahoma' !important;
 			}
 
 			`,

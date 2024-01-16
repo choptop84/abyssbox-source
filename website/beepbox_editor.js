@@ -2568,7 +2568,11 @@ var beepbox = (function (exports) {
  		   	font-family: 'AbyssType';
 			}
 
-		   var(--track-font): 'AbyssType';
+			.beepboxEditor .trackContainer {
+				--track-font: 'AbyssType_small' !important;
+			}
+
+		   
 
 			`,
         "AbyssBox Competative": `
@@ -2712,9 +2716,11 @@ var beepbox = (function (exports) {
 			}
 
 			html {
- 		   font-family: 'AbyssType_small';
+ 		   font-family: 'AbyssType';
 			}
-		   var(--track-font): 'AbyssType';
+			.beepboxEditor .trackContainer {
+				--track-font: 'AbyssType_small' !important;
+			}
 
 			`,
         "AbyssBox Light": `
@@ -2858,9 +2864,11 @@ var beepbox = (function (exports) {
 			}
 
 			html {
- 		   font-family: 'AbyssType_small';
+ 		   font-family: 'AbyssType';
 			}
-		   var(--track-font): 'AbyssType';
+			.beepboxEditor .trackContainer {
+				--track-font: 'AbyssType_small' !important;
+			}
 
 			`,
         "Half-Life": `
@@ -3018,6 +3026,9 @@ var beepbox = (function (exports) {
 			html {
  		   font-family: 'trebuc';
 			}
+			.beepboxEditor .trackContainer {
+				--track-font: 'trebuc' !important;
+			}
 
 			`,
         "Doom 1993": `
@@ -3172,6 +3183,9 @@ var beepbox = (function (exports) {
 
 			html {
  		   font-family: 'doomfont';
+			}
+			.beepboxEditor .trackContainer {
+				--track-font: 'doomfont' !important;
 			}
 
 			`,
@@ -3352,6 +3366,9 @@ var beepbox = (function (exports) {
 			html {
  		   font-family: 'tahoma';
 		   font-size: 125% !important;
+			}
+			.beepboxEditor .trackContainer {
+				--track-font: 'tahoma' !important;
 			}
 
 			`,
@@ -10087,7 +10104,6 @@ var beepbox = (function (exports) {
 			<path d="M -1 76 L 30 76 L 30 1 L 33 -1 L 33 80 L -1 80 z" fill="rgba(0,0,0,0.7)"/> \
 			<rect x="-1" y="-1" width="19" height="80" fill="url(%23shadow)"/> \
 		</svg>');
-		--track-font: "sans-serif"
 }
 
 
@@ -11281,6 +11297,7 @@ var beepbox = (function (exports) {
 
 .beepboxEditor .trackContainer {
 	flex-grow: 1;
+	--track-font: "sans-serif"
 }
 
 .beepboxEditor .trackAndMuteContainer {
