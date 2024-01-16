@@ -14,7 +14,7 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 	const isMobile: boolean = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|android|ipad|playbook|silk/i.test(navigator.userAgent);
 
 	const colorTheme: string | null = getLocalStorage("colorTheme");
-	ColorConfig.setTheme(colorTheme === null ? "dark classic" : colorTheme);
+	ColorConfig.setTheme(colorTheme === null ? "abyssbox classic" : colorTheme);
 	
 	let prevHash: string | null = null;
 	let id: string = ((Math.random() * 0xffffffff) >>> 0).toString(16);

@@ -21727,7 +21727,7 @@ var beepbox = (function (exports) {
     const { svg, circle, rect, path } = SVG;
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|android|ipad|playbook|silk/i.test(navigator.userAgent);
     const colorTheme = getLocalStorage("colorTheme");
-    ColorConfig.setTheme(colorTheme === null ? "dark classic" : colorTheme);
+    ColorConfig.setTheme(colorTheme === null ? "abyssbox classic" : colorTheme);
     let prevHash = null;
     let id = ((Math.random() * 0xffffffff) >>> 0).toString(16);
     let pauseButtonDisplayed = false;
