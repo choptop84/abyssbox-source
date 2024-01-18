@@ -1,11 +1,11 @@
 // Copyright (c) 2012-2022 John Nesky and contributing authors, distributed under the MIT license, see accompanying the LICENSE.md file.
 
-import { startLoadingSample, sampleLoadingState, SampleLoadingState, sampleLoadEvents, SampleLoadedEvent, SampleLoadingStatus, loadBuiltInSamples, Dictionary, DictionaryArray, toNameMap, FilterType, EnvelopeType, InstrumentType, EffectType, EnvelopeComputeIndex, Transition, Unison, Chord, Vibrato, Envelope, AutomationTarget, Config, getDrumWave, drawNoiseSpectrum, getArpeggioPitchIndex, performIntegralOld, getPulseWidthRatio, effectsIncludeTransition, effectsIncludeChord, effectsIncludePitchShift, effectsIncludeDetune, effectsIncludeVibrato, effectsIncludeNoteFilter, effectsIncludeDistortion, effectsIncludeBitcrusher, effectsIncludePanning, effectsIncludeChorus, effectsIncludeEcho, effectsIncludeReverb, OperatorWave } from "./SynthConfig";
+import { startLoadingSample, sampleLoadingState, SampleLoadingState, sampleLoadEvents, SampleLoadedEvent, SampleLoadingStatus, loadBuiltInSamples, Dictionary, DictionaryArray, toNameMap, FilterType, SustainType, EnvelopeType, InstrumentType, EffectType, EnvelopeComputeIndex, Transition, Unison, Chord, Vibrato, Envelope, AutomationTarget, Config, getDrumWave, drawNoiseSpectrum, getArpeggioPitchIndex, performIntegralOld, getPulseWidthRatio, effectsIncludeTransition, effectsIncludeChord, effectsIncludePitchShift, effectsIncludeDetune, effectsIncludeVibrato, effectsIncludeNoteFilter, effectsIncludeDistortion, effectsIncludeBitcrusher, effectsIncludePanning, effectsIncludeChorus, effectsIncludeEcho, effectsIncludeReverb, OperatorWave } from "./SynthConfig";
 import { Preset, EditorConfig } from "../editor/EditorConfig";
 import { scaleElementsByFactor, inverseRealFourierTransform } from "./FFT";
 import { Deque } from "./Deque";
 import { events } from "../global/Events";
-import { FilterCoefficients, FrequencyResponse, DynamicBiquadFilter } from "./filtering";
+import { FilterCoefficients, FrequencyResponse, DynamicBiquadFilter, warpInfinityToNyquist } from "./filtering";
 
 declare global {
     interface Window {
@@ -206,58 +206,70 @@ const enum CharCode {
 }
 
 const enum SongTagCode {
-    beatCount = CharCode.a, // added in song url version 2
-    bars = CharCode.b, // added in 2
-    vibrato = CharCode.c, // added in 2, DEPRECATED
-    fadeInOut = CharCode.d, // added in 3 for transition, switched to fadeInOut in 9
-    loopEnd = CharCode.e, // added in 2
-    eqFilter = CharCode.f, // added in 3
-    barCount = CharCode.g, // added in 3
-    unison = CharCode.h, // added in 2
-    instrumentCount = CharCode.i, // added in 3
-    patternCount = CharCode.j, // added in 3
-    key = CharCode.k, // added in 2
-    loopStart = CharCode.l, // added in 2
-    reverb = CharCode.m, // added in 5, DEPRECATED
-    channelCount = CharCode.n, // added in 6
-    channelOctave = CharCode.o, // added in 3
-    patterns = CharCode.p, // added in 2
-    effects = CharCode.q, // added in 7
-    rhythm = CharCode.r, // added in 2
-    scale = CharCode.s, // added in 2
-    tempo = CharCode.t, // added in 2
-    preset = CharCode.u, // added in 7
-    volume = CharCode.v, // added in 2
-    wave = CharCode.w, // added in 2
-    supersaw = CharCode.x, // added in BeepBox URL version 9
-
-
-    filterResonance = CharCode.y, // added in 7, DEPRECATED, [UB] repurposed for chip wave loop controls
-    drumsetEnvelopes = CharCode.z, // added in 7 for filter envelopes, still used for drumset envelopes
-    algorithm = CharCode.A, // added in 6
-    feedbackAmplitude = CharCode.B, // added in 6
-    chord = CharCode.C, // added in 7, DEPRECATED
-    detune = CharCode.D, // [JB], added in 3(?), DEPRECATED
-    envelopes = CharCode.E, // added in 6 for FM operator envelopes, repurposed in 9 for general envelopes.
-    feedbackType = CharCode.F, // added in 6
-    arpeggioSpeed = CharCode.G, // [JB], added in 3, DEPRECATED
-    harmonics = CharCode.H, // added in 7
-    stringSustain = CharCode.I, // added in 9
-
-    pan = CharCode.L, // added between 8 and 9, DEPRECATED
-    customChipWave = CharCode.M, // [JB], added in 1(?)
-    songTitle = CharCode.N, // [JB], added in 1(?)
-    limiterSettings = CharCode.O, // [JB], added in 3(?)
-
-    operatorAmplitudes = CharCode.P, // added in 6
-    operatorFrequencies = CharCode.Q, // added in 6
-    operatorWaves = CharCode.R, // [JB], added in 4
-    spectrum = CharCode.S, // added in 7
-    startInstrument = CharCode.T, // added in 6
-    channelNames = CharCode.U, // [JB], added in 4(?)
-    feedbackEnvelope = CharCode.V, // added in 6, DEPRECATED
-    pulseWidth = CharCode.W, // added in 7
-    aliases = CharCode.X, // [JB], added in 4, DEPRECATED
+    beatCount           = CharCode.a, // added in BeepBox URL version 2
+	bars                = CharCode.b, // added in BeepBox URL version 2
+	vibrato             = CharCode.c, // added in BeepBox URL version 2, DEPRECATED
+	fadeInOut           = CharCode.d, // added in BeepBox URL version 3 for transition, switched to fadeInOut in 9
+	loopEnd             = CharCode.e, // added in BeepBox URL version 2
+	eqFilter            = CharCode.f, // added in BeepBox URL version 3
+	barCount            = CharCode.g, // added in BeepBox URL version 3
+	unison              = CharCode.h, // added in BeepBox URL version 2
+	instrumentCount     = CharCode.i, // added in BeepBox URL version 3
+	patternCount        = CharCode.j, // added in BeepBox URL version 3
+	key                 = CharCode.k, // added in BeepBox URL version 2
+	loopStart           = CharCode.l, // added in BeepBox URL version 2
+	reverb              = CharCode.m, // added in BeepBox URL version 5, DEPRECATED
+	channelCount        = CharCode.n, // added in BeepBox URL version 6
+	channelOctave       = CharCode.o, // added in BeepBox URL version 3
+	patterns            = CharCode.p, // added in BeepBox URL version 2
+	effects             = CharCode.q, // added in BeepBox URL version 7
+	rhythm              = CharCode.r, // added in BeepBox URL version 2
+	scale               = CharCode.s, // added in BeepBox URL version 2
+	tempo               = CharCode.t, // added in BeepBox URL version 2
+	preset              = CharCode.u, // added in BeepBox URL version 7
+	volume              = CharCode.v, // added in BeepBox URL version 2
+	wave                = CharCode.w, // added in BeepBox URL version 2
+	supersaw            = CharCode.x, // added in BeepBox URL version 9 ([UB] was used for chip wave but is now DEPRECATED)
+	filterResonance     = CharCode.y, // added in BeepBox URL version 7, DEPRECATED, [UB] repurposed for chip wave loop controls
+	drumsetEnvelopes    = CharCode.z, // added in BeepBox URL version 7 for filter envelopes, still used for drumset envelopes
+	algorithm           = CharCode.A, // added in BeepBox URL version 6
+	feedbackAmplitude   = CharCode.B, // added in BeepBox URL version 6
+	chord               = CharCode.C, // added in BeepBox URL version 7, DEPRECATED
+	detune              = CharCode.D, // added in JummBox URL version 3(?) for detune, DEPRECATED
+	envelopes           = CharCode.E, // added in BeepBox URL version 6 for FM operator envelopes, repurposed in 9 for general envelopes.
+	feedbackType        = CharCode.F, // added in BeepBox URL version 6
+	arpeggioSpeed       = CharCode.G, // added in JummBox URL version 3 for arpeggioSpeed, DEPRECATED
+	harmonics           = CharCode.H, // added in BeepBox URL version 7
+	stringSustain       = CharCode.I, // added in BeepBox URL version 9
+//	                    = CharCode.J,
+//	                    = CharCode.K,
+	pan                 = CharCode.L, // added between 8 and 9, DEPRECATED
+	customChipWave      = CharCode.M, // added in JummBox URL version 1(?) for customChipWave
+	songTitle           = CharCode.N, // added in JummBox URL version 1(?) for songTitle
+	limiterSettings     = CharCode.O, // added in JummBox URL version 3(?) for limiterSettings
+	operatorAmplitudes  = CharCode.P, // added in BeepBox URL version 6
+	operatorFrequencies = CharCode.Q, // added in BeepBox URL version 6
+	operatorWaves       = CharCode.R, // added in JummBox URL version 4 for operatorWaves
+	spectrum            = CharCode.S, // added in BeepBox URL version 7
+	startInstrument     = CharCode.T, // added in BeepBox URL version 6
+	channelNames        = CharCode.U, // added in JummBox URL version 4(?) for channelNames
+	feedbackEnvelope    = CharCode.V, // added in BeepBox URL version 6, DEPRECATED
+	pulseWidth          = CharCode.W, // added in BeepBox URL version 7
+	aliases             = CharCode.X, // added in JummBox URL version 4 for aliases, DEPRECATED, [UB] repurposed for PWM decimal offset (DEPRECATED as well)
+//	                    = CharCode.Y,
+//	                    = CharCode.Z,
+//	                    = CharCode.NUM_0,
+//	                    = CharCode.NUM_1,
+//	                    = CharCode.NUM_2,
+//	                    = CharCode.NUM_3,
+//	                    = CharCode.NUM_4,
+//	                    = CharCode.NUM_5,
+//	                    = CharCode.NUM_6,
+//	                    = CharCode.NUM_7,
+//	                    = CharCode.NUM_8,
+//	                    = CharCode.NUM_9,
+//	                    = CharCode.DASH,
+//	                    = CharCode.UNDERSCORE,
 
 }
 
@@ -1121,49 +1133,6 @@ export class FilterSettings {
             // Not allowing morph of unmatching filters for now. It's a hornet's nest of problems, and I had it implemented and mostly working and it didn't sound very interesting since the shape becomes "mushy" in between
             return (pos >= 1) ? filterB : filterA;
         }
-        /* 
-        // Filter control points do not match. Take all filterA points and move them to neutral at pos=1 (gain 7 for normal points, slide to edge and gain 7 for lo/hipass),
-        // and do the opposite for filterB points. Return a filter with points for both.
-        else {
-            let lerpedFilter: FilterSettings = new FilterSettings();
-            // Filter A's morph points
-            for (let i: number = 0; i < filterA.controlPointCount; i++) {
-                lerpedFilter.controlPoints[i] = new FilterControlPoint();
-                lerpedFilter.controlPoints[i].type = filterA.controlPoints[i].type;
-                lerpedFilter.controlPoints[i].gain = filterA.controlPoints[i].gain + (Config.filterGainCenter - filterA.controlPoints[i].gain) * pos;
-
-                if (filterA.controlPoints[i].type == FilterType.peak) {
-                    lerpedFilter.controlPoints[i].freq = filterA.controlPoints[i].freq;
-                }
-                else if (filterA.controlPoints[i].type == FilterType.highPass) {
-                    lerpedFilter.controlPoints[i].freq = filterA.controlPoints[i].freq * (1 - pos);
-                }
-                else {
-                    lerpedFilter.controlPoints[i].freq = filterA.controlPoints[i].freq + ((Config.filterFreqRange - 1) - filterA.controlPoints[i].freq) * pos;
-                }
-            }
-            // Filter B's morph points
-            for (let i: number = 0, j: number = filterA.controlPointCount; i < filterB.controlPointCount; i++, j++) {
-                lerpedFilter.controlPoints[j] = new FilterControlPoint();
-                lerpedFilter.controlPoints[j].type = filterB.controlPoints[i].type;
-                lerpedFilter.controlPoints[j].gain = filterB.controlPoints[i].gain + (Config.filterGainCenter - filterB.controlPoints[i].gain) * (1 - pos);
-
-                if (filterB.controlPoints[i].type == FilterType.peak) {
-                    lerpedFilter.controlPoints[j].freq = filterB.controlPoints[i].freq;
-                }
-                else if (filterB.controlPoints[i].type == FilterType.highPass) {
-                    lerpedFilter.controlPoints[j].freq = filterB.controlPoints[i].freq * pos;
-                }
-                else {
-                    lerpedFilter.controlPoints[j].freq = filterB.controlPoints[i].freq + ((Config.filterFreqRange - 1) - filterB.controlPoints[i].freq) * (1 - pos);
-                }
-            }
-
-            lerpedFilter.controlPointCount = filterA.controlPointCount + filterB.controlPointCount;
-
-            return lerpedFilter;
-        }
-        */
     }
 
     public convertLegacySettings(legacyCutoffSetting: number, legacyResonanceSetting: number, legacyEnv: Envelope): void {
@@ -1378,6 +1347,14 @@ interface LegacySettings {
     feedbackEnvelope?: Envelope;
 }
 
+interface HeldMod {
+    volume: number;
+    channelIndex: number;
+    instrumentIndex: number;
+    setting: number;
+    holdFor: number;
+}
+
 export class Instrument {
     public type: InstrumentType = InstrumentType.chip;
     public preset: number = 0;
@@ -1418,6 +1395,8 @@ export class Instrument {
     public vibratoSpeed: number = 10;
     public vibratoDelay: number = 0;
     public vibratoType: number = 0;
+    public envelopeSpeed: number = 12;
+    public discreteEnvelope: boolean = false;
     public unison: number = 0;
     public unisonVoices: number = 1;
     public unisonSpread: number = 0.0;
@@ -1435,11 +1414,12 @@ export class Instrument {
     public clicklessTransition: boolean = false;
     public aliases: boolean = false;
     public pulseWidth: number = Config.pulseWidthRange;
+    public decimalOffset: number = 0;
     public supersawDynamism: number = Config.supersawDynamismMax;
 	public supersawSpread: number = Math.ceil(Config.supersawSpreadMax / 2.0);
 	public supersawShape: number = 0;
-    public decimalOffset: number = 0;
-    public stringSustain: number = 10;
+	public stringSustain: number = 10;
+	public stringSustainType: SustainType = SustainType.acoustic;
     public distortion: number = 0;
     public bitcrusherFreq: number = 0;
     public bitcrusherQuantization: number = 0;
@@ -1454,9 +1434,6 @@ export class Instrument {
     public customAlgorithm: CustomAlgorithm = new CustomAlgorithm(); //{ name: "1←4(2←5 3←6", carrierCount: 3, associatedCarrier: [1, 2, 3, 1, 2, 3], modulatedBy: [[2, 3, 4], [5], [6], [], [], []] };
     public customFeedbackType: CustomFeedBack = new CustomFeedBack(); //{ name: "1↔4 2↔5 3↔6", indices: [[3], [5], [6], [1], [2], [3]] };
     public feedbackAmplitude: number = 0;
-    public LFOtime: number = 0;
-    public nextLFOtime: number = 0;
-    public arpTime: number = 0;
     public customChipWave: Float32Array = new Float32Array(64);
     public customChipWaveIntegral: Float32Array = new Float32Array(65); // One extra element for wrap-around in chipSynth.
     public readonly operators: Operator[] = [];
@@ -1471,9 +1448,27 @@ export class Instrument {
     public invalidModulators: boolean[] = [];
     constructor(isNoiseChannel: boolean, isModChannel: boolean) {
 
+        // @jummbus - My screed on how modulator arrays for instruments work, for the benefit of myself in the future, or whoever else.
+        //
+        // modulators[mod] is the index in Config.modulators to use, with "none" being the first entry.
+        //
+        // modChannels[mod] gives the index of a channel set for this mod. Two special values:
+        //   -2 "none"
+        //   -1 "song"
+        //   0+ actual channel index
+        //
+        // modInstruments[mod] gives the index of an instrument within the channel set for this mod. Again, two special values:
+        //   [0 ~ channel.instruments.length-1]     channel's instrument index
+        //   channel.instruments.length             "all"
+        //   channel.instruments.length+1           "active"
+        //
+        // modFilterTypes[mod] gives some info about the filter type: 0 is morph, 1+ is index in the dot selection array (dot 1 x, dot 1 y, dot 2 x...)
+        //   0  filter morph
+        //   1+ filter dot target, starting from dot 1 x and then dot 1 y, then repeating x, y for all dots in order. Note: odd values are always "x" targets, even are "y".
+
         if (isModChannel) {
             for (let mod: number = 0; mod < Config.modCount; mod++) {
-                this.modChannels.push(0);
+                this.modChannels.push(-2);
                 this.modInstruments.push(0);
                 this.modulators.push(Config.modulators.dictionary["none"].index);
             }
@@ -1545,8 +1540,11 @@ export class Instrument {
         this.vibrato = 0;
         this.unison = 0;
         this.stringSustain = 10;
+        this.stringSustainType = Config.enableAcousticSustain ? SustainType.acoustic : SustainType.bright;
         this.clicklessTransition = false;
         this.arpeggioSpeed = 12;
+        this.envelopeSpeed = 12;
+        this.discreteEnvelope = false;
         this.legacyTieOver = false;
         this.aliases = false;
         this.fadeIn = 0;
@@ -1640,6 +1638,7 @@ export class Instrument {
             case InstrumentType.pwm:
                 this.chord = Config.chords.dictionary["arpeggio"].index;
                 this.pulseWidth = Config.pulseWidthRange;
+                this.decimalOffset = 0;
                 break;
             case InstrumentType.pickedString:
                 this.chord = Config.chords.dictionary["strum"].index;
@@ -1662,13 +1661,14 @@ export class Instrument {
                     this.modFilterTypes[mod] = 0;
                 }
                 break;
-                case InstrumentType.supersaw:
-                    this.chord = Config.chords.dictionary["arpeggio"].index;
-                    this.supersawDynamism = Config.supersawDynamismMax;
-                    this.supersawSpread = Math.ceil(Config.supersawSpreadMax / 2.0);
-                    this.supersawShape = 0;
-                    this.pulseWidth = Config.pulseWidthRange - 1;
-                    break;
+            case InstrumentType.supersaw:
+				this.chord = Config.chords.dictionary["arpeggio"].index;
+				this.supersawDynamism = Config.supersawDynamismMax;
+				this.supersawSpread = Math.ceil(Config.supersawSpreadMax / 2.0);
+				this.supersawShape = 0;
+				this.pulseWidth = Config.pulseWidthRange - 1;
+                this.decimalOffset = 0;
+				break;
             default:
                 throw new Error("Unrecognized instrument type: " + type);
         }
@@ -1780,7 +1780,9 @@ export class Instrument {
             "eqFilter": this.eqFilter.toJsonObject(),
             "eqFilterType": this.eqFilterType,
             "eqSimpleCut": this.eqFilterSimpleCut,
-            "eqSimplePeak": this.eqFilterSimplePeak
+            "eqSimplePeak": this.eqFilterSimplePeak,
+            "envelopeSpeed": this.envelopeSpeed,
+            "discreteEnvelope": this.discreteEnvelope
         };
 
         if (this.preset != this.type) {
@@ -1895,18 +1897,6 @@ export class Instrument {
                     "spectrum": spectrum,
                 };
             }
-       /* } else if (this.type == InstrumentType.sampledset) {
-            instrumentObject["drums"] = [];
-            for (let j: number = 0; j < Config.drumCount; j++) {
-                const spectrum: number[] = [];
-                for (let i: number = 0; i < Config.spectrumControlPoints; i++) {
-                    spectrum[i] = Math.round(100 * this.drumsetSpectrumWaves[j].spectrum[i] / Config.spectrumMax);
-                }
-                instrumentObject["drums"][j] = {
-                    "filterEnvelope": this.getDrumsetEnvelope(j).name,
-                    "spectrum": spectrum,
-                };
-            }*/
         } else if (this.type == InstrumentType.chip) {
             instrumentObject["wave"] = Config.chipWaves[this.chipWave].name;
             // should this unison pushing code be turned into a function..?
@@ -1932,11 +1922,12 @@ export class Instrument {
             instrumentObject["pulseWidth"] = this.pulseWidth;
             instrumentObject["decimalOffset"] = this.decimalOffset;
         } else if (this.type == InstrumentType.supersaw) {
-			instrumentObject["pulseWidth"] = Math.round(getPulseWidthRatio(this.pulseWidth) * 100 * 100000) / 100000;
+			instrumentObject["pulseWidth"] = this.pulseWidth;
+            instrumentObject["decimalOffset"] = this.decimalOffset;
 			instrumentObject["dynamism"] = Math.round(100 * this.supersawDynamism / Config.supersawDynamismMax);
 			instrumentObject["spread"] = Math.round(100 * this.supersawSpread / Config.supersawSpreadMax);
 			instrumentObject["shape"] = Math.round(100 * this.supersawShape / Config.supersawShapeMax);
-       } else if (this.type == InstrumentType.pickedString) {
+		} else if (this.type == InstrumentType.pickedString) {
             instrumentObject["unison"] = this.unison == Config.unisons.length ? "custom" : Config.unisons[this.unison].name;
             if (this.unison == Config.unisons.length) {
                 instrumentObject["unisonVoices"] = this.unisonVoices;
@@ -1946,6 +1937,9 @@ export class Instrument {
                 instrumentObject["unisonSign"] = this.unisonSign;
             }
             instrumentObject["stringSustain"] = Math.round(100 * this.stringSustain / (Config.stringSustainRange - 1));
+            if (Config.enableAcousticSustain) {
+				instrumentObject["stringSustainType"] = Config.sustainTypeNames[this.stringSustainType];
+			}
         } else if (this.type == InstrumentType.harmonics) {
             instrumentObject["unison"] = this.unison == Config.unisons.length ? "custom" : Config.unisons[this.unison].name;
             if (this.unison == Config.unisons.length) {
@@ -2009,11 +2003,12 @@ export class Instrument {
             instrumentObject["modChannels"] = [];
             instrumentObject["modInstruments"] = [];
             instrumentObject["modSettings"] = [];
-            instrumentObject["modStatuses"] = [];
+            instrumentObject["modFilterTypes"] = [];
             for (let mod: number = 0; mod < Config.modCount; mod++) {
                 instrumentObject["modChannels"][mod] = this.modChannels[mod];
                 instrumentObject["modInstruments"][mod] = this.modInstruments[mod];
                 instrumentObject["modSettings"][mod] = this.modulators[mod];
+                instrumentObject["modFilterTypes"][mod] = this.modFilterTypes[mod];
             }
         } else {
             throw new Error("Unrecognized instrument type");
@@ -2036,6 +2031,8 @@ export class Instrument {
         if (<any>type == -1) type = isModChannel ? InstrumentType.mod : (isNoiseChannel ? InstrumentType.noise : InstrumentType.chip);
         this.setTypeAndReset(type, isNoiseChannel, isModChannel);
 
+        this.effects &= ~(1 << EffectType.panning);
+
         if (instrumentObject["preset"] != undefined) {
             this.preset = instrumentObject["preset"] >>> 0;
         }
@@ -2044,6 +2041,19 @@ export class Instrument {
             this.volume = clamp(-Config.volumeRange / 2, (Config.volumeRange / 2) + 1, instrumentObject["volume"] | 0);
         } else {
             this.volume = 0;
+        }
+
+        if (instrumentObject["envelopeSpeed"] != undefined) {
+            this.envelopeSpeed = clamp(0, Config.modulators.dictionary["envelope speed"].maxRawVol + 1, instrumentObject["envelopeSpeed"] | 0);
+        } else {
+            this.envelopeSpeed = 12;
+        }
+
+        if (instrumentObject["discreteEnvelope"] != undefined) {
+            this.discreteEnvelope = instrumentObject["discreteEnvelope"];
+        }
+        else {
+            this.discreteEnvelope = false;
         }
 
         if (Array.isArray(instrumentObject["effects"])) {
@@ -2197,8 +2207,6 @@ export class Instrument {
             }
         } else {
             this.pan = Config.panCenter;
-            // Still enabling pan effect, to make it a default
-            this.effects = (this.effects | (1 << EffectType.panning));
         }
 
         if (instrumentObject["panDelay"] != undefined) {
@@ -2248,6 +2256,12 @@ export class Instrument {
             this.pulseWidth = Config.pulseWidthRange;
         }
 
+        if (instrumentObject["decimalOffset"] != undefined) {
+            this.decimalOffset = clamp(0, 99 + 1, Math.round(instrumentObject["decimalOffset"]));
+        } else {
+            this.decimalOffset = 0;
+        }
+
         if (instrumentObject["dynamism"] != undefined) {
 			this.supersawDynamism = clamp(0, Config.supersawDynamismMax + 1, Math.round(Config.supersawDynamismMax * (instrumentObject["dynamism"] | 0) / 100));
 		} else {
@@ -2263,13 +2277,7 @@ export class Instrument {
 		} else {
 			this.supersawShape = 0;
 		}
-
-        if (instrumentObject["decimalOffset"] != undefined) {
-            this.decimalOffset = clamp(0, 99 + 1, Math.round(instrumentObject["decimalOffset"]));
-        } else {
-            this.decimalOffset = 0;
-        }
-
+        
         if (instrumentObject["harmonics"] != undefined) {
             for (let i: number = 0; i < Config.harmonicsControlPoints; i++) {
                 this.harmonicsWave.harmonics[i] = Math.max(0, Math.min(Config.harmonicsMax, Math.round(Config.harmonicsMax * (+instrumentObject["harmonics"][i]) / 100)));
@@ -2292,6 +2300,8 @@ export class Instrument {
         } else {
             this.stringSustain = 10;
         }
+        this.stringSustainType = Config.enableAcousticSustain ? Config.sustainTypeNames.indexOf(instrumentObject["stringSustainType"]) : SustainType.bright;
+		if (<any>this.stringSustainType == -1) this.stringSustainType = SustainType.bright;
 
         if (this.type == InstrumentType.noise) {
             this.chipNoise = Config.chipNoises.findIndex(wave => wave.name == instrumentObject["wave"]);
@@ -2450,6 +2460,9 @@ export class Instrument {
                     this.modChannels[mod] = instrumentObject["modChannels"][mod];
                     this.modInstruments[mod] = instrumentObject["modInstruments"][mod];
                     this.modulators[mod] = instrumentObject["modSettings"][mod];
+                    // Due to an oversight, this isn't included in JSONs prior to JB 2.6.
+                    if (instrumentObject["modFilterTypes"] != undefined)
+                    this.modFilterTypes[mod] = instrumentObject["modFilterTypes"][mod];
                 }
             }
         }
@@ -2603,6 +2616,25 @@ export class Instrument {
 	}	
            // advloop addition
 
+        public getLargestControlPointCount(forNoteFilter: boolean) {
+        let largest: number;
+        if (forNoteFilter) {
+            largest = this.noteFilter.controlPointCount;
+            for (let i: number = 0; i < Config.filterMorphCount; i++) {
+                if (this.noteSubFilters[i] != null && this.noteSubFilters[i]!.controlPointCount > largest)
+                    largest = this.noteSubFilters[i]!.controlPointCount;
+            }
+        }
+        else {
+            largest = this.eqFilter.controlPointCount;
+            for (let i: number = 0; i < Config.filterMorphCount; i++) {
+                if (this.eqSubFilters[i] != null && this.eqSubFilters[i]!.controlPointCount > largest)
+                    largest = this.eqSubFilters[i]!.controlPointCount;
+            }
+        }
+        return largest;
+    }
+
     public static frequencyFromPitch(pitch: number): number {
         return 440.0 * Math.pow(2.0, (pitch - 69.0) / 12.0);
     }
@@ -2621,6 +2653,9 @@ export class Instrument {
 
     public supportsEnvelopeTarget(target: number, index: number): boolean {
         const automationTarget: AutomationTarget = Config.instrumentAutomationTargets[target];
+        if (automationTarget.computeIndex == null && automationTarget.name != "none") {
+			return false;
+		}
         if (index >= automationTarget.maxCount) {
             return false;
         }
@@ -2691,14 +2726,14 @@ export class Song {
     private static readonly _oldestBeepboxVersion: number = 2;
     private static readonly _latestBeepboxVersion: number = 9;
     private static readonly _oldestJummBoxVersion: number = 1;
-    private static readonly _latestJummBoxVersion: number = 5;
+    private static readonly _latestJummBoxVersion: number = 6;
     private static readonly _oldestGoldBoxVersion: number = 1;
     private static readonly _latestGoldBoxVersion: number = 4;
     private static readonly _oldestUltraBoxVersion: number = 1;
-    private static readonly _latestUltraBoxVersion: number = 4;
+    private static readonly _latestUltraBoxVersion: number = 5;
     // One-character variant detection at the start of URL to distinguish variants such as JummBox, Or Goldbox. "j" and "g" respectively
 	//also "u" is ultrabox lol
-    private static readonly _variant = 0x75; //"a" ~ abyssbox
+    private static readonly _variant = 0x75; //"u" ~ ultrabox
 
     public title: string;
     public scale: number;
@@ -3276,11 +3311,14 @@ export class Song {
                 } else if (instrument.type == InstrumentType.supersaw) {
 					buffer.push(SongTagCode.supersaw, base64IntToCharCode[instrument.supersawDynamism], base64IntToCharCode[instrument.supersawSpread], base64IntToCharCode[instrument.supersawShape]);
 					buffer.push(SongTagCode.pulseWidth, base64IntToCharCode[instrument.pulseWidth]);
-					buffer.push(base64IntToCharCode[instrument.decimalOffset >> 6], base64IntToCharCode[instrument.decimalOffset & 0x3f]);
-                } else if (instrument.type == InstrumentType.pickedString) {
+                    buffer.push(base64IntToCharCode[instrument.decimalOffset >> 6], base64IntToCharCode[instrument.decimalOffset & 0x3f]);
+				} else if (instrument.type == InstrumentType.pickedString) {
+                    if (Config.stringSustainRange > 0x20 || SustainType.length > 2) {
+						throw new Error("Not enough bits to represent sustain value and type in same base64 character.");
+					}
                     buffer.push(SongTagCode.unison, base64IntToCharCode[instrument.unison]);
                     if (instrument.unison == Config.unisons.length) encodeUnisonSettings(buffer, instrument.unisonVoices, instrument.unisonSpread, instrument.unisonOffset, instrument.unisonExpression, instrument.unisonSign);
-                    buffer.push(SongTagCode.stringSustain, base64IntToCharCode[instrument.stringSustain]);
+                    buffer.push(SongTagCode.stringSustain, base64IntToCharCode[instrument.stringSustain | (instrument.stringSustainType << 5)]);
                 } else if (instrument.type == InstrumentType.mod) {
                     // Handled down below. Could be moved, but meh.
                 } else {
@@ -3288,6 +3326,9 @@ export class Song {
                 }
 
                 buffer.push(SongTagCode.envelopes, base64IntToCharCode[instrument.envelopeCount]);
+                // Added in JB v6: Options for envelopes come next.
+                buffer.push(base64IntToCharCode[instrument.envelopeSpeed]);
+                buffer.push(base64IntToCharCode[+instrument.discreteEnvelope]);
                 for (let envelopeIndex: number = 0; envelopeIndex < instrument.envelopeCount; envelopeIndex++) {
                     buffer.push(base64IntToCharCode[instrument.envelopes[envelopeIndex].target]);
                     if (Config.instrumentAutomationTargets[instrument.envelopes[envelopeIndex].target].maxCount > 1) {
@@ -3567,7 +3608,10 @@ export class Song {
         let fromBeepBox: boolean;
         let fromJummBox: boolean;
         let fromGoldBox: boolean;
-	let fromUltraBox: boolean;
+	    let fromUltraBox: boolean;
+        // let fromMidbox: boolean;
+        // let fromDogebox2: boolean;
+        // let fromAbyssBox: boolean;
 
         // Detect variant here. If version doesn't match known variant, assume it is a vanilla string which does not report variant.
         if (variantTest == 0x6A) { //"j"
@@ -3943,14 +3987,17 @@ export class Song {
                 }
                 validateRange(0, this.channels.length - 1, instrumentChannelIterator);
                 const instrument: Instrument = this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator];
-                // JB before v5 had custom chip in the place where pickedString is now, and mod one sooner as well. New index is +1 for both.
+                // JB before v5 had custom chip and mod before pickedString and supersaw were added. Index +2.
                 let instrumentType: number = validateRange(0, InstrumentType.length - 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                 if ((fromJummBox && beforeFive) || (beforeFour && fromGoldBox)) {
-                    if (instrumentType == InstrumentType.pickedString) {
-                        instrumentType = InstrumentType.customChipWave;
+                    if (instrumentType == InstrumentType.pickedString || instrumentType == InstrumentType.supersaw) {
+                        instrumentType += 2;
                     }
-                    else if (instrumentType == InstrumentType.customChipWave) {
-                        instrumentType = InstrumentType.mod;
+                }
+                // Similar story here, JB before v5 had custom chip and mod before supersaw was added. Index +1.
+                else if ((fromJummBox && beforeSix) || (fromGoldBox && !beforeFour) || (fromUltraBox && beforeFive) ) {
+                    if (instrumentType == InstrumentType.supersaw || instrumentType == InstrumentType.customChipWave || instrumentType == InstrumentType.mod) {
+                        instrumentType += 1;
                     }
                 }
                 instrument.setTypeAndReset(instrumentType, instrumentChannelIterator >= this.pitchChannelCount && instrumentChannelIterator < this.pitchChannelCount + this.noiseChannelCount, instrumentChannelIterator >= this.pitchChannelCount + this.noiseChannelCount);
@@ -3985,7 +4032,24 @@ export class Song {
                 if ((fromJummBox && beforeFive) || (beforeFour && fromGoldBox)) {
                     if (this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].preset == InstrumentType.pickedString) {
                         this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].preset = InstrumentType.customChipWave;
+                        this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].type = InstrumentType.customChipWave;
                     }
+                }
+                // Similar story, supersaw is also before custom chip (and mod, but mods can't have presets).
+                else if ((fromJummBox && beforeSix) || (fromUltraBox && beforeFive)) {
+                    if (this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].preset == InstrumentType.supersaw ) {
+                        this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].preset = InstrumentType.customChipWave;
+                        this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].type = InstrumentType.customChipWave;
+                    }
+                    // ultra code for 6-op fm maybe
+                    if (this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].preset == InstrumentType.mod ) {
+                        this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].preset = InstrumentType.fm6op;
+                        this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].type = InstrumentType.fm6op;
+                    }
+                }
+                // BeepBox directly tweaked "grand piano", but JB kept it the same. The most up to date version is now "grand piano 3"
+                if (fromBeepBox && presetValue == EditorConfig.nameToPresetValue("grand piano 1") ) {
+                    this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].preset = EditorConfig.nameToPresetValue("grand piano 3")!;
                 }
             } break;
             case SongTagCode.wave: {
@@ -4041,41 +4105,6 @@ export class Song {
 		 }
         	}
             } break;
-			/* case 120:
-
-
-						Archeology time!! So, adding the supersaw caused this to break, and now I need to merge this with something else
-						Leo could have been a bit more descriptive but I'll just write down everything I can observe for now 
-						
-
-						if (fromGoldBox && !beforeFour && beforeSix) {
-							const chipWaveForCompat = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
-							if ((chipWaveForCompat + 62) > 85) {
-								if (document.URL.substring(document.URL.length - 13).toLowerCase() != "legacysamples") {
-									if (!willLoadLegacySamplesForOldSongs) {
-										willLoadLegacySamplesForOldSongs = true;
-										Config.willReloadForCustomSamples = true;
-										EditorConfig.customSamples = ["legacySamples"];
-										loadBuiltInSamples(0);
-									}
-								}
-							}
-							
-							if ((chipWaveForCompat + 62) > 78) {
-								this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].chipWave = clamp(0, Config.chipWaves.length, chipWaveForCompat + 63);	
-							}
-							else if ((chipWaveForCompat + 62) > 67) {
-								this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].chipWave = clamp(0, Config.chipWaves.length, chipWaveForCompat + 61);	
-							}
-							else if ((chipWaveForCompat + 62) == 67) {
-								this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].chipWave = 40;	
-							}
-							else {
-								this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].chipWave = clamp(0, Config.chipWaves.length, chipWaveForCompat + 62);			
-							}							
-						}
-						//is it more useful to save base64 characters or url length?
-					break; */
             case SongTagCode.eqFilter: {
                 if ((beforeNine && fromBeepBox) || (beforeFive && fromJummBox) || (beforeFour && fromGoldBox)) {
                     if (beforeSeven && fromBeepBox) {
@@ -4315,20 +4344,15 @@ export class Song {
                 }
 
                 if (fromUltraBox && !beforeFour) {
-                    const instrument: Instrument = this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator];  
                     instrument.decimalOffset = clamp(0, 99 + 1, (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << 6) + base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                 }
 
             } break;
-            case SongTagCode.supersaw: {
-				const instrument: Instrument = this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator];
-				instrument.supersawDynamism = clamp(0, Config.supersawDynamismMax + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
-				instrument.supersawSpread = clamp(0, Config.supersawSpreadMax + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
-				instrument.supersawShape = clamp(0, Config.supersawShapeMax + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
-            } break;
             case SongTagCode.stringSustain: {
                 const instrument: Instrument = this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator];
-                instrument.stringSustain = clamp(0, Config.stringSustainRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                const sustainValue: number = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
+				instrument.stringSustain = clamp(0, Config.stringSustainRange, sustainValue & 0x1F);
+				instrument.stringSustainType = Config.enableAcousticSustain ? clamp(0, SustainType.length, sustainValue >> 5) : SustainType.bright;
             } break;
             case SongTagCode.fadeInOut: {
                 if ((beforeNine && fromBeepBox) || ((fromJummBox && beforeFive) || (beforeFour && fromGoldBox))) {
@@ -4543,8 +4567,8 @@ export class Song {
                 }
                 const instrument = this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator];
                 
-                //if (fromUltrabox) && !beforeFive && (instrument.unison == Config.unisons.length)  {
-                if (instrument.unison == Config.unisons.length) {
+                if ((fromUltraBox && !beforeFive) && (instrument.unison == Config.unisons.length))  {
+                // if (instrument.unison == Config.unisons.length) {
                     instrument.unisonVoices = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
 
                     const unisonSpreadNegative = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
@@ -4917,6 +4941,40 @@ export class Song {
                     instrument.convertLegacySettings(legacySettings, forceSimpleFilter);
                 }
             } break;
+            case SongTagCode.supersaw: {
+                if (fromGoldBox && !beforeFour && beforeSix) {
+                    //is it more useful to save base64 characters or url length?
+                    const chipWaveForCompat = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
+                    if ((chipWaveForCompat + 62) > 85) {
+                        if (document.URL.substring(document.URL.length - 13).toLowerCase() != "legacysamples") {
+                            if (!willLoadLegacySamplesForOldSongs) {
+                                willLoadLegacySamplesForOldSongs = true;
+                                Config.willReloadForCustomSamples = true;
+                                EditorConfig.customSamples = ["legacySamples"];
+                                loadBuiltInSamples(0);
+                            }
+                        }
+                    }
+                    
+                    if ((chipWaveForCompat + 62) > 78) {
+                        this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].chipWave = clamp(0, Config.chipWaves.length, chipWaveForCompat + 63);	
+                    }
+                    else if ((chipWaveForCompat + 62) > 67) {
+                        this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].chipWave = clamp(0, Config.chipWaves.length, chipWaveForCompat + 61);	
+                    }
+                    else if ((chipWaveForCompat + 62) == 67) {
+                        this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].chipWave = 40;	
+                    }
+                    else {
+                        this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].chipWave = clamp(0, Config.chipWaves.length, chipWaveForCompat + 62);			
+                    }							
+                } else {
+                    const instrument: Instrument = this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator];
+                    instrument.supersawDynamism = clamp(0, Config.supersawDynamismMax + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                    instrument.supersawSpread = clamp(0, Config.supersawSpreadMax + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                    instrument.supersawShape = clamp(0, Config.supersawShapeMax + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                }
+			} break;
             case SongTagCode.feedbackType: {
                 const instrument: Instrument = this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator];
                 if (instrument.type == InstrumentType.fm) {
@@ -4968,20 +5026,20 @@ export class Song {
                             if (beforeThree && fromGoldBox) {
 								const freqToGold3 = [4, 5, 6, 7, 8, 10, 12, 13, 14, 15, 16, 18, 20, 22, 24, 2, 1, 9, 17, 19, 21, 23, 0, 3];
                                
-								for (let o = 0; o < (instrument.type == 10 ? 6 : Config.operatorCount); o++) {
+								for (let o = 0; o < (instrument.type == InstrumentType.fm6op ? 6 : Config.operatorCount); o++) {
                                     instrument.operators[o].frequency = freqToGold3[clamp(0, freqToGold3.length, base64CharCodeToInt[compressed.charCodeAt(charIndex++)])];
                                 }
                             }
 							else if (!fromGoldBox && !fromUltraBox) {
 								const freqToUltraBox = [4, 5, 6, 7, 8, 10, 12, 13, 14, 15, 16, 18, 20, 23, 27, 2, 1, 9, 17, 19, 21, 23, 0, 3];
 								
-								for (let o = 0; o < (instrument.type == 10 ? 6 : Config.operatorCount); o++) {
+								for (let o = 0; o < (instrument.type == InstrumentType.fm6op ? 6 : Config.operatorCount); o++) {
                                     instrument.operators[o].frequency = freqToUltraBox[clamp(0, freqToUltraBox.length, base64CharCodeToInt[compressed.charCodeAt(charIndex++)])];
                                 }
 								
 							}
                             else {
-                                for (let o = 0; o < (instrument.type == 10 ? 6 : Config.operatorCount); o++) {
+                                for (let o = 0; o < (instrument.type == InstrumentType.fm6op ? 6 : Config.operatorCount); o++) {
                                     instrument.operators[o].frequency = clamp(0, Config.operatorFrequencies.length, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                                 }
                             }
@@ -4994,18 +5052,25 @@ export class Song {
             } break;
             case SongTagCode.envelopes: {
                 const pregoldToEnvelope: number[] = [0, 1, 2, 4, 5, 6, 8, 9, 10, 12, 13, 14, 16, 17, 18, 19, 20, 21, 23, 24, 25, 27, 28, 29, 32, 33, 34, 31, 11];
+                const jummToUltraEnvelope: number[] = [0, 1, 2, 4, 5, 6, 8, 9, 10, 12, 13, 14, 16, 17, 18, 19, 20, 21, 23, 24, 25, 58, 59, 60];
                 const instrument: Instrument = this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator];
                 if ((beforeNine && fromBeepBox) || (beforeFive && fromJummBox) || (beforeFour && fromGoldBox)) {
                     const legacySettings: LegacySettings = legacySettingsCache![instrumentChannelIterator][instrumentIndexIterator];
                     legacySettings.operatorEnvelopes = [];
                     for (let o: number = 0; o < (instrument.type == InstrumentType.fm6op ? 6 : Config.operatorCount); o++) {
                         let aa:number = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
-                        if ((beforeTwo && fromGoldBox) || (!fromGoldBox && !fromUltraBox)) aa = pregoldToEnvelope[aa];  
+                        if ((beforeTwo && fromGoldBox) || (fromBeepBox)) aa = pregoldToEnvelope[aa];
+                        if (fromJummBox) aa = jummToUltraEnvelope[aa];
                         legacySettings.operatorEnvelopes[o] = Song._envelopeFromLegacyIndex(aa);
                     }
                     instrument.convertLegacySettings(legacySettings, forceSimpleFilter);
                 } else {
                     const envelopeCount: number = clamp(0, Config.maxEnvelopeCount + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                    // JB v6 adds some envelope options here in the sequence.
+                    if ((fromJummBox && !beforeSix) || (fromUltraBox && !beforeFive)) {
+                        instrument.envelopeSpeed = clamp(0, Config.modulators.dictionary["envelope speed"].maxRawVol + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                        instrument.discreteEnvelope = (base64CharCodeToInt[compressed.charCodeAt(charIndex++)]) ? true : false;
+                    }
                     for (let i: number = 0; i < envelopeCount; i++) {
                         const target: number = clamp(0, Config.instrumentAutomationTargets.length, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                         let index: number = 0;
@@ -5014,7 +5079,8 @@ export class Song {
                             index = clamp(0, maxCount, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                         }
                         let aa:number = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
-                        if ((beforeTwo && fromGoldBox) || (!fromGoldBox && !fromUltraBox)) aa = pregoldToEnvelope[aa]; 
+                        if ((beforeTwo && fromGoldBox) || (fromBeepBox)) aa = pregoldToEnvelope[aa]; 
+                        if (fromJummBox) aa = jummToUltraEnvelope[aa];
                         const envelope: number = clamp(0, Config.envelopes.length, aa);
                         instrument.addEnvelope(target, index, envelope);
                     }
@@ -6247,8 +6313,10 @@ export class Song {
         this.scale = 0; // default to free.
         if (jsonObject["scale"] != undefined) {
             const oldScaleNames: Dictionary<string> = {
-                "romani :)": "dbl harmonic :)",
-                "romani :(": "dbl harmonic :(",
+                "romani :)": "double harmonic :)",
+				"romani :(": "double harmonic :(",
+				"dbl harmonic :)": "double harmonic :)",
+				"dbl harmonic :(": "double harmonic :(",
                 "enigma": "strange",
             };
             const scaleName: string = (oldScaleNames[jsonObject["scale"]] != undefined) ? oldScaleNames[jsonObject["scale"]] : jsonObject["scale"];
@@ -6524,8 +6592,10 @@ class PickedString {
     public delayIndex: number;
     public allPassSample: number;
     public allPassPrevInput: number;
-    public shelfSample: number;
-    public shelfPrevInput: number;
+    public sustainFilterSample: number;
+	public sustainFilterPrevOutput2: number;
+	public sustainFilterPrevInput1: number;
+	public sustainFilterPrevInput2: number;
     public fractionalDelaySample: number;
     public prevDelayLength: number;
     public delayLengthDelta: number;
@@ -6533,12 +6603,16 @@ class PickedString {
 
     public allPassG: number = 0.0;
     public allPassGDelta: number = 0.0;
-    public shelfA1: number = 0.0;
-    public shelfA1Delta: number = 0.0;
-    public shelfB0: number = 0.0;
-    public shelfB0Delta: number = 0.0;
-    public shelfB1: number = 0.0;
-    public shelfB1Delta: number = 0.0;
+    public sustainFilterA1: number = 0.0;
+	public sustainFilterA1Delta: number = 0.0;
+	public sustainFilterA2: number = 0.0;
+	public sustainFilterA2Delta: number = 0.0;
+	public sustainFilterB0: number = 0.0;
+	public sustainFilterB0Delta: number = 0.0;
+	public sustainFilterB1: number = 0.0;
+	public sustainFilterB1Delta: number = 0.0;
+	public sustainFilterB2: number = 0.0;
+	public sustainFilterB2Delta: number = 0.0;
 
     constructor() {
         this.reset();
@@ -6548,18 +6622,17 @@ class PickedString {
         this.delayIndex = -1;
         this.allPassSample = 0.0;
         this.allPassPrevInput = 0.0;
-        this.shelfSample = 0.0;
-        this.shelfPrevInput = 0.0;
+        this.sustainFilterSample = 0.0;
+		this.sustainFilterPrevOutput2 = 0.0;
+		this.sustainFilterPrevInput1 = 0.0;
+		this.sustainFilterPrevInput2 = 0.0;
         this.fractionalDelaySample = 0.0;
         this.prevDelayLength = -1.0;
         this.delayResetOffset = 0;
     }
 
-    public update(synth: Synth, instrumentState: InstrumentState, tone: Tone, stringIndex: number, roundedSamplesPerTick: number, stringDecayStart: number, stringDecayEnd: number): void {
+    public update(synth: Synth, instrumentState: InstrumentState, tone: Tone, stringIndex: number, roundedSamplesPerTick: number, stringDecayStart: number, stringDecayEnd: number, sustainType: SustainType): void {
         const allPassCenter: number = 2.0 * Math.PI * Config.pickedStringDispersionCenterFreq / synth.samplesPerSecond;
-        const shelfRadians: number = 2.0 * Math.PI * Config.pickedStringShelfHz / synth.samplesPerSecond;
-        const decayCurveStart: number = (Math.pow(100.0, stringDecayStart) - 1.0) / 99.0;
-        const decayCurveEnd: number = (Math.pow(100.0, stringDecayEnd) - 1.0) / 99.0;
 
         const prevDelayLength: number = this.prevDelayLength;
 
@@ -6575,11 +6648,17 @@ class PickedString {
 
         const allPassRadiansStart: number = Math.min(Math.PI, radiansPerSampleStart * Config.pickedStringDispersionFreqMult * Math.pow(allPassCenter / radiansPerSampleStart, Config.pickedStringDispersionFreqScale));
         const allPassRadiansEnd: number = Math.min(Math.PI, radiansPerSampleEnd * Config.pickedStringDispersionFreqMult * Math.pow(allPassCenter / radiansPerSampleEnd, Config.pickedStringDispersionFreqScale));
-
-        const decayRateStart: number = Math.pow(0.5, decayCurveStart * shelfRadians / radiansPerSampleStart);
-        const decayRateEnd: number = Math.pow(0.5, decayCurveEnd * shelfRadians / radiansPerSampleEnd);
-        const shelfGainStart: number = Math.pow(decayRateStart, Config.stringDecayRate);
-        const shelfGainEnd: number = Math.pow(decayRateEnd, Config.stringDecayRate);
+        const shelfRadians: number = 2.0 * Math.PI * Config.pickedStringShelfHz / synth.samplesPerSecond;
+		const decayCurveStart: number = (Math.pow(100.0, stringDecayStart) - 1.0) / 99.0;
+		const decayCurveEnd: number   = (Math.pow(100.0, stringDecayEnd  ) - 1.0) / 99.0;
+		const register: number = sustainType == SustainType.acoustic ? 0.25 : 0.0;
+		const registerShelfCenter: number = 15.6;
+		const registerLowpassCenter: number = 3.0 * synth.samplesPerSecond / 48000;
+		//const decayRateStart: number = Math.pow(0.5, decayCurveStart * shelfRadians / radiansPerSampleStart);
+		//const decayRateEnd: number   = Math.pow(0.5, decayCurveEnd   * shelfRadians / radiansPerSampleEnd);
+		const decayRateStart: number = Math.pow(0.5, decayCurveStart * Math.pow(shelfRadians / (radiansPerSampleStart * registerShelfCenter), (1.0 + 2.0 * register)) * registerShelfCenter);
+		const decayRateEnd:   number = Math.pow(0.5, decayCurveEnd   * Math.pow(shelfRadians / (radiansPerSampleEnd   * registerShelfCenter), (1.0 + 2.0 * register)) * registerShelfCenter);
+        
         const expressionDecayStart: number = Math.pow(decayRateStart, 0.002);
         const expressionDecayEnd: number = Math.pow(decayRateEnd, 0.002);
 
@@ -6593,36 +6672,68 @@ class PickedString {
         const allPassGEnd: number = Synth.tempFilterEndCoefficients.b[0]; /* same as a[1] */
         const allPassPhaseDelayEnd: number = -synth.tempFrequencyResponse.angle() / centerHarmonicEnd;
 
-        Synth.tempFilterStartCoefficients.highShelf1stOrder(shelfRadians, shelfGainStart);
-        synth.tempFrequencyResponse.analyze(Synth.tempFilterStartCoefficients, centerHarmonicStart);
-        const shelfA1Start: number = Synth.tempFilterStartCoefficients.a[1];
-        const shelfB0Start: number = Synth.tempFilterStartCoefficients.b[0] * expressionDecayStart;
-        const shelfB1Start: number = Synth.tempFilterStartCoefficients.b[1] * expressionDecayStart;
-        const shelfPhaseDelayStart: number = -synth.tempFrequencyResponse.angle() / centerHarmonicStart;
+        // 1st order shelf filters and 2nd order lowpass filters have differently shaped frequency
+		// responses, as well as adjustable shapes. I originally picked a 1st order shelf filter,
+		// but I kinda prefer 2nd order lowpass filters now and I designed a couple settings:
+		const enum PickedStringBrightnessType {
+			bright, // 1st order shelf
+			normal, // 2nd order lowpass, rounded corner
+			resonant, // 3rd order lowpass, harder corner
+		}
+		const brightnessType: PickedStringBrightnessType = <any> sustainType == SustainType.bright ? PickedStringBrightnessType.bright : PickedStringBrightnessType.normal;
+		if (brightnessType == PickedStringBrightnessType.bright) {
+			const shelfGainStart: number = Math.pow(decayRateStart, Config.stringDecayRate);
+			const shelfGainEnd: number   = Math.pow(decayRateEnd,   Config.stringDecayRate);
+			Synth.tempFilterStartCoefficients.highShelf2ndOrder(shelfRadians, shelfGainStart, 0.5);
+			Synth.tempFilterEndCoefficients.highShelf2ndOrder(shelfRadians, shelfGainEnd, 0.5);
+		} else {
+			const cornerHardness: number = Math.pow(brightnessType == PickedStringBrightnessType.normal ? 0.0 : 1.0, 0.25);
+			const lowpass1stOrderCutoffRadiansStart: number = Math.pow(registerLowpassCenter * registerLowpassCenter * radiansPerSampleStart * 3.3 * 48000 / synth.samplesPerSecond, 0.5 + register) / registerLowpassCenter / Math.pow(decayCurveStart, .5);
+			const lowpass1stOrderCutoffRadiansEnd:   number = Math.pow(registerLowpassCenter * registerLowpassCenter * radiansPerSampleEnd   * 3.3 * 48000 / synth.samplesPerSecond, 0.5 + register) / registerLowpassCenter / Math.pow(decayCurveEnd,   .5);
+			const lowpass2ndOrderCutoffRadiansStart: number = lowpass1stOrderCutoffRadiansStart * Math.pow(2.0, 0.5 - 1.75 * (1.0 - Math.pow(1.0 - cornerHardness, 0.85)));
+			const lowpass2ndOrderCutoffRadiansEnd:   number = lowpass1stOrderCutoffRadiansEnd   * Math.pow(2.0, 0.5 - 1.75 * (1.0 - Math.pow(1.0 - cornerHardness, 0.85)));
+			const lowpass2ndOrderGainStart: number = Math.pow(2.0, -Math.pow(2.0, -Math.pow(cornerHardness, 0.9)));
+			const lowpass2ndOrderGainEnd:   number = Math.pow(2.0, -Math.pow(2.0, -Math.pow(cornerHardness, 0.9)));
+			Synth.tempFilterStartCoefficients.lowPass2ndOrderButterworth(warpInfinityToNyquist(lowpass2ndOrderCutoffRadiansStart), lowpass2ndOrderGainStart);
+			Synth.tempFilterEndCoefficients  .lowPass2ndOrderButterworth(warpInfinityToNyquist(lowpass2ndOrderCutoffRadiansEnd),   lowpass2ndOrderGainEnd);
+		}
 
-        Synth.tempFilterEndCoefficients.highShelf1stOrder(shelfRadians, shelfGainEnd);
-        synth.tempFrequencyResponse.analyze(Synth.tempFilterEndCoefficients, centerHarmonicEnd);
-        const shelfA1End: number = Synth.tempFilterEndCoefficients.a[1];
-        const shelfB0End: number = Synth.tempFilterEndCoefficients.b[0] * expressionDecayEnd;
-        const shelfB1End: number = Synth.tempFilterEndCoefficients.b[1] * expressionDecayEnd;
-        const shelfPhaseDelayEnd: number = -synth.tempFrequencyResponse.angle() / centerHarmonicEnd;
+		synth.tempFrequencyResponse.analyze(Synth.tempFilterStartCoefficients, centerHarmonicStart);
+		const sustainFilterA1Start: number = Synth.tempFilterStartCoefficients.a[1];
+		const sustainFilterA2Start: number = Synth.tempFilterStartCoefficients.a[2];
+		const sustainFilterB0Start: number = Synth.tempFilterStartCoefficients.b[0] * expressionDecayStart;
+		const sustainFilterB1Start: number = Synth.tempFilterStartCoefficients.b[1] * expressionDecayStart;
+		const sustainFilterB2Start: number = Synth.tempFilterStartCoefficients.b[2] * expressionDecayStart;
+		const sustainFilterPhaseDelayStart: number = -synth.tempFrequencyResponse.angle() / centerHarmonicStart;
 
-        const periodLengthStart: number = 1.0 / phaseDeltaStart;
-        const periodLengthEnd: number = 1.0 / phaseDeltaEnd;
-        const minBufferLength: number = Math.ceil(Math.max(periodLengthStart, periodLengthEnd) * 2);
-        const delayLength: number = periodLengthStart - allPassPhaseDelayStart - shelfPhaseDelayStart;
-        const delayLengthEnd: number = periodLengthEnd - allPassPhaseDelayEnd - shelfPhaseDelayEnd;
+		synth.tempFrequencyResponse.analyze(Synth.tempFilterEndCoefficients, centerHarmonicEnd);
+		const sustainFilterA1End: number = Synth.tempFilterEndCoefficients.a[1];
+		const sustainFilterA2End: number = Synth.tempFilterEndCoefficients.a[2];
+		const sustainFilterB0End: number = Synth.tempFilterEndCoefficients.b[0] * expressionDecayEnd;
+		const sustainFilterB1End: number = Synth.tempFilterEndCoefficients.b[1] * expressionDecayEnd;
+		const sustainFilterB2End: number = Synth.tempFilterEndCoefficients.b[2] * expressionDecayEnd;
+		const sustainFilterPhaseDelayEnd: number = -synth.tempFrequencyResponse.angle() / centerHarmonicEnd;
 
-        this.prevDelayLength = delayLength;
-        this.delayLengthDelta = (delayLengthEnd - delayLength) / roundedSamplesPerTick;
-        this.allPassG = allPassGStart;
-        this.shelfA1 = shelfA1Start;
-        this.shelfB0 = shelfB0Start;
-        this.shelfB1 = shelfB1Start;
-        this.allPassGDelta = (allPassGEnd - allPassGStart) / roundedSamplesPerTick;
-        this.shelfA1Delta = (shelfA1End - shelfA1Start) / roundedSamplesPerTick;
-        this.shelfB0Delta = (shelfB0End - shelfB0Start) / roundedSamplesPerTick;
-        this.shelfB1Delta = (shelfB1End - shelfB1Start) / roundedSamplesPerTick;
+		const periodLengthStart: number = 1.0 / phaseDeltaStart;
+		const periodLengthEnd: number = 1.0 / phaseDeltaEnd;
+		const minBufferLength: number = Math.ceil(Math.max(periodLengthStart, periodLengthEnd) * 2);
+		const delayLength: number = periodLengthStart - allPassPhaseDelayStart - sustainFilterPhaseDelayStart;
+		const delayLengthEnd: number = periodLengthEnd - allPassPhaseDelayEnd - sustainFilterPhaseDelayEnd;
+
+		this.prevDelayLength = delayLength;
+		this.delayLengthDelta = (delayLengthEnd - delayLength) / roundedSamplesPerTick;
+		this.allPassG = allPassGStart;
+		this.sustainFilterA1 = sustainFilterA1Start;
+		this.sustainFilterA2 = sustainFilterA2Start;
+		this.sustainFilterB0 = sustainFilterB0Start;
+		this.sustainFilterB1 = sustainFilterB1Start;
+		this.sustainFilterB2 = sustainFilterB2Start;
+		this.allPassGDelta = (allPassGEnd - allPassGStart) / roundedSamplesPerTick;
+		this.sustainFilterA1Delta = (sustainFilterA1End - sustainFilterA1Start) / roundedSamplesPerTick;
+		this.sustainFilterA2Delta = (sustainFilterA2End - sustainFilterA2Start) / roundedSamplesPerTick;
+		this.sustainFilterB0Delta = (sustainFilterB0End - sustainFilterB0Start) / roundedSamplesPerTick;
+		this.sustainFilterB1Delta = (sustainFilterB1End - sustainFilterB1Start) / roundedSamplesPerTick;
+		this.sustainFilterB2Delta = (sustainFilterB2End - sustainFilterB2Start) / roundedSamplesPerTick;
 
         const pitchChanged: boolean = Math.abs(Math.log2(delayLength / prevDelayLength)) > 0.01;
 
@@ -6654,8 +6765,10 @@ class PickedString {
             this.delayIndex = 0;
             this.allPassSample = 0.0;
             this.allPassPrevInput = 0.0;
-            this.shelfSample = 0.0;
-            this.shelfPrevInput = 0.0;
+            this.sustainFilterSample = 0.0;
+			this.sustainFilterPrevOutput2 = 0.0;
+			this.sustainFilterPrevInput1 = 0.0;
+			this.sustainFilterPrevInput2 = 0.0;
             this.fractionalDelaySample = 0.0;
 
             // Clear away a region of the delay buffer for the new impulse.
@@ -6748,7 +6861,8 @@ class EnvelopeComputer {
         this._modifiedEnvelopeCount = 0;
     }
 
-    public computeEnvelopes(instrument: Instrument, currentPart: number, tickTimeStart: number, secondsPerTick: number, tone: Tone | null): void {
+    public computeEnvelopes(instrument: Instrument, currentPart: number, tickTimeStart: number, tickTimeStartReal: number, secondsPerTick: number, tone: Tone | null, timeScale: number): void {
+        secondsPerTick *= timeScale;
         const transition: Transition = instrument.getTransition();
         if (tone != null && tone.atNoteStart && !transition.continues && !tone.forceContinueAtStart) {
             this.prevNoteSecondsEnd = this.noteSecondsEnd;
@@ -6764,8 +6878,8 @@ class EnvelopeComputer {
                 this._noteSizeFinal = Config.noteSizeMax;
             }
         }
-
         const tickTimeEnd: number = tickTimeStart + 1.0;
+        const tickTimeEndReal: number = tickTimeStartReal + 1.0;
         const noteSecondsStart: number = this.noteSecondsEnd;
         const noteSecondsEnd: number = noteSecondsStart + secondsPerTick;
         const noteTicksStart: number = this.noteTicksEnd;
@@ -6797,8 +6911,8 @@ class EnvelopeComputer {
             const endPin: NotePin = tone.note.pins[endPinIndex];
             const startPinTick: number = (tone.note.start + startPin.time) * Config.ticksPerPart;
             const endPinTick: number = (tone.note.start + endPin.time) * Config.ticksPerPart;
-            const ratioStart: number = (tickTimeStart - startPinTick) / (endPinTick - startPinTick);
-            const ratioEnd: number = (tickTimeEnd - startPinTick) / (endPinTick - startPinTick);
+            const ratioStart: number = (tickTimeStartReal - startPinTick) / (endPinTick - startPinTick);
+            const ratioEnd: number = (tickTimeEndReal - startPinTick) / (endPinTick - startPinTick);
             noteSizeStart = startPin.size + (endPin.size - startPin.size) * ratioStart;
             noteSizeEnd = startPin.size + (endPin.size - startPin.size) * ratioEnd;
 
@@ -6809,24 +6923,24 @@ class EnvelopeComputer {
                 const maximumSlideTicks: number = noteLengthTicks * 0.5;
                 const slideTicks: number = Math.min(maximumSlideTicks, transition.slideTicks);
                 if (tone.prevNote != null && !tone.forceContinueAtStart) {
-                    if (tickTimeStart - noteStartTick < slideTicks) {
+                    if (tickTimeStartReal - noteStartTick < slideTicks) {
                         prevSlideStart = true;
-                        prevSlideRatioStart = 0.5 * (1.0 - (tickTimeStart - noteStartTick) / slideTicks);
+                        prevSlideRatioStart = 0.5 * (1.0 - (tickTimeStartReal - noteStartTick) / slideTicks);
                     }
-                    if (tickTimeEnd - noteStartTick < slideTicks) {
+                    if (tickTimeEndReal - noteStartTick < slideTicks) {
                         prevSlideEnd = true;
-                        prevSlideRatioEnd = 0.5 * (1.0 - (tickTimeEnd - noteStartTick) / slideTicks);
+                        prevSlideRatioEnd = 0.5 * (1.0 - (tickTimeEndReal - noteStartTick) / slideTicks);
                     }
                 }
                 if (tone.nextNote != null && !tone.forceContinueAtEnd) {
                     nextNoteSize = tone.nextNote.pins[0].size
-                    if (noteEndTick - tickTimeStart < slideTicks) {
+                    if (noteEndTick - tickTimeStartReal < slideTicks) {
                         nextSlideStart = true;
-                        nextSlideRatioStart = 0.5 * (1.0 - (noteEndTick - tickTimeStart) / slideTicks);
+                        nextSlideRatioStart = 0.5 * (1.0 - (noteEndTick - tickTimeStartReal) / slideTicks);
                     }
-                    if (noteEndTick - tickTimeEnd < slideTicks) {
+                    if (noteEndTick - tickTimeEndReal < slideTicks) {
                         nextSlideEnd = true;
-                        nextSlideRatioEnd = 0.5 * (1.0 - (noteEndTick - tickTimeEnd) / slideTicks);
+                        nextSlideRatioEnd = 0.5 * (1.0 - (noteEndTick - tickTimeEndReal) / slideTicks);
                     }
                 }
             }
@@ -6854,23 +6968,25 @@ class EnvelopeComputer {
             if (/*automationTarget.perNote == this._perNote &&*/ automationTarget.computeIndex != null) {
                 const computeIndex: number = automationTarget.computeIndex + targetIndex;
                 let envelopeStart: number = EnvelopeComputer.computeEnvelope(envelope, noteSecondsStart, beatTimeStart, noteSizeStart);
-                let envelopeEnd: number = EnvelopeComputer.computeEnvelope(envelope, noteSecondsEnd, beatTimeEnd, noteSizeEnd);
-
                 if (prevSlideStart) {
                     const other: number = EnvelopeComputer.computeEnvelope(envelope, prevNoteSecondsStart, beatTimeStart, prevNoteSize);
                     envelopeStart += (other - envelopeStart) * prevSlideRatioStart;
-                }
-                if (prevSlideEnd) {
-                    const other: number = EnvelopeComputer.computeEnvelope(envelope, prevNoteSecondsEnd, beatTimeEnd, prevNoteSize);
-                    envelopeEnd += (other - envelopeEnd) * prevSlideRatioEnd;
                 }
                 if (nextSlideStart) {
                     const other: number = EnvelopeComputer.computeEnvelope(envelope, 0.0, beatTimeStart, nextNoteSize);
                     envelopeStart += (other - envelopeStart) * nextSlideRatioStart;
                 }
-                if (nextSlideEnd) {
-                    const other: number = EnvelopeComputer.computeEnvelope(envelope, 0.0, beatTimeEnd, nextNoteSize);
-                    envelopeEnd += (other - envelopeEnd) * nextSlideRatioEnd;
+                let envelopeEnd: number = envelopeStart;
+                if (instrument.discreteEnvelope == false) {
+                    envelopeEnd = EnvelopeComputer.computeEnvelope(envelope, noteSecondsEnd, beatTimeEnd, noteSizeEnd);
+                    if (prevSlideEnd) {
+                        const other: number = EnvelopeComputer.computeEnvelope(envelope, prevNoteSecondsEnd, beatTimeEnd, prevNoteSize);
+                        envelopeEnd += (other - envelopeEnd) * prevSlideRatioEnd;
+                    }
+                    if (nextSlideEnd) {
+                        const other: number = EnvelopeComputer.computeEnvelope(envelope, 0.0, beatTimeEnd, nextNoteSize);
+                        envelopeEnd += (other - envelopeEnd) * nextSlideRatioEnd;
+                    }
                 }
 
                 this.envelopeStarts[computeIndex] *= envelopeStart;
@@ -6929,6 +7045,7 @@ class EnvelopeComputer {
             case EnvelopeType.punch: return Math.max(1.0, 2.0 - time * 10.0);
             case EnvelopeType.flare: const attack: number = 0.25 / Math.sqrt(envelope.speed); return time < attack ? time / attack : 1.0 / (1.0 + (time - attack) * envelope.speed);
             case EnvelopeType.decay: return Math.pow(2, -envelope.speed * time);
+            case EnvelopeType.blip: return 1.0 * +(time < (0.25 / Math.sqrt(envelope.speed)));
             case EnvelopeType.wibble:
                 let temp = 0.5 - Math.cos(beats * envelope.speed) * 0.5;
                 temp = 1.0 / (1.0 + time * (envelope.speed - (temp / (1.5 / envelope.speed))));
@@ -7079,8 +7196,6 @@ class Tone {
 }
 
 class InstrumentState {
-    public instrument: Instrument;
-
     public awake: boolean = false; // Whether the instrument's effects-processing loop should continue.
     public computed: boolean = false; // Whether the effects-processing parameters are up-to-date for the current synth run.
     public tonesAddedInThisTick: boolean = false; // Whether any instrument tones are currently active.
@@ -7116,6 +7231,10 @@ class InstrumentState {
 
     public volumeScale: number = 0;
     public aliases: boolean = false;
+    public arpTime: number = 0;
+    public vibratoTime: number = 0;
+    public nextVibratoTime: number = 0;
+    public envelopeTime: number = 0;
 
     public eqFilterVolume: number = 1.0;
     public eqFilterVolumeDelta: number = 0.0;
@@ -7300,6 +7419,10 @@ class InstrumentState {
 
         this.volumeScale = 1.0;
         this.aliases = false;
+        this.vibratoTime = 0.0;
+        this.nextVibratoTime = 0.0;
+        this.arpTime = 0.0;
+        this.envelopeTime = 0.0;
 
         this.awake = false;
         this.flushingDelayLines = false;
@@ -7368,7 +7491,7 @@ class InstrumentState {
             if (synth.isModActive(Config.modulators.dictionary["distortion"].index, channelIndex, instrumentIndex)) {
                 useDistortionStart = synth.getModValue(Config.modulators.dictionary["distortion"].index, channelIndex, instrumentIndex, false);
                 useDistortionEnd = synth.getModValue(Config.modulators.dictionary["distortion"].index, channelIndex, instrumentIndex, true);
-            } 
+            }
 
             const distortionSliderStart = Math.min(1.0, /*envelopeStarts[InstrumentAutomationIndex.distortion] **/ useDistortionStart / (Config.distortionRange - 1));
             const distortionSliderEnd = Math.min(1.0, /*envelopeEnds[  InstrumentAutomationIndex.distortion] **/ useDistortionEnd / (Config.distortionRange - 1));
@@ -7390,7 +7513,7 @@ class InstrumentState {
             if (synth.isModActive(Config.modulators.dictionary["freq crush"].index, channelIndex, instrumentIndex)) {
                 freqSettingStart = synth.getModValue(Config.modulators.dictionary["freq crush"].index, channelIndex, instrumentIndex, false);
                 freqSettingEnd = synth.getModValue(Config.modulators.dictionary["freq crush"].index, channelIndex, instrumentIndex, true);
-            } 
+            }
 
             let quantizationSettingStart: number = instrument.bitcrusherQuantization /** Math.sqrt(envelopeStarts[InstrumentAutomationIndex.bitcrusherQuantization])*/;
             let quantizationSettingEnd: number = instrument.bitcrusherQuantization /** Math.sqrt(envelopeEnds[  InstrumentAutomationIndex.bitcrusherQuantization])*/;
@@ -7399,7 +7522,7 @@ class InstrumentState {
             if (synth.isModActive(Config.modulators.dictionary["bit crush"].index, channelIndex, instrumentIndex)) {
                 quantizationSettingStart = synth.getModValue(Config.modulators.dictionary["bit crush"].index, channelIndex, instrumentIndex, false);
                 quantizationSettingEnd = synth.getModValue(Config.modulators.dictionary["bit crush"].index, channelIndex, instrumentIndex, true);
-            } 
+            }
 
             const basePitch: number = Config.keys[synth.song!.key].basePitch + (Config.pitchesPerOctave * synth.song!.octave); // TODO: What if there's a key change mid-song?
             const freqStart: number = Instrument.frequencyFromPitch(basePitch + 60) * Math.pow(2.0, (Config.bitcrusherFreqRange - 1 - freqSettingStart) * Config.bitcrusherOctaveStep);
@@ -7440,12 +7563,12 @@ class InstrumentState {
                 startSimpleFreq = synth.getModValue(Config.modulators.dictionary["eq filt cut"].index, channelIndex, instrumentIndex, false);
                 endSimpleFreq = synth.getModValue(Config.modulators.dictionary["eq filt cut"].index, channelIndex, instrumentIndex, true);
                 filterChanges = true;
-            } 
+            }
             if (synth.isModActive(Config.modulators.dictionary["eq filt peak"].index, channelIndex, instrumentIndex)) {
                 startSimpleGain = synth.getModValue(Config.modulators.dictionary["eq filt peak"].index, channelIndex, instrumentIndex, false);
                 endSimpleGain = synth.getModValue(Config.modulators.dictionary["eq filt peak"].index, channelIndex, instrumentIndex, true);
                 filterChanges = true;
-            } 
+            }
 
             let startPoint: FilterControlPoint;
 
@@ -7518,7 +7641,7 @@ class InstrumentState {
             const endVal: number = synth.getModValue(Config.modulators.dictionary["mix volume"].index, channelIndex, instrumentIndex, true)
             this.mixVolume *= ((startVal <= 0) ? ((startVal + Config.volumeRange / 2) / (Config.volumeRange / 2)) : Synth.instrumentVolumeToVolumeMult(startVal));
             mixVolumeEnd *= ((endVal <= 0) ? ((endVal + Config.volumeRange / 2) / (Config.volumeRange / 2)) : Synth.instrumentVolumeToVolumeMult(endVal));
-        } 
+        }
 
         // Check for SONG mod-related volume delta
         if (synth.isModActive(Config.modulators.dictionary["song volume"].index)) {
@@ -7543,7 +7666,7 @@ class InstrumentState {
             if (synth.isModActive(Config.modulators.dictionary["pan"].index, channelIndex, instrumentIndex)) {
                 usePanStart = synth.getModValue(Config.modulators.dictionary["pan"].index, channelIndex, instrumentIndex, false);
                 usePanEnd = synth.getModValue(Config.modulators.dictionary["pan"].index, channelIndex, instrumentIndex, true);
-            } 
+            }
 
             let panStart: number = Math.max(-1.0, Math.min(1.0, (usePanStart - Config.panCenter) / Config.panCenter /** panEnvelopeStart*/));
             let panEnd: number = Math.max(-1.0, Math.min(1.0, (usePanEnd - Config.panCenter) / Config.panCenter /** panEnvelopeEnd  */));
@@ -7560,7 +7683,7 @@ class InstrumentState {
             if (synth.isModActive(Config.modulators.dictionary["pan delay"].index, channelIndex, instrumentIndex)) {
                 usePanDelayStart = synth.getModValue(Config.modulators.dictionary["pan delay"].index, channelIndex, instrumentIndex, false);
                 usePanDelayEnd = synth.getModValue(Config.modulators.dictionary["pan delay"].index, channelIndex, instrumentIndex, true);
-            } 
+            }
 
             const delayStart: number = panStart * usePanDelayStart * maxDelaySamples / 10;
             const delayEnd: number = panEnd * usePanDelayEnd * maxDelaySamples / 10;
@@ -7588,7 +7711,7 @@ class InstrumentState {
             if (synth.isModActive(Config.modulators.dictionary["chorus"].index, channelIndex, instrumentIndex)) {
                 useChorusStart = synth.getModValue(Config.modulators.dictionary["chorus"].index, channelIndex, instrumentIndex, false);
                 useChorusEnd = synth.getModValue(Config.modulators.dictionary["chorus"].index, channelIndex, instrumentIndex, true);
-            } 
+            }
 
             let chorusStart: number = Math.min(1.0, /*chorusEnvelopeStart **/ useChorusStart / (Config.chorusRange - 1));
             let chorusEnd: number = Math.min(1.0, /*chorusEnvelopeEnd   **/ useChorusEnd / (Config.chorusRange - 1));
@@ -7613,7 +7736,7 @@ class InstrumentState {
             if (synth.isModActive(Config.modulators.dictionary["echo"].index, channelIndex, instrumentIndex)) {
                 useEchoSustainStart = Math.max( 0.0, synth.getModValue(Config.modulators.dictionary["echo"].index, channelIndex, instrumentIndex, false) );
                 useEchoSustainEnd = Math.max( 0.0, synth.getModValue(Config.modulators.dictionary["echo"].index, channelIndex, instrumentIndex, true) );
-            } 
+            }
             const echoMultStart: number = Math.min(1.0, Math.pow(/*echoSustainEnvelopeStart **/ useEchoSustainStart / Config.echoSustainRange, 1.1)) * 0.9;
             const echoMultEnd: number = Math.min(1.0, Math.pow(/*echoSustainEnvelopeEnd   **/ useEchoSustainEnd / Config.echoSustainRange, 1.1)) * 0.9;
             this.echoMult = echoMultStart;
@@ -7633,7 +7756,7 @@ class InstrumentState {
                 useEchoDelayStart = synth.getModValue(Config.modulators.dictionary["echo delay"].index, channelIndex, instrumentIndex, false);
                 useEchoDelayEnd = synth.getModValue(Config.modulators.dictionary["echo delay"].index, channelIndex, instrumentIndex, true);
                 ignoreTicks = true;
-            } 
+            }
 
             const tmpEchoDelayOffsetStart: number = Math.round((useEchoDelayStart + 1) * Config.echoDelayStepTicks * samplesPerTick);
             const tmpEchoDelayOffsetEnd: number = Math.round((useEchoDelayEnd + 1) * Config.echoDelayStepTicks * samplesPerTick);
@@ -7668,7 +7791,7 @@ class InstrumentState {
             if (synth.isModActive(Config.modulators.dictionary["reverb"].index, channelIndex, instrumentIndex)) {
                 useReverbStart = synth.getModValue(Config.modulators.dictionary["reverb"].index, channelIndex, instrumentIndex, false);
                 useReverbEnd = synth.getModValue(Config.modulators.dictionary["reverb"].index, channelIndex, instrumentIndex, true);
-            } 
+            }
             // Check for mod reverb, song scalar
             if (synth.isModActive(Config.modulators.dictionary["song reverb"].index, channelIndex, instrumentIndex)) {
                 useReverbStart *= (synth.getModValue(Config.modulators.dictionary["song reverb"].index, undefined, undefined, false) - Config.modulators.dictionary["song reverb"].convertRealFactor) / Config.reverbRange;
@@ -7868,6 +7991,19 @@ export class Synth {
         }
     }
 
+    public initModFilters(song: Song | null): void {
+        if (song != null) {
+            for (let channelIndex: number = 0; channelIndex < song.getChannelCount(); channelIndex++) {
+                for (let instrumentIndex: number = 0; instrumentIndex < song.channels[channelIndex].instruments.length; instrumentIndex++) {
+                    const instrument: Instrument = song.channels[channelIndex].instruments[instrumentIndex];
+                    instrument.tmpEqFilterStart = instrument.eqFilter;
+                    instrument.tmpEqFilterEnd = null;
+                    instrument.tmpNoteFilterStart = instrument.noteFilter;
+                    instrument.tmpNoteFilterEnd = null;
+                }
+            }
+        }
+    }
     public warmUpSynthesizer(song: Song | null): void {
         // Don't bother to generate the drum waves unless the song actually
         // uses them, since they may require a lot of computation.
@@ -7879,20 +8015,19 @@ export class Synth {
                     const instrument: Instrument = song.channels[channelIndex].instruments[instrumentIndex];
                     const instrumentState: InstrumentState = this.channels[channelIndex].instruments[instrumentIndex];
                     Synth.getInstrumentSynthFunction(instrument);
-                    instrument.LFOtime = 0;
-                    instrument.nextLFOtime = 0;
-                    instrument.arpTime = 0;
-                    instrument.tmpEqFilterStart = instrument.eqFilter;
-                    instrument.tmpEqFilterEnd = null;
-                    instrument.tmpNoteFilterStart = instrument.noteFilter;
-                    instrument.tmpNoteFilterEnd = null;
+                    instrumentState.vibratoTime = 0;
+                    instrumentState.nextVibratoTime = 0;
+                    instrumentState.envelopeTime = 0;
+                    instrumentState.arpTime = 0;
                     instrumentState.updateWaves(instrument, this.samplesPerSecond);
                     instrumentState.allocateNecessaryBuffers(this, instrument, samplesPerTick);
                 }
 
             }
         }
-	    			 var dummyArray = new Float32Array(1);
+        // JummBox needs to run synth functions for at least one sample (for JIT purposes)
+		// before starting audio callbacks to avoid skipping the initial output.
+        var dummyArray = new Float32Array(1);
         this.isPlayingSong = true;
         this.synthesize(dummyArray, dummyArray, 1, true);
         this.isPlayingSong = false;
@@ -7910,6 +8045,7 @@ export class Synth {
             this.nextModValues = [];
             this.modInsValues = [];
             this.nextModInsValues = [];
+            this.heldMods = [];
             for (let channel: number = 0; channel < this.song.pitchChannelCount + this.song.noiseChannelCount; channel++) {
                 latestModInsTimes[channel] = [];
                 this.modInsValues[channel] = [];
@@ -7945,7 +8081,11 @@ export class Synth {
                                 : this.findPartsInBar(currentBar);
 
                             for (const note of pattern.notes) {
-                                if (note.start < partsInBar && (latestPinParts[Config.modCount - 1 - note.pitches[0]] == null || note.end > latestPinParts[Config.modCount - 1 - note.pitches[0]])) {
+                                if (note.start <= partsInBar && (latestPinParts[Config.modCount - 1 - note.pitches[0]] == null || note.end > latestPinParts[Config.modCount - 1 - note.pitches[0]])) {
+                                    if (note.start == partsInBar) { // This can happen with next bar mods, and the value of the aligned note's start pin will be used.
+                                        latestPinParts[Config.modCount - 1 - note.pitches[0]] = note.start;
+                                        latestPinValues[Config.modCount - 1 - note.pitches[0]] = note.pins[0].size;
+                                    }
                                     if (note.end <= partsInBar) {
                                         latestPinParts[Config.modCount - 1 - note.pitches[0]] = note.end;
                                         latestPinValues[Config.modCount - 1 - note.pitches[0]] = note.pins[note.pins.length - 1].size;
@@ -7972,7 +8112,7 @@ export class Synth {
                                 if (latestPinParts[mod] != null) {
                                     if (Config.modulators[instrument.modulators[mod]].forSong) {
                                         if (latestModTimes[instrument.modulators[mod]] == null || currentBar * Config.partsPerBeat * this.song.beatsPerBar + latestPinParts[mod] > (latestModTimes[instrument.modulators[mod]] as number)) {
-                                            this.setModValue(latestPinValues[mod], latestPinValues[mod], mod, instrument.modChannels[mod], instrument.modInstruments[mod], instrument.modulators[mod]);
+                                            this.setModValue(latestPinValues[mod], latestPinValues[mod], instrument.modChannels[mod], instrument.modInstruments[mod], instrument.modulators[mod]);
                                             latestModTimes[instrument.modulators[mod]] = currentBar * Config.partsPerBeat * this.song.beatsPerBar + latestPinParts[mod];
                                         }
                                     }
@@ -8000,10 +8140,10 @@ export class Synth {
                                             const noteFilterParam: boolean = instrument.modulators[mod] == Config.modulators.dictionary["note filter"].index
                                             let modulatorAdjust: number = instrument.modulators[mod];
                                             if (eqFilterParam) {
-                                                modulatorAdjust = Config.modulators.length + instrument.modFilterTypes[mod];
+                                                modulatorAdjust = Config.modulators.length + (instrument.modFilterTypes[mod] | 0);
                                             } else if (noteFilterParam) {
                                                 // Skip all possible indices for eq filter
-                                                modulatorAdjust = Config.modulators.length + 1 + (2 * Config.filterMaxPoints) + instrument.modFilterTypes[mod];
+                                                modulatorAdjust = Config.modulators.length + 1 + (2 * Config.filterMaxPoints) + (instrument.modFilterTypes[mod] | 0);
                                             }
 
                                             if (latestModInsTimes[instrument.modChannels[mod]][usedInstruments[instrumentIndex]][modulatorAdjust] == null
@@ -8015,17 +8155,17 @@ export class Synth {
                                                         tgtInstrument.tmpEqFilterStart = tgtInstrument.eqSubFilters[latestPinValues[mod]];
                                                     } else {
                                                         for (let i: number = 0; i < Config.filterMorphCount; i++) {
-                                                            if (tgtInstrument.tmpEqFilterStart == tgtInstrument.eqSubFilters[i]) {
+                                                            if (tgtInstrument.tmpEqFilterStart != null && tgtInstrument.tmpEqFilterStart == tgtInstrument.eqSubFilters[i]) {
                                                                 tgtInstrument.tmpEqFilterStart = new FilterSettings();
                                                                 tgtInstrument.tmpEqFilterStart.fromJsonObject(tgtInstrument.eqSubFilters[i]!.toJsonObject());
                                                                 i = Config.filterMorphCount;
                                                             }
                                                         }
-                                                        if (Math.floor((instrument.modFilterTypes[mod] - 1) / 2) < tgtInstrument.tmpEqFilterStart!.controlPointCount) {
+                                                        if (tgtInstrument.tmpEqFilterStart != null && Math.floor((instrument.modFilterTypes[mod] - 1) / 2) < tgtInstrument.tmpEqFilterStart.controlPointCount) {
                                                             if (instrument.modFilterTypes[mod] % 2)
-                                                                tgtInstrument.tmpEqFilterStart!.controlPoints[Math.floor((instrument.modFilterTypes[mod] - 1) / 2)].freq = latestPinValues[mod];
+                                                                tgtInstrument.tmpEqFilterStart.controlPoints[Math.floor((instrument.modFilterTypes[mod] - 1) / 2)].freq = latestPinValues[mod];
                                                             else
-                                                                tgtInstrument.tmpEqFilterStart!.controlPoints[Math.floor((instrument.modFilterTypes[mod] - 1) / 2)].gain = latestPinValues[mod];
+                                                                tgtInstrument.tmpEqFilterStart.controlPoints[Math.floor((instrument.modFilterTypes[mod] - 1) / 2)].gain = latestPinValues[mod];
                                                         }
                                                     }
                                                     tgtInstrument.tmpEqFilterEnd = tgtInstrument.tmpEqFilterStart;
@@ -8035,22 +8175,22 @@ export class Synth {
                                                         tgtInstrument.tmpNoteFilterStart = tgtInstrument.noteSubFilters[latestPinValues[mod]];
                                                     } else {
                                                         for (let i: number = 0; i < Config.filterMorphCount; i++) {
-                                                            if (tgtInstrument.tmpNoteFilterStart == tgtInstrument.noteSubFilters[i]) {
+                                                            if (tgtInstrument.tmpNoteFilterStart != null && tgtInstrument.tmpNoteFilterStart == tgtInstrument.noteSubFilters[i]) {
                                                                 tgtInstrument.tmpNoteFilterStart = new FilterSettings();
                                                                 tgtInstrument.tmpNoteFilterStart.fromJsonObject(tgtInstrument.noteSubFilters[i]!.toJsonObject());
                                                                 i = Config.filterMorphCount;
                                                             }
                                                         }
-                                                        if (Math.floor((instrument.modFilterTypes[mod] - 1) / 2) < tgtInstrument.tmpNoteFilterStart!.controlPointCount) {
+                                                        if (tgtInstrument.tmpNoteFilterStart != null && Math.floor((instrument.modFilterTypes[mod] - 1) / 2) < tgtInstrument.tmpNoteFilterStart.controlPointCount) {
                                                             if (instrument.modFilterTypes[mod] % 2)
-                                                                tgtInstrument.tmpNoteFilterStart!.controlPoints[Math.floor((instrument.modFilterTypes[mod] - 1) / 2)].freq = latestPinValues[mod];
+                                                                tgtInstrument.tmpNoteFilterStart.controlPoints[Math.floor((instrument.modFilterTypes[mod] - 1) / 2)].freq = latestPinValues[mod];
                                                             else
-                                                                tgtInstrument.tmpNoteFilterStart!.controlPoints[Math.floor((instrument.modFilterTypes[mod] - 1) / 2)].gain = latestPinValues[mod];
+                                                                tgtInstrument.tmpNoteFilterStart.controlPoints[Math.floor((instrument.modFilterTypes[mod] - 1) / 2)].gain = latestPinValues[mod];
                                                         }
                                                     }
                                                     tgtInstrument.tmpNoteFilterEnd = tgtInstrument.tmpNoteFilterStart;
                                                 }
-                                                else this.setModValue(latestPinValues[mod], latestPinValues[mod], mod, instrument.modChannels[mod], usedInstruments[instrumentIndex], modulatorAdjust);
+                                                else this.setModValue(latestPinValues[mod], latestPinValues[mod], instrument.modChannels[mod], usedInstruments[instrumentIndex], modulatorAdjust);
 
                                                 latestModInsTimes[instrument.modChannels[mod]][usedInstruments[instrumentIndex]][modulatorAdjust] = currentBar * Config.partsPerBeat * this.song.beatsPerBar + latestPinParts[mod];
                                             }
@@ -8095,18 +8235,19 @@ export class Synth {
                 if (!((Config.modulators[instrument.modulators[mod]].associatedEffect != EffectType.length && !(tgtInstrument.effects & (1 << Config.modulators[instrument.modulators[mod]].associatedEffect)))
                     // Instrument type specific
                     || ((tgtInstrument.type != InstrumentType.fm && tgtInstrument.type != InstrumentType.fm6op) && (str == "fm slider 1" || str == "fm slider 2" || str == "fm slider 3" || str == "fm slider 4" || str == "fm feedback"))
-                    || ((tgtInstrument.type != InstrumentType.pwm && tgtInstrument.type != InstrumentType.supersaw) && (str == "pulse width"))
                     || tgtInstrument.type != InstrumentType.fm6op && (str == "fm slider 5" || str == "fm slider 6")
+                    || ((tgtInstrument.type != InstrumentType.pwm && tgtInstrument.type != InstrumentType.supersaw) && (str == "pulse width" || str == "decimal offset"))
+                    || ((tgtInstrument.type != InstrumentType.supersaw) && (str == "dynamism" || str == "spread" || str == "saw shape"))
                     // Arp check
                     || (!tgtInstrument.getChord().arpeggiates && (str == "arp speed" || str == "reset arp"))
                     // EQ Filter check
                     || (tgtInstrument.eqFilterType && str == "eq filter")
                     || (!tgtInstrument.eqFilterType && (str == "eq filt cut" || str == "eq filt peak"))
-                    || (str == "eq filter" && Math.floor((instrument.modFilterTypes[mod] + 1) / 2) > tgtInstrument.eqFilter.controlPointCount)
+                    || (str == "eq filter" && Math.floor((instrument.modFilterTypes[mod] + 1) / 2) > tgtInstrument.getLargestControlPointCount(false))
                     // Note Filter check
                     || (tgtInstrument.noteFilterType && str == "note filter")
                     || (!tgtInstrument.noteFilterType && (str == "note filt cut" || str == "note filt peak"))
-                    || (str == "note filter" && Math.floor((instrument.modFilterTypes[mod] + 1) / 2) > tgtInstrument.noteFilter.controlPointCount))) {
+                    || (str == "note filter" && Math.floor((instrument.modFilterTypes[mod] + 1) / 2) > tgtInstrument.getLargestControlPointCount(true)))) {
 
                     instrument.invalidModulators[mod] = false;
                     i = tgtInstrumentList.length;
@@ -8131,10 +8272,15 @@ export class Synth {
     public preferLowerLatency: boolean = false; // enable when recording performances from keyboard or MIDI. Takes effect next time you activate audio.
     public anticipatePoorPerformance: boolean = false; // enable on mobile devices to reduce audio stutter glitches. Takes effect next time you activate audio.
     public liveInputDuration: number = 0;
+    public liveBassInputDuration: number = 0;
     public liveInputStarted: boolean = false;
+    public liveBassInputStarted: boolean = false;
     public liveInputPitches: number[] = [];
+    public liveBassInputPitches: number[] = [];
     public liveInputChannel: number = 0;
+    public liveBassInputChannel: number = 0;
     public liveInputInstruments: number[] = [];
+    public liveBassInputInstruments: number[] = [];
     public loopRepeatCount: number = -1;
     public volume: number = 1.0;
     public oscRefreshEventTimer: number = 0;
@@ -8142,7 +8288,7 @@ export class Synth {
     public enableMetronome: boolean = false;
     public countInMetronome: boolean = false;
     public renderingSong: boolean = false;
-
+    public heldMods: HeldMod[] = [];
     private wantToSkip: boolean = false;
     private playheadInternal: number = 0.0;
     private bar: number = 0;
@@ -8167,6 +8313,7 @@ export class Synth {
     public static readonly tempFilterEndCoefficients: FilterCoefficients = new FilterCoefficients();
     private tempDrumSetControlPoint: FilterControlPoint = new FilterControlPoint();
     public tempFrequencyResponse: FrequencyResponse = new FrequencyResponse();
+    public loopBar: number = -1;
 
     private static readonly fmSynthFunctionCache: Dictionary<Function> = {};
     private static readonly fm6SynthFunctionCache: Dictionary<Function> = {};
@@ -8266,7 +8413,7 @@ export class Synth {
         let prevTempo: number = this.song.tempo;
 
         // Determine if any tempo or next bar mods happen anywhere in the window
-        for (let channel: number = this.song.pitchChannelCount + this.song.noiseChannelCount; channel < this.song.getChannelCount(); channel++) {
+        for (let channel: number = this.song.getChannelCount() - 1; channel >= this.song.pitchChannelCount + this.song.noiseChannelCount; channel--) {
             for (let bar: number = startBar; bar < endBar; bar++) {
                 let pattern: Pattern | null = this.song.getPattern(channel, bar);
                 if (pattern != null) {
@@ -8289,7 +8436,7 @@ export class Synth {
             let latestTempoValue: number = 0;
 
             for (let bar: number = startBar - 1; bar >= 0; bar--) {
-                for (let channel: number = this.song.pitchChannelCount + this.song.noiseChannelCount; channel < this.song.getChannelCount(); channel++) {
+                for (let channel: number = this.song.getChannelCount() - 1; channel >= this.song.pitchChannelCount + this.song.noiseChannelCount; channel--) {
                     let pattern = this.song.getPattern(channel, bar);
 
                     if (pattern != null) {
@@ -8351,7 +8498,7 @@ export class Synth {
                 // Compute average tempo in this tick window, or use last tempo if nothing happened
                 if (hasTempoMods) {
                     let foundMod: boolean = false;
-                    for (let channel: number = this.song.pitchChannelCount + this.song.noiseChannelCount; channel < this.song.getChannelCount(); channel++) {
+                    for (let channel: number = this.song.getChannelCount() - 1; channel >= this.song.pitchChannelCount + this.song.noiseChannelCount; channel--) {
                         if (foundMod == false) {
                             let pattern: Pattern | null = this.song.getPattern(channel, bar);
                             if (pattern != null) {
@@ -8430,6 +8577,7 @@ export class Synth {
                 if (bar >= endBar) {
                     ended = true;
                 }
+
             }
 
             return Math.ceil(totalSamples);
@@ -8503,13 +8651,11 @@ export class Synth {
 
     public play(): void {
         if (this.isPlayingSong) return;
-	    			 this.computeLatestModValues();
-        this.warmUpSynthesizer(this.song);
-		//BUGFIX FROM JUMMBOX
-        this.isPlayingSong = true;
+        this.initModFilters(this.song);
+        this.computeLatestModValues();
         this.activateAudio();
-                   //this.warmUpSynthesizer(this.song);
-           // this.computeLatestModValues();
+        this.warmUpSynthesizer(this.song);
+        this.isPlayingSong = true;
     }
 
     public pause(): void {
@@ -8518,6 +8664,7 @@ export class Synth {
         this.isRecording = false;
         this.modValues = [];
         this.nextModValues = [];
+        this.heldMods = [];
         if (this.song != null) {
             this.song.inVolumeCap = 0.0;
             this.song.outVolumeCap = 0.0;
@@ -8546,9 +8693,10 @@ export class Synth {
         }
     }
 
-    public setModValue(volumeStart: number, volumeEnd: number, mod: number, channelIndex: number, instrumentIndex: number, setting: number): number {
+    public setModValue(volumeStart: number, volumeEnd: number, channelIndex: number, instrumentIndex: number, setting: number): number {
         let val: number = volumeStart + Config.modulators[setting].convertRealFactor;
         let nextVal: number = volumeEnd + Config.modulators[setting].convertRealFactor;
+        // should these be turned into a function?
         if (Config.modulators[setting].optionalModify == "invert-0to50") {
             val = 50 - val;
             nextVal = 50 - nextVal;
@@ -8557,7 +8705,6 @@ export class Synth {
             val = 99 - val;
             nextVal = 99 - nextVal;
         }
-        //should this be turned into a function?
         if (Config.modulators[setting].forSong) {
             if (this.modValues[setting] == null || this.modValues[setting] != val || this.nextModValues[setting] != nextVal) {
                 this.modValues[setting] = val;
@@ -8604,6 +8751,15 @@ export class Synth {
         if (this.isModActive(setting) || (channel != undefined && instrument != undefined && this.isModActive(setting, channel, instrument))) {
             this.modValues[setting] = null;
             this.nextModValues[setting] = null;
+            for (let i: number = 0; i < this.heldMods.length; i++) {
+                if (channel != undefined && instrument != undefined) {
+                    if (this.heldMods[i].channelIndex == channel && this.heldMods[i].instrumentIndex == instrument && this.heldMods[i].setting == setting)
+                        this.heldMods.splice(i, 1);
+                } else {
+                    if (this.heldMods[i].setting == setting)
+                        this.heldMods.splice(i, 1);
+                }
+            }
             if (channel != undefined && instrument != undefined) {
                 this.modInsValues[channel][instrument][setting] = null;
                 this.nextModInsValues[channel][instrument][setting] = null;
@@ -8637,6 +8793,21 @@ export class Synth {
             return (this.modInsValues[channel][instrument][setting] != null);
         }
         return false;
+    }
+
+    // Force a modulator to be held at the given volumeStart for a brief duration.
+    public forceHoldMods(volumeStart: number, channelIndex: number, instrumentIndex: number, setting: number): void {
+        let found: boolean = false;
+        for (let i: number = 0; i < this.heldMods.length; i++) {
+            if (this.heldMods[i].channelIndex == channelIndex && this.heldMods[i].instrumentIndex == instrumentIndex && this.heldMods[i].setting == setting) {
+                this.heldMods[i].volume = volumeStart;
+                this.heldMods[i].holdFor = 24;
+                found = true;
+            }
+        }
+        // Default: hold for 24 ticks / 12 parts (half a beat).
+        if (!found)
+            this.heldMods.push({ volume: volumeStart, channelIndex: channelIndex, instrumentIndex: instrumentIndex, setting: setting, holdFor: 24 });
     }
 
     public snapToStart(): void {
@@ -8705,7 +8876,10 @@ export class Synth {
             if (nextBar >= this.song!.barCount) {
                 nextBar = this.song!.barCount - 1;
             }
-        } else if (this.loopRepeatCount != 0 && nextBar == this.song!.loopStart + this.song!.loopLength) {
+        } else if (this.bar == this.loopBar && !this.renderingSong) {
+            nextBar = this.bar;
+        }
+        else if (this.loopRepeatCount != 0 && nextBar == this.song!.loopStart + this.song!.loopLength) {
             nextBar = this.song!.loopStart;
         }
         return nextBar;
@@ -8817,8 +8991,8 @@ export class Synth {
 
         // Post processing parameters:
         const volume: number = +this.volume;
-        const limitDecay: number = 1.0 - Math.pow(0.5, 4.0 / this.samplesPerSecond);
-        const limitRise: number = 1.0 - Math.pow(0.5, 4000.0 / this.samplesPerSecond);
+        const limitDecay: number = 1.0 - Math.pow(0.5, this.song.limitDecay / this.samplesPerSecond);
+        const limitRise: number = 1.0 - Math.pow(0.5, this.song.limitRise / this.samplesPerSecond);
         let limit: number = +this.limit;
 	    			let skippedBars = [];
         let firstSkippedBufferIndex = -1;
@@ -8837,18 +9011,53 @@ export class Synth {
 
             // Handle mod synth
             if (this.isPlayingSong || this.renderingSong) {
+
+                // First modulation pass. Determines active tones.
+                // Runs everything but Dot X/Y mods, to let them always come after morph.
                 for (let channelIndex: number = song.pitchChannelCount + song.noiseChannelCount; channelIndex < song.getChannelCount(); channelIndex++) {
                     const channel: Channel = song.channels[channelIndex];
                     const channelState: ChannelState = this.channels[channelIndex];
 
                     this.determineCurrentActiveTones(song, channelIndex, samplesPerTick, playSong);
+                    for (let instrumentIndex: number = 0; instrumentIndex < channel.instruments.length; instrumentIndex++) {
+                        const instrumentState: InstrumentState = channelState.instruments[instrumentIndex];
+                        for (let i: number = 0; i < instrumentState.activeModTones.count(); i++) {
+                            const tone: Tone = instrumentState.activeModTones.get(i);
+                            const channel: Channel = song.channels[channelIndex];
+                            const instrument: Instrument = channel.instruments[tone.instrumentIndex];
+                            let mod: number = Config.modCount - 1 - tone.pitches[0];
+
+                            if ((instrument.modulators[mod] == Config.modulators.dictionary["note filter"].index
+                                || instrument.modulators[mod] == Config.modulators.dictionary["eq filter"].index)
+                                && instrument.modFilterTypes[mod] != null && instrument.modFilterTypes[mod] > 0) {
+                                continue;
+                            }
+                            this.playModTone(song, channelIndex, samplesPerTick, bufferIndex, runLength, tone, false, false);
+                        }
+                    }
+                }
+
+                 // Second modulation pass.
+                // Only for Dot X/Y mods.
+                for (let channelIndex: number = song.pitchChannelCount + song.noiseChannelCount; channelIndex < song.getChannelCount(); channelIndex++) {
+                    const channel: Channel = song.channels[channelIndex];
+                    const channelState: ChannelState = this.channels[channelIndex];
 
                     for (let instrumentIndex: number = 0; instrumentIndex < channel.instruments.length; instrumentIndex++) {
                         const instrumentState: InstrumentState = channelState.instruments[instrumentIndex];
-
                         for (let i: number = 0; i < instrumentState.activeModTones.count(); i++) {
                             const tone: Tone = instrumentState.activeModTones.get(i);
-                            this.playModTone(song, channelIndex, samplesPerTick, bufferIndex, runLength, tone, false, false);
+                            const channel: Channel = song.channels[channelIndex];
+                            const instrument: Instrument = channel.instruments[tone.instrumentIndex];
+                            let mod: number = Config.modCount - 1 - tone.pitches[0];
+
+                            if ((instrument.modulators[mod] == Config.modulators.dictionary["note filter"].index
+                                || instrument.modulators[mod] == Config.modulators.dictionary["eq filter"].index)
+                                && instrument.modFilterTypes[mod] != null && instrument.modFilterTypes[mod] > 0) {
+
+                                this.playModTone(song, channelIndex, samplesPerTick, bufferIndex, runLength, tone, false, false);
+                            }
+
                         }
                     }
                 }
@@ -8941,18 +9150,18 @@ export class Synth {
                     const partTimeEnd: number = partTimeTickStart + (partTimeTickEnd - partTimeTickStart) * endRatio;
                     let useVibratoSpeed: number = instrument.vibratoSpeed;
 
-                    instrument.LFOtime = instrument.nextLFOtime;
+                    instrumentState.vibratoTime = instrumentState.nextVibratoTime;
 
                     if (this.isModActive(Config.modulators.dictionary["vibrato speed"].index, channelIndex, instrumentIndex)) {
                         useVibratoSpeed = this.getModValue(Config.modulators.dictionary["vibrato speed"].index, channelIndex, instrumentIndex);
                     }
 
                     if (useVibratoSpeed == 0) {
-                        instrument.LFOtime = 0;
-                        instrument.nextLFOtime = 0;
+                        instrumentState.vibratoTime = 0;
+                        instrumentState.nextVibratoTime = 0;
                     }
                     else {
-                        instrument.nextLFOtime += useVibratoSpeed * 0.1 * (partTimeEnd - partTimeStart);
+                        instrumentState.nextVibratoTime += useVibratoSpeed * 0.1 * (partTimeEnd - partTimeStart);
                     }
                 }
             }
@@ -9041,22 +9250,39 @@ export class Synth {
                     }
                 }
 
-                // Update arpeggio time, which is used to calculate arpeggio position
                 for (let channel: number = 0; channel < this.song.pitchChannelCount + this.song.noiseChannelCount; channel++) {
                     for (let instrumentIdx: number = 0; instrumentIdx < this.song.channels[channel].instruments.length; instrumentIdx++) {
                         let instrument: Instrument = this.song.channels[channel].instruments[instrumentIdx];
+                        let instrumentState: InstrumentState = this.channels[channel].instruments[instrumentIdx];
+
+                        // Update arpeggio time, which is used to calculate arpeggio position
                         let useArpeggioSpeed: number = instrument.arpeggioSpeed;
                         if (this.isModActive(Config.modulators.dictionary["arp speed"].index, channel, instrumentIdx)) {
-                            useArpeggioSpeed = this.getModValue(Config.modulators.dictionary["arp speed"].index, channel, instrumentIdx, false);
+                            useArpeggioSpeed = Math.max(0, Math.min(Config.arpSpeedScale.length-1, this.getModValue(Config.modulators.dictionary["arp speed"].index, channel, instrumentIdx, false)));
                             if (Number.isInteger(useArpeggioSpeed)) {
-                                instrument.arpTime += Config.arpSpeedScale[useArpeggioSpeed];
+                                instrumentState.arpTime += Config.arpSpeedScale[useArpeggioSpeed];
                             } else {
                                 // Linear interpolate arpeggio values
-                                instrument.arpTime += (1 - (useArpeggioSpeed % 1)) * Config.arpSpeedScale[Math.floor(useArpeggioSpeed)] + (useArpeggioSpeed % 1) * Config.arpSpeedScale[Math.ceil(useArpeggioSpeed)];
+                                instrumentState.arpTime += (1 - (useArpeggioSpeed % 1)) * Config.arpSpeedScale[Math.floor(useArpeggioSpeed)] + (useArpeggioSpeed % 1) * Config.arpSpeedScale[Math.ceil(useArpeggioSpeed)];
                             }
                         }
                         else {
-                            instrument.arpTime += Config.arpSpeedScale[useArpeggioSpeed];
+                            instrumentState.arpTime += Config.arpSpeedScale[useArpeggioSpeed];
+                        }
+
+                        // Update envelope time, which is used to calculate (all envelopes') position
+                        let useEnvelopeSpeed: number = instrument.envelopeSpeed;
+                        if (this.isModActive(Config.modulators.dictionary["envelope speed"].index, channel, instrumentIdx)) {
+                            useEnvelopeSpeed = Math.max(0, Math.min(Config.arpSpeedScale.length-1, this.getModValue(Config.modulators.dictionary["envelope speed"].index, channel, instrumentIdx, false)));
+                            if (Number.isInteger(useEnvelopeSpeed)) {
+                                instrumentState.envelopeTime += Config.arpSpeedScale[useEnvelopeSpeed];
+                            } else {
+                                // Linear interpolate envelope values
+                                instrumentState.envelopeTime += (1 - (useEnvelopeSpeed % 1)) * Config.arpSpeedScale[Math.floor(useEnvelopeSpeed)] + (useEnvelopeSpeed % 1) * Config.arpSpeedScale[Math.ceil(useEnvelopeSpeed)];
+                            }
+                        }
+                        else {
+                            instrumentState.envelopeTime += Config.arpSpeedScale[useEnvelopeSpeed];
                         }
                     }
                 }
@@ -9084,6 +9310,14 @@ export class Synth {
                     this.tick = 0;
                     this.part++;
                     this.liveInputDuration--;
+                    this.liveBassInputDuration--;
+                    // Decrement held modulator counters after each run
+                    for (let i: number = 0; i < this.heldMods.length; i++) {
+                        this.heldMods[i].holdFor--;
+                        if (this.heldMods[i].holdFor <= 0) {
+                            this.heldMods.splice(i, 1);
+                        }
+                    }
 
                     if (this.part == Config.partsPerBeat) {
                         this.part = 0;
@@ -9130,10 +9364,13 @@ export class Synth {
 
             // Bound LFO times to be within their period (to keep values from getting large)
             // I figured this modulo math probably doesn't have to happen every LFO tick.
-            for (let channel: number = 0; channel < this.song.pitchChannelCount; channel++) {
-                for (let instrument of this.song.channels[channel].instruments) {
-                    instrument.nextLFOtime = (instrument.nextLFOtime % (Config.vibratoTypes[instrument.vibratoType].period / (Config.ticksPerPart * samplesPerTick / this.samplesPerSecond)));
-                    instrument.arpTime = (instrument.arpTime % (2520 * Config.ticksPerArpeggio)); // 2520 = LCM of 4, 5, 6, 7, 8, 9 (arp sizes)
+            for (let channelIndex: number = 0; channelIndex < this.song.pitchChannelCount + this.song.noiseChannelCount; channelIndex++) {
+                for (let instrumentIndex = 0; instrumentIndex < this.channels[channelIndex].instruments.length; instrumentIndex++) {
+                    const instrumentState: InstrumentState = this.channels[channelIndex].instruments[instrumentIndex];
+                    const instrument: Instrument = this.song.channels[channelIndex].instruments[instrumentIndex];
+                    instrumentState.nextVibratoTime = (instrumentState.nextVibratoTime % (Config.vibratoTypes[instrument.vibratoType].period / (Config.ticksPerPart * samplesPerTick / this.samplesPerSecond)));
+                    instrumentState.arpTime = (instrumentState.arpTime % (2520 * Config.ticksPerArpeggio)); // 2520 = LCM of 4, 5, 6, 7, 8, 9 (arp sizes)
+                    instrumentState.envelopeTime = (instrumentState.envelopeTime % (Config.partsPerBeat * Config.ticksPerPart * this.song.beatsPerBar));
                 }
             }
 
@@ -9212,12 +9449,13 @@ export class Synth {
         const channel: Channel = song.channels[channelIndex];
         const channelState: ChannelState = this.channels[channelIndex];
         const pitches: number[] = this.liveInputPitches;
+        const bassPitches: number[] = this.liveBassInputPitches;
 
         for (let instrumentIndex: number = 0; instrumentIndex < channel.instruments.length; instrumentIndex++) {
             const instrumentState: InstrumentState = channelState.instruments[instrumentIndex];
             const toneList: Deque<Tone> = instrumentState.liveInputTones;
             let toneCount: number = 0;
-            if (this.liveInputDuration > 0 && channelIndex == this.liveInputChannel && pitches.length > 0 && this.liveInputInstruments.indexOf(instrumentIndex) != -1) {
+            if (this.liveInputDuration > 0 && (channelIndex == this.liveInputChannel) && pitches.length > 0 && this.liveInputInstruments.indexOf(instrumentIndex) != -1) {
                 const instrument: Instrument = channel.instruments[instrumentIndex];
 
                 if (instrument.getChord().singleTone) {
@@ -9281,6 +9519,70 @@ export class Synth {
                 }
             }
 
+            if (this.liveBassInputDuration > 0 && (channelIndex == this.liveBassInputChannel) && bassPitches.length > 0 && this.liveBassInputInstruments.indexOf(instrumentIndex) != -1) {
+                const instrument: Instrument = channel.instruments[instrumentIndex];
+
+                if (instrument.getChord().singleTone) {
+                    let tone: Tone;
+                    if (toneList.count() <= toneCount) {
+                        tone = this.newTone();
+                        toneList.pushBack(tone);
+                    } else if (!instrument.getTransition().isSeamless && this.liveInputStarted) {
+                        this.releaseTone(instrumentState, toneList.get(toneCount));
+                        tone = this.newTone();
+                        toneList.set(toneCount, tone);
+                    } else {
+                        tone = toneList.get(toneCount);
+                    }
+                    toneCount++;
+
+                    for (let i: number = 0; i < bassPitches.length; i++) {
+                        tone.pitches[i] = bassPitches[i];
+                    }
+                    tone.pitchCount = bassPitches.length;
+                    tone.chordSize = 1;
+                    tone.instrumentIndex = instrumentIndex;
+                    tone.note = tone.prevNote = tone.nextNote = null;
+                    tone.atNoteStart = this.liveBassInputStarted;
+                    tone.forceContinueAtStart = false;
+                    tone.forceContinueAtEnd = false;
+                    this.computeTone(song, channelIndex, samplesPerTick, tone, false, false);
+                } else {
+                    //const transition: Transition = instrument.getTransition();
+
+                    this.moveTonesIntoOrderedTempMatchedList(toneList, bassPitches);
+
+                    for (let i: number = 0; i < bassPitches.length; i++) {
+                        //const strumOffsetParts: number = i * instrument.getChord().strumParts;
+
+                        let tone: Tone;
+                        if (this.tempMatchedPitchTones[toneCount] != null) {
+                            tone = this.tempMatchedPitchTones[toneCount]!;
+                            this.tempMatchedPitchTones[toneCount] = null;
+                            if (tone.pitchCount != 1 || tone.pitches[0] != bassPitches[i]) {
+                                this.releaseTone(instrumentState, tone);
+                                tone = this.newTone();
+                            }
+                            toneList.pushBack(tone);
+                        } else {
+                            tone = this.newTone();
+                            toneList.pushBack(tone);
+                        }
+                        toneCount++;
+
+                        tone.pitches[0] = bassPitches[i];
+                        tone.pitchCount = 1;
+                        tone.chordSize = bassPitches.length;
+                        tone.instrumentIndex = instrumentIndex;
+                        tone.note = tone.prevNote = tone.nextNote = null;
+                        tone.atNoteStart = this.liveBassInputStarted;
+                        tone.forceContinueAtStart = false;
+                        tone.forceContinueAtEnd = false;
+                        this.computeTone(song, channelIndex, samplesPerTick, tone, false, false);
+                    }
+                }
+            }
+
             while (toneList.count() > toneCount) {
                 this.releaseTone(instrumentState, toneList.popBack());
             }
@@ -9289,6 +9591,7 @@ export class Synth {
         }
 
         this.liveInputStarted = false;
+        this.liveBassInputStarted = false;
     }
 
     // Returns the chord type of the instrument in the adjacent pattern if it is compatible for a
@@ -9905,7 +10208,7 @@ export class Synth {
         }
         tone.expression = 0.0;
         tone.expressionDelta = 0.0;
-        for (let i: number = 0; i < Config.operatorCount; i++) {
+        for (let i: number = 0; i < (instrument.type == InstrumentType.fm6op ? 6 : Config.operatorCount); i++) {
             tone.operatorWaves[i] = Synth.getOperatorWave(instrument.operators[i].waveform, instrument.operators[i].pulseWidth);
         }
 
@@ -10014,7 +10317,11 @@ export class Synth {
 
         // Compute envelopes *after* resetting the tone, otherwise the envelope computer gets reset too!
         const envelopeComputer: EnvelopeComputer = tone.envelopeComputer;
-        envelopeComputer.computeEnvelopes(instrument, currentPart, Config.ticksPerPart * partTimeStart, samplesPerTick / this.samplesPerSecond, tone);
+        let useEnvelopeSpeed: number = Config.arpSpeedScale[instrument.envelopeSpeed];
+        if (this.isModActive(Config.modulators.dictionary["envelope speed"].index, channelIndex, tone.instrumentIndex)) {
+            useEnvelopeSpeed = Math.max(0, this.getModValue(Config.modulators.dictionary["envelope speed"].index, channelIndex, tone.instrumentIndex, false));
+        }
+        envelopeComputer.computeEnvelopes(instrument, currentPart, instrumentState.envelopeTime, Config.ticksPerPart * partTimeStart, samplesPerTick / this.samplesPerSecond, tone, useEnvelopeSpeed);
         const envelopeStarts: number[] = tone.envelopeComputer.envelopeStarts;
         const envelopeEnds: number[] = tone.envelopeComputer.envelopeEnds;
         instrument.noteFilter = tmpNoteFilter;
@@ -10072,8 +10379,8 @@ export class Synth {
                 modDetuneStart += 4 * this.getModValue(Config.modulators.dictionary["song detune"].index, channelIndex, tone.instrumentIndex, false);
                 modDetuneEnd += 4 * this.getModValue(Config.modulators.dictionary["song detune"].index, channelIndex, tone.instrumentIndex, true);
             }
-            intervalStart += Synth.detuneToCents((modDetuneStart) * envelopeStart) * Config.pitchesPerOctave / (12.0 * 100.0);
-            intervalEnd += Synth.detuneToCents((modDetuneEnd) * envelopeEnd) * Config.pitchesPerOctave / (12.0 * 100.0);
+            intervalStart += Synth.detuneToCents(modDetuneStart) * envelopeStart * Config.pitchesPerOctave / (12.0 * 100.0);
+            intervalEnd += Synth.detuneToCents(modDetuneEnd) * envelopeEnd * Config.pitchesPerOctave / (12.0 * 100.0);
         }
 
         if (effectsIncludeVibrato(instrument.effects)) {
@@ -10114,19 +10421,19 @@ export class Synth {
             if (tone.prevVibrato != null) {
                 vibratoStart = tone.prevVibrato;
             } else {
-                let lfoStart: number = Synth.getLFOAmplitude(instrument, secondsPerPart * instrument.LFOtime);
+                let vibratoLfoStart: number = Synth.getLFOAmplitude(instrument, secondsPerPart * instrumentState.vibratoTime);
                 const vibratoDepthEnvelopeStart: number = envelopeStarts[EnvelopeComputeIndex.vibratoDepth];
-                vibratoStart = vibratoAmplitudeStart * lfoStart * vibratoDepthEnvelopeStart;
+                vibratoStart = vibratoAmplitudeStart * vibratoLfoStart * vibratoDepthEnvelopeStart;
                 if (delayTicks > 0.0) {
                     const ticksUntilVibratoStart: number = delayTicks - envelopeComputer.noteTicksStart;
                     vibratoStart *= Math.max(0.0, Math.min(1.0, 1.0 - ticksUntilVibratoStart / 2.0));
                 }
             }
 
-            let lfoEnd: number = Synth.getLFOAmplitude(instrument, secondsPerPart * instrument.nextLFOtime);
+            let vibratoLfoEnd: number = Synth.getLFOAmplitude(instrument, secondsPerPart * instrumentState.nextVibratoTime);
             const vibratoDepthEnvelopeEnd: number = envelopeEnds[EnvelopeComputeIndex.vibratoDepth];
             if (instrument.type != InstrumentType.mod) {
-                let vibratoEnd: number = vibratoAmplitudeEnd * lfoEnd * vibratoDepthEnvelopeEnd;
+                let vibratoEnd: number = vibratoAmplitudeEnd * vibratoLfoEnd * vibratoDepthEnvelopeEnd;
                 if (delayTicks > 0.0) {
                     const ticksUntilVibratoEnd: number = delayTicks - envelopeComputer.noteTicksEnd;
                     vibratoEnd *= Math.max(0.0, Math.min(1.0, 1.0 - ticksUntilVibratoEnd / 2.0));
@@ -10210,29 +10517,37 @@ export class Synth {
 
         if (instrument.type == InstrumentType.drumset) {
             const drumsetFilterEnvelope: Envelope = instrument.getDrumsetEnvelope(tone.drumsetPitch!);
+            //const timeScale: number = Config.arpSpeedScale[instrument.envelopeSpeed];
+            //secondsPerTick *= timeScale;
             // If the drumset lowpass cutoff decays, compensate by increasing expression.
             noteFilterExpression *= EnvelopeComputer.getLowpassCutoffDecayVolumeCompensation(drumsetFilterEnvelope)
 
             // Drumset filters use the same envelope timing as the rest of the envelopes, but do not include support for slide transitions.
             let drumsetFilterEnvelopeStart: number = EnvelopeComputer.computeEnvelope(drumsetFilterEnvelope, envelopeComputer.noteSecondsStart, beatsPerPart * partTimeStart, envelopeComputer.noteSizeStart);
-            let drumsetFilterEnvelopeEnd: number = EnvelopeComputer.computeEnvelope(drumsetFilterEnvelope, envelopeComputer.noteSecondsEnd, beatsPerPart * partTimeEnd, envelopeComputer.noteSizeEnd);
 
             // Apply slide interpolation to drumset envelope.
             if (envelopeComputer.prevSlideStart) {
                 const other: number = EnvelopeComputer.computeEnvelope(drumsetFilterEnvelope, envelopeComputer.prevNoteSecondsStart, beatsPerPart * partTimeStart, envelopeComputer.prevNoteSize);
                 drumsetFilterEnvelopeStart += (other - drumsetFilterEnvelopeStart) * envelopeComputer.prevSlideRatioStart;
             }
-            if (envelopeComputer.prevSlideEnd) {
-                const other: number = EnvelopeComputer.computeEnvelope(drumsetFilterEnvelope, envelopeComputer.prevNoteSecondsEnd, beatsPerPart * partTimeEnd, envelopeComputer.prevNoteSize);
-                drumsetFilterEnvelopeEnd += (other - drumsetFilterEnvelopeEnd) * envelopeComputer.prevSlideRatioEnd;
-            }
             if (envelopeComputer.nextSlideStart) {
                 const other: number = EnvelopeComputer.computeEnvelope(drumsetFilterEnvelope, 0.0, beatsPerPart * partTimeStart, envelopeComputer.nextNoteSize);
                 drumsetFilterEnvelopeStart += (other - drumsetFilterEnvelopeStart) * envelopeComputer.nextSlideRatioStart;
             }
-            if (envelopeComputer.nextSlideEnd) {
-                const other: number = EnvelopeComputer.computeEnvelope(drumsetFilterEnvelope, 0.0, beatsPerPart * partTimeEnd, envelopeComputer.nextNoteSize);
-                drumsetFilterEnvelopeEnd += (other - drumsetFilterEnvelopeEnd) * envelopeComputer.nextSlideRatioEnd;
+            
+            let drumsetFilterEnvelopeEnd: number = drumsetFilterEnvelopeStart;
+
+            if ( instrument.discreteEnvelope == false ) {
+                drumsetFilterEnvelopeEnd = EnvelopeComputer.computeEnvelope(drumsetFilterEnvelope, envelopeComputer.noteSecondsEnd, beatsPerPart * partTimeEnd, envelopeComputer.noteSizeEnd);
+
+                if (envelopeComputer.prevSlideEnd) {
+                    const other: number = EnvelopeComputer.computeEnvelope(drumsetFilterEnvelope, envelopeComputer.prevNoteSecondsEnd, beatsPerPart * partTimeEnd, envelopeComputer.prevNoteSize);
+                    drumsetFilterEnvelopeEnd += (other - drumsetFilterEnvelopeEnd) * envelopeComputer.prevSlideRatioEnd;
+                }
+                if (envelopeComputer.nextSlideEnd) {
+                    const other: number = EnvelopeComputer.computeEnvelope(drumsetFilterEnvelope, 0.0, beatsPerPart * partTimeEnd, envelopeComputer.nextNoteSize);
+                    drumsetFilterEnvelopeEnd += (other - drumsetFilterEnvelopeEnd) * envelopeComputer.nextSlideRatioEnd;
+                }
             }
 
             const point: FilterControlPoint = this.tempDrumSetControlPoint;
@@ -10258,7 +10573,7 @@ export class Synth {
             let arpeggioInterval: number = 0;
             const arpeggiates: boolean = chord.arpeggiates;
             if (tone.pitchCount > 1 && arpeggiates) {
-                const arpeggio: number = Math.floor(instrument.arpTime / Config.ticksPerArpeggio);
+                const arpeggio: number = Math.floor(instrumentState.arpTime / Config.ticksPerArpeggio);
                 arpeggioInterval = tone.pitches[getArpeggioPitchIndex(tone.pitchCount, instrument.fastTwoNoteArp, arpeggio)] - tone.pitches[0];
             }
 
@@ -10386,11 +10701,12 @@ export class Synth {
 
         } else {
             const freqEndRatio: number = Math.pow(2.0, (intervalEnd - intervalStart) * intervalScale / 12.0);
-            const basePhaseDeltaScale: number = Math.pow(freqEndRatio, 1.0 / roundedSamplesPerTick);
+			const basePhaseDeltaScale: number = Math.pow(freqEndRatio, 1.0 / roundedSamplesPerTick);
+
 
             let pitch: number = tone.pitches[0];
             if (tone.pitchCount > 1 && (chord.arpeggiates || chord.customInterval)) {
-                const arpeggio: number = Math.floor(instrument.arpTime / Config.ticksPerArpeggio);
+                const arpeggio: number = Math.floor(instrumentState.arpTime / Config.ticksPerArpeggio);
                 if (chord.customInterval) {
                     const intervalOffset: number = tone.pitches[1 + getArpeggioPitchIndex(tone.pitchCount - 1, instrument.fastTwoNoteArp, arpeggio)] - tone.pitches[0];
                     specialIntervalMult = Math.pow(2.0, intervalOffset / 12.0);
@@ -10489,34 +10805,39 @@ export class Synth {
                 tone.phaseDeltas[0] = startFreq * sampleTime;
                 tone.phaseDeltaScales[0] = basePhaseDeltaScale;
             }
-    let supersawExpressionStart: number = 1.0;
-		let supersawExpressionEnd: number = 1.0;
+
+             // TODO: make expressionStart and expressionEnd variables earlier and modify those
+			// instead of these supersawExpression variables.
+			let supersawExpressionStart: number = 1.0;
+			let supersawExpressionEnd: number = 1.0;
 			if (instrument.type == InstrumentType.supersaw) {
 				const minFirstVoiceAmplitude: number = 1.0 / Math.sqrt(Config.supersawVoiceCount);
-				let baseDynamismSliderStart: number = instrument.supersawDynamism / Config.supersawDynamismMax;
-                let baseDynamismSliderEnd: number = instrument.supersawDynamism / Config.supersawDynamismMax;
+
+                // Dynamism mods
+                let useDynamismStart: number = instrument.supersawDynamism / Config.supersawDynamismMax;
+                let useDynamismEnd: number = instrument.supersawDynamism / Config.supersawDynamismMax;
                 if (this.isModActive(Config.modulators.dictionary["dynamism"].index, channelIndex, tone.instrumentIndex)) {
-                  baseDynamismSliderStart = Math.max(0.0, this.getModValue(Config.modulators.dictionary["dynamism"].index, channelIndex, tone.instrumentIndex, false) / Config.supersawDynamismMax);
-                  baseDynamismSliderEnd = Math.max(0.0, this.getModValue(Config.modulators.dictionary["dynamism"].index, channelIndex, tone.instrumentIndex, true) / Config.supersawDynamismMax);
+                    useDynamismStart = (this.getModValue(Config.modulators.dictionary["dynamism"].index, channelIndex, tone.instrumentIndex, false)) / Config.supersawDynamismMax;
+                    useDynamismEnd = (this.getModValue(Config.modulators.dictionary["dynamism"].index, channelIndex, tone.instrumentIndex, true)) / Config.supersawDynamismMax;
                 }
-                const curvedDynamismStart: number = 1.0 - Math.pow(Math.max(0.0, 1.0 - baseDynamismSliderStart * envelopeStarts[EnvelopeComputeIndex.supersawDynamism]), 0.2);
-                const curvedDynamismEnd:   number = 1.0 - Math.pow(Math.max(0.0, 1.0 - baseDynamismSliderEnd * envelopeEnds[  EnvelopeComputeIndex.supersawDynamism]), 0.2);
-                const firstVoiceAmplitudeStart: number = Math.pow(2.0, Math.log2(minFirstVoiceAmplitude) * curvedDynamismStart);
+
+				const curvedDynamismStart: number = 1.0 - Math.pow(Math.max(0.0, 1.0 - useDynamismStart * envelopeStarts[EnvelopeComputeIndex.supersawDynamism]), 0.2);
+				const curvedDynamismEnd:   number = 1.0 - Math.pow(Math.max(0.0, 1.0 - useDynamismEnd * envelopeEnds[  EnvelopeComputeIndex.supersawDynamism]), 0.2);
+				const firstVoiceAmplitudeStart: number = Math.pow(2.0, Math.log2(minFirstVoiceAmplitude) * curvedDynamismStart);
 				const firstVoiceAmplitudeEnd:   number = Math.pow(2.0, Math.log2(minFirstVoiceAmplitude) * curvedDynamismEnd);
 
-				let dynamismStart: number = Math.sqrt((1.0 / Math.pow(firstVoiceAmplitudeStart, 2.0) - 1.0) / (Config.supersawVoiceCount - 1.0));
-				let dynamismEnd:   number = Math.sqrt((1.0 / Math.pow(firstVoiceAmplitudeEnd, 2.0) - 1.0) / (Config.supersawVoiceCount - 1.0));
-
+				const dynamismStart: number = Math.sqrt((1.0 / Math.pow(firstVoiceAmplitudeStart, 2.0) - 1.0) / (Config.supersawVoiceCount - 1.0));
+				const dynamismEnd:   number = Math.sqrt((1.0 / Math.pow(firstVoiceAmplitudeEnd, 2.0) - 1.0) / (Config.supersawVoiceCount - 1.0));
 				tone.supersawDynamism = dynamismStart;
 				tone.supersawDynamismDelta = (dynamismEnd - dynamismStart) / roundedSamplesPerTick;
-				
+
 				const initializeSupersaw: boolean = (tone.supersawDelayIndex == -1);
 				if (initializeSupersaw) {
 					// Goal: generate sawtooth phases such that the combined initial amplitude
 					// cancel out to minimize pop. Algorithm: generate sorted phases, iterate over
 					// their sawtooth drop points to find a combined zero crossing, then offset the
 					// phases so they start there.
-					
+
 					// Generate random phases in ascending order by adding positive randomly
 					// sized gaps between adjacent phases. For a proper distribution of random
 					// events, the gaps sizes should be an "exponential distribution", which is
@@ -10527,10 +10848,10 @@ export class Synth {
 						tone.phases[i] = accumulator;
 						accumulator += -Math.log(Math.random());
 					}
-					
+
 					const amplitudeSum: number = 1.0 + (Config.supersawVoiceCount - 1.0) * dynamismStart;
 					const slope: number = amplitudeSum;
-					
+
 					// Find the initial amplitude of the sum of sawtooths with the normalized
 					// set of phases.
 					let sample: number = 0.0;
@@ -10540,7 +10861,7 @@ export class Synth {
 						tone.phases[i] = normalizedPhase;
 						sample += (normalizedPhase - 0.5) * amplitude;
 					}
-					
+
 					// Find the phase of the zero crossing of the sum of the sawtooths. You can
 					// use a constant slope and the distance between sawtooth drops to determine if
 					// the zero crossing occurs between them. Note that a small phase means that
@@ -10566,7 +10887,7 @@ export class Synth {
 					for (let i: number = 0; i < Config.supersawVoiceCount; i++) {
 						tone.phases[i] += zeroCrossingPhase;
 					}
-					
+
 					// Randomize the (initially sorted) order of the phases (aside from the
 					// first one) so that they don't correlate to the detunes that are also
 					// based on index.
@@ -10579,12 +10900,16 @@ export class Synth {
 				}
 
 				const baseSpreadSlider: number = instrument.supersawSpread / Config.supersawSpreadMax;
-				let spreadSliderStart: number = Math.max(0.0, baseSpreadSlider * envelopeStarts[EnvelopeComputeIndex.supersawSpread]);
-				let spreadSliderEnd:   number = Math.max(0.0, baseSpreadSlider * envelopeEnds[  EnvelopeComputeIndex.supersawSpread]);
+				// Spread mods
+				let useSpreadStart: number = baseSpreadSlider;
+				let useSpreadEnd:   number = baseSpreadSlider;
                 if (this.isModActive(Config.modulators.dictionary["spread"].index, channelIndex, tone.instrumentIndex)) {
-                  spreadSliderStart = Math.max(0.0, this.getModValue(Config.modulators.dictionary["spread"].index, channelIndex, tone.instrumentIndex, false) / Config.supersawSpreadMax);
-                  spreadSliderEnd = Math.max(0.0, this.getModValue(Config.modulators.dictionary["spread"].index, channelIndex, tone.instrumentIndex, true) / Config.supersawSpreadMax);
-                    }
+                    useSpreadStart = (this.getModValue(Config.modulators.dictionary["spread"].index, channelIndex, tone.instrumentIndex, false)) / Config.supersawSpreadMax;
+                    useSpreadEnd = (this.getModValue(Config.modulators.dictionary["spread"].index, channelIndex, tone.instrumentIndex, true)) / Config.supersawSpreadMax;
+                }
+
+				const spreadSliderStart: number = useSpreadStart * envelopeStarts[EnvelopeComputeIndex.supersawSpread];
+				const spreadSliderEnd:   number = useSpreadEnd * envelopeEnds[  EnvelopeComputeIndex.supersawSpread];
 				// Just use the average detune for the current tick in the below loop.
 				const averageSpreadSlider: number = (spreadSliderStart + spreadSliderEnd) * 0.5;
 				const curvedSpread: number = Math.pow(1.0 - Math.sqrt(Math.max(0.0, 1.0 - averageSpreadSlider)), 1.75);
@@ -10593,31 +10918,20 @@ export class Synth {
 					const offset: number = (i == 0) ? 0.0 : Math.pow((((i + 1) >> 1) - 0.5 + 0.025 * ((i & 2) - 1)) / (Config.supersawVoiceCount >> 1), 1.1) * ((i & 1) * 2 - 1);
 					tone.supersawUnisonDetunes[i] = Math.pow(2.0, curvedSpread * offset / 12.0);
 				}
-				
+
 				const baseShape: number = instrument.supersawShape / Config.supersawShapeMax;
-				let shapeStart: number = baseShape * envelopeStarts[EnvelopeComputeIndex.supersawShape];
-				let shapeEnd:   number = baseShape * envelopeEnds[  EnvelopeComputeIndex.supersawShape];
-                if (this.isModActive(Config.modulators.dictionary["shape"].index, channelIndex, tone.instrumentIndex)) {
-                  shapeStart = Math.max(0.0, this.getModValue(Config.modulators.dictionary["shape"].index, channelIndex, tone.instrumentIndex, false) / Config.supersawShapeMax);
-                  shapeEnd = Math.max(0.0, this.getModValue(Config.modulators.dictionary["shape"].index, channelIndex, tone.instrumentIndex, true) / Config.supersawShapeMax);
-                }
-				tone.supersawShape = shapeStart;
-				tone.supersawShapeDelta = (shapeEnd - shapeStart) / roundedSamplesPerTick;
-				
-				const basePulseWidth: number = getPulseWidthRatio(instrument.pulseWidth);
-				
-                // Just like pulse width, check for PWM mods.
-                let pulseWidthModStart: number = basePulseWidth;
-                let pulseWidthModEnd: number = basePulseWidth;
-                if (this.isModActive(Config.modulators.dictionary["pulse width"].index, channelIndex, tone.instrumentIndex)) {
-                  pulseWidthModStart = Math.max(0.0, this.getModValue(Config.modulators.dictionary["pulse width"].index, channelIndex, tone.instrumentIndex, false) / (Config.pulseWidthRange * 2));
-                  pulseWidthModEnd = Math.max(0.0, this.getModValue(Config.modulators.dictionary["pulse width"].index, channelIndex, tone.instrumentIndex, true) / (Config.pulseWidthRange * 2));
+				// Saw shape mods
+				let useShapeStart: number = baseShape * envelopeStarts[EnvelopeComputeIndex.supersawShape];
+				let useShapeEnd:   number = baseShape * envelopeEnds[  EnvelopeComputeIndex.supersawShape];
+                if (this.isModActive(Config.modulators.dictionary["saw shape"].index, channelIndex, tone.instrumentIndex)) {
+                    useShapeStart = (this.getModValue(Config.modulators.dictionary["saw shape"].index, channelIndex, tone.instrumentIndex, false)) / Config.supersawShapeMax;
+                    useShapeEnd = (this.getModValue(Config.modulators.dictionary["saw shape"].index, channelIndex, tone.instrumentIndex, true)) / Config.supersawShapeMax;
                 }
 
-				const pulseWidthStart: number = pulseWidthModStart * envelopeStarts[EnvelopeComputeIndex.pulseWidth];
-				const pulseWidthEnd:   number = pulseWidthModEnd * envelopeEnds[  EnvelopeComputeIndex.pulseWidth];
-                tone.pulseWidth = pulseWidthStart;
-                tone.pulseWidthDelta = (pulseWidthEnd - pulseWidthStart) / roundedSamplesPerTick;
+				const shapeStart: number = useShapeStart * envelopeStarts[EnvelopeComputeIndex.supersawShape];
+				const shapeEnd:   number = useShapeEnd * envelopeEnds[EnvelopeComputeIndex.supersawShape];
+				tone.supersawShape = shapeStart;
+				tone.supersawShapeDelta = (shapeEnd - shapeStart) / roundedSamplesPerTick;
 
                 //decimal offset mods
                 let decimalOffsetModStart: number = instrument.decimalOffset;
@@ -10626,9 +10940,23 @@ export class Synth {
                 }
  
                 const decimalOffsetStart: number = decimalOffsetModStart * envelopeStarts[EnvelopeComputeIndex.decimalOffset];
+                // ...is including tone.decimalOffset still necessary?
                 tone.decimalOffset = decimalOffsetStart;
-                
-                tone.pulseWidth -= (tone.decimalOffset) / 10000;
+
+                const basePulseWidth: number = getPulseWidthRatio(instrument.pulseWidth);
+
+                // Check for PWM mods to this instrument
+                let pulseWidthModStart: number = basePulseWidth;
+                let pulseWidthModEnd: number = basePulseWidth;
+                if (this.isModActive(Config.modulators.dictionary["pulse width"].index, channelIndex, tone.instrumentIndex)) {
+                    pulseWidthModStart = (this.getModValue(Config.modulators.dictionary["pulse width"].index, channelIndex, tone.instrumentIndex, false)) / (Config.pulseWidthRange * 2);
+                    pulseWidthModEnd = (this.getModValue(Config.modulators.dictionary["pulse width"].index, channelIndex, tone.instrumentIndex, true)) / (Config.pulseWidthRange * 2);
+                }
+
+                let pulseWidthStart: number = pulseWidthModStart * envelopeStarts[EnvelopeComputeIndex.pulseWidth];
+                let pulseWidthEnd: number = pulseWidthModEnd * envelopeEnds[EnvelopeComputeIndex.pulseWidth];
+                pulseWidthStart -= decimalOffsetStart / 10000;
+                pulseWidthEnd -= decimalOffsetStart / 10000;
 				const phaseDeltaStart: number = (tone.supersawPrevPhaseDelta != null) ? tone.supersawPrevPhaseDelta : startFreq * sampleTime;
 				const phaseDeltaEnd: number = startFreq * sampleTime * freqEndRatio;
 				tone.supersawPrevPhaseDelta = phaseDeltaEnd;
@@ -10637,7 +10965,7 @@ export class Synth {
 				tone.supersawDelayLength = delayLengthStart;
 				tone.supersawDelayLengthDelta = (delayLengthEnd - delayLengthStart) / roundedSamplesPerTick;
 				const minBufferLength: number = Math.ceil(Math.max(delayLengthStart, delayLengthEnd)) + 2;
-				
+
 				if (tone.supersawDelayLine == null || tone.supersawDelayLine.length <= minBufferLength) {
 					// The delay line buffer will get reused for other tones so might as well
 					// start off with a buffer size that is big enough for most notes.
@@ -10658,14 +10986,14 @@ export class Synth {
 					tone.supersawDelayLine.fill(0.0);
 					tone.supersawDelayIndex = tone.supersawDelayLine.length;
 				}
-				
+
 				const pulseExpressionRatio: number = Config.pwmBaseExpression / Config.supersawBaseExpression;
 				supersawExpressionStart *= (1.0 + (pulseExpressionRatio - 1.0) * shapeStart) / Math.sqrt(1.0 + (Config.supersawVoiceCount - 1.0) * dynamismStart * dynamismStart);
 				supersawExpressionEnd *= (1.0 + (pulseExpressionRatio - 1.0) * shapeEnd) / Math.sqrt(1.0 + (Config.supersawVoiceCount - 1.0) * dynamismEnd * dynamismEnd);
+			}
 
-        }
-            let expressionStart: number = settingsExpressionMult * fadeExpressionStart * chordExpressionStart * pitchExpressionStart * envelopeStarts[EnvelopeComputeIndex.noteVolume] * supersawExpressionStart;
-            let expressionEnd: number = settingsExpressionMult * fadeExpressionEnd * chordExpressionEnd * pitchExpressionEnd * envelopeEnds[EnvelopeComputeIndex.noteVolume] * supersawExpressionEnd;
+			let expressionStart: number = settingsExpressionMult * fadeExpressionStart * chordExpressionStart * pitchExpressionStart * envelopeStarts[EnvelopeComputeIndex.noteVolume] * supersawExpressionStart;
+			let expressionEnd:   number = settingsExpressionMult * fadeExpressionEnd   * chordExpressionEnd   * pitchExpressionEnd   * envelopeEnds[  EnvelopeComputeIndex.noteVolume] * supersawExpressionEnd;
 
             // Check for mod-related volume delta
             if (this.isModActive(Config.modulators.dictionary["note volume"].index, channelIndex, tone.instrumentIndex)) {
@@ -10706,7 +11034,7 @@ export class Synth {
                 }
 
                 for (let i: number = 0; i < unisonVoices; i++) {
-                    tone.pickedStrings[i].update(this, instrumentState, tone, i, roundedSamplesPerTick, stringDecayStart, stringDecayEnd);
+                    tone.pickedStrings[i].update(this, instrumentState, tone, i, roundedSamplesPerTick, stringDecayStart, stringDecayEnd, instrument.stringSustainType);
                 }
             }
         }
@@ -10769,7 +11097,10 @@ export class Synth {
 
                 //console.log(synthSource.join("\n"));
 
-                Synth.fmSynthFunctionCache[fingerprint] = new Function("synth", "bufferIndex", "roundedSamplesPerTick", "tone", "instrumentState", synthSource.join("\n"));
+                const wrappedFmSynth: string = "return (synth, bufferIndex, roundedSamplesPerTick, tone, instrument) => {" + synthSource.join("\n") + "}";
+
+				Synth.fmSynthFunctionCache[fingerprint] = new Function("Config", "Synth", wrappedFmSynth)(Config, Synth);
+
             }
             return Synth.fmSynthFunctionCache[fingerprint];
         } else if (instrument.type == InstrumentType.chip) {
@@ -10844,7 +11175,9 @@ export class Synth {
 
                 //console.log(synthSource.join("\n"));
 
-                Synth.fm6SynthFunctionCache[fingerprint] = new Function("synth", "bufferIndex", "roundedSamplesPerTick", "tone", "instrumentState", synthSource.join("\n"));
+                const wrappedFm6Synth: string = "return (synth, bufferIndex, roundedSamplesPerTick, tone, instrument) => {" + synthSource.join("\n") + "}";
+
+				Synth.fm6SynthFunctionCache[fingerprint] = new Function("Config", "Synth", wrappedFm6Synth)(Config, Synth);
             }
             return Synth.fm6SynthFunctionCache[fingerprint];
         }else{
@@ -11378,7 +11711,8 @@ export class Synth {
         const voiceCount: number = instrumentState.unisonVoices;
         let pickedStringFunction: Function = Synth.pickedStringFunctionCache[voiceCount];
         if (pickedStringFunction == undefined) {
-            let pickedStringSource: string = "";
+            let pickedStringSource: string = "return (synth, bufferIndex, runLength, tone, instrumentState) => {";
+
 
             pickedStringSource += `
 				const Config = beepbox.Config;
@@ -11388,8 +11722,10 @@ export class Synth {
 				let pickedString# = tone.pickedStrings[#];
 				let allPassSample# = +pickedString#.allPassSample;
 				let allPassPrevInput# = +pickedString#.allPassPrevInput;
-				let shelfSample# = +pickedString#.shelfSample;
-				let shelfPrevInput# = +pickedString#.shelfPrevInput;
+				let sustainFilterSample# = +pickedString#.sustainFilterSample;
+				let sustainFilterPrevOutput2# = +pickedString#.sustainFilterPrevOutput2;
+				let sustainFilterPrevInput1# = +pickedString#.sustainFilterPrevInput1;
+				let sustainFilterPrevInput2# = +pickedString#.sustainFilterPrevInput2;
 				let fractionalDelaySample# = +pickedString#.fractionalDelaySample;
 				const delayLine# = pickedString#.delayLine;
 				const delayBufferMask# = (delayLine#.length - 1) >> 0;
@@ -11398,13 +11734,17 @@ export class Synth {
 				let delayLength# = +pickedString#.prevDelayLength;
 				const delayLengthDelta# = +pickedString#.delayLengthDelta;
 				let allPassG# = +pickedString#.allPassG;
-				let shelfA1# = +pickedString#.shelfA1;
-				let shelfB0# = +pickedString#.shelfB0;
-				let shelfB1# = +pickedString#.shelfB1;
+				let sustainFilterA1# = +pickedString#.sustainFilterA1;
+				let sustainFilterA2# = +pickedString#.sustainFilterA2;
+				let sustainFilterB0# = +pickedString#.sustainFilterB0;
+				let sustainFilterB1# = +pickedString#.sustainFilterB1;
+				let sustainFilterB2# = +pickedString#.sustainFilterB2;
 				const allPassGDelta# = +pickedString#.allPassGDelta;
-				const shelfA1Delta# = +pickedString#.shelfA1Delta;
-				const shelfB0Delta# = +pickedString#.shelfB0Delta;
-				const shelfB1Delta# = +pickedString#.shelfB1Delta;
+				const sustainFilterA1Delta# = +pickedString#.sustainFilterA1Delta;
+				const sustainFilterA2Delta# = +pickedString#.sustainFilterA2Delta;
+				const sustainFilterB0Delta# = +pickedString#.sustainFilterB0Delta;
+				const sustainFilterB1Delta# = +pickedString#.sustainFilterB1Delta;
+				const sustainFilterB2Delta# = +pickedString#.sustainFilterB2Delta;
 				
 				let expression = +tone.expression;
 				const expressionDelta = +tone.expressionDelta;
@@ -11432,10 +11772,13 @@ export class Synth {
 					allPassSample# = fractionalDelaySample# * allPassG# + allPassPrevInput# - allPassG# * allPassSample#;
 					allPassPrevInput# = fractionalDelaySample#;
 					
-					shelfSample# = shelfB0# * allPassSample# + shelfB1# * shelfPrevInput# - shelfA1# * shelfSample#;
-					shelfPrevInput# = allPassSample#;
+					const sustainFilterPrevOutput1# = sustainFilterSample#;
+					sustainFilterSample# = sustainFilterB0# * allPassSample# + sustainFilterB1# * sustainFilterPrevInput1# + sustainFilterB2# * sustainFilterPrevInput2# - sustainFilterA1# * sustainFilterSample# - sustainFilterA2# * sustainFilterPrevOutput2#;
+					sustainFilterPrevOutput2# = sustainFilterPrevOutput1#;
+					sustainFilterPrevInput2# = sustainFilterPrevInput1#;
+					sustainFilterPrevInput1# = allPassSample#;
 					
-					delayLine#[delayIndex# & delayBufferMask#] += shelfSample#;
+					delayLine#[delayIndex# & delayBufferMask#] += sustainFilterSample#;
 					delayLine#[(delayIndex# + delayResetOffset#) & delayBufferMask#] = 0.0;
 					delayIndex#++;
 					
@@ -11457,35 +11800,44 @@ export class Synth {
 					expression += expressionDelta;
 					delayLength# += delayLengthDelta#;
 					allPassG# += allPassGDelta#;
-					shelfA1# += shelfA1Delta#;
-					shelfB0# += shelfB0Delta#;
-					shelfB1# += shelfB1Delta#;
+					sustainFilterA1# += sustainFilterA1Delta#;
+					sustainFilterA2# += sustainFilterA2Delta#;
+					sustainFilterB0# += sustainFilterB0Delta#;
+					sustainFilterB1# += sustainFilterB1Delta#;
+					sustainFilterB2# += sustainFilterB2Delta#;
 				}
 				
 				// Avoid persistent denormal or NaN values in the delay buffers and filter history.
 				const epsilon = (1.0e-24);
 				if (!Number.isFinite(allPassSample#) || Math.abs(allPassSample#) < epsilon) allPassSample# = 0.0;
 				if (!Number.isFinite(allPassPrevInput#) || Math.abs(allPassPrevInput#) < epsilon) allPassPrevInput# = 0.0;
-				if (!Number.isFinite(shelfSample#) || Math.abs(shelfSample#) < epsilon) shelfSample# = 0.0;
-				if (!Number.isFinite(shelfPrevInput#) || Math.abs(shelfPrevInput#) < epsilon) shelfPrevInput# = 0.0;
+				if (!Number.isFinite(sustainFilterSample#) || Math.abs(sustainFilterSample#) < epsilon) sustainFilterSample# = 0.0;
+				if (!Number.isFinite(sustainFilterPrevOutput2#) || Math.abs(sustainFilterPrevOutput2#) < epsilon) sustainFilterPrevOutput2# = 0.0;
+				if (!Number.isFinite(sustainFilterPrevInput1#) || Math.abs(sustainFilterPrevInput1#) < epsilon) sustainFilterPrevInput1# = 0.0;
+				if (!Number.isFinite(sustainFilterPrevInput2#) || Math.abs(sustainFilterPrevInput2#) < epsilon) sustainFilterPrevInput2# = 0.0;
 				if (!Number.isFinite(fractionalDelaySample#) || Math.abs(fractionalDelaySample#) < epsilon) fractionalDelaySample# = 0.0;
 				pickedString#.allPassSample = allPassSample#;
 				pickedString#.allPassPrevInput = allPassPrevInput#;
-				pickedString#.shelfSample = shelfSample#;
-				pickedString#.shelfPrevInput = shelfPrevInput#;
+				pickedString#.sustainFilterSample = sustainFilterSample#;
+				pickedString#.sustainFilterPrevOutput2 = sustainFilterPrevOutput2#;
+				pickedString#.sustainFilterPrevInput1 = sustainFilterPrevInput1#;
+				pickedString#.sustainFilterPrevInput2 = sustainFilterPrevInput2#;
 				pickedString#.fractionalDelaySample = fractionalDelaySample#;
 				pickedString#.delayIndex = delayIndex#;
 				pickedString#.prevDelayLength = delayLength#;
 				pickedString#.allPassG = allPassG#;
-				pickedString#.shelfA1 = shelfA1#;
-				pickedString#.shelfB0 = shelfB0#;
-				pickedString#.shelfB1 = shelfB1#;
+				pickedString#.sustainFilterA1 = sustainFilterA1#;
+				pickedString#.sustainFilterA2 = sustainFilterA2#;
+				pickedString#.sustainFilterB0 = sustainFilterB0#;
+				pickedString#.sustainFilterB1 = sustainFilterB1#;
+				pickedString#.sustainFilterB2 = sustainFilterB2#;
 				
 				tone.expression = expression;
 				
 				synth.sanitizeFilters(filters);
 				tone.initialNoteFilterInput1 = initialFilterInput1;
-				tone.initialNoteFilterInput2 = initialFilterInput2;`
+				tone.initialNoteFilterInput2 = initialFilterInput2;
+			}`
 
             // Duplicate lines containing "#" for each voice and replace the "#" with the voice index.
             pickedStringSource = pickedStringSource.replace(/^.*\#.*$/mg, line => {
@@ -11497,8 +11849,8 @@ export class Synth {
             });
 
             //console.log(pickedStringSource);
-            pickedStringFunction = new Function("synth", "bufferIndex", "runLength", "tone", "instrumentState", pickedStringSource);
-            Synth.pickedStringFunctionCache[voiceCount] = pickedStringFunction;
+            pickedStringFunction = new Function("Config", "Synth", pickedStringSource)(Config, Synth);
+			Synth.pickedStringFunctionCache[voiceCount] = pickedStringFunction;
         }
 
         pickedStringFunction(synth, bufferIndex, roundedSamplesPerTick, tone, instrumentState);
@@ -11525,12 +11877,11 @@ export class Synth {
 
         let effectsFunction: Function = Synth.effectsFunctionCache[signature];
         if (effectsFunction == undefined) {
-            let effectsSource: string = "";
+            let effectsSource: string = "return (synth, outputDataL, outputDataR, bufferIndex, runLength, instrumentState) => {";
 
             const usesDelays: boolean = usesChorus || usesReverb || usesEcho;
 
             effectsSource += `
-				const Config = beepbox.Config;
 				const tempMonoInstrumentSampleBuffer = synth.tempMonoInstrumentSampleBuffer;
 				
 				let mixVolume = +instrumentState.mixVolume;
@@ -11606,7 +11957,7 @@ export class Synth {
 				const filterCount = instrumentState.eqFilterCount|0;
 				let initialFilterInput1 = +instrumentState.initialEqFilterInput1;
 				let initialFilterInput2 = +instrumentState.initialEqFilterInput2;
-				const applyFilters = beepbox.Synth.applyFilters;`
+				const applyFilters = Synth.applyFilters;`
             }
 
             // The eq filter volume is also used to fade out the instrument state, so always include it.
@@ -12012,7 +12363,7 @@ export class Synth {
             if (usesPanning) {
                 effectsSource += `
 				
-				beepbox.Synth.sanitizeDelayLine(panningDelayLine, panningDelayPos, panningMask);
+				Synth.sanitizeDelayLine(panningDelayLine, panningDelayPos, panningMask);
 				instrumentState.panningDelayPos = panningDelayPos;
 				instrumentState.panningVolumeL = panningVolumeL;
 				instrumentState.panningVolumeR = panningVolumeR;
@@ -12023,8 +12374,8 @@ export class Synth {
             if (usesChorus) {
                 effectsSource += `
 				
-				beepbox.Synth.sanitizeDelayLine(chorusDelayLineL, chorusDelayPos, chorusMask);
-				beepbox.Synth.sanitizeDelayLine(chorusDelayLineR, chorusDelayPos, chorusMask);
+				Synth.sanitizeDelayLine(chorusDelayLineL, chorusDelayPos, chorusMask);
+				Synth.sanitizeDelayLine(chorusDelayLineR, chorusDelayPos, chorusMask);
 				instrumentState.chorusPhase = chorusPhase;
 				instrumentState.chorusDelayPos = chorusDelayPos;
 				instrumentState.chorusVoiceMult = chorusVoiceMult;
@@ -12034,8 +12385,8 @@ export class Synth {
             if (usesEcho) {
                 effectsSource += `
 				
-				beepbox.Synth.sanitizeDelayLine(echoDelayLineL, echoDelayPos, echoMask);
-				beepbox.Synth.sanitizeDelayLine(echoDelayLineR, echoDelayPos, echoMask);
+				Synth.sanitizeDelayLine(echoDelayLineL, echoDelayPos, echoMask);
+				Synth.sanitizeDelayLine(echoDelayLineR, echoDelayPos, echoMask);
 				instrumentState.echoDelayPos = echoDelayPos;
 				instrumentState.echoMult = echoMult;
 				instrumentState.echoDelayOffsetRatio = echoDelayOffsetRatio;
@@ -12053,10 +12404,10 @@ export class Synth {
             if (usesReverb) {
                 effectsSource += `
 				
-				beepbox.Synth.sanitizeDelayLine(reverbDelayLine, reverbDelayPos        , reverbMask);
-				beepbox.Synth.sanitizeDelayLine(reverbDelayLine, reverbDelayPos +  3041, reverbMask);
-				beepbox.Synth.sanitizeDelayLine(reverbDelayLine, reverbDelayPos +  6426, reverbMask);
-				beepbox.Synth.sanitizeDelayLine(reverbDelayLine, reverbDelayPos + 10907, reverbMask);
+				Synth.sanitizeDelayLine(reverbDelayLine, reverbDelayPos        , reverbMask);
+				Synth.sanitizeDelayLine(reverbDelayLine, reverbDelayPos +  3041, reverbMask);
+				Synth.sanitizeDelayLine(reverbDelayLine, reverbDelayPos +  6426, reverbMask);
+				Synth.sanitizeDelayLine(reverbDelayLine, reverbDelayPos + 10907, reverbMask);
 				instrumentState.reverbDelayPos = reverbDelayPos;
 				instrumentState.reverbMult = reverb;
 				
@@ -12078,8 +12429,10 @@ export class Synth {
 				instrumentState.reverbShelfPrevInput3 = reverbShelfPrevInput3;`
             }
 
+            effectsSource += "}";
+
             //console.log(effectsSource);
-            effectsFunction = new Function("synth", "outputDataL", "outputDataR", "bufferIndex", "runLength", "instrumentState", effectsSource);
+            effectsFunction = new Function("Config", "Synth", effectsSource)(Config, Synth);
             Synth.effectsFunctionCache[signature] = effectsFunction;
         }
 
@@ -12155,16 +12508,16 @@ export class Synth {
         tone.initialNoteFilterInput2 = initialFilterInput2;
     }
 
-     private static supersawSynth(synth: Synth, bufferIndex: number, runLength: number, tone: Tone, instrumentState: InstrumentState): void {
+    private static supersawSynth(synth: Synth, bufferIndex: number, runLength: number, tone: Tone, instrumentState: InstrumentState): void {
 		const data: Float32Array = synth.tempMonoInstrumentSampleBuffer!;
 		const voiceCount: number = Config.supersawVoiceCount|0;
-		
+
 		let phaseDelta: number = tone.phaseDeltas[0];
 		const phaseDeltaScale: number = +tone.phaseDeltaScales[0];
 		let expression: number = +tone.expression;
 		const expressionDelta: number = +tone.expressionDelta;
 		let phases: number[] = tone.phases;
-		
+
 		let dynamism: number = +tone.supersawDynamism;
 		const dynamismDelta: number = +tone.supersawDynamismDelta;
 		const unisonDetunes: number[] = tone.supersawUnisonDetunes;
@@ -12176,50 +12529,54 @@ export class Synth {
 		const delayBufferMask: number = (delayLine.length - 1) >> 0;
 		let delayIndex: number = tone.supersawDelayIndex|0;
 		delayIndex = (delayIndex & delayBufferMask) + delayLine.length;
-		
+
 		const filters: DynamicBiquadFilter[] = tone.noteFilters;
 		const filterCount: number = tone.noteFilterCount|0;
 		let initialFilterInput1: number = +tone.initialNoteFilterInput1;
 		let initialFilterInput2: number = +tone.initialNoteFilterInput2;
 		const applyFilters: Function = Synth.applyFilters;
-		
+
 		const stopIndex: number = bufferIndex + runLength;
 		for (let sampleIndex: number = bufferIndex; sampleIndex < stopIndex; sampleIndex++) {
 			// The phase initially starts at a zero crossing so apply
 			// the delta before first sample to get a nonzero value.
 			let phase: number = (phases[0] + phaseDelta) % 1.0;
 			let supersawSample: number = phase - 0.5 * (1.0 + (voiceCount - 1.0) * dynamism);
-			
+
 			// This is a PolyBLEP, which smooths out discontinuities at any frequency to reduce aliasing. 
-			if (phase < phaseDelta) {
-				var t: number = phase / phaseDelta;
-				supersawSample -= (t+t-t*t-1) * 0.5;
-			} else if (phase > 1.0 - phaseDelta) {
-				var t: number = (phase - 1.0) / phaseDelta;
-				supersawSample -= (t+t+t*t+1) * 0.5;
-			}
-			
+            if (!instrumentState.aliases) {
+                if (phase < phaseDelta) {
+                    var t: number = phase / phaseDelta;
+                    supersawSample -= (t + t - t * t - 1) * 0.5;
+                } else if (phase > 1.0 - phaseDelta) {
+                    var t: number = (phase - 1.0) / phaseDelta;
+                    supersawSample -= (t + t + t * t + 1) * 0.5;
+                }
+            }
+
 			phases[0] = phase;
-			
+
 			for (let i: number = 1; i < voiceCount; i++) {
 				const detunedPhaseDelta: number = phaseDelta * unisonDetunes[i];
 				// The phase initially starts at a zero crossing so apply
 				// the delta before first sample to get a nonzero value.
 				let phase: number = (phases[i] + detunedPhaseDelta) % 1.0;
 				supersawSample += phase * dynamism;
-				
+
 				// This is a PolyBLEP, which smooths out discontinuities at any frequency to reduce aliasing. 
-				if (phase < detunedPhaseDelta) {
-					const t: number = phase / detunedPhaseDelta;
-					supersawSample -= (t+t-t*t-1) * 0.5 * dynamism;
-				} else if (phase > 1.0 - detunedPhaseDelta) {
-					const t: number = (phase - 1.0) / detunedPhaseDelta;
-					supersawSample -= (t+t+t*t+1) * 0.5 * dynamism;
-				}
-				
+                if (!instrumentState.aliases) {
+                    if (phase < detunedPhaseDelta) {
+                        const t: number = phase / detunedPhaseDelta;
+                        supersawSample -= (t + t - t * t - 1) * 0.5 * dynamism;
+                    } else if (phase > 1.0 - detunedPhaseDelta) {
+                        const t: number = (phase - 1.0) / detunedPhaseDelta;
+                        supersawSample -= (t + t + t * t + 1) * 0.5 * dynamism;
+                    }
+                }
+
 				phases[i] = phase;
 			}
-			
+
 			delayLine[delayIndex & delayBufferMask] = supersawSample;
 			const delaySampleTime: number = delayIndex - delayLength;
 			const lowerIndex: number = delaySampleTime | 0;
@@ -12229,30 +12586,30 @@ export class Synth {
 			const nextDelaySample: number = delayLine[upperIndex & delayBufferMask];
 			const delaySample: number = prevDelaySample + (nextDelaySample - prevDelaySample) * delayRatio;
 			delayIndex++;
-			
+
 			const inputSample: number = supersawSample - delaySample * shape;
 			const sample: number = applyFilters(inputSample, initialFilterInput1, initialFilterInput2, filterCount, filters);
 			initialFilterInput2 = initialFilterInput1;
 			initialFilterInput1 = inputSample;
-			
+
 			phaseDelta *= phaseDeltaScale;
 			dynamism += dynamismDelta;
 			shape += shapeDelta;
 			delayLength += delayLengthDelta;
-			
+
 			const output: number = sample * expression;
 			expression += expressionDelta;
-			
+
 			data[sampleIndex] += output;
 		}
-		
+
 		tone.phaseDeltas[0] = phaseDelta;
 		tone.expression = expression;
 		tone.supersawDynamism = dynamism;
 		tone.supersawShape = shape;
 		tone.supersawDelayLength = delayLength;
 		tone.supersawDelayIndex = delayIndex;
-		
+
 		synth.sanitizeFilters(filters);
 		tone.initialNoteFilterInput1 = initialFilterInput1;
 		tone.initialNoteFilterInput2 = initialFilterInput2;
@@ -12260,7 +12617,7 @@ export class Synth {
 
     private static fmSourceTemplate: string[] = (`
 		const data = synth.tempMonoInstrumentSampleBuffer;
-		const sineWave = beepbox.Config.sineWave;
+		const sineWave = Config.sineWave;
 			
 		// I'm adding 1000 to the phase to ensure that it's never negative even when modulated by other waves because negative numbers don't work with the modulus operator very well.
 		let operator#Phase       = +((tone.phases[#] % 1) + 1000) * ` + Config.sineWaveLength + `;
@@ -12279,7 +12636,7 @@ export class Synth {
 		const filterCount = tone.noteFilterCount|0;
 		let initialFilterInput1 = +tone.initialNoteFilterInput1;
 		let initialFilterInput2 = +tone.initialNoteFilterInput2;
-		const applyFilters = beepbox.Synth.applyFilters;
+		const applyFilters = Synth.applyFilters;
 		
 		const stopIndex = bufferIndex + roundedSamplesPerTick;
 		for (let sampleIndex = bufferIndex; sampleIndex < stopIndex; sampleIndex++) {
@@ -12331,7 +12688,7 @@ export class Synth {
         let expression: number = +tone.expression;
         const expressionDelta: number = +tone.expressionDelta;
         let phase: number = (tone.phases[0] % 1) * Config.chipNoiseLength;
-        if (tone.phases[0] == 0) {
+        if (tone.phases[0] == 0.0) {
             // Zero phase means the tone was reset, just give noise a random start phase instead.
             phase = Math.random() * Config.chipNoiseLength;
         }
@@ -12396,7 +12753,7 @@ export class Synth {
 
         let phase: number = (tone.phases[0] % 1) * Config.spectrumNoiseLength;
         // Zero phase means the tone was reset, just give noise a random start phase instead.
-        if (tone.phases[0] == 0) phase = Synth.findRandomZeroCrossing(wave, Config.spectrumNoiseLength) + phaseDelta;
+        if (tone.phases[0] == 0.0) phase = Synth.findRandomZeroCrossing(wave, Config.spectrumNoiseLength) + phaseDelta;
         const phaseMask: number = Config.spectrumNoiseLength - 1;
 
         // This is for a "legacy" style simplified 1st order lowpass filter with
@@ -12455,7 +12812,7 @@ export class Synth {
 
         let phase: number = (tone.phases[0] % 1) * Config.spectrumNoiseLength;
         // Zero phase means the tone was reset, just give noise a random start phase instead.
-        if (tone.phases[0] == 0) phase = Synth.findRandomZeroCrossing(wave, Config.spectrumNoiseLength) + phaseDelta;
+        if (tone.phases[0] == 0.0) phase = Synth.findRandomZeroCrossing(wave, Config.spectrumNoiseLength) + phaseDelta;
         const phaseMask: number = Config.spectrumNoiseLength - 1;
 
         const stopIndex: number = bufferIndex + runLength;
@@ -12524,11 +12881,22 @@ export class Synth {
 
         for (let instrumentIndex: number = 0; instrumentIndex < usedInstruments.length; instrumentIndex++) {
 
-            synth.setModValue(tone.expression, tone.expression + tone.expressionDelta, mod, instrument.modChannels[mod], usedInstruments[instrumentIndex], setting);
+            synth.setModValue(tone.expression, tone.expression + tone.expressionDelta, instrument.modChannels[mod], usedInstruments[instrumentIndex], setting);
+
+            // If mods are being held (for smoother playback while recording mods), use those values instead.
+            for (let i: number = 0; i < synth.heldMods.length; i++) {
+                if (Config.modulators[instrument.modulators[mod]].forSong) {
+                    if (synth.heldMods[i].setting == setting)
+                        synth.setModValue(synth.heldMods[i].volume, synth.heldMods[i].volume, instrument.modChannels[mod], usedInstruments[instrumentIndex], setting);
+                }
+                else if (synth.heldMods[i].channelIndex == instrument.modChannels[mod] && synth.heldMods[i].instrumentIndex == usedInstruments[instrumentIndex] && synth.heldMods[i].setting == setting) {
+                    synth.setModValue(synth.heldMods[i].volume, synth.heldMods[i].volume, instrument.modChannels[mod], usedInstruments[instrumentIndex], setting);
+                }
+            }
 
             // Reset arps, but only at the start of the note
             if (setting == Config.modulators.dictionary["reset arp"].index && synth.tick == 0 && tone.noteStartPart == synth.beat * Config.partsPerBeat + synth.part) {
-                synth.song.channels[instrument.modChannels[mod]].instruments[usedInstruments[instrumentIndex]].arpTime = 0;
+                synth.channels[instrument.modChannels[mod]].instruments[usedInstruments[instrumentIndex]].arpTime = 0;
             }
             // Denote next bar skip
             else if (setting == Config.modulators.dictionary["next bar"].index) {

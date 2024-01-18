@@ -863,6 +863,7 @@ export class Selection {
                 const canReplaceLastChange: boolean = this._doc.lastChangeWas(this._changeInstrument);
                 this._changeInstrument = new ChangeGroup();
                 const instruments: number[] = this._doc.recentPatternInstruments[this._doc.channel];
+                this._doc.notifier.changed(); // doc.recentPatternInstruments changes even if a 0 pattern is selected.
                 if (instruments.indexOf(instrument) == -1) {
                     instruments.push(instrument);
                     const maxLayers: number = this._doc.song.getMaxInstrumentsPerPattern(this._doc.channel);

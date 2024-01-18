@@ -1,11 +1,12 @@
 // Copyright (c) 2012-2022 John Nesky and contributing authors, distributed under the MIT license, see accompanying the LICENSE.md file.
 
-import { Algorithm, Dictionary, FilterType, InstrumentType, EffectType, AutomationTarget, Config, effectsIncludeDistortion } from "../synth/SynthConfig";
+import { Algorithm, Dictionary, FilterType, SustainType, InstrumentType, EffectType, AutomationTarget, Config, effectsIncludeDistortion } from "../synth/SynthConfig";
 import { NotePin, Note, makeNotePin, Pattern, FilterSettings, FilterControlPoint, SpectrumWave, HarmonicsWave, Instrument, Channel, Song, Synth } from "../synth/synth";
 import { Preset, PresetCategory, EditorConfig } from "./EditorConfig";
 import { Change, ChangeGroup, ChangeSequence, UndoableChange } from "./Change";
 import { SongDocument } from "./SongDocument";
 import { ColorConfig } from "./ColorConfig";
+import { Slider } from "./HTMLWrapper";
 
 export function patternsContainSameInstruments(pattern1Instruments: number[], pattern2Instruments: number[]): boolean {
     const pattern2Has1Instruments: boolean = pattern1Instruments.every(instrument => pattern2Instruments.indexOf(instrument) != -1);
@@ -591,6 +592,7 @@ export class ChangeRandomGeneratedInstrument extends Change {
         const isNoise: boolean = doc.song.getChannelIsNoise(doc.channel);
         const instrument: Instrument = doc.song.channels[doc.channel].instruments[doc.getCurrentInstrument()];
         instrument.effects &= 1 << EffectType.panning; // disable all existing effects except panning.
+        instrument.aliases = false;
         instrument.envelopeCount = 0;
 
         const midFreq: number = FilterControlPoint.getRoundedSettingValueFromHz(700.0);
@@ -958,7 +960,13 @@ export class ChangeRandomGeneratedInstrument extends Change {
                             instrument.chipWaveStartOffset = 0;
                             // advloop addition
 				} break;
-				case InstrumentType.pwm: {
+				case InstrumentType.pwm:
+                case InstrumentType.supersaw: {
+					if (type == InstrumentType.supersaw) {
+						instrument.supersawDynamism = selectCurvedDistribution(0, Config.supersawDynamismMax, Config.supersawDynamismMax, 2);
+						instrument.supersawSpread = selectCurvedDistribution(0, Config.supersawSpreadMax, Math.ceil(Config.supersawSpreadMax / 3), 4);
+						instrument.supersawShape = selectCurvedDistribution(0, Config.supersawShapeMax, 0, 4);
+					}
                     instrument.pulseWidth = selectCurvedDistribution(0, Config.pulseWidthRange - 1, Config.pulseWidthRange - 1, 2);
                     instrument.decimalOffset = 0;
 
@@ -1431,6 +1439,9 @@ export class ChangeToggleEffects extends Change {
         instrument.effects = newValue;
         // As a special case, toggling the panning effect doesn't remove the preset.
         if (toggleFlag != EffectType.panning) instrument.preset = instrument.type;
+        // Remove AA when distortion is turned off.
+        if (toggleFlag == EffectType.distortion && wasSelected)
+            instrument.aliases = false;
         if (wasSelected) instrument.clearInvalidEnvelopeTargets();
         this._didSomething();
         doc.notifier.changed();
@@ -1936,6 +1947,21 @@ export class ChangeVibratoDepth extends Change {
     }
 }
 
+export class ChangeEnvelopeSpeed extends Change {
+    constructor(doc: SongDocument, oldValue: number, newValue: number) {
+        super();
+        const instrument: Instrument = doc.song.channels[doc.channel].instruments[doc.getCurrentInstrument()];
+        doc.synth.unsetMod(Config.modulators.dictionary["envelope speed"].index, doc.channel, doc.getCurrentInstrument());
+
+        doc.notifier.changed();
+        if (oldValue != newValue) {
+            instrument.envelopeSpeed = newValue;
+            doc.notifier.changed();
+            this._didSomething();
+        }
+    }
+}
+
 export class ChangeVibratoSpeed extends Change {
     constructor(doc: SongDocument, oldValue: number, newValue: number) {
         super();
@@ -2041,6 +2067,20 @@ export class ChangeAliasing extends Change {
     }
 }
 
+export class ChangeDiscreteEnvelope extends Change {
+    constructor(doc: SongDocument, newValue: boolean) {
+        super();
+        const instrument: Instrument = doc.song.channels[doc.channel].instruments[doc.getCurrentInstrument()];
+        const oldValue = instrument.discreteEnvelope;
+
+        doc.notifier.changed();
+        if (oldValue != newValue) {
+            instrument.discreteEnvelope = newValue;
+            this._didSomething();
+        }
+    }
+}
+
 export class ChangeSpectrum extends Change {
     constructor(doc: SongDocument, instrument: Instrument, spectrumWave: SpectrumWave) {
         super();
@@ -2060,6 +2100,8 @@ export class ChangeHarmonics extends Change {
         this._didSomething();
     }
 }
+
+
 
 export class ChangeDrumsetEnvelope extends Change {
     constructor(doc: SongDocument, drumIndex: number, newValue: number) {
@@ -2114,31 +2156,6 @@ export class ChangePulseWidth extends ChangeInstrumentSlider {
     }
 }
 
-export class ChangeSupersawDynamism extends ChangeInstrumentSlider {
-	constructor(doc: SongDocument, oldValue: number, newValue: number) {
-		super(doc);
-		this._instrument.supersawDynamism = newValue;
-		doc.notifier.changed();
-		if (oldValue != newValue) this._didSomething();
-	}
-}
-export class ChangeSupersawSpread extends ChangeInstrumentSlider {
-	constructor(doc: SongDocument, oldValue: number, newValue: number) {
-		super(doc);
-		this._instrument.supersawSpread = newValue;
-		doc.notifier.changed();
-		if (oldValue != newValue) this._didSomething();
-	}
-}
-export class ChangeSupersawShape extends ChangeInstrumentSlider {
-	constructor(doc: SongDocument, oldValue: number, newValue: number) {
-		super(doc);
-		this._instrument.supersawShape = newValue;
-		doc.notifier.changed();
-		if (oldValue != newValue) this._didSomething();
-	}
-}
-
 export class ChangeDecimalOffset extends ChangeInstrumentSlider {
     constructor(doc: SongDocument, oldValue: number, newValue: number) {
         super(doc);
@@ -2147,6 +2164,34 @@ export class ChangeDecimalOffset extends ChangeInstrumentSlider {
         doc.notifier.changed();
         if (oldValue != newValue) this._didSomething();
     }
+}
+
+export class ChangeSupersawDynamism extends ChangeInstrumentSlider {
+	constructor(doc: SongDocument, oldValue: number, newValue: number) {
+		super(doc);
+		this._instrument.supersawDynamism = newValue;
+        doc.synth.unsetMod(Config.modulators.dictionary["dynamism"].index, doc.channel, doc.getCurrentInstrument());
+		doc.notifier.changed();
+		if (oldValue != newValue) this._didSomething();
+	}
+}
+export class ChangeSupersawSpread extends ChangeInstrumentSlider {
+	constructor(doc: SongDocument, oldValue: number, newValue: number) {
+		super(doc);
+		this._instrument.supersawSpread = newValue;
+        doc.synth.unsetMod(Config.modulators.dictionary["spread"].index, doc.channel, doc.getCurrentInstrument());
+		doc.notifier.changed();
+		if (oldValue != newValue) this._didSomething();
+	}
+}
+export class ChangeSupersawShape extends ChangeInstrumentSlider {
+	constructor(doc: SongDocument, oldValue: number, newValue: number) {
+		super(doc);
+		this._instrument.supersawShape = newValue;
+        doc.synth.unsetMod(Config.modulators.dictionary["saw shape"].index, doc.channel, doc.getCurrentInstrument());
+		doc.notifier.changed();
+		if (oldValue != newValue) this._didSomething();
+	}
 }
 
 export class ChangePitchShift extends ChangeInstrumentSlider {
@@ -2206,6 +2251,20 @@ export class ChangeStringSustain extends ChangeInstrumentSlider {
         doc.notifier.changed();
         if (oldValue != newValue) this._didSomething();
     }
+}
+
+export class ChangeStringSustainType extends Change {
+	constructor(doc: SongDocument, newValue: SustainType) {
+		super();
+		const instrument: Instrument = doc.song.channels[doc.channel].instruments[doc.getCurrentInstrument()];
+		const oldValue: SustainType = instrument.stringSustainType;
+		if (oldValue != newValue) {
+			instrument.stringSustainType = newValue;
+			instrument.preset = instrument.type;
+			doc.notifier.changed();
+			this._didSomething();
+		}
+	}
 }
 
 export class ChangeEQFilterType extends Change {
@@ -2379,6 +2438,18 @@ export class ChangeFilterAddPoint extends UndoableChange {
     }
 }
 
+export class FilterMoveData {
+    public point: FilterControlPoint;
+    public freq: number;
+    public gain: number;
+
+    constructor(usePoint: FilterControlPoint, useFreq: number, useGain: number) {
+        this.point = usePoint;
+        this.freq = useFreq;
+        this.gain = useGain;
+    }
+}
+
 export class ChangeFilterMovePoint extends UndoableChange {
     private _doc: SongDocument;
     private _instrument: Instrument;
@@ -2389,7 +2460,10 @@ export class ChangeFilterMovePoint extends UndoableChange {
     private _newFreq: number;
     private _oldGain: number;
     private _newGain: number;
-    constructor(doc: SongDocument, point: FilterControlPoint, oldFreq: number, newFreq: number, oldGain: number, newGain: number) {
+    public useNoteFilter: boolean;
+    public pointIndex: number;
+    public pointType: FilterType;
+    constructor(doc: SongDocument, point: FilterControlPoint, oldFreq: number, newFreq: number, oldGain: number, newGain: number, useNoteFilter: boolean, pointIndex: number) {
         super(false);
         this._doc = doc;
         this._instrument = this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()];
@@ -2400,18 +2474,24 @@ export class ChangeFilterMovePoint extends UndoableChange {
         this._newFreq = newFreq;
         this._oldGain = oldGain;
         this._newGain = newGain;
+        this.useNoteFilter = useNoteFilter;
+        this.pointIndex = pointIndex;
+        this.pointType = point.type;
         this._didSomething();
         this.redo();
+    }
+
+    public getMoveData(beforeChange: boolean): FilterMoveData {
+        if (beforeChange) {
+            return new FilterMoveData(this._point, this._oldFreq, this._oldGain);
+        }
+        return new FilterMoveData(this._point, this._newFreq, this._newGain);
     }
 
     protected _doForwards(): void {
         this._point.freq = this._newFreq;
         this._point.gain = this._newGain;
         this._instrument.preset = this._instrumentNextPreset;
-        this._instrument.tmpEqFilterStart = this._instrument.eqFilter;
-        this._instrument.tmpEqFilterEnd = null;
-        this._instrument.tmpNoteFilterStart = this._instrument.noteFilter;
-        this._instrument.tmpNoteFilterEnd = null;
         this._doc.notifier.changed();
     }
 
@@ -2419,10 +2499,6 @@ export class ChangeFilterMovePoint extends UndoableChange {
         this._point.freq = this._oldFreq;
         this._point.gain = this._oldGain;
         this._instrument.preset = this._instrumentPrevPreset;
-        this._instrument.tmpEqFilterStart = this._instrument.eqFilter;
-        this._instrument.tmpEqFilterEnd = null;
-        this._instrument.tmpNoteFilterStart = this._instrument.noteFilter;
-        this._instrument.tmpNoteFilterEnd = null;
         this._doc.notifier.changed();
     }
 }
@@ -2639,8 +2715,10 @@ export class ChangeOperatorFrequency extends Change {
 }
 
 export class ChangeOperatorAmplitude extends ChangeInstrumentSlider {
+    public operatorIndex: number = 0;
     constructor(doc: SongDocument, operatorIndex: number, oldValue: number, newValue: number) {
         super(doc);
+        this.operatorIndex = operatorIndex;
         this._instrument.operators[operatorIndex].amplitude = newValue;
         // Not used currently as mod is implemented as multiplicative
         //doc.synth.unsetMod(ModSetting.mstFMSlider1 + operatorIndex, doc.channel, doc.getCurrentInstrument());
@@ -2761,6 +2839,8 @@ export class ChangeViewInstrument extends Change {
         super();
         if (doc.viewedInstrument[doc.channel] != index) {
             doc.viewedInstrument[doc.channel] = index;
+            if ( doc.channel >= doc.song.pitchChannelCount + doc.song.noiseChannelCount )
+            doc.recentPatternInstruments[doc.channel] = [index];
             doc.notifier.changed();
             this._didSomething();
         }
@@ -3133,7 +3213,10 @@ export class ChangeEnsurePatternExists extends UndoableChange {
         this._channelIndex = channelIndex;
         this._oldPatternCount = song.patternsPerChannel;
         this._newPatternCount = song.patternsPerChannel;
+        if (channelIndex < doc.song.pitchChannelCount + doc.song.noiseChannelCount)
         this._newPatternInstruments = doc.recentPatternInstruments[channelIndex].concat();
+        else
+        this._newPatternInstruments = [doc.viewedInstrument[channelIndex]];
 
         let firstEmptyUnusedIndex: number | null = null;
         let firstUnusedIndex: number | null = null;
@@ -4244,6 +4327,19 @@ export class ChangeDragSelectedNotes extends ChangeSequence {
             }
 
         }
+    }
+}
+
+export class ChangeHoldingModRecording extends Change {
+    public storedChange: Change | null;
+    public storedValues: number[] | null;
+    public storedSlider: Slider | null;
+    constructor(doc: SongDocument, storedChange: Change | null, storedValues: number[] | null, slider: Slider | null) {
+        super();
+        this.storedChange = storedChange;
+        this.storedValues = storedValues;
+        this.storedSlider = slider;
+        this._didSomething();
     }
 }
 

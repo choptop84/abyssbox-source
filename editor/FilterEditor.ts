@@ -7,7 +7,7 @@ import { SongDocument } from "./SongDocument";
 import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 import { ColorConfig } from "./ColorConfig";
 import { ChangeSequence, UndoableChange } from "./Change";
-import { ChangeFilterAddPoint, ChangeFilterMovePoint, ChangeFilterSettings } from "./changes";
+import { ChangeFilterAddPoint, ChangeFilterMovePoint, ChangeFilterSettings, FilterMoveData  } from "./changes";
 import { prettyNumber } from "./EditorConfig";
 
 export class FilterEditor {
@@ -17,6 +17,7 @@ export class FilterEditor {
     //private readonly _octaves: SVGSVGElement = SVG.svg({"pointer-events": "none", overflow: "visible"});
     private _indicators: SVGTextElement[] = [];
     private _subFilters: FilterSettings[] = [];
+    private _writingMods: boolean = false;
     private readonly _controlPointPath: SVGPathElement = SVG.path({ fill: "currentColor", "pointer-events": "none" });
     private readonly _dottedLinePath: SVGPathElement = SVG.path({ fill: "none", stroke: "currentColor", "stroke-width": 1, "stroke-dasharray": "3, 2", "pointer-events": "none" });
     private readonly _highlight: SVGCircleElement = SVG.circle({ fill: "white", stroke: "none", "pointer-events": "none", r: 4 });
@@ -56,6 +57,7 @@ export class FilterEditor {
     private _subfilterIndex: number = 0;
 
     private _filterSettings: FilterSettings;
+    private _useFilterSettings: FilterSettings;
     private _renderedSelectedIndex: number = -1;
     private _renderedPointCount: number = -1;
     private _renderedPointTypes: number = -1;
@@ -228,10 +230,10 @@ export class FilterEditor {
         this._addingPoint = true;
         this._selectedIndex = -1;
         let nearestDistance: number = Number.POSITIVE_INFINITY;
-        for (let i: number = 0; i < this._filterSettings.controlPointCount; i++) {
-            const point: FilterControlPoint = this._filterSettings.controlPoints[i];
+        for (let i: number = 0; i < this._useFilterSettings.controlPointCount; i++) {
+            const point: FilterControlPoint = this._useFilterSettings.controlPoints[i];
             const distance: number = Math.sqrt(Math.pow(this._freqToX(point.freq) - this._mouseX, 2) + Math.pow(this._gainToY(point.gain) - this._mouseY, 2));
-            if ((distance <= 13 * (1 + +this._larger) || this._filterSettings.controlPointCount >= Config.filterMaxPoints) && distance < nearestDistance) {
+            if ((distance <= 13 * (1 + +this._larger) || this._useFilterSettings.controlPointCount >= Config.filterMaxPoints) && distance < nearestDistance) {
                 nearestDistance = distance;
                 this._selectedIndex = i;
                 this._addingPoint = false;
@@ -250,7 +252,32 @@ export class FilterEditor {
     }
 
     private _whenCursorMoved(): void {
-        if (this._dragChange != null && this._doc.lastChangeWas(this._dragChange)) {
+        if (this._writingMods) {
+            const instrument: Instrument = this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()];
+            this._useFilterSettings = this._getTargetFilterSettings(instrument);
+            if (this._dragChange != null) {
+                if (this._dragChange instanceof ChangeSequence && this._dragChange.checkFirst() instanceof ChangeFilterMovePoint) {
+                    const data: FilterMoveData = ((this._dragChange as ChangeSequence).checkFirst() as ChangeFilterMovePoint).getMoveData(true);
+                    const newPoint: FilterControlPoint | null = this._useFilterSettings.controlPoints[this._selectedIndex];
+
+                    if (newPoint == null || newPoint.type != data.point.type) {
+                        this._dragChange = null;
+                        this._writingMods = false;
+                        this._mouseDown = false;
+                    }
+                    else {
+                        newPoint.freq = data.freq;
+                        newPoint.gain = data.gain;
+                    }
+                } else {
+                    this._dragChange = null;
+                    this._writingMods = false;
+                    this._mouseDown = false;
+                }
+            }
+        }
+
+        if (this._dragChange != null && (this._doc.lastChangeWas(this._dragChange) || this._writingMods )) {
             this._dragChange.undo();
         } else {
             this._mouseDown = false;
@@ -274,13 +301,13 @@ export class FilterEditor {
 
             if (this._addingPoint) {
                 const gain: number = Math.max(0, Math.min(Config.filterGainRange - 1, Math.round(this._yToGain(this._mouseY))));
-                const freq: number = this._findNearestFreqSlot(this._filterSettings, this._xToFreq(this._mouseX), -1);
+                const freq: number = this._findNearestFreqSlot(this._useFilterSettings, this._xToFreq(this._mouseX), -1);
                 if (freq >= 0 && freq < Config.filterFreqRange) {
                     const point: FilterControlPoint = new FilterControlPoint();
                     point.type = this._addedType;
                     point.freq = freq;
                     point.gain = gain;
-                    sequence.append(new ChangeFilterAddPoint(this._doc, this._filterSettings, point, this._filterSettings.controlPointCount, this._useNoteFilter));
+                    sequence.append(new ChangeFilterAddPoint(this._doc, this._useFilterSettings, point, this._useFilterSettings.controlPointCount, this._useNoteFilter));
 
                     if (this.coordText != null) {
                         this.coordText.innerText = "(" + freq + ", " + gain + ")";
@@ -288,27 +315,34 @@ export class FilterEditor {
                 } else {
                     this._deletingPoint = true;
                 }
-            } else if (this._selectedIndex >= this._filterSettings.controlPointCount || this._selectedIndex == -1) {
+            } else if (this._selectedIndex >= this._useFilterSettings.controlPointCount || this._selectedIndex == -1) {
                 this._dragChange = null;
                 this._mouseDown = false;
             } else {
                 const freqDelta: number = this._xToFreq(this._mouseX) - this._freqStart;
                 const gainDelta: number = this._yToGain(this._mouseY) - this._gainStart;
-                const point: FilterControlPoint = this._filterSettings.controlPoints[this._selectedIndex];
+                let point: FilterControlPoint = this._useFilterSettings.controlPoints[this._selectedIndex];
                 const gain: number = Math.max(0, Math.min(Config.filterGainRange - 1, Math.round(point.gain + gainDelta)));
-                const freq: number = this._findNearestFreqSlot(this._filterSettings, point.freq + freqDelta, this._selectedIndex);
+                const freq: number = this._findNearestFreqSlot(this._useFilterSettings, point.freq + freqDelta, this._selectedIndex);
 
                 if (Math.round(freqDelta) != 0.0 || Math.round(gainDelta) != 0.0 || freq != point.freq || gain != point.gain) {
                     this._mouseDragging = true;
                 }
 
                 if (freq >= 0 && freq < Config.filterFreqRange) {
-                    sequence.append(new ChangeFilterMovePoint(this._doc, point, point.freq, freq, point.gain, gain));
+                    sequence.append(new ChangeFilterMovePoint(this._doc, point, point.freq, freq, point.gain, gain, this._useNoteFilter, this._selectedIndex));
                     if (this.coordText != null) {
                         this.coordText.innerText = "(" + freq + ", " + gain + ")";
+                        if (!this._writingMods) {
+                            const instrument: Instrument = this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()];
+                            instrument.tmpEqFilterStart = instrument.eqFilter;
+                            instrument.tmpEqFilterEnd = null;
+                            instrument.tmpNoteFilterStart = instrument.noteFilter;
+                            instrument.tmpNoteFilterEnd = null;
+                        }
                     }
                 } else {
-                    sequence.append(new ChangeFilterAddPoint(this._doc, this._filterSettings, point, this._selectedIndex, this._useNoteFilter, true));
+                    sequence.append(new ChangeFilterAddPoint(this._doc, this._useFilterSettings, point, this._selectedIndex, this._useNoteFilter, true));
                     this._deletingPoint = true;
                 }
             }
@@ -319,12 +353,17 @@ export class FilterEditor {
     }
 
     private _whenCursorReleased = (event: Event): void => {
+        if (this._writingMods) {
+            const instrument: Instrument = this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()];
+            this._useFilterSettings = this._getTargetFilterSettings(instrument);
+        }
+
         if (this.container.offsetParent == null) return;
-        if (this._mouseDown && this._doc.lastChangeWas(this._dragChange) && this._dragChange != null) {
+        if (this._mouseDown && (this._doc.lastChangeWas(this._dragChange) || this._writingMods ) && this._dragChange != null) {
             if (!this._addingPoint && !this._mouseDragging && !this._touchMode) {
-                if (this._selectedIndex < this._filterSettings.controlPointCount && this._selectedIndex != -1) {
-                    const point: FilterControlPoint = this._filterSettings.controlPoints[this._selectedIndex];
-                    let change: ChangeFilterAddPoint = new ChangeFilterAddPoint(this._doc, this._filterSettings, point, this._selectedIndex, this._useNoteFilter, true);
+                if (this._selectedIndex < this._useFilterSettings.controlPointCount && this._selectedIndex != -1) {
+                    const point: FilterControlPoint = this._useFilterSettings.controlPoints[this._selectedIndex];
+                    let change: ChangeFilterAddPoint = new ChangeFilterAddPoint(this._doc, this._useFilterSettings, point, this._selectedIndex, this._useNoteFilter, true);
                     if (!this._larger) {
                         this._doc.record(change);
                     }
@@ -343,6 +382,7 @@ export class FilterEditor {
         this._mouseDragging = false;
         this._deletingPoint = false;
         this._mouseDown = false;
+        this._writingMods = false;
         this._updateCursor();
     }
 
@@ -380,8 +420,8 @@ export class FilterEditor {
 
         let controlPointPath: string = "";
         let dottedLinePath: string = "";
-        for (let i: number = 0; i < this._filterSettings.controlPointCount; i++) {
-            const point: FilterControlPoint = this._filterSettings.controlPoints[i];
+        for (let i: number = 0; i < this._useFilterSettings.controlPointCount; i++) {
+            const point: FilterControlPoint = this._useFilterSettings.controlPoints[i];
             const pointX: number = this._freqToX(point.freq);
             const pointY: number = this._gainToY(point.gain);
 
@@ -402,7 +442,7 @@ export class FilterEditor {
                     this.coordText.innerText = "(" + point.freq + ", " + point.gain + ")";
                 }
             }
-            if ((this._selectedIndex == i || (this._addingPoint && this._mouseDown && i == this._filterSettings.controlPointCount - 1)) && (this._mouseOver || this._mouseDown) && !this._deletingPoint) {
+            if ((this._selectedIndex == i || (this._addingPoint && this._mouseDown && i == this._useFilterSettings.controlPointCount - 1)) && (this._mouseOver || this._mouseDown) && !this._deletingPoint) {
                 this._label.textContent = (i + 1) + ": " + Config.filterTypeNames[point.type] + (this._larger ? " @" + prettyNumber(point.getHz()) + "Hz" : "");
             }
 
@@ -420,7 +460,7 @@ export class FilterEditor {
 
         // Hide unused control point labels
         if (this._larger) {
-            for (let i: number = this._filterSettings.controlPointCount; i < Config.filterMaxPoints; i++) {
+            for (let i: number = this._useFilterSettings.controlPointCount; i < Config.filterMaxPoints; i++) {
                 this._indicators[i].style.setProperty("display", "none");
             }
         }
@@ -428,8 +468,8 @@ export class FilterEditor {
         //let volumeCompensation: number = 1.0;
         const standardSampleRate: number = 44800;
         const filters: FilterCoefficients[] = [];
-        for (let i: number = 0; i < this._filterSettings.controlPointCount; i++) {
-            const point: FilterControlPoint = this._filterSettings.controlPoints[i];
+        for (let i: number = 0; i < this._useFilterSettings.controlPointCount; i++) {
+            const point: FilterControlPoint = this._useFilterSettings.controlPoints[i];
             const filter: FilterCoefficients = new FilterCoefficients();
             point.toCoefficients(filter, standardSampleRate);
             filters.push(filter);
@@ -471,6 +511,7 @@ export class FilterEditor {
             this.selfUndoSettings.push(JSON.stringify((this._filterSettings.toJsonObject())));
             this.selfUndoHistoryPos++;
         }
+        this._useFilterSettings = this._filterSettings;
         this._updatePath();
     }
 
@@ -537,12 +578,12 @@ export class FilterEditor {
         if (this._selectedIndex == -1)
             return;
 
-        if (newIndex >= this._filterSettings.controlPointCount)
+        if (newIndex >= this._useFilterSettings.controlPointCount)
             return;
 
-        let tmp: FilterControlPoint = this._filterSettings.controlPoints[this._selectedIndex];
-        this._filterSettings.controlPoints[this._selectedIndex] = this._filterSettings.controlPoints[newIndex];
-        this._filterSettings.controlPoints[newIndex] = tmp;
+            let tmp: FilterControlPoint = this._useFilterSettings.controlPoints[this._selectedIndex];
+            this._useFilterSettings.controlPoints[this._selectedIndex] = this._useFilterSettings.controlPoints[newIndex];
+            this._useFilterSettings.controlPoints[newIndex] = tmp;
 
         this.render();
     }
@@ -576,56 +617,65 @@ export class FilterEditor {
 
     }
 
-    public render(activeMods: boolean = false): void {
+    private _getTargetFilterSettings(instrument: Instrument): FilterSettings {
+        // TODO: Re-compute default point freqs/gains only when needed
+        let targetSettings: FilterSettings = (this._useNoteFilter) ? instrument.tmpNoteFilterStart! : instrument.tmpEqFilterStart!;
+        if (targetSettings == null) targetSettings = (this._useNoteFilter) ? instrument.noteFilter : instrument.eqFilter;
+
+        return targetSettings;
+    }
+
+    public render(activeMods: boolean = false, forceModRender: boolean = false): void {
+        this._writingMods = forceModRender && this._mouseDown;
         const instrument: Instrument = this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()];
         const filterSettings: FilterSettings = this._useNoteFilter ? instrument.noteFilter : instrument.eqFilter;
-        let displayMods: boolean = (activeMods && !this._larger && !this._mouseOver && !this._mouseDragging && !this._mouseDown && this._doc.synth.playing)
+        let displayMods: boolean = (activeMods && !this._larger && (forceModRender || (!this._mouseOver && !this._mouseDragging && !this._mouseDown) ) && this._doc.synth.playing)
         if (displayMods)
             this._controlPointPath.style.setProperty("fill", `${ColorConfig.overwritingModSlider}`);
         else if (!this._larger)
             this._controlPointPath.style.setProperty("fill", "currentColor");
 
-        if (this._filterSettings != filterSettings) {
+            if (this._useFilterSettings != filterSettings && !this._writingMods) {
             this._dragChange = null;
             this._mouseDown = false;
         }
         this._filterSettings = filterSettings;
-        let targetSettings: FilterSettings = filterSettings;
-        if (!this._mouseDown) this._updateCursor();
 
-        // If modulators are active, show synth's current filter point settings instead of real points
+        // If modulators are active, show synth's current filter point settings instead of real points.
+        // Will auto update, but if the user is writing directly to mod values then the writing point will be
+        // forcibly maintained at the cursor position.
         if (displayMods) {
-            // TODO: Re-compute default point freqs/gains only when needed
-            targetSettings = (this._useNoteFilter) ? instrument.tmpNoteFilterStart! : instrument.tmpEqFilterStart!;
-            if (targetSettings == null) targetSettings = (this._useNoteFilter) ? instrument.noteFilter : instrument.eqFilter;
-            this._filterSettings = targetSettings!;
+            this._useFilterSettings = this._getTargetFilterSettings(instrument);
+
+            if (this._writingMods)
+                this._whenCursorMoved();
         }
+        else {
+            this._useFilterSettings = filterSettings;
+        }
+
+        if (!this._mouseDown) this._updateCursor();
 
         let pointTypes: number = 0;
         let pointFreqs: number = 0;
         let pointGains: number = 0;
-        for (let i: number = 0; i < targetSettings.controlPointCount; i++) {
-            const point: FilterControlPoint = targetSettings.controlPoints[i];
+        for (let i: number = 0; i < this._useFilterSettings.controlPointCount; i++) {
+            const point: FilterControlPoint = this._useFilterSettings.controlPoints[i];
             pointTypes = pointTypes * FilterType.length + point.type;
             pointFreqs = pointFreqs * Config.filterFreqRange + point.freq;
             pointGains = pointGains * Config.filterGainRange + point.gain;
         }
         if (this._renderedSelectedIndex != this._selectedIndex ||
-            this._renderedPointCount != targetSettings.controlPointCount ||
+            this._renderedPointCount != this._useFilterSettings.controlPointCount ||
             this._renderedPointTypes != pointTypes ||
             this._renderedPointFreqs != pointFreqs ||
             this._renderedPointGains != pointGains) {
             this._renderedSelectedIndex = this._selectedIndex;
-            this._renderedPointCount = targetSettings.controlPointCount;
+            this._renderedPointCount = this._useFilterSettings.controlPointCount;
             this._renderedPointTypes = pointTypes;
             this._renderedPointFreqs = pointFreqs;
             this._renderedPointGains = pointGains;
             this._updatePath();
-        }
-
-        // Return to normal filter settings
-        if (displayMods) {
-            this._filterSettings = filterSettings;
         }
 
         /*

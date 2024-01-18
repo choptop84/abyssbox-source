@@ -147,12 +147,6 @@ document.head.appendChild(HTML.style({ type: "text/css" }, `
 	border: 3px solid ${ColorConfig.editorBackground};
 }
 
-@-moz-document url-prefix() {
-	.muteButtonText {
-		transform: translate(3px, 1px) !important;
-	}
-}
-
 .beepboxEditor {
 	display: grid;
     grid-template-columns: minmax(0, 1fr) max-content;
@@ -1333,6 +1327,31 @@ document.head.appendChild(HTML.style({ type: "text/css" }, `
 	flex: 1;
 	overflow-x: hidden;
 	position: relative;
+}
+
+.beepboxEditor .channelRow {
+	display: flex;
+}
+.beepboxEditor .channelBox {
+	display: flex;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	padding-top: 1px;
+}
+.beepboxEditor .channelBoxLabel {
+	font-size: 20px;
+	font-family: sans-serif;
+	font-weight: bold;
+}
+.beepboxEditor .dropFader {
+	opacity: 0;
+	-webkit-transition:opacity 0.17s linear;
+    -moz-transition:opacity 0.17s linear;
+    -o-transition:opacity 0.17s linear;
+    -ms-transition:opacity 0.17s linear; 
+    transition:opacity 0.17s linear;
 }
 
 .beepboxEditor .muteEditor {

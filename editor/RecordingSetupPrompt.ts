@@ -24,6 +24,11 @@ export class RecordingSetupPrompt implements Prompt {
 		option({value: "pianoTransposingC"}, "piano transposing C :) to song key"),
 		option({value: "pianoTransposingA"}, "piano transposing A :( to song key"),
 	);
+	private readonly _bassOffset: HTMLSelectElement = select({style: "width: 100%;"},
+		option({value: "0"}, "disabled"),
+		option({value: "-1"}, "before"),
+		option({value: "1"}, "after"),
+	);
 	private readonly _keyboardLayoutPreview: HTMLDivElement = div({style: "display: grid; row-gap: 4px; margin: 4px auto; font-size: 10px;"});
 	private readonly _enableMidi: HTMLInputElement = input({style: "width: 2em; margin-left: 1em;", type: "checkbox"});
 	private readonly _showRecordButton: HTMLInputElement = input({style: "width: 2em; margin-left: 1em;", type: "checkbox"});
@@ -34,50 +39,57 @@ export class RecordingSetupPrompt implements Prompt {
 	
 	private readonly _okayButton: HTMLButtonElement = button({class: "okayButton", style: "width:45%;"}, "Okay");
 	private readonly _cancelButton: HTMLButtonElement = button({class: "cancelButton"});
-	public readonly container: HTMLDivElement = div({class: "prompt noSelection recordingSetupPrompt", style: "width: 333px; text-align: right; max-height: 90%;"},
-		h2("Note Recording Setup"),
+	public readonly container: HTMLDivElement = div({class: "prompt noSelection recordingSetupPrompt", style: "width: 600px; text-align: right; max-height: 90%;"},
+		h2({style: "align-self: center;"}, "Note Recording Setup"),
 		div({style: "display: grid; overflow-y: auto; overflow-x: hidden; flex-shrink: 1;"},
-			p("BeepBox can record notes as you perform them. You can start recording by pressing Ctrl+Space (or " + EditorConfig.ctrlSymbol + "P)."),
-			label({style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;"},
+			p("AbyssBox can record notes as you perform them. You can start recording by pressing Ctrl+Space (or " + EditorConfig.ctrlSymbol + "P)."),
+			label({style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: center;"},
 				"Add ● record button next to ▶ play button:",
 				this._showRecordButton,
 			),
-			label({style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;"},
+			label({style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: center;"},
 				"Snap recorded notes to the song's rhythm:",
 				this._snapRecordedNotesToRhythm,
 			),
-			label({style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;"},
+			label({style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: center;"},
 				"Ignore notes not in the song's scale:",
 				this._ignorePerformedNotesNotInScale,
 			),
 			p("While recording, you can perform notes on your keyboard!"),
-			label({style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;"},
+			label({style: "display: flex; flex-direction: row; align-items: center; margin-top: 0.5em; margin-bottom: 0.5em; height: 2em; justify-content: center;"},
 				"Keyboard layout:",
 				div({class: "selectContainer", style: "width: 65%; margin-left: 1em;"}, this._keyboardLayout),
 			),
 			this._keyboardLayoutPreview,
 			p("When not recording, you can use the computer keyboard either for shortcuts (like C and V for copy and paste) or for performing notes, depending on this mode:"),
-			label({style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;"},
-				div({class: "selectContainer", style: "width: 100%;"}, this._keyboardMode),
+			label({style: "display: flex; margin-top: 0.5em; margin-bottom: 0.5em; flex-direction: row; align-items: center; height: 2em; justify-content: center;"},
+			div({class: "selectContainer", style: "width: 50%;"}, this._keyboardMode),
 			),
 			p("Performing music takes practice! Try slowing the tempo and using this metronome to help you keep a rhythm."),
-			label({style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;"},
+			label({style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: center;"},
 				"Hear metronome while recording:",
 				this._metronomeWhileRecording,
 			),
-			label({style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;"},
+			label({style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: center;"},
 				"Count-in 1 bar of metronome before recording:",
 				this._metronomeCountIn,
 			),
-			p("If you have a ", a({href: "https://caniuse.com/midi", target: "_blank"}, "compatible browser"), " on a device connected to a MIDI keyboard, you can use it to perform notes in BeepBox! (Or you could buy ", a({href: "https://imitone.com/", target: "_blank"}, "Imitone"), " or ", a({href: "https://vochlea.com/", target: "_blank"}, "Dubler"), " to hum notes into a microphone while wearing headphones!)"),
-			label({style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;"},
+			p("If you have a ", a({href: "https://caniuse.com/midi", target: "_blank"}, "compatible browser"), " on a device connected to a MIDI keyboard, you can use it to perform notes in AbyssBox! (Or you could buy ", a({href: "https://imitone.com/", target: "_blank"}, "Imitone"), " or ", a({href: "https://vochlea.com/", target: "_blank"}, "Dubler"), " to hum notes into a microphone while wearing headphones!)"),
+			label({style: "display: flex; flex-direction: row; align-items: center; margin-top: 0.5em; height: 2em; justify-content: center;"},
 				"Enable MIDI performance:",
 				this._enableMidi,
 			),
-			p("Tip: Recorded notes often overlap such that one note ends after the next note already started. In BeepBox, these notes get split into two notes which may sound different when re-played than they did when you were recording. To fix the sound, you can either manually clean up the notes in the pattern editor, or you could try enabling the \"transition type\" effect on the instrument and setting it to \"continue\"."),
+			p("The range of pitches available to play via your computer keyboard is affected by the octave scrollbar of the currently selected channel."),
+			p("If you set the channel offset below to 'before' or 'after', notes below the middle octave in the view will be 'bass' notes, and placed in the channel before or after the viewed one. Using this, you can play bass and lead at the same time!"),
+			label({style: "display: flex; flex-direction: row; align-items: center; margin-top: 0.5em; margin-bottom: 0.5em; height: 2em; justify-content: center;"},
+				"Bass Offset:",
+				div({class: "selectContainer", style: "width: 50%; margin-left: 1em;"}, this._bassOffset),
+			),
+			p("Once you enable the setting, the keyboard layout above will darken to denote the new bass notes. The notes will be recorded with independent timing and this works with MIDI devices, too. Be aware that the octave offset of both used channels will impact how high/low the bass/lead are relative to one another."),
+			p("Recorded notes often overlap such that one note ends after the next note already started. In UltraBox, these notes get split into multiple notes which may sound different when re-played than they did when you were recording. To fix the sound, you can either manually clean up the notes in the pattern editor, or you could try enabling the \"transition type\" effect on the instrument and setting it to \"continue\"."),
 			div({style: `width: 100%; height: 80px; background: linear-gradient(rgba(0,0,0,0), ${ColorConfig.editorBackground}); position: sticky; bottom: 0; pointer-events: none;`}),
 		),
-		label({style: "display: flex; flex-direction: row-reverse; justify-content: space-between;"},
+		div({style: "display: flex; flex-direction: row-reverse; justify-content: space-between;"},
 			this._okayButton,
 		),
 		this._cancelButton,
@@ -87,6 +99,7 @@ export class RecordingSetupPrompt implements Prompt {
 		this._keyboardMode.value = this._doc.prefs.pressControlForShortcuts ? "pressControlForShortcuts" : "useCapsLockForNotes";
 		this._keyboardLayout.value = this._doc.prefs.keyboardLayout;
 		this._enableMidi.checked = this._doc.prefs.enableMidi;
+		this._bassOffset.value = String(this._doc.prefs.bassOffset);
 		this._showRecordButton.checked = this._doc.prefs.showRecordButton;
 		this._snapRecordedNotesToRhythm.checked = this._doc.prefs.snapRecordedNotesToRhythm;
 		this._ignorePerformedNotesNotInScale.checked = this._doc.prefs.ignorePerformedNotesNotInScale;
@@ -101,6 +114,7 @@ export class RecordingSetupPrompt implements Prompt {
 		
 		this._renderKeyboardLayoutPreview();
 		this._keyboardLayout.addEventListener("change", this._renderKeyboardLayoutPreview);
+		this._bassOffset.addEventListener("change", this._renderKeyboardLayoutPreview);
 	}
 	
 	private _close = (): void => { 
@@ -122,6 +136,7 @@ export class RecordingSetupPrompt implements Prompt {
 	private _confirm = (): void => { 
 		this._doc.prefs.pressControlForShortcuts = (this._keyboardMode.value == "pressControlForShortcuts");
 		this._doc.prefs.keyboardLayout = this._keyboardLayout.value;
+		this._doc.prefs.bassOffset = Number(this._bassOffset.value);
 		this._doc.prefs.enableMidi = this._enableMidi.checked;
 		this._doc.prefs.showRecordButton = this._showRecordButton.checked;
 		this._doc.prefs.snapRecordedNotesToRhythm = this._snapRecordedNotesToRhythm.checked;
@@ -160,7 +175,13 @@ export class RecordingSetupPrompt implements Prompt {
 					} else {
 						key.style.border = "2px solid " + ColorConfig.pitchBackground;
 					}
-					
+					if (this._bassOffset.selectedIndex != 0 && pitch <= Piano.getBassCutoffPitch(this._doc)) {
+						key.style.setProperty("filter", "hue-rotate(60deg) brightness(0.5)");
+					}
+					else {
+						key.style.setProperty("filter", "");
+					}
+
 					const pitchNameIndex: number = (scalePitch + Config.keys[this._doc.song.key].basePitch) % Config.pitchesPerOctave;
 					key.textContent = Piano.getPitchName(pitchNameIndex, scalePitch, Math.floor(pitch / 12));
 				}

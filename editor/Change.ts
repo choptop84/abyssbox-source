@@ -73,6 +73,7 @@ export class ChangeGroup extends Change {
 
 export class ChangeSequence extends UndoableChange {
 	private _changes: UndoableChange[];
+	private _committed: boolean;
 	constructor(changes?: UndoableChange[]) {
 		super(false);
 		if (changes == undefined) {
@@ -80,6 +81,13 @@ export class ChangeSequence extends UndoableChange {
 		} else {
 			this._changes = changes.concat();
 		}
+		this._committed = false;
+	}
+
+	public checkFirst(): UndoableChange | null {
+		if (this._changes.length > 0)
+			return this._changes[0];
+		return null;
 	}
 		
 	public append(change: UndoableChange): void {
@@ -99,4 +107,11 @@ export class ChangeSequence extends UndoableChange {
 			this._changes[i].undo();
 		}
 	}
+	public isCommitted(): boolean {
+		return this._committed;
+	}
+
+	public commit(): void {
+		this._committed = true;
+    }
 }

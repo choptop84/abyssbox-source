@@ -27,6 +27,7 @@ export class Preferences {
 	public visibleOctaves: number = Preferences.defaultVisibleOctaves;
 	public pressControlForShortcuts: boolean;
 	public keyboardLayout: string;
+	public bassOffset: number;
 	public enableMidi: boolean;
 	public showRecordButton: boolean;
 	public snapRecordedNotesToRhythm: boolean;
@@ -65,6 +66,7 @@ export class Preferences {
 		this.showOscilloscope = window.localStorage.getItem("showOscilloscope") != "false";
 		this.showSampleLoadingStatus = window.localStorage.getItem("showSampleLoadingStatus") != "false";
 		this.keyboardLayout = window.localStorage.getItem("keyboardLayout") || "wickiHayden";
+		this.bassOffset = (+(<any>window.localStorage.getItem("bassOffset"))) || 0;
 		this.layout = window.localStorage.getItem("layout") || "small";
 		this.colorTheme = window.localStorage.getItem("colorTheme") || "AbyssBox Classic";
 		this.customTheme = window.localStorage.getItem("customTheme");
@@ -110,6 +112,7 @@ export class Preferences {
 		window.localStorage.setItem("showOscilloscope", this.showOscilloscope ? "true" : "false");
 		window.localStorage.setItem("showSampleLoadingStatus", this.showSampleLoadingStatus ? "true" : "false");
 		window.localStorage.setItem("keyboardLayout", this.keyboardLayout);
+		window.localStorage.setItem("bassOffset", String(this.bassOffset));
 		window.localStorage.setItem("layout", this.layout);
 		window.localStorage.setItem("colorTheme", this.colorTheme);
 		window.localStorage.setItem("customTheme", this.customTheme!);

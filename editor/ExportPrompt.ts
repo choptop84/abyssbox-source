@@ -317,7 +317,8 @@ export class ExportPrompt implements Prompt {
             }
         }
 
-      
+        
+        this.synth.initModFilters(this._doc.song);
         this.synth.computeLatestModValues();
 	      this.synth.warmUpSynthesizer(this._doc.song);
 

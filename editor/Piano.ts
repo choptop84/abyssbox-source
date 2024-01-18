@@ -46,6 +46,12 @@ export class Piano {
 		this._documentChanged();
 	}
 
+// Bass cutoff pitch is roughly half of the viewed window and below, though on odd-numbered octave counts the lead has priority for the middle octave.
+public static getBassCutoffPitch(doc: SongDocument): number {
+	const octaveOffset: number = doc.getBaseVisibleOctave(doc.channel);
+	return octaveOffset * Config.pitchesPerOctave + Math.floor( doc.getVisiblePitchCount() / ( Config.pitchesPerOctave * 2 ) ) * Config.pitchesPerOctave;
+}
+
 	constructor(private _doc: SongDocument) {
 			
 		for (let i: number = 0; i < Config.drumCount; i++) {
@@ -54,7 +60,6 @@ export class Piano {
 		}
 			
 		for (let i: number = 0; i < Config.modCount; i++) {
-
 
 			const firstRowText: SVGTextElement = SVG.text({ class: "modulator-label", "text-anchor": "left", fill: ColorConfig.modLabelPrimaryText, style: "font-weight: bold; align-self: flex-start; transform-origin: center; transform: rotate(-90deg) translate(-19px, 39px); font-size: 11px; font-family: sans-serif;" });
 			const secondRowText: SVGTextElement = SVG.text({ class: "modulator-label", "text-anchor": "left", fill: ColorConfig.modLabelPrimaryText, style: "font-weight: bold; align-self: flex-end; transform-origin: center; transform: rotate(-90deg) translate(-26px, 42px); font-size: 11px; font-family: sans-serif;" });
@@ -225,13 +230,20 @@ export class Piano {
 		window.requestAnimationFrame(this._onAnimationFrame);
 		
 		let liveInputChanged: boolean = false;
-		const liveInputPitchCount: number = !this._doc.performance.pitchesAreTemporary() ? this._doc.synth.liveInputPitches.length : 0;
+		let liveInputPitchCount: number = !this._doc.performance.pitchesAreTemporary() ? this._doc.synth.liveInputPitches.length : 0;
+		liveInputPitchCount += !this._doc.performance.bassPitchesAreTemporary() ? this._doc.synth.liveBassInputPitches.length : 0;
 		if (this._renderedLiveInputPitches.length != liveInputPitchCount) {
 			liveInputChanged = true;
 		}
-		for (let i: number = 0; i < liveInputPitchCount; i++) {
+		for (let i: number = 0; i < this._doc.synth.liveInputPitches.length; i++) {
 			if (this._renderedLiveInputPitches[i] != this._doc.synth.liveInputPitches[i]) {
 				this._renderedLiveInputPitches[i] = this._doc.synth.liveInputPitches[i];
+				liveInputChanged = true;
+			}
+		}
+		for (let i: number = this._doc.synth.liveInputPitches.length; i < liveInputPitchCount; i++) {
+			if (this._renderedLiveInputPitches[i] != this._doc.synth.liveBassInputPitches[i - this._doc.synth.liveInputPitches.length]) {
+				this._renderedLiveInputPitches[i] = this._doc.synth.liveBassInputPitches[i - this._doc.synth.liveInputPitches.length];
 				liveInputChanged = true;
 			}
 		}
@@ -325,7 +337,16 @@ export class Piano {
 						label.style.transform = "translate(0px, 0px)";
 					}
 
-
+				/* @jummbus - Visual distinciton for bass notes during live input. Axed for now... maybe needs new colors?
+					I want to do filter: hue-shift(60deg) but keys are usually grayscale, and filter: is used already anyway for displaying played notes as pressed.
+					if ( j + octaveOffset <= Piano.getBassCutoffPitch(this._doc) && this._doc.prefs.bassOffset != 0) {
+						label.style.setProperty("font-style", "italic");
+					}
+					else {
+						this._pianoKeys[j].style.setProperty("font-style", "");
+					}
+					*/	
+					
 					label.style.color = Config.keys[pitchNameIndex].isWhiteKey ? ColorConfig.whitePianoKeyText : ColorConfig.blackPianoKeyText;
 					label.textContent = Piano.getPitchName(pitchNameIndex, j, this._doc.getBaseVisibleOctave(this._doc.channel) + this._doc.song.octave);
 

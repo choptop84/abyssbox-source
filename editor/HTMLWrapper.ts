@@ -62,6 +62,10 @@ export class Slider {
 		}
 	};
 
+	public getValueBeforeProspectiveChange(): number {
+		return this._oldValue;
+	}
+
 	private _whenChange = (): void => {
 		if (this._getChange != null) {
 			this._doc.record(this._change!);
