@@ -9858,9 +9858,9 @@ var beepbox = (function (exports) {
                 { name: TypePresets[5], customType: 5 },
                 { name: TypePresets[6], customType: 6 },
                 { name: TypePresets[7], customType: 7 },
+                { name: TypePresets[8], customType: 8 },
                 { name: TypePresets[9], customType: 9 },
                 { name: TypePresets[11], customType: 11 },
-                { name: TypePresets[8], customType: 8 },
             ])
         },
         {

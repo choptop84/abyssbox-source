@@ -46,9 +46,9 @@ export class EditorConfig {
                 { name: TypePresets[InstrumentType.harmonics], customType: InstrumentType.harmonics },
                 { name: TypePresets[InstrumentType.pwm], customType: InstrumentType.pwm },
                 { name: TypePresets[InstrumentType.pickedString], customType: InstrumentType.pickedString },
+                { name: TypePresets[InstrumentType.supersaw], customType: InstrumentType.supersaw },
                 { name: TypePresets[InstrumentType.customChipWave], customType: InstrumentType.customChipWave },
                 { name: TypePresets[InstrumentType.fm6op], customType: InstrumentType.fm6op },
-                { name: TypePresets[InstrumentType.supersaw], customType: InstrumentType.supersaw },
             ])
         },
         {
