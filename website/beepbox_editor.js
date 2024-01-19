@@ -3080,7 +3080,6 @@ var beepbox = (function (exports) {
     				image-rendering: optimizeSpeed !important;             /* IE */
 				}
 			#beepboxEditorContainer {
-				background-image: url(https://choptop84.github.io/abyssbox-source/website/viviandbelle.png)
     				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png");
     				border-image-slice: 4 fill; 
    				border-image-width: 8px; 
@@ -3092,6 +3091,7 @@ var beepbox = (function (exports) {
     				image-rendering: -o-crisp-edges !important;            /* Opera */
     				image-rendering: pixelated !important;                 /* Future browsers */
     				image-rendering: optimizeSpeed !important;             /* IE */ 
+
 				}
 			 .beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered {
     				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png") !important;
@@ -3106,6 +3106,17 @@ var beepbox = (function (exports) {
     				image-rendering: pixelated !important;                 /* Future browsers */
     				image-rendering: optimizeSpeed !important;             /* IE */
 				}
+
+				#firstImage {
+					background-image: url("https://choptop84.github.io/abyssbox-source/website/viviandbelle.png") !important;
+					background-repeat: no-repeat !important;
+					background-size: 100% 100% !important;
+				}
+
+				#firstImage rect {
+					opacity: 0.8 !important;
+				}
+
 
 			@font-face {
 		   font-family: "AbyssType_small";
@@ -9720,6 +9731,131 @@ var beepbox = (function (exports) {
 		content: url("UltraBoxALThemeLogo.png");
 		}
 	}`,
+        "WeebBox": `
+	:root {
+		--page-margin: #040410;
+		--editor-background: #040410;
+		--hover-preview: white;
+		--playhead: rgba(255, 255, 255, 0.9);
+		--primary-text: white;
+		--secondary-text: #84859a;
+		--inverted-text: black;
+		--text-selection: rgba(119,68,255,0.99);
+		--box-selection-fill: #044b94;
+		--loop-accent: #74f;
+		--link-accent: #98f;
+		--ui-widget-background: #393e4f;
+		--ui-widget-focus: #6d6886;
+		--pitch-background: #393e4f;
+		--tonic: #725491;
+		--fifth-note: #54547a;
+		--white-piano-key: #eee;
+		--black-piano-key: #666;
+		--white-piano-key-text: #131200;
+		--black-piano-key-text: #fff;
+		--use-color-formula: true;
+		--track-editor-bg-pitch: #393e4f;
+		--track-editor-bg-pitch-dim: #1c1d28;
+		--track-editor-bg-noise: #3d3535;
+		--track-editor-bg-noise-dim: #161313;
+		--track-editor-bg-mod: #283560;
+		--track-editor-bg-mod-dim: #0a101f;
+		--multiplicative-mod-slider: #606c9f;
+		--overwriting-mod-slider: #6850b5;
+		--indicator-primary: #9c64f7;
+		--indicator-secondary: #393e4f;
+		--select2-opt-group: #5d576f;
+		--input-box-outline: #222;
+		--mute-button-normal: #dda85d;
+		--mute-button-mod: #886eae;
+		--mod-label-primary: #282840;
+		--mod-label-secondary-text: rgb(87, 86, 120);
+		--mod-label-primary-text: white;
+		--pitch-secondary-channel-hue: 0;
+		--pitch-secondary-channel-hue-scale: 6.5;
+		--pitch-secondary-channel-sat: 83.3;
+		--pitch-secondary-channel-sat-scale: 0.1;
+		--pitch-secondary-channel-lum: 40;
+		--pitch-secondary-channel-lum-scale: 0.05;
+		--pitch-primary-channel-hue: 0;
+		--pitch-primary-channel-hue-scale: 6.5;
+		--pitch-primary-channel-sat: 100;
+		--pitch-primary-channel-sat-scale: 0.1;
+		--pitch-primary-channel-lum: 67.5;
+		--pitch-primary-channel-lum-scale: 0.05;
+		--pitch-secondary-note-hue: 0;
+		--pitch-secondary-note-hue-scale: 6.5;
+		--pitch-secondary-note-sat: 93.9;
+		--pitch-secondary-note-sat-scale: 0.1;
+		--pitch-secondary-note-lum: 25;
+		--pitch-secondary-note-lum-scale: 0.05;
+		--pitch-primary-note-hue: 0;
+		--pitch-primary-note-hue-scale: 6.5;
+		--pitch-primary-note-sat: 100;
+		--pitch-primary-note-sat-scale: 0.05;
+		--pitch-primary-note-lum: 85.6;
+		--pitch-primary-note-lum-scale: 0.025;
+		--noise-secondary-channel-hue: 0;
+		--noise-secondary-channel-hue-scale: 2;
+		--noise-secondary-channel-sat: 25;
+		--noise-secondary-channel-sat-scale: 0;
+		--noise-secondary-channel-lum: 42;
+		--noise-secondary-channel-lum-scale: 0;
+		--noise-primary-channel-hue: 0;
+		--noise-primary-channel-hue-scale: 2;
+		--noise-primary-channel-sat: 33;
+		--noise-primary-channel-sat-scale: 0;
+		--noise-primary-channel-lum: 63.5;
+		--noise-primary-channel-lum-scale: 0;
+		--noise-secondary-note-hue: 0;
+		--noise-secondary-note-hue-scale: 2;
+		--noise-secondary-note-sat: 33.5;
+		--noise-secondary-note-sat-scale: 0;
+		--noise-secondary-note-lum: 55;
+		--noise-secondary-note-lum-scale: 0;
+		--noise-primary-note-hue: 0;
+		--noise-primary-note-hue-scale: 2;
+		--noise-primary-note-sat: 46.5;
+		--noise-primary-note-sat-scale: 0;
+		--noise-primary-note-lum: 74;
+		--noise-primary-note-lum-scale: 0;
+		--mod-secondary-channel-hue: 192;
+		--mod-secondary-channel-hue-scale: 1.5;
+		--mod-secondary-channel-sat: 88;
+		--mod-secondary-channel-sat-scale: 0;
+		--mod-secondary-channel-lum: 50;
+		--mod-secondary-channel-lum-scale: 0;
+		--mod-primary-channel-hue: 192;
+		--mod-primary-channel-hue-scale: 1.5;
+		--mod-primary-channel-sat: 96;
+		--mod-primary-channel-sat-scale: 0;
+		--mod-primary-channel-lum: 80;
+		--mod-primary-channel-lum-scale: 0;
+		--mod-secondary-note-hue: 192;
+		--mod-secondary-note-hue-scale: 1.5;
+		--mod-secondary-note-sat: 92;
+		--mod-secondary-note-sat-scale: 0;
+		--mod-secondary-note-lum: 45;
+		--mod-secondary-note-lum-scale: 0;
+		--mod-primary-note-hue: 192;
+		--mod-primary-note-hue-scale: 1.5;
+		--mod-primary-note-sat: 96;
+		--mod-primary-note-sat-scale: 0;
+		--mod-primary-note-lum: 85;
+		--mod-primary-note-lum-scale: 0;
+		--disabled-note-primary:    #91879f;
+		--disabled-note-secondary:  #6a677a;
+	}
+	#firstImage {
+		background-image: url("https://www.teahub.io/photos/full/244-2448998_anime-girl-wallpaper-4k.jpg") !important;
+		background-repeat: no-repeat !important;
+		background-size: 100% 100% !important;
+	}
+
+	#firstImage rect {
+		opacity: 0.8 !important;
+	}
+`,
         "Protanopia": `
 :root { 
 --page-margin: #000000; 
@@ -10764,7 +10900,7 @@ var beepbox = (function (exports) {
     -o-transition: opacity 0.5s ease-in;
     -ms-transition: opacity 0.5s ease-in;
     transition: opacity 0.5s ease-in;
-    transition-delay: 0.45s;
+    transition-delay: 0.15s;
 }
 
 .trackAndMuteContainer {
@@ -39011,7 +39147,7 @@ You should be redirected to the song at:<br /><br />
     class ThemePrompt {
         constructor(_doc) {
             this._doc = _doc;
-            this._themeSelect = select$3({ style: "width: 100%;" }, option$3({ value: "AbyssBox Classic" }, "AbyssBox Classic"), option$3({ value: "AbyssBox Competative" }, "AbyssBox Competative"), option$3({ value: "AbyssBox Light" }, "AbyssBox Light"), option$3({ value: "Half-Life" }, "Half-Life"), option$3({ value: "Doom 1993" }, "Doom 1993"), option$3({ value: "Windows Xp" }, "Windows Xp"), option$3({ value: "dark classic" }, "BeepBox Dark"), option$3({ value: "light classic" }, "BeepBox Light"), option$3({ value: "dark competition" }, "BeepBox Competition Dark"), option$3({ value: "jummbox classic" }, "JummBox Dark"), option$3({ value: "jummbox light" }, "Gold Light"), option$3({ value: "forest" }, "Forest"), option$3({ value: "canyon" }, "Canyon"), option$3({ value: "midnight" }, "Midnight"), option$3({ value: "beachcombing" }, "Beachcombing"), option$3({ value: "violet verdant" }, "Violet Verdant"), option$3({ value: "sunset" }, "Sunset"), option$3({ value: "autumn" }, "Autumn"), option$3({ value: "fruit" }, "Shadowfruit"), option$3({ value: "toxic" }, "Toxic"), option$3({ value: "roe" }, "Roe"), option$3({ value: "moonlight" }, "Moonlight"), option$3({ value: "portal" }, "Portal"), option$3({ value: "fusion" }, "Fusion"), option$3({ value: "inverse" }, "Inverse"), option$3({ value: "nebula" }, "Nebula"), option$3({ value: "roe light" }, "Roe Light"), option$3({ value: "amoled dark" }, "High Contrast Dark"), option$3({ value: "energized" }, "Energized"), option$3({ value: "neapolitan" }, "Neapolitan"), option$3({ value: "mono" }, "Poly"), option$3({ value: "blutonium" }, "Blutonium"), option$3({ value: "slushie" }, "Slushie"), option$3({ value: "azur lane" }, "Azur Lane"), option$3({ value: "modbox classic" }, "Modbox"), option$3({ value: "sandbox classic" }, "Sandbox"), option$3({ value: "harrybox" }, "Haileybox"), option$3({ value: "brucebox" }, "Brucebox"), option$3({ value: "shitbox 3.0" }, "Shitbox 1.0/3.0"), option$3({ value: "shitbox 2.0" }, "Shitbox 2.0"), option$3({ value: "nerdbox" }, "NerdBox"), option$3({ value: "zefbox" }, "Zefbox"), option$3({ value: "cardboardbox classic" }, "Cardboardbox"), option$3({ value: "blubox classic" }, "Blubox"), option$3({ value: "dogebox classic" }, "Dogebox"), option$3({ value: "wackybox" }, "Wackybox"), option$3({ value: "todbox dark mode" }, "Todbox Dark Mode"), option$3({ value: "mainbox 1.0" }, "Mainbox"), option$3({ value: "microbox" }, "MicroBox"), option$3({ value: "paandorasbox" }, "PaandorasBox"), option$3({ value: "foxbox" }, "FoxBox"), option$3({ value: "midbox" }, "Midbox"), option$3({ value: "dogebox2" }, "Dogebox2"), option$3({ value: "nepbox" }, "Nepbox"), option$3({ value: "AWeebyssBox" }, "AWeebyssBox"), option$3({ value: "Deuteranopia" }, "Deuteranopia"), option$3({ value: "Protanopia" }, "Protanopia"), option$3({ value: "Tritanopia" }, "Tritanopia"), option$3({ value: "custom" }, "Custom"));
+            this._themeSelect = select$3({ style: "width: 100%;" }, option$3({ value: "AbyssBox Classic" }, "AbyssBox Classic"), option$3({ value: "AbyssBox Competative" }, "AbyssBox Competative"), option$3({ value: "AbyssBox Light" }, "AbyssBox Light"), option$3({ value: "Half-Life" }, "Half-Life"), option$3({ value: "Doom 1993" }, "Doom 1993"), option$3({ value: "Windows Xp" }, "Windows Xp"), option$3({ value: "dark classic" }, "BeepBox Dark"), option$3({ value: "light classic" }, "BeepBox Light"), option$3({ value: "dark competition" }, "BeepBox Competition Dark"), option$3({ value: "jummbox classic" }, "JummBox Dark"), option$3({ value: "jummbox light" }, "Gold Light"), option$3({ value: "forest" }, "Forest"), option$3({ value: "canyon" }, "Canyon"), option$3({ value: "midnight" }, "Midnight"), option$3({ value: "beachcombing" }, "Beachcombing"), option$3({ value: "violet verdant" }, "Violet Verdant"), option$3({ value: "sunset" }, "Sunset"), option$3({ value: "autumn" }, "Autumn"), option$3({ value: "fruit" }, "Shadowfruit"), option$3({ value: "toxic" }, "Toxic"), option$3({ value: "roe" }, "Roe"), option$3({ value: "moonlight" }, "Moonlight"), option$3({ value: "portal" }, "Portal"), option$3({ value: "fusion" }, "Fusion"), option$3({ value: "inverse" }, "Inverse"), option$3({ value: "nebula" }, "Nebula"), option$3({ value: "roe light" }, "Roe Light"), option$3({ value: "amoled dark" }, "High Contrast Dark"), option$3({ value: "energized" }, "Energized"), option$3({ value: "neapolitan" }, "Neapolitan"), option$3({ value: "mono" }, "Poly"), option$3({ value: "blutonium" }, "Blutonium"), option$3({ value: "slushie" }, "Slushie"), option$3({ value: "azur lane" }, "Azur Lane"), option$3({ value: "modbox classic" }, "Modbox"), option$3({ value: "sandbox classic" }, "Sandbox"), option$3({ value: "harrybox" }, "Haileybox"), option$3({ value: "brucebox" }, "Brucebox"), option$3({ value: "shitbox 3.0" }, "Shitbox 1.0/3.0"), option$3({ value: "shitbox 2.0" }, "Shitbox 2.0"), option$3({ value: "nerdbox" }, "NerdBox"), option$3({ value: "zefbox" }, "Zefbox"), option$3({ value: "cardboardbox classic" }, "Cardboardbox"), option$3({ value: "blubox classic" }, "Blubox"), option$3({ value: "dogebox classic" }, "Dogebox"), option$3({ value: "wackybox" }, "Wackybox"), option$3({ value: "todbox dark mode" }, "Todbox Dark Mode"), option$3({ value: "mainbox 1.0" }, "Mainbox"), option$3({ value: "microbox" }, "MicroBox"), option$3({ value: "paandorasbox" }, "PaandorasBox"), option$3({ value: "foxbox" }, "FoxBox"), option$3({ value: "midbox" }, "Midbox"), option$3({ value: "dogebox2" }, "Dogebox2"), option$3({ value: "nepbox" }, "Nepbox"), option$3({ value: "WeebBox" }, "WeebBox"), option$3({ value: "AWeebyssBox" }, "AWeebyssBox"), option$3({ value: "Deuteranopia" }, "Deuteranopia"), option$3({ value: "Protanopia" }, "Protanopia"), option$3({ value: "Tritanopia" }, "Tritanopia"), option$3({ value: "custom" }, "Custom"));
             this._cancelButton = button$5({ class: "cancelButton" });
             this._okayButton = button$5({ class: "okayButton", style: "width:45%;" }, "Okay");
             this.container = div$5({ class: "prompt noSelection", style: "width: 220px;" }, h2$4("Set Theme"), div$5({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$5({ class: "selectContainer", style: "width: 100%;" }, this._themeSelect)), div$5({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);

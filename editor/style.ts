@@ -220,7 +220,7 @@ document.head.appendChild(HTML.style({ type: "text/css" }, `
     -o-transition: opacity 0.5s ease-in;
     -ms-transition: opacity 0.5s ease-in;
     transition: opacity 0.5s ease-in;
-    transition-delay: 0.45s;
+    transition-delay: 0.15s;
 }
 
 .trackAndMuteContainer {
