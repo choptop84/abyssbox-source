@@ -33826,9 +33826,9 @@ You should be redirected to the song at:<br /><br />
 				`), div$e("Wide (JB)")), label$1({ class: "layout-option" }, input$a({ type: "radio", name: "layout", value: "AbyssBox Special" }), SVG(`\
 					<svg viewBox="-1 -1 28 22">
 						<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
-						<rect x="2" y="2" width="22" height="2" fill="currentColor"/>
-						<rect x="2" y="5" width="4" height="8" fill="currentColor"/>
-						<rect x="7" y="5" width="17" height="8" fill="currentColor"/>
+						<rect x="7" y="2" width="4" height="11" fill="currentColor"/>
+						<rect x="2" y="2" width="4" height="11" fill="currentColor"/>
+						<rect x="10" y="2" width="14" height="11" fill="currentColor"/>
 						<rect x="2" y="14" width="22" height="4" fill="currentColor"/>
 					</svg>
 				`), div$e("Flipped (AB)")), label$1({ class: "layout-option" }, input$a({ type: "radio", name: "layout", value: "focus" }), SVG(`\
