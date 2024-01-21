@@ -211,8 +211,8 @@ export class ColorConfig {
  		   	font-family: 'AbyssType';
 			}
 
-			.beepboxEditor .trackContainer {
-				--track-font: 'AbyssType_small' !important;
+			div.channelBoxLabel {
+				font-family: 'AbyssType_small' !important;
 			}
 
 		   
@@ -361,8 +361,8 @@ export class ColorConfig {
 			html {
  		   font-family: 'AbyssType';
 			}
-			.beepboxEditor .trackContainer {
-				--track-font: 'AbyssType_small' !important;
+			div.channelBoxLabel {
+				font-family: 'AbyssType_small' !important;
 			}
 
 			`,
@@ -560,8 +560,8 @@ export class ColorConfig {
 			html {
  		   font-family: 'AbyssType';
 			}
-			.beepboxEditor .trackContainer {
-				--track-font: 'AbyssType_small' !important;
+			div.channelBoxLabel {
+				font-family: 'AbyssType_small' !important;
 			}
 
 			`,

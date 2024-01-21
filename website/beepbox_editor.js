@@ -2604,8 +2604,8 @@ var beepbox = (function (exports) {
  		   	font-family: 'AbyssType';
 			}
 
-			.beepboxEditor .trackContainer {
-				--track-font: 'AbyssType_small' !important;
+			div.channelBoxLabel {
+				font-family: 'AbyssType_small' !important;
 			}
 
 		   
@@ -2754,8 +2754,8 @@ var beepbox = (function (exports) {
 			html {
  		   font-family: 'AbyssType';
 			}
-			.beepboxEditor .trackContainer {
-				--track-font: 'AbyssType_small' !important;
+			div.channelBoxLabel {
+				font-family: 'AbyssType_small' !important;
 			}
 
 			`,
@@ -2953,8 +2953,8 @@ var beepbox = (function (exports) {
 			html {
  		   font-family: 'AbyssType';
 			}
-			.beepboxEditor .trackContainer {
-				--track-font: 'AbyssType_small' !important;
+			div.channelBoxLabel {
+				font-family: 'AbyssType_small' !important;
 			}
 
 			`,
