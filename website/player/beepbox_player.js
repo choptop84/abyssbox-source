@@ -2144,6 +2144,20 @@ var beepbox = (function (exports) {
  		   url("abysstype.otf") format("opentype") tech(color-COLRv1),
 			}
 
+			/* sets background image */
+			body {
+			background-image: url("stripesbg.gif") !important;
+			background-size: 25%;
+			background-position: center;
+			background-repeat: repeat;
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+				}
+
 			#text-content {
     				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png");
     				border-image-slice: 4 fill; 
@@ -2474,7 +2488,7 @@ var beepbox = (function (exports) {
 			--track-font: "AbyssType";
 				}
 			#text-content {
-    				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png");
+    				border-image-source: url("https://choptop84.github.io/abyssbox-source/website/abyssbox_border_light.png");
     				border-image-slice: 4 fill; 
    				border-image-width: 8px; 
 				border-image-repeat: stretch; 
@@ -2487,7 +2501,7 @@ var beepbox = (function (exports) {
     				image-rendering: optimizeSpeed !important;             /* IE */
 				}
 			#beepboxEditorContainer {
-    				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png");
+    				border-image-source: url("https://choptop84.github.io/abyssbox-source/website/abyssbox_border_light.png");
     				border-image-slice: 4 fill; 
    				border-image-width: 8px; 
 				border-image-repeat: stretch;
@@ -2500,7 +2514,7 @@ var beepbox = (function (exports) {
     				image-rendering: optimizeSpeed !important;             /* IE */ 
 				}
 			 .beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered {
-    				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png") !important;
+    				border-image-source: url("https://choptop84.github.io/abyssbox-source/website/abyssbox_border_light.png") !important;
     				border-image-slice: 4 fill !important; 
    				border-image-width: 4px !important; 
 				border-image-repeat: stretch !important;
