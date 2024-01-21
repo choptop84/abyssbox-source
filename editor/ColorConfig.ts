@@ -150,7 +150,7 @@ export class ColorConfig {
 
 			/* sets background image */
 			body {
-			background-image: url("stripesbg.gif") !important;
+			background-image: url("https://choptop84.github.io/abyssbox-source/website/stripesbg.gif") !important;
 			background-position: center;
 			background-repeat: repeat;
 
@@ -372,8 +372,8 @@ export class ColorConfig {
 			--editor-background: #e0adbc; 		
 			--hover-preview: white; 		
 			--playhead: rgba(255, 255, 255, 0.9); 		
-			--primary-text: #c763a0; 		
-			--secondary-text: #c763a0; 		
+			--primary-text: #f5f0f1; 		
+			--secondary-text: #eddadf; 		
 			--inverted-text:  #e8bcc9;	 		
 			--text-selection: rgba(119,68,255,0.99); 		
 			--box-selection-fill: #bf2c5d; 		
@@ -383,7 +383,7 @@ export class ColorConfig {
 			--ui-widget-focus: #8c346a; 		
 			--pitch-background: #eddadf; 		
 			--tonic: #f5f0f1; 		
-			--fifth-note: #75001e; 		
+			--fifth-note: #ffb5c9; 		
 			--white-piano-key: #cca5c7; 		
 			--black-piano-key: #402f2f; 		
 			--use-color-formula: true; 		
@@ -492,7 +492,7 @@ export class ColorConfig {
 				}
 				/* sets background image */
 				body {
-				background-image: url("stripesbg_light.gif") !important;
+				background-image: url("https://choptop84.github.io/abyssbox-source/website/stripesbg_light.gif") !important;
 				background-position: center;
 				background-repeat: repeat;
 	
@@ -760,8 +760,8 @@ export class ColorConfig {
  		   	font-family: 'AbyssType';
 			}
 
-			.beepboxEditor .trackContainer {
-				--track-font: 'AbyssType_small' !important;
+			div.channelBoxLabel {
+				font-family: 'AbyssType_small' !important;
 			}
 
 		   
@@ -904,7 +904,7 @@ export class ColorConfig {
 		}
 		/* sets background image */
 		body {
-		background-image: url("lambda.png") !important;
+		background-image: url("https://choptop84.github.io/abyssbox-source/website/lambda.png") !important;
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
@@ -922,8 +922,8 @@ export class ColorConfig {
 			html {
  		   font-family: 'trebuc';
 			}
-			.beepboxEditor .trackContainer {
-				--track-font: 'trebuc' !important;
+			div.channelBoxLabel {
+				font-family: 'trebuc' !important;
 			}
 
 			`,
@@ -1080,8 +1080,8 @@ export class ColorConfig {
 			html {
  		   font-family: 'doomfont';
 			}
-			.beepboxEditor .trackContainer {
-				--track-font: 'doomfont' !important;
+			div.channelBoxLabel {
+				font-family: 'doomfont' !important;
 			}
 
 			`,
@@ -1263,8 +1263,8 @@ export class ColorConfig {
  		   font-family: 'tahoma';
 		   font-size: 125% !important;
 			}
-			.beepboxEditor .trackContainer {
-				--track-font: 'tahoma' !important;
+			div.channelBoxLabel {
+				font-family: 'tahoma' !important;
 			}
 
 			`,
