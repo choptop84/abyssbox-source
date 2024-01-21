@@ -341,7 +341,7 @@ export class ColorConfig {
 			--mod-primary-note-lum: 85; 		
 			--mod-primary-note-lum-scale: 0; 
 			--track-font: "AbyssType";	
-				}
+				}		
 		/* sets cursor */ 
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
@@ -490,6 +490,18 @@ export class ColorConfig {
 			--mod-primary-note-lum-scale: 0; 	
 			--track-font: "AbyssType";
 				}
+				/* sets background image */
+				body {
+				background-image: url("stripesbg_light.gif") !important;
+				background-position: center;
+				background-repeat: repeat;
+	
+				image-rendering: -moz-crisp-edges !important;         /* Firefox */
+				image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+				image-rendering: -o-crisp-edges !important;            /* Opera */
+				image-rendering: pixelated !important;                 /* Future browsers */
+				image-rendering: optimizeSpeed !important;             /* IE */
+					}		
 			#text-content {
     				border-image-source: url("https://choptop84.github.io/abyssbox-source/website/abyssbox_border_light.png");
     				border-image-slice: 4 fill; 
