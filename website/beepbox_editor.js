@@ -43664,9 +43664,6 @@ You should be redirected to the song at:<br /><br />
                             break;
                         if (needControlForShortcuts == (event.ctrlKey || event.metaKey)) {
                             if (event.shiftKey) {
-                                this._openPrompt("beatsPerBar");
-                            }
-                            else {
                                 if (this._doc.synth.loopBar != this._doc.bar) {
                                     this._doc.synth.loopBar = this._doc.bar;
                                     if (!this._doc.synth.playing) {
@@ -43687,6 +43684,9 @@ You should be redirected to the song at:<br /><br />
                                     }
                                 }
                                 this._loopEditor.setLoopAt(this._doc.synth.loopBar);
+                            }
+                            else {
+                                this._openPrompt("beatsPerBar");
                             }
                         }
                         event.preventDefault();
