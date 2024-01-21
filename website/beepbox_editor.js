@@ -2544,7 +2544,6 @@ var beepbox = (function (exports) {
 			/* sets background image */
 			body {
 			background-image: url("stripesbg.gif") !important;
-			background-size: 25%;
 			background-position: center;
 			background-repeat: repeat;
 
