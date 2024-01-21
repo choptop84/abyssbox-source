@@ -1075,9 +1075,9 @@ export class ColorConfig {
 			--link-accent: #003399; 		
 			--ui-widget-background: #cfcab2; 		
 			--ui-widget-focus: #cfcab2; 		
-			--pitch-background: #918d79; 		
-			--tonic: #575344; 		
-			--fifth-note: #b0ac96; 		
+			--pitch-background: #e4dac5; 		
+			--tonic: #d1c09c; 		
+			--fifth-note: #919fdd; 		
 			--white-piano-key: #ebe2ca; 		
 			--black-piano-key: #403a2f; 		
 			--use-color-formula: true; 		
