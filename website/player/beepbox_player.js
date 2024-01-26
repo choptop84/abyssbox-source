@@ -3870,15 +3870,15 @@ var beepbox = (function (exports) {
 					--editor-background: rgba(255, 255, 255, 0); 
 					--hover-preview: white; 
 					--playhead: rgba(255, 255, 255, 0.9); 
-					--primary-text: #e9f8eb; 
-					--secondary-text: #f2f8e9; 
+					--primary-text: #96d69f; 
+					--secondary-text: #7fdb60; 
 					--inverted-text: #2c562e; 
 					--text-selection: rgba(119,68,255,0.99); 
 					--box-selection-fill: #044b94; 
 					--loop-accent: #63e469; 
-					--link-accent: #81e9d1; 
-					--ui-widget-background: #3f7638; 
-					--ui-widget-focus: #396b32; 
+					--link-accent: #c5facd; 
+					--ui-widget-background: #396b32; 
+					--ui-widget-focus: #002b03; 
 					--pitch-background: #30583c; 
 					--tonic: #4dac5b; 
 					--fifth-note: #458343; 
@@ -4034,7 +4034,7 @@ var beepbox = (function (exports) {
 							image-rendering: optimizeSpeed !important;             /* IE */
 						}
 					div.prompt.noSelection{
-						--editor-background: #004005; 
+						--editor-background: #002b03; 
 					}
 					/* div.channelBox {
 					border-radius: 5px;
