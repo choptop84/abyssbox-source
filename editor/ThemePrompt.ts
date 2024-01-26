@@ -22,6 +22,7 @@ export class ThemePrompt implements Prompt {
 			option({ value: "jummbox classic" }, "JummBox Dark"),
 			option({ value: "jummbox light" }, "Gold Light"),
 			option({ value: "forest" }, "Forest"),
+			option({ value: "forest 2" }, "Forest 2"),
 			option({ value: "canyon" }, "Canyon"),
 			option({ value: "midnight" }, "Midnight"),
 			option({ value: "beachcombing" }, "Beachcombing"),

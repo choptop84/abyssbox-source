@@ -4262,6 +4262,202 @@ var beepbox = (function (exports) {
 					--disabled-note-secondary:  #395440;
 				}
 			`,
+        "forest 2": `
+					:root { --page-margin: #132f16; 
+					--editor-background: rgba(255, 255, 255, 0); 
+					--hover-preview: white; 
+					--playhead: rgba(255, 255, 255, 0.9); 
+					--primary-text: #e9f8eb; 
+					--secondary-text: #f2f8e9; 
+					--inverted-text: #2c562e; 
+					--text-selection: rgba(119,68,255,0.99); 
+					--box-selection-fill: #044b94; 
+					--loop-accent: #63e469; 
+					--link-accent: #81e9d1; 
+					--ui-widget-background: #3f7638; 
+					--ui-widget-focus: #396b32; 
+					--pitch-background: #30583c; 
+					--tonic: #4dac5b; 
+					--fifth-note: #458343; 
+					--white-piano-key: #bee9bf; 
+					--black-piano-key: #395e3c; 
+					--use-color-formula: true; 
+					--track-editor-bg-pitch: #43a631; 
+					--track-editor-bg-pitch-dim: #387e34; 
+					--track-editor-bg-noise: #3c8462; 
+					--track-editor-bg-noise-dim: #285821; 
+					--track-editor-bg-mod: #419296; 
+					--track-editor-bg-mod-dim: #3e7b59; 
+					--multiplicative-mod-slider: #345838; 
+					--overwriting-mod-slider: #3a8136; 
+					--indicator-primary: #75ce71; 
+					--indicator-secondary: #5fe857; 
+					--select2-opt-group: #002002; 
+					--input-box-outline: #bbe6b0; 
+					--mute-button-normal: #50aa4a; 
+					--mute-button-mod: #49ab69; 
+					--mod-label-primary: #8dd883; 
+					--mod-label-secondary-text: #7be250; 
+					--mod-label-primary-text: #bcebb4; 
+
+					--pitch-secondary-channel-hue: 120;
+					--pitch-secondary-channel-hue-scale: 8.1;
+					--pitch-secondary-channel-sat: 59;
+					--pitch-secondary-channel-sat-scale: 0.1;
+					--pitch-secondary-channel-lum: 50;
+					--pitch-secondary-channel-lum-scale: 0.04;
+					--pitch-primary-channel-hue: 120;
+					--pitch-primary-channel-hue-scale: 8.1;
+					--pitch-primary-channel-sat: 86;
+					--pitch-primary-channel-sat-scale: 0.1;
+					--pitch-primary-channel-lum: 70;
+					--pitch-primary-channel-lum-scale: 0.04;
+					--pitch-secondary-note-hue: 120;
+					--pitch-secondary-note-hue-scale: 8.1;
+					--pitch-secondary-note-sat: 85;
+					--pitch-secondary-note-sat-scale: 0.1;
+					--pitch-secondary-note-lum: 30;
+					--pitch-secondary-note-lum-scale: 0.04;
+					--pitch-primary-note-hue: 120;
+					--pitch-primary-note-hue-scale: 8.1;
+					--pitch-primary-note-sat: 90;
+					--pitch-primary-note-sat-scale: 0.05;
+					--pitch-primary-note-lum: 80;
+					--pitch-primary-note-lum-scale: 0.025;
+					--noise-secondary-channel-hue: 200;
+					--noise-secondary-channel-hue-scale: 1.1;
+					--noise-secondary-channel-sat: 25;
+					--noise-secondary-channel-sat-scale: 0;
+					--noise-secondary-channel-lum: 22;
+					--noise-secondary-channel-lum-scale: 0;
+					--noise-primary-channel-hue: 200;
+					--noise-primary-channel-hue-scale: 1.1;
+					--noise-primary-channel-sat: 48;
+					--noise-primary-channel-sat-scale: 0;
+					--noise-primary-channel-lum: 65;
+					--noise-primary-channel-lum-scale: 0;
+					--noise-secondary-note-hue: 200;
+					--noise-secondary-note-hue-scale: 1.1;
+					--noise-secondary-note-sat: 33.5;
+					--noise-secondary-note-sat-scale: 0;
+					--noise-secondary-note-lum: 33;
+					--noise-secondary-note-lum-scale: 0;
+					--noise-primary-note-hue: 200;
+					--noise-primary-note-hue-scale: 1.1;
+					--noise-primary-note-sat: 46.5;
+					--noise-primary-note-sat-scale: 0;
+					--noise-primary-note-lum: 64;
+					--noise-primary-note-lum-scale: 0;
+					--mod-secondary-channel-hue: 40;
+					--mod-secondary-channel-hue-scale: 1.8;
+					--mod-secondary-channel-sat: 44;
+					--mod-secondary-channel-sat-scale: 0;
+					--mod-secondary-channel-lum: 50;
+					--mod-secondary-channel-lum-scale: 0;
+					--mod-primary-channel-hue: 40;
+					--mod-primary-channel-hue-scale: 1.8;
+					--mod-primary-channel-sat: 60;
+					--mod-primary-channel-sat-scale: 0;
+					--mod-primary-channel-lum: 80;
+					--mod-primary-channel-lum-scale: 0;
+					--mod-secondary-note-hue: 40;
+					--mod-secondary-note-hue-scale: 1.8;
+					--mod-secondary-note-sat: 62;
+					--mod-secondary-note-sat-scale: 0;
+					--mod-secondary-note-lum: 55;
+					--mod-secondary-note-lum-scale: 0;
+					--mod-primary-note-hue: 40;
+					--mod-primary-note-hue-scale: 1.8;
+					--mod-primary-note-sat: 66;
+					--mod-primary-note-sat-scale: 0;
+					--mod-primary-note-lum: 85;
+					--mod-primary-note-lum-scale: 0;
+					--disabled-note-primary:    #536e5c;
+					--disabled-note-secondary:  #395440;
+					}
+					/* sets background image */
+					body {
+						background-image: url("https://choptop84.github.io/abyssbox-app/Forest2Trees.png") !important;
+						background-size: cover;
+						background-position: center top; /* Adjusted to align with the top */
+  						background-repeat: no-repeat;
+
+    				image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    				image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    				image-rendering: -o-crisp-edges !important;            /* Opera */
+    				image-rendering: pixelated !important;                 /* Future browsers */
+    				image-rendering: optimizeSpeed !important;             /* IE */ 
+						}
+						#text-content {
+							border-image-source: url("https://choptop84.github.io/abyssbox-app/forest2_border.png");
+							border-image-slice: 16 fill; 
+						   	border-image-width: 32px; 
+							border-image-repeat: repeat; 
+							padding: 36px; 
+		
+							image-rendering: -moz-crisp-edges !important;         /* Firefox */
+							image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+							image-rendering: -o-crisp-edges !important;            /* Opera */
+							image-rendering: pixelated !important;                 /* Future browsers */
+							image-rendering: optimizeSpeed !important;             /* IE */
+						}
+					#beepboxEditorContainer {
+							border-image-source: url("https://choptop84.github.io/abyssbox-app/forest2_border.png");
+							border-image-slice: 16 fill; 
+						   	border-image-width: 32px; 
+							border-image-repeat: repeat; 
+							padding-left: 36px; 
+							padding-right: 36px; 
+							padding-top: 5px; 
+							padding-bottom: 5px; 
+
+							image-rendering: -moz-crisp-edges !important;         /* Firefox */
+							image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+							image-rendering: -o-crisp-edges !important;            /* Opera */
+							image-rendering: pixelated !important;                 /* Future browsers */
+							image-rendering: optimizeSpeed !important;             /* IE */ 
+						}
+					.beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered {
+							border-image-source: url("https://choptop84.github.io/abyssbox-app/forest2_border2.png") !important;
+							border-image-slice: 4 fill !important; 
+						   border-image-width: 4px !important; 
+						border-image-repeat: stretch !important;
+							padding: 4px !important; 
+		
+							image-rendering: -moz-crisp-edges !important;         /* Firefox */
+							image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+							image-rendering: -o-crisp-edges !important;            /* Opera */
+							image-rendering: pixelated !important;                 /* Future browsers */
+							image-rendering: optimizeSpeed !important;             /* IE */
+						}
+					div.prompt.noSelection{
+						--editor-background: #004005; 
+					}
+					/* div.channelBox {
+					border-radius: 5px;
+					} */
+					* {
+						cursor: url("https://choptop84.github.io/abyssbox-app/pixel_cursor.png"), auto !important;
+						} 
+							@font-face {
+						   font-family: "AbyssType";
+						   src:
+							url("abysstype.otf") format("opentype") tech(color-COLRv1),
+							}
+				
+							@font-face {
+						   font-family: "AbyssType_small";
+						   src:
+							url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
+							}
+				
+							html {
+							font-family: 'AbyssType';
+							}
+							div.channelBoxLabel {
+								font-family: 'AbyssType_small' !important;
+							}
+			`,
         "canyon": `
 				:root {
 					--page-margin: #0a0000;
@@ -7232,7 +7428,7 @@ var beepbox = (function (exports) {
 		:root {
 				font: 16px/2 cursive;
 				--page-margin: #4667CE;
-				--editor-background: black;
+				--editor-background: #4667CE;
 				--hover-preview: white;
 				--playhead: white;
 				--primary-text: white;
@@ -39172,7 +39368,7 @@ You should be redirected to the song at:<br /><br />
     class ThemePrompt {
         constructor(_doc) {
             this._doc = _doc;
-            this._themeSelect = select$3({ style: "width: 100%;" }, option$3({ value: "AbyssBox Classic" }, "AbyssBox Classic"), option$3({ value: "AbyssBox Competative" }, "AbyssBox Competative"), option$3({ value: "AbyssBox Light" }, "AbyssBox Light"), option$3({ value: "Half-Life" }, "Half-Life"), option$3({ value: "Doom 1993" }, "Doom 1993"), option$3({ value: "Windows Xp" }, "Windows Xp"), option$3({ value: "dark classic" }, "BeepBox Dark"), option$3({ value: "light classic" }, "BeepBox Light"), option$3({ value: "dark competition" }, "BeepBox Competition Dark"), option$3({ value: "jummbox classic" }, "JummBox Dark"), option$3({ value: "jummbox light" }, "Gold Light"), option$3({ value: "forest" }, "Forest"), option$3({ value: "canyon" }, "Canyon"), option$3({ value: "midnight" }, "Midnight"), option$3({ value: "beachcombing" }, "Beachcombing"), option$3({ value: "violet verdant" }, "Violet Verdant"), option$3({ value: "sunset" }, "Sunset"), option$3({ value: "autumn" }, "Autumn"), option$3({ value: "fruit" }, "Shadowfruit"), option$3({ value: "toxic" }, "Toxic"), option$3({ value: "roe" }, "Roe"), option$3({ value: "moonlight" }, "Moonlight"), option$3({ value: "portal" }, "Portal"), option$3({ value: "fusion" }, "Fusion"), option$3({ value: "inverse" }, "Inverse"), option$3({ value: "nebula" }, "Nebula"), option$3({ value: "roe light" }, "Roe Light"), option$3({ value: "amoled dark" }, "High Contrast Dark"), option$3({ value: "energized" }, "Energized"), option$3({ value: "neapolitan" }, "Neapolitan"), option$3({ value: "mono" }, "Poly"), option$3({ value: "blutonium" }, "Blutonium"), option$3({ value: "slushie" }, "Slushie"), option$3({ value: "azur lane" }, "Azur Lane"), option$3({ value: "modbox classic" }, "Modbox"), option$3({ value: "sandbox classic" }, "Sandbox"), option$3({ value: "harrybox" }, "Haileybox"), option$3({ value: "brucebox" }, "Brucebox"), option$3({ value: "shitbox 3.0" }, "Shitbox 1.0/3.0"), option$3({ value: "shitbox 2.0" }, "Shitbox 2.0"), option$3({ value: "nerdbox" }, "NerdBox"), option$3({ value: "zefbox" }, "Zefbox"), option$3({ value: "cardboardbox classic" }, "Cardboardbox"), option$3({ value: "blubox classic" }, "Blubox"), option$3({ value: "dogebox classic" }, "Dogebox"), option$3({ value: "wackybox" }, "Wackybox"), option$3({ value: "todbox dark mode" }, "Todbox Dark Mode"), option$3({ value: "mainbox 1.0" }, "Mainbox"), option$3({ value: "microbox" }, "MicroBox"), option$3({ value: "paandorasbox" }, "PaandorasBox"), option$3({ value: "foxbox" }, "FoxBox"), option$3({ value: "midbox" }, "Midbox"), option$3({ value: "dogebox2" }, "Dogebox2"), option$3({ value: "nepbox" }, "Nepbox"), option$3({ value: "WeebBox" }, "WeebBox"), option$3({ value: "AWeebyssBox" }, "AWeebyssBox"), option$3({ value: "Deuteranopia" }, "Deuteranopia"), option$3({ value: "Protanopia" }, "Protanopia"), option$3({ value: "Tritanopia" }, "Tritanopia"), option$3({ value: "custom" }, "Custom"));
+            this._themeSelect = select$3({ style: "width: 100%;" }, option$3({ value: "AbyssBox Classic" }, "AbyssBox Classic"), option$3({ value: "AbyssBox Competative" }, "AbyssBox Competative"), option$3({ value: "AbyssBox Light" }, "AbyssBox Light"), option$3({ value: "Half-Life" }, "Half-Life"), option$3({ value: "Doom 1993" }, "Doom 1993"), option$3({ value: "Windows Xp" }, "Windows Xp"), option$3({ value: "dark classic" }, "BeepBox Dark"), option$3({ value: "light classic" }, "BeepBox Light"), option$3({ value: "dark competition" }, "BeepBox Competition Dark"), option$3({ value: "jummbox classic" }, "JummBox Dark"), option$3({ value: "jummbox light" }, "Gold Light"), option$3({ value: "forest" }, "Forest"), option$3({ value: "forest 2" }, "Forest 2"), option$3({ value: "canyon" }, "Canyon"), option$3({ value: "midnight" }, "Midnight"), option$3({ value: "beachcombing" }, "Beachcombing"), option$3({ value: "violet verdant" }, "Violet Verdant"), option$3({ value: "sunset" }, "Sunset"), option$3({ value: "autumn" }, "Autumn"), option$3({ value: "fruit" }, "Shadowfruit"), option$3({ value: "toxic" }, "Toxic"), option$3({ value: "roe" }, "Roe"), option$3({ value: "moonlight" }, "Moonlight"), option$3({ value: "portal" }, "Portal"), option$3({ value: "fusion" }, "Fusion"), option$3({ value: "inverse" }, "Inverse"), option$3({ value: "nebula" }, "Nebula"), option$3({ value: "roe light" }, "Roe Light"), option$3({ value: "amoled dark" }, "High Contrast Dark"), option$3({ value: "energized" }, "Energized"), option$3({ value: "neapolitan" }, "Neapolitan"), option$3({ value: "mono" }, "Poly"), option$3({ value: "blutonium" }, "Blutonium"), option$3({ value: "slushie" }, "Slushie"), option$3({ value: "azur lane" }, "Azur Lane"), option$3({ value: "modbox classic" }, "Modbox"), option$3({ value: "sandbox classic" }, "Sandbox"), option$3({ value: "harrybox" }, "Haileybox"), option$3({ value: "brucebox" }, "Brucebox"), option$3({ value: "shitbox 3.0" }, "Shitbox 1.0/3.0"), option$3({ value: "shitbox 2.0" }, "Shitbox 2.0"), option$3({ value: "nerdbox" }, "NerdBox"), option$3({ value: "zefbox" }, "Zefbox"), option$3({ value: "cardboardbox classic" }, "Cardboardbox"), option$3({ value: "blubox classic" }, "Blubox"), option$3({ value: "dogebox classic" }, "Dogebox"), option$3({ value: "wackybox" }, "Wackybox"), option$3({ value: "todbox dark mode" }, "Todbox Dark Mode"), option$3({ value: "mainbox 1.0" }, "Mainbox"), option$3({ value: "microbox" }, "MicroBox"), option$3({ value: "paandorasbox" }, "PaandorasBox"), option$3({ value: "foxbox" }, "FoxBox"), option$3({ value: "midbox" }, "Midbox"), option$3({ value: "dogebox2" }, "Dogebox2"), option$3({ value: "nepbox" }, "Nepbox"), option$3({ value: "WeebBox" }, "WeebBox"), option$3({ value: "AWeebyssBox" }, "AWeebyssBox"), option$3({ value: "Deuteranopia" }, "Deuteranopia"), option$3({ value: "Protanopia" }, "Protanopia"), option$3({ value: "Tritanopia" }, "Tritanopia"), option$3({ value: "custom" }, "Custom"));
             this._cancelButton = button$5({ class: "cancelButton" });
             this._okayButton = button$5({ class: "okayButton", style: "width:45%;" }, "Okay");
             this.container = div$5({ class: "prompt noSelection", style: "width: 220px;" }, h2$4("Set Theme"), div$5({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$5({ class: "selectContainer", style: "width: 100%;" }, this._themeSelect)), div$5({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);

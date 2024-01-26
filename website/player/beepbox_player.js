@@ -3865,6 +3865,202 @@ var beepbox = (function (exports) {
 					--disabled-note-secondary:  #395440;
 				}
 			`,
+        "forest 2": `
+					:root { --page-margin: #132f16; 
+					--editor-background: rgba(255, 255, 255, 0); 
+					--hover-preview: white; 
+					--playhead: rgba(255, 255, 255, 0.9); 
+					--primary-text: #e9f8eb; 
+					--secondary-text: #f2f8e9; 
+					--inverted-text: #2c562e; 
+					--text-selection: rgba(119,68,255,0.99); 
+					--box-selection-fill: #044b94; 
+					--loop-accent: #63e469; 
+					--link-accent: #81e9d1; 
+					--ui-widget-background: #3f7638; 
+					--ui-widget-focus: #396b32; 
+					--pitch-background: #30583c; 
+					--tonic: #4dac5b; 
+					--fifth-note: #458343; 
+					--white-piano-key: #bee9bf; 
+					--black-piano-key: #395e3c; 
+					--use-color-formula: true; 
+					--track-editor-bg-pitch: #43a631; 
+					--track-editor-bg-pitch-dim: #387e34; 
+					--track-editor-bg-noise: #3c8462; 
+					--track-editor-bg-noise-dim: #285821; 
+					--track-editor-bg-mod: #419296; 
+					--track-editor-bg-mod-dim: #3e7b59; 
+					--multiplicative-mod-slider: #345838; 
+					--overwriting-mod-slider: #3a8136; 
+					--indicator-primary: #75ce71; 
+					--indicator-secondary: #5fe857; 
+					--select2-opt-group: #002002; 
+					--input-box-outline: #bbe6b0; 
+					--mute-button-normal: #50aa4a; 
+					--mute-button-mod: #49ab69; 
+					--mod-label-primary: #8dd883; 
+					--mod-label-secondary-text: #7be250; 
+					--mod-label-primary-text: #bcebb4; 
+
+					--pitch-secondary-channel-hue: 120;
+					--pitch-secondary-channel-hue-scale: 8.1;
+					--pitch-secondary-channel-sat: 59;
+					--pitch-secondary-channel-sat-scale: 0.1;
+					--pitch-secondary-channel-lum: 50;
+					--pitch-secondary-channel-lum-scale: 0.04;
+					--pitch-primary-channel-hue: 120;
+					--pitch-primary-channel-hue-scale: 8.1;
+					--pitch-primary-channel-sat: 86;
+					--pitch-primary-channel-sat-scale: 0.1;
+					--pitch-primary-channel-lum: 70;
+					--pitch-primary-channel-lum-scale: 0.04;
+					--pitch-secondary-note-hue: 120;
+					--pitch-secondary-note-hue-scale: 8.1;
+					--pitch-secondary-note-sat: 85;
+					--pitch-secondary-note-sat-scale: 0.1;
+					--pitch-secondary-note-lum: 30;
+					--pitch-secondary-note-lum-scale: 0.04;
+					--pitch-primary-note-hue: 120;
+					--pitch-primary-note-hue-scale: 8.1;
+					--pitch-primary-note-sat: 90;
+					--pitch-primary-note-sat-scale: 0.05;
+					--pitch-primary-note-lum: 80;
+					--pitch-primary-note-lum-scale: 0.025;
+					--noise-secondary-channel-hue: 200;
+					--noise-secondary-channel-hue-scale: 1.1;
+					--noise-secondary-channel-sat: 25;
+					--noise-secondary-channel-sat-scale: 0;
+					--noise-secondary-channel-lum: 22;
+					--noise-secondary-channel-lum-scale: 0;
+					--noise-primary-channel-hue: 200;
+					--noise-primary-channel-hue-scale: 1.1;
+					--noise-primary-channel-sat: 48;
+					--noise-primary-channel-sat-scale: 0;
+					--noise-primary-channel-lum: 65;
+					--noise-primary-channel-lum-scale: 0;
+					--noise-secondary-note-hue: 200;
+					--noise-secondary-note-hue-scale: 1.1;
+					--noise-secondary-note-sat: 33.5;
+					--noise-secondary-note-sat-scale: 0;
+					--noise-secondary-note-lum: 33;
+					--noise-secondary-note-lum-scale: 0;
+					--noise-primary-note-hue: 200;
+					--noise-primary-note-hue-scale: 1.1;
+					--noise-primary-note-sat: 46.5;
+					--noise-primary-note-sat-scale: 0;
+					--noise-primary-note-lum: 64;
+					--noise-primary-note-lum-scale: 0;
+					--mod-secondary-channel-hue: 40;
+					--mod-secondary-channel-hue-scale: 1.8;
+					--mod-secondary-channel-sat: 44;
+					--mod-secondary-channel-sat-scale: 0;
+					--mod-secondary-channel-lum: 50;
+					--mod-secondary-channel-lum-scale: 0;
+					--mod-primary-channel-hue: 40;
+					--mod-primary-channel-hue-scale: 1.8;
+					--mod-primary-channel-sat: 60;
+					--mod-primary-channel-sat-scale: 0;
+					--mod-primary-channel-lum: 80;
+					--mod-primary-channel-lum-scale: 0;
+					--mod-secondary-note-hue: 40;
+					--mod-secondary-note-hue-scale: 1.8;
+					--mod-secondary-note-sat: 62;
+					--mod-secondary-note-sat-scale: 0;
+					--mod-secondary-note-lum: 55;
+					--mod-secondary-note-lum-scale: 0;
+					--mod-primary-note-hue: 40;
+					--mod-primary-note-hue-scale: 1.8;
+					--mod-primary-note-sat: 66;
+					--mod-primary-note-sat-scale: 0;
+					--mod-primary-note-lum: 85;
+					--mod-primary-note-lum-scale: 0;
+					--disabled-note-primary:    #536e5c;
+					--disabled-note-secondary:  #395440;
+					}
+					/* sets background image */
+					body {
+						background-image: url("https://choptop84.github.io/abyssbox-app/Forest2Trees.png") !important;
+						background-size: cover;
+						background-position: center top; /* Adjusted to align with the top */
+  						background-repeat: no-repeat;
+
+    				image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    				image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    				image-rendering: -o-crisp-edges !important;            /* Opera */
+    				image-rendering: pixelated !important;                 /* Future browsers */
+    				image-rendering: optimizeSpeed !important;             /* IE */ 
+						}
+						#text-content {
+							border-image-source: url("https://choptop84.github.io/abyssbox-app/forest2_border.png");
+							border-image-slice: 16 fill; 
+						   	border-image-width: 32px; 
+							border-image-repeat: repeat; 
+							padding: 36px; 
+		
+							image-rendering: -moz-crisp-edges !important;         /* Firefox */
+							image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+							image-rendering: -o-crisp-edges !important;            /* Opera */
+							image-rendering: pixelated !important;                 /* Future browsers */
+							image-rendering: optimizeSpeed !important;             /* IE */
+						}
+					#beepboxEditorContainer {
+							border-image-source: url("https://choptop84.github.io/abyssbox-app/forest2_border.png");
+							border-image-slice: 16 fill; 
+						   	border-image-width: 32px; 
+							border-image-repeat: repeat; 
+							padding-left: 36px; 
+							padding-right: 36px; 
+							padding-top: 5px; 
+							padding-bottom: 5px; 
+
+							image-rendering: -moz-crisp-edges !important;         /* Firefox */
+							image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+							image-rendering: -o-crisp-edges !important;            /* Opera */
+							image-rendering: pixelated !important;                 /* Future browsers */
+							image-rendering: optimizeSpeed !important;             /* IE */ 
+						}
+					.beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered {
+							border-image-source: url("https://choptop84.github.io/abyssbox-app/forest2_border2.png") !important;
+							border-image-slice: 4 fill !important; 
+						   border-image-width: 4px !important; 
+						border-image-repeat: stretch !important;
+							padding: 4px !important; 
+		
+							image-rendering: -moz-crisp-edges !important;         /* Firefox */
+							image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+							image-rendering: -o-crisp-edges !important;            /* Opera */
+							image-rendering: pixelated !important;                 /* Future browsers */
+							image-rendering: optimizeSpeed !important;             /* IE */
+						}
+					div.prompt.noSelection{
+						--editor-background: #004005; 
+					}
+					/* div.channelBox {
+					border-radius: 5px;
+					} */
+					* {
+						cursor: url("https://choptop84.github.io/abyssbox-app/pixel_cursor.png"), auto !important;
+						} 
+							@font-face {
+						   font-family: "AbyssType";
+						   src:
+							url("abysstype.otf") format("opentype") tech(color-COLRv1),
+							}
+				
+							@font-face {
+						   font-family: "AbyssType_small";
+						   src:
+							url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
+							}
+				
+							html {
+							font-family: 'AbyssType';
+							}
+							div.channelBoxLabel {
+								font-family: 'AbyssType_small' !important;
+							}
+			`,
         "canyon": `
 				:root {
 					--page-margin: #0a0000;
@@ -6835,7 +7031,7 @@ var beepbox = (function (exports) {
 		:root {
 				font: 16px/2 cursive;
 				--page-margin: #4667CE;
-				--editor-background: black;
+				--editor-background: #4667CE;
 				--hover-preview: white;
 				--playhead: white;
 				--primary-text: white;
