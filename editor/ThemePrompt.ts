@@ -37,6 +37,7 @@ export class ThemePrompt implements Prompt {
 			option({ value: "fusion" }, "Fusion"),
 			option({ value: "inverse" }, "Inverse"),
 			option({ value: "nebula" }, "Nebula"),
+			option({ value: "Nebula 2" }, "Nebula 2"),
 			option({ value: "roe light" }, "Roe Light"),
 			option({ value: "amoled dark" }, "High Contrast Dark"),
 			option({ value: "energized" }, "Energized"),

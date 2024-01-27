@@ -3851,7 +3851,7 @@ export class ColorConfig {
 			}`,
         "nebula": `
 		:root {
-			--page-margin: #040410;
+			--page-margin: #11001c;
 			--editor-background: #150e1f;
 			--hover-preview: white;
 			--playhead: rgba(255, 255, 255, 0.9);
@@ -3964,6 +3964,206 @@ export class ColorConfig {
 			--disabled-note-primary: #aaa;
 			--disabled-note-secondary: #666;
 		}`,
+		"Nebula 2": ` 
+			:root { 
+				--page-margin: #040410;
+				--editor-background: rgba(255, 255, 255, 0);
+				--hover-preview: white;
+				--playhead: rgba(255, 255, 255, 0.9);
+				--primary-text: white;
+				--secondary-text: #8C849A;
+				--inverted-text: black;
+				--text-selection: rgba(141,79,201,0.99);
+				--box-selection-fill: #311E44;
+				--loop-accent: #CC688C;
+				--link-accent: #817DC9;
+				--ui-widget-background: #3b2057;
+				--ui-widget-focus: #7A6386;
+				--pitch-background: #393e4f40;
+				--tonic: #7D5C9EC0;
+				--fifth-note: #ab77bd50;
+				--white-piano-key: #EEEEEE;
+				--black-piano-key: #5F5566;
+				--white-piano-key-text: #131200;
+				--black-piano-key-text: #fff;
+				--use-color-formula: true;
+				--track-editor-bg-pitch: #46374C;
+				--track-editor-bg-pitch-dim: #1F1C2850;
+				--track-editor-bg-noise: #3D353B;
+				--track-editor-bg-noise-dim: #16131550;
+				--track-editor-bg-mod: #623F4C;
+				--track-editor-bg-mod-dim: #361A2450;
+				--multiplicative-mod-slider: #9F6E6A;
+				--overwriting-mod-slider: #A664B5;
+				--indicator-primary: #CC6B8E;
+				--indicator-secondary: #3b2057;
+				--select2-opt-group: #6A576F;
+				--input-box-outline: #222;
+				--mute-button-normal: #BF91DC;
+				--mute-button-mod: #DC8C9A;
+				--mod-label-primary: #3A2840;
+				--mod-label-secondary-text: #62485E;
+				--mod-label-primary-text: white;
+				--pitch-secondary-channel-hue: -96;
+				--pitch-secondary-channel-hue-scale: 4.2;
+				--pitch-secondary-channel-sat: 50.3;
+				--pitch-secondary-channel-sat-scale: 0.1;
+				--pitch-secondary-channel-lum: 40;
+				--pitch-secondary-channel-lum-scale: 0.05;
+				--pitch-primary-channel-hue: -96;
+				--pitch-primary-channel-hue-scale: 4.2;
+				--pitch-primary-channel-sat: 70;
+				--pitch-primary-channel-sat-scale: 0.1;
+				--pitch-primary-channel-lum: 67.5;
+				--pitch-primary-channel-lum-scale: 0.05;
+				--pitch-secondary-note-hue: -96;
+				--pitch-secondary-note-hue-scale: 4.2;
+				--pitch-secondary-note-sat: 70.9;
+				--pitch-secondary-note-sat-scale: 0.1;
+				--pitch-secondary-note-lum: 25;
+				--pitch-secondary-note-lum-scale: 0.05;
+				--pitch-primary-note-hue: -96;
+				--pitch-primary-note-hue-scale: 4.2;
+				--pitch-primary-note-sat: 90;
+				--pitch-primary-note-sat-scale: 0.05;
+				--pitch-primary-note-lum: 85.6;
+				--pitch-primary-note-lum-scale: 0.025;
+				--noise-secondary-channel-hue: 16;
+				--noise-secondary-channel-hue-scale: -1.33;
+				--noise-secondary-channel-sat: 25;
+				--noise-secondary-channel-sat-scale: 0;
+				--noise-secondary-channel-lum: 42;
+				--noise-secondary-channel-lum-scale: 0;
+				--noise-primary-channel-hue: 16;
+				--noise-primary-channel-hue-scale: -1.33;
+				--noise-primary-channel-sat: 33;
+				--noise-primary-channel-sat-scale: 0;
+				--noise-primary-channel-lum: 63.5;
+				--noise-primary-channel-lum-scale: 0;
+				--noise-secondary-note-hue: 12;
+				--noise-secondary-note-hue-scale: -1.33;
+				--noise-secondary-note-sat: 33.5;
+				--noise-secondary-note-sat-scale: 0;
+				--noise-secondary-note-lum: 55;
+				--noise-secondary-note-lum-scale: 0;
+				--noise-primary-note-hue: 12;
+				--noise-primary-note-hue-scale: -1.33;
+				--noise-primary-note-sat: 46.5;
+				--noise-primary-note-sat-scale: 0;
+				--noise-primary-note-lum: 74;
+				--noise-primary-note-lum-scale: 0;
+				--mod-secondary-channel-hue: 12;
+				--mod-secondary-channel-hue-scale: -.75;
+				--mod-secondary-channel-sat: 50;
+				--mod-secondary-channel-sat-scale: 0;
+				--mod-secondary-channel-lum: 50;
+				--mod-secondary-channel-lum-scale: 0;
+				--mod-primary-channel-hue: 12;
+				--mod-primary-channel-hue-scale: -.75;
+				--mod-primary-channel-sat: 70;
+				--mod-primary-channel-sat-scale: 0;
+				--mod-primary-channel-lum: 80;
+				--mod-primary-channel-lum-scale: 0;
+				--mod-secondary-note-hue: 12;
+				--mod-secondary-note-hue-scale: -.75;
+				--mod-secondary-note-sat: 75;
+				--mod-secondary-note-sat-scale: 0;
+				--mod-secondary-note-lum: 45;
+				--mod-secondary-note-lum-scale: 0;
+				--mod-primary-note-hue: 12;
+				--mod-primary-note-hue-scale: -.75;
+				--mod-primary-note-sat: 85;
+				--mod-primary-note-sat-scale: 0;
+				--mod-primary-note-lum: 85;
+				--mod-primary-note-lum-scale: 0;
+				--disabled-note-primary: #aaa;
+				--disabled-note-secondary: #666;
+			}
+			body {
+				background-image: url("https://choptop84.github.io/abyssbox-app/stars.gif") !important;
+				background-size: contain;
+				background-position: center top;
+				  background-repeat: repeat;
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */ 
+				}
+			#text-content {
+					border-image-source: url("https://choptop84.github.io/abyssbox-app/nebula2_border.png");
+					border-image-slice: 16 fill; 
+					   border-image-width: 32px; 
+					border-image-repeat: repeat; 
+					padding: 36px; 
+
+					image-rendering: -moz-crisp-edges !important;         /* Firefox */
+					image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+					image-rendering: -o-crisp-edges !important;            /* Opera */
+					image-rendering: pixelated !important;                 /* Future browsers */
+					image-rendering: optimizeSpeed !important;             /* IE */
+				}
+			#beepboxEditorContainer {
+					border-image-source: url("https://choptop84.github.io/abyssbox-app/nebula2_border.png");
+					border-image-slice: 16 fill; 
+					   border-image-width: 32px; 
+					border-image-repeat: repeat; 
+					padding-left: 36px; 
+					padding-right: 36px; 
+					padding-top: 5px; 
+					padding-bottom: 5px; 
+
+					image-rendering: -moz-crisp-edges !important;         /* Firefox */
+					image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+					image-rendering: -o-crisp-edges !important;            /* Opera */
+					image-rendering: pixelated !important;                 /* Future browsers */
+					image-rendering: optimizeSpeed !important;             /* IE */ 
+				}
+			.beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered {
+					border-image-source: url("https://choptop84.github.io/abyssbox-app/nebula2_border2.png") !important;
+					border-image-slice: 4 fill !important; 
+				   border-image-width: 4px !important; 
+				border-image-repeat: stretch !important;
+					padding: 4px !important; 
+
+					image-rendering: -moz-crisp-edges !important;         /* Firefox */
+					image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+					image-rendering: -o-crisp-edges !important;            /* Opera */
+					image-rendering: pixelated !important;                 /* Future browsers */
+					image-rendering: optimizeSpeed !important;             /* IE */
+				}
+			div.prompt.noSelection{
+				--editor-background: #11001c; 
+			}
+			/* div.channelBox {
+			border-radius: 5px;
+			} */
+			* {
+				cursor: url("https://choptop84.github.io/abyssbox-app/pixel_cursor.png"), auto !important;
+				} 
+					@font-face {
+				   font-family: "AbyssType";
+				   src:
+					url("abysstype.otf") format("opentype") tech(color-COLRv1),
+					}
+		
+					@font-face {
+				   font-family: "AbyssType_small";
+				   src:
+					url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
+					}
+		
+					html {
+					font-family: 'AbyssType';
+					}
+					div.channelBoxLabel {
+						font-family: 'AbyssType_small' !important;
+					}
+		
+
+
+		`,
         "roe light": `
 		:root {
 			--page-margin: #fff5f5;
