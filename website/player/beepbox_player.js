@@ -2133,6 +2133,9 @@ var beepbox = (function (exports) {
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
 			--mod-primary-note-lum-scale: 0; 	
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 				}
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
@@ -2336,7 +2339,9 @@ var beepbox = (function (exports) {
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
 			--mod-primary-note-lum-scale: 0; 
-			--track-font: "AbyssType";	
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 				}		
 		/* sets cursor */ 
 		* {
@@ -2484,7 +2489,8 @@ var beepbox = (function (exports) {
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
 			--mod-primary-note-lum-scale: 0; 	
-			--track-font: "AbyssType";
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 				}
 				/* sets background image */
 				body {
@@ -2684,7 +2690,9 @@ var beepbox = (function (exports) {
 			--mod-primary-note-sat: 96; 		
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
-			--mod-primary-note-lum-scale: 0; 	
+			--mod-primary-note-lum-scale: 0; 
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;	
 				}
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
@@ -2886,7 +2894,9 @@ var beepbox = (function (exports) {
 			--mod-primary-note-sat: 96; 		
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
-			--mod-primary-note-lum-scale: 0; 	
+			--mod-primary-note-lum-scale: 0; 
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;	
 				}
 		/* replaces hotdog (in a hacky way) with an image of gordon freeman but really wide*/
 		#Hotdog {
@@ -3046,7 +3056,10 @@ var beepbox = (function (exports) {
 			--mod-primary-note-sat: 96; 		
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
-			--mod-primary-note-lum-scale: 0; 	
+			--mod-primary-note-lum-scale: 0; 
+			
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 				}
 		
 			#text-content > section > h1 > font {
@@ -3205,6 +3218,9 @@ var beepbox = (function (exports) {
 --mod-primary-note-sat-scale: 0;		
 --mod-primary-note-lum: 65;		
 --mod-primary-note-lum-scale: 0;	
+
+			--note-flash: #81bef0;
+			--note-flash-secondary: #5f9ccf;
 
 				}
 				
@@ -3683,6 +3699,10 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
+
 				}
 			`,
         "dark competition": `
@@ -3802,6 +3822,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 
 			}
 		`,
@@ -3924,6 +3947,10 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #666;
 					--disabled-note-secondary:  #aaa;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
+
 			}
 			
 			.beepboxEditor button, .beepboxEditor select {
@@ -4048,6 +4075,10 @@ var beepbox = (function (exports) {
 					--mod-primary-note-lum-scale: 0;
 					--disabled-note-primary:    #91879f;
 					--disabled-note-secondary:  #6a677a;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
+
 				}
 			`,
         "forest": `
@@ -4164,6 +4195,10 @@ var beepbox = (function (exports) {
 					--mod-primary-note-lum-scale: 0;
 					--disabled-note-primary:    #536e5c;
 					--disabled-note-secondary:  #395440;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
+
 				}
 			`,
         "forest 2": `
@@ -4278,6 +4313,10 @@ var beepbox = (function (exports) {
 					--mod-primary-note-lum-scale: 0;
 					--disabled-note-primary:    #536e5c;
 					--disabled-note-secondary:  #395440;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
+
 					}
 					/* sets background image */
 					body {
@@ -4476,6 +4515,9 @@ var beepbox = (function (exports) {
 					--mod-primary-note-lum-scale: 0;
 					--disabled-note-primary:    #515164;
 					--disabled-note-secondary:  #2a2a3a;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "midnight": `
@@ -4592,6 +4634,9 @@ var beepbox = (function (exports) {
 			--mod-primary-note-lum-scale: 0;
 			--disabled-note-primary:    #66a;
 			--disabled-note-secondary:  #447;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}
 	`,
         "jummbox light": `
@@ -4709,6 +4754,9 @@ var beepbox = (function (exports) {
 					--mod-primary-note-lum-scale: 0;
 					--disabled-note-primary:    #868;
 					--disabled-note-secondary:  #767;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 
 				.beepboxEditor button, .beepboxEditor select {
@@ -4837,6 +4885,9 @@ var beepbox = (function (exports) {
 					--mod-primary-note-lum-scale: 0;
 					--disabled-note-primary: #91879f;
 					--disabled-note-secondary: #6a677a;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 
 			`,
@@ -4959,6 +5010,8 @@ var beepbox = (function (exports) {
   --disabled-note-primary: #91879f;
   --disabled-note-secondary: #6a677a;
 
+  --note-flash: #ffffff;
+  --note-flash-secondary: #badfe6;
 
 			}
 		`,
@@ -5080,6 +5133,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: white;
 			--disabled-note-primary: #c9c9c9;
 			--disabled-note-secondary: #616161;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "moonlight": `
 			:root {
@@ -5199,7 +5255,10 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: white;
 			--disabled-note-primary: #828282;
 			--disabled-note-secondary: #4f4f4f;
-			}`,
+			
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
+		}`,
         "autumn": `
 		:root {
 			--page-margin: #060304;
@@ -5318,6 +5377,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: white;
 			--disabled-note-primary: #5d5d5d;
 			--disabled-note-secondary: #292929;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "fruit": `
 		:root {
@@ -5437,6 +5499,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: white;
 			--disabled-note-primary: #5d5d5d;
 			--disabled-note-secondary: #292929;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "sunset": `
 		:root {
@@ -5556,6 +5621,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: white;
 			--disabled-note-primary: #5d5d5d;
 			--disabled-note-secondary: #292929;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "toxic": `
 		:root {
@@ -5675,6 +5743,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: white;
 			--disabled-note-primary: #5d5d5d;
 			--disabled-note-secondary: #292929;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "violet verdant": `
 		:root {
@@ -5790,6 +5861,9 @@ var beepbox = (function (exports) {
 			--mod-primary-note-lum-scale: 0;
 			--disabled-note-primary: #91879f;
 			--disabled-note-secondary: #6a677a;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "portal": `
 		:root {
@@ -5909,6 +5983,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: #7bd4ff;
 			--disabled-note-primary: #072f4a;
 			--disabled-note-secondary: #6585a7;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "fusion": `:root {
 			--page-margin: #0c0306;
@@ -6027,6 +6104,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: black;
 			--disabled-note-primary: #696969;
 			--disabled-note-secondary: #232323;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "inverse": `:root {
 			--page-margin: #c4c8e3;
@@ -6145,6 +6225,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: black;
 			--disabled-note-primary: #959595;
 			--disabled-note-secondary: #6e6e6e;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 			}`,
         "nebula": `
 		:root {
@@ -6260,6 +6343,9 @@ var beepbox = (function (exports) {
 			--mod-primary-note-lum-scale: 0;
 			--disabled-note-primary: #aaa;
 			--disabled-note-secondary: #666;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "Nebula 2": ` 
 			:root { 
@@ -6375,6 +6461,9 @@ var beepbox = (function (exports) {
 				--mod-primary-note-lum-scale: 0;
 				--disabled-note-primary: #aaa;
 				--disabled-note-secondary: #666;
+				
+				--note-flash: #ffffff;
+				--note-flash-secondary: #badfe6;
 			}
 			body {
 				background-image: url("https://choptop84.github.io/abyssbox-app/stars.gif") !important;
@@ -6579,6 +6668,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: black;
 			--disabled-note-primary: #616161;
 			--disabled-note-secondary: #474747;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "energized": `
 		:root {
@@ -6696,6 +6788,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: white;
 			--disabled-note-primary: #808080;
 			--disabled-note-secondary: #666666;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "neapolitan": `:root {
 			--page-margin: #120807;
@@ -6814,6 +6909,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: #decdbf;
 			--disabled-note-primary: #bababa;
 			--disabled-note-secondary: #878787;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "mono": `:root {
 			--page-margin: #000;
@@ -7042,6 +7140,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: #ffffffa6;
 			--disabled-note-primary: #c9c9c9;
 			--disabled-note-secondary: #616161;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 	}`,
         "modbox classic": `
 			:root {
@@ -7163,6 +7264,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "zefbox": `
@@ -7283,6 +7387,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "sandbox classic": `
@@ -7405,6 +7512,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "harrybox": `
@@ -7526,6 +7636,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "brucebox": `
@@ -7650,6 +7763,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "shitbox 2.0": `
@@ -7772,6 +7888,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "shitbox 3.0": `
@@ -7896,6 +8015,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			
 			`,
@@ -8019,6 +8141,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "nepbox": `
@@ -8140,6 +8265,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+				--note-flash: #ffffff;
+				--note-flash-secondary: #badfe6;
 				}
 			`,
         "cardboardbox classic": `
@@ -8256,6 +8384,9 @@ var beepbox = (function (exports) {
 --mod-label-primary: #999;
 --mod-label-secondary-text: #333;
 --mod-label-primary-text: black;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 				}
 			`,
         "blubox classic": `
@@ -8368,6 +8499,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary:        #282840;
 					--mod-label-secondary-text: rgb(87, 86, 120);
 					--mod-label-primary-text:   white;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "dogebox classic": `
@@ -8490,6 +8624,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text:   black;
 			--disabled-note-primary:    #999;
 			--disabled-note-secondary:  #666;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 				}
 			`,
         "dogebox dark": `
@@ -8548,6 +8685,9 @@ var beepbox = (function (exports) {
 					--noise3-primary-channel:   #77aadd;
 					--noise3-secondary-note:    #6f9fcf;
 					--noise3-primary-note:      #bbd7ff;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "todbox classic": `
@@ -8670,6 +8810,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "todbox dark mode": `
@@ -8793,6 +8936,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 				.beepboxEditor button, .beepboxEditor select {
 					box-shadow: inset 0 0 0 1px var(--secondary-text);
@@ -8918,6 +9064,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "fogbox": `
@@ -9038,6 +9187,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "foxbox": `
@@ -9158,6 +9310,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;	
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "wackybox": `
@@ -9282,6 +9437,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 
 .beepboxEditor {
@@ -9435,6 +9593,9 @@ var beepbox = (function (exports) {
 					--mod-primary-note-sat-scale: 0;
 					--mod-primary-note-lum: 85;
 					--mod-primary-note-lum-scale: 0;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "paandorasbox": `
@@ -9553,6 +9714,9 @@ var beepbox = (function (exports) {
 			  --mod-label-primary-text: #331512;
 			  --disabled-note-primary: #994038;
 			  --disabled-note-secondary: #331512;
+
+			  --note-flash: #ffffff;
+			  --note-flash-secondary: #badfe6;
 			}
 			`,
         "slushie": `
@@ -9671,6 +9835,9 @@ var beepbox = (function (exports) {
     --mod-label-primary-text: #c1ffff;
     --disabled-note-primary: #999;
     --disabled-note-secondary: #666;
+
+	--note-flash: #ffffff;
+	--note-flash-secondary: #badfe6;
 				}
 			`,
         "midbox": `:root {
@@ -9786,6 +9953,9 @@ var beepbox = (function (exports) {
 			--mod-primary-note-lum-scale: 0;
 			--disabled-note-primary:    #53527b;
 			--disabled-note-secondary:  #1c1b30;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "dogebox2": `
 			:root {
@@ -9904,6 +10074,9 @@ var beepbox = (function (exports) {
 				--mod4-primary-note: #b2fffb;
 				--disabled-note-primary: #c6c6c6;
 				--disabled-note-secondary: #8c8c8c;
+
+				--note-flash: #ffffff;
+				--note-flash-secondary: #badfe6;
 				}`,
         "azur lane": `
 		:root {
@@ -10021,6 +10194,9 @@ var beepbox = (function (exports) {
 		  --mod4-primary-note: #fff;
 		  --disabled-note-primary: #3a3a3a;
 		  --disabled-note-secondary: #000;
+
+		  --note-flash: #ffffff;
+		  --note-flash-secondary: #badfe6;
 			}
 		/* replaces hotdog (in a hacky way) with an image of the girls using the same scratch sprites from the 404 page*/
 		#Hotdog {
@@ -10170,6 +10346,9 @@ var beepbox = (function (exports) {
 		--mod-primary-note-lum-scale: 0;
 		--disabled-note-primary:    #91879f;
 		--disabled-note-secondary:  #6a677a;
+
+		--note-flash: #ffffff;
+		--note-flash-secondary: #badfe6;
 	}
 	#firstImage {
 		background-image: url("https://www.teahub.io/photos/full/244-2448998_anime-girl-wallpaper-4k.jpg") !important;
@@ -10322,6 +10501,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 }
 
 			`,
@@ -10466,6 +10648,8 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 }
 
 			`,
@@ -10583,6 +10767,9 @@ var beepbox = (function (exports) {
   --mod4-primary-note: #0ce7ff;
   --disabled-note-primary: #8d8d8d;
   --disabled-note-secondary: #363636;
+
+  --note-flash: #ffffff;
+  --note-flash-secondary: #badfe6;
     }
 
 			`,
@@ -10695,6 +10882,9 @@ var beepbox = (function (exports) {
 				--mod-primary-note-sat-scale: 0;
 				--mod-primary-note-lum: 85;
 				--mod-primary-note-lum-scale: 0;
+
+				--note-flash: #ffffff;
+				--note-flash-secondary: #badfe6;
 			}`}`,
     };
     ColorConfig.pageMargin = "var(--page-margin)";
@@ -23752,11 +23942,27 @@ var beepbox = (function (exports) {
         synth.volume = Math.min(1.0, Math.pow(volume / 50.0, 0.5)) * Math.pow(2.0, (volume - 75.0) / 25.0);
     }
     function renderPlayhead() {
+        const noteFlashElements = timeline.querySelectorAll('.note-flash-player');
         if (synth.song != null) {
             let pos = synth.playhead / synth.song.barCount;
             playhead.style.left = (timelineWidth * pos) + "px";
             const boundingRect = visualizationContainer.getBoundingClientRect();
             visualizationContainer.scrollLeft = pos * (timelineWidth - boundingRect.width);
+            const playheadBar = Math.floor(synth.playhead);
+            const modPlayhead = synth.playhead - playheadBar;
+            for (var i = 0; i < noteFlashElements.length; i++) {
+                var element = noteFlashElements[i];
+                const noteStart = Number(element.getAttribute("note-start")) / (synth.song.beatsPerBar * Config.partsPerBeat);
+                const noteEnd = Number(element.getAttribute("note-end")) / (synth.song.beatsPerBar * Config.partsPerBeat);
+                const noteBar = Number(element.getAttribute("note-bar"));
+                if ((modPlayhead >= noteStart) && window.localStorage.getItem("notesFlashWhenPlayed") && (noteBar == Math.floor(synth.playhead))) {
+                    const dist = noteEnd - noteStart;
+                    element.style.opacity = String((1 - (((modPlayhead - noteStart) - (dist / 2)) / (dist / 2))));
+                }
+                else {
+                    element.style.opacity = "0";
+                }
+            }
         }
     }
     function renderTimeline() {
@@ -23816,6 +24022,18 @@ var beepbox = (function (exports) {
                         if (isNoise)
                             noteElement.style.opacity = String(0.6);
                         timeline.appendChild(noteElement);
+                        if (window.localStorage.getItem("notesFlashWhenPlayed")) {
+                            const dflash = drawNote(pitch, note.start, note.pins, (pitchHeight + 1) / 2, offsetX, offsetY, partWidth, pitchHeight);
+                            const noteFlashColorSecondary = ColorConfig.getComputed("--note-flash-secondary") !== "" ? "var(--note-flash-secondary)" : "#ffffff77";
+                            const noteFlashColor = ColorConfig.getComputed("--note-flash") !== "" ? "var(--note-flash)" : "#ffffff77";
+                            const noteFlashElement = path({ d: dflash, fill: (isNoise ? noteFlashColorSecondary : noteFlashColor) });
+                            noteFlashElement.classList.add('note-flash-player');
+                            noteFlashElement.style.opacity = "0";
+                            noteFlashElement.setAttribute('note-start', String(note.start));
+                            noteFlashElement.setAttribute('note-end', String(note.end));
+                            noteFlashElement.setAttribute('note-bar', String(bar));
+                            timeline.appendChild(noteFlashElement);
+                        }
                     }
                 }
             }

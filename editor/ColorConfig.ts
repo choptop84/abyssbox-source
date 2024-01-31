@@ -137,6 +137,9 @@ export class ColorConfig {
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
 			--mod-primary-note-lum-scale: 0; 	
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 				}
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
@@ -340,7 +343,9 @@ export class ColorConfig {
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
 			--mod-primary-note-lum-scale: 0; 
-			--track-font: "AbyssType";	
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 				}		
 		/* sets cursor */ 
 		* {
@@ -488,7 +493,8 @@ export class ColorConfig {
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
 			--mod-primary-note-lum-scale: 0; 	
-			--track-font: "AbyssType";
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 				}
 				/* sets background image */
 				body {
@@ -688,7 +694,9 @@ export class ColorConfig {
 			--mod-primary-note-sat: 96; 		
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
-			--mod-primary-note-lum-scale: 0; 	
+			--mod-primary-note-lum-scale: 0; 
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;	
 				}
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
@@ -890,7 +898,9 @@ export class ColorConfig {
 			--mod-primary-note-sat: 96; 		
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
-			--mod-primary-note-lum-scale: 0; 	
+			--mod-primary-note-lum-scale: 0; 
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;	
 				}
 		/* replaces hotdog (in a hacky way) with an image of gordon freeman but really wide*/
 		#Hotdog {
@@ -1050,7 +1060,10 @@ export class ColorConfig {
 			--mod-primary-note-sat: 96; 		
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
-			--mod-primary-note-lum-scale: 0; 	
+			--mod-primary-note-lum-scale: 0; 
+			
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 				}
 		
 			#text-content > section > h1 > font {
@@ -1209,6 +1222,9 @@ export class ColorConfig {
 --mod-primary-note-sat-scale: 0;		
 --mod-primary-note-lum: 65;		
 --mod-primary-note-lum-scale: 0;	
+
+			--note-flash: #81bef0;
+			--note-flash-secondary: #5f9ccf;
 
 				}
 				
@@ -1687,6 +1703,10 @@ export class ColorConfig {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
+
 				}
 			`,
         "dark competition": `
@@ -1806,6 +1826,9 @@ export class ColorConfig {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 
 			}
 		`,
@@ -1928,6 +1951,10 @@ export class ColorConfig {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #666;
 					--disabled-note-secondary:  #aaa;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
+
 			}
 			
 			.beepboxEditor button, .beepboxEditor select {
@@ -2052,6 +2079,10 @@ export class ColorConfig {
 					--mod-primary-note-lum-scale: 0;
 					--disabled-note-primary:    #91879f;
 					--disabled-note-secondary:  #6a677a;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
+
 				}
 			`,
         "forest": `
@@ -2168,6 +2199,10 @@ export class ColorConfig {
 					--mod-primary-note-lum-scale: 0;
 					--disabled-note-primary:    #536e5c;
 					--disabled-note-secondary:  #395440;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
+
 				}
 			`,
 	"forest 2": `
@@ -2282,6 +2317,10 @@ export class ColorConfig {
 					--mod-primary-note-lum-scale: 0;
 					--disabled-note-primary:    #536e5c;
 					--disabled-note-secondary:  #395440;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
+
 					}
 					/* sets background image */
 					body {
@@ -2480,6 +2519,9 @@ export class ColorConfig {
 					--mod-primary-note-lum-scale: 0;
 					--disabled-note-primary:    #515164;
 					--disabled-note-secondary:  #2a2a3a;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "midnight": `
@@ -2596,6 +2638,9 @@ export class ColorConfig {
 			--mod-primary-note-lum-scale: 0;
 			--disabled-note-primary:    #66a;
 			--disabled-note-secondary:  #447;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}
 	`,
         "jummbox light": `
@@ -2713,6 +2758,9 @@ export class ColorConfig {
 					--mod-primary-note-lum-scale: 0;
 					--disabled-note-primary:    #868;
 					--disabled-note-secondary:  #767;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 
 				.beepboxEditor button, .beepboxEditor select {
@@ -2841,6 +2889,9 @@ export class ColorConfig {
 					--mod-primary-note-lum-scale: 0;
 					--disabled-note-primary: #91879f;
 					--disabled-note-secondary: #6a677a;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 
 			`,
@@ -2963,6 +3014,8 @@ export class ColorConfig {
   --disabled-note-primary: #91879f;
   --disabled-note-secondary: #6a677a;
 
+  --note-flash: #ffffff;
+  --note-flash-secondary: #badfe6;
 
 			}
 		`,
@@ -3084,6 +3137,9 @@ export class ColorConfig {
 			--mod-label-primary-text: white;
 			--disabled-note-primary: #c9c9c9;
 			--disabled-note-secondary: #616161;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "moonlight": `
 			:root {
@@ -3203,7 +3259,10 @@ export class ColorConfig {
 			--mod-label-primary-text: white;
 			--disabled-note-primary: #828282;
 			--disabled-note-secondary: #4f4f4f;
-			}`,
+			
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
+		}`,
         "autumn": `
 		:root {
 			--page-margin: #060304;
@@ -3322,6 +3381,9 @@ export class ColorConfig {
 			--mod-label-primary-text: white;
 			--disabled-note-primary: #5d5d5d;
 			--disabled-note-secondary: #292929;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "fruit": `
 		:root {
@@ -3441,6 +3503,9 @@ export class ColorConfig {
 			--mod-label-primary-text: white;
 			--disabled-note-primary: #5d5d5d;
 			--disabled-note-secondary: #292929;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "sunset": `
 		:root {
@@ -3560,6 +3625,9 @@ export class ColorConfig {
 			--mod-label-primary-text: white;
 			--disabled-note-primary: #5d5d5d;
 			--disabled-note-secondary: #292929;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "toxic": `
 		:root {
@@ -3679,6 +3747,9 @@ export class ColorConfig {
 			--mod-label-primary-text: white;
 			--disabled-note-primary: #5d5d5d;
 			--disabled-note-secondary: #292929;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "violet verdant": `
 		:root {
@@ -3794,6 +3865,9 @@ export class ColorConfig {
 			--mod-primary-note-lum-scale: 0;
 			--disabled-note-primary: #91879f;
 			--disabled-note-secondary: #6a677a;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "portal": `
 		:root {
@@ -3913,6 +3987,9 @@ export class ColorConfig {
 			--mod-label-primary-text: #7bd4ff;
 			--disabled-note-primary: #072f4a;
 			--disabled-note-secondary: #6585a7;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "fusion": `:root {
 			--page-margin: #0c0306;
@@ -4031,6 +4108,9 @@ export class ColorConfig {
 			--mod-label-primary-text: black;
 			--disabled-note-primary: #696969;
 			--disabled-note-secondary: #232323;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "inverse": `:root {
 			--page-margin: #c4c8e3;
@@ -4149,6 +4229,9 @@ export class ColorConfig {
 			--mod-label-primary-text: black;
 			--disabled-note-primary: #959595;
 			--disabled-note-secondary: #6e6e6e;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 			}`,
         "nebula": `
 		:root {
@@ -4264,6 +4347,9 @@ export class ColorConfig {
 			--mod-primary-note-lum-scale: 0;
 			--disabled-note-primary: #aaa;
 			--disabled-note-secondary: #666;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
 		"Nebula 2": ` 
 			:root { 
@@ -4379,6 +4465,9 @@ export class ColorConfig {
 				--mod-primary-note-lum-scale: 0;
 				--disabled-note-primary: #aaa;
 				--disabled-note-secondary: #666;
+				
+				--note-flash: #ffffff;
+				--note-flash-secondary: #badfe6;
 			}
 			body {
 				background-image: url("https://choptop84.github.io/abyssbox-app/stars.gif") !important;
@@ -4583,6 +4672,9 @@ export class ColorConfig {
 			--mod-label-primary-text: black;
 			--disabled-note-primary: #616161;
 			--disabled-note-secondary: #474747;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "energized": `
 		:root {
@@ -4700,6 +4792,9 @@ export class ColorConfig {
 			--mod-label-primary-text: white;
 			--disabled-note-primary: #808080;
 			--disabled-note-secondary: #666666;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "neapolitan": `:root {
 			--page-margin: #120807;
@@ -4818,6 +4913,9 @@ export class ColorConfig {
 			--mod-label-primary-text: #decdbf;
 			--disabled-note-primary: #bababa;
 			--disabled-note-secondary: #878787;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "mono": `:root {
 			--page-margin: #000;
@@ -5047,6 +5145,9 @@ export class ColorConfig {
 			--mod-label-primary-text: #ffffffa6;
 			--disabled-note-primary: #c9c9c9;
 			--disabled-note-secondary: #616161;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 	}`,
 		"modbox classic": `
 			:root {
@@ -5168,6 +5269,9 @@ export class ColorConfig {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
 			"zefbox": `
@@ -5288,6 +5392,9 @@ export class ColorConfig {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
 			"sandbox classic": `
@@ -5410,6 +5517,9 @@ export class ColorConfig {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
 			"harrybox": `
@@ -5531,6 +5641,9 @@ export class ColorConfig {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
 			"brucebox": `
@@ -5655,6 +5768,9 @@ export class ColorConfig {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
 			 "shitbox 2.0": `
@@ -5777,6 +5893,9 @@ export class ColorConfig {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
 			 "shitbox 3.0": `
@@ -5901,6 +6020,9 @@ export class ColorConfig {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			
 			`,
@@ -6024,6 +6146,9 @@ export class ColorConfig {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
 	"nepbox": `
@@ -6145,6 +6270,9 @@ export class ColorConfig {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+				--note-flash: #ffffff;
+				--note-flash-secondary: #badfe6;
 				}
 			`,
 			 "cardboardbox classic": `
@@ -6261,6 +6389,9 @@ export class ColorConfig {
 --mod-label-primary: #999;
 --mod-label-secondary-text: #333;
 --mod-label-primary-text: black;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 				}
 			`,
 			"blubox classic": `
@@ -6373,6 +6504,9 @@ export class ColorConfig {
 					--mod-label-primary:        #282840;
 					--mod-label-secondary-text: rgb(87, 86, 120);
 					--mod-label-primary-text:   white;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
 		"dogebox classic": `
@@ -6495,6 +6629,9 @@ export class ColorConfig {
 			--mod-label-primary-text:   black;
 			--disabled-note-primary:    #999;
 			--disabled-note-secondary:  #666;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 				}
 			`,
 		  "dogebox dark": `
@@ -6553,6 +6690,9 @@ export class ColorConfig {
 					--noise3-primary-channel:   #77aadd;
 					--noise3-secondary-note:    #6f9fcf;
 					--noise3-primary-note:      #bbd7ff;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
 			    "todbox classic": `
@@ -6675,6 +6815,9 @@ export class ColorConfig {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
 			 "todbox dark mode": `
@@ -6798,6 +6941,9 @@ export class ColorConfig {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 				.beepboxEditor button, .beepboxEditor select {
 					box-shadow: inset 0 0 0 1px var(--secondary-text);
@@ -6923,6 +7069,9 @@ export class ColorConfig {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
 			 "fogbox": `
@@ -7043,6 +7192,9 @@ export class ColorConfig {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
 			"foxbox": `
@@ -7163,6 +7315,9 @@ export class ColorConfig {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;	
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
 			 "wackybox": `
@@ -7287,6 +7442,9 @@ export class ColorConfig {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 
 .beepboxEditor {
@@ -7440,6 +7598,9 @@ export class ColorConfig {
 					--mod-primary-note-sat-scale: 0;
 					--mod-primary-note-lum: 85;
 					--mod-primary-note-lum-scale: 0;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
 			"paandorasbox": `
@@ -7558,6 +7719,9 @@ export class ColorConfig {
 			  --mod-label-primary-text: #331512;
 			  --disabled-note-primary: #994038;
 			  --disabled-note-secondary: #331512;
+
+			  --note-flash: #ffffff;
+			  --note-flash-secondary: #badfe6;
 			}
 			`,
 			 "slushie": `
@@ -7676,6 +7840,9 @@ export class ColorConfig {
     --mod-label-primary-text: #c1ffff;
     --disabled-note-primary: #999;
     --disabled-note-secondary: #666;
+
+	--note-flash: #ffffff;
+	--note-flash-secondary: #badfe6;
 				}
 			`,
 			"midbox":
@@ -7792,6 +7959,9 @@ export class ColorConfig {
 			--mod-primary-note-lum-scale: 0;
 			--disabled-note-primary:    #53527b;
 			--disabled-note-secondary:  #1c1b30;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
 		"dogebox2": `
 			:root {
@@ -7910,6 +8080,9 @@ export class ColorConfig {
 				--mod4-primary-note: #b2fffb;
 				--disabled-note-primary: #c6c6c6;
 				--disabled-note-secondary: #8c8c8c;
+
+				--note-flash: #ffffff;
+				--note-flash-secondary: #badfe6;
 				}`,
 		"azur lane":`
 		:root {
@@ -8027,6 +8200,9 @@ export class ColorConfig {
 		  --mod4-primary-note: #fff;
 		  --disabled-note-primary: #3a3a3a;
 		  --disabled-note-secondary: #000;
+
+		  --note-flash: #ffffff;
+		  --note-flash-secondary: #badfe6;
 			}
 		/* replaces hotdog (in a hacky way) with an image of the girls using the same scratch sprites from the 404 page*/
 		#Hotdog {
@@ -8176,6 +8352,9 @@ export class ColorConfig {
 		--mod-primary-note-lum-scale: 0;
 		--disabled-note-primary:    #91879f;
 		--disabled-note-secondary:  #6a677a;
+
+		--note-flash: #ffffff;
+		--note-flash-secondary: #badfe6;
 	}
 	#firstImage {
 		background-image: url("https://www.teahub.io/photos/full/244-2448998_anime-girl-wallpaper-4k.jpg") !important;
@@ -8328,6 +8507,9 @@ export class ColorConfig {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 }
 
 			`,
@@ -8472,6 +8654,8 @@ export class ColorConfig {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 }
 
 			`,
@@ -8589,6 +8773,9 @@ export class ColorConfig {
   --mod4-primary-note: #0ce7ff;
   --disabled-note-primary: #8d8d8d;
   --disabled-note-secondary: #363636;
+
+  --note-flash: #ffffff;
+  --note-flash-secondary: #badfe6;
     }
 
 			`,
@@ -8701,6 +8888,9 @@ export class ColorConfig {
 				--mod-primary-note-sat-scale: 0;
 				--mod-primary-note-lum: 85;
 				--mod-primary-note-lum-scale: 0;
+
+				--note-flash: #ffffff;
+				--note-flash-secondary: #badfe6;
 			}`}`,
     };
 

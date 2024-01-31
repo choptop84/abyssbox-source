@@ -2530,6 +2530,9 @@ var beepbox = (function (exports) {
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
 			--mod-primary-note-lum-scale: 0; 	
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 				}
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
@@ -2733,7 +2736,9 @@ var beepbox = (function (exports) {
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
 			--mod-primary-note-lum-scale: 0; 
-			--track-font: "AbyssType";	
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 				}		
 		/* sets cursor */ 
 		* {
@@ -2881,7 +2886,8 @@ var beepbox = (function (exports) {
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
 			--mod-primary-note-lum-scale: 0; 	
-			--track-font: "AbyssType";
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 				}
 				/* sets background image */
 				body {
@@ -3081,7 +3087,9 @@ var beepbox = (function (exports) {
 			--mod-primary-note-sat: 96; 		
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
-			--mod-primary-note-lum-scale: 0; 	
+			--mod-primary-note-lum-scale: 0; 
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;	
 				}
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
@@ -3283,7 +3291,9 @@ var beepbox = (function (exports) {
 			--mod-primary-note-sat: 96; 		
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
-			--mod-primary-note-lum-scale: 0; 	
+			--mod-primary-note-lum-scale: 0; 
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;	
 				}
 		/* replaces hotdog (in a hacky way) with an image of gordon freeman but really wide*/
 		#Hotdog {
@@ -3443,7 +3453,10 @@ var beepbox = (function (exports) {
 			--mod-primary-note-sat: 96; 		
 			--mod-primary-note-sat-scale: 0; 		
 			--mod-primary-note-lum: 85; 		
-			--mod-primary-note-lum-scale: 0; 	
+			--mod-primary-note-lum-scale: 0; 
+			
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 				}
 		
 			#text-content > section > h1 > font {
@@ -3602,6 +3615,9 @@ var beepbox = (function (exports) {
 --mod-primary-note-sat-scale: 0;		
 --mod-primary-note-lum: 65;		
 --mod-primary-note-lum-scale: 0;	
+
+			--note-flash: #81bef0;
+			--note-flash-secondary: #5f9ccf;
 
 				}
 				
@@ -4080,6 +4096,10 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
+
 				}
 			`,
         "dark competition": `
@@ -4199,6 +4219,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 
 			}
 		`,
@@ -4321,6 +4344,10 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #666;
 					--disabled-note-secondary:  #aaa;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
+
 			}
 			
 			.beepboxEditor button, .beepboxEditor select {
@@ -4445,6 +4472,10 @@ var beepbox = (function (exports) {
 					--mod-primary-note-lum-scale: 0;
 					--disabled-note-primary:    #91879f;
 					--disabled-note-secondary:  #6a677a;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
+
 				}
 			`,
         "forest": `
@@ -4561,6 +4592,10 @@ var beepbox = (function (exports) {
 					--mod-primary-note-lum-scale: 0;
 					--disabled-note-primary:    #536e5c;
 					--disabled-note-secondary:  #395440;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
+
 				}
 			`,
         "forest 2": `
@@ -4675,6 +4710,10 @@ var beepbox = (function (exports) {
 					--mod-primary-note-lum-scale: 0;
 					--disabled-note-primary:    #536e5c;
 					--disabled-note-secondary:  #395440;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
+
 					}
 					/* sets background image */
 					body {
@@ -4873,6 +4912,9 @@ var beepbox = (function (exports) {
 					--mod-primary-note-lum-scale: 0;
 					--disabled-note-primary:    #515164;
 					--disabled-note-secondary:  #2a2a3a;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "midnight": `
@@ -4989,6 +5031,9 @@ var beepbox = (function (exports) {
 			--mod-primary-note-lum-scale: 0;
 			--disabled-note-primary:    #66a;
 			--disabled-note-secondary:  #447;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}
 	`,
         "jummbox light": `
@@ -5106,6 +5151,9 @@ var beepbox = (function (exports) {
 					--mod-primary-note-lum-scale: 0;
 					--disabled-note-primary:    #868;
 					--disabled-note-secondary:  #767;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 
 				.beepboxEditor button, .beepboxEditor select {
@@ -5234,6 +5282,9 @@ var beepbox = (function (exports) {
 					--mod-primary-note-lum-scale: 0;
 					--disabled-note-primary: #91879f;
 					--disabled-note-secondary: #6a677a;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 
 			`,
@@ -5356,6 +5407,8 @@ var beepbox = (function (exports) {
   --disabled-note-primary: #91879f;
   --disabled-note-secondary: #6a677a;
 
+  --note-flash: #ffffff;
+  --note-flash-secondary: #badfe6;
 
 			}
 		`,
@@ -5477,6 +5530,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: white;
 			--disabled-note-primary: #c9c9c9;
 			--disabled-note-secondary: #616161;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "moonlight": `
 			:root {
@@ -5596,7 +5652,10 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: white;
 			--disabled-note-primary: #828282;
 			--disabled-note-secondary: #4f4f4f;
-			}`,
+			
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
+		}`,
         "autumn": `
 		:root {
 			--page-margin: #060304;
@@ -5715,6 +5774,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: white;
 			--disabled-note-primary: #5d5d5d;
 			--disabled-note-secondary: #292929;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "fruit": `
 		:root {
@@ -5834,6 +5896,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: white;
 			--disabled-note-primary: #5d5d5d;
 			--disabled-note-secondary: #292929;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "sunset": `
 		:root {
@@ -5953,6 +6018,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: white;
 			--disabled-note-primary: #5d5d5d;
 			--disabled-note-secondary: #292929;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "toxic": `
 		:root {
@@ -6072,6 +6140,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: white;
 			--disabled-note-primary: #5d5d5d;
 			--disabled-note-secondary: #292929;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "violet verdant": `
 		:root {
@@ -6187,6 +6258,9 @@ var beepbox = (function (exports) {
 			--mod-primary-note-lum-scale: 0;
 			--disabled-note-primary: #91879f;
 			--disabled-note-secondary: #6a677a;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "portal": `
 		:root {
@@ -6306,6 +6380,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: #7bd4ff;
 			--disabled-note-primary: #072f4a;
 			--disabled-note-secondary: #6585a7;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "fusion": `:root {
 			--page-margin: #0c0306;
@@ -6424,6 +6501,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: black;
 			--disabled-note-primary: #696969;
 			--disabled-note-secondary: #232323;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "inverse": `:root {
 			--page-margin: #c4c8e3;
@@ -6542,6 +6622,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: black;
 			--disabled-note-primary: #959595;
 			--disabled-note-secondary: #6e6e6e;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 			}`,
         "nebula": `
 		:root {
@@ -6657,6 +6740,9 @@ var beepbox = (function (exports) {
 			--mod-primary-note-lum-scale: 0;
 			--disabled-note-primary: #aaa;
 			--disabled-note-secondary: #666;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "Nebula 2": ` 
 			:root { 
@@ -6772,6 +6858,9 @@ var beepbox = (function (exports) {
 				--mod-primary-note-lum-scale: 0;
 				--disabled-note-primary: #aaa;
 				--disabled-note-secondary: #666;
+				
+				--note-flash: #ffffff;
+				--note-flash-secondary: #badfe6;
 			}
 			body {
 				background-image: url("https://choptop84.github.io/abyssbox-app/stars.gif") !important;
@@ -6976,6 +7065,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: black;
 			--disabled-note-primary: #616161;
 			--disabled-note-secondary: #474747;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "energized": `
 		:root {
@@ -7093,6 +7185,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: white;
 			--disabled-note-primary: #808080;
 			--disabled-note-secondary: #666666;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "neapolitan": `:root {
 			--page-margin: #120807;
@@ -7211,6 +7306,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: #decdbf;
 			--disabled-note-primary: #bababa;
 			--disabled-note-secondary: #878787;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "mono": `:root {
 			--page-margin: #000;
@@ -7439,6 +7537,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: #ffffffa6;
 			--disabled-note-primary: #c9c9c9;
 			--disabled-note-secondary: #616161;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 	}`,
         "modbox classic": `
 			:root {
@@ -7560,6 +7661,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "zefbox": `
@@ -7680,6 +7784,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "sandbox classic": `
@@ -7802,6 +7909,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "harrybox": `
@@ -7923,6 +8033,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "brucebox": `
@@ -8047,6 +8160,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "shitbox 2.0": `
@@ -8169,6 +8285,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "shitbox 3.0": `
@@ -8293,6 +8412,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			
 			`,
@@ -8416,6 +8538,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "nepbox": `
@@ -8537,6 +8662,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+				--note-flash: #ffffff;
+				--note-flash-secondary: #badfe6;
 				}
 			`,
         "cardboardbox classic": `
@@ -8653,6 +8781,9 @@ var beepbox = (function (exports) {
 --mod-label-primary: #999;
 --mod-label-secondary-text: #333;
 --mod-label-primary-text: black;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 				}
 			`,
         "blubox classic": `
@@ -8765,6 +8896,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary:        #282840;
 					--mod-label-secondary-text: rgb(87, 86, 120);
 					--mod-label-primary-text:   white;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "dogebox classic": `
@@ -8887,6 +9021,9 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text:   black;
 			--disabled-note-primary:    #999;
 			--disabled-note-secondary:  #666;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 				}
 			`,
         "dogebox dark": `
@@ -8945,6 +9082,9 @@ var beepbox = (function (exports) {
 					--noise3-primary-channel:   #77aadd;
 					--noise3-secondary-note:    #6f9fcf;
 					--noise3-primary-note:      #bbd7ff;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "todbox classic": `
@@ -9067,6 +9207,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "todbox dark mode": `
@@ -9190,6 +9333,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 				.beepboxEditor button, .beepboxEditor select {
 					box-shadow: inset 0 0 0 1px var(--secondary-text);
@@ -9315,6 +9461,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "fogbox": `
@@ -9435,6 +9584,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "foxbox": `
@@ -9555,6 +9707,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;	
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "wackybox": `
@@ -9679,6 +9834,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 
 .beepboxEditor {
@@ -9832,6 +9990,9 @@ var beepbox = (function (exports) {
 					--mod-primary-note-sat-scale: 0;
 					--mod-primary-note-lum: 85;
 					--mod-primary-note-lum-scale: 0;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 				}
 			`,
         "paandorasbox": `
@@ -9950,6 +10111,9 @@ var beepbox = (function (exports) {
 			  --mod-label-primary-text: #331512;
 			  --disabled-note-primary: #994038;
 			  --disabled-note-secondary: #331512;
+
+			  --note-flash: #ffffff;
+			  --note-flash-secondary: #badfe6;
 			}
 			`,
         "slushie": `
@@ -10068,6 +10232,9 @@ var beepbox = (function (exports) {
     --mod-label-primary-text: #c1ffff;
     --disabled-note-primary: #999;
     --disabled-note-secondary: #666;
+
+	--note-flash: #ffffff;
+	--note-flash-secondary: #badfe6;
 				}
 			`,
         "midbox": `:root {
@@ -10183,6 +10350,9 @@ var beepbox = (function (exports) {
 			--mod-primary-note-lum-scale: 0;
 			--disabled-note-primary:    #53527b;
 			--disabled-note-secondary:  #1c1b30;
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
 		}`,
         "dogebox2": `
 			:root {
@@ -10301,6 +10471,9 @@ var beepbox = (function (exports) {
 				--mod4-primary-note: #b2fffb;
 				--disabled-note-primary: #c6c6c6;
 				--disabled-note-secondary: #8c8c8c;
+
+				--note-flash: #ffffff;
+				--note-flash-secondary: #badfe6;
 				}`,
         "azur lane": `
 		:root {
@@ -10418,6 +10591,9 @@ var beepbox = (function (exports) {
 		  --mod4-primary-note: #fff;
 		  --disabled-note-primary: #3a3a3a;
 		  --disabled-note-secondary: #000;
+
+		  --note-flash: #ffffff;
+		  --note-flash-secondary: #badfe6;
 			}
 		/* replaces hotdog (in a hacky way) with an image of the girls using the same scratch sprites from the 404 page*/
 		#Hotdog {
@@ -10567,6 +10743,9 @@ var beepbox = (function (exports) {
 		--mod-primary-note-lum-scale: 0;
 		--disabled-note-primary:    #91879f;
 		--disabled-note-secondary:  #6a677a;
+
+		--note-flash: #ffffff;
+		--note-flash-secondary: #badfe6;
 	}
 	#firstImage {
 		background-image: url("https://www.teahub.io/photos/full/244-2448998_anime-girl-wallpaper-4k.jpg") !important;
@@ -10719,6 +10898,9 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 }
 
 			`,
@@ -10863,6 +11045,8 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+					--note-flash: #ffffff;
+					--note-flash-secondary: #badfe6;
 }
 
 			`,
@@ -10980,6 +11164,9 @@ var beepbox = (function (exports) {
   --mod4-primary-note: #0ce7ff;
   --disabled-note-primary: #8d8d8d;
   --disabled-note-secondary: #363636;
+
+  --note-flash: #ffffff;
+  --note-flash-secondary: #badfe6;
     }
 
 			`,
@@ -11092,6 +11279,9 @@ var beepbox = (function (exports) {
 				--mod-primary-note-sat-scale: 0;
 				--mod-primary-note-lum: 85;
 				--mod-primary-note-lum-scale: 0;
+
+				--note-flash: #ffffff;
+				--note-flash-secondary: #badfe6;
 			}`}`,
     };
     ColorConfig.pageMargin = "var(--page-margin)";
@@ -36516,9 +36706,22 @@ You should be redirected to the song at:<br /><br />
                     this._doc.notifier.notifyWatchers();
                 }
                 const playheadBar = Math.floor(this._doc.synth.playhead);
+                const noteFlashElements = this._svgNoteContainer.querySelectorAll('.note-flash');
                 if (this._doc.synth.playing && ((this._pattern != null && this._doc.song.getPattern(this._doc.channel, Math.floor(this._doc.synth.playhead)) == this._pattern) || Math.floor(this._doc.synth.playhead) == this._doc.bar + this._barOffset)) {
                     this._svgPlayhead.setAttribute("visibility", "visible");
                     const modPlayhead = this._doc.synth.playhead - playheadBar;
+                    for (var i = 0; i < noteFlashElements.length; i++) {
+                        var element = noteFlashElements[i];
+                        const noteStart = Number(element.getAttribute("note-start")) / (this._doc.song.beatsPerBar * Config.partsPerBeat);
+                        const noteEnd = Number(element.getAttribute("note-end")) / (this._doc.song.beatsPerBar * Config.partsPerBeat);
+                        if ((modPlayhead >= noteStart) && this._doc.prefs.notesFlashWhenPlayed) {
+                            const dist = noteEnd - noteStart;
+                            element.style.opacity = String((1 - (((modPlayhead - noteStart) - (dist / 2)) / (dist / 2))));
+                        }
+                        else {
+                            element.style.opacity = "0";
+                        }
+                    }
                     if (Math.abs(modPlayhead - this._playheadX) > 0.1) {
                         this._playheadX = modPlayhead;
                     }
@@ -36529,6 +36732,10 @@ You should be redirected to the song at:<br /><br />
                 }
                 else {
                     this._svgPlayhead.setAttribute("visibility", "hidden");
+                    for (var i = 0; i < noteFlashElements.length; i++) {
+                        var element = noteFlashElements[i];
+                        element.style.opacity = "0";
+                    }
                 }
                 if (this._doc.synth.playing && (this._doc.synth.recording || this._doc.prefs.autoFollow) && this._followPlayheadBar != playheadBar) {
                     new ChangeChannelBar(this._doc, this._doc.channel, playheadBar);
@@ -38473,11 +38680,22 @@ You should be redirected to the song at:<br /><br />
                         const octaveOffset = this._doc.getBaseVisibleOctave(channel) * Config.pitchesPerOctave;
                         for (const note of pattern2.notes) {
                             for (const pitch of note.pitches) {
-                                const notePath = SVG.path();
+                                var notePath = SVG.path();
                                 notePath.setAttribute("fill", ColorConfig.getChannelColor(this._doc.song, channel).secondaryNote);
                                 notePath.setAttribute("pointer-events", "none");
                                 this._drawNote(notePath, pitch, note.start, note.pins, this._pitchHeight * 0.19, false, octaveOffset);
                                 this._svgNoteContainer.appendChild(notePath);
+                                if (this._doc.prefs.notesFlashWhenPlayed) {
+                                    notePath = SVG.path();
+                                    notePath.setAttribute("fill", "var(--note-flash-secondary)");
+                                    notePath.setAttribute("pointer-events", "none");
+                                    this._drawNote(notePath, pitch, note.start, note.pins, this._pitchHeight * 0.19, false, octaveOffset);
+                                    this._svgNoteContainer.appendChild(notePath);
+                                    notePath.classList.add('note-flash');
+                                    notePath.style.opacity = "0";
+                                    notePath.setAttribute('note-start', String(note.start));
+                                    notePath.setAttribute('note-end', String(note.end));
+                                }
                             }
                         }
                     }
@@ -38510,6 +38728,17 @@ You should be redirected to the song at:<br /><br />
                         notePath.setAttribute("pointer-events", "none");
                         this._drawNote(notePath, pitch, note.start, note.pins, (this._pitchHeight - this._pitchBorder) / 2 + 1, true, this._octaveOffset);
                         this._svgNoteContainer.appendChild(notePath);
+                        if (this._doc.prefs.notesFlashWhenPlayed && !disabled) {
+                            notePath = SVG.path();
+                            notePath.setAttribute("fill", "var(--note-flash)");
+                            notePath.setAttribute("pointer-events", "none");
+                            this._drawNote(notePath, pitch, note.start, note.pins, (this._pitchHeight - this._pitchBorder) / 2 + 1, true, this._octaveOffset);
+                            this._svgNoteContainer.appendChild(notePath);
+                            notePath.classList.add('note-flash');
+                            notePath.style.opacity = "0";
+                            notePath.setAttribute('note-start', String(note.start));
+                            notePath.setAttribute('note-end', String(note.end));
+                        }
                         let indicatorOffset = 2;
                         if (note.continuesLastPattern) {
                             const arrowHeight = Math.min(this._pitchHeight, 20);
@@ -39663,7 +39892,7 @@ You should be redirected to the song at:<br /><br />
             this._fileInput2 = input$4({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose website background image" });
             this._colorpicker = input$4({ type: "color", id: "colorPicker", value: (_pageMarginTest), style: "width: 100%; height: 30px;" });
             this._currentThemeProperty = "--page-margin";
-            this._colorMenu = select$4({ style: "width: 100%;" }, option$4({ selected: true, disabled: true, hidden: false }, "Select an asset to change"), option$4({ value: "--page-margin" }, "Page Margin"), option$4({ value: "--editor-background" }, "Editor Background"), option$4({ value: "--primary-text" }, "Primary Text"), option$4({ value: "--secondary-text" }, "Secondary Text"), option$4({ value: "--inverted-text" }, "Inverted Text"), option$4({ value: "--loop-accent" }, "Loop Accent"), option$4({ value: "--link-accent" }, "Link Accent"), option$4({ value: "--ui-widget-background" }, "UI Widget Background"), option$4({ value: "--ui-widget-focus" }, "UI Widget Focus"), option$4({ value: "--pitch-background" }, "Pitch Background"), option$4({ value: "--tonic" }, "Tonic"), option$4({ value: "--fifth-note" }, "Fifth note"), option$4({ value: "--white-piano-key" }, "White Piano Key"), option$4({ value: "--black-piano-key" }, "Black Piano Key"), option$4({ value: "--track-editor-bg-pitch" }, "Track Editor Pitch BG"), option$4({ value: "--track-editor-bg-pitch-dim" }, "Empty Track Editor Pitch BG"), option$4({ value: "--track-editor-bg-noise" }, "Track Editor Noise BG"), option$4({ value: "--track-editor-bg-noise-dim" }, "Empty Track Editor Noise BG"), option$4({ value: "--track-editor-bg-mod" }, "Track Editor Mod BG"), option$4({ value: "--track-editor-bg-mod-dim" }, "Empty Track Editor Mod BG"), option$4({ value: "--multiplicative-mod-slider" }, "Multiplicative Mod Slider"), option$4({ value: "--overwriting-mod-slider" }, "Overwriting Mod Slider"), option$4({ value: "--indicator-primary" }, "Primary Indicator"), option$4({ value: "--indicator-secondary" }, "Secondary Indicator"), option$4({ value: "--select2-opt-group" }, "Preset Catagory Background"), option$4({ value: "--input-box-outline" }, "Input Box Outline"), option$4({ value: "--mute-button-normal" }, "Mute Button (Normal)"), option$4({ value: "--mute-button-mod" }, "Mute Button (Mod)"), option$4({ value: "--mod-label-primary" }, "Mod Label Primary"), option$4({ value: "--mod-label-secondary-text" }, "Mod Label Secondary"), option$4({ value: "--mod-label-primary-text" }, "Mod Label Primary Text"));
+            this._colorMenu = select$4({ style: "width: 100%;" }, option$4({ selected: true, disabled: true, hidden: false }, "Select an asset to change"), option$4({ value: "--page-margin" }, "Page Margin"), option$4({ value: "--editor-background" }, "Editor Background"), option$4({ value: "--primary-text" }, "Primary Text"), option$4({ value: "--secondary-text" }, "Secondary Text"), option$4({ value: "--inverted-text" }, "Inverted Text"), option$4({ value: "--loop-accent" }, "Loop Accent"), option$4({ value: "--link-accent" }, "Link Accent"), option$4({ value: "--ui-widget-background" }, "UI Widget Background"), option$4({ value: "--ui-widget-focus" }, "UI Widget Focus"), option$4({ value: "--pitch-background" }, "Pitch Background"), option$4({ value: "--tonic" }, "Tonic"), option$4({ value: "--fifth-note" }, "Fifth note"), option$4({ value: "--white-piano-key" }, "White Piano Key"), option$4({ value: "--black-piano-key" }, "Black Piano Key"), option$4({ value: "--track-editor-bg-pitch" }, "Track Editor Pitch BG"), option$4({ value: "--track-editor-bg-pitch-dim" }, "Empty Track Editor Pitch BG"), option$4({ value: "--track-editor-bg-noise" }, "Track Editor Noise BG"), option$4({ value: "--track-editor-bg-noise-dim" }, "Empty Track Editor Noise BG"), option$4({ value: "--track-editor-bg-mod" }, "Track Editor Mod BG"), option$4({ value: "--track-editor-bg-mod-dim" }, "Empty Track Editor Mod BG"), option$4({ value: "--multiplicative-mod-slider" }, "Multiplicative Mod Slider"), option$4({ value: "--overwriting-mod-slider" }, "Overwriting Mod Slider"), option$4({ value: "--indicator-primary" }, "Primary Indicator"), option$4({ value: "--indicator-secondary" }, "Secondary Indicator"), option$4({ value: "--select2-opt-group" }, "Preset Catagory Background"), option$4({ value: "--input-box-outline" }, "Input Box Outline"), option$4({ value: "--mute-button-normal" }, "Mute Button (Normal)"), option$4({ value: "--mute-button-mod" }, "Mute Button (Mod)"), option$4({ value: "--mod-label-primary" }, "Mod Label Primary"), option$4({ value: "--mod-label-secondary-text" }, "Mod Label Secondary"), option$4({ value: "--mod-label-primary-text" }, "Mod Label Primary Text"), option$4({ value: "--note-flash" }, "Note Flash"), option$4({ value: "--note-flash-secondary" }, "Note Flash Secondary"));
             this._colorInput = input$4({ type: "text", value: localStorage.getItem("customColors") || `:root {
 		--page-margin: #040410;
 		--editor-background: #040410;
@@ -39773,6 +40002,8 @@ You should be redirected to the song at:<br /><br />
 		--mod-primary-note-sat-scale: 0;
 		--mod-primary-note-lum: 85;
 		--mod-primary-note-lum-scale: 0;
+		--note-flash: #ffffff;
+		--note-flash-secondary: #badfe6;
 	}` });
             this._cancelButton = button$6({ class: "cancelButton" });
             this._okayButton = button$6({ class: "okayButton", style: "width:45%;" }, "Okay");
@@ -42752,7 +42983,7 @@ You should be redirected to the song at:<br /><br />
             this._volumeBarBox = div({ class: "playback-volume-bar", style: "height: 12px; align-self: center;" }, this._volumeBarContainer);
             this._fileMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "File"), option({ value: "new" }, "+ New Blank Song"), option({ value: "import" }, "↑ Import Song... (" + EditorConfig.ctrlSymbol + "O)"), option({ value: "export" }, "↓ Export Song... (" + EditorConfig.ctrlSymbol + "S)"), option({ value: "copyUrl" }, "⎘ Copy Song URL"), option({ value: "shareUrl" }, "⤳ Share Song URL"), option({ value: "shortenUrl" }, "… Shorten Song URL"), option({ value: "viewPlayer" }, "▶ View in Song Player"), option({ value: "copyEmbed" }, "⎘ Copy HTML Embed Code"), option({ value: "songRecovery" }, "⚠ Recover Recent Song..."));
             this._editMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Edit"), option({ value: "undo" }, "Undo (Z)"), option({ value: "redo" }, "Redo (Y)"), option({ value: "copy" }, "Copy Pattern (C)"), option({ value: "pasteNotes" }, "Paste Pattern Notes (V)"), option({ value: "pasteNumbers" }, "Paste Pattern Numbers (" + EditorConfig.ctrlSymbol + "⇧V)"), option({ value: "insertBars" }, "Insert Bar (⏎)"), option({ value: "deleteBars" }, "Delete Selected Bars (⌫)"), option({ value: "insertChannel" }, "Insert Channel (" + EditorConfig.ctrlSymbol + "⏎)"), option({ value: "deleteChannel" }, "Delete Selected Channels (" + EditorConfig.ctrlSymbol + "⌫)"), option({ value: "selectChannel" }, "Select Channel (⇧A)"), option({ value: "selectAll" }, "Select All (A)"), option({ value: "duplicatePatterns" }, "Duplicate Reused Patterns (D)"), option({ value: "transposeUp" }, "Move Notes Up (+ or ⇧+)"), option({ value: "transposeDown" }, "Move Notes Down (- or ⇧-)"), option({ value: "moveNotesSideways" }, "Move All Notes Sideways... (W)"), option({ value: "generateEuclideanRhythm" }, "Generate Euclidean Rhythm... (E)"), option({ value: "beatsPerBar" }, "Change Beats Per Bar... (B)"), option({ value: "barCount" }, "Change Song Length... (L)"), option({ value: "channelSettings" }, "Channel Settings... (Q)"), option({ value: "limiterSettings" }, "Limiter Settings... (⇧L)"), option({ value: "addExternal" }, "Add Custom Samples... (⇧Q)"));
-            this._optionsMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Preferences"), option({ value: "autoPlay" }, "Auto Play on Load"), option({ value: "autoFollow" }, "Auto Follow Playhead"), option({ value: "enableNotePreview" }, "Hear of Added Notes"), option({ value: "showLetters" }, "Show Piano Keys"), option({ value: "showFifth" }, 'Highlight "Fifth" Note'), option({ value: "notesOutsideScale" }, "Place Notes Out of Scale"), option({ value: "setDefaultScale" }, "Set Current Scale as Default"), option({ value: "showChannels" }, "Show All Channels"), option({ value: "showScrollBar" }, "Show Octave Scroll Bar"), option({ value: "alwaysFineNoteVol" }, "Always Fine Note Volume"), option({ value: "enableChannelMuting" }, "Enable Channel Muting"), option({ value: "displayBrowserUrl" }, "Show Song Data in URL"), option({ value: "displayVolumeBar" }, "Show Playback Volume"), option({ value: "showOscilloscope" }, "Show Oscilloscope"), option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"), option({ value: "closePromptByClickoff" }, "Close prompts on click off"), option({ value: "layout" }, "Set Layout..."), option({ value: "colorTheme" }, "Set Theme..."), option({ value: "customTheme" }, "Custom Theme..."), option({ value: "recordingSetup" }, "Note Recording..."));
+            this._optionsMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Preferences"), option({ value: "autoPlay" }, "Auto Play on Load"), option({ value: "autoFollow" }, "Auto Follow Playhead"), option({ value: "enableNotePreview" }, "Hear of Added Notes"), option({ value: "showLetters" }, "Show Piano Keys"), option({ value: "showFifth" }, 'Highlight "Fifth" Note'), option({ value: "notesOutsideScale" }, "Place Notes Out of Scale"), option({ value: "setDefaultScale" }, "Set Current Scale as Default"), option({ value: "showChannels" }, "Show All Channels"), option({ value: "showScrollBar" }, "Show Octave Scroll Bar"), option({ value: "alwaysFineNoteVol" }, "Always Fine Note Volume"), option({ value: "enableChannelMuting" }, "Enable Channel Muting"), option({ value: "displayBrowserUrl" }, "Show Song Data in URL"), option({ value: "displayVolumeBar" }, "Show Playback Volume"), option({ value: "notesFlashWhenPlayed" }, "Notes Flash When Played (DB2)"), option({ value: "showOscilloscope" }, "Show Oscilloscope"), option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"), option({ value: "closePromptByClickoff" }, "Close prompts on click off"), option({ value: "layout" }, "Set Layout..."), option({ value: "colorTheme" }, "Set Theme..."), option({ value: "customTheme" }, "Custom Theme..."), option({ value: "recordingSetup" }, "Note Recording..."));
             this._scaleSelect = buildOptions(select(), Config.scales.map(scale => scale.name));
             this._keySelect = buildOptions(select(), Config.keys.map(key => key.name).reverse());
             this._octaveStepper = input({ type: "number", min: Config.octaveMin, max: Config.octaveMax, value: "0" });
@@ -43109,6 +43340,7 @@ You should be redirected to the song at:<br /><br />
                     (prefs.enableChannelMuting ? "✓ " : "　") + "Enable Channel Muting",
                     (prefs.displayBrowserUrl ? "✓ " : "　") + "Show Song Data in URL",
                     (prefs.displayVolumeBar ? "✓ " : "　") + "Show Playback Volume",
+                    (prefs.notesFlashWhenPlayed ? "✓ " : "　") + "Notes Flash When Played (DB2)",
                     (prefs.showOscilloscope ? "✓ " : "　") + "Show Oscilloscope",
                     (prefs.showSampleLoadingStatus ? "✓ " : "　") + "Show Sample Loading Status",
                     (prefs.closePromptByClickoff ? "✓ " : "　") + "Close Prompts on Click Off",
@@ -45329,6 +45561,9 @@ You should be redirected to the song at:<br /><br />
                     case "displayVolumeBar":
                         this._doc.prefs.displayVolumeBar = !this._doc.prefs.displayVolumeBar;
                         break;
+                    case "notesFlashWhenPlayed":
+                        this._doc.prefs.notesFlashWhenPlayed = !this._doc.prefs.notesFlashWhenPlayed;
+                        break;
                     case "layout":
                         this._openPrompt("layout");
                         break;
@@ -47473,6 +47708,7 @@ You should be redirected to the song at:<br /><br />
             this.metronomeWhileRecording = window.localStorage.getItem("metronomeWhileRecording") != "false";
             this.showOscilloscope = window.localStorage.getItem("showOscilloscope") != "false";
             this.showSampleLoadingStatus = window.localStorage.getItem("showSampleLoadingStatus") != "false";
+            this.notesFlashWhenPlayed = window.localStorage.getItem("notesFlashWhenPlayed") != "false";
             this.keyboardLayout = window.localStorage.getItem("keyboardLayout") || "wickiHayden";
             this.bassOffset = (+window.localStorage.getItem("bassOffset")) || 0;
             this.layout = window.localStorage.getItem("layout") || "small";
@@ -47516,6 +47752,7 @@ You should be redirected to the song at:<br /><br />
             window.localStorage.setItem("metronomeWhileRecording", this.metronomeWhileRecording ? "true" : "false");
             window.localStorage.setItem("showOscilloscope", this.showOscilloscope ? "true" : "false");
             window.localStorage.setItem("showSampleLoadingStatus", this.showSampleLoadingStatus ? "true" : "false");
+            window.localStorage.setItem("notesFlashWhenPlayed", this.notesFlashWhenPlayed ? "true" : "false");
             window.localStorage.setItem("keyboardLayout", this.keyboardLayout);
             window.localStorage.setItem("bassOffset", String(this.bassOffset));
             window.localStorage.setItem("layout", this.layout);

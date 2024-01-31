@@ -623,10 +623,24 @@ export class PatternEditor {
         }
 
         const playheadBar: number = Math.floor(this._doc.synth.playhead);
+        const noteFlashElements: NodeListOf<SVGPathElement> = this._svgNoteContainer.querySelectorAll('.note-flash');
 
         if (this._doc.synth.playing && ((this._pattern != null && this._doc.song.getPattern(this._doc.channel, Math.floor(this._doc.synth.playhead)) == this._pattern) || Math.floor(this._doc.synth.playhead) == this._doc.bar + this._barOffset)) {
             this._svgPlayhead.setAttribute("visibility", "visible");
             const modPlayhead: number = this._doc.synth.playhead - playheadBar;
+
+            for (var i = 0; i < noteFlashElements.length; i++) {
+                var element: SVGPathElement = noteFlashElements[i];
+                const noteStart: number = Number(element.getAttribute("note-start"))/(this._doc.song.beatsPerBar * Config.partsPerBeat)
+                const noteEnd: number = Number(element.getAttribute("note-end"))/(this._doc.song.beatsPerBar * Config.partsPerBeat)
+                if ((modPlayhead>=noteStart)&&this._doc.prefs.notesFlashWhenPlayed) {
+                    const dist = noteEnd-noteStart
+                    element.style.opacity = String((1-(((modPlayhead-noteStart)-(dist/2))/(dist/2))))
+                } else {
+                    element.style.opacity = "0"
+                }
+            }
+            
             if (Math.abs(modPlayhead - this._playheadX) > 0.1) {
                 this._playheadX = modPlayhead;
             } else {
@@ -635,6 +649,12 @@ export class PatternEditor {
             this._svgPlayhead.setAttribute("x", "" + prettyNumber(this._playheadX * this._editorWidth - 2));
         } else {
             this._svgPlayhead.setAttribute("visibility", "hidden");
+
+                        //lazy fix boohoo
+                        for (var i = 0; i < noteFlashElements.length; i++) {
+                            var element: SVGPathElement = noteFlashElements[i];
+                            element.style.opacity = "0"
+                        }
         }
 
         if (this._doc.synth.playing && (this._doc.synth.recording || this._doc.prefs.autoFollow) && this._followPlayheadBar != playheadBar) {
@@ -2408,11 +2428,25 @@ export class PatternEditor {
                     const octaveOffset: number = this._doc.getBaseVisibleOctave(channel) * Config.pitchesPerOctave;
                     for (const note of pattern2.notes) {
                         for (const pitch of note.pitches) {
-                            const notePath: SVGPathElement = SVG.path();
+                            var notePath: SVGPathElement = SVG.path();
                             notePath.setAttribute("fill", ColorConfig.getChannelColor(this._doc.song, channel).secondaryNote);
                             notePath.setAttribute("pointer-events", "none");
                             this._drawNote(notePath, pitch, note.start, note.pins, this._pitchHeight * 0.19, false, octaveOffset);
                             this._svgNoteContainer.appendChild(notePath);
+
+                            if (this._doc.prefs.notesFlashWhenPlayed) {
+                                notePath = SVG.path();
+                                notePath.setAttribute("fill", "var(--note-flash-secondary)");
+                                notePath.setAttribute("pointer-events", "none");
+                                this._drawNote(notePath, pitch, note.start, note.pins, this._pitchHeight * 0.19, false, octaveOffset);
+                                this._svgNoteContainer.appendChild(notePath);
+                                notePath.classList.add('note-flash');
+                                notePath.style.opacity = "0";
+                                notePath.setAttribute('note-start', String(note.start));
+                                notePath.setAttribute('note-end', String(
+                                    note.end
+                                    ));
+                            }
                         }
                     }
                 }
@@ -2446,6 +2480,20 @@ export class PatternEditor {
                     notePath.setAttribute("pointer-events", "none");
                     this._drawNote(notePath, pitch, note.start, note.pins, (this._pitchHeight - this._pitchBorder) / 2 + 1, true, this._octaveOffset);
                     this._svgNoteContainer.appendChild(notePath);
+
+                    if (this._doc.prefs.notesFlashWhenPlayed&&!disabled) {
+                        notePath = SVG.path();
+                        notePath.setAttribute("fill", "var(--note-flash)");
+                        notePath.setAttribute("pointer-events", "none");
+                        this._drawNote(notePath, pitch, note.start, note.pins, (this._pitchHeight - this._pitchBorder) / 2 + 1, true, this._octaveOffset);
+                        this._svgNoteContainer.appendChild(notePath);
+                        notePath.classList.add('note-flash');
+                        notePath.style.opacity = "0";
+                        notePath.setAttribute('note-start', String(note.start));
+                        notePath.setAttribute('note-end', String(
+                            note.end
+                            ));
+                    }
 
                     let indicatorOffset: number = 2;
                     if (note.continuesLastPattern) {

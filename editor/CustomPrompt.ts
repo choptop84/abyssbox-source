@@ -20,6 +20,8 @@ export class CustomPrompt implements Prompt {
 	private readonly _fileInput2: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose website background image" });
 	private readonly _colorpicker: HTMLInputElement = input({ type: "color", id: "colorPicker", value:(_pageMarginTest), style:"width: 100%; height: 30px;"});
 
+	//private readonly _useColorFomula: HTMLInputElement = input({ type:""});
+
 	private _currentThemeProperty: string = "--page-margin";
 	
     private readonly _colorMenu: HTMLSelectElement = select({ style: "width: 100%;" },
@@ -58,6 +60,9 @@ export class CustomPrompt implements Prompt {
 		option({ value: "--mod-label-primary" }, "Mod Label Primary"),
 		option({ value: "--mod-label-secondary-text" }, "Mod Label Secondary"),
 		option({ value: "--mod-label-primary-text" }, "Mod Label Primary Text"),		
+		option({ value: "--note-flash" }, "Note Flash"),
+		option({ value: "--note-flash-secondary" }, "Note Flash Secondary"),		
+
 
     ); 
 
@@ -170,6 +175,8 @@ export class CustomPrompt implements Prompt {
 		--mod-primary-note-sat-scale: 0;
 		--mod-primary-note-lum: 85;
 		--mod-primary-note-lum-scale: 0;
+		--note-flash: #ffffff;
+		--note-flash-secondary: #badfe6;
 	}`});
 	private readonly _cancelButton: HTMLButtonElement = button({ class: "cancelButton" });
 	private readonly _okayButton: HTMLButtonElement = button({ class: "okayButton", style: "width:45%;" }, "Okay");
@@ -228,8 +235,9 @@ export class CustomPrompt implements Prompt {
 		this._okayButton.addEventListener("click", this._close);
 		this._cancelButton.addEventListener("click", this._close);
 		this._resetButton.addEventListener("click", this._reset);
-		this._colorpicker.addEventListener("change", this._whenColorsPicked)
-		this._colorMenu.addEventListener("change", this._whenMenuChanged)
+		this._colorpicker.addEventListener("change", this._whenColorsPicked);
+		this._colorMenu.addEventListener("change", this._whenMenuChanged);
+		//this._useColorFomula.addEventListener("change", this._whenColorFormula);
 	}
 
 	private _close = (): void => {
@@ -263,6 +271,11 @@ export class CustomPrompt implements Prompt {
 		doReload = true;
 		this._close();
 	}
+
+/*	private _whenColorFormula = (): void => {
+
+
+	} */
 
 	private _whenColorsChanged = (): void => {
 		localStorage.setItem("customColors", this._colorInput.value);
