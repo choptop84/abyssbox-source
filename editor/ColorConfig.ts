@@ -541,6 +541,8 @@ export class ColorConfig {
     				image-rendering: pixelated !important;                 /* Future browsers */
     				image-rendering: optimizeSpeed !important;             /* IE */
 				}
+				
+
 		/* sets cursor */ 
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
@@ -1099,9 +1101,9 @@ export class ColorConfig {
 			--loop-accent: #003399; 		
 			--link-accent: #003399; 		
 			--ui-widget-background: #cfcab2; 		
-			--ui-widget-focus: #cfcab2; 		
-			--pitch-background: #e4dac5; 		
-			--tonic: #d1c09c; 		
+			--ui-widget-focus: #faf9f2; 		
+			--pitch-background: #ffffff; 		
+			--tonic: #e8e8e8; 		
 			--fifth-note: #919fdd; 		
 			--white-piano-key: #ebe2ca; 		
 			--black-piano-key: #403a2f; 		
@@ -1207,10 +1209,249 @@ export class ColorConfig {
 --mod-primary-note-sat-scale: 0;		
 --mod-primary-note-lum: 65;		
 --mod-primary-note-lum-scale: 0;	
+
 				}
+				
+				@font-face {
+					font-family: "tahoma";
+					src:
+					 url("https://choptop84.github.io/abyssbox-app/tahoma.otf") format("opentype") tech(color-COLRv1),
+					 }
+	
+				html {
+				font-family: 'tahoma' !important;
+			   font-size: 150% !important;
+				}
+				div.channelBoxLabel {
+					font-family: 'tahoma' !important;
+				}
+
+			
 		* {
 		cursor: url("https://choptop84.github.io/abyssbox-app/xpcursor.png"), auto !important;
+		--play-symbol:url("https://choptop84.github.io/abyssbox-app/xpPlay.png");
+		--pause-symbol:url("https://choptop84.github.io/abyssbox-app/xpPause.png");
+		--record-symbol:url("https://choptop84.github.io/abyssbox-app/xpRecord.png");
+		--stop-symbol:url("https://choptop84.github.io/abyssbox-app/xpStop.png");
+		--prev-bar-symbol:url("https://choptop84.github.io/abyssbox-app/xpBackward.png");
+		--next-bar-symbol:url("https://choptop84.github.io/abyssbox-app/xpForward.png");
+		--file-page-symbol: url("https://choptop84.github.io/abyssbox-app/xpFile.png");
+		--edit-pencil-symbol: url("https://choptop84.github.io/abyssbox-app/xpEdit.png");
+		--preferences-gear-symbol: url("https://choptop84.github.io/abyssbox-app/xpPreferences.png");
+		--muted-symbol: url("https://choptop84.github.io/abyssbox-app/xpSpeakerMute.png");
+		--unmuted-symbol: url("https://choptop84.github.io/abyssbox-app/xpSpeaker.png");
+		--volume-symbol: url("https://choptop84.github.io/abyssbox-app/xpSpeaker.png");
+		--zoom-in-symbol: url("https://choptop84.github.io/abyssbox-app/xpZoomIn.png");
+		--zoom-out-symbol: url("https://choptop84.github.io/abyssbox-app/xpZoomOut.png");
 		}
+
+		div.mute-button::before {
+			background-image: url("https://choptop84.github.io/abyssbox-app/xpSpeaker.png") !important;
+			background-size: 120% !important;
+			background-position-x: center !important;
+			background-position-y: center !important;
+			background-repeat: no-repeat !important;
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+		}
+
+		div.mute-button.muted::before {
+			background-image: url("https://choptop84.github.io/abyssbox-app/xpSpeakerMute.png") !important;
+			background-size: 120% !important;
+			background-position-x: center !important;
+			background-position-y: center !important;
+			background-repeat: no-repeat !important;
+			
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+		}
+
+		button.recordButton::Before {
+			background-image: url("https://choptop84.github.io/abyssbox-app/xpRecord.png") !important;
+			background-size: 64% !important;
+			background-position: center !important;
+			background-repeat: no-repeat !important;
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+
+		}
+
+		button.stopButton::Before {
+			background-image: url("https://choptop84.github.io/abyssbox-app/xpStop.png") !important;
+			background-size: 64% !important;
+			background-position: center !important;
+			background-repeat: no-repeat !important;
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+
+		}
+
+		button.pauseButton::Before {
+			background-image: url("https://choptop84.github.io/abyssbox-app/xpPause.png") !important;
+			background-size: 64% !important;
+			background-position: center !important;
+			background-repeat: no-repeat !important;
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+
+		}
+
+		.beepboxEditor span.volume-speaker {
+			background-image: url("https://choptop84.github.io/abyssbox-app/xpSpeaker.png");
+			background-position: center !important;
+			background-repeat: no-repeat !important;
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+			}
+
+		div.selectContainer.menu.file::before {
+
+			background-image: url("https://choptop84.github.io/abyssbox-app/xpFile.png");
+			background-size: 64%;
+			background-position-x: center;
+			background-position-y: center;
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+		}
+
+		div.selectContainer.menu.edit::before {
+
+			background-image: url("https://choptop84.github.io/abyssbox-app/xpEdit.png");
+			background-size: 64%;
+			background-position-x: center;
+			background-position-y: center;
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+		}
+		div.selectContainer.menu.preferences::before {
+
+			background-image: url("https://choptop84.github.io/abyssbox-app/xpPreferences.png");
+			background-size: 64%;
+			background-position-x: center;
+			background-position-y: center;
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+		}
+		button.playButton::before {
+
+			background-image: url("https://choptop84.github.io/abyssbox-app/xpPlay.png") !important;
+			background-size: 64% !important;
+			background-position: center !important;
+
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+		}
+
+		.beepboxEditor button.prevBarButton::before {
+			background-image: url("https://choptop84.github.io/abyssbox-app/xpBackward.png") !important;
+			background-size: 64% !important;
+			background-position: center !important;
+
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+
+		}
+
+		.beepboxEditor button.nextBarButton::before {
+			background-image: url("https://choptop84.github.io/abyssbox-app/xpForward.png") !important;
+			background-size: 64% !important;
+			background-position: center !important;
+
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+
+		}
+
+		.beepboxEditor .zoomInButton::before {
+			background-image: url("https://choptop84.github.io/abyssbox-app/xpZoomIn.png") !important;
+			background-position: center !important;
+
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+
+		}
+
+		.beepboxEditor .zoomOutButton::before {
+			background-image: url("https://choptop84.github.io/abyssbox-app/xpZoomOut.png") !important;
+			background-position: center !important;
+
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+
+		}
+
+		.beepboxEditor input[type="range"]::-moz-range-thumb {
+			background-image: url("https://choptop84.github.io/abyssbox-app/scrollbar.png") !important;
+			background-position: center !important;
+			background-size: inherit !important;
+
+			border-radius: 0px !important;
+			width: 13px !important;
+			height: 23px !important;
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+
+		}
+
+			/* NON ICON STUFFS SO DON'T GET CONFUSED DUMMY!!! */
 
 			#text-content > section > h1 > font {
 		display: none;
@@ -1234,7 +1475,7 @@ export class ColorConfig {
    				border-image-width: 11px; 
 				border-image-repeat: stretch;
     				background-color: transparent; 
-    				padding: 11px; 
+    				padding: 14px; 
 				}
 			#beepboxEditorContainer {
     				border-image-source: url("https://choptop84.github.io/abyssbox-app/xptextbg.png");
@@ -1244,28 +1485,88 @@ export class ColorConfig {
     				background-color: transparent; 
     				padding: 13px; 
 				}
-			 .beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered {
-    				border-image-source: url("https://choptop84.github.io/abyssbox-app/xpbuttonbg.png") !important;
-    				border-image-slice: 5 fill !important; 
-   				border-image-width: 2px !important; 
-				border-image-repeat: stretch !important;
-    				background-color: transparent !important; 
-    				padding: 7px !important; 
-				}		
 
-			@font-face {
-		   font-family: "tahoma";
-		   src:
- 		   url("https://choptop84.github.io/abyssbox-app/tahoma.otf") format("opentype") tech(color-COLRv1),
+			#firstImage {
+				background-image: url("https://choptop84.github.io/abyssbox-app/xpsongeditorbg.png") !important;
+				background-repeat: no-repeat !important;
+				background-size: 100% 100% !important;
 			}
 
-			html {
- 		   font-family: 'tahoma';
-		   font-size: 125% !important;
+			div.menu-area {
+				--ui-widget-background: #edead9; 
 			}
-			div.channelBoxLabel {
-				font-family: 'tahoma' !important;
+			select {
+				--ui-widget-background: #edead9; 
 			}
+			div.playback-bar-controls {
+				--ui-widget-background: #edead9; 
+			}
+
+			.beepboxEditor input[type="range"]::-moz-range-track
+			{
+				background: rgba(222, 217, 189, 0.2) !important;
+				box-shadow:
+					0px 0px 1px 1px rgba(0, 0, 0, 0.0), 
+					inset 0px 1px 2px 0px rgb(125, 120, 95), 
+					inset 0px -1px 0px 0px rgb(255, 255, 255)
+				;
+				border-radius: 4px;
+			} /* Thanks to LeoV's Skeumorphic theme on this one */
+			
+			.beepboxEditor input[type="range"]::-moz-range-track {
+				height: 3px !important;
+			}
+			
+			.beepboxEditor select:focus {
+					border-image-source: url("https://choptop84.github.io/abyssbox-app/xpbuttonpressedbg.png");
+					border-image-slice: 4 fill; 
+					border-image-width: 4px; 
+					border-image-repeat: repeat;
+					background-color: transparent; 
+					padding: 6px; 
+				}
+
+				.beepboxEditor input[type="checkbox"]
+				{
+					appearance: none;
+					background: rgba(255, 255, 255, 1);
+					color: currentColor;
+					border-radius: 0px;
+					width: 13px !important;
+					height: 13px !important;
+					background-image:url("https://choptop84.github.io/abyssbox-app/xpCheckmarkBlank.png");
+					background-repeat:no-repeat;
+
+					image-rendering: -moz-crisp-edges !important;         /* Firefox */
+					image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+					image-rendering: -o-crisp-edges !important;            /* Opera */
+					image-rendering: pixelated !important;                 /* Future browsers */
+					image-rendering: optimizeSpeed !important;             /* IE */
+					transform: scale(2) !important;
+					}
+
+				.beepboxEditor input[type="checkbox"]:checked
+				{
+					display: flex;
+					justify-content: center;
+					transform: scale(2) !important;
+				}
+				 
+				.beepboxEditor input[type="checkbox"]:checked:after
+				{
+					width: 13px;
+					height: 13px;
+					text-align: center;
+					content: "";
+					background-repeat:no-repeat;
+					background-image:url("https://choptop84.github.io/abyssbox-app/xpCheckmark.png");
+					image-rendering: -moz-crisp-edges !important;         /* Firefox */
+					image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+					image-rendering: -o-crisp-edges !important;            /* Opera */
+					image-rendering: pixelated !important;                 /* Future browsers */
+					image-rendering: optimizeSpeed !important;             /* IE */
+				}
+
 
 			`,
       "dark classic": `
