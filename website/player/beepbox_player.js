@@ -3109,11 +3109,11 @@ var beepbox = (function (exports) {
 			--box-selection-fill: #1e0915; 		
 			--loop-accent: #003399; 		
 			--link-accent: #003399; 		
-			--ui-widget-background: #cfcab2; 		
+			--ui-widget-background: #faf9f2; 		
 			--ui-widget-focus: #faf9f2; 		
 			--pitch-background: #ffffff; 		
-			--tonic: #e8e8e8; 		
-			--fifth-note: #919fdd; 		
+			--tonic: #d5dbf5; 		
+			--fifth-note: #e8e8e8; 		
 			--white-piano-key: #ebe2ca; 		
 			--black-piano-key: #403a2f; 		
 			--use-color-formula: true; 		
@@ -3219,8 +3219,8 @@ var beepbox = (function (exports) {
 --mod-primary-note-lum: 65;		
 --mod-primary-note-lum-scale: 0;	
 
-			--note-flash: #81bef0;
-			--note-flash-secondary: #5f9ccf;
+			--note-flash: #ffffff77;
+			--note-flash-secondary: #ffffff66;
 
 				}
 				

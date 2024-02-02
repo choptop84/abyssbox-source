@@ -1194,6 +1194,8 @@ export class SongEditor {
     private readonly _promptContainer: HTMLDivElement = div({ class: "promptContainer", style: "display: none;" });
     private readonly _zoomInButton: HTMLButtonElement = button({ class: "zoomInButton", type: "button", title: "Zoom In" });
     private readonly _zoomOutButton: HTMLButtonElement = button({ class: "zoomOutButton", type: "button", title: "Zoom Out" });
+    private readonly _notesUpButton: HTMLButtonElement = button({ class: "notesUpButton", type: "button", title: "Move Notes Up" });
+    private readonly _notesDownButton: HTMLButtonElement = button({ class: "notesDownButton", type: "button", title: "Move Notes Down" });
     private readonly _patternEditorRow: HTMLDivElement = div({ style: "flex: 1; height: 100%; display: flex; overflow: hidden; justify-content: center;" },
         this._patternEditorPrev.container,
         this._patternEditor.container,
@@ -1205,6 +1207,8 @@ export class SongEditor {
         this._octaveScrollBar.container,
         this._zoomInButton,
         this._zoomOutButton,
+        this._notesUpButton,
+        this._notesDownButton,
     );
     private readonly _trackContainer: HTMLDivElement = div({ class: "trackContainer" },
         this._trackEditor.container,
@@ -1579,6 +1583,8 @@ export class SongEditor {
         this._volumeSlider.input.addEventListener("input", this._setVolumeSlider);
         this._zoomInButton.addEventListener("click", this._zoomIn);
         this._zoomOutButton.addEventListener("click", this._zoomOut);
+        this._notesUpButton.addEventListener("click", this._notesUp);
+        this._notesDownButton.addEventListener("click", this._notesDown);
         this._patternArea.addEventListener("mousedown", this._refocusStageNotEditing);
         this._trackArea.addEventListener("mousedown", this.refocusStage);
 
@@ -2131,6 +2137,10 @@ export class SongEditor {
             this._zoomOutButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
             this._zoomInButton.style.right = prefs.showScrollBar ? "24px" : "4px";
             this._zoomOutButton.style.right = prefs.showScrollBar ? "24px" : "4px";
+            this._notesUpButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._notesDownButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._notesUpButton.style.left = prefs.showScrollBar ? "40px" : "4px";
+            this._notesDownButton.style.left = prefs.showScrollBar ? "40px" : "4px";            
         } else {
             this._patternEditor.container.style.width = "";
             this._patternEditor.container.style.flexShrink = "";
@@ -2138,6 +2148,10 @@ export class SongEditor {
             this._patternEditorNext.container.style.display = "none";
             this._zoomInButton.style.display = "none";
             this._zoomOutButton.style.display = "none";
+            this._notesUpButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._notesDownButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._notesUpButton.style.left = prefs.showScrollBar ? "-50px" : "4px";
+            this._notesDownButton.style.left = prefs.showScrollBar ? "-50px" : "4px";  
         }
         this._patternEditor.render();
 
@@ -4754,6 +4768,14 @@ export class SongEditor {
         this._doc.prefs.save();
         this._doc.notifier.changed();
         this.refocusStage();
+    }
+
+    private _notesUp = (): void => {
+        this._doc.selection.transpose(true, false);
+    }
+
+    private _notesDown = (): void => {
+        this._doc.selection.transpose(false, false);
     }
 
     private _fileMenuHandler = (event: Event): void => {
