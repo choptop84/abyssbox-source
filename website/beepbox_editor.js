@@ -3625,7 +3625,13 @@ var beepbox = (function (exports) {
 					font-family: "tahoma";
 					src:
 					 url("https://choptop84.github.io/abyssbox-app/tahoma.otf") format("opentype") tech(color-COLRv1),
-					 }
+					 image-rendering: -moz-crisp-edges !important;         /* Firefox */
+					 image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+					 image-rendering: -o-crisp-edges !important;            /* Opera */
+					 image-rendering: pixelated !important;                 /* Future browsers */
+					 image-rendering: optimizeSpeed !important;             /* IE */
+
+				}
 	
 				html {
 				font-family: 'tahoma' !important;
@@ -11650,8 +11656,17 @@ var beepbox = (function (exports) {
 	--add-symbol: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="-13 -13 26 26"><path fill="gray" d="M -8 -1 L -1 -1 L -1 -8  L 1 -8 L 1 -1 L 8 -1 L 8 1 L 1 1 L 1 8 L -1 8 L -1 1 L -8 1 z"/></svg>');
 	--zoom-in-symbol: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="-10 -10 20 20"><circle cx="-1" cy="-1" r="6" stroke-width="2" stroke="gray" fill="none"></circle><path stroke="gray" stroke-width="2" d="M 3 3 L 7 7 M -1 -4 L -1 2 M -4 -1 L 2 -1" fill="none"></path></svg>');
 	--zoom-out-symbol: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="-10 -10 20 20"><circle cx="-1" cy="-1" r="6" stroke-width="2" stroke="gray" fill="none"></circle><path stroke="gray" stroke-width="2" d="M 3 3 L 7 7 M -4 -1 L 2 -1" fill="none"></path></svg>');
+	--undo-symbol: url("https://choptop84.github.io/abyssbox-app/icon-undo.png");
+	--redo-symbol: url("https://choptop84.github.io/abyssbox-app/icon-redo.png");
+	--copy-symbol: url("https://choptop84.github.io/abyssbox-app/icon-copy.png");
+	--paste-symbol: url("https://choptop84.github.io/abyssbox-app/icon-paste.png");
+	--insert-channel-symbol: url("https://choptop84.github.io/abyssbox-app/icon-insertChannel.png");
+	--delete-channel-symbol: url("https://choptop84.github.io/abyssbox-app/icon-deleteChannel.png");
+	--select-all-symbol: url("https://choptop84.github.io/abyssbox-app/icon-SelectAll.png");
+	--duplicate-symbol: url("https://choptop84.github.io/abyssbox-app/icon-duplicate.png");
 	--notes-up-symbol: url("https://choptop84.github.io/abyssbox-app/moveNotesUp.png");
 	--notes-down-symbol: url("https://choptop84.github.io/abyssbox-app/moveNotesDown.png");
+	--single-bar-loop-symbol: url("https://choptop84.github.io/abyssbox-app/icon-duplicate.png");
 	--checkmark-symbol: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="-13 -13 26 26"><path fill="gray" d="M -9 -2 L -8 -3 L -3 2 L 9 -8 L 10 -7 L -3 8 z"/></svg>');
 	--drum-symbol: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="40" viewBox="0 0 32 40"> \
 			<defs> \
@@ -12158,16 +12173,216 @@ var beepbox = (function (exports) {
 	-webkit-mask-position: center;
 }
 
+.beepboxEditor .undoButton,
+.beepboxEditor .redoButton,
+.beepboxEditor .copyPatternButton,
+.beepboxEditor .pastePatternButton,
+.beepboxEditor .insertChannelButton,
+.beepboxEditor .deleteChannelButton, 
+.beepboxEditor .selectAllButton,
+.beepboxEditor .duplicateButton, 
 .beepboxEditor .notesUpButton, .beepboxEditor .notesDownButton {
 	width: var(--button-size);
 	position: absolute;
 	right: 10px;
 }
-.beepboxEditor .notesUpButton {
+.beepboxEditor .undoButton {
 	top: 10px;
 }
+.beepboxEditor .redoButton {
+	top: 10px;
+}
+.beepboxEditor .copyPatternButton {
+	top: 40px;
+}
+.beepboxEditor .pastePatternButton {
+	top: 40px;
+}
+.beepboxEditor .insertChannelButton {
+	top: 70px;
+}
+.beepboxEditor .deleteChannelButton {
+	top: 70px;
+}
+.beepboxEditor .selectAllButton {
+	top: 100px;
+}
+.beepboxEditor .duplicateButton {
+	top: 100px;
+}
+.beepboxEditor .notesUpButton {
+	top: 130px;
+}
 .beepboxEditor .notesDownButton {
-	top: 50px;
+	top: 130px;
+}
+.beepboxEditor .copyPatternButton::before {
+	content: "";
+	position: absolute;
+	width: var(--button-size);
+	height: var(--button-size);
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--copy-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--copy-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;         /* Firefox */
+	image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+	image-rendering: -o-crisp-edges !important;            /* Opera */
+	image-rendering: pixelated !important;                 /* Future browsers */
+	image-rendering: optimizeSpeed !important;             /* IE */
+}
+.beepboxEditor .pastePatternButton::before {
+	content: "";
+	position: absolute;
+	width: var(--button-size);
+	height: var(--button-size);
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--paste-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--paste-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;         /* Firefox */
+	image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+	image-rendering: -o-crisp-edges !important;            /* Opera */
+	image-rendering: pixelated !important;                 /* Future browsers */
+	image-rendering: optimizeSpeed !important;             /* IE */
+}
+.beepboxEditor .undoButton::before {
+	content: "";
+	position: absolute;
+	width: var(--button-size);
+	height: var(--button-size);
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--undo-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--undo-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;         /* Firefox */
+	image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+	image-rendering: -o-crisp-edges !important;            /* Opera */
+	image-rendering: pixelated !important;                 /* Future browsers */
+	image-rendering: optimizeSpeed !important;             /* IE */
+}
+.beepboxEditor .redoButton::before {
+	content: "";
+	position: absolute;
+	width: var(--button-size);
+	height: var(--button-size);
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--redo-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--redo-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;         /* Firefox */
+	image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+	image-rendering: -o-crisp-edges !important;            /* Opera */
+	image-rendering: pixelated !important;                 /* Future browsers */
+	image-rendering: optimizeSpeed !important;             /* IE */
+}
+.beepboxEditor .insertChannelButton::before {
+	content: "";
+	position: absolute;
+	width: var(--button-size);
+	height: var(--button-size);
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--insert-channel-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--insert-channel-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;         /* Firefox */
+	image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+	image-rendering: -o-crisp-edges !important;            /* Opera */
+	image-rendering: pixelated !important;                 /* Future browsers */
+	image-rendering: optimizeSpeed !important;             /* IE */
+}
+.beepboxEditor .deleteChannelButton::before {
+	content: "";
+	position: absolute;
+	width: var(--button-size);
+	height: var(--button-size);
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--delete-channel-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--delete-channel-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;         /* Firefox */
+	image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+	image-rendering: -o-crisp-edges !important;            /* Opera */
+	image-rendering: pixelated !important;                 /* Future browsers */
+	image-rendering: optimizeSpeed !important;             /* IE */
+}
+.beepboxEditor .selectAllButton::before {
+	content: "";
+	position: absolute;
+	width: var(--button-size);
+	height: var(--button-size);
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--select-all-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--select-all-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;         /* Firefox */
+	image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+	image-rendering: -o-crisp-edges !important;            /* Opera */
+	image-rendering: pixelated !important;                 /* Future browsers */
+	image-rendering: optimizeSpeed !important;             /* IE */
+}
+.beepboxEditor .duplicateButton::before {
+	content: "";
+	position: absolute;
+	width: var(--button-size);
+	height: var(--button-size);
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--duplicate-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--duplicate-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;         /* Firefox */
+	image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+	image-rendering: -o-crisp-edges !important;            /* Opera */
+	image-rendering: pixelated !important;                 /* Future browsers */
+	image-rendering: optimizeSpeed !important;             /* IE */
 }
 .beepboxEditor .notesUpButton::before {
 	content: "";
@@ -43255,10 +43470,18 @@ You should be redirected to the song at:<br /><br />
             this._promptContainer = div({ class: "promptContainer", style: "display: none;" });
             this._zoomInButton = button({ class: "zoomInButton", type: "button", title: "Zoom In" });
             this._zoomOutButton = button({ class: "zoomOutButton", type: "button", title: "Zoom Out" });
+            this._undoButton = button({ class: "undoButton", type: "button", title: "Undo Changes" });
+            this._redoButton = button({ class: "redoButton", type: "button", title: "Redo Changes" });
+            this._copyPatternButton = button({ class: "copyPatternButton", type: "button", title: "Copy Selected Notes" });
+            this._pastePatternButton = button({ class: "pastePatternButton", type: "button", title: "Paste Selected Notes" });
+            this._insertChannelButton = button({ class: "insertChannelButton", type: "button", title: "Insert Channel Below" });
+            this._deleteChannelButton = button({ class: "deleteChannelButton", type: "button", title: "Delete Selected Channel" });
+            this._selectAllButton = button({ class: "selectAllButton", type: "button", title: "Select All" });
+            this._duplicateButton = button({ class: "duplicateButton", type: "button", title: "Duplicate Selected Pattern" });
             this._notesUpButton = button({ class: "notesUpButton", type: "button", title: "Move Notes Up" });
             this._notesDownButton = button({ class: "notesDownButton", type: "button", title: "Move Notes Down" });
             this._patternEditorRow = div({ style: "flex: 1; height: 100%; display: flex; overflow: hidden; justify-content: center;" }, this._patternEditorPrev.container, this._patternEditor.container, this._patternEditorNext.container);
-            this._patternArea = div({ class: "pattern-area" }, this._piano.container, this._patternEditorRow, this._octaveScrollBar.container, this._zoomInButton, this._zoomOutButton, this._notesUpButton, this._notesDownButton);
+            this._patternArea = div({ class: "pattern-area" }, this._piano.container, this._patternEditorRow, this._octaveScrollBar.container, this._zoomInButton, this._zoomOutButton, this._undoButton, this._redoButton, this._copyPatternButton, this._pastePatternButton, this._insertChannelButton, this._deleteChannelButton, this._selectAllButton, this._duplicateButton, this._notesUpButton, this._notesDownButton);
             this._trackContainer = div({ class: "trackContainer" }, this._trackEditor.container, this._loopEditor.container);
             this._trackVisibleArea = div({ style: "position: absolute; width: 100%; height: 100%; pointer-events: none;" });
             this._trackAndMuteContainer = div({ class: "trackAndMuteContainer" }, this._muteEditor.container, this._trackContainer, this._trackVisibleArea);
@@ -43374,10 +43597,24 @@ You should be redirected to the song at:<br /><br />
                     this._zoomOutButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
                     this._zoomInButton.style.right = prefs.showScrollBar ? "24px" : "4px";
                     this._zoomOutButton.style.right = prefs.showScrollBar ? "24px" : "4px";
-                    this._notesUpButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                    this._notesDownButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                    this._notesUpButton.style.left = prefs.showScrollBar ? "40px" : "4px";
-                    this._notesDownButton.style.left = prefs.showScrollBar ? "40px" : "4px";
+                    this._undoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+                    this._redoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+                    this._copyPatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+                    this._pastePatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+                    this._insertChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+                    this._deleteChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+                    this._selectAllButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+                    this._duplicateButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+                    this._undoButton.style.left = prefs.showScrollBar ? "40px" : "40px";
+                    this._redoButton.style.left = prefs.showScrollBar ? "70px" : "70px";
+                    this._copyPatternButton.style.left = prefs.showScrollBar ? "40px" : "40px";
+                    this._pastePatternButton.style.left = prefs.showScrollBar ? "70px" : "70px";
+                    this._insertChannelButton.style.left = prefs.showScrollBar ? "40px" : "40px";
+                    this._deleteChannelButton.style.left = prefs.showScrollBar ? "70px" : "70px";
+                    this._selectAllButton.style.left = prefs.showScrollBar ? "40px" : "40px";
+                    this._duplicateButton.style.left = prefs.showScrollBar ? "70px" : "70px";
+                    this._notesUpButton.style.left = prefs.showScrollBar ? "40px" : "40px";
+                    this._notesDownButton.style.left = prefs.showScrollBar ? "70px" : "70px";
                 }
                 else {
                     this._patternEditor.container.style.width = "";
@@ -43386,10 +43623,26 @@ You should be redirected to the song at:<br /><br />
                     this._patternEditorNext.container.style.display = "none";
                     this._zoomInButton.style.display = "none";
                     this._zoomOutButton.style.display = "none";
+                    this._undoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+                    this._redoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+                    this._copyPatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+                    this._pastePatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+                    this._insertChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+                    this._deleteChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+                    this._selectAllButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+                    this._duplicateButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
                     this._notesUpButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
                     this._notesDownButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                    this._notesUpButton.style.left = prefs.showScrollBar ? "-50px" : "4px";
-                    this._notesDownButton.style.left = prefs.showScrollBar ? "-50px" : "4px";
+                    this._undoButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
+                    this._redoButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";
+                    this._copyPatternButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
+                    this._pastePatternButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";
+                    this._insertChannelButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
+                    this._deleteChannelButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";
+                    this._selectAllButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
+                    this._duplicateButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";
+                    this._notesUpButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
+                    this._notesDownButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";
                 }
                 this._patternEditor.render();
                 const optionCommands = [
@@ -45478,6 +45731,30 @@ You should be redirected to the song at:<br /><br />
                 this._doc.notifier.changed();
                 this.refocusStage();
             };
+            this._undo = () => {
+                this._doc.undo();
+            };
+            this._redo = () => {
+                this._doc.redo();
+            };
+            this._copy = () => {
+                this._doc.selection.copy();
+            };
+            this._paste = () => {
+                this._doc.selection.pasteNotes();
+            };
+            this._insertChannel = () => {
+                this._doc.selection.insertChannel();
+            };
+            this._deleteChannel = () => {
+                this._doc.selection.deleteChannel();
+            };
+            this._selectAll = () => {
+                this._doc.selection.selectAll();
+            };
+            this._duplicate = () => {
+                this._doc.selection.duplicatePatterns();
+            };
             this._notesUp = () => {
                 this._doc.selection.transpose(true, false);
             };
@@ -45842,6 +46119,14 @@ You should be redirected to the song at:<br /><br />
             this._volumeSlider.input.addEventListener("input", this._setVolumeSlider);
             this._zoomInButton.addEventListener("click", this._zoomIn);
             this._zoomOutButton.addEventListener("click", this._zoomOut);
+            this._undoButton.addEventListener("click", this._undo);
+            this._redoButton.addEventListener("click", this._redo);
+            this._copyPatternButton.addEventListener("click", this._copy);
+            this._pastePatternButton.addEventListener("click", this._paste);
+            this._insertChannelButton.addEventListener("click", this._insertChannel);
+            this._deleteChannelButton.addEventListener("click", this._deleteChannel);
+            this._selectAllButton.addEventListener("click", this._selectAll);
+            this._duplicateButton.addEventListener("click", this._duplicate);
             this._notesUpButton.addEventListener("click", this._notesUp);
             this._notesDownButton.addEventListener("click", this._notesDown);
             this._patternArea.addEventListener("mousedown", this._refocusStageNotEditing);

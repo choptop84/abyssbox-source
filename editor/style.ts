@@ -58,8 +58,17 @@ document.head.appendChild(HTML.style({ type: "text/css" }, `
 	--add-symbol: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="-13 -13 26 26"><path fill="gray" d="M -8 -1 L -1 -1 L -1 -8  L 1 -8 L 1 -1 L 8 -1 L 8 1 L 1 1 L 1 8 L -1 8 L -1 1 L -8 1 z"/></svg>');
 	--zoom-in-symbol: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="-10 -10 20 20"><circle cx="-1" cy="-1" r="6" stroke-width="2" stroke="gray" fill="none"></circle><path stroke="gray" stroke-width="2" d="M 3 3 L 7 7 M -1 -4 L -1 2 M -4 -1 L 2 -1" fill="none"></path></svg>');
 	--zoom-out-symbol: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="-10 -10 20 20"><circle cx="-1" cy="-1" r="6" stroke-width="2" stroke="gray" fill="none"></circle><path stroke="gray" stroke-width="2" d="M 3 3 L 7 7 M -4 -1 L 2 -1" fill="none"></path></svg>');
+	--undo-symbol: url("https://choptop84.github.io/abyssbox-app/icon-undo.png");
+	--redo-symbol: url("https://choptop84.github.io/abyssbox-app/icon-redo.png");
+	--copy-symbol: url("https://choptop84.github.io/abyssbox-app/icon-copy.png");
+	--paste-symbol: url("https://choptop84.github.io/abyssbox-app/icon-paste.png");
+	--insert-channel-symbol: url("https://choptop84.github.io/abyssbox-app/icon-insertChannel.png");
+	--delete-channel-symbol: url("https://choptop84.github.io/abyssbox-app/icon-deleteChannel.png");
+	--select-all-symbol: url("https://choptop84.github.io/abyssbox-app/icon-SelectAll.png");
+	--duplicate-symbol: url("https://choptop84.github.io/abyssbox-app/icon-duplicate.png");
 	--notes-up-symbol: url("https://choptop84.github.io/abyssbox-app/moveNotesUp.png");
 	--notes-down-symbol: url("https://choptop84.github.io/abyssbox-app/moveNotesDown.png");
+	--single-bar-loop-symbol: url("https://choptop84.github.io/abyssbox-app/icon-duplicate.png");
 	--checkmark-symbol: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="-13 -13 26 26"><path fill="gray" d="M -9 -2 L -8 -3 L -3 2 L 9 -8 L 10 -7 L -3 8 z"/></svg>');
 	--drum-symbol: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="40" viewBox="0 0 32 40"> \
 			<defs> \
@@ -566,16 +575,216 @@ document.head.appendChild(HTML.style({ type: "text/css" }, `
 	-webkit-mask-position: center;
 }
 
+.beepboxEditor .undoButton,
+.beepboxEditor .redoButton,
+.beepboxEditor .copyPatternButton,
+.beepboxEditor .pastePatternButton,
+.beepboxEditor .insertChannelButton,
+.beepboxEditor .deleteChannelButton, 
+.beepboxEditor .selectAllButton,
+.beepboxEditor .duplicateButton, 
 .beepboxEditor .notesUpButton, .beepboxEditor .notesDownButton {
 	width: var(--button-size);
 	position: absolute;
 	right: 10px;
 }
-.beepboxEditor .notesUpButton {
+.beepboxEditor .undoButton {
 	top: 10px;
 }
+.beepboxEditor .redoButton {
+	top: 10px;
+}
+.beepboxEditor .copyPatternButton {
+	top: 40px;
+}
+.beepboxEditor .pastePatternButton {
+	top: 40px;
+}
+.beepboxEditor .insertChannelButton {
+	top: 70px;
+}
+.beepboxEditor .deleteChannelButton {
+	top: 70px;
+}
+.beepboxEditor .selectAllButton {
+	top: 100px;
+}
+.beepboxEditor .duplicateButton {
+	top: 100px;
+}
+.beepboxEditor .notesUpButton {
+	top: 130px;
+}
 .beepboxEditor .notesDownButton {
-	top: 50px;
+	top: 130px;
+}
+.beepboxEditor .copyPatternButton::before {
+	content: "";
+	position: absolute;
+	width: var(--button-size);
+	height: var(--button-size);
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--copy-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--copy-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;         /* Firefox */
+	image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+	image-rendering: -o-crisp-edges !important;            /* Opera */
+	image-rendering: pixelated !important;                 /* Future browsers */
+	image-rendering: optimizeSpeed !important;             /* IE */
+}
+.beepboxEditor .pastePatternButton::before {
+	content: "";
+	position: absolute;
+	width: var(--button-size);
+	height: var(--button-size);
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--paste-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--paste-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;         /* Firefox */
+	image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+	image-rendering: -o-crisp-edges !important;            /* Opera */
+	image-rendering: pixelated !important;                 /* Future browsers */
+	image-rendering: optimizeSpeed !important;             /* IE */
+}
+.beepboxEditor .undoButton::before {
+	content: "";
+	position: absolute;
+	width: var(--button-size);
+	height: var(--button-size);
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--undo-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--undo-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;         /* Firefox */
+	image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+	image-rendering: -o-crisp-edges !important;            /* Opera */
+	image-rendering: pixelated !important;                 /* Future browsers */
+	image-rendering: optimizeSpeed !important;             /* IE */
+}
+.beepboxEditor .redoButton::before {
+	content: "";
+	position: absolute;
+	width: var(--button-size);
+	height: var(--button-size);
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--redo-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--redo-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;         /* Firefox */
+	image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+	image-rendering: -o-crisp-edges !important;            /* Opera */
+	image-rendering: pixelated !important;                 /* Future browsers */
+	image-rendering: optimizeSpeed !important;             /* IE */
+}
+.beepboxEditor .insertChannelButton::before {
+	content: "";
+	position: absolute;
+	width: var(--button-size);
+	height: var(--button-size);
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--insert-channel-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--insert-channel-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;         /* Firefox */
+	image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+	image-rendering: -o-crisp-edges !important;            /* Opera */
+	image-rendering: pixelated !important;                 /* Future browsers */
+	image-rendering: optimizeSpeed !important;             /* IE */
+}
+.beepboxEditor .deleteChannelButton::before {
+	content: "";
+	position: absolute;
+	width: var(--button-size);
+	height: var(--button-size);
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--delete-channel-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--delete-channel-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;         /* Firefox */
+	image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+	image-rendering: -o-crisp-edges !important;            /* Opera */
+	image-rendering: pixelated !important;                 /* Future browsers */
+	image-rendering: optimizeSpeed !important;             /* IE */
+}
+.beepboxEditor .selectAllButton::before {
+	content: "";
+	position: absolute;
+	width: var(--button-size);
+	height: var(--button-size);
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--select-all-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--select-all-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;         /* Firefox */
+	image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+	image-rendering: -o-crisp-edges !important;            /* Opera */
+	image-rendering: pixelated !important;                 /* Future browsers */
+	image-rendering: optimizeSpeed !important;             /* IE */
+}
+.beepboxEditor .duplicateButton::before {
+	content: "";
+	position: absolute;
+	width: var(--button-size);
+	height: var(--button-size);
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--duplicate-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--duplicate-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;         /* Firefox */
+	image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+	image-rendering: -o-crisp-edges !important;            /* Opera */
+	image-rendering: pixelated !important;                 /* Future browsers */
+	image-rendering: optimizeSpeed !important;             /* IE */
 }
 .beepboxEditor .notesUpButton::before {
 	content: "";

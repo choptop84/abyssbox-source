@@ -1232,7 +1232,13 @@ export class ColorConfig {
 					font-family: "tahoma";
 					src:
 					 url("https://choptop84.github.io/abyssbox-app/tahoma.otf") format("opentype") tech(color-COLRv1),
-					 }
+					 image-rendering: -moz-crisp-edges !important;         /* Firefox */
+					 image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+					 image-rendering: -o-crisp-edges !important;            /* Opera */
+					 image-rendering: pixelated !important;                 /* Future browsers */
+					 image-rendering: optimizeSpeed !important;             /* IE */
+
+				}
 	
 				html {
 				font-family: 'tahoma' !important;
