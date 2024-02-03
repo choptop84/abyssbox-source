@@ -1228,6 +1228,7 @@ export class SongEditor {
     private readonly _duplicateButton: HTMLButtonElement = button({class:"duplicateButton", type:"button", title:"Duplicate Selected Pattern"});  
     private readonly _notesUpButton: HTMLButtonElement = button({ class: "notesUpButton", type: "button", title: "Move Notes Up" });
     private readonly _notesDownButton: HTMLButtonElement = button({ class: "notesDownButton", type: "button", title: "Move Notes Down" });
+    private readonly _loopBarButton: HTMLButtonElement = button({ class: "loopBarButton", type: "button", title: "Loop only on the Currently Selected Bar" });
     private readonly _patternEditorRow: HTMLDivElement = div({ style: "flex: 1; height: 100%; display: flex; overflow: hidden; justify-content: center;" },
         this._patternEditorPrev.container,
         this._patternEditor.container,
@@ -1249,6 +1250,7 @@ export class SongEditor {
         this._duplicateButton,        
         this._notesUpButton,
         this._notesDownButton,
+        this._loopBarButton,
     );
     private readonly _trackContainer: HTMLDivElement = div({ class: "trackContainer" },
         this._trackEditor.container,
@@ -1633,6 +1635,7 @@ export class SongEditor {
         this._duplicateButton.addEventListener("click", this._duplicate);
         this._notesUpButton.addEventListener("click", this._notesUp);
         this._notesDownButton.addEventListener("click", this._notesDown);
+        this._loopBarButton.addEventListener("click", this._loopBar);
         this._patternArea.addEventListener("mousedown", this._refocusStageNotEditing);
         this._trackArea.addEventListener("mousedown", this.refocusStage);
 
@@ -2217,7 +2220,8 @@ export class SongEditor {
             this._selectAllButton.style.left = prefs.showScrollBar ? "40px" : "40px";
             this._duplicateButton.style.left = prefs.showScrollBar ? "70px" : "70px";   
             this._notesUpButton.style.left = prefs.showScrollBar ? "40px" : "40px";
-            this._notesDownButton.style.left = prefs.showScrollBar ? "70px" : "70px";            
+            this._notesDownButton.style.left = prefs.showScrollBar ? "70px" : "70px";
+            this._loopBarButton.style.left = prefs.showScrollBar ? "40px" : "40px";            
         } else {
             this._patternEditor.container.style.width = "";
             this._patternEditor.container.style.flexShrink = "";
@@ -2244,7 +2248,8 @@ export class SongEditor {
             this._selectAllButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
             this._duplicateButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";   
             this._notesUpButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
-            this._notesDownButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";  
+            this._notesDownButton.style.left = prefs.showScrollBar ? "-50px" : "-50px"; 
+            this._loopBarButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";   
         }
     } else {
         if (this._doc.getFullScreen()) {
@@ -2326,6 +2331,8 @@ export class SongEditor {
             this._notesUpButton.style.left = prefs.showScrollBar ? "2px" : "2px";
             this._notesDownButton.style.top = prefs.showScrollBar ? "270px" : "270px";
             this._notesDownButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._loopBarButton.style.top = prefs.showScrollBar ? "300px" : "300px";
+            this._loopBarButton.style.left = prefs.showScrollBar ? "2px" : "2px";
         }
     }
         this._patternEditor.render();
@@ -5019,6 +5026,12 @@ export class SongEditor {
 
     private _notesDown = (): void => {
         this._doc.selection.transpose(false, false);
+    }
+
+    private _loopBar = (): void => {
+        if (this._doc.synth.loopBar != this._doc.bar) {
+            this._doc.synth.loopBar = this._doc.bar; } else {
+                this._doc.synth.loopBar = -1; }
     }
 
     private _fileMenuHandler = (event: Event): void => {
