@@ -2308,9 +2308,7 @@ export class SongEditor {
                 this._fullscreenButton.style.left = prefs.showScrollBar ? "2px" : "2px";
                 this._patternArea.style.paddingLeft = prefs.showScrollBar ? "32px" : "32px" ;
         } else {
-
                 // "Zoomed in" Layout that only shows the pattern editor //
-
                 this._patternEditor.container.style.width = "";
                 this._patternEditor.container.style.flexShrink = "";
                 this._patternEditorPrev.container.style.display = "none";
@@ -2327,8 +2325,12 @@ export class SongEditor {
                 this._duplicateButton.style.display = "none";
                 this._notesUpButton.style.display = "none";
                 this._notesDownButton.style.display = "none";
+                this._loopBarButton.style.display = "none";
                 this._fullscreenButton.style.top = prefs.showScrollBar ? "0px" : "0px";
                 this._fullscreenButton.style.left = prefs.showScrollBar ? "32px" : "32px";
+                this._patternArea.style.maxHeight =  "99vh";
+                this._patternArea.style.height =  "800px";
+                this._patternArea.style.paddingLeft ="0px";
         }
     }
         this._patternEditor.render();

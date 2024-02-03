@@ -43980,8 +43980,12 @@ You should be redirected to the song at:<br /><br />
                         this._duplicateButton.style.display = "none";
                         this._notesUpButton.style.display = "none";
                         this._notesDownButton.style.display = "none";
+                        this._loopBarButton.style.display = "none";
                         this._fullscreenButton.style.top = prefs.showScrollBar ? "0px" : "0px";
                         this._fullscreenButton.style.left = prefs.showScrollBar ? "32px" : "32px";
+                        this._patternArea.style.maxHeight = "99vh";
+                        this._patternArea.style.height = "800px";
+                        this._patternArea.style.paddingLeft = "0px";
                     }
                 }
                 this._patternEditor.render();
