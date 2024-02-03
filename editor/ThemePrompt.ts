@@ -44,7 +44,6 @@ export class ThemePrompt implements Prompt {
 			option({ value: "neapolitan" }, "Neapolitan"),
 			option({ value: "mono" }, "Poly"),
 			option({ value: "blutonium" }, "Blutonium"),
-			option({ value: "slushie" }, "Slushie"),
 			option({ value: "azur lane" }, "Azur Lane"),
 			option({ value: "modbox classic" }, "Modbox"),
 			option({ value: "sandbox classic" }, "Sandbox"),

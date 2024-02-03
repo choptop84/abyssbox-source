@@ -144,7 +144,10 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 		
 		fullscreenLink.href = location.href;
 			
-		for (const parameter of myHash.split("&")) {
+			// @TODO: This can be moved back into splitting merely on & once samples
+			// are reworked so that the URLs don't clash with the overall URL syntax
+			// that's assumed to be respected here (and probably elsewhere...)
+		for (const parameter of myHash.split(/&(?=[a-z]+=)/g)) {
 			let equalsIndex: number = parameter.indexOf("=");
 			if (equalsIndex != -1) {
 				let paramName: string = parameter.substring(0, equalsIndex);

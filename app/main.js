@@ -1,5 +1,5 @@
-const { app, BrowserWindow, Menu } = require('electron/main');
-const { mainMenu } = require("./menu");
+const { app, BrowserWindow } = require('electron/main'); //, Menu
+// const { mainMenu } = require("./menu");
 const path = require('path');
 
 const createWindow = () => {
@@ -12,9 +12,10 @@ const createWindow = () => {
 	})
 
 	win.loadFile('index.html');
+	win.removeMenu();
 }
 
-Menu.setApplicationMenu(mainMenu);
+//Menu.setApplicationMenu(mainMenu);
 
 app.whenReady().then(() => {
 	createWindow()

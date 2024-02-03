@@ -223,7 +223,7 @@ export class SongDocument {
 			this._resetSongRecoveryUid();
 			const state: HistoryState = {canUndo: true, sequenceNumber: this._sequenceNumber, bar: this.bar, channel: this.channel, instrument: this.viewedInstrument[this.channel], recoveryUid: this._recoveryUid, prompt: null, selection: this.selection.toJSON()};
 			try {
-			new ChangeSong(this, window.location.hash);
+				new ChangeSong(this, this._getHash());
 		} catch (error) {
 			errorAlert(error);
 		}

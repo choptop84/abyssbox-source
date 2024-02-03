@@ -36,6 +36,7 @@ export class Preferences {
 	public metronomeWhileRecording: boolean;
 	public showOscilloscope: boolean;
 	public showSampleLoadingStatus: boolean;
+	public showDescription: boolean;
 	public closePromptByClickoff: boolean;
 	public notesFlashWhenPlayed: boolean;
 
@@ -87,6 +88,7 @@ export class Preferences {
 			window.localStorage.removeItem("fullScreen");
 		}
 		this.closePromptByClickoff = window.localStorage.getItem("closePromptByClickoff") != "false";
+		this.showDescription = window.localStorage.getItem("showDescription") != "false";
 	}
 	
 	public save(): void {
@@ -123,5 +125,6 @@ export class Preferences {
 		window.localStorage.setItem("volume", String(this.volume));
 		window.localStorage.setItem("visibleOctaves", String(this.visibleOctaves));
 		window.localStorage.setItem("closePromptByClickoff", this.closePromptByClickoff ? "true" : "false");
+		window.localStorage.setItem("showDescription", this.showDescription ? "true" : "false");
 	}
 }

@@ -519,31 +519,32 @@ export class TipPrompt implements Prompt {
 			case "unisonVoices": {
 				message = div(
 					h2("Unison Voices"),
-					p("This setting controls how many voices there are in a unison."),
+					p("This setting controls how many voices there are in a unison. Unisons such as \"none\" or \"detune\" use 1 voice, while most other unisons use 2 voices."),
 				);
 			} break;
 			case "unisonSpread": {
 				message = div(
 					h2("Unison Spread"),
-					p("This setting controls the distance between the two voices."),
+					p("This setting controls the distance between the two voices, in semitones. A small amount of spread causes the voice's waves to shift in and out from each other, causing a shimmering effect. Larger spread will cause the voices to act like separate notes."),
+					p("This setting will only work correctly with two voices."),
 				);
 			} break;
 			case "unisonOffset": {
 				message = div(
 					h2("Unison Offset"),
-					p("This setting controls the pitch offset."),
+					p("This setting controls the detune applied to BOTH voices, in semitones."),
 				);
 			} break;
 			case "unisonExpression": {
 				message = div(
 					h2("Unison Expression"),
-					p("This setting controls the unison volume."),
+					p("This setting controls the unison volume. Use this if the unison makes your instrument too loud in comparison to other instruments."),
 				);
 			} break;
 			case "unisonSign": {
 				message = div(
 					h2("Unison Sign"),
-					p("This setting is a multiplier applied to the second voice (if applicable)."),
+					p("This setting is a volume multiplier applied to the second voice. This setting will only work correctly with two voices."),
 				);
 			} break;
 

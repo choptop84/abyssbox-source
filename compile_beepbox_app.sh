@@ -1,8 +1,12 @@
 #!/bin/bash
 set -e
 
-# Compile editor/main.ts into build/editor/main.js and dependencies
+# Copy all typescript files of /editor to /app_editor
+cp editor/*.ts app_editor/
 npx tsc -p tsconfig_app.json
+
+# Copy contents of OfflineAddSamplesPrompt.ts into AddSamplesPrompt.ts
+cp app_editor/OfflineAddSamplesPrompt.ts app_editor/AddSamplesPrompt.ts
 
 # Combine build/app_editor/main.js and dependencies into app/beepbox_app_editor.js
 npx rollup build/app_editor/main.js \

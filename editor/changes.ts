@@ -591,7 +591,7 @@ export class ChangeRandomGeneratedInstrument extends Change {
 
         const isNoise: boolean = doc.song.getChannelIsNoise(doc.channel);
         const instrument: Instrument = doc.song.channels[doc.channel].instruments[doc.getCurrentInstrument()];
-        instrument.effects &= 1 << EffectType.panning; // disable all existing effects except panning.
+        instrument.effects = 1 << EffectType.panning; // disable all existing effects except panning, which should always be on.
         instrument.aliases = false;
         instrument.envelopeCount = 0;
 
@@ -3015,6 +3015,17 @@ export class ChangePasteInstrument extends ChangeGroup {
         instrument.fromJsonObject(instrumentCopy, instrumentCopy["isDrum"], instrumentCopy["isMod"], false, false);
         doc.notifier.changed();
         this._didSomething();
+    }
+}
+
+export class ChangeAppendInstrument extends ChangeGroup {
+    constructor(doc: SongDocument, channel: Channel, instrument: any) {
+        super();
+        let newInstrument: Instrument = new Instrument(instrument["isDrum"], instrument["isMod"])
+        newInstrument.fromJsonObject(instrument, instrument["isDrum"], instrument["isMod"], false, false);
+        channel.instruments.push(newInstrument);
+        this._didSomething();
+        doc.notifier.changed();
     }
 }
 
