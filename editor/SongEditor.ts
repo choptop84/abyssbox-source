@@ -2263,7 +2263,7 @@ export class SongEditor {
 
         }
     } else {
-
+            
         if (this.isMobileFullscreen != true) {
 
                 // Default Mobile Layout with buttons and stuff //
@@ -2312,6 +2312,7 @@ export class SongEditor {
                 this._patternArea.style.paddingLeft = prefs.showScrollBar ? "32px" : "32px" ;
                 this._patternArea.style.maxHeight =  "75vh";
                 this._patternArea.style.height =  "481px";
+                this._patternEditor.container.style.paddingTop = "0px";
         } else {
                 // "Zoomed in" Layout that only shows the pattern editor //
                 this._patternEditor.container.style.width = "";
@@ -2336,6 +2337,7 @@ export class SongEditor {
                 this._patternArea.style.maxHeight =  "99vh";
                 this._patternArea.style.height =  "800px";
                 this._patternArea.style.paddingLeft ="0px";
+                this._patternEditor.container.style.paddingTop = "0px";
         }
     }
         this._patternEditor.render();
