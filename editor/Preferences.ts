@@ -67,6 +67,7 @@ export class Preferences {
 		this.metronomeWhileRecording = window.localStorage.getItem("metronomeWhileRecording") != "false";
 		this.showOscilloscope = window.localStorage.getItem("showOscilloscope") != "false";
 		this.showSampleLoadingStatus = window.localStorage.getItem("showSampleLoadingStatus") != "false";
+		this.showDescription = window.localStorage.getItem("showDescription") != "false";
 		this.notesFlashWhenPlayed = window.localStorage.getItem("notesFlashWhenPlayed") != "false";
 		this.keyboardLayout = window.localStorage.getItem("keyboardLayout") || "wickiHayden";
 		this.bassOffset = (+(<any>window.localStorage.getItem("bassOffset"))) || 0;
@@ -88,7 +89,6 @@ export class Preferences {
 			window.localStorage.removeItem("fullScreen");
 		}
 		this.closePromptByClickoff = window.localStorage.getItem("closePromptByClickoff") != "false";
-		this.showDescription = window.localStorage.getItem("showDescription") != "false";
 	}
 	
 	public save(): void {
@@ -115,6 +115,7 @@ export class Preferences {
 		window.localStorage.setItem("metronomeWhileRecording", this.metronomeWhileRecording ? "true" : "false");
 		window.localStorage.setItem("showOscilloscope", this.showOscilloscope ? "true" : "false");
 		window.localStorage.setItem("showSampleLoadingStatus", this.showSampleLoadingStatus ? "true" : "false");
+		window.localStorage.setItem("showDescription", this.showDescription ? "true" : "false");
 		window.localStorage.setItem("notesFlashWhenPlayed", this.notesFlashWhenPlayed ? "true" : "false");
 		window.localStorage.setItem("keyboardLayout", this.keyboardLayout);
 		window.localStorage.setItem("bassOffset", String(this.bassOffset));
@@ -125,6 +126,5 @@ export class Preferences {
 		window.localStorage.setItem("volume", String(this.volume));
 		window.localStorage.setItem("visibleOctaves", String(this.visibleOctaves));
 		window.localStorage.setItem("closePromptByClickoff", this.closePromptByClickoff ? "true" : "false");
-		window.localStorage.setItem("showDescription", this.showDescription ? "true" : "false");
 	}
 }

@@ -811,8 +811,8 @@ export class SongEditor {
         option({ value: "notesFlashWhenPlayed" }, "Notes Flash When Played (DB2)"),
         option({ value: "showOscilloscope" }, "Show Oscilloscope"),
         option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"),
-        option({ value: "closePromptByClickoff" }, "Close prompts on click off"),
         option({ value: "showDescription" }, "Show Description"),
+        option({ value: "closePromptByClickoff" }, "Close prompts on click off"),
         option({ value: "layout" }, "Set Layout..."),
         option({ value: "colorTheme" }, "Set Theme..."),
 	    option({ value: "customTheme" }, "Custom Theme..."),
@@ -2175,7 +2175,7 @@ export class SongEditor {
         if (document.getElementById('text-content'))
             document.getElementById('text-content')!.style.display = this._doc.prefs.showDescription ? "" : "none";
 
-
+            if (!isMobile) {
         if (this._doc.getFullScreen()) {
             const semitoneHeight: number = this._patternEditorRow.clientHeight / this._doc.getVisiblePitchCount();
             const targetBeatWidth: number = semitoneHeight * 5;
@@ -2246,6 +2246,88 @@ export class SongEditor {
             this._notesUpButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
             this._notesDownButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";  
         }
+    } else {
+        if (this._doc.getFullScreen()) {
+            const semitoneHeight: number = this._patternEditorRow.clientHeight / this._doc.getVisiblePitchCount();
+            const targetBeatWidth: number = semitoneHeight * 5;
+            const minBeatWidth: number = this._patternEditorRow.clientWidth / (this._doc.song.beatsPerBar * 3);
+            const maxBeatWidth: number = this._patternEditorRow.clientWidth / (this._doc.song.beatsPerBar + 2);
+            const beatWidth: number = Math.max(minBeatWidth, Math.min(maxBeatWidth, targetBeatWidth));
+            const patternEditorWidth: number = beatWidth * this._doc.song.beatsPerBar;
+
+            this._patternEditorPrev.container.style.width = patternEditorWidth + "px";
+            this._patternEditor.container.style.width = patternEditorWidth + "px";
+            this._patternEditorNext.container.style.width = patternEditorWidth + "px";
+            this._patternEditorPrev.container.style.flexShrink = "0";
+            this._patternEditor.container.style.flexShrink = "0";
+            this._patternEditorNext.container.style.flexShrink = "0";
+            this._patternEditorPrev.container.style.display = "";
+            this._patternEditorNext.container.style.display = "";
+            this._patternEditorPrev.render();
+            this._patternEditorNext.render();
+            this._zoomInButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._zoomOutButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._zoomInButton.style.right = prefs.showScrollBar ? "24px" : "4px";
+            this._zoomOutButton.style.right = prefs.showScrollBar ? "24px" : "4px";
+
+            this._undoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._redoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._copyPatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._pastePatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";            
+            this._insertChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._deleteChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._selectAllButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._duplicateButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+
+            this._undoButton.style.left = prefs.showScrollBar ? "40px" : "40px";
+            this._redoButton.style.left = prefs.showScrollBar ? "70px" : "70px";
+            this._copyPatternButton.style.left = prefs.showScrollBar ? "40px" : "40px";
+            this._pastePatternButton.style.left = prefs.showScrollBar ? "70px" : "70px";
+            this._insertChannelButton.style.left = prefs.showScrollBar ? "40px" : "40px";
+            this._deleteChannelButton.style.left = prefs.showScrollBar ? "70px" : "70px";
+            this._selectAllButton.style.left = prefs.showScrollBar ? "40px" : "40px";
+            this._duplicateButton.style.left = prefs.showScrollBar ? "70px" : "70px";   
+            this._notesUpButton.style.left = prefs.showScrollBar ? "40px" : "40px";
+            this._notesDownButton.style.left = prefs.showScrollBar ? "70px" : "70px";            
+        } else {
+            this._patternEditor.container.style.width = "";
+            this._patternEditor.container.style.flexShrink = "";
+            this._patternEditorPrev.container.style.display = "none";
+            this._patternEditorNext.container.style.display = "none";
+            this._zoomInButton.style.display = "none";
+            this._zoomOutButton.style.display = "none";
+            this._undoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._redoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._copyPatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._pastePatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";            
+            this._insertChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._deleteChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._selectAllButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._duplicateButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._notesUpButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._notesDownButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._undoButton.style.top = prefs.showScrollBar ? "0px" : "0px";
+            this._undoButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._redoButton.style.top = prefs.showScrollBar ? "30px" : "30px";
+            this._redoButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._copyPatternButton.style.top = prefs.showScrollBar ? "60px" : "60px";
+            this._copyPatternButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._pastePatternButton.style.top = prefs.showScrollBar ? "90px" : "90px";
+            this._pastePatternButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._insertChannelButton.style.top = prefs.showScrollBar ? "120px" : "120px";
+            this._insertChannelButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._deleteChannelButton.style.top = prefs.showScrollBar ? "150px" : "150px";
+            this._deleteChannelButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._selectAllButton.style.top = prefs.showScrollBar ? "180px" : "180px";
+            this._selectAllButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._duplicateButton.style.top = prefs.showScrollBar ? "210px" : "210px";
+            this._duplicateButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._notesUpButton.style.top = prefs.showScrollBar ? "240px" : "240px";   
+            this._notesUpButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._notesDownButton.style.top = prefs.showScrollBar ? "270px" : "270px";
+            this._notesDownButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+        }
+    }
         this._patternEditor.render();
 
         // make the names of these two variables as short as possible for readability

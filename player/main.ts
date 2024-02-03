@@ -64,6 +64,10 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 		const playhead: HTMLDivElement = div({style: `position: absolute; left: 0; top: 0; width: 2px; height: 100%; background: ${ColorConfig.playhead}; pointer-events: none;`});
 		const timelineContainer: HTMLDivElement = div({style: "display: flex; flex-grow: 1; flex-shrink: 1; position: relative;"}, timeline, playhead);
 		const visualizationContainer: HTMLDivElement = div({style: "display: flex; flex-grow: 1; flex-shrink: 1; height: 0; position: relative; align-items: center; overflow: hidden;"}, timelineContainer);
+		let noteFlashElementsPerBar: (SVGPathElement[])[];
+		let currentNoteFlashElements: SVGPathElement[] = [];
+		let currentNoteFlashBar: number = -1;
+		const notesFlashWhenPlayed: boolean = getLocalStorage("notesFlashWhenPlayed") == "true";
 	
 	const outVolumeBarBg: SVGRectElement = SVG.rect({ "pointer-events": "none", width: "90%", height: "50%", x: "5%", y: "25%", fill: ColorConfig.uiWidgetBackground });
 	const outVolumeBar: SVGRectElement = SVG.rect({ "pointer-events": "none", height: "50%", width: "0%", x: "5%", y: "25%", fill: "url('#volumeGrad2')" });
@@ -118,6 +122,24 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 		}
 	}
 	
+	function removeFromUnorderedArray<T>(array: T[], index: number): void {
+		if (array.length < 1) {
+			// Don't need to do anything when `array` is empty.
+			return;
+		}
+		if (index === array.length - 1) {
+			// Trivial case.
+			array.pop();
+		} else if (index >= 0 && index < array.length - 1) {
+			// The idea here is that we want to remove an element from the array
+			// quickly, and the fastest way to do that is to use `array.pop()`. As
+			// the name of this function says, we assume `array` to be unordered,
+			// so this trick is okay to do.
+			const lastElement: T = array.pop()!;
+			array[index] = lastElement;
+		}
+	}
+
 	function loadSong(songString: string, reuseParams: boolean): void {
 		synth.setSong(songString);
 		synth.snapToStart();
@@ -312,7 +334,7 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 	}
 	
 	function renderPlayhead(): void {
-		const noteFlashElements: NodeListOf<SVGPathElement> = timeline.querySelectorAll('.note-flash-player');
+		
 		if (synth.song != null) {
 			let pos: number = synth.playhead / synth.song.barCount;
 			playhead.style.left = (timelineWidth * pos) + "px";
@@ -320,20 +342,41 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 			const boundingRect: ClientRect = visualizationContainer.getBoundingClientRect();
 			visualizationContainer.scrollLeft = pos * (timelineWidth - boundingRect.width);
 
-			const playheadBar: number = Math.floor(synth.playhead);
-			const modPlayhead: number = synth.playhead - playheadBar;
+			if (notesFlashWhenPlayed) {
+				const playheadBar: number = Math.floor(synth.playhead);
+				const modPlayhead: number = synth.playhead - playheadBar;
+				const partsPerBar: number = synth.song.beatsPerBar * Config.partsPerBeat;
+				const noteFlashElementsForThisBar: SVGPathElement[] = noteFlashElementsPerBar[playheadBar];
 	
-			for (var i = 0; i < noteFlashElements.length; i++) {
-				var element: SVGPathElement = noteFlashElements[i];
-				const noteStart: number = Number(element.getAttribute("note-start"))/(synth.song.beatsPerBar * Config.partsPerBeat)
-				const noteEnd: number = Number(element.getAttribute("note-end"))/(synth.song.beatsPerBar * Config.partsPerBeat)
-				const noteBar: number = Number(element.getAttribute("note-bar"))
-				if ((modPlayhead>=noteStart)&&window.localStorage.getItem("notesFlashWhenPlayed")&&(noteBar==Math.floor(synth.playhead))) {
-					const dist = noteEnd-noteStart
-					element.style.opacity = String((1-(((modPlayhead-noteStart)-(dist/2))/(dist/2))))
-				} else {
-					element.style.opacity = "0"
+				if (noteFlashElementsForThisBar != null && playheadBar !== currentNoteFlashBar) {
+					for (var i = currentNoteFlashElements.length - 1; i >= 0; i--) {
+						var element: SVGPathElement = currentNoteFlashElements[i];
+						const outsideOfCurrentBar = Number(element.getAttribute("note-bar")) !== playheadBar;
+						const isInvisible: boolean = element.style.opacity === "0";
+						if (outsideOfCurrentBar && isInvisible) {
+							removeFromUnorderedArray(currentNoteFlashElements, i);
+						}
+					}
+					for (var i = 0; i < noteFlashElementsForThisBar.length; i++) {
+						var element: SVGPathElement = noteFlashElementsForThisBar[i];
+						currentNoteFlashElements.push(element);
+					}
 				}
+				if (currentNoteFlashElements != null) {
+					for (var i = 0; i < currentNoteFlashElements.length; i++) {
+						var element: SVGPathElement = currentNoteFlashElements[i];
+						const noteStart: number = Number(element.getAttribute("note-start")) / partsPerBar;
+						const noteEnd: number = Number(element.getAttribute("note-end")) / partsPerBar;
+						const noteBar: number = Number(element.getAttribute("note-bar"));
+						if ((modPlayhead >= noteStart) && (noteBar == playheadBar)) {
+							const dist: number = noteEnd - noteStart;
+							element.style.opacity = String((1 - (((modPlayhead - noteStart) - (dist / 2)) / (dist / 2))));
+						} else {
+							element.style.opacity = "0";
+						}
+					}
+				}
+				currentNoteFlashBar = playheadBar;
 			}
 		}
 	}
@@ -382,7 +425,23 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 		for (let octave: number = 0; octave <= windowOctaves; octave++) {
 				timeline.appendChild(rect({x: 0, y: octave * 12 * wavePitchHeight, width: timelineWidth, height: wavePitchHeight + 1, fill: ColorConfig.tonic, opacity: 0.75}));
 		}
-			
+		
+			// note flash colors
+		let noteFlashColor: string = "#ffffff";
+		let noteFlashColorSecondary: string = "#ffffff77";
+		if (notesFlashWhenPlayed) {
+			noteFlashColor = ColorConfig.getComputed("--note-flash") !== "" ? "var(--note-flash)" : "#ffffff";
+			noteFlashColorSecondary = ColorConfig.getComputed("--note-flash-secondary") !== "" ? "var(--note-flash-secondary)" : "#ffffff77";
+		}
+
+		if (notesFlashWhenPlayed) {
+			noteFlashElementsPerBar = [];
+			for (let bar: number = 0; bar < synth.song.barCount; bar++) {
+				noteFlashElementsPerBar.push([]);
+			}
+			currentNoteFlashBar = -1;
+		}
+
 		for (let channel: number = synth.song.channels.length - 1 - synth.song.modChannelCount; channel >= 0; channel--) {
 	
 			const isNoise: boolean = synth.song.getChannelIsNoise(channel);
@@ -407,12 +466,11 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 						if (isNoise) noteElement.style.opacity = String(0.6);
 						timeline.appendChild(noteElement);
 
-						if (window.localStorage.getItem("notesFlashWhenPlayed")) {
+							if (notesFlashWhenPlayed) {
 							const dflash: string = drawNote(pitch, note.start, note.pins, (pitchHeight + 1) / 2, offsetX, offsetY, partWidth, pitchHeight);
-							const noteFlashColorSecondary = ColorConfig.getComputed("--note-flash-secondary") !== "" ? "var(--note-flash-secondary)" : "#ffffff77";
-							const noteFlashColor = ColorConfig.getComputed("--note-flash") !== "" ? "var(--note-flash)" : "#ffffff77";
+							//const noteFlashColorSecondary = ColorConfig.getComputed("--note-flash-secondary") !== "" ? "var(--note-flash-secondary)" : "#ffffff77";
+							//const noteFlashColor = ColorConfig.getComputed("--note-flash") !== "" ? "var(--note-flash)" : "#ffffff77";
 							const noteFlashElement: SVGPathElement = path({d: dflash, fill: (isNoise ? noteFlashColorSecondary : noteFlashColor)});
-							noteFlashElement.classList.add('note-flash-player');
 							noteFlashElement.style.opacity = "0";
 							noteFlashElement.setAttribute('note-start', String(note.start));
 							noteFlashElement.setAttribute('note-end', String(
@@ -420,6 +478,8 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 								));
 							noteFlashElement.setAttribute('note-bar', String(bar));
 							timeline.appendChild(noteFlashElement);
+							const noteFlashElementsForThisBar: SVGPathElement[] = noteFlashElementsPerBar[bar];
+							noteFlashElementsForThisBar.push(noteFlashElement);
 						}
 					}
 				}

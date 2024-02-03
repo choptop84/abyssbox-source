@@ -3705,10 +3705,6 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
-
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
-
 				}
 			`,
         "dark competition": `
@@ -3828,9 +3824,6 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
-
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
 
 			}
 		`,
@@ -3954,8 +3947,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #666;
 					--disabled-note-secondary:  #aaa;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 
 			}
 			
@@ -4082,8 +4075,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #91879f;
 					--disabled-note-secondary:  #6a677a;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 
 				}
 			`,
@@ -4202,8 +4195,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #536e5c;
 					--disabled-note-secondary:  #395440;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 
 				}
 			`,
@@ -4320,8 +4313,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #536e5c;
 					--disabled-note-secondary:  #395440;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 
 					}
 					/* sets background image */
@@ -4522,8 +4515,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #515164;
 					--disabled-note-secondary:  #2a2a3a;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 				}
 			`,
         "midnight": `
@@ -4641,8 +4634,8 @@ var beepbox = (function (exports) {
 			--disabled-note-primary:    #66a;
 			--disabled-note-secondary:  #447;
 
-			--note-flash: #ffffff;
-			--note-flash-secondary: #ffffff77;
+			
+			
 		}
 	`,
         "jummbox light": `
@@ -4761,8 +4754,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #868;
 					--disabled-note-secondary:  #767;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 				}
 
 				.beepboxEditor button, .beepboxEditor select {
@@ -4892,8 +4885,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary: #91879f;
 					--disabled-note-secondary: #6a677a;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 				}
 
 			`,
@@ -5016,8 +5009,8 @@ var beepbox = (function (exports) {
   --disabled-note-primary: #91879f;
   --disabled-note-secondary: #6a677a;
 
-  --note-flash: #ffffff;
-  --note-flash-secondary: #ffffff77;
+  
+  
 
 			}
 		`,
@@ -5140,8 +5133,8 @@ var beepbox = (function (exports) {
 			--disabled-note-primary: #c9c9c9;
 			--disabled-note-secondary: #616161;
 
-			--note-flash: #ffffff;
-			--note-flash-secondary: #ffffff77;
+			
+			
 		}`,
         "moonlight": `
 			:root {
@@ -5262,8 +5255,8 @@ var beepbox = (function (exports) {
 			--disabled-note-primary: #828282;
 			--disabled-note-secondary: #4f4f4f;
 			
-			--note-flash: #ffffff;
-			--note-flash-secondary: #ffffff77;
+			
+			
 		}`,
         "autumn": `
 		:root {
@@ -5384,8 +5377,8 @@ var beepbox = (function (exports) {
 			--disabled-note-primary: #5d5d5d;
 			--disabled-note-secondary: #292929;
 
-			--note-flash: #ffffff;
-			--note-flash-secondary: #ffffff77;
+			
+			
 		}`,
         "fruit": `
 		:root {
@@ -5506,8 +5499,8 @@ var beepbox = (function (exports) {
 			--disabled-note-primary: #5d5d5d;
 			--disabled-note-secondary: #292929;
 
-			--note-flash: #ffffff;
-			--note-flash-secondary: #ffffff77;
+			
+			
 		}`,
         "sunset": `
 		:root {
@@ -5628,8 +5621,8 @@ var beepbox = (function (exports) {
 			--disabled-note-primary: #5d5d5d;
 			--disabled-note-secondary: #292929;
 
-			--note-flash: #ffffff;
-			--note-flash-secondary: #ffffff77;
+			
+			
 		}`,
         "toxic": `
 		:root {
@@ -5750,8 +5743,8 @@ var beepbox = (function (exports) {
 			--disabled-note-primary: #5d5d5d;
 			--disabled-note-secondary: #292929;
 
-			--note-flash: #ffffff;
-			--note-flash-secondary: #ffffff77;
+			
+			
 		}`,
         "violet verdant": `
 		:root {
@@ -5868,8 +5861,8 @@ var beepbox = (function (exports) {
 			--disabled-note-primary: #91879f;
 			--disabled-note-secondary: #6a677a;
 
-			--note-flash: #ffffff;
-			--note-flash-secondary: #ffffff77;
+			
+			
 		}`,
         "portal": `
 		:root {
@@ -5990,8 +5983,8 @@ var beepbox = (function (exports) {
 			--disabled-note-primary: #072f4a;
 			--disabled-note-secondary: #6585a7;
 
-			--note-flash: #ffffff;
-			--note-flash-secondary: #ffffff77;
+			
+			
 		}`,
         "fusion": `:root {
 			--page-margin: #0c0306;
@@ -6111,8 +6104,8 @@ var beepbox = (function (exports) {
 			--disabled-note-primary: #696969;
 			--disabled-note-secondary: #232323;
 
-			--note-flash: #ffffff;
-			--note-flash-secondary: #ffffff77;
+			
+			
 		}`,
         "inverse": `:root {
 			--page-margin: #c4c8e3;
@@ -6232,8 +6225,8 @@ var beepbox = (function (exports) {
 			--disabled-note-primary: #959595;
 			--disabled-note-secondary: #6e6e6e;
 
-			--note-flash: #ffffff;
-			--note-flash-secondary: #ffffff77;
+			
+			
 			}`,
         "nebula": `
 		:root {
@@ -6350,8 +6343,8 @@ var beepbox = (function (exports) {
 			--disabled-note-primary: #aaa;
 			--disabled-note-secondary: #666;
 
-			--note-flash: #ffffff;
-			--note-flash-secondary: #ffffff77;
+			
+			
 		}`,
         "Nebula 2": ` 
 			:root { 
@@ -6468,8 +6461,8 @@ var beepbox = (function (exports) {
 				--disabled-note-primary: #aaa;
 				--disabled-note-secondary: #666;
 				
-				--note-flash: #ffffff;
-				--note-flash-secondary: #ffffff77;
+				
+				
 			}
 			body {
 				background-image: url("https://choptop84.github.io/abyssbox-app/stars.gif") !important;
@@ -6675,8 +6668,8 @@ var beepbox = (function (exports) {
 			--disabled-note-primary: #616161;
 			--disabled-note-secondary: #474747;
 
-			--note-flash: #ffffff;
-			--note-flash-secondary: #ffffff77;
+			
+			
 		}`,
         "energized": `
 		:root {
@@ -6795,8 +6788,8 @@ var beepbox = (function (exports) {
 			--disabled-note-primary: #808080;
 			--disabled-note-secondary: #666666;
 
-			--note-flash: #ffffff;
-			--note-flash-secondary: #ffffff77;
+			
+			
 		}`,
         "neapolitan": `:root {
 			--page-margin: #120807;
@@ -6916,8 +6909,8 @@ var beepbox = (function (exports) {
 			--disabled-note-primary: #bababa;
 			--disabled-note-secondary: #878787;
 
-			--note-flash: #ffffff;
-			--note-flash-secondary: #ffffff77;
+			
+			
 		}`,
         "mono": `:root {
 			--page-margin: #000;
@@ -7147,8 +7140,8 @@ var beepbox = (function (exports) {
 			--disabled-note-primary: #c9c9c9;
 			--disabled-note-secondary: #616161;
 
-			--note-flash: #ffffff;
-			--note-flash-secondary: #ffffff77;
+			
+			
 	}`,
         "modbox classic": `
 			:root {
@@ -7271,8 +7264,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 				}
 			`,
         "zefbox": `
@@ -7394,8 +7387,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 				}
 			`,
         "sandbox classic": `
@@ -7519,8 +7512,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 				}
 			`,
         "harrybox": `
@@ -7643,8 +7636,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 				}
 			`,
         "brucebox": `
@@ -7770,8 +7763,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 				}
 			`,
         "shitbox 2.0": `
@@ -7895,8 +7888,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 				}
 			`,
         "shitbox 3.0": `
@@ -8022,8 +8015,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 				}
 			
 			`,
@@ -8148,8 +8141,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 				}
 			`,
         "nepbox": `
@@ -8235,8 +8228,8 @@ var beepbox = (function (exports) {
 				--disabled-note-primary: #999;
 				--disabled-note-secondary: #696969;
 
-				--note-flash: #ffffff;
-				--note-flash-secondary: #ffffff77;
+				
+				
 				}
 			`,
         "cardboardbox classic": `
@@ -8354,8 +8347,8 @@ var beepbox = (function (exports) {
 --mod-label-secondary-text: #333;
 --mod-label-primary-text: black;
 
-			--note-flash: #ffffff;
-			--note-flash-secondary: #ffffff77;
+			
+			
 				}
 			`,
         "blubox classic": `
@@ -8469,8 +8462,8 @@ var beepbox = (function (exports) {
 					--mod-label-secondary-text: rgb(87, 86, 120);
 					--mod-label-primary-text:   white;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 				}
 			`,
         "dogebox classic": `
@@ -8594,8 +8587,8 @@ var beepbox = (function (exports) {
 			--disabled-note-primary:    #999;
 			--disabled-note-secondary:  #666;
 
-			--note-flash: #ffffff;
-			--note-flash-secondary: #ffffff77;
+			
+			
 				}
 			`,
         "dogebox dark": `
@@ -8655,8 +8648,8 @@ var beepbox = (function (exports) {
 					--noise3-secondary-note:    #6f9fcf;
 					--noise3-primary-note:      #bbd7ff;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 				}
 			`,
         "todbox classic": `
@@ -8780,8 +8773,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 				}
 			`,
         "todbox dark mode": `
@@ -8906,8 +8899,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 				}
 				.beepboxEditor button, .beepboxEditor select {
 					box-shadow: inset 0 0 0 1px var(--secondary-text);
@@ -9034,8 +9027,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 				}
 			`,
         "fogbox": `
@@ -9157,8 +9150,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 				}
 			`,
         "foxbox": `
@@ -9280,8 +9273,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;	
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 				}
 			`,
         "wackybox": `
@@ -9407,8 +9400,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 				}
 
 .beepboxEditor {
@@ -9563,8 +9556,8 @@ var beepbox = (function (exports) {
 					--mod-primary-note-lum: 85;
 					--mod-primary-note-lum-scale: 0;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 				}
 			`,
         "paandorasbox": `
@@ -9684,8 +9677,8 @@ var beepbox = (function (exports) {
 			  --disabled-note-primary: #994038;
 			  --disabled-note-secondary: #331512;
 
-			  --note-flash: #ffffff;
-			  --note-flash-secondary: #ffffff77;
+			  
+			  
 			}
 			`,
         "midbox": `:root {
@@ -9802,8 +9795,8 @@ var beepbox = (function (exports) {
 			--disabled-note-primary:    #53527b;
 			--disabled-note-secondary:  #1c1b30;
 
-			--note-flash: #ffffff;
-			--note-flash-secondary: #ffffff77;
+			
+			
 		}`,
         "dogebox2": `
 			:root {
@@ -9923,8 +9916,8 @@ var beepbox = (function (exports) {
 				--disabled-note-primary: #c6c6c6;
 				--disabled-note-secondary: #8c8c8c;
 
-				--note-flash: #ffffff;
-				--note-flash-secondary: #ffffff77;
+				
+				
 				}`,
         "azur lane": `
 		:root {
@@ -10043,8 +10036,8 @@ var beepbox = (function (exports) {
 		  --disabled-note-primary: #3a3a3a;
 		  --disabled-note-secondary: #000;
 
-		  --note-flash: #ffffff;
-		  --note-flash-secondary: #ffffff77;
+		  
+		  
 			}
 		/* replaces hotdog (in a hacky way) with an image of the girls using the same scratch sprites from the 404 page*/
 		#Hotdog {
@@ -10195,8 +10188,8 @@ var beepbox = (function (exports) {
 		--disabled-note-primary:    #91879f;
 		--disabled-note-secondary:  #6a677a;
 
-		--note-flash: #ffffff;
-		--note-flash-secondary: #ffffff77;
+		
+		
 	}
 	#firstImage {
 		background-image: url("https://www.teahub.io/photos/full/244-2448998_anime-girl-wallpaper-4k.jpg") !important;
@@ -10350,8 +10343,8 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
 
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 }
 
 			`,
@@ -10496,8 +10489,8 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
-					--note-flash: #ffffff;
-					--note-flash-secondary: #ffffff77;
+					
+					
 }
 
 			`,
@@ -10616,8 +10609,8 @@ var beepbox = (function (exports) {
   --disabled-note-primary: #8d8d8d;
   --disabled-note-secondary: #363636;
 
-  --note-flash: #ffffff;
-  --note-flash-secondary: #ffffff77;
+  
+  
     }
 
 			`,
@@ -10731,8 +10724,8 @@ var beepbox = (function (exports) {
 				--mod-primary-note-lum: 85;
 				--mod-primary-note-lum-scale: 0;
 
-				--note-flash: #ffffff;
-				--note-flash-secondary: #ffffff77;
+				
+				
 			}`}`,
     };
     ColorConfig.pageMargin = "var(--page-margin)";
@@ -11369,7 +11362,7 @@ var beepbox = (function (exports) {
                 { name: "talking bass", generalMidi: false, settings: { "type": "FM", "volume": 0, "eqFilter": [], "effects": ["chord type"], "chord": "custom interval", "fadeInSeconds": 0, "fadeOutTicks": -3, "algorithm": "1←(2 3)←4", "feedbackType": "1⟲", "feedbackAmplitude": 15, "operators": [{ "frequency": "1×", "amplitude": 15 }, { "frequency": "2×", "amplitude": 8 }, { "frequency": "2×", "amplitude": 5 }, { "frequency": "1×", "amplitude": 12 }], "envelopes": [{ "target": "operatorAmplitude", "envelope": "note size", "index": 2 }, { "target": "operatorAmplitude", "envelope": "note size", "index": 3 }, { "target": "feedbackAmplitude", "envelope": "note size" }] } },
                 { name: "synth marimba", generalMidi: false, settings: { "type": "Picked String", "volume": 0, "eqFilter": [{ "type": "high-pass", "cutoffHz": 176.78, "linearGain": 1 }, { "type": "peak", "cutoffHz": 4000, "linearGain": 0.5 }], "effects": ["note filter", "echo"], "noteFilter": [{ "type": "low-pass", "cutoffHz": 6727.17, "linearGain": 1.4142 }], "echoSustain": 71, "echoDelayBeats": 0.5, "fadeInSeconds": 0, "fadeOutTicks": -1, "harmonics": [86, 100, 29, 29, 0, 0, 0, 100, 0, 0, 0, 86, 29, 0, 14, 100, 0, 0, 0, 0, 0, 14, 0, 0, 14, 0, 0, 86], "unison": "fifth", "stringSustain": 7, "envelopes": [{ "target": "noteFilterAllFreqs", "envelope": "punch" }] } },
                 { name: "italian accordian", generalMidi: false, settings: { "type": "custom chip", "volume": 0, "eqFilter": [{ "type": "low-pass", "cutoffHz": 6000, "linearGain": 0.5 }], "eqFilterType": true, "eqSimpleCut": 8, "eqSimplePeak": 1, "eqSubFilters1": [], "effects": ["panning", "chorus", "reverb"], "pan": 0, "panDelay": 10, "chorus": 71, "reverb": 45, "fadeInSeconds": 0.0263, "fadeOutTicks": -3, "wave": "square", "unison": "honky tonk", "customChipWave": { "0": -24, "1": -24, "2": -24, "3": -24, "4": -24, "5": -24, "6": -24, "7": -24, "8": -24, "9": -24, "10": -24, "11": -24, "12": -24, "13": -24, "14": -24, "15": -24, "16": 24, "17": 24, "18": 24, "19": 24, "20": 24, "21": 24, "22": 24, "23": 24, "24": -24, "25": -24, "26": -24, "27": -24, "28": -24, "29": -24, "30": -24, "31": -24, "32": -24, "33": -24, "34": -24, "35": -24, "36": -24, "37": -24, "38": -24, "39": -24, "40": 24, "41": 24, "42": 24, "43": 24, "44": 24, "45": 24, "46": 24, "47": 24, "48": -24, "49": -24, "50": -24, "51": -24, "52": -24, "53": -24, "54": -24, "55": -24, "56": -24, "57": -24, "58": -24, "59": -24, "60": -24, "61": -24, "62": -24, "63": -24 }, "customChipWaveIntegral": { "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0, "16": 0, "17": 0, "18": 0, "19": 0, "20": 0, "21": 0, "22": 0, "23": 0, "24": 0, "25": 0, "26": 0, "27": 0, "28": 0, "29": 0, "30": 0, "31": 0, "32": 0, "33": 0, "34": 0, "35": 0, "36": 0, "37": 0, "38": 0, "39": 0, "40": 0, "41": 0, "42": 0, "43": 0, "44": 0, "45": 0, "46": 0, "47": 0, "48": 0, "49": 0, "50": 0, "51": 0, "52": 0, "53": 0, "54": 0, "55": 0, "56": 0, "57": 0, "58": 0, "59": 0, "60": 0, "61": 0, "62": 0, "63": 0, "64": 0 }, "envelopes": [] } },
-                { name: "custom chip supersaw", generalMidi: false, settings: { "type": "custom chip", "volume": 0, "eqFilter": [{ "type": "low-pass", "cutoffHz": 19027.31, "linearGain": 0.7071 }], "eqFilterType": true, "eqSimpleCut": 10, "eqSimplePeak": 0, "eqSubFilters1": [], "effects": ["panning", "transition type", "vibrato", "chorus", "reverb"], "transition": "interrupt", "clicklessTransition": false, "vibrato": "delayed", "vibratoDepth": 0.3, "vibratoDelay": 18.5, "vibratoSpeed": 10, "vibratoType": 0, "pan": 0, "panDelay": 10, "chorus": 29, "reverb": 29, "fadeInSeconds": 0, "fadeOutTicks": -1, "wave": "square", "unison": "dissonant", "customChipWave": { "0": 22, "1": 22, "2": 16, "3": 6, "4": 0, "5": -3, "6": -8, "7": -10, "8": -13, "9": -16, "10": -19, "11": -19, "12": -20, "13": -22, "14": -22, "15": -24, "16": -24, "17": -24, "18": -24, "19": -24, "20": -24, "21": -24, "22": -24, "23": -24, "24": -24, "25": -24, "26": -24, "27": -24, "28": -24, "29": -24, "30": -24, "31": 24, "32": 24, "33": 16, "34": 9, "35": 6, "36": 4, "37": 2, "38": 0, "39": -1, "40": -3, "41": -4, "42": -4, "43": -6, "44": -6, "45": -6, "46": -6, "47": -5, "48": -5, "49": -4, "50": -2, "51": -2, "52": 1, "53": 4, "54": 6, "55": 8, "56": 10, "57": 12, "58": 14, "59": 16, "60": 18, "61": 19, "62": 22, "63": 24 }, "customChipWaveIntegral": { "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0, "16": 0, "17": 0, "18": 0, "19": 0, "20": 0, "21": 0, "22": 0, "23": 0, "24": 0, "25": 0, "26": 0, "27": 0, "28": 0, "29": 0, "30": 0, "31": 0, "32": 0, "33": 0, "34": 0, "35": 0, "36": 0, "37": 0, "38": 0, "39": 0, "40": 0, "41": 0, "42": 0, "43": 0, "44": 0, "45": 0, "46": 0, "47": 0, "48": 0, "49": 0, "50": 0, "51": 0, "52": 0, "53": 0, "54": 0, "55": 0, "56": 0, "57": 0, "58": 0, "59": 0, "60": 0, "61": 0, "62": 0, "63": 0, "64": 0 }, "envelopes": [] } },
+                { name: "chip supersaw", generalMidi: false, settings: { "type": "custom chip", "volume": 0, "eqFilter": [{ "type": "low-pass", "cutoffHz": 19027.31, "linearGain": 0.7071 }], "eqFilterType": true, "eqSimpleCut": 10, "eqSimplePeak": 0, "eqSubFilters1": [], "effects": ["panning", "transition type", "vibrato", "chorus", "reverb"], "transition": "interrupt", "clicklessTransition": false, "vibrato": "delayed", "vibratoDepth": 0.3, "vibratoDelay": 18.5, "vibratoSpeed": 10, "vibratoType": 0, "pan": 0, "panDelay": 10, "chorus": 29, "reverb": 29, "fadeInSeconds": 0, "fadeOutTicks": -1, "wave": "square", "unison": "dissonant", "customChipWave": { "0": 22, "1": 22, "2": 16, "3": 6, "4": 0, "5": -3, "6": -8, "7": -10, "8": -13, "9": -16, "10": -19, "11": -19, "12": -20, "13": -22, "14": -22, "15": -24, "16": -24, "17": -24, "18": -24, "19": -24, "20": -24, "21": -24, "22": -24, "23": -24, "24": -24, "25": -24, "26": -24, "27": -24, "28": -24, "29": -24, "30": -24, "31": 24, "32": 24, "33": 16, "34": 9, "35": 6, "36": 4, "37": 2, "38": 0, "39": -1, "40": -3, "41": -4, "42": -4, "43": -6, "44": -6, "45": -6, "46": -6, "47": -5, "48": -5, "49": -4, "50": -2, "51": -2, "52": 1, "53": 4, "54": 6, "55": 8, "56": 10, "57": 12, "58": 14, "59": 16, "60": 18, "61": 19, "62": 22, "63": 24 }, "customChipWaveIntegral": { "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0, "16": 0, "17": 0, "18": 0, "19": 0, "20": 0, "21": 0, "22": 0, "23": 0, "24": 0, "25": 0, "26": 0, "27": 0, "28": 0, "29": 0, "30": 0, "31": 0, "32": 0, "33": 0, "34": 0, "35": 0, "36": 0, "37": 0, "38": 0, "39": 0, "40": 0, "41": 0, "42": 0, "43": 0, "44": 0, "45": 0, "46": 0, "47": 0, "48": 0, "49": 0, "50": 0, "51": 0, "52": 0, "53": 0, "54": 0, "55": 0, "56": 0, "57": 0, "58": 0, "59": 0, "60": 0, "61": 0, "62": 0, "63": 0, "64": 0 }, "envelopes": [] } },
                 { name: "fm supersaw", generalMidi: false, settings: { "type": "FM6op", "volume": 0, "eqFilter": [{ "type": "low-pass", "cutoffHz": 19027.31, "linearGain": 1.4142 }, { "type": "high-pass", "cutoffHz": 148.65, "linearGain": 0.7071 }], "eqFilterType": false, "eqSimpleCut": 10, "eqSimplePeak": 0, "eqSubFilters0": [{ "type": "low-pass", "cutoffHz": 19027.31, "linearGain": 1.4142 }, { "type": "high-pass", "cutoffHz": 148.65, "linearGain": 0.7071 }], "effects": ["panning", "transition type", "pitch shift", "note filter", "chorus", "reverb"], "transition": "continue", "clicklessTransition": false, "pitchShiftSemitones": 0, "noteFilterType": false, "noteSimpleCut": 10, "noteSimplePeak": 0, "noteFilter": [], "noteSubFilters0": [], "noteSubFilters1": [{ "type": "low-pass", "cutoffHz": 4756.83, "linearGain": 1 }], "pan": 0, "panDelay": 10, "chorus": 71, "reverb": 0, "fadeInSeconds": 0, "fadeOutTicks": -1, "algorithm": "1 2 3 4 5 6", "feedbackType": "1⟲", "feedbackAmplitude": 0, "operators": [{ "frequency": "1×", "amplitude": 13, "waveform": "sawtooth", "pulseWidth": 5 }, { "frequency": "~1×", "amplitude": 15, "waveform": "sawtooth", "pulseWidth": 5 }, { "frequency": "2×", "amplitude": 10, "waveform": "sawtooth", "pulseWidth": 5 }, { "frequency": "3×", "amplitude": 7, "waveform": "sawtooth", "pulseWidth": 5 }, { "frequency": "4×", "amplitude": 9, "waveform": "sawtooth", "pulseWidth": 5 }, { "frequency": "8×", "amplitude": 6, "waveform": "sawtooth", "pulseWidth": 5 }], "envelopes": [] } },
                 { name: "obama why", generalMidi: false, settings: { "type": "harmonics", "volume": 0, "eqFilter": [], "effects": ["note filter", "panning", "reverb"], "noteFilter": [{ "type": "low-pass", "cutoffHz": 840.9, "linearGain": 11.3137 }], "pan": 0, "reverb": 0, "fadeInSeconds": 0.0263, "fadeOutTicks": -3, "harmonics": [100, 86, 29, 29, 14, 14, 0, 14, 14, 43, 71, 100, 100, 86, 71, 71, 57, 57, 43, 43, 43, 43, 43, 0, 0, 0, 0, 0], "unison": "octave", "envelopes": [{ "target": "noteFilterAllFreqs", "envelope": "note size" }] } },
             ]) },
@@ -23559,6 +23552,10 @@ var beepbox = (function (exports) {
     const playhead = div({ style: `position: absolute; left: 0; top: 0; width: 2px; height: 100%; background: ${ColorConfig.playhead}; pointer-events: none;` });
     const timelineContainer = div({ style: "display: flex; flex-grow: 1; flex-shrink: 1; position: relative;" }, timeline, playhead);
     const visualizationContainer = div({ style: "display: flex; flex-grow: 1; flex-shrink: 1; height: 0; position: relative; align-items: center; overflow: hidden;" }, timelineContainer);
+    let noteFlashElementsPerBar;
+    let currentNoteFlashElements = [];
+    let currentNoteFlashBar = -1;
+    const notesFlashWhenPlayed = getLocalStorage("notesFlashWhenPlayed") == "true";
     const outVolumeBarBg = SVG.rect({ "pointer-events": "none", width: "90%", height: "50%", x: "5%", y: "25%", fill: ColorConfig.uiWidgetBackground });
     const outVolumeBar = SVG.rect({ "pointer-events": "none", height: "50%", width: "0%", x: "5%", y: "25%", fill: "url('#volumeGrad2')" });
     const outVolumeCap = SVG.rect({ "pointer-events": "none", width: "2px", height: "50%", x: "5%", y: "25%", fill: ColorConfig.uiWidgetFocus });
@@ -23583,6 +23580,18 @@ var beepbox = (function (exports) {
         }
         catch (error) {
             return null;
+        }
+    }
+    function removeFromUnorderedArray(array, index) {
+        if (array.length < 1) {
+            return;
+        }
+        if (index === array.length - 1) {
+            array.pop();
+        }
+        else if (index >= 0 && index < array.length - 1) {
+            const lastElement = array.pop();
+            array[index] = lastElement;
         }
     }
     function loadSong(songString, reuseParams) {
@@ -23744,26 +23753,46 @@ var beepbox = (function (exports) {
         synth.volume = Math.min(1.0, Math.pow(volume / 50.0, 0.5)) * Math.pow(2.0, (volume - 75.0) / 25.0);
     }
     function renderPlayhead() {
-        const noteFlashElements = timeline.querySelectorAll('.note-flash-player');
         if (synth.song != null) {
             let pos = synth.playhead / synth.song.barCount;
             playhead.style.left = (timelineWidth * pos) + "px";
             const boundingRect = visualizationContainer.getBoundingClientRect();
             visualizationContainer.scrollLeft = pos * (timelineWidth - boundingRect.width);
-            const playheadBar = Math.floor(synth.playhead);
-            const modPlayhead = synth.playhead - playheadBar;
-            for (var i = 0; i < noteFlashElements.length; i++) {
-                var element = noteFlashElements[i];
-                const noteStart = Number(element.getAttribute("note-start")) / (synth.song.beatsPerBar * Config.partsPerBeat);
-                const noteEnd = Number(element.getAttribute("note-end")) / (synth.song.beatsPerBar * Config.partsPerBeat);
-                const noteBar = Number(element.getAttribute("note-bar"));
-                if ((modPlayhead >= noteStart) && window.localStorage.getItem("notesFlashWhenPlayed") && (noteBar == Math.floor(synth.playhead))) {
-                    const dist = noteEnd - noteStart;
-                    element.style.opacity = String((1 - (((modPlayhead - noteStart) - (dist / 2)) / (dist / 2))));
+            if (notesFlashWhenPlayed) {
+                const playheadBar = Math.floor(synth.playhead);
+                const modPlayhead = synth.playhead - playheadBar;
+                const partsPerBar = synth.song.beatsPerBar * Config.partsPerBeat;
+                const noteFlashElementsForThisBar = noteFlashElementsPerBar[playheadBar];
+                if (noteFlashElementsForThisBar != null && playheadBar !== currentNoteFlashBar) {
+                    for (var i = currentNoteFlashElements.length - 1; i >= 0; i--) {
+                        var element = currentNoteFlashElements[i];
+                        const outsideOfCurrentBar = Number(element.getAttribute("note-bar")) !== playheadBar;
+                        const isInvisible = element.style.opacity === "0";
+                        if (outsideOfCurrentBar && isInvisible) {
+                            removeFromUnorderedArray(currentNoteFlashElements, i);
+                        }
+                    }
+                    for (var i = 0; i < noteFlashElementsForThisBar.length; i++) {
+                        var element = noteFlashElementsForThisBar[i];
+                        currentNoteFlashElements.push(element);
+                    }
                 }
-                else {
-                    element.style.opacity = "0";
+                if (currentNoteFlashElements != null) {
+                    for (var i = 0; i < currentNoteFlashElements.length; i++) {
+                        var element = currentNoteFlashElements[i];
+                        const noteStart = Number(element.getAttribute("note-start")) / partsPerBar;
+                        const noteEnd = Number(element.getAttribute("note-end")) / partsPerBar;
+                        const noteBar = Number(element.getAttribute("note-bar"));
+                        if ((modPlayhead >= noteStart) && (noteBar == playheadBar)) {
+                            const dist = noteEnd - noteStart;
+                            element.style.opacity = String((1 - (((modPlayhead - noteStart) - (dist / 2)) / (dist / 2))));
+                        }
+                        else {
+                            element.style.opacity = "0";
+                        }
+                    }
                 }
+                currentNoteFlashBar = playheadBar;
             }
         }
     }
@@ -23805,6 +23834,19 @@ var beepbox = (function (exports) {
         for (let octave = 0; octave <= windowOctaves; octave++) {
             timeline.appendChild(rect({ x: 0, y: octave * 12 * wavePitchHeight, width: timelineWidth, height: wavePitchHeight + 1, fill: ColorConfig.tonic, opacity: 0.75 }));
         }
+        let noteFlashColor = "#ffffff";
+        let noteFlashColorSecondary = "#ffffff77";
+        if (notesFlashWhenPlayed) {
+            noteFlashColor = ColorConfig.getComputed("--note-flash") !== "" ? "var(--note-flash)" : "#ffffff";
+            noteFlashColorSecondary = ColorConfig.getComputed("--note-flash-secondary") !== "" ? "var(--note-flash-secondary)" : "#ffffff77";
+        }
+        if (notesFlashWhenPlayed) {
+            noteFlashElementsPerBar = [];
+            for (let bar = 0; bar < synth.song.barCount; bar++) {
+                noteFlashElementsPerBar.push([]);
+            }
+            currentNoteFlashBar = -1;
+        }
         for (let channel = synth.song.channels.length - 1 - synth.song.modChannelCount; channel >= 0; channel--) {
             const isNoise = synth.song.getChannelIsNoise(channel);
             const pitchHeight = isNoise ? drumPitchHeight : wavePitchHeight;
@@ -23824,17 +23866,16 @@ var beepbox = (function (exports) {
                         if (isNoise)
                             noteElement.style.opacity = String(0.6);
                         timeline.appendChild(noteElement);
-                        if (window.localStorage.getItem("notesFlashWhenPlayed")) {
+                        if (notesFlashWhenPlayed) {
                             const dflash = drawNote(pitch, note.start, note.pins, (pitchHeight + 1) / 2, offsetX, offsetY, partWidth, pitchHeight);
-                            const noteFlashColorSecondary = ColorConfig.getComputed("--note-flash-secondary") !== "" ? "var(--note-flash-secondary)" : "#ffffff77";
-                            const noteFlashColor = ColorConfig.getComputed("--note-flash") !== "" ? "var(--note-flash)" : "#ffffff77";
                             const noteFlashElement = path({ d: dflash, fill: (isNoise ? noteFlashColorSecondary : noteFlashColor) });
-                            noteFlashElement.classList.add('note-flash-player');
                             noteFlashElement.style.opacity = "0";
                             noteFlashElement.setAttribute('note-start', String(note.start));
                             noteFlashElement.setAttribute('note-end', String(note.end));
                             noteFlashElement.setAttribute('note-bar', String(bar));
                             timeline.appendChild(noteFlashElement);
+                            const noteFlashElementsForThisBar = noteFlashElementsPerBar[bar];
+                            noteFlashElementsForThisBar.push(noteFlashElement);
                         }
                     }
                 }
