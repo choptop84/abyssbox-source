@@ -69,6 +69,7 @@ document.head.appendChild(HTML.style({ type: "text/css" }, `
 	--notes-up-symbol: url("https://choptop84.github.io/abyssbox-app/moveNotesUp.png");
 	--notes-down-symbol: url("https://choptop84.github.io/abyssbox-app/moveNotesDown.png");
 	--loop-bar-symbol: url("https://choptop84.github.io/abyssbox-app/icon-singleBarLoop.png");
+	--fullscreen-symbol: url("https://choptop84.github.io/abyssbox-app/icon-fullscreen.png");
 	--checkmark-symbol: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="-13 -13 26 26"><path fill="gray" d="M -9 -2 L -8 -3 L -3 2 L 9 -8 L 10 -7 L -3 8 z"/></svg>');
 	--drum-symbol: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="40" viewBox="0 0 32 40"> \
 			<defs> \
@@ -585,7 +586,8 @@ document.head.appendChild(HTML.style({ type: "text/css" }, `
 .beepboxEditor .duplicateButton, 
 .beepboxEditor .notesUpButton, 
 .beepboxEditor .notesDownButton,
-.beepboxEditor .loopBarButton
+.beepboxEditor .loopBarButton,
+.beepboxEditor .fullscreenButton
  {
 	width: var(--button-size);
 	position: absolute;
@@ -847,6 +849,27 @@ document.head.appendChild(HTML.style({ type: "text/css" }, `
 	mask-repeat: no-repeat;
 	mask-position: center;
 	-webkit-mask-image: var(--loop-bar-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;         /* Firefox */
+	image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+	image-rendering: -o-crisp-edges !important;            /* Opera */
+	image-rendering: pixelated !important;                 /* Future browsers */
+	image-rendering: optimizeSpeed !important;             /* IE */
+}
+.beepboxEditor .fullscreenButton::before {
+	content: "";
+	position: absolute;
+	width: var(--button-size);
+	height: var(--button-size);
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--fullscreen-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--fullscreen-symbol);
 	-webkit-mask-repeat: no-repeat;
 	-webkit-mask-position: center;
 	image-rendering: -moz-crisp-edges !important;         /* Firefox */

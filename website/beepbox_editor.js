@@ -2924,6 +2924,172 @@ var beepbox = (function (exports) {
 			}
 
 			`,
+        "Glyde": `
+			:root {		
+			--page-margin: #ffadbf; 		
+			--editor-background: #ffadbf; 		
+			--hover-preview: white; 		
+			--playhead: rgba(255, 255, 255, 0.9); 		
+			--primary-text: white; 		
+			--secondary-text: #ffcedd; 		
+			--inverted-text: black;	 		
+			--text-selection: rgba(119,68,255,0.99); 		
+			--box-selection-fill: #1e0915; 		
+			--loop-accent: #873a51; 		
+			--link-accent: #df88ff; 		
+			--ui-widget-background: #ffd4dd; 		
+			--ui-widget-focus: #ffd4dd; 		
+			--pitch-background: #381d24; 		
+			--tonic: #873a51; 		
+			--fifth-note: #75001e; 		
+			--white-piano-key: #cca5c7; 		
+			--black-piano-key: #402f2f; 		
+			--use-color-formula: true; 		
+			--track-editor-bg-pitch: #571c40; 		
+			--track-editor-bg-pitch-dim: #290d0d; 		
+			--track-editor-bg-noise: #571131; 		
+			--track-editor-bg-noise-dim: #330a28; 		
+			--track-editor-bg-mod: #54083c; 		
+			--track-editor-bg-mod-dim: #360426; 		
+			--multiplicative-mod-slider: #9f6082; 		
+			--overwriting-mod-slider: #9e3470; 		
+			--indicator-primary: #b3498f; 		
+			--indicator-secondary: #541d40; 		
+			--select2-opt-group: #4f191e; 		
+			--input-box-outline: #18041a; 		
+			--mute-button-normal: #dd5d94;	 		
+			--mute-button-mod: #ba364c; 		
+			--mod-label-primary: #541625; 		
+			--mod-label-secondary-text: rgb(120, 87, 86); 
+			--mod-label-primary-text: gray; 
+		
+			--pitch-secondary-channel-hue: -80; 		
+			--pitch-secondary-channel-hue-scale 0; 		
+			--pitch-secondary-channel-sat: 43; 		
+			--pitch-secondary-channel-sat-scale: 0.1; 		
+			--pitch-secondary-channel-lum: 40; 		
+			--pitch-secondary-channel-lum-scale: 0.05; 
+		
+			--pitch-primary-channel-hue: -53; 		
+			--pitch-primary-channel-hue-scale: 6.1; 		
+			--pitch-primary-channel-sat: 75; 		
+			--pitch-primary-channel-sat-scale: 0.1; 		
+			--pitch-primary-channel-lum: 67.5; 		
+			--pitch-primary-channel-lum-scale: 0.05; 	
+	
+			--pitch-secondary-note-hue: -34; 		
+			--pitch-secondary-note-hue-scale: 6.1; 		
+			--pitch-secondary-note-sat: 93.9; 		
+			--pitch-secondary-note-sat-scale: 0.1; 		
+			--pitch-secondary-note-lum: 25; 		
+			--pitch-secondary-note-lum-scale: 0.05; 
+		
+			--pitch-primary-note-hue: -53; 		
+			--pitch-primary-note-hue-scale: 6.1; 		
+			--pitch-primary-note-sat: 100; 		
+			--pitch-primary-note-sat-scale: 0.05; 		
+			--pitch-primary-note-lum: 85.6; 		
+			--pitch-primary-note-lum-scale: 0.025; 
+		
+			--noise-secondary-channel-hue: 0; 		
+			--noise-secondary-channel-hue-scale: 2; 		
+			--noise-secondary-channel-sat: 65; 		
+			--noise-secondary-channel-sat-scale: 0; 		
+			--noise-secondary-channel-lum: 42; 		
+			--noise-secondary-channel-lum-scale: 0; 
+		
+			--noise-primary-channel-hue: 0; 		
+			--noise-primary-channel-hue-scale: 1; 		
+			--noise-primary-channel-sat: 100; 		
+			--noise-primary-channel-sat-scale: 1; 		
+			--noise-primary-channel-lum: 63.5; 		
+			--noise-primary-channel-lum-scale: 0; 
+		
+			--noise-secondary-note-hue: 24; 		
+			--noise-secondary-note-hue-scale: 2; 		
+			--noise-secondary-note-sat: 100; 		
+			--noise-secondary-note-sat-scale: 0; 		
+			--noise-secondary-note-lum: 35; 		
+			--noise-secondary-note-lum-scale: 0; 	
+	
+			--noise-primary-note-hue: 24; 		
+			--noise-primary-note-hue-scale: 2; 		
+			--noise-primary-note-sat: 100; 		
+			--noise-primary-note-sat-scale: 1; 		
+			--noise-primary-note-lum: 60; 		
+			--noise-primary-note-lum-scale: 1; 	
+	
+			--mod-secondary-channel-hue: 55; 		
+			--mod-secondary-channel-hue-scale: 1.5; 		
+			--mod-secondary-channel-sat: 100; 		
+			--mod-secondary-channel-sat-scale: 0; 		
+			--mod-secondary-channel-lum: 20; 		
+			--mod-secondary-channel-lum-scale: 0; 
+		
+			--mod-primary-channel-hue: 55; 		
+			--mod-primary-channel-hue-scale: 1.5; 		
+			--mod-primary-channel-sat: 96; 		
+			--mod-primary-channel-sat-scale: 0; 		
+			--mod-primary-channel-lum: 50; 		
+			--mod-primary-channel-lum-scale: 0; 
+		
+			--mod-secondary-note-hue: 55; 		
+			--mod-secondary-note-hue-scale: 1.5; 		
+			--mod-secondary-note-sat: 92; 		
+			--mod-secondary-note-sat-scale: 0; 		
+			--mod-secondary-note-lum: 45; 		
+			--mod-secondary-note-lum-scale: 0; 
+		
+			--mod-primary-note-hue: 55; 		
+			--mod-primary-note-hue-scale: 1.5; 		
+			--mod-primary-note-sat: 96; 		
+			--mod-primary-note-sat-scale: 0; 		
+			--mod-primary-note-lum: 85; 		
+			--mod-primary-note-lum-scale: 0; 	
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #ffffff77;
+				}
+		* {
+		cursor: url("abyssbox_cursor.png"), auto !important;
+		}
+		
+			@font-face {
+		   font-family: "AbyssType";
+		   src:
+ 		   url("abysstype.otf") format("opentype") tech(color-COLRv1),
+			}
+
+			/* sets background image */
+			body {
+			background-image: url("https://choptop84.github.io/choptop84s-image-repository/glydebg.png") !important;
+			background-position: center;
+			background-repeat: no-repeat;
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+				}
+				
+			@font-face {
+		   font-family: "AbyssType_small";
+		   src:
+ 		   url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
+			}
+
+			html {
+ 		   	font-family: 'AbyssType';
+			}
+
+			div.channelBoxLabel {
+				font-family: 'AbyssType_small' !important;
+			}
+
+		   
+
+			`,
         "AWeebyssBox": `
 			:root {		
 			--page-margin: #1e0915; 		
@@ -11463,6 +11629,7 @@ var beepbox = (function (exports) {
 	--notes-up-symbol: url("https://choptop84.github.io/abyssbox-app/moveNotesUp.png");
 	--notes-down-symbol: url("https://choptop84.github.io/abyssbox-app/moveNotesDown.png");
 	--loop-bar-symbol: url("https://choptop84.github.io/abyssbox-app/icon-singleBarLoop.png");
+	--fullscreen-symbol: url("https://choptop84.github.io/abyssbox-app/icon-fullscreen.png");
 	--checkmark-symbol: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="-13 -13 26 26"><path fill="gray" d="M -9 -2 L -8 -3 L -3 2 L 9 -8 L 10 -7 L -3 8 z"/></svg>');
 	--drum-symbol: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="40" viewBox="0 0 32 40"> \
 			<defs> \
@@ -11979,7 +12146,8 @@ var beepbox = (function (exports) {
 .beepboxEditor .duplicateButton, 
 .beepboxEditor .notesUpButton, 
 .beepboxEditor .notesDownButton,
-.beepboxEditor .loopBarButton
+.beepboxEditor .loopBarButton,
+.beepboxEditor .fullscreenButton
  {
 	width: var(--button-size);
 	position: absolute;
@@ -12241,6 +12409,27 @@ var beepbox = (function (exports) {
 	mask-repeat: no-repeat;
 	mask-position: center;
 	-webkit-mask-image: var(--loop-bar-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;         /* Firefox */
+	image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+	image-rendering: -o-crisp-edges !important;            /* Opera */
+	image-rendering: pixelated !important;                 /* Future browsers */
+	image-rendering: optimizeSpeed !important;             /* IE */
+}
+.beepboxEditor .fullscreenButton::before {
+	content: "";
+	position: absolute;
+	width: var(--button-size);
+	height: var(--button-size);
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--fullscreen-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--fullscreen-symbol);
 	-webkit-mask-repeat: no-repeat;
 	-webkit-mask-position: center;
 	image-rendering: -moz-crisp-edges !important;         /* Firefox */
@@ -43557,8 +43746,9 @@ You should be redirected to the song at:<br /><br />
             this._notesUpButton = button({ class: "notesUpButton", type: "button", title: "Move Notes Up" });
             this._notesDownButton = button({ class: "notesDownButton", type: "button", title: "Move Notes Down" });
             this._loopBarButton = button({ class: "loopBarButton", type: "button", title: "Loop only on the Currently Selected Bar" });
+            this._fullscreenButton = button({ class: "notesUpButton", type: "button", title: "Move Notes Up" });
             this._patternEditorRow = div({ style: "flex: 1; height: 100%; display: flex; overflow: hidden; justify-content: center;" }, this._patternEditorPrev.container, this._patternEditor.container, this._patternEditorNext.container);
-            this._patternArea = div({ class: "pattern-area" }, this._piano.container, this._patternEditorRow, this._octaveScrollBar.container, this._zoomInButton, this._zoomOutButton, this._undoButton, this._redoButton, this._copyPatternButton, this._pastePatternButton, this._insertChannelButton, this._deleteChannelButton, this._selectAllButton, this._duplicateButton, this._notesUpButton, this._notesDownButton, this._loopBarButton);
+            this._patternArea = div({ class: "pattern-area" }, this._piano.container, this._patternEditorRow, this._octaveScrollBar.container, this._zoomInButton, this._zoomOutButton, this._undoButton, this._redoButton, this._copyPatternButton, this._pastePatternButton, this._insertChannelButton, this._deleteChannelButton, this._selectAllButton, this._duplicateButton, this._notesUpButton, this._notesDownButton, this._loopBarButton, this._fullscreenButton);
             this._trackContainer = div({ class: "trackContainer" }, this._trackEditor.container, this._loopEditor.container);
             this._trackVisibleArea = div({ style: "position: absolute; width: 100%; height: 100%; pointer-events: none;" });
             this._trackAndMuteContainer = div({ class: "trackAndMuteContainer" }, this._muteEditor.container, this._trackContainer, this._trackVisibleArea);
@@ -43696,6 +43886,7 @@ You should be redirected to the song at:<br /><br />
                         this._notesUpButton.style.left = prefs.showScrollBar ? "40px" : "40px";
                         this._notesDownButton.style.left = prefs.showScrollBar ? "70px" : "70px";
                         this._loopBarButton.style.left = prefs.showScrollBar ? "40px" : "40px";
+                        this._fullscreenButton.style.display = "none";
                     }
                     else {
                         this._patternEditor.container.style.width = "";
@@ -43725,50 +43916,11 @@ You should be redirected to the song at:<br /><br />
                         this._notesUpButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
                         this._notesDownButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";
                         this._loopBarButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";
+                        this._fullscreenButton.style.display = "none";
                     }
                 }
                 else {
-                    if (this._doc.getFullScreen()) {
-                        const semitoneHeight = this._patternEditorRow.clientHeight / this._doc.getVisiblePitchCount();
-                        const targetBeatWidth = semitoneHeight * 5;
-                        const minBeatWidth = this._patternEditorRow.clientWidth / (this._doc.song.beatsPerBar * 3);
-                        const maxBeatWidth = this._patternEditorRow.clientWidth / (this._doc.song.beatsPerBar + 2);
-                        const beatWidth = Math.max(minBeatWidth, Math.min(maxBeatWidth, targetBeatWidth));
-                        const patternEditorWidth = beatWidth * this._doc.song.beatsPerBar;
-                        this._patternEditorPrev.container.style.width = patternEditorWidth + "px";
-                        this._patternEditor.container.style.width = patternEditorWidth + "px";
-                        this._patternEditorNext.container.style.width = patternEditorWidth + "px";
-                        this._patternEditorPrev.container.style.flexShrink = "0";
-                        this._patternEditor.container.style.flexShrink = "0";
-                        this._patternEditorNext.container.style.flexShrink = "0";
-                        this._patternEditorPrev.container.style.display = "";
-                        this._patternEditorNext.container.style.display = "";
-                        this._patternEditorPrev.render();
-                        this._patternEditorNext.render();
-                        this._zoomInButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._zoomOutButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._zoomInButton.style.right = prefs.showScrollBar ? "24px" : "4px";
-                        this._zoomOutButton.style.right = prefs.showScrollBar ? "24px" : "4px";
-                        this._undoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._redoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._copyPatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._pastePatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._insertChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._deleteChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._selectAllButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._duplicateButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._undoButton.style.left = prefs.showScrollBar ? "40px" : "40px";
-                        this._redoButton.style.left = prefs.showScrollBar ? "70px" : "70px";
-                        this._copyPatternButton.style.left = prefs.showScrollBar ? "40px" : "40px";
-                        this._pastePatternButton.style.left = prefs.showScrollBar ? "70px" : "70px";
-                        this._insertChannelButton.style.left = prefs.showScrollBar ? "40px" : "40px";
-                        this._deleteChannelButton.style.left = prefs.showScrollBar ? "70px" : "70px";
-                        this._selectAllButton.style.left = prefs.showScrollBar ? "40px" : "40px";
-                        this._duplicateButton.style.left = prefs.showScrollBar ? "70px" : "70px";
-                        this._notesUpButton.style.left = prefs.showScrollBar ? "40px" : "40px";
-                        this._notesDownButton.style.left = prefs.showScrollBar ? "70px" : "70px";
-                    }
-                    else {
+                    if (this.isMobileFullscreen != true) {
                         this._patternEditor.container.style.width = "";
                         this._patternEditor.container.style.flexShrink = "";
                         this._patternEditorPrev.container.style.display = "none";
@@ -43807,7 +43959,29 @@ You should be redirected to the song at:<br /><br />
                         this._notesDownButton.style.left = prefs.showScrollBar ? "2px" : "2px";
                         this._loopBarButton.style.top = prefs.showScrollBar ? "300px" : "300px";
                         this._loopBarButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+                        this._fullscreenButton.style.top = prefs.showScrollBar ? "330px" : "330px";
+                        this._fullscreenButton.style.left = prefs.showScrollBar ? "2px" : "2px";
                         this._patternArea.style.paddingLeft = prefs.showScrollBar ? "32px" : "32px";
+                    }
+                    else {
+                        this._patternEditor.container.style.width = "";
+                        this._patternEditor.container.style.flexShrink = "";
+                        this._patternEditorPrev.container.style.display = "none";
+                        this._patternEditorNext.container.style.display = "none";
+                        this._zoomInButton.style.display = "none";
+                        this._zoomOutButton.style.display = "none";
+                        this._undoButton.style.display = "none";
+                        this._redoButton.style.display = "none";
+                        this._copyPatternButton.style.display = "none";
+                        this._pastePatternButton.style.display = "none";
+                        this._insertChannelButton.style.display = "none";
+                        this._deleteChannelButton.style.display = "none";
+                        this._selectAllButton.style.display = "none";
+                        this._duplicateButton.style.display = "none";
+                        this._notesUpButton.style.display = "none";
+                        this._notesDownButton.style.display = "none";
+                        this._fullscreenButton.style.top = prefs.showScrollBar ? "0px" : "0px";
+                        this._fullscreenButton.style.left = prefs.showScrollBar ? "32px" : "32px";
                     }
                 }
                 this._patternEditor.render();
@@ -45980,6 +46154,9 @@ You should be redirected to the song at:<br /><br />
                 }
                 this._loopEditor.setLoopAt(this._doc.synth.loopBar);
             };
+            this._goFullscreen = () => {
+                this.isMobileFullscreen = !this.isMobileFullscreen;
+            };
             this._fileMenuHandler = (event) => {
                 switch (this._fileMenu.value) {
                     case "new":
@@ -46352,6 +46529,7 @@ You should be redirected to the song at:<br /><br />
             this._notesUpButton.addEventListener("click", this._notesUp);
             this._notesDownButton.addEventListener("click", this._notesDown);
             this._loopBarButton.addEventListener("click", this._loopBar);
+            this._fullscreenButton.addEventListener("click", this._goFullscreen);
             this._patternArea.addEventListener("mousedown", this._refocusStageNotEditing);
             this._trackArea.addEventListener("mousedown", this.refocusStage);
             this._volumeSlider.container.style.setProperty("flex-grow", "1");

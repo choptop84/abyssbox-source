@@ -14,6 +14,7 @@ export interface Preset extends BeepBoxOption {
     readonly midiSubharmonicOctaves?: number;
     readonly customType?: InstrumentType;
     readonly settings?: any;
+    
 }
 
 export const isMobile: boolean = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|android|ipad|playbook|silk/i.test(navigator.userAgent);
