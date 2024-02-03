@@ -43875,6 +43875,7 @@ You should be redirected to the song at:<br /><br />
                         this._deleteChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
                         this._selectAllButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
                         this._duplicateButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+                        this._loopBarButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
                         this._undoButton.style.left = prefs.showScrollBar ? "40px" : "40px";
                         this._redoButton.style.left = prefs.showScrollBar ? "70px" : "70px";
                         this._copyPatternButton.style.left = prefs.showScrollBar ? "40px" : "40px";
@@ -43905,6 +43906,7 @@ You should be redirected to the song at:<br /><br />
                         this._duplicateButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
                         this._notesUpButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
                         this._notesDownButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+                        this._loopBarButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
                         this._undoButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
                         this._redoButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";
                         this._copyPatternButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
@@ -43937,6 +43939,7 @@ You should be redirected to the song at:<br /><br />
                         this._duplicateButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
                         this._notesUpButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
                         this._notesDownButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+                        this._loopBarButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
                         this._undoButton.style.top = prefs.showScrollBar ? "0px" : "0px";
                         this._undoButton.style.left = prefs.showScrollBar ? "2px" : "2px";
                         this._redoButton.style.top = prefs.showScrollBar ? "30px" : "30px";
@@ -43962,6 +43965,8 @@ You should be redirected to the song at:<br /><br />
                         this._fullscreenButton.style.top = prefs.showScrollBar ? "330px" : "330px";
                         this._fullscreenButton.style.left = prefs.showScrollBar ? "2px" : "2px";
                         this._patternArea.style.paddingLeft = prefs.showScrollBar ? "32px" : "32px";
+                        this._patternArea.style.maxHeight = "75vh";
+                        this._patternArea.style.height = "481px";
                     }
                     else {
                         this._patternEditor.container.style.width = "";
@@ -46160,6 +46165,7 @@ You should be redirected to the song at:<br /><br />
             };
             this._goFullscreen = () => {
                 this.isMobileFullscreen = !this.isMobileFullscreen;
+                this._doc.notifier.changed();
             };
             this._fileMenuHandler = (event) => {
                 switch (this._fileMenu.value) {
