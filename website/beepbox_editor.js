@@ -43781,6 +43781,7 @@ You should be redirected to the song at:<br /><br />
                     (prefs.enableChannelMuting ? textOnIcon : textOffIcon) + "Enable Channel Muting",
                     (prefs.displayBrowserUrl ? textOnIcon : textOffIcon) + "Show Song Data in URL",
                     (prefs.displayVolumeBar ? textOnIcon : textOffIcon) + "Show Playback Volume",
+                    (prefs.notesFlashWhenPlayed ? textOnIcon : textOffIcon) + "Notes Flash When Played (DB2)",
                     (prefs.showOscilloscope ? textOnIcon : textOffIcon) + "Show Oscilloscope",
                     (prefs.showSampleLoadingStatus ? textOnIcon : textOffIcon) + "Show Sample Loading Status",
                     (prefs.showDescription ? textOnIcon : textOffIcon) + "Show Description",
