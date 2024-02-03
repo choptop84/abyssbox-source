@@ -2488,7 +2488,7 @@ var beepbox = (function (exports) {
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
 		}
-
+		
 			@font-face {
 		   font-family: "AbyssType";
 		   src:
@@ -3253,8 +3253,8 @@ var beepbox = (function (exports) {
 		.instructions-column > section:first-of-type > p:first-of-type:after {
 		display: block;
 		content: url("wide-gordon.png");
-		width: 50%;
-		height: 50%;
+		width: inherit;
+		height: contain;
 		text-align: center;
 		margin-top: 25px;
 		}
@@ -43794,6 +43794,7 @@ You should be redirected to the song at:<br /><br />
                         this._notesDownButton.style.left = prefs.showScrollBar ? "2px" : "2px";
                         this._loopBarButton.style.top = prefs.showScrollBar ? "300px" : "300px";
                         this._loopBarButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+                        this._patternArea.style.paddingLeft = prefs.showScrollBar ? "32px" : "32px";
                     }
                 }
                 this._patternEditor.render();
@@ -45947,10 +45948,24 @@ You should be redirected to the song at:<br /><br />
             this._loopBar = () => {
                 if (this._doc.synth.loopBar != this._doc.bar) {
                     this._doc.synth.loopBar = this._doc.bar;
+                    if (!this._doc.synth.playing) {
+                        this._doc.synth.snapToBar();
+                        this._doc.performance.play();
+                    }
                 }
                 else {
                     this._doc.synth.loopBar = -1;
                 }
+                if (this._doc.bar != Math.floor(this._doc.synth.playhead) && this._doc.synth.loopBar != -1) {
+                    this._doc.synth.goToBar(this._doc.bar);
+                    this._doc.synth.snapToBar();
+                    this._doc.synth.initModFilters(this._doc.song);
+                    this._doc.synth.computeLatestModValues();
+                    if (this._doc.prefs.autoFollow) {
+                        this._doc.selection.setChannelBar(this._doc.channel, Math.floor(this._doc.synth.playhead));
+                    }
+                }
+                this._loopEditor.setLoopAt(this._doc.synth.loopBar);
             };
             this._fileMenuHandler = (event) => {
                 switch (this._fileMenu.value) {

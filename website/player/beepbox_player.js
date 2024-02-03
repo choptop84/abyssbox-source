@@ -2140,7 +2140,7 @@ var beepbox = (function (exports) {
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
 		}
-
+		
 			@font-face {
 		   font-family: "AbyssType";
 		   src:
@@ -2905,8 +2905,8 @@ var beepbox = (function (exports) {
 		.instructions-column > section:first-of-type > p:first-of-type:after {
 		display: block;
 		content: url("wide-gordon.png");
-		width: 50%;
-		height: 50%;
+		width: inherit;
+		height: contain;
 		text-align: center;
 		margin-top: 25px;
 		}

@@ -2333,6 +2333,7 @@ export class SongEditor {
             this._notesDownButton.style.left = prefs.showScrollBar ? "2px" : "2px";
             this._loopBarButton.style.top = prefs.showScrollBar ? "300px" : "300px";
             this._loopBarButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._patternArea.style.paddingLeft = prefs.showScrollBar ? "32px" : "32px" ;
         }
     }
         this._patternEditor.render();
@@ -5030,8 +5031,26 @@ export class SongEditor {
 
     private _loopBar = (): void => {
         if (this._doc.synth.loopBar != this._doc.bar) {
-            this._doc.synth.loopBar = this._doc.bar; } else {
+            this._doc.synth.loopBar = this._doc.bar; 
+
+            if (!this._doc.synth.playing) {
+                this._doc.synth.snapToBar();
+                this._doc.performance.play();
+            }
+                } 
+            else {
                 this._doc.synth.loopBar = -1; }
+                // Pressed while viewing a different bar than the current synth playhead.
+                if (this._doc.bar != Math.floor(this._doc.synth.playhead) && this._doc.synth.loopBar != -1) {
+                    this._doc.synth.goToBar(this._doc.bar);
+                    this._doc.synth.snapToBar();
+                    this._doc.synth.initModFilters(this._doc.song);
+                    this._doc.synth.computeLatestModValues();
+                    if (this._doc.prefs.autoFollow) {
+                        this._doc.selection.setChannelBar(this._doc.channel, Math.floor(this._doc.synth.playhead));
+                    }
+                }
+                this._loopEditor.setLoopAt(this._doc.synth.loopBar);
     }
 
     private _fileMenuHandler = (event: Event): void => {
