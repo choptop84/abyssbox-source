@@ -42926,6 +42926,7 @@ You should be redirected to the song at:<br /><br />
     }
 
     const { button, div, input, select, span, optgroup, option, canvas } = HTML;
+    const beepboxEditorContainer$1 = document.getElementById("beepboxEditorContainer");
     function buildOptions(menu, items) {
         for (let index = 0; index < items.length; index++) {
             menu.appendChild(option({ value: index }, items[index]));
@@ -43967,7 +43968,7 @@ You should be redirected to the song at:<br /><br />
                         this._patternArea.style.paddingLeft = prefs.showScrollBar ? "32px" : "32px";
                         this._patternArea.style.maxHeight = "75vh";
                         this._patternArea.style.height = "481px";
-                        this._patternEditor.container.style.paddingTop = "0px";
+                        beepboxEditorContainer$1.style.paddingTop = "0px";
                     }
                     else {
                         this._patternEditor.container.style.width = "";
@@ -43992,7 +43993,7 @@ You should be redirected to the song at:<br /><br />
                         this._patternArea.style.maxHeight = "99vh";
                         this._patternArea.style.height = "800px";
                         this._patternArea.style.paddingLeft = "0px";
-                        this._patternEditor.container.style.paddingTop = "0px";
+                        beepboxEditorContainer$1.style.paddingTop = "0px";
                     }
                 }
                 this._patternEditor.render();

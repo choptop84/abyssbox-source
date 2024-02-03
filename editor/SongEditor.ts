@@ -57,6 +57,8 @@ import { AddSamplesPrompt } from "./AddSamplesPrompt";
 
 const { button, div, input, select, span, optgroup, option, canvas } = HTML;
 
+const beepboxEditorContainer: HTMLElement = document.getElementById("beepboxEditorContainer")!;
+
 function buildOptions(menu: HTMLSelectElement, items: ReadonlyArray<string | number>): HTMLSelectElement {
     for (let index: number = 0; index < items.length; index++) {
         menu.appendChild(option({ value: index }, items[index]));
@@ -820,7 +822,7 @@ export class SongEditor {
     );
 
     public isMobileFullscreen?: boolean;
-
+    
     private readonly _scaleSelect: HTMLSelectElement = buildOptions(select(), Config.scales.map(scale => scale.name));
     private readonly _keySelect: HTMLSelectElement = buildOptions(select(), Config.keys.map(key => key.name).reverse());
     private readonly _octaveStepper: HTMLInputElement = input({ type: "number", min: Config.octaveMin, max: Config.octaveMax, value: "0" });
@@ -2312,7 +2314,7 @@ export class SongEditor {
                 this._patternArea.style.paddingLeft = prefs.showScrollBar ? "32px" : "32px" ;
                 this._patternArea.style.maxHeight =  "75vh";
                 this._patternArea.style.height =  "481px";
-                this._patternEditor.container.style.paddingTop = "0px";
+                beepboxEditorContainer.style.paddingTop = "0px";
         } else {
                 // "Zoomed in" Layout that only shows the pattern editor //
                 this._patternEditor.container.style.width = "";
@@ -2337,7 +2339,7 @@ export class SongEditor {
                 this._patternArea.style.maxHeight =  "99vh";
                 this._patternArea.style.height =  "800px";
                 this._patternArea.style.paddingLeft ="0px";
-                this._patternEditor.container.style.paddingTop = "0px";
+                beepboxEditorContainer.style.paddingTop = "0px";
         }
     }
         this._patternEditor.render();
