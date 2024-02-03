@@ -43747,7 +43747,7 @@ You should be redirected to the song at:<br /><br />
             this._notesUpButton = button({ class: "notesUpButton", type: "button", title: "Move Notes Up" });
             this._notesDownButton = button({ class: "notesDownButton", type: "button", title: "Move Notes Down" });
             this._loopBarButton = button({ class: "loopBarButton", type: "button", title: "Loop only on the Currently Selected Bar" });
-            this._fullscreenButton = button({ class: "notesUpButton", type: "button", title: "Move Notes Up" });
+            this._fullscreenButton = button({ class: "fullscreenButton", type: "button", title: "Make the screen fit fully in your browser (Mobile Only)" });
             this._patternEditorRow = div({ style: "flex: 1; height: 100%; display: flex; overflow: hidden; justify-content: center;" }, this._patternEditorPrev.container, this._patternEditor.container, this._patternEditorNext.container);
             this._patternArea = div({ class: "pattern-area" }, this._piano.container, this._patternEditorRow, this._octaveScrollBar.container, this._zoomInButton, this._zoomOutButton, this._undoButton, this._redoButton, this._copyPatternButton, this._pastePatternButton, this._insertChannelButton, this._deleteChannelButton, this._selectAllButton, this._duplicateButton, this._notesUpButton, this._notesDownButton, this._loopBarButton, this._fullscreenButton);
             this._trackContainer = div({ class: "trackContainer" }, this._trackEditor.container, this._loopEditor.container);
@@ -43990,7 +43990,7 @@ You should be redirected to the song at:<br /><br />
                         this._loopBarButton.style.display = "none";
                         this._fullscreenButton.style.top = prefs.showScrollBar ? "0px" : "0px";
                         this._fullscreenButton.style.left = prefs.showScrollBar ? "32px" : "32px";
-                        this._patternArea.style.maxHeight = "99vh";
+                        this._patternArea.style.maxHeight = "96vh";
                         this._patternArea.style.height = "800px";
                         this._patternArea.style.paddingLeft = "0px";
                         beepboxEditorContainer$1.style.paddingTop = "0px";

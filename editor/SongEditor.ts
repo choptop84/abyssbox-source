@@ -1234,7 +1234,7 @@ export class SongEditor {
     private readonly _notesUpButton: HTMLButtonElement = button({ class: "notesUpButton", type: "button", title: "Move Notes Up" });
     private readonly _notesDownButton: HTMLButtonElement = button({ class: "notesDownButton", type: "button", title: "Move Notes Down" });
     private readonly _loopBarButton: HTMLButtonElement = button({ class: "loopBarButton", type: "button", title: "Loop only on the Currently Selected Bar" });
-    private readonly _fullscreenButton: HTMLButtonElement = button({ class: "notesUpButton", type: "button", title: "Move Notes Up" });
+    private readonly _fullscreenButton: HTMLButtonElement = button({ class: "fullscreenButton", type: "button", title: "Make the screen fit fully in your browser (Mobile Only)" });
     private readonly _patternEditorRow: HTMLDivElement = div({ style: "flex: 1; height: 100%; display: flex; overflow: hidden; justify-content: center;" },
         this._patternEditorPrev.container,
         this._patternEditor.container,
@@ -2336,7 +2336,7 @@ export class SongEditor {
                 this._loopBarButton.style.display = "none";
                 this._fullscreenButton.style.top = prefs.showScrollBar ? "0px" : "0px";
                 this._fullscreenButton.style.left = prefs.showScrollBar ? "32px" : "32px";
-                this._patternArea.style.maxHeight =  "99vh";
+                this._patternArea.style.maxHeight =  "96vh";
                 this._patternArea.style.height =  "800px";
                 this._patternArea.style.paddingLeft ="0px";
                 beepboxEditorContainer.style.paddingTop = "0px";
