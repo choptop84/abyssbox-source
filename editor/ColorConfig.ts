@@ -204,6 +204,10 @@ export class ColorConfig {
     				image-rendering: optimizeSpeed !important;             /* IE */
 				}
 
+				select.trackSelectBox {
+					border-image: none !important;
+				}
+				
 			@font-face {
 		   font-family: "AbyssType_small";
 		   src:
@@ -547,7 +551,10 @@ export class ColorConfig {
     				image-rendering: pixelated !important;                 /* Future browsers */
     				image-rendering: optimizeSpeed !important;             /* IE */
 				}
-				
+
+				select.trackSelectBox {
+					border-image: none !important;
+				}
 
 		/* sets cursor */ 
 		* {
@@ -588,7 +595,7 @@ export class ColorConfig {
 			--link-accent: #df88ff; 		
 			--ui-widget-background: #581b3e; 		
 			--ui-widget-focus: #762b4c; 		
-			--pitch-background: #381d24; 		
+			--pitch-background: #381d2455; 		
 			--tonic: #873a51; 		
 			--fifth-note: #75001e; 		
 			--white-piano-key: #cca5c7; 		
@@ -749,14 +756,14 @@ export class ColorConfig {
     				image-rendering: optimizeSpeed !important;             /* IE */
 				}
 
+				select.trackSelectBox {
+					border-image: none !important;
+				}
+
 				#firstImage {
 					background-image: url("https://choptop84.github.io/abyssbox-source/website/viviandbelle.png") !important;
 					background-repeat: no-repeat !important;
 					background-size: 100% 100% !important;
-				}
-
-				#firstImage rect {
-					opacity: 0.8 !important;
 				}
 
 
@@ -2376,6 +2383,9 @@ export class ColorConfig {
 							image-rendering: pixelated !important;                 /* Future browsers */
 							image-rendering: optimizeSpeed !important;             /* IE */
 						}
+					select.trackSelectBox {
+						border-image: none !important;
+					}
 					div.prompt.noSelection{
 						--editor-background: #002b03; 
 					}
@@ -4521,6 +4531,9 @@ export class ColorConfig {
 					image-rendering: -o-crisp-edges !important;            /* Opera */
 					image-rendering: pixelated !important;                 /* Future browsers */
 					image-rendering: optimizeSpeed !important;             /* IE */
+				}
+				select.trackSelectBox {
+					border-image: none !important;
 				}
 			div.prompt.noSelection{
 				--editor-background: #11001c; 
@@ -8094,7 +8107,7 @@ export class ColorConfig {
 		--link-accent: #98f;
 		--ui-widget-background: #393e4f;
 		--ui-widget-focus: #6d6886;
-		--pitch-background: #393e4f;
+		--pitch-background: #393e4f55;
 		--tonic: #725491;
 		--fifth-note: #54547a;
 		--white-piano-key: #eee;
@@ -8198,7 +8211,7 @@ export class ColorConfig {
 		
 	}
 	#firstImage {
-		background-image: url("https://www.teahub.io/photos/full/244-2448998_anime-girl-wallpaper-4k.jpg") !important;
+		background-image: url("https://choptop84.github.io/choptop84s-image-repository/weebboxbackground.jpg") !important;
 		background-repeat: no-repeat !important;
 		background-size: 100% 100% !important;
 	}
