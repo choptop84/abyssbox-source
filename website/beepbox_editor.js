@@ -43928,8 +43928,6 @@ You should be redirected to the song at:<br /><br />
                         this._patternEditor.container.style.flexShrink = "";
                         this._patternEditorPrev.container.style.display = "none";
                         this._patternEditorNext.container.style.display = "none";
-                        this._zoomInButton.style.display = "none";
-                        this._zoomOutButton.style.display = "none";
                         this._undoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
                         this._redoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
                         this._copyPatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
@@ -43965,6 +43963,10 @@ You should be redirected to the song at:<br /><br />
                         this._loopBarButton.style.left = prefs.showScrollBar ? "2px" : "2px";
                         this._fullscreenButton.style.top = prefs.showScrollBar ? "330px" : "330px";
                         this._fullscreenButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+                        this._zoomInButton.style.top = prefs.showScrollBar ? "360px" : "360px";
+                        this._zoomInButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+                        this._zoomOutButton.style.top = prefs.showScrollBar ? "390px" : "390px";
+                        this._zoomOutButton.style.left = prefs.showScrollBar ? "2px" : "2px";
                         this._patternArea.style.paddingLeft = prefs.showScrollBar ? "32px" : "32px";
                         this._patternArea.style.maxHeight = "75vh";
                         this._patternArea.style.height = "481px";
