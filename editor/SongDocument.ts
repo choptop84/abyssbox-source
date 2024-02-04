@@ -474,12 +474,12 @@ export class SongDocument {
 	}
 		
 	public getFullScreen(): boolean {
-		return !this.getMobileLayout() && (this.prefs.layout != "small");
+		return (this.prefs.layout != "small");
 	}
 	
 	public getVisibleOctaveCount(): number {
 		return this.getFullScreen() ? this.prefs.visibleOctaves : Preferences.defaultVisibleOctaves;
-}
+	}
 	
 	public getVisiblePitchCount(): number {
 		 return this.getVisibleOctaveCount() * Config.pitchesPerOctave + 1;

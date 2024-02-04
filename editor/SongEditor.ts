@@ -2265,6 +2265,7 @@ export class SongEditor {
 
         }
     } else {
+        if (this._doc.getFullScreen()) {
                 // Default Mobile Layout with buttons and stuff //
                 const semitoneHeight: number = this._patternEditorRow.clientHeight / this._doc.getVisiblePitchCount();
                 const targetBeatWidth: number = semitoneHeight * 5;
@@ -2281,8 +2282,7 @@ export class SongEditor {
                 this._patternEditorNext.container.style.flexShrink = "0";
                 this._patternEditorPrev.container.style.display = "";
                 this._patternEditorNext.container.style.display = "";
-                this._patternEditorPrev.render();
-                this._patternEditorNext.render();
+
 
                 this._patternEditor.container.style.width = "";
                 this._patternEditor.container.style.flexShrink = "";
@@ -2328,6 +2328,53 @@ export class SongEditor {
                 this._zoomOutButton.style.left = prefs.showScrollBar ? "2px" : "2px";
                 this._patternArea.style.paddingLeft = prefs.showScrollBar ? "32px" : "32px" ;
                 beepboxEditorContainer.style.paddingTop = "0px";
+        } else {
+            // Default Mobile Layout with buttons and stuff //
+            this._patternEditor.container.style.width = "";
+            this._patternEditor.container.style.flexShrink = "";
+            this._patternEditorPrev.container.style.display = "none";
+            this._patternEditorNext.container.style.display = "none";
+            this._undoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._redoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._copyPatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._pastePatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";            
+            this._insertChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._deleteChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._selectAllButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._duplicateButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._notesUpButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._notesDownButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._loopBarButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._undoButton.style.top = prefs.showScrollBar ? "0px" : "0px";
+            this._undoButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._redoButton.style.top = prefs.showScrollBar ? "30px" : "30px";
+            this._redoButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._copyPatternButton.style.top = prefs.showScrollBar ? "60px" : "60px";
+            this._copyPatternButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._pastePatternButton.style.top = prefs.showScrollBar ? "90px" : "90px";
+            this._pastePatternButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._insertChannelButton.style.top = prefs.showScrollBar ? "120px" : "120px";
+            this._insertChannelButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._deleteChannelButton.style.top = prefs.showScrollBar ? "150px" : "150px";
+            this._deleteChannelButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._selectAllButton.style.top = prefs.showScrollBar ? "180px" : "180px";
+            this._selectAllButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._duplicateButton.style.top = prefs.showScrollBar ? "210px" : "210px";
+            this._duplicateButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._notesUpButton.style.top = prefs.showScrollBar ? "240px" : "240px";   
+            this._notesUpButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._notesDownButton.style.top = prefs.showScrollBar ? "270px" : "270px";
+            this._notesDownButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._loopBarButton.style.top = prefs.showScrollBar ? "300px" : "300px";
+            this._loopBarButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._fullscreenButton.style.display = "none";
+            this._zoomInButton.style.top = prefs.showScrollBar ? "330px" : "330px";
+            this._zoomInButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._zoomOutButton.style.top = prefs.showScrollBar ? "360px" : "360px";
+            this._zoomOutButton.style.left = prefs.showScrollBar ? "2px" : "2px";
+            this._patternArea.style.paddingLeft = prefs.showScrollBar ? "32px" : "32px" ;
+            beepboxEditorContainer.style.paddingTop = "0px";
+        }
     }
         this._patternEditor.render();
 
