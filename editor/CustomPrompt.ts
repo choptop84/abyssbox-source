@@ -9,6 +9,7 @@ import { PatternEditor } from "./PatternEditor";
 import { ColorConfig } from "./ColorConfig";
 
 import Alwan from 'alwan';
+import { alwanEvent } from 'alwan/dist/js/types/src/types';
 
 //namespace beepbox {
 const { button, div, h2, input, p, option, select} = HTML;
@@ -302,11 +303,11 @@ export class CustomPrompt implements Prompt {
 	private _whenColorsPicked = (ev: alwanEvent): void => {
 
 		//document.documentElement.style.setProperty("--page-margin", this._colorpicker.value)
-		//ColorConfig.setThemeProperty(this._currentThemeProperty, this._colorpicker.value);
-		//this._colorInput.value = ColorConfig.getThemeProperties();
-		//this._colorInput.dispatchEvent(new Event("change"));
+		ColorConfig.setThemeProperty(this._currentThemeProperty, ev.hex);
+		this._colorInput.value = ColorConfig.getThemeProperties();
+		this._colorInput.dispatchEvent(new Event("change"));
 
-	//	this._hexColorInput.value = this._colorpicker.value;
+		this._hexColorInput.value = ev.hex;
 
 	}
 
