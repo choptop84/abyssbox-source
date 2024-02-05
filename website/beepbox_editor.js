@@ -4723,7 +4723,7 @@ var beepbox = (function (exports) {
 			`,
         "forest 2": `
 					:root { --page-margin: #132f16; 
-					--editor-background: rgba(255, 255, 255, 0); 
+					--editor-background: #002b03;; 
 					--hover-preview: white; 
 					--playhead: rgba(255, 255, 255, 0.9); 
 					--primary-text: #96d69f; 
@@ -4834,8 +4834,6 @@ var beepbox = (function (exports) {
 					--disabled-note-primary:    #536e5c;
 					--disabled-note-secondary:  #395440;
 
-					
-					
 
 					}
 					/* sets background image */
@@ -4852,6 +4850,7 @@ var beepbox = (function (exports) {
     				image-rendering: optimizeSpeed !important;             /* IE */ 
 						}
 						#text-content {
+						--editor-background: (255, 255, 255, 0);
 							border-image-source: url("https://choptop84.github.io/abyssbox-app/forest2_border.png");
 							border-image-slice: 16 fill; 
 						   	border-image-width: 32px; 
@@ -4865,6 +4864,7 @@ var beepbox = (function (exports) {
 							image-rendering: optimizeSpeed !important;             /* IE */
 						}
 					#beepboxEditorContainer {
+						--editor-background: (255, 255, 255, 0);
 							border-image-source: url("https://choptop84.github.io/abyssbox-app/forest2_border.png");
 							border-image-slice: 16 fill; 
 						   	border-image-width: 32px; 
@@ -6873,7 +6873,7 @@ var beepbox = (function (exports) {
         "Nebula 2": ` 
 			:root { 
 				--page-margin: #040410;
-				--editor-background: rgba(255, 255, 255, 0);
+				--editor-background: #11001c;
 				--hover-preview: white;
 				--playhead: rgba(255, 255, 255, 0.9);
 				--primary-text: white;
@@ -7001,6 +7001,7 @@ var beepbox = (function (exports) {
 			image-rendering: optimizeSpeed !important;             /* IE */ 
 				}
 			#text-content {
+				--editor-background: rgba(255, 255, 255, 0);
 					border-image-source: url("https://choptop84.github.io/abyssbox-app/nebula2_border.png");
 					border-image-slice: 16 fill; 
 					   border-image-width: 32px; 
@@ -7014,6 +7015,7 @@ var beepbox = (function (exports) {
 					image-rendering: optimizeSpeed !important;             /* IE */
 				}
 			#beepboxEditorContainer {
+				--editor-background: rgba(255, 255, 255, 0);
 					border-image-source: url("https://choptop84.github.io/abyssbox-app/nebula2_border.png");
 					border-image-slice: 16 fill; 
 					   border-image-width: 32px; 
@@ -7045,9 +7047,6 @@ var beepbox = (function (exports) {
 				select.trackSelectBox {
 					border-image: none !important;
 				}
-			div.prompt.noSelection{
-				--editor-background: #11001c; 
-			}
 			/* div.channelBox {
 			border-radius: 5px;
 			} */
