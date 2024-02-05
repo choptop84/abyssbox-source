@@ -11,7 +11,7 @@
 		"build-synth": "bash ./compile_beepbox_synth.sh",
 		"build-player": "bash ./compile_beepbox_player.sh",
 		"build-editor": "bash ./compile_beepbox_editor.sh",
-                "build-app": "bash ./compile_beepbox_app.sh"
+		"build-app": "bash ./compile_beepbox_app.sh"
 	},
 	"repository": {
 		"type": "git",
@@ -27,6 +27,7 @@
 	"dependencies": {
 		"@types/jquery": "^3.5.5",
 		"@types/select2": "^4.0.53",
+		"alwan": "^2.0.2",
 		"imperative-html": "^0.1.0",
 		"select2": "^4.0.13"
 	}

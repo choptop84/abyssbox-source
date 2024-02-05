@@ -40402,7 +40402,6 @@ You should be redirected to the song at:<br /><br />
     }
 
     const { button: button$6, div: div$6, h2: h2$5, input: input$4, p: p$1, option: option$4, select: select$4 } = HTML;
-    const _pageMarginTest = ColorConfig.getComputed("--page-margin");
     let doReload = false;
     class CustomPrompt {
         constructor(_doc, _pattern, _pattern2, _pattern3) {
@@ -40410,10 +40409,9 @@ You should be redirected to the song at:<br /><br />
             this._pattern = _pattern;
             this._pattern2 = _pattern2;
             this._pattern3 = _pattern3;
+            this._currentThemeProperty = "--page-margin";
             this._fileInput = input$4({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose editor background image" });
             this._fileInput2 = input$4({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose website background image" });
-            this._colorpicker = input$4({ type: "color", id: "colorPicker", value: (_pageMarginTest), style: "width: 100%; height: 30px;" });
-            this._currentThemeProperty = "--page-margin";
             this._colorMenu = select$4({ style: "width: 100%;" }, option$4({ selected: true, disabled: true, hidden: false }, "Select an asset to change"), option$4({ value: "--page-margin" }, "Page Margin"), option$4({ value: "--editor-background" }, "Editor Background"), option$4({ value: "--primary-text" }, "Primary Text"), option$4({ value: "--secondary-text" }, "Secondary Text"), option$4({ value: "--inverted-text" }, "Inverted Text"), option$4({ value: "--loop-accent" }, "Loop Accent"), option$4({ value: "--link-accent" }, "Link Accent"), option$4({ value: "--ui-widget-background" }, "UI Widget Background"), option$4({ value: "--ui-widget-focus" }, "UI Widget Focus"), option$4({ value: "--pitch-background" }, "Pitch Background"), option$4({ value: "--tonic" }, "Tonic"), option$4({ value: "--fifth-note" }, "Fifth note"), option$4({ value: "--white-piano-key" }, "White Piano Key"), option$4({ value: "--black-piano-key" }, "Black Piano Key"), option$4({ value: "--track-editor-bg-pitch" }, "Track Editor Pitch BG"), option$4({ value: "--track-editor-bg-pitch-dim" }, "Empty Track Editor Pitch BG"), option$4({ value: "--track-editor-bg-noise" }, "Track Editor Noise BG"), option$4({ value: "--track-editor-bg-noise-dim" }, "Empty Track Editor Noise BG"), option$4({ value: "--track-editor-bg-mod" }, "Track Editor Mod BG"), option$4({ value: "--track-editor-bg-mod-dim" }, "Empty Track Editor Mod BG"), option$4({ value: "--multiplicative-mod-slider" }, "Multiplicative Mod Slider"), option$4({ value: "--overwriting-mod-slider" }, "Overwriting Mod Slider"), option$4({ value: "--indicator-primary" }, "Primary Indicator"), option$4({ value: "--indicator-secondary" }, "Secondary Indicator"), option$4({ value: "--select2-opt-group" }, "Preset Catagory Background"), option$4({ value: "--input-box-outline" }, "Input Box Outline"), option$4({ value: "--mute-button-normal" }, "Mute Button (Normal)"), option$4({ value: "--mute-button-mod" }, "Mute Button (Mod)"), option$4({ value: "--mod-label-primary" }, "Mod Label Primary"), option$4({ value: "--mod-label-secondary-text" }, "Mod Label Secondary"), option$4({ value: "--mod-label-primary-text" }, "Mod Label Primary Text"), option$4({ value: "--note-flash" }, "Note Flash"), option$4({ value: "--note-flash-secondary" }, "Note Flash Secondary"));
             this._colorInput = input$4({ type: "text", value: localStorage.getItem("customColors") || `:root {
 		--page-margin: #040410;
@@ -40527,10 +40525,12 @@ You should be redirected to the song at:<br /><br />
 		--note-flash: #ffffff;
 		--note-flash-secondary: #badfe6;
 	}` });
+            this._colorpicker = input$4({ type: "color", id: "colorPicker", value: "#000000", style: "width: 50%; height: 30px;" });
+            this._hexColorInput = input$4({ type: "text", id: "colorPicker", value: "#000000", style: "width: 25%; height: 30px;" });
             this._cancelButton = button$6({ class: "cancelButton" });
             this._okayButton = button$6({ class: "okayButton", style: "width:45%;" }, "Okay");
             this._resetButton = button$6({ style: "height: auto; min-height: var(--button-size);" }, "Reset to defaults");
-            this.container = div$6({ class: "prompt noSelection", style: "width: 500px; left: 4;" }, h2$5("Custom Theme Editor"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Thank you to leoV on discord for basically writing the whole system on how this works, without him this wouldn't be possible!"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "To create your custom theme, click the dropdown menu labeled 'Select an asset to change.' After choosing the asset, modify its color by clicking the colored square. All adjustments occur once you press Okay, allowing you to instantly see the effects of color changes."), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "The website and editor background images are being updated. Soon, you'll only need to copy and paste the theme to automatically include the backgrounds!"), p$1({ style: "text-align: center; margin: 1em 0;" }, this._colorMenu), p$1({ style: "text-align: center; margin: 1em 0;" }, "Pick a color: ", this._colorpicker), this._colorInput, div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._resetButton), div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
+            this.container = div$6({ class: "prompt noSelection", style: "width: 500px; left: 4;" }, h2$5("Custom Theme Editor"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Thank you to leoV on discord for basically writing the whole system on how this works, without him this wouldn't be possible!"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "To use the custom theme editor, simply use the options below!"), div$6(), p$1({ style: "text-align: left; margin: 0;" }, "Editor Background Image:", this._fileInput), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Website Background Image:", this._fileInput2), div$6(), p$1({ style: "text-align: center; margin: 1em 0;" }, this._colorMenu), p$1({ style: "text-align: center; margin: 1em 0;" }, "Pick a color: ", this._colorpicker, this._hexColorInput), div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._resetButton), div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
             this._close = () => {
                 this._doc.prompt = null;
                 this._doc.undo();
@@ -40584,6 +40584,13 @@ You should be redirected to the song at:<br /><br />
                 ColorConfig.setThemeProperty(this._currentThemeProperty, this._colorpicker.value);
                 this._colorInput.value = ColorConfig.getThemeProperties();
                 this._colorInput.dispatchEvent(new Event("change"));
+                this._hexColorInput.value = this._colorpicker.value;
+            };
+            this._whenHexColorsPicked = () => {
+                ColorConfig.setThemeProperty(this._currentThemeProperty, this._hexColorInput.value);
+                this._colorInput.value = ColorConfig.getThemeProperties();
+                this._colorInput.dispatchEvent(new Event("change"));
+                this._colorpicker.value = this._hexColorInput.value;
             };
             this._whenMenuChanged = () => {
                 this._currentThemeProperty = this._colorMenu.value;
@@ -40614,6 +40621,7 @@ You should be redirected to the song at:<br /><br />
             this._cancelButton.addEventListener("click", this._close);
             this._resetButton.addEventListener("click", this._reset);
             this._colorpicker.addEventListener("change", this._whenColorsPicked);
+            this._hexColorInput.addEventListener("change", this._whenHexColorsPicked);
             this._colorMenu.addEventListener("change", this._whenMenuChanged);
         }
     }

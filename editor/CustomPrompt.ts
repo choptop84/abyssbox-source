@@ -8,21 +8,20 @@ import { PatternEditor } from "./PatternEditor";
 
 import { ColorConfig } from "./ColorConfig";
 
+import Alwan from 'alwan';
+
 //namespace beepbox {
 const { button, div, h2, input, p, option, select} = HTML;
 
-//const _pageMarginWeb = document.querySelector("--page-margin");
-const _pageMarginTest = ColorConfig.getComputed("--page-margin");
-
 let doReload = false;
 export class CustomPrompt implements Prompt {
+	private _currentThemeProperty: string = "--page-margin";
+
 	private readonly _fileInput: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose editor background image"});
 	private readonly _fileInput2: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose website background image" });
-	private readonly _colorpicker: HTMLInputElement = input({ type: "color", id: "colorPicker", value:(_pageMarginTest), style:"width: 100%; height: 30px;"});
 
 	//private readonly _useColorFomula: HTMLInputElement = input({ type:""});
 
-	private _currentThemeProperty: string = "--page-margin";
 	
     private readonly _colorMenu: HTMLSelectElement = select({ style: "width: 100%;" },
         option({ selected: true, disabled: true, hidden: false }, "Select an asset to change"),
@@ -178,9 +177,18 @@ export class CustomPrompt implements Prompt {
 		--note-flash: #ffffff;
 		--note-flash-secondary: #badfe6;
 	}`});
+
+	//private readonly _colorpicker: HTMLInputElement = input({ type: "color", id: "colorPicker", value:"#000000", style:"width: 50%; height: 30px;"});
+	private readonly _hexColorInput: HTMLInputElement = input({ type: "text", id: "colorPicker", value:"#000000", style:"width: 25%; height: 30px;" });
+	
 	private readonly _cancelButton: HTMLButtonElement = button({ class: "cancelButton" });
 	private readonly _okayButton: HTMLButtonElement = button({ class: "okayButton", style: "width:45%;" }, "Okay");
 	private readonly _resetButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size);" }, "Reset to defaults");
+
+	private readonly _colorpicker = new Alwan('#reference', {
+		theme: 'dark',
+		format: 'hex',
+	});
 
 	public readonly container: HTMLDivElement = div({ class: "prompt noSelection", style: "width: 500px; left: 4;"},
 	
@@ -188,14 +196,9 @@ export class CustomPrompt implements Prompt {
 		p({ style: "text-align: left; margin: 0.5em 0;" },
 		"Thank you to leoV on discord for basically writing the whole system on how this works, without him this wouldn't be possible!",
 		),
+
 		p({ style: "text-align: left; margin: 0.5em 0;" },
-		"To create your custom theme, click the dropdown menu labeled 'Select an asset to change.' After choosing the asset, modify its color by clicking the colored square. All adjustments occur once you press Okay, allowing you to instantly see the effects of color changes.",
-		),	
-		p({ style: "text-align: left; margin: 0.5em 0;" },
-		"The website and editor background images are being updated. Soon, you'll only need to copy and paste the theme to automatically include the backgrounds!",
-		),				
-		/* p({ style: "text-align: left; margin: 0.5em 0;" },
-			"The first image will become the editor background, and the second image will be tiled across the webpage.",
+		"To use the custom theme editor, simply use the options below!",
 		),
 		div(),
 		p({ style: "text-align: left; margin: 0;" },
@@ -207,18 +210,13 @@ export class CustomPrompt implements Prompt {
 			this._fileInput2
 		),
 		div(),
-		p({ style: "text-align: left; margin: 0;"},
-			"If you want to mess with custom color schemes, mess with the hexcodes yourself, I dare you:", 
-		), */
 		p({ style: "text-align: center; margin: 1em 0;"},
 		this._colorMenu
 		),
 		p({ style: "text-align: center; margin: 1em 0;"},
 			"Pick a color: ",
-			this._colorpicker,
+			this._colorpicker, this._hexColorInput,
 		),
-
-		this._colorInput,
 		div({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" },
 			this._resetButton
 		),
@@ -235,7 +233,8 @@ export class CustomPrompt implements Prompt {
 		this._okayButton.addEventListener("click", this._close);
 		this._cancelButton.addEventListener("click", this._close);
 		this._resetButton.addEventListener("click", this._reset);
-		this._colorpicker.addEventListener("change", this._whenColorsPicked);
+		this._colorpicker.on("change", this._whenColorsPicked);
+		this._hexColorInput.addEventListener("change", this._whenHexColorsPicked);
 		this._colorMenu.addEventListener("change", this._whenMenuChanged);
 		//this._useColorFomula.addEventListener("change", this._whenColorFormula);
 	}
@@ -300,13 +299,25 @@ export class CustomPrompt implements Prompt {
 		reader.readAsDataURL(file);
 	}
 
-	private _whenColorsPicked = (): void => {
+	private _whenColorsPicked = (ev: alwanEvent): void => {
 
 		//document.documentElement.style.setProperty("--page-margin", this._colorpicker.value)
-		ColorConfig.setThemeProperty(this._currentThemeProperty, this._colorpicker.value);
+		//ColorConfig.setThemeProperty(this._currentThemeProperty, this._colorpicker.value);
+		//this._colorInput.value = ColorConfig.getThemeProperties();
+		//this._colorInput.dispatchEvent(new Event("change"));
+
+	//	this._hexColorInput.value = this._colorpicker.value;
+
+	}
+
+	private _whenHexColorsPicked = (): void => {
+
+		//document.documentElement.style.setProperty("--page-margin", this._colorpicker.value)
+		ColorConfig.setThemeProperty(this._currentThemeProperty, this._hexColorInput.value);
 		this._colorInput.value = ColorConfig.getThemeProperties();
 		this._colorInput.dispatchEvent(new Event("change"));
-		
+
+		//this._colorpicker.value = this._hexColorInput.value;
 
 	}
 
