@@ -40527,15 +40527,12 @@ You should be redirected to the song at:<br /><br />
 		--note-flash: #ffffff;
 		--note-flash-secondary: #badfe6;
 	}` });
-            this._hexColorInput = input$4({ type: "text", id: "colorPicker", value: "#000000", style: "width: 25%; height: 30px;" });
+            this._colorpickerInput = input$4({ type: "color", id: "colorPicker", value: "#000000", style: "width: 50%; height: 30px;" });
+            this._hexColorInput = input$4({ type: "text", value: "#000000", style: "width: 25%; height: 30px;" });
             this._cancelButton = button$6({ class: "cancelButton" });
             this._okayButton = button$6({ class: "okayButton", style: "width:45%;" }, "Okay");
             this._resetButton = button$6({ style: "height: auto; min-height: var(--button-size);" }, "Reset to defaults");
-            this._colorpicker = new Tt('#reference', {
-                theme: 'dark',
-                format: 'hex',
-            });
-            this.container = div$6({ class: "prompt noSelection", style: "width: 500px; left: 4;" }, h2$5("Custom Theme Editor"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Thank you to leoV on discord for basically writing the whole system on how this works, without him this wouldn't be possible!"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "To use the custom theme editor, simply use the options below!"), div$6(), p$1({ style: "text-align: left; margin: 0;" }, "Editor Background Image:", this._fileInput), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Website Background Image:", this._fileInput2), div$6(), p$1({ style: "text-align: center; margin: 1em 0;" }, this._colorMenu), p$1({ style: "text-align: center; margin: 1em 0;" }, "Pick a color: ", this._colorpicker, this._hexColorInput), div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._resetButton), div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
+            this.container = div$6({ class: "prompt noSelection", style: "width: 500px; left: 4;" }, h2$5("Custom Theme Editor"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Thank you to leoV on discord for basically writing the whole system on how this works, without him this wouldn't be possible!"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "To use the custom theme editor, simply use the options below!"), div$6(), p$1({ style: "text-align: left; margin: 0;" }, "Editor Background Image:", this._fileInput), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Website Background Image:", this._fileInput2), div$6(), p$1({ style: "text-align: center; margin: 1em 0;" }, this._colorMenu), p$1({ style: "text-align: center; margin: 1em 0;" }, "Pick a color: ", this._colorpickerInput), div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._resetButton), p$1({ style: "text-align: center; margin: 1em 0;" }, this._colorInput), div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
             this._close = () => {
                 this._doc.prompt = null;
                 this._doc.undo();
@@ -40618,13 +40615,19 @@ You should be redirected to the song at:<br /><br />
                 });
                 reader.readAsDataURL(file);
             };
+            setTimeout(() => {
+                this._colorpicker = new Tt(this._colorpickerInput, {
+                    theme: 'dark',
+                    format: 'hex',
+                });
+                this._colorpicker.on("change", this._whenColorsPicked);
+            }, 0);
             this._fileInput.addEventListener("change", this._whenFileSelected);
             this._fileInput2.addEventListener("change", this._whenFileSelected2);
             this._colorInput.addEventListener("change", this._whenColorsChanged);
             this._okayButton.addEventListener("click", this._close);
             this._cancelButton.addEventListener("click", this._close);
             this._resetButton.addEventListener("click", this._reset);
-            this._colorpicker.on("change", this._whenColorsPicked);
             this._hexColorInput.addEventListener("change", this._whenHexColorsPicked);
             this._colorMenu.addEventListener("change", this._whenMenuChanged);
         }

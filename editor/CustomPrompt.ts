@@ -179,18 +179,14 @@ export class CustomPrompt implements Prompt {
 		--note-flash-secondary: #badfe6;
 	}`});
 
-	//private readonly _colorpicker: HTMLInputElement = input({ type: "color", id: "colorPicker", value:"#000000", style:"width: 50%; height: 30px;"});
-	private readonly _hexColorInput: HTMLInputElement = input({ type: "text", id: "colorPicker", value:"#000000", style:"width: 25%; height: 30px;" });
+	private readonly _colorpickerInput: HTMLInputElement = input({ type: "color", id: "colorPicker", value:"#000000", style:"width: 50%; height: 30px;"});
+	private readonly _hexColorInput: HTMLInputElement = input({ type: "text", value:"#000000", style:"width: 25%; height: 30px;" });
 	
 	private readonly _cancelButton: HTMLButtonElement = button({ class: "cancelButton" });
 	private readonly _okayButton: HTMLButtonElement = button({ class: "okayButton", style: "width:45%;" }, "Okay");
 	private readonly _resetButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size);" }, "Reset to defaults");
 
-	private readonly _colorpicker = new Alwan('#reference', {
-		theme: 'dark',
-		format: 'hex',
-	});
-
+	private _colorpicker: Alwan;
 	public readonly container: HTMLDivElement = div({ class: "prompt noSelection", style: "width: 500px; left: 4;"},
 	
 		h2("Custom Theme Editor"),
@@ -216,10 +212,13 @@ export class CustomPrompt implements Prompt {
 		),
 		p({ style: "text-align: center; margin: 1em 0;"},
 			"Pick a color: ",
-			this._colorpicker, this._hexColorInput,
+			this._colorpickerInput,
 		),
 		div({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" },
 			this._resetButton
+		),
+		p({ style: "text-align: center; margin: 1em 0;"},
+			this._colorInput,
 		),
 		div({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" },
 			this._okayButton,
@@ -228,13 +227,20 @@ export class CustomPrompt implements Prompt {
 	);
 	// private readonly lastTheme: string | null = window.localStorage.getItem("colorTheme")
 	constructor(private _doc: SongDocument, private _pattern: PatternEditor, private _pattern2: HTMLDivElement, private _pattern3: HTMLElement) {
+		setTimeout(() => {
+			this._colorpicker = new Alwan(this._colorpickerInput, {
+			theme: 'dark',
+			format: 'hex',
+				});
+			this._colorpicker.on("change", this._whenColorsPicked);
+				}, 0);
 		this._fileInput.addEventListener("change", this._whenFileSelected);
 		this._fileInput2.addEventListener("change", this._whenFileSelected2);
 		this._colorInput.addEventListener("change", this._whenColorsChanged);
 		this._okayButton.addEventListener("click", this._close);
 		this._cancelButton.addEventListener("click", this._close);
 		this._resetButton.addEventListener("click", this._reset);
-		this._colorpicker.on("change", this._whenColorsPicked);
+		//this._colorpicker.on("change", this._whenColorsPicked);
 		this._hexColorInput.addEventListener("change", this._whenHexColorsPicked);
 		this._colorMenu.addEventListener("change", this._whenMenuChanged);
 		//this._useColorFomula.addEventListener("change", this._whenColorFormula);
