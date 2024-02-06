@@ -2924,6 +2924,394 @@ var beepbox = (function (exports) {
 			}
 
 			`,
+        "Frutiger Aero": `
+			:root {		
+			--page-margin: #1e0915; 		
+			--editor-background: #fff0; 		
+			--hover-preview: white; 		
+			--playhead: rgba(255, 255, 255, 0.9); 		
+			--primary-text: white; 		
+			--secondary-text: #ffcedd; 		
+			--inverted-text: black;	 		
+			--text-selection: rgba(119,68,255,0.99); 		
+			--box-selection-fill: #1e0915; 		
+			--loop-accent: #873a51; 		
+			--link-accent: #df88ff; 		
+			--ui-widget-background: #5e9cff; 		
+			--ui-widget-focus: #762b4c; 		
+			--pitch-background: #381d24; 		
+			--tonic: #873a51; 		
+			--fifth-note: #75001e; 		
+			--white-piano-key: #cca5c7; 		
+			--black-piano-key: #402f2f; 		
+			--use-color-formula: true; 		
+			--track-editor-bg-pitch: #571c40; 		
+			--track-editor-bg-pitch-dim: #290d0d; 		
+			--track-editor-bg-noise: #571131; 		
+			--track-editor-bg-noise-dim: #330a28; 		
+			--track-editor-bg-mod: #54083c; 		
+			--track-editor-bg-mod-dim: #360426; 		
+			--multiplicative-mod-slider: #9f6082; 		
+			--overwriting-mod-slider: #9e3470; 		
+			--indicator-primary: #b3498f; 		
+			--indicator-secondary: #541d40; 		
+			--select2-opt-group: #4f191e; 		
+			--input-box-outline: #18041a; 		
+			--mute-button-normal: #dd5d94;	 		
+			--mute-button-mod: #ba364c; 		
+			--mod-label-primary: #541625; 		
+			--mod-label-secondary-text: rgb(120, 87, 86); 
+			--mod-label-primary-text: gray; 
+		
+			--pitch-secondary-channel-hue: -80; 		
+			--pitch-secondary-channel-hue-scale 0; 		
+			--pitch-secondary-channel-sat: 43; 		
+			--pitch-secondary-channel-sat-scale: 0.1; 		
+			--pitch-secondary-channel-lum: 40; 		
+			--pitch-secondary-channel-lum-scale: 0.05; 
+		
+			--pitch-primary-channel-hue: -53; 		
+			--pitch-primary-channel-hue-scale: 6.1; 		
+			--pitch-primary-channel-sat: 75; 		
+			--pitch-primary-channel-sat-scale: 0.1; 		
+			--pitch-primary-channel-lum: 67.5; 		
+			--pitch-primary-channel-lum-scale: 0.05; 	
+	
+			--pitch-secondary-note-hue: -34; 		
+			--pitch-secondary-note-hue-scale: 6.1; 		
+			--pitch-secondary-note-sat: 93.9; 		
+			--pitch-secondary-note-sat-scale: 0.1; 		
+			--pitch-secondary-note-lum: 25; 		
+			--pitch-secondary-note-lum-scale: 0.05; 
+		
+			--pitch-primary-note-hue: -53; 		
+			--pitch-primary-note-hue-scale: 6.1; 		
+			--pitch-primary-note-sat: 100; 		
+			--pitch-primary-note-sat-scale: 0.05; 		
+			--pitch-primary-note-lum: 85.6; 		
+			--pitch-primary-note-lum-scale: 0.025; 
+		
+			--noise-secondary-channel-hue: 0; 		
+			--noise-secondary-channel-hue-scale: 2; 		
+			--noise-secondary-channel-sat: 65; 		
+			--noise-secondary-channel-sat-scale: 0; 		
+			--noise-secondary-channel-lum: 42; 		
+			--noise-secondary-channel-lum-scale: 0; 
+		
+			--noise-primary-channel-hue: 0; 		
+			--noise-primary-channel-hue-scale: 1; 		
+			--noise-primary-channel-sat: 100; 		
+			--noise-primary-channel-sat-scale: 1; 		
+			--noise-primary-channel-lum: 63.5; 		
+			--noise-primary-channel-lum-scale: 0; 
+		
+			--noise-secondary-note-hue: 24; 		
+			--noise-secondary-note-hue-scale: 2; 		
+			--noise-secondary-note-sat: 100; 		
+			--noise-secondary-note-sat-scale: 0; 		
+			--noise-secondary-note-lum: 35; 		
+			--noise-secondary-note-lum-scale: 0; 	
+	
+			--noise-primary-note-hue: 24; 		
+			--noise-primary-note-hue-scale: 2; 		
+			--noise-primary-note-sat: 100; 		
+			--noise-primary-note-sat-scale: 1; 		
+			--noise-primary-note-lum: 60; 		
+			--noise-primary-note-lum-scale: 1; 	
+	
+			--mod-secondary-channel-hue: 55; 		
+			--mod-secondary-channel-hue-scale: 1.5; 		
+			--mod-secondary-channel-sat: 100; 		
+			--mod-secondary-channel-sat-scale: 0; 		
+			--mod-secondary-channel-lum: 20; 		
+			--mod-secondary-channel-lum-scale: 0; 
+		
+			--mod-primary-channel-hue: 55; 		
+			--mod-primary-channel-hue-scale: 1.5; 		
+			--mod-primary-channel-sat: 96; 		
+			--mod-primary-channel-sat-scale: 0; 		
+			--mod-primary-channel-lum: 50; 		
+			--mod-primary-channel-lum-scale: 0; 
+		
+			--mod-secondary-note-hue: 55; 		
+			--mod-secondary-note-hue-scale: 1.5; 		
+			--mod-secondary-note-sat: 92; 		
+			--mod-secondary-note-sat-scale: 0; 		
+			--mod-secondary-note-lum: 45; 		
+			--mod-secondary-note-lum-scale: 0; 
+		
+			--mod-primary-note-hue: 55; 		
+			--mod-primary-note-hue-scale: 1.5; 		
+			--mod-primary-note-sat: 96; 		
+			--mod-primary-note-sat-scale: 0; 		
+			--mod-primary-note-lum: 85; 		
+			--mod-primary-note-lum-scale: 0; 	
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #ffffff77;
+				}
+		* {
+		cursor: url("abyssbox_cursor.png"), auto !important;
+		}
+		
+			@font-face {
+		   font-family: "Frutiger";
+		   src:
+ 		   url("https://choptop84.github.io/choptop84s-image-repository/FrutigerLight.ttf") format("truetype") tech(color-COLRv1),
+			}
+
+			canvas#oscilascopeAll {
+				background: #5e9cff !important; 
+			}
+
+			div.prompt.noSelection{
+				background: linear-gradient(#84aef080, #2a3d6a80) !important; 
+				opacity: 77;
+			}
+
+			/* sets background image */
+			body {
+			background-image: url("https://choptop84.github.io/choptop84s-image-repository/frutigerbg.png") !important;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size:cover;
+				}
+			 .beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered {
+				}
+
+			#beepboxEditorContainer {
+				background: linear-gradient(#eef3ff80, #395eb380) !important;
+				border-style: solid;
+  				border-color: lightblue;
+			}
+			#text-content {
+				background: linear-gradient(#395eb380, #03112f80);
+				border-style: solid;
+  				border-color: lightblue;
+			}
+
+			
+				select.trackSelectBox {
+			
+				}
+				
+				.beepboxEditor select
+				{
+					box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.4), 0px 0px 1px 1px rgba(0, 0, 0, 0.5), inset 0px -4px 10px 6px rgba(0, 0, 0, 0.1), inset 0px 1px 0px 0px rgb(255, 255, 255);
+					background: linear-gradient(#84aef0, #2a3d6a) !important;
+
+					border-image-source:url("https://choptop84.github.io/choptop84s-image-repository/buttonshading.png") !important;
+					border-image-slice: 40 fill !important; 
+   					border-image-width: 4px !important; 
+					border-image-repeat: stretch; 
+				
+
+				}
+
+				.beepboxEditor select:focus
+				{
+					border-image-source: none;
+					
+					background: linear-gradient(#2a3d6a, #2a3d6a) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+						inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+						inset 0px 10px 20px 1px rgba(0, 0, 0, 0.4),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+
+				.beepboxEditor .select2-selection__rendered,
+				.beepboxEditor button,
+				.beepboxEditor .instrument-bar button,
+				.beepboxEditor .eq-filter-type-bar button .deactivated,
+				.beepboxEditor .note-filter-type-bar button .deactivated
+				{
+					background: linear-gradient(#84aef0, #2a3d6a) !important;
+					box-shadow:
+						0px 2px 2px 1px rgba(0, 0, 0, 0.4),
+						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+						inset 0px 1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor .select2-container--open .select2-selection__rendered,
+				.beepboxEditor button:focus,
+				.beepboxEditor .instrument-bar .selected-instrument,
+				.beepboxEditor .eq-filter-type-bar button:not(.deactivated),
+				.beepboxEditor .note-filter-type-bar button:not(.deactivated)
+				{
+					background: linear-gradient(#333, #444) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+						inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor .filterEditor svg,
+				.beepboxEditor .fadeInOut svg,
+				.beepboxEditor .harmonics svg,
+				.beepboxEditor .spectrum svg
+				{
+					background: rgba(0, 0, 0, 0.3) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+						inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor input[type="range"]::-webkit-slider-thumb
+				{
+					box-shadow:
+						0px 2px 2px 1px rgba(0, 0, 0, 0.4),
+						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+						inset 0px 1px 0px 0px rgba(255, 255, 255, 1),
+						inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+						inset 0px -8px 3px rgba(0, 0, 0, 0.2)
+					;
+				}
+				 
+				.beepboxEditor input[type="range"]::-webkit-slider-runnable-track
+				{
+					background: rgba(0, 0, 0, 0.2) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+					border-radius: 4px;
+				}
+				 
+				.beepboxEditor input[type="range"]:focus::-webkit-slider-runnable-track
+				{
+					background: rgba(255, 255, 255, 0.2) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor input[type="range"]::-ms-thumb
+				{
+					box-shadow:
+						0px 2px 2px 1px rgba(0, 0, 0, 0.4),
+						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+						inset 0px 1px 0px 0px rgba(255, 255, 255, 1),
+						inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+						inset 0px -8px 3px rgba(0, 0, 0, 0.2)
+					;
+				}
+				 
+				.beepboxEditor input[type="range"]::-ms-track
+				{
+					background: rgba(0, 0, 0, 0.2) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+					border-radius: 4px;
+				}
+				 
+				.beepboxEditor input[type="range"]:focus::-ms-track
+				{
+					background: rgba(255, 255, 255, 0.2) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor input[type="range"]::-moz-range-thumb
+				{
+					box-shadow:
+						0px 2px 2px 1px rgba(0, 0, 0, 0.4),
+						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+						inset 0px 1px 0px 0px rgba(255, 255, 255, 1),
+						inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+						inset 0px -8px 3px rgba(0, 0, 0, 0.2)
+					;
+				}
+				 
+				.beepboxEditor input[type="range"]::-moz-range-track
+				{
+					background: rgba(0, 0, 0, 0.2) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+					border-radius: 4px;
+				}
+				 
+				.beepboxEditor input[type="range"]:focus::-moz-range-track
+				{
+					background: rgba(255, 255, 255, 0.2) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor input[type="text"],
+				.beepboxEditor input[type="number"]
+				{
+					border: none !important;
+					background: rgba(0, 0, 0, 0.2) !important;
+					box-shadow:
+						0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor input[type="checkbox"]
+				{
+					appearance: none;
+					background: rgba(0, 0, 0, 0.3);
+					color: currentColor;
+					border-radius: 1px;
+					width: 1em !important;
+					height: 1em !important;
+					box-shadow:
+						inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor input[type="checkbox"]:checked
+				{
+					display: flex;
+					justify-content: center;
+				}
+				 
+				.beepboxEditor input[type="checkbox"]:checked:after
+				{
+					width: 1em;
+					height: 1em;
+					text-align: center;
+					font-size: 0.8em;
+					content: "✓";
+					color: currentColor;
+					text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.5);
+				}
+
+			html {
+ 		   	font-family: 'Frutiger';
+			}
+
+			div.channelBoxLabel {
+				font-family: 'Frutiger' !important;
+			}
+
+		   
+
+			`,
         "Glyde": `
 	  :root { 
 		--page-margin: #2b0f1a; 
@@ -40654,7 +41042,7 @@ You should be redirected to the song at:<br /><br />
     class ThemePrompt {
         constructor(_doc) {
             this._doc = _doc;
-            this._themeSelect = select$3({ style: "width: 100%;" }, option$3({ value: "AbyssBox Classic" }, "AbyssBox Classic"), option$3({ value: "AbyssBox Competative" }, "AbyssBox Competative"), option$3({ value: "AbyssBox Light" }, "AbyssBox Light"), option$3({ value: "Half-Life" }, "Half-Life"), option$3({ value: "Doom 1993" }, "Doom 1993"), option$3({ value: "Windows Xp" }, "Windows Xp"), option$3({ value: "Glyde" }, "Glyde"), option$3({ value: "dark classic" }, "BeepBox Dark"), option$3({ value: "light classic" }, "BeepBox Light"), option$3({ value: "dark competition" }, "BeepBox Competition Dark"), option$3({ value: "jummbox classic" }, "JummBox Dark"), option$3({ value: "jummbox light" }, "Gold Light"), option$3({ value: "forest" }, "Forest"), option$3({ value: "forest 2" }, "Forest 2"), option$3({ value: "canyon" }, "Canyon"), option$3({ value: "midnight" }, "Midnight"), option$3({ value: "beachcombing" }, "Beachcombing"), option$3({ value: "violet verdant" }, "Violet Verdant"), option$3({ value: "sunset" }, "Sunset"), option$3({ value: "autumn" }, "Autumn"), option$3({ value: "fruit" }, "Shadowfruit"), option$3({ value: "toxic" }, "Toxic"), option$3({ value: "roe" }, "Roe"), option$3({ value: "moonlight" }, "Moonlight"), option$3({ value: "portal" }, "Portal"), option$3({ value: "fusion" }, "Fusion"), option$3({ value: "inverse" }, "Inverse"), option$3({ value: "nebula" }, "Nebula"), option$3({ value: "Nebula 2" }, "Nebula 2"), option$3({ value: "roe light" }, "Roe Light"), option$3({ value: "amoled dark" }, "High Contrast Dark"), option$3({ value: "energized" }, "Energized"), option$3({ value: "neapolitan" }, "Neapolitan"), option$3({ value: "mono" }, "Poly"), option$3({ value: "blutonium" }, "Blutonium"), option$3({ value: "azur lane" }, "Azur Lane"), option$3({ value: "modbox classic" }, "Modbox"), option$3({ value: "sandbox classic" }, "Sandbox"), option$3({ value: "harrybox" }, "Haileybox"), option$3({ value: "brucebox" }, "Brucebox"), option$3({ value: "shitbox 3.0" }, "Shitbox 1.0/3.0"), option$3({ value: "shitbox 2.0" }, "Shitbox 2.0"), option$3({ value: "nerdbox" }, "NerdBox"), option$3({ value: "zefbox" }, "Zefbox"), option$3({ value: "cardboardbox classic" }, "Cardboardbox"), option$3({ value: "blubox classic" }, "Blubox"), option$3({ value: "dogebox classic" }, "Dogebox"), option$3({ value: "wackybox" }, "Wackybox"), option$3({ value: "todbox dark mode" }, "Todbox Dark Mode"), option$3({ value: "mainbox 1.0" }, "Mainbox"), option$3({ value: "microbox" }, "MicroBox"), option$3({ value: "paandorasbox" }, "PaandorasBox"), option$3({ value: "foxbox" }, "FoxBox"), option$3({ value: "midbox" }, "Midbox"), option$3({ value: "dogebox2" }, "Dogebox2"), option$3({ value: "nepbox" }, "Nepbox"), option$3({ value: "WeebBox" }, "WeebBox"), option$3({ value: "AWeebyssBox" }, "AWeebyssBox"), option$3({ value: "Deuteranopia" }, "Deuteranopia"), option$3({ value: "Protanopia" }, "Protanopia"), option$3({ value: "Tritanopia" }, "Tritanopia"), option$3({ value: "custom" }, "Custom"));
+            this._themeSelect = select$3({ style: "width: 100%;" }, option$3({ value: "AbyssBox Classic" }, "AbyssBox Classic"), option$3({ value: "AbyssBox Competative" }, "AbyssBox Competative"), option$3({ value: "AbyssBox Light" }, "AbyssBox Light"), option$3({ value: "Half-Life" }, "Half-Life"), option$3({ value: "Doom 1993" }, "Doom 1993"), option$3({ value: "Windows Xp" }, "Windows Xp"), option$3({ value: "Frutiger Aero" }, "Frutiger Aero"), option$3({ value: "Glyde" }, "Glyde"), option$3({ value: "dark classic" }, "BeepBox Dark"), option$3({ value: "light classic" }, "BeepBox Light"), option$3({ value: "dark competition" }, "BeepBox Competition Dark"), option$3({ value: "jummbox classic" }, "JummBox Dark"), option$3({ value: "jummbox light" }, "Gold Light"), option$3({ value: "forest" }, "Forest"), option$3({ value: "forest 2" }, "Forest 2"), option$3({ value: "canyon" }, "Canyon"), option$3({ value: "midnight" }, "Midnight"), option$3({ value: "beachcombing" }, "Beachcombing"), option$3({ value: "violet verdant" }, "Violet Verdant"), option$3({ value: "sunset" }, "Sunset"), option$3({ value: "autumn" }, "Autumn"), option$3({ value: "fruit" }, "Shadowfruit"), option$3({ value: "toxic" }, "Toxic"), option$3({ value: "roe" }, "Roe"), option$3({ value: "moonlight" }, "Moonlight"), option$3({ value: "portal" }, "Portal"), option$3({ value: "fusion" }, "Fusion"), option$3({ value: "inverse" }, "Inverse"), option$3({ value: "nebula" }, "Nebula"), option$3({ value: "Nebula 2" }, "Nebula 2"), option$3({ value: "roe light" }, "Roe Light"), option$3({ value: "amoled dark" }, "High Contrast Dark"), option$3({ value: "energized" }, "Energized"), option$3({ value: "neapolitan" }, "Neapolitan"), option$3({ value: "mono" }, "Poly"), option$3({ value: "blutonium" }, "Blutonium"), option$3({ value: "azur lane" }, "Azur Lane"), option$3({ value: "modbox classic" }, "Modbox"), option$3({ value: "sandbox classic" }, "Sandbox"), option$3({ value: "harrybox" }, "Haileybox"), option$3({ value: "brucebox" }, "Brucebox"), option$3({ value: "shitbox 3.0" }, "Shitbox 1.0/3.0"), option$3({ value: "shitbox 2.0" }, "Shitbox 2.0"), option$3({ value: "nerdbox" }, "NerdBox"), option$3({ value: "zefbox" }, "Zefbox"), option$3({ value: "cardboardbox classic" }, "Cardboardbox"), option$3({ value: "blubox classic" }, "Blubox"), option$3({ value: "dogebox classic" }, "Dogebox"), option$3({ value: "wackybox" }, "Wackybox"), option$3({ value: "todbox dark mode" }, "Todbox Dark Mode"), option$3({ value: "mainbox 1.0" }, "Mainbox"), option$3({ value: "microbox" }, "MicroBox"), option$3({ value: "paandorasbox" }, "PaandorasBox"), option$3({ value: "foxbox" }, "FoxBox"), option$3({ value: "midbox" }, "Midbox"), option$3({ value: "dogebox2" }, "Dogebox2"), option$3({ value: "nepbox" }, "Nepbox"), option$3({ value: "WeebBox" }, "WeebBox"), option$3({ value: "AWeebyssBox" }, "AWeebyssBox"), option$3({ value: "Deuteranopia" }, "Deuteranopia"), option$3({ value: "Protanopia" }, "Protanopia"), option$3({ value: "Tritanopia" }, "Tritanopia"), option$3({ value: "custom" }, "Custom"));
             this._cancelButton = button$5({ class: "cancelButton" });
             this._okayButton = button$5({ class: "okayButton", style: "width:45%;" }, "Okay");
             this.container = div$5({ class: "prompt noSelection", style: "width: 220px;" }, h2$4("Set Theme"), div$5({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$5({ class: "selectContainer", style: "width: 100%;" }, this._themeSelect)), div$5({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
