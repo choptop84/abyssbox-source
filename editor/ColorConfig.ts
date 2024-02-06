@@ -581,139 +581,137 @@ export class ColorConfig {
 
 			`,
       "Glyde": `
-			:root {		
-			--page-margin: #ffadbf; 		
-			--editor-background: #ffadbf; 		
-			--hover-preview: white; 		
-			--playhead: rgba(255, 255, 255, 0.9); 		
-			--primary-text: white; 		
-			--secondary-text: #ffcedd; 		
-			--inverted-text: black;	 		
-			--text-selection: rgba(119,68,255,0.99); 		
-			--box-selection-fill: #1e0915; 		
-			--loop-accent: #873a51; 		
-			--link-accent: #df88ff; 		
-			--ui-widget-background: #ffd4dd; 		
-			--ui-widget-focus: #ffd4dd; 		
-			--pitch-background: #381d24; 		
-			--tonic: #873a51; 		
-			--fifth-note: #75001e; 		
-			--white-piano-key: #cca5c7; 		
-			--black-piano-key: #402f2f; 		
-			--use-color-formula: true; 		
-			--track-editor-bg-pitch: #571c40; 		
-			--track-editor-bg-pitch-dim: #290d0d; 		
-			--track-editor-bg-noise: #571131; 		
-			--track-editor-bg-noise-dim: #330a28; 		
-			--track-editor-bg-mod: #54083c; 		
-			--track-editor-bg-mod-dim: #360426; 		
-			--multiplicative-mod-slider: #9f6082; 		
-			--overwriting-mod-slider: #9e3470; 		
-			--indicator-primary: #b3498f; 		
-			--indicator-secondary: #541d40; 		
-			--select2-opt-group: #4f191e; 		
-			--input-box-outline: #18041a; 		
-			--mute-button-normal: #dd5d94;	 		
-			--mute-button-mod: #ba364c; 		
-			--mod-label-primary: #541625; 		
-			--mod-label-secondary-text: rgb(120, 87, 86); 
-			--mod-label-primary-text: gray; 
-		
-			--pitch-secondary-channel-hue: -80; 		
-			--pitch-secondary-channel-hue-scale 0; 		
-			--pitch-secondary-channel-sat: 43; 		
-			--pitch-secondary-channel-sat-scale: 0.1; 		
-			--pitch-secondary-channel-lum: 40; 		
-			--pitch-secondary-channel-lum-scale: 0.05; 
-		
-			--pitch-primary-channel-hue: -53; 		
-			--pitch-primary-channel-hue-scale: 6.1; 		
-			--pitch-primary-channel-sat: 75; 		
-			--pitch-primary-channel-sat-scale: 0.1; 		
-			--pitch-primary-channel-lum: 67.5; 		
-			--pitch-primary-channel-lum-scale: 0.05; 	
-	
-			--pitch-secondary-note-hue: -34; 		
-			--pitch-secondary-note-hue-scale: 6.1; 		
-			--pitch-secondary-note-sat: 93.9; 		
-			--pitch-secondary-note-sat-scale: 0.1; 		
-			--pitch-secondary-note-lum: 25; 		
-			--pitch-secondary-note-lum-scale: 0.05; 
-		
-			--pitch-primary-note-hue: -53; 		
-			--pitch-primary-note-hue-scale: 6.1; 		
-			--pitch-primary-note-sat: 100; 		
-			--pitch-primary-note-sat-scale: 0.05; 		
-			--pitch-primary-note-lum: 85.6; 		
-			--pitch-primary-note-lum-scale: 0.025; 
-		
-			--noise-secondary-channel-hue: 0; 		
-			--noise-secondary-channel-hue-scale: 2; 		
-			--noise-secondary-channel-sat: 65; 		
-			--noise-secondary-channel-sat-scale: 0; 		
-			--noise-secondary-channel-lum: 42; 		
-			--noise-secondary-channel-lum-scale: 0; 
-		
-			--noise-primary-channel-hue: 0; 		
-			--noise-primary-channel-hue-scale: 1; 		
-			--noise-primary-channel-sat: 100; 		
-			--noise-primary-channel-sat-scale: 1; 		
-			--noise-primary-channel-lum: 63.5; 		
-			--noise-primary-channel-lum-scale: 0; 
-		
-			--noise-secondary-note-hue: 24; 		
-			--noise-secondary-note-hue-scale: 2; 		
-			--noise-secondary-note-sat: 100; 		
-			--noise-secondary-note-sat-scale: 0; 		
-			--noise-secondary-note-lum: 35; 		
-			--noise-secondary-note-lum-scale: 0; 	
-	
-			--noise-primary-note-hue: 24; 		
-			--noise-primary-note-hue-scale: 2; 		
-			--noise-primary-note-sat: 100; 		
-			--noise-primary-note-sat-scale: 1; 		
-			--noise-primary-note-lum: 60; 		
-			--noise-primary-note-lum-scale: 1; 	
-	
-			--mod-secondary-channel-hue: 55; 		
-			--mod-secondary-channel-hue-scale: 1.5; 		
-			--mod-secondary-channel-sat: 100; 		
-			--mod-secondary-channel-sat-scale: 0; 		
-			--mod-secondary-channel-lum: 20; 		
-			--mod-secondary-channel-lum-scale: 0; 
-		
-			--mod-primary-channel-hue: 55; 		
-			--mod-primary-channel-hue-scale: 1.5; 		
-			--mod-primary-channel-sat: 96; 		
-			--mod-primary-channel-sat-scale: 0; 		
-			--mod-primary-channel-lum: 50; 		
-			--mod-primary-channel-lum-scale: 0; 
-		
-			--mod-secondary-note-hue: 55; 		
-			--mod-secondary-note-hue-scale: 1.5; 		
-			--mod-secondary-note-sat: 92; 		
-			--mod-secondary-note-sat-scale: 0; 		
-			--mod-secondary-note-lum: 45; 		
-			--mod-secondary-note-lum-scale: 0; 
-		
-			--mod-primary-note-hue: 55; 		
-			--mod-primary-note-hue-scale: 1.5; 		
-			--mod-primary-note-sat: 96; 		
-			--mod-primary-note-sat-scale: 0; 		
-			--mod-primary-note-lum: 85; 		
-			--mod-primary-note-lum-scale: 0; 	
+	  :root { 
+		--page-margin: #2b0f1a; 
+		--editor-background: #2b0f1a; 
+		--hover-preview: white; 
+		--playhead: rgba(255, 255, 255, 0.9); 
+		--primary-text: white; 
+		--secondary-text: #ffcedd; 
+		--inverted-text: black; 
+		--text-selection: rgba(119,68,255,0.99); 
+		--box-selection-fill: #1e0915; 
+		--loop-accent: #873a51; 
+		--link-accent: #df88ff; 
+		--ui-widget-background: #4f152b; 
+		--ui-widget-focus: #4f152b; 
+		--pitch-background: #f58cb7ba; 
+		--tonic: #ffc2d2ba; 
+		--fifth-note: #f53d88ba; 
+		--white-piano-key: #cca5c7; 
+		--black-piano-key: #402f2f; 
+		--use-color-formula: true; 
+		--track-editor-bg-pitch: #751e40; 
+		--track-editor-bg-pitch-dim: #4f152b; 
+		--track-editor-bg-noise: #751e30; 
+		--track-editor-bg-noise-dim: #4f152b; 
+		--track-editor-bg-mod: #751e29; 
+		--track-editor-bg-mod-dim: #4f152b; 
+		--multiplicative-mod-slider: #ea7d7d; 
+		--overwriting-mod-slider: #ffebd5; 
+		--indicator-primary: #ffebd5; 
+		--indicator-secondary: #4f152b; 
+		--select2-opt-group: #ffebd5; 
+		--input-box-outline: #a33e67; 
+		--mute-button-normal: #b63448; 
+		--mute-button-mod: #6d0f1d; 
+		--mod-label-primary: #2b080d; 
+		--mod-label-secondary-text: #421a20; 
+		--mod-label-primary-text: #ffc6cf; 
 
-			--note-flash: #ffffff;
-			--note-flash-secondary: #ffffff77;
-				}
+		--pitch-secondary-channel-hue: 60; 
+		--pitch-secondary-channel-sat: 23; 
+		--pitch-secondary-channel-sat-scale: 0.1; 
+		--pitch-secondary-channel-lum: 50; 
+		--pitch-secondary-channel-lum-scale: 0.05; 
+
+		--pitch-primary-channel-hue: 60; 
+		--pitch-primary-channel-hue-scale: 6.1; 
+		--pitch-primary-channel-sat: 75; 
+		--pitch-primary-channel-sat-scale: 0.1; 
+		--pitch-primary-channel-lum: 87.5; 
+		--pitch-primary-channel-lum-scale: 0.05; 
+
+		--pitch-secondary-note-hue: 60; 
+		--pitch-secondary-note-hue-scale: 6.1; 
+		--pitch-secondary-note-sat: 53.9; 
+		--pitch-secondary-note-sat-scale: 0.1; 
+		--pitch-secondary-note-lum: 65; 
+		--pitch-secondary-note-lum-scale: 0.05; 
+
+		--pitch-primary-note-hue: 60; 
+		--pitch-primary-note-hue-scale: 6.1; 
+		--pitch-primary-note-sat: 100; 
+		--pitch-primary-note-sat-scale: 0.05; 
+		--pitch-primary-note-lum: 95.6; 
+		--pitch-primary-note-lum-scale: 0.025; 
+
+		--noise-secondary-channel-hue: 0; 
+		--noise-secondary-channel-hue-scale: 2; 
+		--noise-secondary-channel-sat: 65; 
+		--noise-secondary-channel-sat-scale: 0; 
+		--noise-secondary-channel-lum: 72; 
+		--noise-secondary-channel-lum-scale: 0;
+
+		--noise-primary-channel-hue: 0; 
+		--noise-primary-channel-hue-scale: 1; 
+		--noise-primary-channel-sat: 100; 
+		--noise-primary-channel-sat-scale: 1; 
+		--noise-primary-channel-lum: 93.5; 
+		--noise-primary-channel-lum-scale: 0; 
+
+		--noise-secondary-note-hue: 24; 
+		--noise-secondary-note-hue-scale: 2; 
+		--noise-secondary-note-sat: 100; 
+		--noise-secondary-note-sat-scale: 0; 
+		--noise-secondary-note-lum: 75; 
+		--noise-secondary-note-lum-scale: 0; 
+
+		--noise-primary-note-hue: 24; 
+		--noise-primary-note-hue-scale: 2; 
+		--noise-primary-note-sat: 100; 
+		--noise-primary-note-sat-scale: 1; 
+		--noise-primary-note-lum: 90; 
+		--noise-primary-note-lum-scale: 1; 
+
+		--mod-secondary-channel-hue: 55; 
+		--mod-secondary-channel-hue-scale: 1.5; 
+		--mod-secondary-channel-sat: 100; 
+		--mod-secondary-channel-sat-scale: 0; 
+		--mod-secondary-channel-lum: 70; 
+		--mod-secondary-channel-lum-scale: 0; 
+
+		--mod-primary-channel-hue: 55; 
+		--mod-primary-channel-hue-scale: 1.5; 
+		--mod-primary-channel-sat: 96; 
+		--mod-primary-channel-sat-scale: 0; 
+		--mod-primary-channel-lum: 95; 
+		--mod-primary-channel-lum-scale: 0; 
+
+		--mod-secondary-note-hue: 55; 
+		--mod-secondary-note-hue-scale: 1.5; 
+		--mod-secondary-note-sat: 92; 
+		--mod-secondary-note-sat-scale: 0; 
+		--mod-secondary-note-lum: 75; 
+		--mod-secondary-note-lum-scale: 0; 
+
+		--mod-primary-note-hue: 55; 
+		--mod-primary-note-hue-scale: 1.5; 
+		--mod-primary-note-sat: 96; 
+		--mod-primary-note-sat-scale: 0; 
+		--mod-primary-note-lum: 95; 
+		--mod-primary-note-lum-scale: 0; 
+
+		--note-flash: #fff; 
+		--note-flash-secondary: #ffffff54; }
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
 		}
 		
 			@font-face {
-		   font-family: "AbyssType";
+		   font-family: "Valera";
 		   src:
- 		   url("abysstype.otf") format("opentype") tech(color-COLRv1),
+ 		   url("https://choptop84.github.io/abyssbox-app/Valera.ttf") format("truetype") tech(color-COLRv1),
 			}
 
 			/* sets background image */
@@ -728,22 +726,41 @@ export class ColorConfig {
 			image-rendering: pixelated !important;                 /* Future browsers */
 			image-rendering: optimizeSpeed !important;             /* IE */
 				}
+
+			div#beepboxEditorContainer {
+				border-style: solid;
+				border-width: 8px;
+				border-color: #4f152b;
+				padding-bottom: 5px;
+			}
 				
-			@font-face {
-		   font-family: "AbyssType_small";
-		   src:
- 		   url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
+			#text-content {
+				border-style: solid;
+				border-width: 8px;
+				border-color: #4f152b;
 			}
 
 			html {
- 		   	font-family: 'AbyssType';
+ 		   	font-family: 'Valera';
 			}
 
 			div.channelBoxLabel {
-				font-family: 'AbyssType_small' !important;
+				font-family: 'Valera' !important;
 			}
 
-		   
+			#firstImage {
+				background-image: url("https://choptop84.github.io/choptop84s-image-repository/slushiepfp.PNG") !important;
+				background-repeat: no-repeat !important;
+				background-size: 100% 100% !important;
+			}
+
+			#text-content > section > h1 > font {
+				display: none;
+				}
+				#text-content > section > h1 {
+				margin: auto;
+				content: url("https://choptop84.github.io/choptop84s-image-repository/AbyssBoxGlydeThemeLogo.png");
+				}
 
 			`,			
 		"AWeebyssBox": `
@@ -8400,9 +8417,9 @@ export class ColorConfig {
 --link-accent: #8915c8; 
 --ui-widget-background: #676767; 
 --ui-widget-focus: #696969; 
---pitch-background: #7a7887; 
---tonic: #313036; 
---fifth-note: #c3c1db; 
+--pitch-background: #302f36; 
+--tonic: #19181c; 
+--fifth-note: #1b1924; 
 --white-piano-key: #a6a6a6; 
 --black-piano-key: #484848; 
 --use-color-formula: false; 
@@ -8423,11 +8440,11 @@ export class ColorConfig {
 --mod-label-primary: #0909ff; 
 --mod-label-secondary-text: #ffffff; 
 --mod-label-primary-text: #c8ecfd; 
-				--pitch1-secondary-channel: #0e0429;
-				--pitch1-primary-channel:   #310b8f;
+				--pitch1-secondary-channel: #160740;
+				--pitch1-primary-channel:   #482d8a;
 
-				--pitch1-secondary-note:    #0e0429;
-				--pitch1-primary-note:      #310b8f;
+				--pitch1-secondary-note:    #160740;
+				--pitch1-primary-note:      #482d8a;
 
 				--pitch2-secondary-channel: #0b555e;
 				--pitch2-primary-channel:   #126e7a;
@@ -8547,9 +8564,9 @@ export class ColorConfig {
 --link-accent: #8915c8; 
 --ui-widget-background: #676767; 
 --ui-widget-focus: #696969; 
---pitch-background: #7a7887; 
---tonic: #313036; 
---fifth-note: #c3c1db; 
+--pitch-background: #302f36; 
+--tonic: #19181c; 
+--fifth-note: #1b1924; 
 --white-piano-key: #a6a6a6; 
 --black-piano-key: #484848; 
 --use-color-formula: false; 
