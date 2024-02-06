@@ -3053,9 +3053,9 @@ var beepbox = (function (exports) {
 		}
 		
 			@font-face {
-		   font-family: "Valera";
+		   font-family: "Varela";
 		   src:
- 		   url("https://choptop84.github.io/abyssbox-app/Valera.ttf") format("truetype") tech(color-COLRv1),
+ 		   url("https://choptop84.github.io/abyssbox-app/Varela.ttf") format("truetype") tech(color-COLRv1),
 			}
 
 			/* sets background image */
@@ -3085,11 +3085,11 @@ var beepbox = (function (exports) {
 			}
 
 			html {
- 		   	font-family: 'Valera';
+ 		   	font-family: 'Varela';
 			}
 
 			div.channelBoxLabel {
-				font-family: 'Valera' !important;
+				font-family: 'Varela' !important;
 			}
 
 			#firstImage {
