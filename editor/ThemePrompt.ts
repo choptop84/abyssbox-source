@@ -15,6 +15,7 @@ export class ThemePrompt implements Prompt {
 			option({ value: "AbyssBox Light"}, "AbyssBox Light"),
 			option({ value: "Half-Life"}, "Half-Life"),
 			option({ value: "Doom 1993"}, "Doom 1993"),
+			option({ value: "Scratch"}, "Scratch"),
 			option({ value: "Windows Xp"}, "Windows Xp"),
 			option({ value: "Frutiger Aero"}, "Frutiger Aero"),
 			option({ value: "Glyde"}, "Glyde"),

@@ -582,7 +582,7 @@ export class ColorConfig {
 			`,
 	"Frutiger Aero": `
 			:root {		
-			--page-margin: #1e0915; 		
+			--page-margin: #fff; 		
 			--editor-background: #84aef0; 		
 			--hover-preview: white; 		
 			--playhead: rgba(255, 255, 255, 0.9); 		
@@ -970,6 +970,8 @@ export class ColorConfig {
 				font-family: 'Frutiger' !important;
 			}
 
+				/* Use this code down here when you have transparent backgrounds!!! */
+
 		   div.beepboxEditor.load {
 			background: none !important;
 		   }
@@ -986,31 +988,31 @@ export class ColorConfig {
 			background: none !important;
 		   }
 
-		   .beepboxEditor div {
+		   div.muteEditor div {
 			background: none !important;
 		   }
 
 			`,			
       "Glyde": `
 	  :root { 
-		--page-margin: #2b0f1a; 
-		--editor-background: #2b0f1a; 
+		--page-margin: #000000; 
+		--editor-background: #472434a8; 
 		--hover-preview: white; 
 		--playhead: rgba(255, 255, 255, 0.9); 
-		--primary-text: white; 
+		--primary-text: #ffe5c2; 
 		--secondary-text: #ffcedd; 
 		--inverted-text: black; 
 		--text-selection: rgba(119,68,255,0.99); 
 		--box-selection-fill: #1e0915; 
-		--loop-accent: #873a51; 
+		--loop-accent: #ffdeaf; 
 		--link-accent: #df88ff; 
-		--ui-widget-background: #4f152b; 
+		--ui-widget-background: #8a516e9e; 
 		--ui-widget-focus: #4f152b; 
-		--pitch-background: #f58cb7ba; 
-		--tonic: #ffc2d2ba; 
-		--fifth-note: #f53d88ba; 
-		--white-piano-key: #cca5c7; 
-		--black-piano-key: #402f2f; 
+		--pitch-background: #00000038; 
+		--tonic: #ff9db9; 
+		--fifth-note: #ffe1b88c; 
+		--white-piano-key: #ffb6ce; 
+		--black-piano-key: #ff7ba7; 
 		--use-color-formula: true; 
 		--track-editor-bg-pitch: #751e40; 
 		--track-editor-bg-pitch-dim: #4f152b; 
@@ -1029,90 +1031,77 @@ export class ColorConfig {
 		--mod-label-primary: #2b080d; 
 		--mod-label-secondary-text: #421a20; 
 		--mod-label-primary-text: #ffc6cf; 
-
 		--pitch-secondary-channel-hue: 60; 
 		--pitch-secondary-channel-sat: 23; 
 		--pitch-secondary-channel-sat-scale: 0.1; 
 		--pitch-secondary-channel-lum: 50; 
 		--pitch-secondary-channel-lum-scale: 0.05; 
-
 		--pitch-primary-channel-hue: 60; 
 		--pitch-primary-channel-hue-scale: 6.1; 
 		--pitch-primary-channel-sat: 75; 
 		--pitch-primary-channel-sat-scale: 0.1; 
 		--pitch-primary-channel-lum: 87.5; 
 		--pitch-primary-channel-lum-scale: 0.05; 
-
 		--pitch-secondary-note-hue: 60; 
 		--pitch-secondary-note-hue-scale: 6.1; 
 		--pitch-secondary-note-sat: 53.9; 
 		--pitch-secondary-note-sat-scale: 0.1; 
 		--pitch-secondary-note-lum: 65; 
 		--pitch-secondary-note-lum-scale: 0.05; 
-
 		--pitch-primary-note-hue: 60; 
 		--pitch-primary-note-hue-scale: 6.1; 
 		--pitch-primary-note-sat: 100; 
 		--pitch-primary-note-sat-scale: 0.05; 
 		--pitch-primary-note-lum: 95.6; 
 		--pitch-primary-note-lum-scale: 0.025; 
-
 		--noise-secondary-channel-hue: 0; 
 		--noise-secondary-channel-hue-scale: 2; 
 		--noise-secondary-channel-sat: 65; 
 		--noise-secondary-channel-sat-scale: 0; 
 		--noise-secondary-channel-lum: 72; 
-		--noise-secondary-channel-lum-scale: 0;
-
+		--noise-secondary-channel-lum-scale: 0; 
 		--noise-primary-channel-hue: 0; 
 		--noise-primary-channel-hue-scale: 1; 
 		--noise-primary-channel-sat: 100; 
 		--noise-primary-channel-sat-scale: 1; 
 		--noise-primary-channel-lum: 93.5; 
 		--noise-primary-channel-lum-scale: 0; 
-
 		--noise-secondary-note-hue: 24; 
 		--noise-secondary-note-hue-scale: 2; 
 		--noise-secondary-note-sat: 100; 
 		--noise-secondary-note-sat-scale: 0; 
 		--noise-secondary-note-lum: 75; 
 		--noise-secondary-note-lum-scale: 0; 
-
 		--noise-primary-note-hue: 24; 
 		--noise-primary-note-hue-scale: 2; 
 		--noise-primary-note-sat: 100; 
 		--noise-primary-note-sat-scale: 1; 
 		--noise-primary-note-lum: 90; 
 		--noise-primary-note-lum-scale: 1; 
-
 		--mod-secondary-channel-hue: 55; 
 		--mod-secondary-channel-hue-scale: 1.5; 
 		--mod-secondary-channel-sat: 100; 
 		--mod-secondary-channel-sat-scale: 0; 
 		--mod-secondary-channel-lum: 70; 
 		--mod-secondary-channel-lum-scale: 0; 
-
 		--mod-primary-channel-hue: 55; 
 		--mod-primary-channel-hue-scale: 1.5; 
 		--mod-primary-channel-sat: 96; 
 		--mod-primary-channel-sat-scale: 0; 
 		--mod-primary-channel-lum: 95; 
 		--mod-primary-channel-lum-scale: 0; 
-
 		--mod-secondary-note-hue: 55; 
 		--mod-secondary-note-hue-scale: 1.5; 
 		--mod-secondary-note-sat: 92; 
 		--mod-secondary-note-sat-scale: 0; 
 		--mod-secondary-note-lum: 75; 
 		--mod-secondary-note-lum-scale: 0; 
-
 		--mod-primary-note-hue: 55; 
 		--mod-primary-note-hue-scale: 1.5; 
 		--mod-primary-note-sat: 96; 
 		--mod-primary-note-sat-scale: 0; 
 		--mod-primary-note-lum: 95; 
 		--mod-primary-note-lum-scale: 0; 
-
 		--note-flash: #fff; 
 		--note-flash-secondary: #ffffff54; }
 		* {
@@ -1172,6 +1161,27 @@ export class ColorConfig {
 				margin: auto;
 				content: url("https://choptop84.github.io/choptop84s-image-repository/AbyssBoxGlydeThemeLogo.png");
 				}
+
+				div.beepboxEditor.load {
+					background: none !important;
+				   }
+		
+				   div.noSelection {
+					background: none !important;
+				   }
+		
+				   .beepboxEditor .loopEditor {
+					background: none !important;
+				   }
+		
+				   .beepboxEditor .muteEditor {
+					background: none !important;
+				   }
+		
+				   div.muteEditor div {
+					background: none !important;
+				   }
+
 
 			`,			
 		"AWeebyssBox": `
@@ -1540,6 +1550,288 @@ export class ColorConfig {
 			}
 
 			`,
+		"Scratch": `
+		:root {
+			--page-margin: #4d97ff40;
+			--editor-background: #f6e5fa;
+			--hover-preview: #ff9900;
+			--playhead: #4cbf56;
+			--primary-text: #fff;
+			--secondary-text: #000;
+			--inverted-text: #fff;
+			--text-selection: rgba(255, 255, 255, 0.99);
+			--box-selection-fill: #7725ff;
+			--loop-accent: #ffab19;
+			--link-accent: #ff9900;
+			--ui-widget-background: #855cd6;
+			--ui-widget-focus: #ff661a;
+			--pitch-background: #fff;
+			--tonic: #855cd6;
+			--fifth-note: #7e7e7e;
+			--use-color-formula: false;
+			--track-editor-bg-pitch: #fff;
+			--track-editor-bg-pitch-dim: #c7c7c7;
+			--track-editor-bg-noise: #4d97ff40;
+			--track-editor-bg-noise-dim: #1c54a3b0;
+			--track-editor-bg-mod: #855cd6;
+			--track-editor-bg-mod-dim: #503389;
+			--multiplicative-mod-slider: #ff6680;
+			--overwriting-mod-slider: #ff3355;
+			--indicator-primary: #855cd6;
+			--indicator-secondary: #cecece;
+			--select2-opt-group: #5a3b98;
+			--input-box-outline: #626262;
+			--mute-button-normal: #cf63cf;
+			--mute-button-mod: #cf63cf;
+			--mod-label-primary: #ff3355;
+			--white-piano-key: #fff;
+			--black-piano-key: #000;
+			--white-piano-key-text: #000;
+			--black-piano-key-text: #fff;
+			--note-flash: #4cbf56;
+			--note-flash-secondary: #b84848;
+			--track-font: sans-serif;
+			--oscilloscope-line-L: #d587e6;
+			--oscilloscope-line-R: #b11cc7;
+			--pitch1-secondary-channel: #3373cc;
+			--pitch1-primary-channel: #4c97ff;
+			--pitch1-secondary-note: #3373cc;
+			--pitch1-primary-note: #4c97ff;
+			--pitch2-secondary-channel: #774dcb;
+			--pitch2-primary-channel: #9966ff;
+			--pitch2-secondary-note: #774dcb;
+			--pitch2-primary-note: #9966ff;
+			--pitch3-secondary-channel: #bd42bd;
+			--pitch3-primary-channel: #cf63cf;
+			--pitch3-secondary-note: #bd42bd;
+			--pitch3-primary-note: #cf63cf;
+			--pitch4-secondary-channel: #cc9900;
+			--pitch4-primary-channel: #ffbf00;
+			--pitch4-secondary-note: #cc9900;
+			--pitch4-primary-note: #ffbf00;
+			--pitch5-secondary-channel: #cf8b17;
+			--pitch5-primary-channel: #ffab19;
+			--pitch5-secondary-note: #cf8b17;
+			--pitch5-primary-note: #ffab19;
+			--pitch6-secondary-channel: #2e8eb8;
+			--pitch6-primary-channel: #5cb1d6;
+			--pitch6-secondary-note: #2e8eb8;
+			--pitch6-primary-note: #5cb1d6;
+			--pitch7-secondary-channel: #389438;
+			--pitch7-primary-channel: #59c059;
+			--pitch7-secondary-note: #389438;
+			--pitch7-primary-note: #59c059;
+			--pitch8-secondary-channel: #db6e00;
+			--pitch8-primary-channel: #ff8c1a;
+			--pitch8-secondary-note: #db6e00;
+			--pitch8-primary-note: #ff8c1a;
+			--pitch9-secondary-channel: #ff3355;
+			--pitch9-primary-channel: #ff6680;
+			--pitch9-secondary-note: #ff3355;
+			--pitch9-primary-note: #ff6680;
+			--pitch10-secondary-channel: #0b8e69;
+			--pitch10-primary-channel: #0fbd8c;
+			--pitch10-secondary-note: #0b8e69;
+			--pitch10-primary-note: #0fbd8c;
+			--noise1-secondary-channel: #ef3d23;
+			--noise1-primary-channel: #fcf9ce;
+			--noise1-secondary-note: #ef3d23;
+			--noise1-primary-note: #fcf9ce;
+			--noise2-secondary-channel: #dd002b;
+			--noise2-primary-channel: #f73d61;
+			--noise2-secondary-note: #dd002b;
+			--noise2-primary-note: #f73d61;
+			--noise3-secondary-channel: #d0e9ea;
+			--noise3-primary-channel: #f3ffff;
+			--noise3-secondary-note: #d0e9ea;
+			--noise3-primary-note: #f3ffff;
+			--noise4-secondary-channel: #ed9b24;
+			--noise4-primary-channel: #ffc941;
+			--noise4-secondary-note: #ed9b24;
+			--noise4-primary-note: #ffc941;
+			--noise5-secondary-channel: #663b00;
+			--noise5-primary-channel: #ffe9cc;
+			--noise5-secondary-note: #663b00;
+			--noise5-primary-note: #ffe9cc;
+			--mod1-secondary-channel: #001026;
+			--mod1-primary-channel: #ffab19;
+			--mod1-secondary-note: #001026;
+			--mod1-primary-note: #ffab19;
+			--mod2-secondary-channel: #603813;
+			--mod2-primary-channel: #ffc93e;
+			--mod2-secondary-note: #603813;
+			--mod2-primary-note: #ffc93e;
+			--mod3-secondary-channel: #1b75bb;
+			--mod3-primary-channel: #e6e7e8;
+			--mod3-secondary-note: #1b75bb;
+			--mod3-primary-note: #e6e7e8;
+			--mod4-secondary-channel: #404041;
+			--mod4-primary-channel: #f05a28;
+			--mod4-secondary-note: #404041;
+			--mod4-primary-note: #f05a28;
+			--disabled-note-primary: #ff6680;
+			--disabled-note-secondary: #ff3355;
+		  }
+		  #text-content > section > h1 {
+			margin: auto;
+			content: url("https://file.garden/ZMQ0Om5nmTe-x2hq/AbyssBox%20Scratch%20Logo3.png");
+		  }
+		  .beepboxEditor,
+		  #beepboxEditorContainer {
+			background-color: rgb(255, 255, 255) !important;
+			border-radius: 6px;
+			box-shadow: 0px 0px 0px 4px rgba(158, 158, 158, 0.91);
+		  }
+		  .beepboxEditor .loopEditor {
+			--editor-background: #4d97ff40 !important;
+			border-radius: 3px;
+		  }
+		  .beepboxEditor .muteEditor {
+			--editor-background: #4d97ff40 !important;
+			border-radius: 0px;
+			height: 273px;
+		  }
+		  .beepboxEditor .pattern-area {
+			--editor-background: #4d97ff40 !important;
+			border-radius: 3px;
+		  }
+		  .beepboxEditor .trackContainer svg {
+			--editor-background: #3100ff !important;
+		  }
+		  .beepboxEditor .muteEditor > :last-child {
+			--editor-background: #4d97ff40 !important;
+		  }
+		  .beepboxEditor #octaveScrollBarContainer {
+			background-color: #4d97ff40;
+		  }
+		  .beepboxEditor .muteButtonText {
+			transform: translate(0px, 1px) !important;
+			color: #777 !important;
+		  }
+		  .beepboxEditor .instrument-bar {
+			--text-color-lit: #fff !important;
+			--text-color-dim: #4c4c4c !important;
+		  }
+		  .beepboxEditor .instrument-bar .selected-instrument {
+			color: rgb(0, 0, 0) !important;
+			text-shadow: 0px 0px 4px var(--text-color-lit);
+		  }
+		  .beepboxEditor .instrument-bar .deactivated {
+			color: rgba(0, 0, 0, 1) !important;
+			text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2);
+		  }
+		  .beepboxEditor .instrument-bar > :not(.last-button) {
+			border-color: var(--background-color-lit) !important;
+		  }
+		  .beepboxEditor .instrument-bar .selected-instrument {
+			border-color: rgba(255, 255, 255, 1) !important;
+		  }
+		  .beepboxEditor button {
+			color: #fff;
+			background: #3c236f;
+		  }
+		  .beepboxEditor .instrument-bar .selected-instrument,
+		  .beepboxEditor .filterEditor svg,
+		  .beepboxEditor .fadeInOut svg,
+		  .beepboxEditor .harmonics svg,
+		  .beepboxEditor .spectrum svg {
+			background: rgb(255, 255, 255) !important;
+			box-shadow:
+			  0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+			  inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+			  inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
+		  }
+		  .beepboxEditor input[type="range"]::-webkit-slider-thumb {
+			background: #000000 !important;
+		  }
+		  .beepboxEditor input[type="range"]::-moz-range-thumb {
+			background: #000000 !important;
+		  }
+		  .beepboxEditor input[type="range"]::-webkit-slider-runnable-track {
+			background: rgb(127, 127, 127) !important;
+		  }
+		  .beepboxEditor input[type="range"]::-moz-range-track {
+			background: rgb(127, 127, 127) !important;
+		  }
+		  .beepboxEditor input[type="range"]::-webkit-slider-runnable-track::focus {
+			background: rgba(255, 255, 255, 0.2) !important;
+			box-shadow:
+			  0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+			  inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
+			  inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
+		  }
+		  .beepboxEditor input[type="range"]::-moz-range-track::focus {
+			background: rgba(255, 255, 255, 0.2) !important;
+			box-shadow:
+			  0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+			  inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
+			  inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
+		  }
+		  .beepboxEditor input[type="text"],
+		  .beepboxEditor input[type="number"] {
+			font-size: inherit !important;
+			font-weight: bold !important;
+			font-family: inherit !important;
+			background: #ff8c1a !important;
+			text-align: center !important;
+			border: 1px solid var(--input-box-outline);
+			color: #fff !important;
+			box-shadow: 0px 0px 0px 1px rgb(134, 134, 134) !important;
+		  }
+		  .beepboxEditor .prompt {
+			--primary-text: #fff;
+			--secondary-text: #fff;
+			--ui-widget-background: #351f5f;
+			color: #fff !important;
+			background: #855cd6 !important;
+		  }
+		  .beepboxEditor .trackContainer {
+			--editor-background: #fff;
+		  }
+		  #text-content {
+			color: #fff;
+			background: #855cd6;
+		  }
+		  body:not(#secondImage) {
+			background-image: url("https://cdn.scratch.mit.edu/scratchr2/static/__74e70580e9dbe93ce1c3f8422dde592d__/images/scratch-bg.png");
+		  }
+		  body:not(#secondImage) input {
+			--primary-text: #000;
+		  }
+		  body:not(#secondImage) h1 {
+			color: #000;
+		  }
+		  button.copyButton,
+		  button.pasteButton,
+		  button.exportInstrumentButton,
+		  button.importInstrumentButton, 
+		  button.addEnvelope,
+		  div.editor-controls div button,
+		  div.selectRow button,
+		  div.effects-menu button,
+		  div.effects-menu::before,
+		  div.selectContainer select,
+		  div.selectContainer::after,
+		  span#select2-pitchPresetSelect-container {
+			color: white !important;
+		  }
+		  div#text-content {
+			padding-top: 15px;
+		  }
+		  div#beepboxEditorContainer{
+			padding-bottom: 15px;
+		  }
+		  div.channelBox {
+			border-radius: 5px;
+		  }
+		  div.muteEditor {
+			border-radius: 0px !important;
+			height: 273px !important;
+		  }
+		  div.loopEditor {
+			border-radius: 0px !important;
+		  }
+		`,
 		"Doom 1993": `
 			:root { 		
 			--page-margin: #470000; 		
