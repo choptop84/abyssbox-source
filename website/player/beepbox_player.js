@@ -2701,7 +2701,8 @@ var beepbox = (function (exports) {
 
 			--note-flash: #ffffff;
 			--note-flash-secondary: #ffffff77;
-				}
+		}
+
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
 		}
@@ -2724,9 +2725,9 @@ var beepbox = (function (exports) {
 			/* sets background image */
 			body {
 			background-image: url("https://choptop84.github.io/choptop84s-image-repository/frutigerbg3.jpg") !important;
-			background-position: center left;
+			background-position: ;
 			background-repeat: no-repeat;
-			background-size:cover;
+			background-size: 100vh;
 			image-rendering: optimizeQuality !important;             /* IE */ 
 				}
 
@@ -2741,8 +2742,6 @@ var beepbox = (function (exports) {
   				border-color: lightblue;
 			}
 
-			
-				
 				.beepboxEditor select
 				{
 					box-shadow: 0px 1px 3px 0px rgb(0, 0, 0), inset 0px -12px 14px 0px rgba(0, 0, 0, 0.3), inset 0px -15px 0px 0px rgba(0, 0, 0, 0.2);
@@ -2986,6 +2985,10 @@ var beepbox = (function (exports) {
 		   div.muteEditor div {
 			background: none !important;
 		   }
+
+		   div.channelBox {
+			border-radius: 5px;
+		  }
 
 			`,
         "Glyde": `
