@@ -723,16 +723,15 @@ export class ColorConfig {
 			div.prompt.noSelection{
 				background: linear-gradient(#84aef080, #2a3d6a80) !important; 
 				opacity: 77;
-			}
+			}  
 
 			/* sets background image */
 			body {
 			background-image: url("https://choptop84.github.io/choptop84s-image-repository/frutigerbg.png") !important;
-			background-position: center;
+			background-position: center right;
 			background-repeat: no-repeat;
 			background-size:cover;
-				}
-			 .beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered {
+			image-rendering: optimizeQuality !important;             /* IE */ 
 				}
 
 			#beepboxEditorContainer {
@@ -1117,7 +1116,7 @@ export class ColorConfig {
 			/* sets background image */
 			body {
 			background-image: url("https://choptop84.github.io/choptop84s-image-repository/glydebg.png") !important;
-			background-position: center;
+			background-position: top right;
 			background-repeat: no-repeat;
 
 			image-rendering: -moz-crisp-edges !important;         /* Firefox */
