@@ -729,9 +729,10 @@ export class ColorConfig {
 			/* sets background image */
 			body {
 			background-image: url("https://choptop84.github.io/choptop84s-image-repository/frutigerbg3.jpg") !important;
-			background-position: ;
+			background-position: top;
+			background-attachment: fixed;
 			background-repeat: no-repeat;
-			background-size: 100vh;
+			background-size: cover;
 			image-rendering: optimizeQuality !important;             /* IE */ 
 				}
 
