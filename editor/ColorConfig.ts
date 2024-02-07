@@ -1672,6 +1672,33 @@ export class ColorConfig {
 			--disabled-note-primary: #ff6680;
 			--disabled-note-secondary: #ff3355;
 		  }
+		  * {
+		  --play-symbol:url("https://choptop84.github.io/choptop84s-image-repository/Greenflag.png");
+		  --pause-symbol:url("https://choptop84.github.io/choptop84s-image-repository/stopsign.png");
+		  }
+
+		  button.playButton::before {
+
+			background-image: url("https://choptop84.github.io/choptop84s-image-repository/Greenflag.png") !important;
+			background-size: 18px !important;
+			background-position: center !important;
+			background-repeat: no-repeat !important;
+			mask-size: 800px;
+			color: #fff0;
+			/* Hold on, before you start asking: "WHAT THE? WHY IS THE ICON SO LARGE!!!" Let me tell ya that this method removes all the filtering issues on the png and it looks incredibly seemless so shush */
+
+		}
+
+		button.pauseButton::before {
+
+			background-image: url("https://choptop84.github.io/choptop84s-image-repository/stopsign.png") !important;
+			background-size: 18px !important;
+			background-position: center !important;
+			background-repeat: no-repeat !important;
+			mask-size: 800px;
+			color: #fff0;
+		}
+
 		  #text-content > section > h1 {
 			margin: auto;
 			content: url("https://file.garden/ZMQ0Om5nmTe-x2hq/AbyssBox%20Scratch%20Logo3.png");
@@ -1955,6 +1982,30 @@ export class ColorConfig {
 			--disabled-note-primary: #ff6680;
 			--disabled-note-secondary: #ff3355;
 		   }
+
+		   * {
+		   --play-symbol:url("https://choptop84.github.io/choptop84s-image-repository/Greenflag.png");
+		   --pause-symbol:url("https://choptop84.github.io/choptop84s-image-repository/stopsign.png");
+		   }
+ 
+		   button.playButton::before {
+			 background-image: url("https://choptop84.github.io/choptop84s-image-repository/Greenflag.png") !important;
+			 background-size: 18px !important;
+			 background-position: center !important;
+			 background-repeat: no-repeat !important;
+			 mask-size: 800px;
+			 color: #fff0;
+		 }
+ 
+		 button.pauseButton::before {
+			 background-image: url("https://choptop84.github.io/choptop84s-image-repository/stopsign.png") !important;
+			 background-size: 18px !important;
+			 background-position: center !important;
+			 background-repeat: no-repeat !important;
+			 mask-size: 800px;
+			   color: #fff0;
+		 }
+
 		   #text-content > section > h1 {
 			 margin: auto;
 			 content: url("https://file.garden/ZMQ0Om5nmTe-x2hq/AbyssBox%20Scratch%20Logo3.png");
