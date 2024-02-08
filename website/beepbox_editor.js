@@ -3095,6 +3095,7 @@ var beepbox = (function (exports) {
 				{
 					box-shadow: 0px 1px 3px 0px rgb(0, 0, 0), inset 0px -12px 14px 0px rgba(0, 0, 0, 0.3), inset 0px -15px 0px 0px rgba(0, 0, 0, 0.2);
 
+					--ui-widget-background: linear-gradient(#84aef0, #4f6db3) !important;
 					border-image-source:url("https://choptop84.github.io/choptop84s-image-repository/buttonshading.png") !important;
 					border-image-slice: 40 fill !important; 
    					border-image-width: 4px !important; 
