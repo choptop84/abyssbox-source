@@ -583,7 +583,7 @@ export class ColorConfig {
 	"Frutiger Aero": `
 			:root {		
 			--page-margin: #fff; 		
-			--editor-background: #84aef0; 		
+			--editor-background: #2e538c;		
 			--hover-preview: white; 		
 			--playhead: rgba(255, 255, 255, 0.9); 		
 			--primary-text: white; 		
@@ -591,22 +591,22 @@ export class ColorConfig {
 			--inverted-text: white;	 		
 			--text-selection: rgba(119,68,255,0.99); 		
 			--box-selection-fill: #0a091e; 		
-			--loop-accent: #4e92ce; 		
+			--loop-accent: #6fafe8; 		
 			--link-accent: #a2b0ff; 		
 			--ui-widget-background: #84aef0; 		
 			--ui-widget-focus: #2b5376; 		
 			--pitch-background: #4671b5; 		
-			--tonic: #254c8a; 		
-			--fifth-note: #3852db; 		
+			--tonic: #e4f0e2; 		
+			--fifth-note: #620297; 		
 			--white-piano-key: #4e92ce;		
 			--black-piano-key: #2f3a40;		
 			--use-color-formula: true; 		
-			--track-editor-bg-pitch: #213779; 		
-			--track-editor-bg-pitch-dim: #08204f; 		
-			--track-editor-bg-noise: #1b4079; 		
-			--track-editor-bg-noise-dim: #0a1e33; 		
-			--track-editor-bg-mod: #206d93; 		
-			--track-editor-bg-mod-dim: #0c2b3e; 		
+			--track-editor-bg-pitch: linear-gradient(#2782b0,#0c2b3e); 		
+			--track-editor-bg-pitch-dim: linear-gradient(#0c2b3e70,#05151fc4); 		
+			--track-editor-bg-noise: linear-gradient(#2d4aa1,#08204f); 		
+			--track-editor-bg-noise-dim: linear-gradient(#08204f70, #031029c4); 		
+			--track-editor-bg-mod: linear-gradient(#46299e, #26145e); 		
+			--track-editor-bg-mod-dim: linear-gradient(#26145e70,#110630c4); 		
 			--multiplicative-mod-slider: #60769f; 		
 			--overwriting-mod-slider: #343b9e; 		
 			--indicator-primary: #499ab3; 		
@@ -718,13 +718,34 @@ export class ColorConfig {
 			}
 
 			canvas#oscilascopeAll {
-				background: #84aef0 !important; 
+				background: #2e538c !important; 
+				border: 2px solid #84aef000 !important;
 			}
+
+			.beepboxEditor .play-pause-area div:last-child {
+				position: relative;
+				width: 144px;
+				height: 32px;
+			  }
+			  .beepboxEditor .play-pause-area div:last-child::before {
+				content: "";
+				display: block;
+				width: calc(144px + 4px);
+				height: calc(32px + 4px);
+				box-shadow: 0px -1px 1px 0px rgba(0, 0, 0, 0.5), inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
+				position: absolute;
+				z-index: 1;
+			  }
 
 			div.prompt.noSelection{
 				background: linear-gradient(#84aef080, #2a3d6a80) !important; 
 				opacity: 77;
 			}  
+
+			svg#firstImage {
+				opacity: 50%;
+				--editor-background: #84aef0;
+			}
 
 			/* sets background image */
 			body {
@@ -740,6 +761,8 @@ export class ColorConfig {
 				background: linear-gradient(#eef3ff80, #395eb380) !important;
 				border-style: solid;
   				border-color: lightblue;
+				padding-bottom: 5px;
+				--inverted-text: black;
 			}
 			#text-content {
 				background: linear-gradient(#395eb380, #03112f80);
@@ -888,6 +911,9 @@ export class ColorConfig {
 				 
 				.beepboxEditor input[type="range"]::-moz-range-thumb
 				{
+					height: 16px !important;
+					width: 16px !important;
+					border-radius: 40px !important;
 					box-shadow:
 						0px 2px 2px 1px rgba(0, 0, 0, 0.4),
 						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
@@ -989,6 +1015,13 @@ export class ColorConfig {
 
 		   div.muteEditor div {
 			background: none !important;
+			--track-editor-bg-pitch: #1b4079;
+			--track-editor-bg-noise: #213779;
+			--track-editor-bg-mod: #46299e;
+	
+			--track-editor-bg-pitch-dim: #0c2b3e; 		
+			--track-editor-bg-noise-dim: #08204f; 			
+			--track-editor-bg-mod-dim: #26145e; 
 		   }
 
 		   div.channelBox {
