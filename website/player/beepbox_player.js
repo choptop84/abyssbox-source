@@ -2589,7 +2589,7 @@ var beepbox = (function (exports) {
 			--box-selection-fill: #0a091e; 		
 			--loop-accent: #4e92ce; 		
 			--link-accent: #a2b0ff; 		
-			--ui-widget-background: #5e9cff; 		
+			--ui-widget-background: #84aef0; 		
 			--ui-widget-focus: #2b5376; 		
 			--pitch-background: #4671b5; 		
 			--tonic: #254c8a; 		
@@ -2714,7 +2714,7 @@ var beepbox = (function (exports) {
 			}
 
 			canvas#oscilascopeAll {
-				background: #5e9cff !important; 
+				background: #84aef0 !important; 
 			}
 
 			div.prompt.noSelection{
@@ -2746,7 +2746,6 @@ var beepbox = (function (exports) {
 				.beepboxEditor select
 				{
 					box-shadow: 0px 1px 3px 0px rgb(0, 0, 0), inset 0px -12px 14px 0px rgba(0, 0, 0, 0.3), inset 0px -15px 0px 0px rgba(0, 0, 0, 0.2);
-					background: linear-gradient(#84aef0, #4f6db3) !important;
 
 					border-image-source:url("https://choptop84.github.io/choptop84s-image-repository/buttonshading.png") !important;
 					border-image-slice: 40 fill !important; 
@@ -2760,7 +2759,7 @@ var beepbox = (function (exports) {
 				{
 					border-image-source: none;
 					
-					background: linear-gradient(#2a3d6a, #2a3d6a) !important;
+					--ui-widget-background: linear-gradient(#2a3d6a, #2a3d6a) !important;
 					box-shadow:
 						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
 						inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
@@ -2775,7 +2774,7 @@ var beepbox = (function (exports) {
 				.beepboxEditor .note-filter-type-bar button .deactivated
 				{
 					box-shadow: 0px 1px 3px 0px rgb(0, 0, 0), inset 0px -12px 14px 0px rgba(0, 0, 0, 0.3), inset 0px -15px 0px 0px rgba(0, 0, 0, 0.2);
-					background: linear-gradient(#84aef0, #4f6db3) !important;
+					--ui-widget-background: linear-gradient(#84aef0, #4f6db3) !important;
 
 					border-image-source:url("https://choptop84.github.io/choptop84s-image-repository/buttonshading.png") !important;
 					border-image-slice: 40 fill !important; 
@@ -2784,7 +2783,7 @@ var beepbox = (function (exports) {
 				}
 				.beepboxEditor button
 				{
-					background: linear-gradient(#84aef0, #2a3d6a) !important;
+					--ui-widget-background: linear-gradient(#84aef0, #2a3d6a) !important;
 					box-shadow:
 						0px 2px 2px 1px rgba(0, 0, 0, 0.4),
 						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
@@ -2797,7 +2796,7 @@ var beepbox = (function (exports) {
 				.beepboxEditor .eq-filter-type-bar button:not(.deactivated),
 				.beepboxEditor .note-filter-type-bar button:not(.deactivated)
 				{
-					background: linear-gradient(#333, #444) !important;
+					--ui-widget-background: linear-gradient(#333, #444) !important;
 					box-shadow:
 						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
 						inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
