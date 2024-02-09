@@ -2957,8 +2957,8 @@ var beepbox = (function (exports) {
 			--indicator-secondary: #9db9c4; 		
 			--select2-opt-group: #185f8a; 		
 			--input-box-outline: #18041a; 		
-			--mute-button-normal: #5daddd;	 		
-			--mute-button-mod: #007fee; 		
+			--mute-button-normal: #97d4f9; 		
+			--mute-button-mod: #8a5fff;		
 			--mod-label-primary: #341a7b; 		
 			--mod-label-secondary-text: rgb(86, 93, 120);
 			--mod-label-primary-text: gray; 
@@ -3049,12 +3049,52 @@ var beepbox = (function (exports) {
 
 			--note-flash: #ffffff;
 			--note-flash-secondary: #ffffff77;
+
 		}
 
 		* {
 		cursor: url("abyssbox_cursor.png"), auto !important;
+		--muted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/vistaSpeakerIconMuted.png");
+		--unmuted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/vistaSpeakerIcon.png");
 		}
-		
+	
+
+		/* Frutiger Aero Icons */
+
+		div.mute-button::before {
+			background: #fff0 !important;
+			background-image: url("https://choptop84.github.io/choptop84s-image-repository/vistaSpeakerIcon.png") !important;
+			background-size: 18px !important;
+			background-position: center !important;
+			background-repeat: no-repeat !important;
+			mask-size: 800px !important;
+			color: #fff0;
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+		}
+
+		div.mute-button.muted::before {
+			background: #fff0 !important;
+			background-image: url("https://choptop84.github.io/choptop84s-image-repository/vistaSpeakerIconMuted.png") !important;
+			background-size: 18px !important;
+			background-position: center !important;
+			background-repeat: no-repeat !important;
+			mask-size: 800px !important;
+			color: #fff0;
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+		}
+
+
+
 			@font-face {
 		   font-family: "Frutiger";
 		   src:
@@ -3354,7 +3394,9 @@ var beepbox = (function (exports) {
 		   }
 
 		   .beepboxEditor .muteEditor {
-			background: none !important;
+			background: linear-gradient(#84aef0, #2f6986) !important;
+			border-radius: 5px;
+			box-shadow: 0px 1px 1px 0px rgb(0, 0, 0), inset 0px 3px 14px 0px rgba(0, 0, 0, 0.1), inset 0px -4px 0px 0px rgba(0, 0, 0, 0.1);
 		   }
 
 		   div.muteEditor div {
@@ -3366,6 +3408,7 @@ var beepbox = (function (exports) {
 			--track-editor-bg-pitch-dim: #0c2b3e; 		
 			--track-editor-bg-noise-dim: #08204f; 			
 			--track-editor-bg-mod-dim: #26145e; 
+
 		   }
 
 		   div.channelBox {
