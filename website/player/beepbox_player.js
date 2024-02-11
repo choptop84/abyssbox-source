@@ -2827,18 +2827,18 @@ var beepbox = (function (exports) {
 
 				}
 
-				button.playButton, 
-				button.pauseButton, 
-				button.recordButton, 
-				button.stopButton, 
-				button.prevBarButton, 
-				button.nextBarButton, 
-				button.copyButton, 
-				button.pasteButton, 
-				button.exportInstrumentButton, 
-				button.importInstrumentButton,
-				button.add-envelope,
-				button.delete-envelope  { 
+				div.playback-bar-controls button.playButton, 
+				div.playback-bar-controls button.pauseButton, 
+				div.playback-bar-controls button.recordButton, 
+				div.playback-bar-controls button.stopButton, 
+				div.playback-bar-controls button.prevBarButton, 
+				div.playback-bar-controls button.nextBarButton, 
+				div.selectRow button.copyButton, 
+				div.selectRow button.pasteButton, 
+				div.editor-controls button.exportInstrumentButton, 
+				div.editor-controls button.importInstrumentButton,
+				div.editor-controls div button.add-envelope,
+				div.editor-controls div button.delete-envelope  { 
 					box-shadow: 0px 1px 3px 0px rgb(0, 0, 0), inset 0px -12px 14px 0px rgba(0, 0, 0, 0.3), inset 0px -15px 0px 0px rgba(0, 0, 0, 0.2);
 
 					--ui-widget-background: linear-gradient(#84aef0, #4f6db3) !important;
@@ -3075,9 +3075,10 @@ var beepbox = (function (exports) {
 		   }
 
 		   .beepboxEditor .muteEditor {
-			background: linear-gradient(#dbe5ec, #2f6986) !important;
+			background: linear-gradient(#c4f0d1, #83c139) !important;
 			border-radius: 5px;
 			box-shadow: 0px 1px 1px 0px rgb(0, 0, 0), inset 0px 3px 14px 0px rgba(0, 0, 0, 0.1), inset 0px -4px 0px 0px rgba(0, 0, 0, 0.1);
+			opacity: 65%;
 		   }
 
 		   div.muteEditor div {
