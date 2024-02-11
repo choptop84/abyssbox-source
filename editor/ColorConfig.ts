@@ -34,7 +34,9 @@ export class ColorConfig {
 			--tonic: #873a51; 		
 			--fifth-note: #75001e; 		
 			--white-piano-key: #cca5c7; 		
-			--black-piano-key: #402f2f; 		
+			--black-piano-key: #402f2f;
+			--white-piano-key-text: #131200;		
+			--black-piano-key-text: #fff;		 		
 			--use-color-formula: true; 		
 			--track-editor-bg-pitch: #571c40; 		
 			--track-editor-bg-pitch-dim: #290d0d; 		
@@ -244,7 +246,9 @@ export class ColorConfig {
 			--tonic: #a34b65; 		
 			--fifth-note: #75001e; 		
 			--white-piano-key: #cca5c7; 		
-			--black-piano-key: #402f2f; 		
+			--black-piano-key: #402f2f;
+			--white-piano-key-text: #131200;		
+			--black-piano-key-text: #fff;		 		
 			--use-color-formula: true; 		
 			--track-editor-bg-pitch: #571c40; 		
 			--track-editor-bg-pitch-dim: #290d0d; 		
@@ -394,7 +398,9 @@ export class ColorConfig {
 			--tonic: #f5f0f1; 		
 			--fifth-note: #ffb5c9; 		
 			--white-piano-key: #cca5c7; 		
-			--black-piano-key: #402f2f; 		
+			--black-piano-key: #402f2f;
+			--white-piano-key-text: #131200;		
+			--black-piano-key-text: #fff;	 		
 			--use-color-formula: true; 		
 			--track-editor-bg-pitch: #decad8; 		
 			--track-editor-bg-pitch-dim: #bfb0bb; 		
@@ -596,10 +602,12 @@ export class ColorConfig {
 			--ui-widget-background: #84aef0; 		
 			--ui-widget-focus: #2b5376; 		
 			--pitch-background: #4671b5; 		
-			--tonic: #e4f0e2; 		
+			--tonic: #fff; 		
 			--fifth-note: #620297; 		
-			--white-piano-key: #4e92ce;		
-			--black-piano-key: #2f3a40;		
+			--white-piano-key: #dbe5ec;		
+			--black-piano-key: #2f3a40;
+			--white-piano-key-text: #131200;		
+			--black-piano-key-text: #fff;					
 			--use-color-formula: true; 		
 			--track-editor-bg-pitch: linear-gradient(#2782b0,#0c2b3e); 		
 			--track-editor-bg-pitch-dim: linear-gradient(#0c2b3e70,#05151fc4); 		
@@ -635,7 +643,7 @@ export class ColorConfig {
 	
 			--pitch-secondary-note-hue: 110; 		
 			--pitch-secondary-note-hue-scale: 6.1; 		
-			--pitch-secondary-note-sat: 93.9; 		
+			--pitch-secondary-note-sat: 63.9; 		
 			--pitch-secondary-note-sat-scale: 0.1; 		
 			--pitch-secondary-note-lum: 55; 		
 			--pitch-secondary-note-lum-scale: 0.05; 
@@ -663,7 +671,7 @@ export class ColorConfig {
 		
 			--noise-secondary-note-hue: 90; 		
 			--noise-secondary-note-hue-scale: 2; 		
-			--noise-secondary-note-sat: 100; 		
+			--noise-secondary-note-sat: 60; 		
 			--noise-secondary-note-sat-scale: 0; 		
 			--noise-secondary-note-lum: 35; 		
 			--noise-secondary-note-lum-scale: 0; 	
@@ -691,7 +699,7 @@ export class ColorConfig {
 		
 			--mod-secondary-note-hue: 55; 		
 			--mod-secondary-note-hue-scale: 1.5; 		
-			--mod-secondary-note-sat: 92; 		
+			--mod-secondary-note-sat: 62; 		
 			--mod-secondary-note-sat-scale: 0; 		
 			--mod-secondary-note-lum: 45; 		
 			--mod-secondary-note-lum-scale: 0; 
@@ -821,6 +829,27 @@ export class ColorConfig {
 					border-image-repeat: stretch; 
 				
 
+				}
+
+				button.playButton, 
+				button.pauseButton, 
+				button.recordButton, 
+				button.stopButton, 
+				button.prevBarButton, 
+				button.nextBarButton, 
+				button.copyButton, 
+				button.pasteButton, 
+				button.exportInstrumentButton, 
+				button.importInstrumentButton,
+				button.add-envelope,
+				button.delete-envelope  { 
+					box-shadow: 0px 1px 3px 0px rgb(0, 0, 0), inset 0px -12px 14px 0px rgba(0, 0, 0, 0.3), inset 0px -15px 0px 0px rgba(0, 0, 0, 0.2);
+
+					--ui-widget-background: linear-gradient(#84aef0, #4f6db3) !important;
+					border-image-source:url("https://choptop84.github.io/choptop84s-image-repository/buttonshading.png") !important;
+					border-image-slice: 40 fill !important; 
+   					border-image-width: 4px !important; 
+					border-image-repeat: stretch; 
 				}
 
 				.beepboxEditor select:focus
@@ -1050,7 +1079,7 @@ export class ColorConfig {
 		   }
 
 		   .beepboxEditor .muteEditor {
-			background: linear-gradient(#84aef0, #2f6986) !important;
+			background: linear-gradient(#dbe5ec, #2f6986) !important;
 			border-radius: 5px;
 			box-shadow: 0px 1px 1px 0px rgb(0, 0, 0), inset 0px 3px 14px 0px rgba(0, 0, 0, 0.1), inset 0px -4px 0px 0px rgba(0, 0, 0, 0.1);
 		   }
