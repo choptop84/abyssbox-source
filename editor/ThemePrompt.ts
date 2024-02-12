@@ -17,7 +17,7 @@ let doReload = false;
 
 		private readonly _themeSelect: HTMLSelectElement = select({ style: "width: 100%;" },
 		option({ value: "AbyssBox Classic"}, "AbyssBox Classic"),
-		option({ value: "AbyssBox Competative"}, "AbyssBox Competative"),
+		option({ value: "AbyssBox Competitive"}, "AbyssBox Competitive"),
 		option({ value: "AbyssBox Light"}, "AbyssBox Light"),
 		option({ value: "Half-Life"}, "Half-Life"),
 		option({ value: "Doom 1993"}, "Doom 1993"),
