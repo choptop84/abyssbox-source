@@ -3061,7 +3061,7 @@ var beepbox = (function (exports) {
 		}
 
 		* {
-		cursor: url("abyssbox_cursor.png"), auto !important;
+		/*cursor: url("abyssbox_cursor.png"), auto !important;*/
 		--muted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/vistaSpeakerIconMuted.png");
 		--unmuted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/vistaSpeakerIcon.png");
 		}
