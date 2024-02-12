@@ -21,6 +21,7 @@ let doReload = false;
 		option({ value: "AbyssBox Light"}, "AbyssBox Light"),
 		option({ value: "Half-Life"}, "Half-Life"),
 		option({ value: "Doom 1993"}, "Doom 1993"),
+		option({ value: "Undertale"}, "Undertale"),
 		option({ value: "Scratch"}, "Scratch"),
 		option({ value: "Scratch Addons"}, "Scratch Addons"),
 		option({ value: "Windows Xp"}, "Windows Xp"),
