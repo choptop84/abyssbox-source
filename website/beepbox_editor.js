@@ -3500,11 +3500,13 @@ var beepbox = (function (exports) {
   				border-color: lightblue;
 				padding-bottom: 5px;
 				--inverted-text: black;
+				backdrop-filter: blur(10px);
 			}
 			#text-content {
 				background: linear-gradient(#395eb380, #03112f80);
 				border-style: solid;
   				border-color: lightblue;
+				  backdrop-filter: blur(10px);
 			}
 
 				.beepboxEditor select
@@ -5829,6 +5831,205 @@ var beepbox = (function (exports) {
 				}
 
 
+			`,
+        "Terminal 2.0 (AB)": `
+
+			:root { 
+			--page-margin: black; 
+			--editor-background: black; 
+			--hover-preview: white; 
+			--playhead: white; 
+			--primary-text: #26ff00; 
+			--secondary-text: #0d6d00; 
+			--inverted-text: #000000; 
+			--text-selection: rgba(119,68,255,0.99); 
+			--box-selection-fill: rgba(255,255,255,0.2); 
+			--loop-accent: #1eff00; 
+			--link-accent: #8dff7e; 
+			--ui-widget-background: #000000; 
+			--ui-widget-focus: #242424; 
+			--pitch-background: #0d0d0d50; 
+			--tonic: #06350090; 
+			--fifth-note: #20202090; 
+			--white-piano-key: #ffffff; 
+			--black-piano-key: #000000; 
+			--white-piano-key-text: #131200; 
+			--black-piano-key-text: #fff; 
+			--use-color-formula: false; 
+			--track-editor-bg-pitch: #152912; 
+			--track-editor-bg-pitch-dim: #091307; 
+			--track-editor-bg-noise: #1a1a1a; 
+			--track-editor-bg-noise-dim: #333; 
+			--track-editor-bg-mod: #000000; 
+			--track-editor-bg-mod-dim: #000000; 
+			--multiplicative-mod-slider: #073c00; 
+			--overwriting-mod-slider: #0c6700; 
+			--indicator-primary: #139f00; 
+			--indicator-secondary: #1eff00; 
+			--select2-opt-group: #171717; 
+			--input-box-outline: #00ff00; 
+			--mute-button-normal: #00ff44; 
+			--mute-button-mod: #44ff00; 
+			--pitch1-secondary-channel: #0099A1; 
+			--pitch1-primary-channel: #25F3FF; 
+			--pitch1-secondary-note: #00BDC7; 
+			--pitch1-primary-note: #92F9FF; 
+			--pitch2-secondary-channel: #A1A100; 
+			--pitch2-primary-channel: #FFFF25; 
+			--pitch2-secondary-note: #C7C700; 
+			--pitch2-primary-note: #FFFF92; 
+			--pitch3-secondary-channel: #C75000; 
+			--pitch3-primary-channel: #FF9752; 
+			--pitch3-secondary-note: #FF771C; 
+			--pitch3-primary-note: #FFCDAB; 
+			--pitch4-secondary-channel: #00A100; 
+			--pitch4-primary-channel: #50FF50; 
+			--pitch4-secondary-note: #00C700; 
+			--pitch4-primary-note: #A0FFA0; 
+			--pitch5-secondary-channel: #D020D0; 
+			--pitch5-primary-channel: #FF90FF; 
+			--pitch5-secondary-note: #E040E0; 
+			--pitch5-primary-note: #FFC0FF; 
+			--pitch6-secondary-channel: #7777B0; 
+			--pitch6-primary-channel: #A0A0FF; 
+			--pitch6-secondary-note: #8888D0; 
+			--pitch6-primary-note: #D0D0FF; 
+			--pitch7-secondary-channel: #8AA100; 
+			--pitch7-primary-channel: #DEFF25; 
+			--pitch7-secondary-note: #AAC700; 
+			--pitch7-primary-note: #E6FF92; 
+			--pitch8-secondary-channel: #DF0019; 
+			--pitch8-primary-channel: #FF98A4; 
+			--pitch8-secondary-note: #FF4E63; 
+			--pitch8-primary-note: #FFB2BB; 
+			--pitch9-secondary-channel: #00A170; 
+			--pitch9-primary-channel: #50FFC9; 
+			--pitch9-secondary-note: #00C78A; 
+			--pitch9-primary-note: #83FFD9; 
+			--pitch10-secondary-channel: #A11FFF; 
+			--pitch10-primary-channel: #CE8BFF; 
+			--pitch10-secondary-note: #B757FF; 
+			--pitch10-primary-note: #DFACFF; 
+			--noise1-secondary-channel: #6F6F6F; 
+			--noise1-primary-channel: #AAAAAA; 
+			--noise1-secondary-note: #A7A7A7; 
+			--noise1-primary-note: #E0E0E0; 
+			--noise2-secondary-channel: #996633; 
+			--noise2-primary-channel: #DDAA77; 
+			--noise2-secondary-note: #CC9966; 
+			--noise2-primary-note: #F0D0BB; 
+			--noise3-secondary-channel: #4A6D8F; 
+			--noise3-primary-channel: #77AADD; 
+			--noise3-secondary-note: #6F9FCF; 
+			--noise3-primary-note: #BBD7FF; 
+			--noise4-secondary-channel: #7A4F9A; 
+			--noise4-primary-channel: #AF82D2; 
+			--noise4-secondary-note: #9E71C1; 
+			--noise4-primary-note: #D4C1EA; 
+			--noise5-secondary-channel: #607837; 
+			--noise5-primary-channel: #A2BB77; 
+			--noise5-secondary-note: #91AA66; 
+			--noise5-primary-note: #C5E2B2; 
+			--mod1-secondary-channel: #339955; 
+			--mod1-primary-channel: #77fc55; 
+			--mod1-secondary-note: #77ff8a; 
+			--mod1-primary-note: #cdffee; 
+			--mod2-secondary-channel: #993355; 
+			--mod2-primary-channel: #f04960; 
+			--mod2-secondary-note: #f057a0; 
+			--mod2-primary-note: #ffb8de; 
+			--mod3-secondary-channel: #553399; 
+			--mod3-primary-channel: #8855fc; 
+			--mod3-secondary-note: #aa64ff; 
+			--mod3-primary-note: #f8ddff; 
+			--mod4-secondary-channel: #a86436; 
+			--mod4-primary-channel: #c8a825; 
+			--mod4-secondary-note: #e8ba46; 
+			--mod4-primary-note: #fff6d3; 
+			--mod-label-primary: #164705; 
+			--mod-label-secondary-text: #333; 
+			--mod-label-primary-text: #44ff00; 
+			--disabled-note-primary: #999; 
+			--disabled-note-secondary: #666; 
+			--note-flash: #a4ff82; 
+			--note-flash-secondary: #dffbd57a; }
+			
+						.beepboxEditor button,
+						button.playButton,
+						button.pauseButton, 
+						button.recordButton, 
+						button.stopButton,
+						button.nextBarButton, 
+						button.prevBarButton, 
+						button.copyButton, 
+						button.pasteButton, 
+						button.exportInstrumentButton, 
+						button.importInstrumentButton,
+						.beepboxEditor select, 
+						.beepboxEditor .select2-selection__rendered {
+							background-image: url("https://choptop84.github.io/choptop84s-image-repository/lines2.png") !important;
+							background-size: 75% !important;
+							}
+			
+						.beepboxEditor .playButton::before,
+						.beepboxEditor .pauseButton::before, 
+						.beepboxEditor .recordButton::before, 
+						.beepboxEditor .stopButton::before,
+						.beepboxEditor .nextBarButton::before, 
+						.beepboxEditor .prevBarButton::before, 
+						.beepboxEditor .copyButton::before, 
+						.beepboxEditor .pasteButton::before,
+						.beepboxEditor .copyPatternButton::before, 
+						.beepboxEditor .pastePatternButton::before,
+						.beepboxEditor .undoButton::before,
+						.beepboxEditor .redoButton::before,
+						.beepboxEditor .insertChannelButton::before,
+						.beepboxEditor .deleteChannelButton::before,
+						.beepboxEditor .selectAllButton::before,
+						.beepboxEditor .duplicateButton::before,
+						.beepboxEditor .notesUpButton::before,
+						.beepboxEditor .notesDownButton::before,
+						.beepboxEditor .loopBarButton::before,
+						.beepboxEditor .menu.file::before,
+						.beepboxEditor .menu.edit::before,
+						.beepboxEditor .menu.preferences::before,
+						.beepboxEditor .volume-speaker,
+						.beepboxEditor .mute-button::before,
+						.beepboxEditor .mute-button.modMute::before,
+						div.noSelection  {
+							border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/lines2.png") !important;
+							border-image-width: 46% !important;
+							}
+			
+						@font-face {
+					   font-family: "Workbench";
+					   src:
+						url("https://choptop84.github.io/abyssbox-app/Workbench.ttf") format("truetype") tech(color-COLRv1),
+						}
+			
+						html {
+							font-family: 'Workbench';
+						}
+			
+						div.channelBoxLabel {
+							font-family: 'Workbench' !important;
+						}
+			
+							#firstImage {
+								background-image: url("https://choptop84.github.io/choptop84s-image-repository/lines.png") !important;
+								background-repeat: repeat !important;
+								background-size: 40% 40% !important;
+								opacity: 70%;
+							}
+			
+						.beepboxEditor input[type="range"]::-moz-range-thumb {
+							border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/lines2.png") !important;
+							border-image-width: 46% !important;
+						}    
+			
+						div.channelBox {
+						background-image: url("https://choptop84.github.io/choptop84s-image-repository/lines2.png") !important;
+					  }
 			`,
         "dark classic": `
 			:root {
@@ -42133,7 +42334,7 @@ You should be redirected to the song at:<br /><br />
             this._pattern = _pattern;
             this._pattern2 = _pattern2;
             this._pattern3 = _pattern3;
-            this._themeSelect = select$3({ style: "width: 100%;" }, option$3({ value: "AbyssBox Classic" }, "AbyssBox Classic"), option$3({ value: "AbyssBox Competitive" }, "AbyssBox Competitive"), option$3({ value: "AbyssBox Light" }, "AbyssBox Light"), option$3({ value: "Half-Life" }, "Half-Life"), option$3({ value: "Doom 1993" }, "Doom 1993"), option$3({ value: "Undertale" }, "Undertale"), option$3({ value: "Scratch" }, "Scratch"), option$3({ value: "Scratch Addons" }, "Scratch Addons"), option$3({ value: "Windows Xp" }, "Windows Xp"), option$3({ value: "Frutiger Aero" }, "Frutiger Aero"), option$3({ value: "Glyde" }, "Glyde"), option$3({ value: "dark classic" }, "BeepBox Dark"), option$3({ value: "light classic" }, "BeepBox Light"), option$3({ value: "dark competition" }, "BeepBox Competition Dark"), option$3({ value: "jummbox classic" }, "JummBox Dark"), option$3({ value: "jummbox light" }, "Gold Light"), option$3({ value: "forest" }, "Forest"), option$3({ value: "forest 2" }, "Forest 2"), option$3({ value: "canyon" }, "Canyon"), option$3({ value: "midnight" }, "Midnight"), option$3({ value: "beachcombing" }, "Beachcombing"), option$3({ value: "violet verdant" }, "Violet Verdant"), option$3({ value: "sunset" }, "Sunset"), option$3({ value: "autumn" }, "Autumn"), option$3({ value: "fruit" }, "Shadowfruit"), option$3({ value: "toxic" }, "Toxic"), option$3({ value: "roe" }, "Roe"), option$3({ value: "moonlight" }, "Moonlight"), option$3({ value: "portal" }, "Portal"), option$3({ value: "fusion" }, "Fusion"), option$3({ value: "inverse" }, "Inverse"), option$3({ value: "nebula" }, "Nebula"), option$3({ value: "Nebula 2" }, "Nebula 2"), option$3({ value: "roe light" }, "Roe Light"), option$3({ value: "amoled dark" }, "High Contrast Dark"), option$3({ value: "energized" }, "Energized"), option$3({ value: "neapolitan" }, "Neapolitan"), option$3({ value: "mono" }, "Poly"), option$3({ value: "blutonium" }, "Blutonium"), option$3({ value: "azur lane" }, "Azur Lane"), option$3({ value: "modbox classic" }, "Modbox"), option$3({ value: "sandbox classic" }, "Sandbox"), option$3({ value: "harrybox" }, "Haileybox"), option$3({ value: "brucebox" }, "Brucebox"), option$3({ value: "shitbox 3.0" }, "Shitbox 1.0/3.0"), option$3({ value: "shitbox 2.0" }, "Shitbox 2.0"), option$3({ value: "nerdbox" }, "NerdBox"), option$3({ value: "zefbox" }, "Zefbox"), option$3({ value: "cardboardbox classic" }, "Cardboardbox"), option$3({ value: "blubox classic" }, "Blubox"), option$3({ value: "dogebox classic" }, "Dogebox"), option$3({ value: "wackybox" }, "Wackybox"), option$3({ value: "todbox dark mode" }, "Todbox Dark Mode"), option$3({ value: "mainbox 1.0" }, "Mainbox"), option$3({ value: "microbox" }, "MicroBox"), option$3({ value: "paandorasbox" }, "PaandorasBox"), option$3({ value: "foxbox" }, "FoxBox"), option$3({ value: "midbox" }, "Midbox"), option$3({ value: "dogebox2" }, "Dogebox2"), option$3({ value: "nepbox" }, "Nepbox"), option$3({ value: "WeebBox" }, "WeebBox"), option$3({ value: "AWeebyssBox" }, "AWeebyssBox"), option$3({ value: "Deuteranopia" }, "Deuteranopia"), option$3({ value: "Protanopia" }, "Protanopia"), option$3({ value: "Tritanopia" }, "Tritanopia"), option$3({ value: "custom" }, "Custom"));
+            this._themeSelect = select$3({ style: "width: 100%;" }, option$3({ value: "AbyssBox Classic" }, "AbyssBox Classic"), option$3({ value: "AbyssBox Competitive" }, "AbyssBox Competitive"), option$3({ value: "AbyssBox Light" }, "AbyssBox Light"), option$3({ value: "Half-Life" }, "Half-Life"), option$3({ value: "Doom 1993" }, "Doom 1993"), option$3({ value: "Undertale" }, "Undertale"), option$3({ value: "Scratch" }, "Scratch"), option$3({ value: "Scratch Addons" }, "Scratch Addons"), option$3({ value: "Windows Xp" }, "Windows Xp"), option$3({ value: "Frutiger Aero" }, "Frutiger Aero"), option$3({ value: "Glyde" }, "Glyde"), option$3({ value: "Terminal 2.0 (AB)" }, "Terminal 2.0 (AB)"), option$3({ value: "dark classic" }, "BeepBox Dark"), option$3({ value: "light classic" }, "BeepBox Light"), option$3({ value: "dark competition" }, "BeepBox Competition Dark"), option$3({ value: "jummbox classic" }, "JummBox Dark"), option$3({ value: "jummbox light" }, "Gold Light"), option$3({ value: "forest" }, "Forest"), option$3({ value: "forest 2" }, "Forest 2"), option$3({ value: "canyon" }, "Canyon"), option$3({ value: "midnight" }, "Midnight"), option$3({ value: "beachcombing" }, "Beachcombing"), option$3({ value: "violet verdant" }, "Violet Verdant"), option$3({ value: "sunset" }, "Sunset"), option$3({ value: "autumn" }, "Autumn"), option$3({ value: "fruit" }, "Shadowfruit"), option$3({ value: "toxic" }, "Toxic"), option$3({ value: "roe" }, "Roe"), option$3({ value: "moonlight" }, "Moonlight"), option$3({ value: "portal" }, "Portal"), option$3({ value: "fusion" }, "Fusion"), option$3({ value: "inverse" }, "Inverse"), option$3({ value: "nebula" }, "Nebula"), option$3({ value: "Nebula 2" }, "Nebula 2"), option$3({ value: "roe light" }, "Roe Light"), option$3({ value: "amoled dark" }, "High Contrast Dark"), option$3({ value: "energized" }, "Energized"), option$3({ value: "neapolitan" }, "Neapolitan"), option$3({ value: "mono" }, "Poly"), option$3({ value: "blutonium" }, "Blutonium"), option$3({ value: "azur lane" }, "Azur Lane"), option$3({ value: "modbox classic" }, "Modbox"), option$3({ value: "sandbox classic" }, "Sandbox"), option$3({ value: "harrybox" }, "Haileybox"), option$3({ value: "brucebox" }, "Brucebox"), option$3({ value: "shitbox 3.0" }, "Shitbox 1.0/3.0"), option$3({ value: "shitbox 2.0" }, "Shitbox 2.0"), option$3({ value: "nerdbox" }, "NerdBox"), option$3({ value: "zefbox" }, "Zefbox"), option$3({ value: "cardboardbox classic" }, "Cardboardbox"), option$3({ value: "blubox classic" }, "Blubox"), option$3({ value: "dogebox classic" }, "Dogebox"), option$3({ value: "wackybox" }, "Wackybox"), option$3({ value: "todbox dark mode" }, "Todbox Dark Mode"), option$3({ value: "mainbox 1.0" }, "Mainbox"), option$3({ value: "microbox" }, "MicroBox"), option$3({ value: "paandorasbox" }, "PaandorasBox"), option$3({ value: "foxbox" }, "FoxBox"), option$3({ value: "midbox" }, "Midbox"), option$3({ value: "dogebox2" }, "Dogebox2"), option$3({ value: "nepbox" }, "Nepbox"), option$3({ value: "WeebBox" }, "WeebBox"), option$3({ value: "AWeebyssBox" }, "AWeebyssBox"), option$3({ value: "Deuteranopia" }, "Deuteranopia"), option$3({ value: "Protanopia" }, "Protanopia"), option$3({ value: "Tritanopia" }, "Tritanopia"), option$3({ value: "custom" }, "Custom"));
             this._currentThemeProperty = "--page-margin";
             this._fileInput = input$4({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose editor background image" });
             this._fileInput2 = input$4({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose website background image" });
@@ -45217,9 +45418,9 @@ You should be redirected to the song at:<br /><br />
             this._defs = SVG.defs({}, this._gradient);
             this._volumeBarContainer = SVG.svg({ style: `touch-action: none; overflow: visible; margin: auto; max-width: 20vw;`, width: "160px", height: "100%", preserveAspectRatio: "none", viewBox: "0 0 160 12" }, this._defs, this._outVolumeBarBg, this._outVolumeBar, this._outVolumeCap);
             this._volumeBarBox = div({ class: "playback-volume-bar", style: "height: 12px; align-self: center;" }, this._volumeBarContainer);
-            this._fileMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "File"), option({ value: "new" }, "+ New Blank Song"), option({ value: "import" }, "↑ Import Song... (" + EditorConfig.ctrlSymbol + "O)"), option({ value: "export" }, "↓ Export Song... (" + EditorConfig.ctrlSymbol + "S)"), option({ value: "copyUrl" }, "⎘ Copy Song URL"), option({ value: "shareUrl" }, "⤳ Share Song URL"), option({ value: "shortenUrl" }, "… Shorten Song URL"), option({ value: "viewPlayer" }, "▶ View in Song Player"), option({ value: "copyEmbed" }, "⎘ Copy HTML Embed Code"), option({ value: "songRecovery" }, "⚠ Recover Recent Song..."));
-            this._editMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Edit"), option({ value: "undo" }, "Undo (Z)"), option({ value: "redo" }, "Redo (Y)"), option({ value: "copy" }, "Copy Pattern (C)"), option({ value: "pasteNotes" }, "Paste Pattern Notes (V)"), option({ value: "pasteNumbers" }, "Paste Pattern Numbers (" + EditorConfig.ctrlSymbol + "⇧V)"), option({ value: "insertBars" }, "Insert Bar (⏎)"), option({ value: "deleteBars" }, "Delete Selected Bars (⌫)"), option({ value: "insertChannel" }, "Insert Channel (" + EditorConfig.ctrlSymbol + "⏎)"), option({ value: "deleteChannel" }, "Delete Selected Channels (" + EditorConfig.ctrlSymbol + "⌫)"), option({ value: "selectChannel" }, "Select Channel (⇧A)"), option({ value: "selectAll" }, "Select All (A)"), option({ value: "duplicatePatterns" }, "Duplicate Reused Patterns (D)"), option({ value: "transposeUp" }, "Move Notes Up (+ or ⇧+)"), option({ value: "transposeDown" }, "Move Notes Down (- or ⇧-)"), option({ value: "moveNotesSideways" }, "Move All Notes Sideways... (W)"), option({ value: "generateEuclideanRhythm" }, "Generate Euclidean Rhythm... (E)"), option({ value: "beatsPerBar" }, "Change Beats Per Bar... (B)"), option({ value: "barCount" }, "Change Song Length... (L)"), option({ value: "channelSettings" }, "Channel Settings... (Q)"), option({ value: "limiterSettings" }, "Limiter Settings... (⇧L)"), option({ value: "addExternal" }, "Add Custom Samples... (⇧Q)"));
-            this._optionsMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Preferences"), option({ value: "autoPlay" }, "Auto Play on Load"), option({ value: "autoFollow" }, "Auto Follow Playhead"), option({ value: "enableNotePreview" }, "Hear of Added Notes"), option({ value: "showLetters" }, "Show Piano Keys"), option({ value: "showFifth" }, 'Highlight "Fifth" Note'), option({ value: "notesOutsideScale" }, "Place Notes Out of Scale"), option({ value: "setDefaultScale" }, "Set Current Scale as Default"), option({ value: "showChannels" }, "Show All Channels"), option({ value: "showScrollBar" }, "Show Octave Scroll Bar"), option({ value: "alwaysFineNoteVol" }, "Always Fine Note Volume"), option({ value: "enableChannelMuting" }, "Enable Channel Muting"), option({ value: "displayBrowserUrl" }, "Show Song Data in URL"), option({ value: "displayVolumeBar" }, "Show Playback Volume"), option({ value: "notesFlashWhenPlayed" }, "Notes Flash When Played (DB2)"), option({ value: "showOscilloscope" }, "Show Oscilloscope"), option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"), option({ value: "showDescription" }, "Show Description"), option({ value: "closePromptByClickoff" }, "Close prompts on click off"), option({ value: "layout" }, "Set Layout..."), option({ value: "colorTheme" }, "Set Theme..."), option({ value: "recordingSetup" }, "Note Recording..."));
+            this._fileMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "File"), option({ value: "new" }, "+ New Blank Song"), option({ value: "import" }, "↑ > Import Song (" + EditorConfig.ctrlSymbol + "O)"), option({ value: "export" }, "↓ > Export Song (" + EditorConfig.ctrlSymbol + "S)"), option({ value: "copyUrl" }, "⎘ Copy Song URL"), option({ value: "shareUrl" }, "⤳ Share Song URL"), option({ value: "shortenUrl" }, "… Shorten Song URL"), option({ value: "viewPlayer" }, "▶ View in Song Player"), option({ value: "copyEmbed" }, "⎘ Copy HTML Embed Code"), option({ value: "songRecovery" }, "⚠ > Recover Recent Song"));
+            this._editMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Edit"), option({ value: "undo" }, "Undo (Z)"), option({ value: "redo" }, "Redo (Y)"), option({ value: "copy" }, "Copy Pattern (C)"), option({ value: "pasteNotes" }, "Paste Pattern Notes (V)"), option({ value: "pasteNumbers" }, "Paste Pattern Numbers (" + EditorConfig.ctrlSymbol + "⇧V)"), option({ value: "insertBars" }, "Insert Bar (⏎)"), option({ value: "deleteBars" }, "Delete Selected Bars (⌫)"), option({ value: "insertChannel" }, "Insert Channel (" + EditorConfig.ctrlSymbol + "⏎)"), option({ value: "deleteChannel" }, "Delete Selected Channels (" + EditorConfig.ctrlSymbol + "⌫)"), option({ value: "selectChannel" }, "Select Channel (⇧A)"), option({ value: "selectAll" }, "Select All (A)"), option({ value: "duplicatePatterns" }, "Duplicate Reused Patterns (D)"), option({ value: "transposeUp" }, "Move Notes Up (+ or ⇧+)"), option({ value: "transposeDown" }, "Move Notes Down (- or ⇧-)"), option({ value: "moveNotesSideways" }, "> Move All Notes Sideways (W)"), option({ value: "generateEuclideanRhythm" }, "> Generate Euclidean Rhythm (E)"), option({ value: "beatsPerBar" }, "> Change Beats Per Bar (B)"), option({ value: "barCount" }, "> Change Song Length (L)"), option({ value: "channelSettings" }, "> Channel Settings (Q)"), option({ value: "limiterSettings" }, "> Limiter Settings (⇧L)"), option({ value: "addExternal" }, "> Add Custom Samples (⇧Q)"));
+            this._optionsMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Preferences"), option({ value: "autoPlay" }, "Auto Play on Load"), option({ value: "autoFollow" }, "Auto Follow Playhead"), option({ value: "enableNotePreview" }, "Hear of Added Notes"), option({ value: "showLetters" }, "Show Piano Keys"), option({ value: "showFifth" }, 'Highlight "Fifth" Note'), option({ value: "notesOutsideScale" }, "Place Notes Out of Scale"), option({ value: "setDefaultScale" }, "Set Current Scale as Default"), option({ value: "showChannels" }, "Show All Channels"), option({ value: "showScrollBar" }, "Show Octave Scroll Bar"), option({ value: "alwaysFineNoteVol" }, "Always Fine Note Volume"), option({ value: "enableChannelMuting" }, "Enable Channel Muting"), option({ value: "displayBrowserUrl" }, "Show Song Data in URL"), option({ value: "displayVolumeBar" }, "Show Playback Volume"), option({ value: "notesFlashWhenPlayed" }, "Notes Flash When Played (DB2)"), option({ value: "showOscilloscope" }, "Show Oscilloscope"), option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"), option({ value: "showDescription" }, "Show Description"), option({ value: "closePromptByClickoff" }, "Close prompts on click off"), option({ value: "layout" }, "> Set Layout"), option({ value: "colorTheme" }, "> Set Theme"), option({ value: "recordingSetup" }, "> Note Recording"));
             this._scaleSelect = buildOptions(select(), Config.scales.map(scale => scale.name));
             this._keySelect = buildOptions(select(), Config.keys.map(key => key.name).reverse());
             this._octaveStepper = input({ type: "number", min: Config.octaveMin, max: Config.octaveMax, value: "0" });
@@ -45700,9 +45901,9 @@ You should be redirected to the song at:<br /><br />
                     (prefs.showSampleLoadingStatus ? textOnIcon : textOffIcon) + "Show Sample Loading Status",
                     (prefs.showDescription ? textOnIcon : textOffIcon) + "Show Description",
                     (prefs.closePromptByClickoff ? textOnIcon : textOffIcon) + "Close Prompts on Click Off",
-                    "　Set Layout...",
-                    "　Set Theme...",
-                    "　Note Recording...",
+                    "> Set Layout",
+                    "> Set Theme",
+                    "> Note Recording",
                 ];
                 for (let i = 0; i < optionCommands.length; i++) {
                     const option = this._optionsMenu.children[i + 1];

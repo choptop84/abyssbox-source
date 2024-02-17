@@ -27,6 +27,7 @@ let doReload = false;
 		option({ value: "Windows Xp"}, "Windows Xp"),
 		option({ value: "Frutiger Aero"}, "Frutiger Aero"),
 		option({ value: "Glyde"}, "Glyde"),
+		option({ value: "Terminal 2.0 (AB)"}, "Terminal 2.0 (AB)"),
 		option({ value: "dark classic" }, "BeepBox Dark"),
 		option({ value: "light classic" }, "BeepBox Light"),
 		option({ value: "dark competition" }, "BeepBox Competition Dark"),

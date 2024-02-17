@@ -761,14 +761,14 @@ export class SongEditor {
     private readonly _fileMenu: HTMLSelectElement = select({ style: "width: 100%;" },
         option({ selected: true, disabled: true, hidden: false }, "File"), // todo: "hidden" should be true but looks wrong on mac chrome, adds checkmark next to first visible option even though it's not selected. :(
         option({ value: "new" }, "+ New Blank Song"),
-        option({ value: "import" }, "↑ Import Song... (" + EditorConfig.ctrlSymbol + "O)"),
-        option({ value: "export" }, "↓ Export Song... (" + EditorConfig.ctrlSymbol + "S)"),
+        option({ value: "import" }, "↑ > Import Song (" + EditorConfig.ctrlSymbol + "O)"),
+        option({ value: "export" }, "↓ > Export Song (" + EditorConfig.ctrlSymbol + "S)"),
         option({ value: "copyUrl" }, "⎘ Copy Song URL"),
         option({ value: "shareUrl" }, "⤳ Share Song URL"),
         option({ value: "shortenUrl" }, "… Shorten Song URL"),
         option({ value: "viewPlayer" }, "▶ View in Song Player"),
         option({ value: "copyEmbed" }, "⎘ Copy HTML Embed Code"),
-        option({ value: "songRecovery" }, "⚠ Recover Recent Song..."),
+        option({ value: "songRecovery" }, "⚠ > Recover Recent Song"),
     );
     private readonly _editMenu: HTMLSelectElement = select({ style: "width: 100%;" },
         option({ selected: true, disabled: true, hidden: false }, "Edit"), // todo: "hidden" should be true but looks wrong on mac chrome, adds checkmark next to first visible option even though it's not selected. :(
@@ -786,13 +786,13 @@ export class SongEditor {
         option({ value: "duplicatePatterns" }, "Duplicate Reused Patterns (D)"),
         option({ value: "transposeUp" }, "Move Notes Up (+ or ⇧+)"),
         option({ value: "transposeDown" }, "Move Notes Down (- or ⇧-)"),
-        option({ value: "moveNotesSideways" }, "Move All Notes Sideways... (W)"),
-	option({ value: "generateEuclideanRhythm" }, "Generate Euclidean Rhythm... (E)"),
-        option({ value: "beatsPerBar" }, "Change Beats Per Bar... (B)"),
-        option({ value: "barCount" }, "Change Song Length... (L)"),
-        option({ value: "channelSettings" }, "Channel Settings... (Q)"),
-        option({ value: "limiterSettings" }, "Limiter Settings... (⇧L)"),
-	option({ value: "addExternal" }, "Add Custom Samples... (⇧Q)"),
+        option({ value: "moveNotesSideways" }, "> Move All Notes Sideways (W)"),
+	option({ value: "generateEuclideanRhythm" }, "> Generate Euclidean Rhythm (E)"),
+        option({ value: "beatsPerBar" }, "> Change Beats Per Bar (B)"),
+        option({ value: "barCount" }, "> Change Song Length (L)"),
+        option({ value: "channelSettings" }, "> Channel Settings (Q)"),
+        option({ value: "limiterSettings" }, "> Limiter Settings (⇧L)"),
+	option({ value: "addExternal" }, "> Add Custom Samples (⇧Q)"),
     );
     private readonly _optionsMenu: HTMLSelectElement = select({ style: "width: 100%;" },
         option({ selected: true, disabled: true, hidden: false }, "Preferences"), // todo: "hidden" should be true but looks wrong on mac chrome, adds checkmark next to first visible option even though it's not selected. :(
@@ -814,9 +814,9 @@ export class SongEditor {
         option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"),
         option({ value: "showDescription" }, "Show Description"),
         option({ value: "closePromptByClickoff" }, "Close prompts on click off"),
-        option({ value: "layout" }, "Set Layout..."),
-        option({ value: "colorTheme" }, "Set Theme..."),
-        option({ value: "recordingSetup" }, "Note Recording..."),
+        option({ value: "layout" }, "> Set Layout"),
+        option({ value: "colorTheme" }, "> Set Theme"),
+        option({ value: "recordingSetup" }, "> Note Recording"),
     );
 
     public isMobileFullscreen?: boolean;
@@ -2333,9 +2333,9 @@ export class SongEditor {
             (prefs.showSampleLoadingStatus ? textOnIcon : textOffIcon) + "Show Sample Loading Status",
             (prefs.showDescription ? textOnIcon : textOffIcon) + "Show Description",
             (prefs.closePromptByClickoff ? textOnIcon : textOffIcon) + "Close Prompts on Click Off",
-            "　Set Layout...",
-            "　Set Theme...",
-            "　Note Recording...",
+            "> Set Layout",
+            "> Set Theme",
+            "> Note Recording",
         ];
         for (let i: number = 0; i < optionCommands.length; i++) {
             const option: HTMLOptionElement = <HTMLOptionElement>this._optionsMenu.children[i + 1];
