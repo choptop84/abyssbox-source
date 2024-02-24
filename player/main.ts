@@ -4,7 +4,7 @@ import { Dictionary, DictionaryArray, EnvelopeType, InstrumentType, Transition, 
 import { ColorConfig } from "../editor/ColorConfig";
 import { NotePin, Note, Pattern, Instrument, Channel, Synth } from "../synth/synth";
 import { oscilascopeCanvas } from "../global/Oscilascope";
-import "./songstyle";
+import "./style";
 import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 
 	const {a, button, div, h1, input, canvas} = HTML;

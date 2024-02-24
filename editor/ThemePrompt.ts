@@ -87,6 +87,8 @@ let doReload = false;
 		option({ value: "custom" }, "Custom")
 );
 
+		// This is all stuff relating to custom themes
+
 		private _currentThemeProperty: string = "--page-margin";
 	
 		private readonly _fileInput: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose editor background image"});

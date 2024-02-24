@@ -35387,6 +35387,7 @@ You should be redirected to the song at:<br /><br />
 				#beepboxEditorContainer {
 					max-width: initial;
 					height: 100vh;
+					padding-top: 0px;
 				}
 				.beepboxEditor {
 					width: 100%;
@@ -35476,6 +35477,7 @@ You should be redirected to the song at:<br /><br />
 				#beepboxEditorContainer {
 					max-width: initial;
 					height: 100vh;
+					padding-top: 0px;
 				}
 				.beepboxEditor {
 					width: 100%;
@@ -35573,6 +35575,7 @@ You should be redirected to the song at:<br /><br />
 				#beepboxEditorContainer {
 					max-width: initial;
 					height: 100vh;
+					padding-top: 0px;
 				}
 				.beepboxEditor {
 					width: 100%;
@@ -35655,6 +35658,7 @@ You should be redirected to the song at:<br /><br />
 				#beepboxEditorContainer {
 					max-width: initial;
 					height: 100vh;
+					padding-top: 0px;
 				}
 				.beepboxEditor {
 					width: 100%;
@@ -35745,6 +35749,7 @@ You should be redirected to the song at:<br /><br />
 				#beepboxEditorContainer {
 					max-width: initial;
 					height: 100vh;
+					padding-top: 0px;
 				}
 				.beepboxEditor {
 					width: 100%;
@@ -35830,6 +35835,7 @@ You should be redirected to the song at:<br /><br />
 				#beepboxEditorContainer {
 					max-width: initial;
 					height: 100vh;
+					padding-top: 0px;
 				}
 				.beepboxEditor {
 					width: 100%;
@@ -35912,6 +35918,99 @@ You should be redirected to the song at:<br /><br />
 				}
 			}
 		`,
+        "theatre": `\
+
+		/* Theatre layout */
+		@media (min-width: 711px) {
+			#beepboxEditorContainer {
+				max-width: initial;
+				height: 100vh;
+				padding-top: 0px;
+			}
+			.beepboxEditor {
+				width: 100%;
+				height: 200vh;
+				grid-template-columns: minmax(0, 1fr) 390px;
+				grid-template-rows: minmax(480px, 50%) minmax(0, 50%);
+				grid-template-areas:
+			"pattern-area pattern-area " 
+			"track-area settings-area";
+			  }			
+			.beepboxEditor .pattern-area {
+				width: 100%;
+				height: 100%;
+			}
+			.beepboxEditor .track-area {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+			}
+			.beepboxEditor .trackAndMuteContainer {
+				width: 100%;
+				min-height: 0;
+				flex: 1;
+				overflow: auto;
+				max-height: 97.5vh;
+			}
+			.beepboxEditor .instrument-settings-area {
+				overflow-y: auto;
+				position: relative;
+			}
+			.beepboxEditor .instrument-settings-area > .editor-controls {
+				position: absolute;
+				width: 100%;
+			}
+			.beepboxEditor .song-settings-area {
+				overflow-y: auto;
+			}
+			
+			.beepboxEditor .settings-area {
+				width: 390px;
+				grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+				grid-template-rows: auto auto auto minmax(0, 1fr);
+				grid-template-areas:
+					"instrument-settings-area version-area"
+					"instrument-settings-area play-pause-area"
+					"instrument-settings-area menu-area"
+					"instrument-settings-area song-settings-area";
+			}
+			
+			.beepboxEditor .barScrollBar {
+				display: none;
+			}
+			.beepboxEditor.selectRow {
+				height: 2em;
+			}
+			.beepboxEditor .operatorRow {
+				heiht: 2em;
+			}
+			.beepboxEditor .trackAndMuteContainer {
+				max-height: 446px;
+			}
+
+			.beepboxEditor .trackContainer {
+				overflow: visible;
+			}
+			.beepboxEditor .trackAndMuteContainer {
+				scrollbar-width: auto;
+				scrollbar-color: ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
+			}
+			.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar {
+				width: 20px;
+				height: 20px;
+			}
+			.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar-track {
+				background: ${ColorConfig.editorBackground};
+			}
+			.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar-thumb {
+				background-color: ${ColorConfig.uiWidgetBackground};
+				border: 3px solid ${ColorConfig.editorBackground};
+			}
+			.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar-corner {
+				background-color: ${ColorConfig.editorBackground};
+			}
+		}
+	`,
     };
     Layout._styleElement = document.head.appendChild(HTML.style({ type: "text/css" }));
 
@@ -37176,7 +37275,15 @@ You should be redirected to the song at:<br /><br />
 						<rect x="20" y="2" width="4" height="16" fill="currentColor"/>
 						<rect x="2" y="13" width="12" height="5" fill="currentColor"/>
 					</svg>
-				`), div$d("Long (AB)")));
+				`), div$d("Long (AB)")), label$1({ class: "layout-option" }, input$a({ type: "radio", name: "layout", value: "theatre" }), SVG(`\
+					<svg viewBox="-1 -1 28 22">
+						<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
+						<rect x="2" y="2" width="12" height="10" fill="currentColor"/>
+						<rect x="15" y="2" width="4" height="16" fill="currentColor"/>
+						<rect x="20" y="2" width="4" height="16" fill="currentColor"/>
+						<rect x="2" y="13" width="12" height="5" fill="currentColor"/>
+					</svg>
+				`), div$d("theatre (AB)")));
             this.container = div$d({ class: "prompt noSelection", style: "width: 300px;" }, h2$c("Layout"), this._form, div$d({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
             this._close = () => {
                 this._doc.undo();
