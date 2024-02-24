@@ -96,9 +96,11 @@ let doReload = false;
 	
 		//private readonly _useColorFomula: HTMLInputElement = input({ type:""});
 	
+
 		
 		private readonly _colorMenu: HTMLSelectElement = select({ style: "width: 100%;" },
 			option({ selected: true, disabled: true, hidden: false }, "Select an asset to change"),
+			option({ selected: false, disabled: true, hidden: false }, "General Items"),
 			option({ value: "--page-margin" }, "Page Margin"),
 			option({ value: "--editor-background" }, "Editor Background"),
 			option({ value: "--primary-text" }, "Primary Text"),
@@ -113,7 +115,11 @@ let doReload = false;
 			option({ value: "--fifth-note" }, "Fifth note"),
 			option({ value: "--white-piano-key" }, "White Piano Key"),
 			option({ value: "--black-piano-key" }, "Black Piano Key"),
-	
+			option({ value: "--white-piano-key-text" }, "White Piano Key Text"),
+			option({ value: "--black-piano-key-text" }, "Black Piano Key Text"),	
+
+			option({ selected: false, disabled: true, hidden: false }, "Track Editor Backgrounds"),
+
 			option({ value: "--track-editor-bg-pitch" }, "Track Editor Pitch BG"),
 			option({ value: "--track-editor-bg-pitch-dim" }, "Empty Track Editor Pitch BG"),
 			option({ value: "--track-editor-bg-noise" }, "Track Editor Noise BG"),
@@ -121,6 +127,8 @@ let doReload = false;
 			option({ value: "--track-editor-bg-mod" }, "Track Editor Mod BG"),
 			option({ value: "--track-editor-bg-mod-dim" }, "Empty Track Editor Mod BG"),
 	
+			option({ selected: false, disabled: true, hidden: false }, "Extras"),
+
 			option({ value: "--multiplicative-mod-slider" }, "Multiplicative Mod Slider"),
 			option({ value: "--overwriting-mod-slider" }, "Overwriting Mod Slider"),
 			option({ value: "--indicator-primary" }, "Primary Indicator"),
@@ -136,118 +144,253 @@ let doReload = false;
 			option({ value: "--note-flash" }, "Note Flash"),
 			option({ value: "--note-flash-secondary" }, "Note Flash Secondary"),		
 	
+			option({ selected: false, disabled: true, hidden: false }, "Note Colors (Pitch)"),
+
+			option({ value: "--pitch1-Primary-note" }, "Pitch 1 Primary Color (Note)"),
+			option({ value: "--pitch1-secondary-note" }, "Pitch 1 Secondary Color (Note)"),	
+
+			option({ value: "--pitch2-Primary-note" }, "Pitch 2 Primary Color (Note)"),
+			option({ value: "--pitch2-secondary-note" }, "Pitch 2 Secondary Color (Note)"),	
+
+			option({ value: "--pitch3-Primary-note" }, "Pitch 3 Primary Color (Note)"),
+			option({ value: "--pitch3-secondary-note" }, "Pitch 3 Secondary Color (Note)"),	
+
+			option({ value: "--pitch4-Primary-note" }, "Pitch 4 Primary Color (Note)"),
+			option({ value: "--pitch4-secondary-note" }, "Pitch 4 Secondary Color (Note)"),	
+
+			option({ value: "--pitch5-Primary-note" }, "Pitch 5 Primary Color (Note)"),
+			option({ value: "--pitch5-secondary-note" }, "Pitch 5 Secondary Color (Note)"),	
+
+			option({ value: "--pitch6-Primary-note" }, "Pitch 6 Primary Color (Note)"),
+			option({ value: "--pitch6-secondary-note" }, "Pitch 6 Secondary Color (Note)"),	
+
+			option({ value: "--pitch7-Primary-note" }, "Pitch 7 Primary Color (Note)"),
+			option({ value: "--pitch7-secondary-note" }, "Pitch 7 Secondary Color (Note)"),	
+
+			option({ value: "--pitch8-Primary-note" }, "Pitch 8 Primary Color (Note)"),
+			option({ value: "--pitch8-secondary-note" }, "Pitch 8 Secondary Color (Note)"),	
+
+			option({ value: "--pitch9-Primary-note" }, "Pitch 9 Primary Color (Note)"),
+			option({ value: "--pitch9-secondary-note" }, "Pitch 9 Secondary Color (Note)"),	
+
+			option({ value: "--pitch10-Primary-note" }, "Pitch 10 Primary Color (Note)"),
+			option({ value: "--pitch10-secondary-note" }, "Pitch 10 Secondary Color (Note)"),	
+
+			option({ selected: false, disabled: true, hidden: false }, "Note Colors (Noise)"),
+
+			option({ value: "--noise1-Primary-note" }, "Noise 1 Primary Color (Note)"),
+			option({ value: "--noise1-secondary-note" }, "Noise 1 Secondary Color (Note)"),	
+
+			option({ value: "--noise2-Primary-note" }, "Noise 2 Primary Color (Note)"),
+			option({ value: "--noise2-secondary-note" }, "Noise 2 Secondary Color (Note)"),	
+
+			option({ value: "--noise3-Primary-note" }, "Noise 3 Primary Color (Note)"),
+			option({ value: "--noise3-secondary-note" }, "Noise 3 Secondary Color (Note)"),	
+
+			option({ value: "--noise4-Primary-note" }, "Noise 4 Primary Color (Note)"),
+			option({ value: "--noise4-secondary-note" }, "Noise 4 Secondary Color (Note)"),	
+
+			option({ value: "--noise5-Primary-note" }, "Noise 5 Primary Color (Note)"),
+			option({ value: "--noise5-secondary-note" }, "Noise 5 Secondary Color (Note)"),	
+
+
+			option({ selected: false, disabled: true, hidden: false }, "Note Colors (Mod)"),
+
+			option({ value: "--mod1-Primary-note" }, "Mod 1 Primary Color (Note)"),
+			option({ value: "--mod1-secondary-note" }, "Mod 1 Secondary Color (Note)"),	
+
+			option({ value: "--mod2-Primary-note" }, "Mod 2 Primary Color (Note)"),
+			option({ value: "--mod2-secondary-note" }, "Mod 2 Secondary Color (Note)"),	
+
+			option({ value: "--mod3-Primary-note" }, "Mod 3 Primary Color (Note)"),
+			option({ value: "--mod3-secondary-note" }, "Mod 3 Secondary Color (Note)"),	
+
+			option({ value: "--mod4-Primary-note" }, "Mod 4 Primary Color (Note)"),
+			option({ value: "--mod4-secondary-note" }, "Mod 4 Secondary Color (Note)"),	
+
+			option({ selected: false, disabled: true, hidden: false }, "Channel Colors (Pitch)"),
+
+			option({ value: "--pitch1-Primary-channel" }, "Pitch 1 Primary Color (Channel)"),
+			option({ value: "--pitch1-secondary-channel" }, "Pitch 1 Secondary Color (Channel)"),	
 	
+			option({ value: "--pitch2-Primary-channel" }, "Pitch 2 Primary Color (Channel)"),
+			option({ value: "--pitch2-secondary-channel" }, "Pitch 2 Secondary Color (Channel)"),	
+
+			option({ value: "--pitch3-Primary-channel" }, "Pitch 3 Primary Color (Channel)"),
+			option({ value: "--pitch3-secondary-channel" }, "Pitch 3 Secondary Color (Channel)"),	
+
+			option({ value: "--pitch4-Primary-channel" }, "Pitch 4 Primary Color (Channel)"),
+			option({ value: "--pitch4-secondary-channel" }, "Pitch 4 Secondary Color (Channel)"),	
+
+			option({ value: "--pitch5-Primary-channel" }, "Pitch 5 Primary Color (Channel)"),
+			option({ value: "--pitch5-secondary-channel" }, "Pitch 5 Secondary Color (Channel)"),	
+
+			option({ value: "--pitch6-Primary-channel" }, "Pitch 6 Primary Color (Channel)"),
+			option({ value: "--pitch6-secondary-channel" }, "Pitch 6 Secondary Color (Channel)"),	
+
+			option({ value: "--pitch7-Primary-channel" }, "Pitch 7 Primary Color (Channel)"),
+			option({ value: "--pitch7-secondary-channel" }, "Pitch 7 Secondary Color (Channel)"),	
+
+			option({ value: "--pitch8-Primary-channel" }, "Pitch 8 Primary Color (Channel)"),
+			option({ value: "--pitch8-secondary-channel" }, "Pitch 8 Secondary Color (Channel)"),	
+
+			option({ value: "--pitch9-Primary-channel" }, "Pitch 9 Primary Color (Channel)"),
+			option({ value: "--pitch9-secondary-channel" }, "Pitch 9 Secondary Color (Channel)"),	
+
+			option({ value: "--pitch10-Primary-channel" }, "Pitch 10 Primary Color (Channel)"),
+			option({ value: "--pitch10-secondary-channel" }, "Pitch 10 Secondary Color (Channel)"),	
+
+			option({ selected: false, disabled: true, hidden: false }, "Channel Colors (Noise)"),
+
+			option({ value: "--noise1-Primary-channel" }, "Noise 1 Primary Color (Channel)"),
+			option({ value: "--noise1-secondary-channel" }, "Noise 1 Secondary Color (Channel)"),	
+
+			option({ value: "--noise2-Primary-channel" }, "Noise 2 Primary Color (Channel)"),
+			option({ value: "--noise2-secondary-channel" }, "Noise 2 Secondary Color (Channel)"),	
+
+			option({ value: "--noise3-Primary-channel" }, "Noise 3 Primary Color (Channel)"),
+			option({ value: "--noise3-secondary-channel" }, "Noise 3 Secondary Color (Channel)"),	
+
+			option({ value: "--noise4-Primary-channel" }, "Noise 4 Primary Color (Channel)"),
+			option({ value: "--noise4-secondary-channel" }, "Noise 4 Secondary Color (Channel)"),	
+
+			option({ value: "--noise5-Primary-channel" }, "Noise 5 Primary Color (Channel)"),
+			option({ value: "--noise5-secondary-channel" }, "Noise 5 Secondary Color (Channel)"),	
+
+
+			option({ selected: false, disabled: true, hidden: false }, "Channel Colors (Mod)"),
+
+			option({ value: "--mod1-Primary-channel" }, "Mod 1 Primary Color (Channel)"),
+			option({ value: "--mod1-secondary-channel" }, "Mod 1 Secondary Color (Channel)"),	
+
+			option({ value: "--mod2-Primary-channel" }, "Mod 2 Primary Color (Channel)"),
+			option({ value: "--mod2-secondary-channel" }, "Mod 2 Secondary Color (Channel)"),	
+
+			option({ value: "--mod3-Primary-channel" }, "Mod 3 Primary Color (Channel)"),
+			option({ value: "--mod3-secondary-channel" }, "Mod 3 Secondary Color (Channel)"),	
+
+			option({ value: "--mod4-Primary-channel" }, "Mod 4 Primary Color (Channel)"),
+			option({ value: "--mod4-secondary-channel" }, "Mod 4 Secondary Color (Channel)"),	
+
 		); 
 	
 		private readonly _colorInput: HTMLInputElement = input({ type: "text", value: localStorage.getItem("customColors") || `:root {
-			--page-margin: #040410;
-			--editor-background: #040410;
+			--page-margin: black;
+			--editor-background: black;
 			--hover-preview: white;
-			--playhead: rgba(255, 255, 255, 0.9);
+			--playhead: white;
 			--primary-text: white;
-			--secondary-text: #84859a;
+			--secondary-text: #999;
 			--inverted-text: black;
 			--text-selection: rgba(119,68,255,0.99);
-			--box-selection-fill: #044b94;
+			--box-selection-fill: rgba(255,255,255,0.2);
 			--loop-accent: #74f;
 			--link-accent: #98f;
-			--ui-widget-background: #393e4f;
-			--ui-widget-focus: #6d6886;
-			--pitch-background: #393e4f99;
-			--tonic: #725491;
-			--fifth-note: #54547a;
-			--white-piano-key: #eee;
-			--black-piano-key: #666;
-			--use-color-formula: true;
-			--track-editor-bg-pitch: #393e4f;
-			--track-editor-bg-pitch-dim: #1c1d28;
-			--track-editor-bg-noise: #3d3535;
-			--track-editor-bg-noise-dim: #161313;
-			--track-editor-bg-mod: #283560;
-			--track-editor-bg-mod-dim: #0a101f;
-			--multiplicative-mod-slider: #606c9f;
-			--overwriting-mod-slider: #6850b5;
-			--indicator-primary: #9c64f7;
-			--indicator-secondary: #393e4f;
-			--select2-opt-group: #5d576f;
-			--input-box-outline: #222;
-			--mute-button-normal: #dda85d;
-			--mute-button-mod: #886eae;
-			--mod-label-primary: #282840;
-			--mod-label-secondary-text: rgb(87, 86, 120);
-			--mod-label-primary-text: white;
-			--pitch-secondary-channel-hue: 0;
-			--pitch-secondary-channel-hue-scale: 6.1;
-			--pitch-secondary-channel-sat: 83.3;
-			--pitch-secondary-channel-sat-scale: 0.1;
-			--pitch-secondary-channel-lum: 40;
-			--pitch-secondary-channel-lum-scale: 0.05;
-			--pitch-primary-channel-hue: 0;
-			--pitch-primary-channel-hue-scale: 6.1;
-			--pitch-primary-channel-sat: 100;
-			--pitch-primary-channel-sat-scale: 0.1;
-			--pitch-primary-channel-lum: 67.5;
-			--pitch-primary-channel-lum-scale: 0.05;
-			--pitch-secondary-note-hue: 0;
-			--pitch-secondary-note-hue-scale: 6.1;
-			--pitch-secondary-note-sat: 93.9;
-			--pitch-secondary-note-sat-scale: 0.1;
-			--pitch-secondary-note-lum: 25;
-			--pitch-secondary-note-lum-scale: 0.05;
-			--pitch-primary-note-hue: 0;
-			--pitch-primary-note-hue-scale: 6.1;
-			--pitch-primary-note-sat: 100;
-			--pitch-primary-note-sat-scale: 0.05;
-			--pitch-primary-note-lum: 85.6;
-			--pitch-primary-note-lum-scale: 0.025;
-			--noise-secondary-channel-hue: 0;
-			--noise-secondary-channel-hue-scale: 2;
-			--noise-secondary-channel-sat: 25;
-			--noise-secondary-channel-sat-scale: 0;
-			--noise-secondary-channel-lum: 42;
-			--noise-secondary-channel-lum-scale: 0;
-			--noise-primary-channel-hue: 0;
-			--noise-primary-channel-hue-scale: 2;
-			--noise-primary-channel-sat: 33;
-			--noise-primary-channel-sat-scale: 0;
-			--noise-primary-channel-lum: 63.5;
-			--noise-primary-channel-lum-scale: 0;
-			--noise-secondary-note-hue: 0;
-			--noise-secondary-note-hue-scale: 2;
-			--noise-secondary-note-sat: 33.5;
-			--noise-secondary-note-sat-scale: 0;
-			--noise-secondary-note-lum: 55;
-			--noise-secondary-note-lum-scale: 0;
-			--noise-primary-note-hue: 0;
-			--noise-primary-note-hue-scale: 2;
-			--noise-primary-note-sat: 46.5;
-			--noise-primary-note-sat-scale: 0;
-			--noise-primary-note-lum: 74;
-			--noise-primary-note-lum-scale: 0;
-			--mod-secondary-channel-hue: 192;
-			--mod-secondary-channel-hue-scale: 1.5;
-			--mod-secondary-channel-sat: 88;
-			--mod-secondary-channel-sat-scale: 0;
-			--mod-secondary-channel-lum: 50;
-			--mod-secondary-channel-lum-scale: 0;
-			--mod-primary-channel-hue: 192;
-			--mod-primary-channel-hue-scale: 1.5;
-			--mod-primary-channel-sat: 96;
-			--mod-primary-channel-sat-scale: 0;
-			--mod-primary-channel-lum: 80;
-			--mod-primary-channel-lum-scale: 0;
-			--mod-secondary-note-hue: 192;
-			--mod-secondary-note-hue-scale: 1.5;
-			--mod-secondary-note-sat: 92;
-			--mod-secondary-note-sat-scale: 0;
-			--mod-secondary-note-lum: 45;
-			--mod-secondary-note-lum-scale: 0;
-			--mod-primary-note-hue: 192;
-			--mod-primary-note-hue-scale: 1.5;
-			--mod-primary-note-sat: 96;
-			--mod-primary-note-sat-scale: 0;
-			--mod-primary-note-lum: 85;
-			--mod-primary-note-lum-scale: 0;
+			--ui-widget-background: #444;
+			--ui-widget-focus: #777;
+			--pitch-background: #444;
+			--tonic: #864;
+			--fifth-note: #468;
+			--white-piano-key: #bbb;
+			--black-piano-key: #444;
+			--white-piano-key-text: #131200;
+			--black-piano-key-text: #fff;
+			--use-color-formula: false;
+			--track-editor-bg-pitch: #444;
+			--track-editor-bg-pitch-dim: #333;
+			--track-editor-bg-noise: #444;
+			--track-editor-bg-noise-dim: #333;
+			--track-editor-bg-mod: #234;
+			--track-editor-bg-mod-dim: #123;
+			--multiplicative-mod-slider: #456;
+			--overwriting-mod-slider: #654;
+			--indicator-primary: #74f;
+			--indicator-secondary: #444;
+			--select2-opt-group: #585858;
+			--input-box-outline: #333;
+			--mute-button-normal: #ffa033;
+			--mute-button-mod: #9a6bff;
+			--mod-label-primary:        #999;
+			--mod-label-secondary-text: #333;
+			--mod-label-primary-text:   black;
+			--disabled-note-primary:    #999;
+			--disabled-note-secondary:  #666;
+			--pitch1-secondary-channel: #0099A1;
+			--pitch1-primary-channel:   #25F3FF;
+			--pitch1-secondary-note:    #00BDC7;
+			--pitch1-primary-note:      #92F9FF;
+			--pitch2-secondary-channel: #A1A100;
+			--pitch2-primary-channel:   #FFFF25;
+			--pitch2-secondary-note:    #C7C700;
+			--pitch2-primary-note:      #FFFF92;
+			--pitch3-secondary-channel: #C75000;
+			--pitch3-primary-channel:   #FF9752;
+			--pitch3-secondary-note:    #FF771C;
+			--pitch3-primary-note:      #FFCDAB;
+			--pitch4-secondary-channel: #00A100;
+			--pitch4-primary-channel:   #50FF50;
+			--pitch4-secondary-note:    #00C700;
+			--pitch4-primary-note:      #A0FFA0;
+			--pitch5-secondary-channel: #D020D0;
+			--pitch5-primary-channel:   #FF90FF;
+			--pitch5-secondary-note:    #E040E0;
+			--pitch5-primary-note:      #FFC0FF;
+			--pitch6-secondary-channel: #7777B0;
+			--pitch6-primary-channel:   #A0A0FF;
+			--pitch6-secondary-note:    #8888D0;
+			--pitch6-primary-note:      #D0D0FF;
+			--pitch7-secondary-channel: #8AA100;
+			--pitch7-primary-channel:   #DEFF25;
+			--pitch7-secondary-note:    #AAC700;
+			--pitch7-primary-note:      #E6FF92;
+			--pitch8-secondary-channel: #DF0019;
+			--pitch8-primary-channel:   #FF98A4;
+			--pitch8-secondary-note:    #FF4E63;
+			--pitch8-primary-note:      #FFB2BB;
+			--pitch9-secondary-channel: #00A170;
+			--pitch9-primary-channel:   #50FFC9;
+			--pitch9-secondary-note:    #00C78A;
+			--pitch9-primary-note:      #83FFD9;
+			--pitch10-secondary-channel:#A11FFF;
+			--pitch10-primary-channel:  #CE8BFF;
+			--pitch10-secondary-note:   #B757FF;
+			--pitch10-primary-note:     #DFACFF;
+			--noise1-secondary-channel: #6F6F6F;
+			--noise1-primary-channel:   #AAAAAA;
+			--noise1-secondary-note:    #A7A7A7;
+			--noise1-primary-note:      #E0E0E0;
+			--noise2-secondary-channel: #996633;
+			--noise2-primary-channel:   #DDAA77;
+			--noise2-secondary-note:    #CC9966;
+			--noise2-primary-note:      #F0D0BB;
+			--noise3-secondary-channel: #4A6D8F;
+			--noise3-primary-channel:   #77AADD;
+			--noise3-secondary-note:    #6F9FCF;
+			--noise3-primary-note:      #BBD7FF;
+			--noise4-secondary-channel: #7A4F9A;
+			--noise4-primary-channel:   #AF82D2;
+			--noise4-secondary-note:    #9E71C1;
+			--noise4-primary-note:      #D4C1EA;
+			--noise5-secondary-channel: #607837;
+			--noise5-primary-channel:   #A2BB77;
+			--noise5-secondary-note:    #91AA66;
+			--noise5-primary-note:      #C5E2B2;
+	  --mod1-secondary-channel:   #339955;
+				--mod1-primary-channel:     #77fc55;
+				--mod1-secondary-note:      #77ff8a;
+				--mod1-primary-note:        #cdffee;
+				--mod2-secondary-channel:   #993355;
+				--mod2-primary-channel:     #f04960;
+				--mod2-secondary-note:      #f057a0;
+				--mod2-primary-note:        #ffb8de;
+				--mod3-secondary-channel:   #553399;
+				--mod3-primary-channel:     #8855fc;
+				--mod3-secondary-note:      #aa64ff;
+				--mod3-primary-note:	    #f8ddff;
+				--mod4-secondary-channel:   #a86436;
+				--mod4-primary-channel:     #c8a825;
+				--mod4-secondary-note:      #e8ba46;
+				--mod4-primary-note:        #fff6d3;
 			--note-flash: #ffffff;
 			--note-flash-secondary: #badfe6;
 		}`});
