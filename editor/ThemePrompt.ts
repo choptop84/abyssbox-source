@@ -143,7 +143,7 @@ let doReload = false;
 			option({ value: "--mod-label-primary-text" }, "Mod Label Primary Text"),		
 			option({ value: "--note-flash" }, "Note Flash"),
 			option({ value: "--note-flash-secondary" }, "Note Flash Secondary"),		
-	
+	/*
 			option({ selected: false, disabled: true, hidden: false }, "Note Colors (Pitch)"),
 
 			option({ value: "--pitch1-Primary-note" }, "Pitch 1 Primary Color (Note)"),
@@ -271,7 +271,7 @@ let doReload = false;
 
 			option({ value: "--mod4-Primary-channel" }, "Mod 4 Primary Color (Channel)"),
 			option({ value: "--mod4-secondary-channel" }, "Mod 4 Secondary Color (Channel)"),	
-
+*/
 		); 
 	
 		private readonly _colorInput: HTMLInputElement = input({ type: "text", value: localStorage.getItem("customColors") || `:root {
