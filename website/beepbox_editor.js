@@ -37278,10 +37278,10 @@ You should be redirected to the song at:<br /><br />
 				`), div$d("Long (AB)")), label$1({ class: "layout-option" }, input$a({ type: "radio", name: "layout", value: "theatre" }), SVG(`\
 					<svg viewBox="-1 -1 28 22">
 						<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
-						<rect x="2" y="2" width="12" height="10" fill="currentColor"/>
-						<rect x="15" y="2" width="4" height="16" fill="currentColor"/>
-						<rect x="20" y="2" width="4" height="16" fill="currentColor"/>
-						<rect x="2" y="13" width="12" height="5" fill="currentColor"/>
+						<rect x="2" y="2" width="22" height="10" fill="currentColor"></rect>
+						<rect x="2" y="13" width="16" height="5" fill="currentColor"></rect>
+						<rect x="19" y="13" width="2" height="5" fill="currentColor"></rect>
+						<rect x="22" y="13" width="2" height="5" fill="currentColor"></rect>
 					</svg>
 				`), div$d("theatre (AB)")));
             this.container = div$d({ class: "prompt noSelection", style: "width: 300px;" }, h2$c("Layout"), this._form, div$d({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
