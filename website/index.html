@@ -58,11 +58,6 @@
             padding-left: 30px;
             padding-right: 30px;
         }
-
-        #Hotdog {
-			display: inline !important;
-			content: url("hotdog.png");
-		}
         
         #text-content {
             overflow: auto;
@@ -218,7 +213,7 @@
                     <p>
                         You can add or remove notes by clicking on the gray rows at the top.
                         AbyssBox automatically plays the notes out loud for you. Try it!
-			    <img id="Hotdog" src="" width="500" height="333" onclick="changeHotdogSize()"/>
+			    <img id="Hotdog" src="hotdog.png" width="500" height="333" onclick="changeHotdogSize()"/>
 				<script>
 				function changeHotdogSize(){
 
@@ -235,13 +230,14 @@
                     var shouldExplode = getRandomInt(5);
 
                     if (shouldExplode != 1) {
-                        image.style.content = "url('hotdog.png');";
+                        image.src = ("hotdog.png");
                     }
 
                     if (shouldExplode == 1) {
+                        
                         console.log("Hello! I exploded!");
                         explosion.play();
-                        image.style.content = "url('explosion.gif') !important;";
+                        image.src = ("explosion.gif");
                     }
                 }
 				</script>
