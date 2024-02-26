@@ -212,14 +212,33 @@
                     </h2>
                     <p>
                         You can add or remove notes by clicking on the gray rows at the top.
-                        UltraBox automatically plays the notes out loud for you. Try it!
+                        AbyssBox automatically plays the notes out loud for you. Try it!
 			    <img id="Hotdog" src="hotdog.png" width="500" height="333" onclick="myFunction()"/>
 				<script>
 				function myFunction(){
-					var image = document.getElementById('Hotdog')
-					image.width = Math.random() * (750 - 20) + 20
-					image.height = Math.random() * (499 - 20) + 20
-				}
+
+					var image = document.getElementById('Hotdog');
+					image.width = Math.random() * (750 - 20) + 20;
+					image.height = Math.random() * (499 - 20) + 20;
+
+                    var explosion = new Audio('explosion.mp3');
+
+                    function getRandomInt(max) {
+                    return Math.floor(Math.random() * max);
+                    }
+
+                    var shouldExplode = getRandomInt(10);
+
+                    if (shouldExplode != 1) {
+                        image.src = ("hotdog.png");
+                    }
+
+                    if (shouldExplode == 1) {
+                        console.log("Hello! I exploded!");
+                        explosion.play();
+                        image.src = ("explosion.gif");
+                    }
+                }
 				</script>
 		
                     </p>
