@@ -84,6 +84,7 @@ let doReload = false;
 		option({ value: "Deuteranopia"}, "Deuteranopia"),
 		option({ value: "Protanopia"}, "Protanopia"),
 		option({ value: "Tritanopia"}, "Tritanopia"),
+		option({ value: "I am on fire"}, "I am on fire"),
 		option({ value: "custom" }, "Custom")
 );
 
