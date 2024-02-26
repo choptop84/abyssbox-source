@@ -2009,6 +2009,10 @@ export class ColorConfig {
 				font-family: 'trebuc' !important;
 			}
 
+			.modTitle::before {
+				content: "λbyssBox" !important;
+			}
+
 			`,
 		"Scratch": `
 		:root {
@@ -3687,6 +3691,10 @@ export class ColorConfig {
 							border-image-width: 46% !important;
 						}    
 			
+						.modTitle::before {
+							content: "> AbyssBox Terminal 2.0" !important;
+						}
+
 						div.channelBox {
 						background-image: url("https://choptop84.github.io/choptop84s-image-repository/lines2.png") !important;
 					  }
@@ -3816,6 +3824,11 @@ export class ColorConfig {
 					background-repeat: no-repeat;
   					background-size: cover;
   					background-position-y: bottom;
+				}
+
+				
+				.modTitle::before {
+					content: "AAAA I'M ON FIRE AAA" !important;
 				}
 
 			`,

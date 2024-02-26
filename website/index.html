@@ -40,6 +40,10 @@
             color: var(--primary-text, white);
         }
         
+        .modTitle::before {
+            content: "AbyssBox";
+        }
+
         body {
             margin: auto;
             overflow-x: hidden;
@@ -186,8 +190,7 @@
         <section>
 
             <h1>
-                <font>AbyssBox</font>
-                <span id="goldboxPlant" style="display: inline; color:#62a13b"></span>
+                <div class="modTitle"><span id="goldboxPlant" style="display: inline; color:#62a13b"></span></div>
             </h1>
             
             <p id="introduction">

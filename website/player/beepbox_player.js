@@ -4005,6 +4005,10 @@ var beepbox = (function (exports) {
 				font-family: 'trebuc' !important;
 			}
 
+			.modTitle::before {
+				content: "λbyssBox" !important;
+			}
+
 			`,
         "Scratch": `
 		:root {
@@ -5683,6 +5687,10 @@ var beepbox = (function (exports) {
 							border-image-width: 46% !important;
 						}    
 			
+						.modTitle::before {
+							content: "> AbyssBox Terminal 2.0" !important;
+						}
+
 						div.channelBox {
 						background-image: url("https://choptop84.github.io/choptop84s-image-repository/lines2.png") !important;
 					  }
@@ -5812,6 +5820,11 @@ var beepbox = (function (exports) {
 					background-repeat: no-repeat;
   					background-size: cover;
   					background-position-y: bottom;
+				}
+
+				
+				.modTitle::before {
+					content: "AAAA I'M ON FIRE AAA" !important;
 				}
 
 			`,
