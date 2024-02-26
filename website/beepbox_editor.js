@@ -3448,6 +3448,14 @@ var beepbox = (function (exports) {
 			image-rendering: optimizeSpeed !important;             /* IE */
 		}
 
+		#text-content > section > h1 > font {
+			display: none;
+			}
+			#text-content > section > h1 {
+			margin: auto;
+			content: url("https://choptop84.github.io/choptop84s-image-repository/AbyssBoxFrutigerAeroThemeLogo.png");
+			}
+
 		select.trackSelectBox {
 			border-image: none !important;
 		}
