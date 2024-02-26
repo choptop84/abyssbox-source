@@ -1914,7 +1914,7 @@ var beepbox = (function (exports) {
         static setTheme(name) {
             let theme = this.themes[name];
             if (theme == undefined)
-                theme = this.themes["dark classic"];
+                theme = this.themes["AbyssBox Classic"];
             this._styleElement.textContent = theme;
             const themeColor = document.querySelector("meta[name='theme-color']");
             if (themeColor != null) {

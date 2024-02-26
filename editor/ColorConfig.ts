@@ -11445,14 +11445,14 @@ export class ColorConfig {
 
     public static setTheme(name: string): void {
 		let theme: string = this.themes[name];
-		if (theme == undefined) theme = this.themes["dark classic"];
+		if (theme == undefined) theme = this.themes["AbyssBox Classic"];
 		this._styleElement.textContent = theme;
 
         const themeColor = <HTMLMetaElement>document.querySelector("meta[name='theme-color']");
         if (themeColor != null) {
             themeColor.setAttribute("content", getComputedStyle(document.documentElement).getPropertyValue('--ui-widget-background'));
         }
-
+		
         this.resetColors();
 
 		this.usesColorFormula = (getComputedStyle(this._styleElement).getPropertyValue("--use-color-formula").trim() == "true");
