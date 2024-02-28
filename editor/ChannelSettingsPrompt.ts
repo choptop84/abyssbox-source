@@ -21,7 +21,7 @@ export class ChannelSettingsPrompt implements Prompt {
 		private readonly _okayButton: HTMLButtonElement = button({class: "okayButton", style: "width:45%;"}, "Okay");
 		
 	public readonly container: HTMLDivElement = div({class: "prompt noSelection", style: "width: 250px; text-align: right;"},
-		h2("Channel Settings"),
+	div({class:"promptTitle"}, h2({class:"channelExt",style:"text-align: inherit;"}, ""), h2({class:"channelTitle"},"Channel Settings")),
 		label({style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;"},
 			"Pitch channels:",
 			this._pitchChannelStepper,

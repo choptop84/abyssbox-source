@@ -206,7 +206,7 @@ export class LimiterPrompt implements Prompt {
 	private readonly _resetButton: HTMLButtonElement = button({ style: "width:45%;" }, "Reset");
 
 	public readonly container: HTMLDivElement = div({ class: "prompt noSelection", style: "width: 250px;" },
-		h2("Limiter Options"),
+	div({class:"promptTitle"}, h2({class:"limiterExt",style:"text-align: inherit;"}, ""), h2({class:"limiterTitle"},"Limiter Options")),
 		div({ style: "display: flex; width: 55%; align-self: center; flex-direction: row; align-items: center; justify-content: center;" },
 			this._playButton,
 		),

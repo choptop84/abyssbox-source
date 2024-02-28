@@ -20,7 +20,7 @@ export class SongDurationPrompt implements Prompt {
 		private readonly _okayButton: HTMLButtonElement = button({class: "okayButton", style: "width:45%;"}, "Okay");
 		
 		public readonly container: HTMLDivElement = div({class: "prompt noSelection", style: "width: 250px;"},
-		h2("Song Length"),
+		div({class:"promptTitle"}, h2({class:"song-lengthExt",style:"text-align: inherit;"}, ""), h2({class:"song-lengthTitle"},"Song Length")),
 			div({style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;"},
 				div({style: "display: inline-block; text-align: right;"},
 				"Bars per song:",

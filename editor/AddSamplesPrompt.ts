@@ -74,7 +74,7 @@ export class AddSamplesPrompt {
     private readonly _closeInstructionsButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); width: 100%;" }, "Close instructions");
     private readonly _instructionsArea: HTMLDivElement = div(
         { style: "display: none; margin-top: 0; -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; cursor: text; overflow-y: auto;" },
-        h2("Add Samples"),
+        div({class:"promptTitle"}, h2({class:"samplesExt",style:"text-align: inherit;"}, ""), h2({class:"samplesTitle",style:"margin-bottom: 0.5em;"},"Add Samples")),
         div({ style: "margin-top: 0.5em; margin-bottom: 0.5em;" },
             "In UB and in turn AB, custom samples are loaded from arbitrary URLs.",
         ),
@@ -116,7 +116,7 @@ export class AddSamplesPrompt {
         div({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between; margin-top: 0.5em;" }, this._closeInstructionsButton)
     );
     private readonly _addSamplesArea: HTMLDivElement = div({ style: "overflow-y: auto;" },
-        h2("Add Samples"),
+    div({class:"promptTitle"}, h2({class:"samplesExt",style:"text-align: inherit;"}, ""), h2({class:"samplesTitle",style:"margin-bottom: 0.5em;"},"Add Samples")),
         div({ style: "display: flex; flex-direction: column; align-items: center; margin-bottom: 0.5em;" },
             this._description,
             div({ style: "width: 100%; max-height: 450px; overflow-y: scroll;" }, this._entryContainer),

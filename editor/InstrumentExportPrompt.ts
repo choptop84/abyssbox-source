@@ -15,7 +15,7 @@ export class InstrumentExportPrompt implements Prompt {
         private readonly _fileName: HTMLInputElement = input({ type: "text", style: "width: 10em;", value: this._channelName, maxlength: 250, "autofocus": "autofocus" });
 
 		public readonly container: HTMLDivElement = div({ class: "prompt noSelection", style: "width: 200px;" },
-		    h2("Export Instruments Options"),
+        div({class:"promptTitle"}, h2({class:"export-instrumentExt",style:"text-align: inherit;"}, ""), h2({class:"export-instrumentTitle"},"Export Instruments Options")),
             div({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-between;" },
             "File name:",
             this._fileName,

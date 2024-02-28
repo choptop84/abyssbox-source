@@ -35,7 +35,7 @@ export class CustomScalePrompt implements Prompt {
         this._cancelButton.addEventListener("click", this._close);
 
         this.container = div({ class: "prompt noSelection", style: "width: 250px;" },
-            h2("Custom Scale"),
+        div({class:"promptTitle"}, h2({class:"sclaeExt",style:"text-align: inherit;"}, ""), h2({class:"scaleTitle"},"Custom Scale")),
             div({ style: "display: flex; flex-direction: row; align-items: center; justify-content: flex-end;" },
                 scaleHolder,
             ),

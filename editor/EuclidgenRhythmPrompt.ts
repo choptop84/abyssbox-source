@@ -240,7 +240,7 @@ export class EuclideanRhythmPrompt implements Prompt {
 	private readonly _cancelButton: HTMLButtonElement = button({ class: "cancelButton" });
 
 	public readonly container: HTMLDivElement = div({ class: "prompt noSelection", style: "width: 600px;" },
-		h2("Generate Euclidean Rhythm"),
+	div({class:"promptTitle"}, h2({class:"gerExt",style:"text-align: inherit;"}, ""), h2({class:"gerTitle"},"Generate Euclidean Rhythm")),
 		div({ style: "display: flex; flex-direction: row; align-items: center;" },
 			this._sequenceButtonContainer
 		),

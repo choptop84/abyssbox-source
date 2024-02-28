@@ -32,7 +32,7 @@ export class CustomFilterPrompt implements Prompt {
 
 	private readonly _filterContainer: HTMLDivElement = div({ style: "width: 100%; display: flex; flex-direction: row; align-items: center; justify-content: center;" });
 
-	private readonly _editorTitle: HTMLDivElement = div({}, h2("Edit Filter"));
+	private readonly _editorTitle: HTMLDivElement = div({class:"promptTitle"}, h2({class:"edit-filterExt",style:"text-align: inherit;"}, ""), h2({class:"edit-filterTitle"},"Edit Filter"));
 
 	private readonly _filterCopyButton: HTMLButtonElement = button({ style: "width:86px; margin-right: 5px;", class: "copyButton" }, [
 		"Copy",

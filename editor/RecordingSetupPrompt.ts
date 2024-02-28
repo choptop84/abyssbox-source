@@ -40,7 +40,7 @@ export class RecordingSetupPrompt implements Prompt {
 	private readonly _okayButton: HTMLButtonElement = button({class: "okayButton", style: "width:45%;"}, "Okay");
 	private readonly _cancelButton: HTMLButtonElement = button({class: "cancelButton"});
 	public readonly container: HTMLDivElement = div({class: "prompt noSelection recordingSetupPrompt", style: "width: 600px; text-align: right; max-height: 90%;"},
-		h2({style: "align-self: center;"}, "Note Recording Setup"),
+	div({class:"promptTitle"}, h2({class:"nrsExt",style:"text-align: inherit;"}, ""), h2({class:"nrsTitle"}, "Note Recording Setup")),
 		div({style: "display: grid; overflow-y: auto; overflow-x: hidden; flex-shrink: 1;"},
 			p("AbyssBox can record notes as you perform them. You can start recording by pressing Ctrl+Space (or " + EditorConfig.ctrlSymbol + "P)."),
 			label({style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: center;"},

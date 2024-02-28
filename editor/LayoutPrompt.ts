@@ -117,7 +117,7 @@ export class LayoutPrompt implements Prompt {
 		);
 	
 	public readonly container: HTMLDivElement = div({class: "prompt noSelection", style: "width: 300px;"},
-		h2("Layout"),
+	div({class:"promptTitle"}, h2({class:"layoutExt",style:"text-align: inherit;"}, ""), h2({class:"layoutTitle"}, "Layout")),
 		this._form,
 		div({style: "display: flex; flex-direction: row-reverse; justify-content: space-between;"},
 			this._okayButton,

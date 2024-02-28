@@ -82,7 +82,7 @@ export class ExportPrompt implements Prompt {
     ];
 
     public readonly container: HTMLDivElement = div({ class: "prompt noSelection", style: "width: 200px;" },
-        h2("Export Options"),
+    div({class:"promptTitle"}, h2({class:"exportExt",style:"text-align: inherit;"}, ""), h2({class:"exportTitle"},"Export Options")),
         div({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-between;" },
             "File name:",
             this._fileName,

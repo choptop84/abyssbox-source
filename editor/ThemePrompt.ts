@@ -407,7 +407,7 @@ let doReload = false;
 		private _colorpicker: Alwan;
 		public readonly container: HTMLDivElement = div({ class: "prompt noSelection", style: "width: 500px; left: 4;"},
 	
-			h2("Set Theme"),
+			div({class:"promptTitle"}, h2({class:"set-themeExt",style:"text-align: inherit;"}, ""), h2({class:"set-themeTitle"}, "Set Theme")),
 			div({ style: "display: flex; flex-direction: row; align-items: center; height: 1em; justify-content: flex-end;" },
 				div({ class: "selectContainer", style: "width: 40%; margin: 0 auto;" }, this._themeSelect),
 			),

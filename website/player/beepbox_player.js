@@ -5134,7 +5134,6 @@ var beepbox = (function (exports) {
 
 			--note-flash: #ffffff77;
 			--note-flash-secondary: #ffffff66;
-
 				}
 				
 				@font-face {
@@ -5157,7 +5156,156 @@ var beepbox = (function (exports) {
 					font-family: 'tahoma' !important;
 				}
 
-			
+				.beepboxEditor .promptContainer {
+				}
+
+				div.prompt.noSelection {
+					margin: auto;
+					text-align: center;
+					background: var(--editor-background);
+					border-radius: 15px;
+					border: 0px solid var(--ui-widget-background) !important;
+					padding-left: 20px !important;
+					box-shadow: 0px 0px 0px 0px rgba(0,0,0,0) !important;
+					padding-top: 6px !important;
+					padding-right: 20px !important;
+					padding-bottom: 20px !important;
+					border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/xpborder.png") !important;
+					border-image-slice: 34 !important;
+					border-image-width: 50px !important;
+					border-width: unset !important;
+
+					image-rendering: -moz-crisp-edges !important;         /* Firefox */
+					image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+					image-rendering: -o-crisp-edges !important;            /* Opera */
+					image-rendering: pixelated !important;                 /* Future browsers */
+					image-rendering: optimizeSpeed !important;             /* IE */
+				}
+
+				div.prompt.noSelection button.cancelButton {
+					opacity: 0;
+				}
+
+				div.promptTitle {
+					text-align: left !important;
+					color: white !important;
+				}
+				.set-themeExt::after {
+					content: "setTheme.exe";
+				}
+				.set-themeTitle {
+					display: none;
+				}
+				.layoutExt::before {
+					content: "layout.exe";
+				}
+				.layoutTitle {
+					display: none;
+				}
+				.channelExt::after {
+					content: "channelSettings.exe";
+				}
+				.channelTitle {
+					display: none;
+				}
+				.limiterExt::after {
+					content: "limiter.exe";
+				}
+				.limiterTitle {
+					display: none;
+				}
+
+				.bpmTitle {
+					display: none;
+				}
+				.bpmExt::after {
+					content: "bpb.exe";
+				}
+
+				.gerTitle {
+					display: none;
+				}
+				.gerExt::after {
+					content: "euclidianRhythm.exe";
+				}
+
+				.samplesTitle {
+					display: none;
+				}
+				.samplesExt::after {
+					content: "sampler.exe";
+					margin-bottom: 0.5em;
+
+				}
+				.samplesExt {
+					padding-bottom: 8px;
+				}
+
+				.importTitle {
+					display: none;
+				}
+				.importExt::after {
+					content: "import.exe";
+				}
+
+				.exportTitle {
+					display: none;
+				}
+				.exportExt::after {
+					content: "export.exe";
+				}
+
+				.import-instrumentTitle {
+					display: none;
+				}
+				.import-instrumentExt::after {
+					content: "importInstrument.exe";
+				}
+
+				.export-instrumentTitle {
+					display: none;
+				}
+				.export-instrumentExt::after {
+					content: "exportInstrument.exe";
+				}
+
+				.song-lengthTitle {
+					display: none;
+				}
+				.song-lengthExt::after {
+					content: "songExtender.exe";
+				}
+
+				.mnsTitle {
+					display: none;
+				}
+				.mnsExt::after {
+					content: "moveNotesSideways.exe";
+				}
+
+				.nrsTitle {
+					display: none;
+				}
+				.nrsExt::after {
+					content: "setupMidiKeyboard.exe";
+				}
+
+				.beepboxEditor .promptContainer::before {
+					background: #fff0;
+				}
+
+				.overlay {
+					background-image: url("https://choptop84.github.io/choptop84s-image-repository/xptaskbar.png");
+					background-repeat: no-repeat;
+					background-size: contain;
+					background-position-y: bottom;
+					image-rendering: -moz-crisp-edges !important;         /* Firefox */
+					image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+					image-rendering: -o-crisp-edges !important;            /* Opera */
+					image-rendering: pixelated !important;                 /* Future browsers */
+					image-rendering: optimizeSpeed !important;             /* IE */
+				}
+
 		* {
 		cursor: url("https://choptop84.github.io/abyssbox-app/xpcursor.png"), auto !important;
 		--play-symbol:url("https://choptop84.github.io/abyssbox-app/xpPlay.png");
@@ -5497,7 +5645,6 @@ var beepbox = (function (exports) {
 					image-rendering: pixelated !important;                 /* Future browsers */
 					image-rendering: optimizeSpeed !important;             /* IE */
 				}
-
 
 			`,
         "Terminal 2.0 (AB)": `
@@ -6761,7 +6908,7 @@ var beepbox = (function (exports) {
 					select.trackSelectBox {
 						border-image: none !important;
 					}
-					div.prompt.noSelection{
+					div.prompt.noSelection {
 						--editor-background: #002b03; 
 					}
 					/* div.channelBox {

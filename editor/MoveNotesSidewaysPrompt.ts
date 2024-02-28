@@ -19,7 +19,7 @@ export class MoveNotesSidewaysPrompt implements Prompt {
 		private readonly _okayButton: HTMLButtonElement = button({class: "okayButton", style: "width:45%;"}, "Okay");
 		
 		public readonly container: HTMLDivElement = div({class: "prompt noSelection", style: "width: 250px;"},
-		h2("Move Notes Sideways"),
+		div({class:"promptTitle"}, h2({class:"mnsExt",style:"text-align: inherit;"}, ""), h2({class:"mnsTitle"}, "Move Notes Sideways")),
 			div({style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;"},
 				div({style: "text-align: right;"},
 				"Beats to move:",

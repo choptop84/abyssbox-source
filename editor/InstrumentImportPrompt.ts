@@ -19,7 +19,7 @@ export class InstrumentImportPrompt implements Prompt {
 		private readonly _fileInput: HTMLInputElement = input({type: "file", accept: ".json,application/json"});
 
 		public readonly container: HTMLDivElement = div({ class: "prompt noSelection", style: "width: 300px;" },
-		    h2("Import Instrument(s)"),
+		div({class:"promptTitle"}, h2({class:"import-instrumentExt",style:"text-align: inherit;"}, ""), h2({class:"import-instrumentTitle"},"Import Instrument(s)")),
 			div({ style: "text-align: left;" },
 			"You must enable either ",
 			code("Simultaneous instruments per channel"),

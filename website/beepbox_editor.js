@@ -5482,7 +5482,6 @@ var beepbox = (function (exports) {
 
 			--note-flash: #ffffff77;
 			--note-flash-secondary: #ffffff66;
-
 				}
 				
 				@font-face {
@@ -5505,7 +5504,156 @@ var beepbox = (function (exports) {
 					font-family: 'tahoma' !important;
 				}
 
-			
+				.beepboxEditor .promptContainer {
+				}
+
+				div.prompt.noSelection {
+					margin: auto;
+					text-align: center;
+					background: var(--editor-background);
+					border-radius: 15px;
+					border: 0px solid var(--ui-widget-background) !important;
+					padding-left: 20px !important;
+					box-shadow: 0px 0px 0px 0px rgba(0,0,0,0) !important;
+					padding-top: 6px !important;
+					padding-right: 20px !important;
+					padding-bottom: 20px !important;
+					border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/xpborder.png") !important;
+					border-image-slice: 34 !important;
+					border-image-width: 50px !important;
+					border-width: unset !important;
+
+					image-rendering: -moz-crisp-edges !important;         /* Firefox */
+					image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+					image-rendering: -o-crisp-edges !important;            /* Opera */
+					image-rendering: pixelated !important;                 /* Future browsers */
+					image-rendering: optimizeSpeed !important;             /* IE */
+				}
+
+				div.prompt.noSelection button.cancelButton {
+					opacity: 0;
+				}
+
+				div.promptTitle {
+					text-align: left !important;
+					color: white !important;
+				}
+				.set-themeExt::after {
+					content: "setTheme.exe";
+				}
+				.set-themeTitle {
+					display: none;
+				}
+				.layoutExt::before {
+					content: "layout.exe";
+				}
+				.layoutTitle {
+					display: none;
+				}
+				.channelExt::after {
+					content: "channelSettings.exe";
+				}
+				.channelTitle {
+					display: none;
+				}
+				.limiterExt::after {
+					content: "limiter.exe";
+				}
+				.limiterTitle {
+					display: none;
+				}
+
+				.bpmTitle {
+					display: none;
+				}
+				.bpmExt::after {
+					content: "bpb.exe";
+				}
+
+				.gerTitle {
+					display: none;
+				}
+				.gerExt::after {
+					content: "euclidianRhythm.exe";
+				}
+
+				.samplesTitle {
+					display: none;
+				}
+				.samplesExt::after {
+					content: "sampler.exe";
+					margin-bottom: 0.5em;
+
+				}
+				.samplesExt {
+					padding-bottom: 8px;
+				}
+
+				.importTitle {
+					display: none;
+				}
+				.importExt::after {
+					content: "import.exe";
+				}
+
+				.exportTitle {
+					display: none;
+				}
+				.exportExt::after {
+					content: "export.exe";
+				}
+
+				.import-instrumentTitle {
+					display: none;
+				}
+				.import-instrumentExt::after {
+					content: "importInstrument.exe";
+				}
+
+				.export-instrumentTitle {
+					display: none;
+				}
+				.export-instrumentExt::after {
+					content: "exportInstrument.exe";
+				}
+
+				.song-lengthTitle {
+					display: none;
+				}
+				.song-lengthExt::after {
+					content: "songExtender.exe";
+				}
+
+				.mnsTitle {
+					display: none;
+				}
+				.mnsExt::after {
+					content: "moveNotesSideways.exe";
+				}
+
+				.nrsTitle {
+					display: none;
+				}
+				.nrsExt::after {
+					content: "setupMidiKeyboard.exe";
+				}
+
+				.beepboxEditor .promptContainer::before {
+					background: #fff0;
+				}
+
+				.overlay {
+					background-image: url("https://choptop84.github.io/choptop84s-image-repository/xptaskbar.png");
+					background-repeat: no-repeat;
+					background-size: contain;
+					background-position-y: bottom;
+					image-rendering: -moz-crisp-edges !important;         /* Firefox */
+					image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+					image-rendering: -o-crisp-edges !important;            /* Opera */
+					image-rendering: pixelated !important;                 /* Future browsers */
+					image-rendering: optimizeSpeed !important;             /* IE */
+				}
+
 		* {
 		cursor: url("https://choptop84.github.io/abyssbox-app/xpcursor.png"), auto !important;
 		--play-symbol:url("https://choptop84.github.io/abyssbox-app/xpPlay.png");
@@ -5845,7 +5993,6 @@ var beepbox = (function (exports) {
 					image-rendering: pixelated !important;                 /* Future browsers */
 					image-rendering: optimizeSpeed !important;             /* IE */
 				}
-
 
 			`,
         "Terminal 2.0 (AB)": `
@@ -7109,7 +7256,7 @@ var beepbox = (function (exports) {
 					select.trackSelectBox {
 						border-image: none !important;
 					}
-					div.prompt.noSelection{
+					div.prompt.noSelection {
 						--editor-background: #002b03; 
 					}
 					/* div.channelBox {
@@ -32330,7 +32477,7 @@ li.select2-results__option[role=group] > strong:hover {
             this._conversionStrategySelect = select$b({ style: "width: 100%;" }, option$b({ value: "splice" }, "Splice beats at end of bars."), option$b({ value: "stretch" }, "Stretch notes to fit in bars."), option$b({ value: "overflow" }, "Overflow notes across bars."));
             this._cancelButton = button$m({ class: "cancelButton" });
             this._okayButton = button$m({ class: "okayButton", style: "width:45%;" }, "Okay");
-            this.container = div$m({ class: "prompt noSelection", style: "width: 250px;" }, h2$l("Beats Per Bar"), div$m({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$m({ style: "text-align: right;" }, "Beats per bar:", br$4(), span$6({ style: "font-size: smaller; color: ${ColorConfig.secondaryText};" }, "(Multiples of 3 or 4 are recommended)")), this._beatsStepper), div$m({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$m({ class: "selectContainer", style: "width: 100%;" }, this._conversionStrategySelect)), div$m({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
+            this.container = div$m({ class: "prompt noSelection", style: "width: 250px;" }, div$m({ class: "promptTitle" }, h2$l({ class: "bpmExt", style: "text-align: inherit;" }, ""), h2$l({ class: "bpmTitle" }, "Beats Per Bar")), div$m({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$m({ style: "text-align: right;" }, "Beats per bar:", br$4(), span$6({ style: "font-size: smaller; color: ${ColorConfig.secondaryText};" }, "(Multiples of 3 or 4 are recommended)")), this._beatsStepper), div$m({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$m({ class: "selectContainer", style: "width: 100%;" }, this._conversionStrategySelect)), div$m({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
             this._close = () => {
                 this._doc.undo();
             };
@@ -32395,7 +32542,7 @@ li.select2-results__option[role=group] > strong:hover {
             this._patternInstrumentsBox = input$g({ style: "width: 3em; margin-left: 1em;", type: "checkbox" });
             this._cancelButton = button$l({ class: "cancelButton" });
             this._okayButton = button$l({ class: "okayButton", style: "width:45%;" }, "Okay");
-            this.container = div$l({ class: "prompt noSelection", style: "width: 250px; text-align: right;" }, h2$k("Channel Settings"), label$3({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Pitch channels:", this._pitchChannelStepper), label$3({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Drum channels:", this._drumChannelStepper), div$l({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Mod channels:", this._modChannelStepper), label$3({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Available patterns per channel:", this._patternsStepper), label$3({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Simultaneous instruments", br$3(), "per channel:", this._layeredInstrumentsBox), label$3({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Different instruments", br$3(), "per pattern:", this._patternInstrumentsBox), div$l({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
+            this.container = div$l({ class: "prompt noSelection", style: "width: 250px; text-align: right;" }, div$l({ class: "promptTitle" }, h2$k({ class: "channelExt", style: "text-align: inherit;" }, ""), h2$k({ class: "channelTitle" }, "Channel Settings")), label$3({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Pitch channels:", this._pitchChannelStepper), label$3({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Drum channels:", this._drumChannelStepper), div$l({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Mod channels:", this._modChannelStepper), label$3({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Available patterns per channel:", this._patternsStepper), label$3({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Simultaneous instruments", br$3(), "per channel:", this._layeredInstrumentsBox), label$3({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Different instruments", br$3(), "per pattern:", this._patternInstrumentsBox), div$l({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
             this._close = () => {
                 this._doc.undo();
             };
@@ -32666,7 +32813,7 @@ li.select2-results__option[role=group] > strong:hover {
             this._playButton = button$k({ style: "width: 55%;", type: "button" });
             this._cancelButton = button$k({ class: "cancelButton" });
             this._okayButton = button$k({ class: "okayButton", style: "width:45%;" }, "Okay");
-            this.container = div$k({ class: "prompt noSelection", style: "width: 600px;" }, h2$j("Edit Custom Chip Instrument"), div$k({ style: "display: flex; width: 55%; align-self: center; flex-direction: row; align-items: center; justify-content: center;" }, this._playButton), div$k({ style: "display: flex; flex-direction: row; align-items: center; justify-content: center;" }, this.customChipCanvas.container), div$k({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
+            this.container = div$k({ class: "prompt noSelection", style: "width: 600px;" }, div$k({ class: "promptTitle" }, h2$j({ class: "edit-custom-chipExt", style: "text-align: inherit;" }, ""), h2$j({ class: "edit-custom-chipTitle" }, "Edit Custom Chip Instrument")), div$k({ style: "display: flex; width: 55%; align-self: center; flex-direction: row; align-items: center; justify-content: center;" }, this._playButton), div$k({ style: "display: flex; flex-direction: row; align-items: center; justify-content: center;" }, this.customChipCanvas.container), div$k({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
             this._togglePlay = () => {
                 this._songEditor.togglePlay();
                 this.updatePlayButton();
@@ -33344,7 +33491,7 @@ li.select2-results__option[role=group] > strong:hover {
             this._cancelButton = button$j({ class: "cancelButton" });
             this._okayButton = button$j({ class: "okayButton", style: "width:45%;" }, "Okay");
             this._filterContainer = div$j({ style: "width: 100%; display: flex; flex-direction: row; align-items: center; justify-content: center;" });
-            this._editorTitle = div$j({}, h2$i("Edit Filter"));
+            this._editorTitle = div$j({ class: "promptTitle" }, h2$i({ class: "edit-filterExt", style: "text-align: inherit;" }, ""), h2$i({ class: "edit-filterTitle" }, "Edit Filter"));
             this._filterCopyButton = button$j({ style: "width:86px; margin-right: 5px;", class: "copyButton" }, [
                 "Copy",
                 SVG.svg({ style: "flex-shrink: 0; position: absolute; left: 0; top: 50%; margin-top: -1em; pointer-events: none;", width: "2em", height: "2em", viewBox: "-5 -21 26 26" }, [
@@ -33509,7 +33656,7 @@ li.select2-results__option[role=group] > strong:hover {
             this._exportMultipleBox = input$f({ style: "width: 3em; margin-left: 1em;", type: "checkbox" });
             this._channelName = this._doc.song.channels[this._doc.channel].name == "" ? "Beepbox-Instrument" : this._doc.song.channels[this._doc.channel].name;
             this._fileName = input$f({ type: "text", style: "width: 10em;", value: this._channelName, maxlength: 250, "autofocus": "autofocus" });
-            this.container = div$i({ class: "prompt noSelection", style: "width: 200px;" }, h2$h("Export Instruments Options"), div$i({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-between;" }, "File name:", this._fileName), label$2({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Export all instruments", br$2(), "in channel:", this._exportMultipleBox), div$i({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._exportButton), this._cancelButton);
+            this.container = div$i({ class: "prompt noSelection", style: "width: 200px;" }, div$i({ class: "promptTitle" }, h2$h({ class: "export-instrumentExt", style: "text-align: inherit;" }, ""), h2$h({ class: "export-instrumentTitle" }, "Export Instruments Options")), div$i({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-between;" }, "File name:", this._fileName), label$2({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Export all instruments", br$2(), "in channel:", this._exportMultipleBox), div$i({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._exportButton), this._cancelButton);
             this._close = () => {
                 this._doc.undo();
             };
@@ -33583,7 +33730,7 @@ li.select2-results__option[role=group] > strong:hover {
             this._cancelButton = button$h({ class: "cancelButton" });
             this._importStrategySelect = select$a({ style: "width: 100%;" }, option$a({ value: "append" }, "Append instruments to the end of the list."), option$a({ value: "replace" }, "Replace only the selected instrument."), option$a({ value: "all" }, "Replace all instruments in the channel."));
             this._fileInput = input$e({ type: "file", accept: ".json,application/json" });
-            this.container = div$h({ class: "prompt noSelection", style: "width: 300px;" }, h2$g("Import Instrument(s)"), div$h({ style: "text-align: left;" }, "You must enable either ", code$1("Simultaneous instruments per channel"), " or ", code$1("Different instruments per pattern"), " to change the import strategy."), div$h({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$h({ class: "selectContainer", style: "width: 100%;" }, this._importStrategySelect)), this._fileInput, this._cancelButton);
+            this.container = div$h({ class: "prompt noSelection", style: "width: 300px;" }, div$h({ class: "promptTitle" }, h2$g({ class: "import-instrumentExt", style: "text-align: inherit;" }, ""), h2$g({ class: "import-instrumentTitle" }, "Import Instrument(s)")), div$h({ style: "text-align: left;" }, "You must enable either ", code$1("Simultaneous instruments per channel"), " or ", code$1("Different instruments per pattern"), " to change the import strategy."), div$h({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$h({ class: "selectContainer", style: "width: 100%;" }, this._importStrategySelect)), this._fileInput, this._cancelButton);
             this._whenFileSelected = () => {
                 const file = this._fileInput.files[0];
                 if (!file)
@@ -33853,7 +34000,7 @@ li.select2-results__option[role=group] > strong:hover {
             this._invertBox = input$d({ type: "checkbox", style: "width: 1em; padding: 0; margin-left: 1em;" });
             this._okayButton = button$g({ class: "okayButton", style: "width: 45%;" }, "Okay");
             this._cancelButton = button$g({ class: "cancelButton" });
-            this.container = div$g({ class: "prompt noSelection", style: "width: 600px;" }, h2$f("Generate Euclidean Rhythm"), div$g({ style: "display: flex; flex-direction: row; align-items: center;" }, this._sequenceButtonContainer), div$g({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-between;" }, div$g({ style: "flex-grow: 0; flex-shrink: 0;" }, this._barPreviewGoToFirstButton, this._barPreviewGoBackButton), this._barPreviewLabel, div$g({ style: "flex-grow: 0; flex-shrink: 0;" }, this._barPreviewGoForwardButton, this._barPreviewGoToLastButton)), div$g({ style: "display: flex; flex-direction: row; align-items: center; justify-content: center;" }, SVG.svg({ "pointer-events": "none", style: "touch-action: none; overflow: hidden;", width: "100%", height: "20px", viewBox: `0 0 ${this._barPreviewWidth} ${this._barPreviewHeight}`, preserveAspectRatio: "none" }, this._barPreviewBackground, this._barPreviewSteps)), div$g({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-evenly;" }, div$g({ style: "max-width: 150px; height: 100%;" }, SVG.svg({ "pointer-events": "none", width: "100%", height: "100%", style: "touch-action: none; overflow: hidden; margin-right: 1.5em; max-width: 150px; height: 100%;", viewBox: `0 0 ${this._clockWidth} ${this._clockHeight}`, preserveAspectRatio: "none" }, this._clockWire, this._clockPoints)), div$g({ style: "display: flex; height: 100%;" }, div$g({ style: "flex-grow: 1; " }, div$g({ style: "display: flex; flex-direction: row; align-items: center; height: 3em; justify-content: flex-end;" }, div$g({ style: `text-align: right; flex-grow: 1; color: ${ColorConfig.primaryText};` }, "Steps"), this._stepsStepper), div$g({ style: "display: flex; flex-direction: row; align-items: center; height: 3em; justify-content: flex-end; margin-top: 0.5em;" }, div$g({ style: `text-align: right; flex-grow: 1; color: ${ColorConfig.primaryText};` }, "Pulses"), this._pulsesStepper), div$g({ style: "display: flex; flex-direction: row; align-items: center; height: 3em; justify-content: flex-end; margin-top: 0.5em;" }, div$g({ style: `text-align: right; flex-grow: 1; color: ${ColorConfig.primaryText};` }, "Rotation"), this._rotationStepper)), div$g({ style: "flex-grow: 1; margin-left: 1em;" }, div$g({ style: "display: flex; flex-direction: row; align-items: center; height: 3em; justify-content: flex-end; margin-bottom: 1em;" }, div$g({ style: `text-align: right; flex-grow: 1; color: ${ColorConfig.primaryText};` }, "Size"), div$g({ style: "display: flex; flex-direction: column;" }, this._stepSizeNumeratorStepper, this._stepSizeDenominatorStepper)), div$g({ style: "display: flex; flex-direction: row; align-items: center; height: 3em; justify-content: flex-end; margin-top: 0.5em;" }, div$g({ style: `text-align: right; flex-grow: 1; color: ${ColorConfig.primaryText};` }, "Channel"), this._channelStepper), div$g({ style: "display: flex; flex-direction: row; align-items: center; height: 3em; justify-content: flex-end; margin-top: 0.5em;" }, div$g({ style: `text-align: right; flex-grow: 1; color: ${ColorConfig.primaryText};` }, "Pitch"), this._pitchStepper)))), div$g({ style: "display: flex; flex-direction: row; align-items: center; justify-content: flex-end;" }, div$g({ style: `text-align: right; color: ${ColorConfig.primaryText};` }, "Generate fading notes"), this._generateFadingNotesBox, div$g({ style: `text-align: right; color: ${ColorConfig.primaryText}; margin-left: 1em;` }, "Invert"), this._invertBox), div$g({ style: "display: flex; flex-direction: row; align-items: center; justify-content: flex-end;" }, div$g({ style: `text-align: right; color: ${ColorConfig.primaryText};` }, "Length (in bars)"), this._barAmountStepper, this._extendUntilLoopButton), div$g({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
+            this.container = div$g({ class: "prompt noSelection", style: "width: 600px;" }, div$g({ class: "promptTitle" }, h2$f({ class: "gerExt", style: "text-align: inherit;" }, ""), h2$f({ class: "gerTitle" }, "Generate Euclidean Rhythm")), div$g({ style: "display: flex; flex-direction: row; align-items: center;" }, this._sequenceButtonContainer), div$g({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-between;" }, div$g({ style: "flex-grow: 0; flex-shrink: 0;" }, this._barPreviewGoToFirstButton, this._barPreviewGoBackButton), this._barPreviewLabel, div$g({ style: "flex-grow: 0; flex-shrink: 0;" }, this._barPreviewGoForwardButton, this._barPreviewGoToLastButton)), div$g({ style: "display: flex; flex-direction: row; align-items: center; justify-content: center;" }, SVG.svg({ "pointer-events": "none", style: "touch-action: none; overflow: hidden;", width: "100%", height: "20px", viewBox: `0 0 ${this._barPreviewWidth} ${this._barPreviewHeight}`, preserveAspectRatio: "none" }, this._barPreviewBackground, this._barPreviewSteps)), div$g({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-evenly;" }, div$g({ style: "max-width: 150px; height: 100%;" }, SVG.svg({ "pointer-events": "none", width: "100%", height: "100%", style: "touch-action: none; overflow: hidden; margin-right: 1.5em; max-width: 150px; height: 100%;", viewBox: `0 0 ${this._clockWidth} ${this._clockHeight}`, preserveAspectRatio: "none" }, this._clockWire, this._clockPoints)), div$g({ style: "display: flex; height: 100%;" }, div$g({ style: "flex-grow: 1; " }, div$g({ style: "display: flex; flex-direction: row; align-items: center; height: 3em; justify-content: flex-end;" }, div$g({ style: `text-align: right; flex-grow: 1; color: ${ColorConfig.primaryText};` }, "Steps"), this._stepsStepper), div$g({ style: "display: flex; flex-direction: row; align-items: center; height: 3em; justify-content: flex-end; margin-top: 0.5em;" }, div$g({ style: `text-align: right; flex-grow: 1; color: ${ColorConfig.primaryText};` }, "Pulses"), this._pulsesStepper), div$g({ style: "display: flex; flex-direction: row; align-items: center; height: 3em; justify-content: flex-end; margin-top: 0.5em;" }, div$g({ style: `text-align: right; flex-grow: 1; color: ${ColorConfig.primaryText};` }, "Rotation"), this._rotationStepper)), div$g({ style: "flex-grow: 1; margin-left: 1em;" }, div$g({ style: "display: flex; flex-direction: row; align-items: center; height: 3em; justify-content: flex-end; margin-bottom: 1em;" }, div$g({ style: `text-align: right; flex-grow: 1; color: ${ColorConfig.primaryText};` }, "Size"), div$g({ style: "display: flex; flex-direction: column;" }, this._stepSizeNumeratorStepper, this._stepSizeDenominatorStepper)), div$g({ style: "display: flex; flex-direction: row; align-items: center; height: 3em; justify-content: flex-end; margin-top: 0.5em;" }, div$g({ style: `text-align: right; flex-grow: 1; color: ${ColorConfig.primaryText};` }, "Channel"), this._channelStepper), div$g({ style: "display: flex; flex-direction: row; align-items: center; height: 3em; justify-content: flex-end; margin-top: 0.5em;" }, div$g({ style: `text-align: right; flex-grow: 1; color: ${ColorConfig.primaryText};` }, "Pitch"), this._pitchStepper)))), div$g({ style: "display: flex; flex-direction: row; align-items: center; justify-content: flex-end;" }, div$g({ style: `text-align: right; color: ${ColorConfig.primaryText};` }, "Generate fading notes"), this._generateFadingNotesBox, div$g({ style: `text-align: right; color: ${ColorConfig.primaryText}; margin-left: 1em;` }, "Invert"), this._invertBox), div$g({ style: "display: flex; flex-direction: row; align-items: center; justify-content: flex-end;" }, div$g({ style: `text-align: right; color: ${ColorConfig.primaryText};` }, "Length (in bars)"), this._barAmountStepper, this._extendUntilLoopButton), div$g({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
             this.cleanUp = () => {
                 this._okayButton.removeEventListener("click", this._saveChanges);
                 this._cancelButton.removeEventListener("click", this._close);
@@ -34968,7 +35115,7 @@ li.select2-results__option[role=group] > strong:hover {
             this._outputProgressBar = div$f({ style: `width: 0%; background: ${ColorConfig.loopAccent}; height: 100%; position: absolute; z-index: 2;` });
             this._outputProgressLabel = div$f({ style: `position: relative; top: -1px; z-index: 3;` }, "0%");
             this._outputProgressContainer = div$f({ style: `height: 12px; background: ${ColorConfig.uiWidgetBackground}; display: block; position: relative; z-index: 1;` }, this._outputProgressBar, this._outputProgressLabel);
-            this.container = div$f({ class: "prompt noSelection", style: "width: 200px;" }, h2$e("Export Options"), div$f({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-between;" }, "File name:", this._fileName), div$f({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-between;" }, "Length:", this._computedSamplesLabel), div$f({ style: "display: table; width: 100%;" }, div$f({ style: "display: table-row;" }, div$f({ style: "display: table-cell;" }, "Intro:"), div$f({ style: "display: table-cell;" }, "Loop Count:"), div$f({ style: "display: table-cell;" }, "Outro:")), div$f({ style: "display: table-row;" }, div$f({ style: "display: table-cell; vertical-align: middle;" }, this._enableIntro), div$f({ style: "display: table-cell; vertical-align: middle;" }, this._loopDropDown), div$f({ style: "display: table-cell; vertical-align: middle;" }, this._enableOutro))), div$f({ class: "selectContainer", style: "width: 100%;" }, this._formatSelect), div$f({ style: "text-align: left;" }, "Exporting can be slow. Reloading the page or clicking the X will cancel it. Please be patient."), this._outputProgressContainer, div$f({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._exportButton), this._cancelButton);
+            this.container = div$f({ class: "prompt noSelection", style: "width: 200px;" }, div$f({ class: "promptTitle" }, h2$e({ class: "exportExt", style: "text-align: inherit;" }, ""), h2$e({ class: "exportTitle" }, "Export Options")), div$f({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-between;" }, "File name:", this._fileName), div$f({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-between;" }, "Length:", this._computedSamplesLabel), div$f({ style: "display: table; width: 100%;" }, div$f({ style: "display: table-row;" }, div$f({ style: "display: table-cell;" }, "Intro:"), div$f({ style: "display: table-cell;" }, "Loop Count:"), div$f({ style: "display: table-cell;" }, "Outro:")), div$f({ style: "display: table-row;" }, div$f({ style: "display: table-cell; vertical-align: middle;" }, this._enableIntro), div$f({ style: "display: table-cell; vertical-align: middle;" }, this._loopDropDown), div$f({ style: "display: table-cell; vertical-align: middle;" }, this._enableOutro))), div$f({ class: "selectContainer", style: "width: 100%;" }, this._formatSelect), div$f({ style: "text-align: left;" }, "Exporting can be slow. Reloading the page or clicking the X will cancel it. Please be patient."), this._outputProgressContainer, div$f({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._exportButton), this._cancelButton);
             this._close = () => {
                 if (this.synth != null)
                     this.synth.renderingSong = false;
@@ -36619,7 +36766,7 @@ You should be redirected to the song at:<br /><br />
             this._doc = _doc;
             this._fileInput = input$b({ type: "file", accept: ".json,application/json,.mid,.midi,audio/midi,audio/x-midi" });
             this._cancelButton = button$e({ class: "cancelButton" });
-            this.container = div$e({ class: "prompt noSelection", style: "width: 300px;" }, h2$d("Import"), p$6({ style: "text-align: left; margin: 0.5em 0;" }, "BeepBox songs can be exported and re-imported as .json files. You could also use other means to make .json files for BeepBox as long as they follow the same structure."), p$6({ style: "text-align: left; margin: 0.5em 0;" }, "BeepBox can also (crudely) import .mid files. There are many tools available for creating .mid files. Shorter and simpler songs are more likely to work well."), this._fileInput, this._cancelButton);
+            this.container = div$e({ class: "prompt noSelection", style: "width: 300px;" }, div$e({ class: "promptTitle" }, h2$d({ class: "importExt", style: "text-align: inherit;" }, ""), h2$d({ class: "importTitle" }, "Import")), p$6({ style: "text-align: left; margin: 0.5em 0;" }, "BeepBox songs can be exported and re-imported as .json files. You could also use other means to make .json files for BeepBox as long as they follow the same structure."), p$6({ style: "text-align: left; margin: 0.5em 0;" }, "BeepBox can also (crudely) import .mid files. There are many tools available for creating .mid files. Shorter and simpler songs are more likely to work well."), this._fileInput, this._cancelButton);
             this._close = () => {
                 this._doc.undo();
             };
@@ -37577,7 +37724,7 @@ You should be redirected to the song at:<br /><br />
 						<rect x="22" y="13" width="2" height="5" fill="currentColor"></rect>
 					</svg>
 				`), div$d("theatre (AB)")));
-            this.container = div$d({ class: "prompt noSelection", style: "width: 300px;" }, h2$c("Layout"), this._form, div$d({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
+            this.container = div$d({ class: "prompt noSelection", style: "width: 300px;" }, div$d({ class: "promptTitle" }, h2$c({ class: "layoutExt", style: "text-align: inherit;" }, ""), h2$c({ class: "layoutTitle" }, "Layout")), this._form, div$d({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
             this._close = () => {
                 this._doc.undo();
             };
@@ -38014,7 +38161,7 @@ You should be redirected to the song at:<br /><br />
             this._cancelButton = button$c({ class: "cancelButton" });
             this._okayButton = button$c({ class: "okayButton", style: "width:45%;" }, "Okay");
             this._resetButton = button$c({ style: "width:45%;" }, "Reset");
-            this.container = div$c({ class: "prompt noSelection", style: "width: 250px;" }, h2$b("Limiter Options"), div$c({ style: "display: flex; width: 55%; align-self: center; flex-direction: row; align-items: center; justify-content: center;" }, this._playButton), div$c({ style: "display: flex; flex-direction: row; align-items: center; justify-content: center;" }, this.limiterCanvas.container), div$c({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; margin-top: 1.5em; justify-content: flex-end;" }, div$c({ style: `text-align: right; width: 25%; margin-right: 4.5%; color: ${ColorConfig.primaryText};` }, ""), div$c({ style: `text-align: center; width: 33%; margin-right: 4.5%; color: ${ColorConfig.textSelection};` }, "Boost"), div$c({ style: `text-align: center; width: 33%; margin-right: 0%; color: ${ColorConfig.linkAccent};` }, "Cutoff")), div$c({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; margin-top: 0.5em; justify-content: flex-end;" }, div$c({ style: `text-align: right; width: 25%; margin-right: 4.5%; color: ${ColorConfig.primaryText};` }, "Threshold:"), div$c({ style: `width: 33%; margin-right: 4.5%;` }, this.compressionThresholdSlider), div$c({ style: `width: 33%; margin-right: 0%;` }, this.limitThresholdSlider)), div$c({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$c({ style: `text-align: right; width: 25%; margin-right: 4.5%; color: ${ColorConfig.primaryText};` }, "Ratio:"), div$c({ style: `width: 33%; margin-right: 4.5%;` }, this.compressionRatioSlider), div$c({ style: `width: 33%; margin-right: 0%;` }, this.limitRatioSlider)), div$c({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$c({ style: `text-align: right; width: 8.5em; margin-right: 1em; color: ${ColorConfig.primaryText};` }, "Limit Decay:"), this.limitDecaySlider), div$c({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$c({ style: `text-align: right; width: 8.5em; margin-right: 1em; color: ${ColorConfig.primaryText};` }, "Limit Rise:"), this.limitRiseSlider), div$c({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$c({ style: `text-align: right; width: 8.5em; margin-right: 1em; color: ${ColorConfig.primaryText};` }, "Master Gain:"), this.masterGainSlider), div$c({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton, this._resetButton), this._cancelButton);
+            this.container = div$c({ class: "prompt noSelection", style: "width: 250px;" }, div$c({ class: "promptTitle" }, h2$b({ class: "limiterExt", style: "text-align: inherit;" }, ""), h2$b({ class: "limiterTitle" }, "Limiter Options")), div$c({ style: "display: flex; width: 55%; align-self: center; flex-direction: row; align-items: center; justify-content: center;" }, this._playButton), div$c({ style: "display: flex; flex-direction: row; align-items: center; justify-content: center;" }, this.limiterCanvas.container), div$c({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; margin-top: 1.5em; justify-content: flex-end;" }, div$c({ style: `text-align: right; width: 25%; margin-right: 4.5%; color: ${ColorConfig.primaryText};` }, ""), div$c({ style: `text-align: center; width: 33%; margin-right: 4.5%; color: ${ColorConfig.textSelection};` }, "Boost"), div$c({ style: `text-align: center; width: 33%; margin-right: 0%; color: ${ColorConfig.linkAccent};` }, "Cutoff")), div$c({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; margin-top: 0.5em; justify-content: flex-end;" }, div$c({ style: `text-align: right; width: 25%; margin-right: 4.5%; color: ${ColorConfig.primaryText};` }, "Threshold:"), div$c({ style: `width: 33%; margin-right: 4.5%;` }, this.compressionThresholdSlider), div$c({ style: `width: 33%; margin-right: 0%;` }, this.limitThresholdSlider)), div$c({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$c({ style: `text-align: right; width: 25%; margin-right: 4.5%; color: ${ColorConfig.primaryText};` }, "Ratio:"), div$c({ style: `width: 33%; margin-right: 4.5%;` }, this.compressionRatioSlider), div$c({ style: `width: 33%; margin-right: 0%;` }, this.limitRatioSlider)), div$c({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$c({ style: `text-align: right; width: 8.5em; margin-right: 1em; color: ${ColorConfig.primaryText};` }, "Limit Decay:"), this.limitDecaySlider), div$c({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$c({ style: `text-align: right; width: 8.5em; margin-right: 1em; color: ${ColorConfig.primaryText};` }, "Limit Rise:"), this.limitRiseSlider), div$c({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$c({ style: `text-align: right; width: 8.5em; margin-right: 1em; color: ${ColorConfig.primaryText};` }, "Master Gain:"), this.masterGainSlider), div$c({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton, this._resetButton), this._cancelButton);
             this._volumeUpdate = () => {
                 this.inVolumeHistoricTimer--;
                 if (this.inVolumeHistoricTimer <= 0) {
@@ -38195,7 +38342,7 @@ You should be redirected to the song at:<br /><br />
             }
             this._okayButton.addEventListener("click", this._saveChanges);
             this._cancelButton.addEventListener("click", this._close);
-            this.container = div$b({ class: "prompt noSelection", style: "width: 250px;" }, h2$a("Custom Scale"), div$b({ style: "display: flex; flex-direction: row; align-items: center; justify-content: flex-end;" }, scaleHolder), div$b({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
+            this.container = div$b({ class: "prompt noSelection", style: "width: 250px;" }, div$b({ class: "promptTitle" }, h2$a({ class: "sclaeExt", style: "text-align: inherit;" }, ""), h2$a({ class: "scaleTitle" }, "Custom Scale")), div$b({ style: "display: flex; flex-direction: row; align-items: center; justify-content: flex-end;" }, scaleHolder), div$b({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
             this.container.addEventListener("keydown", this.whenKeyPressed);
         }
     }
@@ -38484,7 +38631,7 @@ You should be redirected to the song at:<br /><br />
             this._conversionStrategySelect = select$8({ style: "width: 100%;" }, option$8({ value: "overflow" }, "Overflow notes across bars."), option$8({ value: "wrapAround" }, "Wrap notes around within bars."));
             this._cancelButton = button$a({ class: "cancelButton" });
             this._okayButton = button$a({ class: "okayButton", style: "width:45%;" }, "Okay");
-            this.container = div$a({ class: "prompt noSelection", style: "width: 250px;" }, h2$9("Move Notes Sideways"), div$a({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$a({ style: "text-align: right;" }, "Beats to move:", br$1(), span$4({ style: `font-size: smaller; color: ${ColorConfig.secondaryText};` }, "(Negative is left, positive is right)")), this._beatsStepper), div$a({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$a({ class: "selectContainer", style: "width: 100%;" }, this._conversionStrategySelect)), div$a({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
+            this.container = div$a({ class: "prompt noSelection", style: "width: 250px;" }, div$a({ class: "promptTitle" }, h2$9({ class: "mnsExt", style: "text-align: inherit;" }, ""), h2$9({ class: "mnsTitle" }, "Move Notes Sideways")), div$a({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$a({ style: "text-align: right;" }, "Beats to move:", br$1(), span$4({ style: `font-size: smaller; color: ${ColorConfig.secondaryText};` }, "(Negative is left, positive is right)")), this._beatsStepper), div$a({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$a({ class: "selectContainer", style: "width: 100%;" }, this._conversionStrategySelect)), div$a({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
             this._close = () => {
                 this._doc.undo();
             };
@@ -42194,7 +42341,7 @@ You should be redirected to the song at:<br /><br />
             this._positionSelect = select$7({ style: "width: 100%;" }, option$7({ value: "end" }, "Apply change at end of song."), option$7({ value: "beginning" }, "Apply change at beginning of song."));
             this._cancelButton = button$9({ class: "cancelButton" });
             this._okayButton = button$9({ class: "okayButton", style: "width:45%;" }, "Okay");
-            this.container = div$9({ class: "prompt noSelection", style: "width: 250px;" }, h2$8("Song Length"), div$9({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$9({ style: "display: inline-block; text-align: right;" }, "Bars per song:", br(), span$3({ style: `font-size: smaller; color: ${ColorConfig.secondaryText};` }, "(Multiples of 4 are recommended)")), this._barsStepper), div$9({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$9({ class: "selectContainer", style: "width: 100%;" }, this._positionSelect)), div$9({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
+            this.container = div$9({ class: "prompt noSelection", style: "width: 250px;" }, div$9({ class: "promptTitle" }, h2$8({ class: "song-lengthExt", style: "text-align: inherit;" }, ""), h2$8({ class: "song-lengthTitle" }, "Song Length")), div$9({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$9({ style: "display: inline-block; text-align: right;" }, "Bars per song:", br(), span$3({ style: `font-size: smaller; color: ${ColorConfig.secondaryText};` }, "(Multiples of 4 are recommended)")), this._barsStepper), div$9({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$9({ class: "selectContainer", style: "width: 100%;" }, this._positionSelect)), div$9({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
             this._close = () => {
                 this._doc.undo();
             };
@@ -42471,7 +42618,7 @@ You should be redirected to the song at:<br /><br />
             this._metronomeWhileRecording = input$5({ style: "width: 2em; margin-left: 1em;", type: "checkbox" });
             this._okayButton = button$6({ class: "okayButton", style: "width:45%;" }, "Okay");
             this._cancelButton = button$6({ class: "cancelButton" });
-            this.container = div$6({ class: "prompt noSelection recordingSetupPrompt", style: "width: 600px; text-align: right; max-height: 90%;" }, h2$5({ style: "align-self: center;" }, "Note Recording Setup"), div$6({ style: "display: grid; overflow-y: auto; overflow-x: hidden; flex-shrink: 1;" }, p$3("AbyssBox can record notes as you perform them. You can start recording by pressing Ctrl+Space (or " + EditorConfig.ctrlSymbol + "P)."), label({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: center;" }, "Add ● record button next to ▶ play button:", this._showRecordButton), label({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: center;" }, "Snap recorded notes to the song's rhythm:", this._snapRecordedNotesToRhythm), label({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: center;" }, "Ignore notes not in the song's scale:", this._ignorePerformedNotesNotInScale), p$3("While recording, you can perform notes on your keyboard!"), label({ style: "display: flex; flex-direction: row; align-items: center; margin-top: 0.5em; margin-bottom: 0.5em; height: 2em; justify-content: center;" }, "Keyboard layout:", div$6({ class: "selectContainer", style: "width: 65%; margin-left: 1em;" }, this._keyboardLayout)), this._keyboardLayoutPreview, p$3("When not recording, you can use the computer keyboard either for shortcuts (like C and V for copy and paste) or for performing notes, depending on this mode:"), label({ style: "display: flex; margin-top: 0.5em; margin-bottom: 0.5em; flex-direction: row; align-items: center; height: 2em; justify-content: center;" }, div$6({ class: "selectContainer", style: "width: 50%;" }, this._keyboardMode)), p$3("Performing music takes practice! Try slowing the tempo and using this metronome to help you keep a rhythm."), label({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: center;" }, "Hear metronome while recording:", this._metronomeWhileRecording), label({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: center;" }, "Count-in 1 bar of metronome before recording:", this._metronomeCountIn), p$3("If you have a ", a$2({ href: "https://caniuse.com/midi", target: "_blank" }, "compatible browser"), " on a device connected to a MIDI keyboard, you can use it to perform notes in AbyssBox! (Or you could buy ", a$2({ href: "https://imitone.com/", target: "_blank" }, "Imitone"), " or ", a$2({ href: "https://vochlea.com/", target: "_blank" }, "Dubler"), " to hum notes into a microphone while wearing headphones!)"), label({ style: "display: flex; flex-direction: row; align-items: center; margin-top: 0.5em; height: 2em; justify-content: center;" }, "Enable MIDI performance:", this._enableMidi), p$3("The range of pitches available to play via your computer keyboard is affected by the octave scrollbar of the currently selected channel."), p$3("If you set the channel offset below to 'before' or 'after', notes below the middle octave in the view will be 'bass' notes, and placed in the channel before or after the viewed one. Using this, you can play bass and lead at the same time!"), label({ style: "display: flex; flex-direction: row; align-items: center; margin-top: 0.5em; margin-bottom: 0.5em; height: 2em; justify-content: center;" }, "Bass Offset:", div$6({ class: "selectContainer", style: "width: 50%; margin-left: 1em;" }, this._bassOffset)), p$3("Once you enable the setting, the keyboard layout above will darken to denote the new bass notes. The notes will be recorded with independent timing and this works with MIDI devices, too. Be aware that the octave offset of both used channels will impact how high/low the bass/lead are relative to one another."), p$3("Recorded notes often overlap such that one note ends after the next note already started. In UltraBox, these notes get split into multiple notes which may sound different when re-played than they did when you were recording. To fix the sound, you can either manually clean up the notes in the pattern editor, or you could try enabling the \"transition type\" effect on the instrument and setting it to \"continue\"."), div$6({ style: `width: 100%; height: 80px; background: linear-gradient(rgba(0,0,0,0), ${ColorConfig.editorBackground}); position: sticky; bottom: 0; pointer-events: none;` })), div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
+            this.container = div$6({ class: "prompt noSelection recordingSetupPrompt", style: "width: 600px; text-align: right; max-height: 90%;" }, div$6({ class: "promptTitle" }, h2$5({ class: "nrsExt", style: "text-align: inherit;" }, ""), h2$5({ class: "nrsTitle" }, "Note Recording Setup")), div$6({ style: "display: grid; overflow-y: auto; overflow-x: hidden; flex-shrink: 1;" }, p$3("AbyssBox can record notes as you perform them. You can start recording by pressing Ctrl+Space (or " + EditorConfig.ctrlSymbol + "P)."), label({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: center;" }, "Add ● record button next to ▶ play button:", this._showRecordButton), label({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: center;" }, "Snap recorded notes to the song's rhythm:", this._snapRecordedNotesToRhythm), label({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: center;" }, "Ignore notes not in the song's scale:", this._ignorePerformedNotesNotInScale), p$3("While recording, you can perform notes on your keyboard!"), label({ style: "display: flex; flex-direction: row; align-items: center; margin-top: 0.5em; margin-bottom: 0.5em; height: 2em; justify-content: center;" }, "Keyboard layout:", div$6({ class: "selectContainer", style: "width: 65%; margin-left: 1em;" }, this._keyboardLayout)), this._keyboardLayoutPreview, p$3("When not recording, you can use the computer keyboard either for shortcuts (like C and V for copy and paste) or for performing notes, depending on this mode:"), label({ style: "display: flex; margin-top: 0.5em; margin-bottom: 0.5em; flex-direction: row; align-items: center; height: 2em; justify-content: center;" }, div$6({ class: "selectContainer", style: "width: 50%;" }, this._keyboardMode)), p$3("Performing music takes practice! Try slowing the tempo and using this metronome to help you keep a rhythm."), label({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: center;" }, "Hear metronome while recording:", this._metronomeWhileRecording), label({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: center;" }, "Count-in 1 bar of metronome before recording:", this._metronomeCountIn), p$3("If you have a ", a$2({ href: "https://caniuse.com/midi", target: "_blank" }, "compatible browser"), " on a device connected to a MIDI keyboard, you can use it to perform notes in AbyssBox! (Or you could buy ", a$2({ href: "https://imitone.com/", target: "_blank" }, "Imitone"), " or ", a$2({ href: "https://vochlea.com/", target: "_blank" }, "Dubler"), " to hum notes into a microphone while wearing headphones!)"), label({ style: "display: flex; flex-direction: row; align-items: center; margin-top: 0.5em; height: 2em; justify-content: center;" }, "Enable MIDI performance:", this._enableMidi), p$3("The range of pitches available to play via your computer keyboard is affected by the octave scrollbar of the currently selected channel."), p$3("If you set the channel offset below to 'before' or 'after', notes below the middle octave in the view will be 'bass' notes, and placed in the channel before or after the viewed one. Using this, you can play bass and lead at the same time!"), label({ style: "display: flex; flex-direction: row; align-items: center; margin-top: 0.5em; margin-bottom: 0.5em; height: 2em; justify-content: center;" }, "Bass Offset:", div$6({ class: "selectContainer", style: "width: 50%; margin-left: 1em;" }, this._bassOffset)), p$3("Once you enable the setting, the keyboard layout above will darken to denote the new bass notes. The notes will be recorded with independent timing and this works with MIDI devices, too. Be aware that the octave offset of both used channels will impact how high/low the bass/lead are relative to one another."), p$3("Recorded notes often overlap such that one note ends after the next note already started. In UltraBox, these notes get split into multiple notes which may sound different when re-played than they did when you were recording. To fix the sound, you can either manually clean up the notes in the pattern editor, or you could try enabling the \"transition type\" effect on the instrument and setting it to \"continue\"."), div$6({ style: `width: 100%; height: 80px; background: linear-gradient(rgba(0,0,0,0), ${ColorConfig.editorBackground}); position: sticky; bottom: 0; pointer-events: none;` })), div$6({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
             this._close = () => {
                 this._doc.undo();
             };
@@ -42864,7 +43011,7 @@ You should be redirected to the song at:<br /><br />
             this._cancelButton = button$5({ class: "cancelButton" });
             this._okayButton = button$5({ class: "okayButton", style: "width:45%;" }, "Okay");
             this._resetButton = button$5({ style: "height: auto; min-height: var(--button-size);" }, "Reset to defaults");
-            this.container = div$5({ class: "prompt noSelection", style: "width: 500px; left: 4;" }, h2$4("Set Theme"), div$5({ style: "display: flex; flex-direction: row; align-items: center; height: 1em; justify-content: flex-end;" }, div$5({ class: "selectContainer", style: "width: 40%; margin: 0 auto;" }, this._themeSelect)), h2$4("Custom Theme Editor"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Thank you to leoV on discord for basically writing the whole system on how this works, without him this wouldn't be possible!"), p$1({ style: "text-align: left; margin: 0em auto; font-size: 26px; color: red;" }, "PLEASE READ THIS!"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Before you use the Custom Theme Editor! Setting your theme above and changing one of the assets causes your custom theme to be overwritten! Do NOT change an asset unless your current custom theme is custom or your theme will be lost!"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "To use the custom theme editor, simply use the options below!"), div$5(), p$1({ style: "text-align: left; margin: 0;" }, "Editor Background Image:", this._fileInput), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Website Background Image:", this._fileInput2), div$5(), p$1({ style: "text-align: center; margin: 1em 0;" }, this._colorMenu), p$1({ style: "text-align: center; margin: 1em 0;" }, "Pick a color: ", this._colorpickerInput), div$5({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._resetButton), p$1({ style: "text-align: center; margin: 1em 0;" }, this._colorInput), div$5({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
+            this.container = div$5({ class: "prompt noSelection", style: "width: 500px; left: 4;" }, div$5({ class: "promptTitle" }, h2$4({ class: "set-themeExt", style: "text-align: inherit;" }, ""), h2$4({ class: "set-themeTitle" }, "Set Theme")), div$5({ style: "display: flex; flex-direction: row; align-items: center; height: 1em; justify-content: flex-end;" }, div$5({ class: "selectContainer", style: "width: 40%; margin: 0 auto;" }, this._themeSelect)), h2$4("Custom Theme Editor"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Thank you to leoV on discord for basically writing the whole system on how this works, without him this wouldn't be possible!"), p$1({ style: "text-align: left; margin: 0em auto; font-size: 26px; color: red;" }, "PLEASE READ THIS!"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Before you use the Custom Theme Editor! Setting your theme above and changing one of the assets causes your custom theme to be overwritten! Do NOT change an asset unless your current custom theme is custom or your theme will be lost!"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "To use the custom theme editor, simply use the options below!"), div$5(), p$1({ style: "text-align: left; margin: 0;" }, "Editor Background Image:", this._fileInput), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Website Background Image:", this._fileInput2), div$5(), p$1({ style: "text-align: center; margin: 1em 0;" }, this._colorMenu), p$1({ style: "text-align: center; margin: 1em 0;" }, "Pick a color: ", this._colorpickerInput), div$5({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._resetButton), p$1({ style: "text-align: center; margin: 1em 0;" }, this._colorInput), div$5({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
             this.lastTheme = window.localStorage.getItem("colorTheme");
             this._close = () => {
                 this._doc.prompt = null;
@@ -44063,7 +44210,7 @@ You should be redirected to the song at:<br /><br />
             this._okayButton = button$3({ class: "okayButton", style: "width: 25%;" }, "Okay");
             this._sampleIsLoadingMessage = div$3({ style: "margin-bottom: 0.5em; display: none;" }, "Sample is loading");
             this._loopControlsContainer = div$3(div$3({ style: "display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 0.5em;" }, div$3({ style: `width: 100%; margin-bottom: 0.5em; text-align: center; color: ${ColorConfig.secondaryText};` }, "You can also zoom by dragging horizontally on the waveform.")), this._startOffsetHandle.canvas, this._waveformContainer, this._loopStartHandle.canvas, this._loopEndHandle.canvas, div$3({ style: "display: flex; flex-direction: row; align-items: center; justify-content: center; margin-bottom: 0.5em;" }, this._viewportOffsetSlider, this._zoomInButton, this._zoomOutButton, this._zoom100Button), div$3({ style: "display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 0.5em;" }, div$3({ style: "width: 100%; display: flex; flex-direction: row; margin-bottom: 0.5em;" }, div$3({ style: `flex-shrink: 0; text-align: right: color: ${ColorConfig.primaryText}; align-self: center;` }, "Loop Mode"), this._loopModeSelect), div$3({ style: "width: 100%; display: flex; flex-direction: row; margin-bottom: 0.5em;" }, div$3({ style: `flex-shrink: 0; text-align: right; color: ${ColorConfig.primaryText}; align-self: center;` }, "Offset"), this._startOffsetStepper), div$3({ style: "width: 100%; display: flex; flex-direction: row; margin-bottom: 0.5em;" }, div$3({ style: `flex-shrink: 0; text-align: right; color: ${ColorConfig.primaryText}; align-self: center;` }, "Loop Start"), this._loopStartStepper), div$3({ style: "width: 100%; display: flex; flex-direction: row; margin-bottom: 0.5em;" }, div$3({ style: `flex-shrink: 0; text-align: right; color: ${ColorConfig.primaryText}; align-self: center;` }, "Loop End"), this._loopEndStepper), div$3({ style: "width: 100%; display: flex; flex-direction: row; margin-bottom: 0.5em;" }, div$3({ style: `flex-shrink: 0; text-align: right; color: ${ColorConfig.primaryText}; align-self: center;` }, "Backwards"), this._playBackwardsBox), div$3({ style: "width: 100%; display: flex; flex-direction: row; margin-bottom: 0.5em; justify-content: center;" }, this._playSongButton)));
-            this.container = div$3({ class: "prompt noSelection", style: "width: 500px;" }, div$3(h2$2({ style: "margin-bottom: 0.5em;" }, "Loop Controls"), this._sampleIsLoadingMessage, this._loopControlsContainer, div$3({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton)), this._cancelButton);
+            this.container = div$3({ class: "prompt noSelection", style: "width: 500px;" }, div$3(div$3({ class: "promptTitle" }, h2$2({ class: "loop-controlsExt", style: "text-align: inherit;" }, ""), h2$2({ class: "loop-controlsTitle" }, "Loop Controls")), this._sampleIsLoadingMessage, this._loopControlsContainer, div$3({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton)), this._cancelButton);
             this.gotMouseUp = false;
             this._waveformSampleLookup = (x) => {
                 const n = this._waveformDataLength;
@@ -44667,8 +44814,8 @@ You should be redirected to the song at:<br /><br />
             this._instructionsLink = a({ href: "#" }, "Wanna add your own samples? Click here!");
             this._description = div$1(div$1({ style: "margin-bottom: 0.5em; -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; cursor: text;" }, "Before you ask: "), div$1({ style: "margin-bottom: 0.5em; -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; cursor: text;" }, "legacySamples", " = Pandoras Box's Samples "), div$1({ style: "margin-bottom: 0.5em; -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; cursor: text;" }, "nintariboxSamples", " = nintaribox's Samples "), div$1({ style: "margin-bottom: 0.5em; -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; cursor: text;" }, "marioPaintboxSamples", " = MarioPaintBox's Samples."), div$1({ style: "margin-bottom: 0.5em;" }, "The order of these samples is important - if you change it you'll break your song!", "Since they're sorted by which ones you added first, changing the position of the sample in the list will", "change your instruments' sample to a different sample!"), div$1({ style: "margin-bottom: 0.5em;" }, this._instructionsLink));
             this._closeInstructionsButton = button$1({ style: "height: auto; min-height: var(--button-size); width: 100%;" }, "Close instructions");
-            this._instructionsArea = div$1({ style: "display: none; margin-top: 0; -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; cursor: text; overflow-y: auto;" }, h2("Add Samples"), div$1({ style: "margin-top: 0.5em; margin-bottom: 0.5em;" }, "In UB and in turn AB, custom samples are loaded from arbitrary URLs."), div$1({ style: `margin-top: 0.5em; margin-bottom: 0.5em; color: ${ColorConfig.secondaryText};` }, "(Technically, the web server behind the URL needs to support ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS", target: "_blank", }, "CORS"), ", but you don't need to know about that: ", " the sample just won't load if that's not the case)"), div$1({ style: "margin-top: 0.5em; margin-bottom: 0.5em;" }, details(summary("Why arbitrary URLs?"), a({ href: "https://pandoras-box-archive.neptendo.repl.co/" }, "A certain BeepBox mod"), " did this with one central server, but it went down, taking down", " the samples with it, though thankfully it got archived.", " This is always an issue with servers: it may run out of space,", " stop working, and so on. With arbitrary URLs, you can always ", " change them to different ones if they stop working.")), div$1({ style: "margin-top: 0.5em; margin-bottom: 0.5em;" }, "As for where to upload your samples, here are some suggestions:", ul({ style: "text-align: left;" }, li(a({ href: "https://filegarden.com" }, "File Garden")), li(a({ href: "https://catbox.moe/" }, "Catbox")), li(a({ href: "https://www.dropbox.com" }, "Dropbox"), " (domain needs to be ", code("https://dl.dropboxusercontent.com"), ")"))), div$1({ style: "margin-top: 0.5em; margin-bottom: 0.5em;" }, "Static website hosting services may also work (such as ", a({ href: "https://pages.github.com" }, "GitHub Pages"), ")", " but those require a bit more setup."), div$1({ style: "margin-top: 0.5em; margin-bottom: 1em;" }, "Finally, if have a soundfont you'd like to get samples from, consider using this ", a({ href: "./sample_extractor.html", target: "_blank" }, "sample extractor"), "!"), div$1({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between; margin-top: 0.5em;" }, this._closeInstructionsButton));
-            this._addSamplesArea = div$1({ style: "overflow-y: auto;" }, h2("Add Samples"), div$1({ style: "display: flex; flex-direction: column; align-items: center; margin-bottom: 0.5em;" }, this._description, div$1({ style: "width: 100%; max-height: 450px; overflow-y: scroll;" }, this._entryContainer), this._addSamplesAreaBottom), div$1({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton));
+            this._instructionsArea = div$1({ style: "display: none; margin-top: 0; -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; cursor: text; overflow-y: auto;" }, div$1({ class: "promptTitle" }, h2({ class: "samplesExt", style: "text-align: inherit;" }, ""), h2({ class: "samplesTitle", style: "margin-bottom: 0.5em;" }, "Add Samples")), div$1({ style: "margin-top: 0.5em; margin-bottom: 0.5em;" }, "In UB and in turn AB, custom samples are loaded from arbitrary URLs."), div$1({ style: `margin-top: 0.5em; margin-bottom: 0.5em; color: ${ColorConfig.secondaryText};` }, "(Technically, the web server behind the URL needs to support ", a({ href: "https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS", target: "_blank", }, "CORS"), ", but you don't need to know about that: ", " the sample just won't load if that's not the case)"), div$1({ style: "margin-top: 0.5em; margin-bottom: 0.5em;" }, details(summary("Why arbitrary URLs?"), a({ href: "https://pandoras-box-archive.neptendo.repl.co/" }, "A certain BeepBox mod"), " did this with one central server, but it went down, taking down", " the samples with it, though thankfully it got archived.", " This is always an issue with servers: it may run out of space,", " stop working, and so on. With arbitrary URLs, you can always ", " change them to different ones if they stop working.")), div$1({ style: "margin-top: 0.5em; margin-bottom: 0.5em;" }, "As for where to upload your samples, here are some suggestions:", ul({ style: "text-align: left;" }, li(a({ href: "https://filegarden.com" }, "File Garden")), li(a({ href: "https://catbox.moe/" }, "Catbox")), li(a({ href: "https://www.dropbox.com" }, "Dropbox"), " (domain needs to be ", code("https://dl.dropboxusercontent.com"), ")"))), div$1({ style: "margin-top: 0.5em; margin-bottom: 0.5em;" }, "Static website hosting services may also work (such as ", a({ href: "https://pages.github.com" }, "GitHub Pages"), ")", " but those require a bit more setup."), div$1({ style: "margin-top: 0.5em; margin-bottom: 1em;" }, "Finally, if have a soundfont you'd like to get samples from, consider using this ", a({ href: "./sample_extractor.html", target: "_blank" }, "sample extractor"), "!"), div$1({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between; margin-top: 0.5em;" }, this._closeInstructionsButton));
+            this._addSamplesArea = div$1({ style: "overflow-y: auto;" }, div$1({ class: "promptTitle" }, h2({ class: "samplesExt", style: "text-align: inherit;" }, ""), h2({ class: "samplesTitle", style: "margin-bottom: 0.5em;" }, "Add Samples")), div$1({ style: "display: flex; flex-direction: column; align-items: center; margin-bottom: 0.5em;" }, this._description, div$1({ style: "width: 100%; max-height: 450px; overflow-y: scroll;" }, this._entryContainer), this._addSamplesAreaBottom), div$1({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton));
             this._bulkAddTextarea = textarea({
                 style: "width: 100%; height: 100%; resize: none; box-sizing: border-box;",
             });
