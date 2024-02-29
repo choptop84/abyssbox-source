@@ -5642,18 +5642,6 @@ var beepbox = (function (exports) {
 					background: #fff0;
 				}
 
-				.overlay {
-					background-image: url("https://choptop84.github.io/choptop84s-image-repository/xptaskbar.png");
-					background-repeat: no-repeat;
-					background-size: contain;
-					background-position-y: bottom;
-					image-rendering: -moz-crisp-edges !important;         /* Firefox */
-					image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-					image-rendering: -o-crisp-edges !important;            /* Opera */
-					image-rendering: pixelated !important;                 /* Future browsers */
-					image-rendering: optimizeSpeed !important;             /* IE */
-				}
-
 		* {
 		cursor: url("https://choptop84.github.io/abyssbox-app/xpcursor.png"), auto !important;
 		--play-symbol:url("https://choptop84.github.io/abyssbox-app/xpPlay.png");

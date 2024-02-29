@@ -39,7 +39,7 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 	
 	let draggingPlayhead: boolean = false;
 		const playButton: HTMLButtonElement = button({style: "width: 100%; height: 100%; max-height: 50px;"});
-		const playButtonContainer: HTMLDivElement = div({style: "flex-shrink: 0; display: flex; padding: 2px; width: 80px; height: 100%; box-sizing: border-box; align-items: center;"},
+		const playButtonContainer: HTMLDivElement = div({class: "playButtonContainer",style: "flex-shrink: 0; display: flex; padding: 2px; width: 80px; height: 100%; box-sizing: border-box; align-items: center;"},
 		playButton,
 	);
 		const loopIcon: SVGPathElement = path({d: "M 4 2 L 4 0 L 7 3 L 4 6 L 4 4 Q 2 4 2 6 Q 2 8 4 8 L 4 10 Q 0 10 0 6 Q 0 2 4 2 M 8 10 L 8 12 L 5 9 L 8 6 L 8 8 Q 10 8 10 6 Q 10 4 8 4 L 8 2 Q 12 2 12 6 Q 12 10 8 10 z"});
@@ -61,9 +61,9 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 	);
 	
 		const timeline: SVGSVGElement = svg({style: "min-width: 0; min-height: 0; touch-action: pan-y pinch-zoom;"});
-		const playhead: HTMLDivElement = div({style: `position: absolute; left: 0; top: 0; width: 2px; height: 100%; background: ${ColorConfig.playhead}; pointer-events: none;`});
-		const timelineContainer: HTMLDivElement = div({style: "display: flex; flex-grow: 1; flex-shrink: 1; position: relative;"}, timeline, playhead);
-		const visualizationContainer: HTMLDivElement = div({style: "display: flex; flex-grow: 1; flex-shrink: 1; height: 0; position: relative; align-items: center; overflow: hidden;"}, timelineContainer);
+		const playhead: HTMLDivElement = div({class: "playhead",style: `position: absolute; left: 0; top: 0; width: 2px; height: 100%; background: ${ColorConfig.playhead}; pointer-events: none;`});
+		const timelineContainer: HTMLDivElement = div({class: "timeline",style: "display: flex; flex-grow: 1; flex-shrink: 1; position: relative;"}, timeline, playhead);
+		const visualizationContainer: HTMLDivElement = div({class: "visualizer",style: "display: flex; flex-grow: 1; flex-shrink: 1; height: 0; position: relative; align-items: center; overflow: hidden;"}, timelineContainer);
 		let noteFlashElementsPerBar: (SVGPathElement[])[];
 		let currentNoteFlashElements: SVGPathElement[] = [];
 		let currentNoteFlashBar: number = -1;
@@ -85,7 +85,7 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 	);
 	document.body.appendChild(visualizationContainer);
 	document.body.appendChild(
-			div({style: `flex-shrink: 0; height: 20vh; min-height: 22px; max-height: 70px; display: flex; align-items: center;`},
+			div({class: "control-center",style: `flex-shrink: 0; height: 20vh; min-height: 22px; max-height: 70px; display: flex; align-items: center;`},
 			playButtonContainer,
 			loopButton,
 			volumeIcon,

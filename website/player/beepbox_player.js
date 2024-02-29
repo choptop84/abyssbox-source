@@ -5294,18 +5294,6 @@ var beepbox = (function (exports) {
 					background: #fff0;
 				}
 
-				.overlay {
-					background-image: url("https://choptop84.github.io/choptop84s-image-repository/xptaskbar.png");
-					background-repeat: no-repeat;
-					background-size: contain;
-					background-position-y: bottom;
-					image-rendering: -moz-crisp-edges !important;         /* Firefox */
-					image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-					image-rendering: -o-crisp-edges !important;            /* Opera */
-					image-rendering: pixelated !important;                 /* Future browsers */
-					image-rendering: optimizeSpeed !important;             /* IE */
-				}
-
 		* {
 		cursor: url("https://choptop84.github.io/abyssbox-app/xpcursor.png"), auto !important;
 		--play-symbol:url("https://choptop84.github.io/abyssbox-app/xpPlay.png");
@@ -26170,7 +26158,7 @@ var beepbox = (function (exports) {
     let fullscreenLink = a({ target: "_top", style: "margin: 0 4px;" }, "⇱ Fullscreen");
     let draggingPlayhead = false;
     const playButton = button({ style: "width: 100%; height: 100%; max-height: 50px;" });
-    const playButtonContainer = div({ style: "flex-shrink: 0; display: flex; padding: 2px; width: 80px; height: 100%; box-sizing: border-box; align-items: center;" }, playButton);
+    const playButtonContainer = div({ class: "playButtonContainer", style: "flex-shrink: 0; display: flex; padding: 2px; width: 80px; height: 100%; box-sizing: border-box; align-items: center;" }, playButton);
     const loopIcon = path({ d: "M 4 2 L 4 0 L 7 3 L 4 6 L 4 4 Q 2 4 2 6 Q 2 8 4 8 L 4 10 Q 0 10 0 6 Q 0 2 4 2 M 8 10 L 8 12 L 5 9 L 8 6 L 8 8 Q 10 8 10 6 Q 10 4 8 4 L 8 2 Q 12 2 12 6 Q 12 10 8 10 z" });
     const loopButton = button({ title: "loop", style: "background: none; flex: 0 0 12px; margin: 0 3px; width: 12px; height: 12px; display: flex;" }, svg({ width: 12, height: 12, viewBox: "0 0 12 12" }, loopIcon));
     const volumeIcon = svg({ style: "flex: 0 0 12px; margin: 0 1px; width: 12px; height: 12px;", viewBox: "0 0 12 12" }, path({ fill: ColorConfig.uiWidgetBackground, d: "M 1 9 L 1 3 L 4 3 L 7 0 L 7 12 L 4 9 L 1 9 M 9 3 Q 12 6 9 9 L 8 8 Q 10.5 6 8 4 L 9 3 z" }));
@@ -26178,9 +26166,9 @@ var beepbox = (function (exports) {
     const zoomIcon = svg({ width: 12, height: 12, viewBox: "0 0 12 12" }, circle({ cx: "5", cy: "5", r: "4.5", "stroke-width": "1", stroke: "currentColor", fill: "none" }), path({ stroke: "currentColor", "stroke-width": "2", d: "M 8 8 L 11 11 M 5 2 L 5 8 M 2 5 L 8 5", fill: "none" }));
     const zoomButton = button({ title: "zoom", style: "background: none; flex: 0 0 12px; margin: 0 3px; width: 12px; height: 12px; display: flex;" }, zoomIcon);
     const timeline = svg({ style: "min-width: 0; min-height: 0; touch-action: pan-y pinch-zoom;" });
-    const playhead = div({ style: `position: absolute; left: 0; top: 0; width: 2px; height: 100%; background: ${ColorConfig.playhead}; pointer-events: none;` });
-    const timelineContainer = div({ style: "display: flex; flex-grow: 1; flex-shrink: 1; position: relative;" }, timeline, playhead);
-    const visualizationContainer = div({ style: "display: flex; flex-grow: 1; flex-shrink: 1; height: 0; position: relative; align-items: center; overflow: hidden;" }, timelineContainer);
+    const playhead = div({ class: "playhead", style: `position: absolute; left: 0; top: 0; width: 2px; height: 100%; background: ${ColorConfig.playhead}; pointer-events: none;` });
+    const timelineContainer = div({ class: "timeline", style: "display: flex; flex-grow: 1; flex-shrink: 1; position: relative;" }, timeline, playhead);
+    const visualizationContainer = div({ class: "visualizer", style: "display: flex; flex-grow: 1; flex-shrink: 1; height: 0; position: relative; align-items: center; overflow: hidden;" }, timelineContainer);
     let noteFlashElementsPerBar;
     let currentNoteFlashElements = [];
     let currentNoteFlashBar = -1;
@@ -26195,7 +26183,7 @@ var beepbox = (function (exports) {
     const defs = SVG.defs({}, gradient);
     const volumeBarContainer = SVG.svg({ style: `touch-action: none; overflow: hidden; margin: auto;`, width: "160px", height: "10px", preserveAspectRatio: "none" }, defs, outVolumeBarBg, outVolumeBar, outVolumeCap);
     document.body.appendChild(visualizationContainer);
-    document.body.appendChild(div({ style: `flex-shrink: 0; height: 20vh; min-height: 22px; max-height: 70px; display: flex; align-items: center;` }, playButtonContainer, loopButton, volumeIcon, volumeSlider, zoomButton, volumeBarContainer, oscilascope.canvas, titleText, editLink, copyLink, shareLink, fullscreenLink));
+    document.body.appendChild(div({ class: "control-center", style: `flex-shrink: 0; height: 20vh; min-height: 22px; max-height: 70px; display: flex; align-items: center;` }, playButtonContainer, loopButton, volumeIcon, volumeSlider, zoomButton, volumeBarContainer, oscilascope.canvas, titleText, editLink, copyLink, shareLink, fullscreenLink));
     function setLocalStorage(key, value) {
         try {
             localStorage.setItem(key, value);
