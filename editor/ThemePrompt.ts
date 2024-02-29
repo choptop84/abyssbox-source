@@ -20,6 +20,7 @@ let doReload = false;
 		option({ value: "AbyssBox Competitive"}, "AbyssBox Competitive"),
 		option({ value: "AbyssBox Light"}, "AbyssBox Light"),
 		option({ value: "Half-Life"}, "Half-Life"),
+		option({ value: "Half-Life: Source"}, "Half-Life: Source"),
 		option({ value: "Doom 1993"}, "Doom 1993"),
 		option({ value: "Undertale"}, "Undertale"),
 		option({ value: "Scratch"}, "Scratch"),
