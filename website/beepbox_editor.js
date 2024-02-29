@@ -5495,7 +5495,7 @@ var beepbox = (function (exports) {
 					 image-rendering: optimizeSpeed !important;             /* IE */
 
 				}
-	
+
 				html {
 				font-family: 'tahoma' !important;
 			   font-size: 150% !important;
@@ -5671,6 +5671,22 @@ var beepbox = (function (exports) {
 		--zoom-in-symbol: url("https://choptop84.github.io/abyssbox-app/xpZoomIn.png");
 		--zoom-out-symbol: url("https://choptop84.github.io/abyssbox-app/xpZoomOut.png");
 		}
+
+		.beepboxEditor button,
+		button.playButton,
+		button.pauseButton, 
+		button.recordButton, 
+		button.stopButton,
+		button.nextBarButton, 
+		button.prevBarButton, 
+		button.copyButton, 
+		button.pasteButton, 
+		button.exportInstrumentButton, 
+		button.importInstrumentButton, 
+		.beepboxEditor select, 
+		.beepboxEditor .select2-selection__rendered {
+				cursor: url("https://choptop84.github.io/choptop84s-image-repository/xphandcursor.png"), pointer !important;
+			}
 
 		div.mute-button::before {
 			background-image: url("https://choptop84.github.io/abyssbox-app/xpSpeaker.png") !important;
@@ -5924,6 +5940,7 @@ var beepbox = (function (exports) {
 			}
 			select {
 				--ui-widget-background: #edead9; 
+				cursor: url("https://choptop84.github.io/choptop84s-image-repository/xphandcursor.png"), pointer !important;
 			}
 			div.playback-bar-controls {
 				--ui-widget-background: #edead9; 
@@ -5951,6 +5968,7 @@ var beepbox = (function (exports) {
 					border-image-repeat: repeat;
 					background-color: transparent; 
 					padding: 6px; 
+					cursor: url("https://choptop84.github.io/choptop84s-image-repository/xphandcursor.png"), pointer !important;
 				}
 
 				.beepboxEditor input[type="checkbox"]
@@ -5993,6 +6011,79 @@ var beepbox = (function (exports) {
 					image-rendering: pixelated !important;                 /* Future browsers */
 					image-rendering: optimizeSpeed !important;             /* IE */
 				}
+
+				.beepboxEditor input[type="range"]::-webkit-slider-thumb
+				{
+					cursor: url("https://choptop84.github.io/choptop84s-image-repository/xphandcursor.png"), pointer !important;
+				}
+				 
+				.beepboxEditor input[type="range"]::-webkit-slider-runnable-track
+				{
+					cursor: url("https://choptop84.github.io/choptop84s-image-repository/xphandcursor.png"), pointer !important;
+				}
+				 
+				.beepboxEditor input[type="range"]:focus::-webkit-slider-runnable-track
+				{
+					cursor: url("https://choptop84.github.io/choptop84s-image-repository/xphandcursor.png"), pointer !important;
+				}
+				 
+				.beepboxEditor input[type="range"]::-ms-thumb
+				{
+					cursor: url("https://choptop84.github.io/choptop84s-image-repository/xphandcursor.png"), pointer !important;
+				}
+				 
+				.beepboxEditor input[type="range"]::-ms-track
+				{
+					cursor: url("https://choptop84.github.io/choptop84s-image-repository/xphandcursor.png"), pointer !important;
+				}
+				 
+				.beepboxEditor input[type="range"]:focus::-ms-track
+				{
+					cursor: url("https://choptop84.github.io/choptop84s-image-repository/xphandcursor.png"), pointer !important;
+				}
+				 
+				.beepboxEditor input[type="range"]::-moz-range-thumb
+				{
+					cursor: url("https://choptop84.github.io/choptop84s-image-repository/xphandcursor.png"), pointer !important;
+				}
+				 
+				.beepboxEditor input[type="range"]::-moz-range-track
+				{
+					cursor: url("https://choptop84.github.io/choptop84s-image-repository/xphandcursor.png"), pointer !important;
+				}
+				 
+				.beepboxEditor input[type="range"]:focus::-moz-range-track
+				{
+					cursor: url("https://choptop84.github.io/choptop84s-image-repository/xphandcursor.png"), pointer !important;
+				}
+				 
+				.beepboxEditor input[type="text"],
+				.beepboxEditor input[type="number"]
+				{
+					cursor: url("https://choptop84.github.io/choptop84s-image-repository/xphandcursor.png"), pointer !important;
+				}
+				 
+				.beepboxEditor input[type="checkbox"]
+				{
+					cursor: url("https://choptop84.github.io/choptop84s-image-repository/xphandcursor.png"), pointer !important;
+				}
+				 
+				.beepboxEditor input[type="checkbox"]:checked
+				{
+					cursor: url("https://choptop84.github.io/choptop84s-image-repository/xphandcursor.png"), pointer !important;
+				}
+				 
+				.beepboxEditor input[type="checkbox"]:checked:after
+				{
+					cursor: url("https://choptop84.github.io/choptop84s-image-repository/xphandcursor.png"), pointer !important;
+				}
+	
+				div.selectRow span 
+				{
+					cursor: url("https://choptop84.github.io/choptop84s-image-repository/xphandcursor.png"), pointer !important;
+				}
+				 
+
 
 			`,
         "Terminal 2.0 (AB)": `
