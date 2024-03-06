@@ -1076,7 +1076,7 @@ var beepbox = (function (exports) {
         { name: "echo delay", pianoName: "Echo Delay", maxRawVol: Config.echoDelayRange, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: 12,
             promptName: "Instrument Echo Delay", promptDesc: ["This setting controls the echo delay of your instrument, just like the echo delay slider.", "At $LO, your instrument will have very little echo delay, and this increases up to 2 beats of delay at $HI.", "[OVERWRITING] [$LO - $HI] [~beats ÷12]"]
         },
-        { name: "chorus", pianoName: "Chorus", maxRawVol: Config.chorusRange, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: 1,
+        { name: "chorus", pianoName: "Chorus", maxRawVol: Config.chorusRange - 1, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: 1,
             promptName: "Instrument Chorus", promptDesc: ["This setting controls the chorus strength of your instrument, just like the chorus slider.", "At $LO, the chorus effect will be disabled. The strength of the chorus effect increases up to the max value, $HI.", "[OVERWRITING] [$LO - $HI]"] },
         { name: "eq filt cut", pianoName: "EQFlt Cut", maxRawVol: Config.filterSimpleCutRange - 1, newNoteVol: Config.filterSimpleCutRange - 1, forSong: false, convertRealFactor: 0, associatedEffect: 12,
             promptName: "EQ Filter Cutoff Frequency", promptDesc: ["This setting controls the filter cut position of your instrument, just like the filter cut slider.", "This setting is roughly analagous to the horizontal position of a single low-pass dot on the advanced filter editor. At lower values, a wider range of frequencies is cut off.", "[OVERWRITING] [$LO - $HI]"] },
@@ -1481,7 +1481,7 @@ var beepbox = (function (exports) {
             return (_a = EditorConfig.presetCategories[0].presets.dictionary) === null || _a === void 0 ? void 0 : _a[TypePresets === null || TypePresets === void 0 ? void 0 : TypePresets[instrument]];
         }
     }
-    EditorConfig.version = "1.1";
+    EditorConfig.version = "1.1.1";
     EditorConfig.versionDisplayName = "AbyssBox " + EditorConfig.version;
     EditorConfig.releaseNotesURL = "./patch_notes.html";
     EditorConfig.isOnMac = /^Mac/i.test(navigator.platform) || /Mac OS X/i.test(navigator.userAgent) || /^(iPhone|iPad|iPod)/i.test(navigator.platform) || /(iPhone|iPad|iPod)/i.test(navigator.userAgent);
@@ -18664,6 +18664,7 @@ li.select2-results__option[role=group] > strong:hover {
             if (instrumentObject["spectrum"] != undefined) {
                 for (let i = 0; i < Config.spectrumControlPoints; i++) {
                     this.spectrumWave.spectrum[i] = Math.max(0, Math.min(Config.spectrumMax, Math.round(Config.spectrumMax * (+instrumentObject["spectrum"][i]) / 100)));
+                    this.spectrumWave.markCustomWaveDirty();
                 }
             }
             else {
@@ -20759,7 +20760,7 @@ li.select2-results__option[role=group] > strong:hover {
                                 this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].unison = clamp(0, Config.unisons.length + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                             }
                             const instrument = this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator];
-                            if ((fromUltraBox && !beforeFive) && (instrument.unison == Config.unisons.length)) {
+                            if ((fromUltraBox && !beforeFour) && (instrument.unison == Config.unisons.length)) {
                                 instrument.unisonVoices = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
                                 const unisonSpreadNegative = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
                                 const unisonSpread = base64CharCodeToInt[compressed.charCodeAt(charIndex++)] + ((base64CharCodeToInt[compressed.charCodeAt(charIndex++)] + (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] * 63)) * 63);
@@ -24318,7 +24319,8 @@ li.select2-results__option[role=group] > strong:hover {
             this.browserAutomaticallyClearsAudioBuffer = true;
             this.tempDrumSetControlPoint = new FilterControlPoint();
             this.tempFrequencyResponse = new FrequencyResponse();
-            this.loopBar = -1;
+            this.loopBarStart = -1;
+            this.loopBarEnd = -1;
             this.channels = [];
             this.tonePool = new Deque();
             this.tempMatchedPitchTones = Array(Config.maxChordSize).fill(null);
@@ -24621,10 +24623,10 @@ li.select2-results__option[role=group] > strong:hover {
                     nextBar = this.song.barCount - 1;
                 }
             }
-            else if (this.bar == this.loopBar && !this.renderingSong) {
-                nextBar = this.bar;
+            else if (this.bar == this.loopBarEnd && !this.renderingSong) {
+                nextBar = this.loopBarStart;
             }
-            else if (this.loopRepeatCount != 0 && nextBar == this.song.loopStart + this.song.loopLength) {
+            else if (this.loopRepeatCount != 0 && nextBar == Math.max(this.loopBarEnd + 1, this.song.loopStart + this.song.loopLength)) {
                 nextBar = this.song.loopStart;
             }
             return nextBar;
@@ -24633,13 +24635,17 @@ li.select2-results__option[role=group] > strong:hover {
             if (!this.song)
                 return;
             const samplesPerTick = this.getSamplesPerTick();
-            this.bar++;
+            if (this.loopBarEnd != this.bar)
+                this.bar++;
+            else {
+                this.bar = this.loopBarStart;
+            }
             this.beat = 0;
             this.part = 0;
             this.tick = 0;
             this.tickSampleCountdown = samplesPerTick;
             this.isAtStartOfTick = true;
-            if (this.loopRepeatCount != 0 && this.bar == this.song.loopStart + this.song.loopLength) {
+            if (this.loopRepeatCount != 0 && this.bar == Math.max(this.song.loopStart + this.song.loopLength, this.loopBarEnd)) {
                 this.bar = this.song.loopStart;
                 if (this.loopRepeatCount > 0)
                     this.loopRepeatCount--;
@@ -24744,8 +24750,10 @@ li.select2-results__option[role=group] > strong:hover {
                 }
                 if (this.wantToSkip) {
                     let barVisited = skippedBars.includes(this.bar);
-                    if (barVisited && bufferIndex == firstSkippedBufferIndex)
+                    if (barVisited && bufferIndex == firstSkippedBufferIndex) {
+                        this.pause();
                         return;
+                    }
                     if (firstSkippedBufferIndex == -1) {
                         firstSkippedBufferIndex = bufferIndex;
                     }
@@ -37911,6 +37919,18 @@ You should be redirected to the song at:<br /><br />
                 else {
                     box.container.style.visibility = "hidden";
                 }
+                if (i == this._doc.synth.loopBarStart) {
+                    box.container.style.setProperty("border-left", `1px dashed ${ColorConfig.uiWidgetFocus}`);
+                }
+                else {
+                    box.container.style.setProperty("border-left", "none");
+                }
+                if (i == this._doc.synth.loopBarEnd) {
+                    box.container.style.setProperty("border-right", `1px dashed ${ColorConfig.uiWidgetFocus}`);
+                }
+                else {
+                    box.container.style.setProperty("border-right", "none");
+                }
             }
         }
     }
@@ -38609,13 +38629,16 @@ You should be redirected to the song at:<br /><br />
     }
 
     class LoopEditor {
-        constructor(_doc) {
+        constructor(_doc, _trackEditor) {
             this._doc = _doc;
+            this._trackEditor = _trackEditor;
             this._editorHeight = 20;
             this._startMode = 0;
             this._endMode = 1;
             this._bothMode = 2;
-            this._loopAtPoint = -1;
+            this._loopMode = 3;
+            this._loopAtPointStart = -1;
+            this._loopAtPointEnd = -1;
             this._loop = SVG.path({ fill: "none", stroke: ColorConfig.loopAccent, "stroke-width": 4 });
             this._barLoop = SVG.path({ fill: "none", stroke: ColorConfig.uiWidgetFocus, "stroke-width": 2 });
             this._highlight = SVG.path({ fill: ColorConfig.hoverPreview, "pointer-events": "none" });
@@ -38635,7 +38658,8 @@ You should be redirected to the song at:<br /><br />
             this._renderedLoopStop = -1;
             this._renderedBarCount = 0;
             this._renderedBarWidth = -1;
-            this._renderedBarLoop = -1;
+            this._renderedBarLoopStart = -1;
+            this._renderedBarLoopEnd = -1;
             this._whenMouseOver = (event) => {
                 if (this._mouseOver)
                     return;
@@ -38728,7 +38752,10 @@ You should be redirected to the song at:<br /><br />
         _updateCursorStatus() {
             const bar = this._mouseX / this._barWidth;
             this._cursor.startBar = bar;
-            if (bar > this._doc.song.loopStart - 0.25 && bar < this._doc.song.loopStart + this._doc.song.loopLength + 0.25) {
+            if (bar >= this._loopAtPointStart && bar <= this._loopAtPointEnd + 1) {
+                this._cursor.mode = this._loopMode;
+            }
+            else if (bar > this._doc.song.loopStart - 0.25 && bar < this._doc.song.loopStart + this._doc.song.loopLength + 0.25) {
                 if (bar - this._doc.song.loopStart < this._doc.song.loopLength * 0.5) {
                     this._cursor.mode = this._startMode;
                 }
@@ -38803,13 +38830,18 @@ You should be redirected to the song at:<br /><br />
                     const endPoints = this._findEndPoints(bar);
                     this._change = new ChangeLoop(this._doc, oldStart, oldEnd - oldStart, endPoints.start, endPoints.length);
                 }
+                else if (this._cursor.mode == this._loopMode) {
+                    this._doc.synth.loopBarStart = -1;
+                    this._doc.synth.loopBarEnd = -1;
+                    this.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
+                }
                 this._doc.synth.jumpIntoLoop();
                 if (this._doc.prefs.autoFollow) {
                     new ChangeChannelBar(this._doc, this._doc.channel, Math.floor(this._doc.synth.playhead), true);
                 }
                 this._doc.setProspectiveChange(this._change);
             }
-            else {
+            else if (this._cursor.mode == this._bothMode) {
                 this._updateCursorStatus();
                 this._updatePreview();
             }
@@ -38832,16 +38864,31 @@ You should be redirected to the song at:<br /><br />
                     highlightStart = (endPoints.start) * this._barWidth;
                     highlightStop = (endPoints.start + endPoints.length) * this._barWidth;
                 }
-                this._highlight.setAttribute("d", `M ${highlightStart + radius} ${4} ` +
-                    `L ${highlightStop - radius} ${4} ` +
-                    `A ${radius - 4} ${radius - 4} ${0} ${0} ${1} ${highlightStop - radius} ${this._editorHeight - 4} ` +
-                    `L ${highlightStart + radius} ${this._editorHeight - 4} ` +
-                    `A ${radius - 4} ${radius - 4} ${0} ${0} ${1} ${highlightStart + radius} ${4} ` +
-                    `z`);
+                if (this._cursor.mode == this._loopMode) {
+                    const barLoopStart = (this._loopAtPointStart + 0.5) * this._barWidth;
+                    const barLoopEnd = (this._loopAtPointEnd + 0.5) * this._barWidth;
+                    this._highlight.setAttribute("d", `M ${barLoopStart} ${radius * 1.7} ` +
+                        `L ${barLoopStart - radius * 1.5} ${radius}` +
+                        `L ${barLoopStart} ${radius * 0.3}` +
+                        `L ${barLoopEnd} ${radius * 0.3}` +
+                        `L ${barLoopEnd + radius * 1.5} ${radius}` +
+                        `L ${barLoopEnd} ${radius * 1.7}` +
+                        `z`);
+                }
+                else {
+                    this._highlight.setAttribute("d", `M ${highlightStart + radius} ${4} ` +
+                        `L ${highlightStop - radius} ${4} ` +
+                        `A ${radius - 4} ${radius - 4} ${0} ${0} ${1} ${highlightStop - radius} ${this._editorHeight - 4} ` +
+                        `L ${highlightStart + radius} ${this._editorHeight - 4} ` +
+                        `A ${radius - 4} ${radius - 4} ${0} ${0} ${1} ${highlightStart + radius} ${4} ` +
+                        `z`);
+                }
             }
         }
-        setLoopAt(bar) {
-            this._loopAtPoint = bar;
+        setLoopAt(startBar, endBar) {
+            this._loopAtPointStart = startBar;
+            this._loopAtPointEnd = endBar;
+            this._trackEditor.render();
             this._render();
         }
         _render() {
@@ -38866,19 +38913,23 @@ You should be redirected to the song at:<br /><br />
                     `A ${radius - 2} ${radius - 2} ${0} ${0} ${1} ${loopStart + radius} ${2} ` +
                     `z`);
             }
-            const barLoopStart = (this._loopAtPoint + 0.5) * this._barWidth;
-            if (this._renderedBarLoop != barLoopStart) {
-                if (barLoopStart < 0) {
+            const barLoopStart = (this._loopAtPointStart + 0.5) * this._barWidth;
+            const barLoopEnd = (this._loopAtPointEnd + 0.5) * this._barWidth;
+            if (this._renderedBarLoopStart != barLoopStart || this._renderedBarLoopEnd != barLoopEnd) {
+                if (barLoopStart < 0 || barLoopEnd < 0) {
                     this._barLoop.setAttribute("d", "");
                 }
                 else {
                     this._barLoop.setAttribute("d", `M ${barLoopStart} ${radius * 1.5} ` +
                         `L ${barLoopStart - radius} ${radius}` +
                         `L ${barLoopStart} ${radius * 0.5}` +
-                        `L ${barLoopStart + radius} ${radius}` +
+                        `L ${barLoopEnd} ${radius * 0.5}` +
+                        `L ${barLoopEnd + radius} ${radius}` +
+                        `L ${barLoopEnd} ${radius * 1.5}` +
                         `z`);
                 }
-                this._renderedBarLoop = barLoopStart;
+                this._renderedBarLoopStart = barLoopStart;
+                this._renderedBarLoopEnd = barLoopEnd;
             }
             this._updatePreview();
         }
@@ -40626,6 +40677,12 @@ You should be redirected to the song at:<br /><br />
                 if (toApply)
                     applyValues.push(this._doc.prefs.volume - modulator.convertRealFactor);
             }
+            else if (this._doc.continuingModRecordingChange != null && this._doc.continuingModRecordingChange.storedChange == null && this._doc.continuingModRecordingChange.storedSlider == null) {
+                var modulator = Config.modulators.dictionary["song volume"];
+                applyToMods.push(modulator.index);
+                if (toApply)
+                    applyValues.push(this._doc.continuingModRecordingChange.storedValues[0]);
+            }
             else if (change instanceof ChangeTempo) {
                 var modulator = Config.modulators.dictionary["tempo"];
                 applyToMods.push(modulator.index);
@@ -41087,7 +41144,6 @@ You should be redirected to the song at:<br /><br />
                     let latestPinIdx = -1;
                     let prevNotePart = -1;
                     let prevNote = null;
-                    JSON.parse(JSON.stringify(usedPatterns[i].notes));
                     const modNoteIndex = Config.modCount - 1 - usedModIndices[i];
                     const usedInstrument = usedInstruments[i];
                     if (usedInstrument.modChannels[usedModIndices[i]] >= -1) {
@@ -46214,7 +46270,7 @@ You should be redirected to the song at:<br /><br />
             this._patternEditorNext = new PatternEditor(this._doc, false, 1);
             this._trackEditor = new TrackEditor(this._doc, this);
             this._muteEditor = new MuteEditor(this._doc, this);
-            this._loopEditor = new LoopEditor(this._doc);
+            this._loopEditor = new LoopEditor(this._doc, this._trackEditor);
             this._piano = new Piano(this._doc);
             this._octaveScrollBar = new OctaveScrollBar(this._doc, this._piano);
             this._playButton = button({ class: "playButton", type: "button", title: "Play (Space)" }, span("Play"));
@@ -46236,7 +46292,7 @@ You should be redirected to the song at:<br /><br />
             this._volumeBarBox = div({ class: "playback-volume-bar", style: "height: 12px; align-self: center;" }, this._volumeBarContainer);
             this._fileMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "File"), option({ value: "new" }, "+ New Blank Song"), option({ value: "import" }, "↑ > Import Song (" + EditorConfig.ctrlSymbol + "O)"), option({ value: "export" }, "↓ > Export Song (" + EditorConfig.ctrlSymbol + "S)"), option({ value: "copyUrl" }, "⎘ Copy Song URL"), option({ value: "shareUrl" }, "⤳ Share Song URL"), option({ value: "shortenUrl" }, "… Shorten Song URL"), option({ value: "viewPlayer" }, "▶ View in Song Player"), option({ value: "copyEmbed" }, "⎘ Copy HTML Embed Code"), option({ value: "songRecovery" }, "⚠ > Recover Recent Song"));
             this._editMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Edit"), option({ value: "undo" }, "Undo (Z)"), option({ value: "redo" }, "Redo (Y)"), option({ value: "copy" }, "Copy Pattern (C)"), option({ value: "pasteNotes" }, "Paste Pattern Notes (V)"), option({ value: "pasteNumbers" }, "Paste Pattern Numbers (" + EditorConfig.ctrlSymbol + "⇧V)"), option({ value: "insertBars" }, "Insert Bar (⏎)"), option({ value: "deleteBars" }, "Delete Selected Bars (⌫)"), option({ value: "insertChannel" }, "Insert Channel (" + EditorConfig.ctrlSymbol + "⏎)"), option({ value: "deleteChannel" }, "Delete Selected Channels (" + EditorConfig.ctrlSymbol + "⌫)"), option({ value: "selectChannel" }, "Select Channel (⇧A)"), option({ value: "selectAll" }, "Select All (A)"), option({ value: "duplicatePatterns" }, "Duplicate Reused Patterns (D)"), option({ value: "transposeUp" }, "Move Notes Up (+ or ⇧+)"), option({ value: "transposeDown" }, "Move Notes Down (- or ⇧-)"), option({ value: "moveNotesSideways" }, "> Move All Notes Sideways (W)"), option({ value: "generateEuclideanRhythm" }, "> Generate Euclidean Rhythm (E)"), option({ value: "beatsPerBar" }, "> Change Beats Per Bar (B)"), option({ value: "barCount" }, "> Change Song Length (L)"), option({ value: "channelSettings" }, "> Channel Settings (Q)"), option({ value: "limiterSettings" }, "> Limiter Settings (⇧L)"), option({ value: "addExternal" }, "> Add Custom Samples (⇧Q)"));
-            this._optionsMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Preferences"), option({ value: "autoPlay" }, "Auto Play on Load"), option({ value: "autoFollow" }, "Auto Follow Playhead"), option({ value: "enableNotePreview" }, "Hear Added Notes"), option({ value: "notesOutsideScale" }, "Place Notes Out of Scale"), option({ value: "setDefaultScale" }, "Set Current Scale as Default"), option({ value: "alwaysFineNoteVol" }, "Always Fine Note Volume"), option({ value: "enableChannelMuting" }, "Enable Channel Muting"), option({ value: "instrumentCopyPaste" }, "Enable Copy/Paste Buttons"), option({ value: "instrumentImportExport" }, "Enable Import/Export Buttons"), option({ value: "displayBrowserUrl" }, "Enable Song Data in URL"), option({ value: "closePromptByClickoff" }, "Close prompts on click off"), option({ value: "showFifth" }, 'Highlight "Fifth" Note'), option({ value: "notesFlashWhenPlayed" }, "Notes Flash When Played (DB2)"), option({ value: "showChannels" }, "Show All Channels"), option({ value: "showScrollBar" }, "Show Octave Scroll Bar"), option({ value: "showLetters" }, "Show Piano Keys"), option({ value: "displayVolumeBar" }, "Show Playback Volume"), option({ value: "showOscilloscope" }, "Show Oscilloscope"), option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"), option({ value: "showDescription" }, "Show Description"), option({ value: "layout" }, "> Set Layout"), option({ value: "colorTheme" }, "> Set Theme"), option({ value: "recordingSetup" }, "> Note Recording"));
+            this._optionsMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Preferences"), optgroup({ label: "Technical" }, option({ value: "autoPlay" }, "Auto Play on Load"), option({ value: "autoFollow" }, "Auto Follow Playhead"), option({ value: "enableNotePreview" }, "Hear Added Notes"), option({ value: "notesOutsideScale" }, "Place Notes Out of Scale"), option({ value: "setDefaultScale" }, "Set Current Scale as Default"), option({ value: "alwaysFineNoteVol" }, "Always Fine Note Volume"), option({ value: "enableChannelMuting" }, "Enable Channel Muting"), option({ value: "instrumentCopyPaste" }, "Enable Copy/Paste Buttons"), option({ value: "instrumentImportExport" }, "Enable Import/Export Buttons"), option({ value: "displayBrowserUrl" }, "Enable Song Data in URL"), option({ value: "closePromptByClickoff" }, "Close prompts on click off"), option({ value: "recordingSetup" }, "Note Recording...")), optgroup({ label: "Appearance" }, option({ value: "showFifth" }, 'Highlight "Fifth" Note'), option({ value: "notesFlashWhenPlayed" }, "Notes Flash When Played (DB2)"), option({ value: "showChannels" }, "Show All Channels"), option({ value: "showScrollBar" }, "Show Octave Scroll Bar"), option({ value: "showLetters" }, "Show Piano Keys"), option({ value: "displayVolumeBar" }, "Show Playback Volume"), option({ value: "showOscilloscope" }, "Show Oscilloscope"), option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"), option({ value: "showDescription" }, "Show Description"), option({ value: "layout" }, "> Set Layout"), option({ value: "colorTheme" }, "> Set Theme")));
             this._scaleSelect = buildOptions(select(), Config.scales.map(scale => scale.name));
             this._keySelect = buildOptions(select(), Config.keys.map(key => key.name).reverse());
             this._octaveStepper = input({ type: "number", min: Config.octaveMin, max: Config.octaveMax, value: "0" });
@@ -46701,6 +46757,7 @@ You should be redirected to the song at:<br /><br />
                 const textOnIcon = ColorConfig.getComputed("--text-enabled-icon") !== "" ? ColorConfig.getComputed("--text-enabled-icon") : "✓ ";
                 const textOffIcon = ColorConfig.getComputed("--text-disabled-icon") !== "" ? ColorConfig.getComputed("--text-disabled-icon") : "　";
                 const optionCommands = [
+                    "Technical",
                     (prefs.autoPlay ? textOnIcon : textOffIcon) + "Auto Play on Load",
                     (prefs.autoFollow ? textOnIcon : textOffIcon) + "Auto Follow Playhead",
                     (prefs.enableNotePreview ? textOnIcon : textOffIcon) + "Hear Added Notes",
@@ -46712,6 +46769,8 @@ You should be redirected to the song at:<br /><br />
                     (prefs.instrumentImportExport ? textOnIcon : textOffIcon) + "Enable Import/Export Buttons",
                     (prefs.displayBrowserUrl ? textOnIcon : textOffIcon) + "Enable Song Data in URL",
                     (prefs.closePromptByClickoff ? textOnIcon : textOffIcon) + "Close Prompts on Click Off",
+                    "> Note Recording",
+                    "Appearance",
                     (prefs.showFifth ? textOnIcon : textOffIcon) + 'Highlight "Fifth" Note',
                     (prefs.notesFlashWhenPlayed ? textOnIcon : textOffIcon) + "Notes Flash When Played (DB2)",
                     (prefs.showChannels ? textOnIcon : textOffIcon) + "Show All Channels",
@@ -46723,12 +46782,18 @@ You should be redirected to the song at:<br /><br />
                     (prefs.showDescription ? textOnIcon : textOffIcon) + "Show Description",
                     "> Set Layout",
                     "> Set Theme",
-                    "> Note Recording",
                 ];
-                for (let i = 0; i < optionCommands.length; i++) {
-                    const option = this._optionsMenu.children[i + 1];
-                    if (option.textContent != optionCommands[i])
-                        option.textContent = optionCommands[i];
+                const technicalOptionGroup = this._optionsMenu.children[1];
+                for (let i = 0; i < 12; i++) {
+                    const option = technicalOptionGroup.children[i];
+                    if (option.textContent != optionCommands[i + 1])
+                        option.textContent = optionCommands[i + 1];
+                }
+                const appearanceOptionGroup = this._optionsMenu.children[2];
+                for (let i = 0; i < 12; i++) {
+                    const option = appearanceOptionGroup.children[i];
+                    if (option.textContent != optionCommands[i + 14])
+                        option.textContent = optionCommands[i + 14];
                 }
                 const channel = this._doc.song.channels[this._doc.channel];
                 const instrumentIndex = this._doc.getCurrentInstrument();
@@ -47791,6 +47856,7 @@ You should be redirected to the song at:<br /><br />
             };
             this._onTrackAreaScroll = (event) => {
                 this._doc.barScrollPos = (this._trackAndMuteContainer.scrollLeft / this._doc.getBarWidth());
+                this._doc.channelScrollPos = (this._trackAndMuteContainer.scrollTop / ChannelRow.patternHeight);
             };
             this._disableCtrlContextMenu = (event) => {
                 if (event.ctrlKey) {
@@ -47900,8 +47966,11 @@ You should be redirected to the song at:<br /><br />
                                 if (!this._doc.synth.playing)
                                     this._doc.performance.play();
                             }
-                            this._doc.synth.loopBar = -1;
-                            this._loopEditor.setLoopAt(this._doc.synth.loopBar);
+                            if (Math.floor(this._doc.synth.playhead) < this._doc.synth.loopBarStart || Math.floor(this._doc.synth.playhead) > this._doc.synth.loopBarEnd) {
+                                this._doc.synth.loopBarStart = -1;
+                                this._doc.synth.loopBarEnd = -1;
+                                this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
+                            }
                         }
                         else {
                             this.togglePlay();
@@ -47914,8 +47983,9 @@ You should be redirected to the song at:<br /><br />
                             break;
                         if (event.ctrlKey || event.metaKey) {
                             this._toggleRecord();
-                            this._doc.synth.loopBar = -1;
-                            this._loopEditor.setLoopAt(this._doc.synth.loopBar);
+                            this._doc.synth.loopBarStart = -1;
+                            this._doc.synth.loopBarEnd = -1;
+                            this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
                             event.preventDefault();
                             this.refocusStage();
                         }
@@ -47973,17 +48043,22 @@ You should be redirected to the song at:<br /><br />
                             break;
                         if (needControlForShortcuts == (event.ctrlKey || event.metaKey)) {
                             if (event.shiftKey) {
-                                if (this._doc.synth.loopBar != this._doc.bar) {
-                                    this._doc.synth.loopBar = this._doc.bar;
+                                const leftSel = Math.min(this._doc.selection.boxSelectionX0, this._doc.selection.boxSelectionX1);
+                                const rightSel = Math.max(this._doc.selection.boxSelectionX0, this._doc.selection.boxSelectionX1);
+                                if ((leftSel < this._doc.synth.loopBarStart || this._doc.synth.loopBarStart == -1)
+                                    || (rightSel > this._doc.synth.loopBarEnd || this._doc.synth.loopBarEnd == -1)) {
+                                    this._doc.synth.loopBarStart = leftSel;
+                                    this._doc.synth.loopBarEnd = rightSel;
                                     if (!this._doc.synth.playing) {
                                         this._doc.synth.snapToBar();
                                         this._doc.performance.play();
                                     }
                                 }
                                 else {
-                                    this._doc.synth.loopBar = -1;
+                                    this._doc.synth.loopBarStart = -1;
+                                    this._doc.synth.loopBarEnd = -1;
                                 }
-                                if (this._doc.bar != Math.floor(this._doc.synth.playhead) && this._doc.synth.loopBar != -1) {
+                                if (this._doc.bar != Math.floor(this._doc.synth.playhead) && this._doc.synth.loopBarStart != -1) {
                                     this._doc.synth.goToBar(this._doc.bar);
                                     this._doc.synth.snapToBar();
                                     this._doc.synth.initModFilters(this._doc.song);
@@ -47992,7 +48067,7 @@ You should be redirected to the song at:<br /><br />
                                         this._doc.selection.setChannelBar(this._doc.channel, Math.floor(this._doc.synth.playhead));
                                     }
                                 }
-                                this._loopEditor.setLoopAt(this._doc.synth.loopBar);
+                                this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
                             }
                             else {
                                 this._openPrompt("beatsPerBar");
@@ -48014,8 +48089,9 @@ You should be redirected to the song at:<br /><br />
                         event.preventDefault();
                         break;
                     case 13:
-                        this._doc.synth.loopBar = -1;
-                        this._loopEditor.setLoopAt(this._doc.synth.loopBar);
+                        this._doc.synth.loopBarStart = -1;
+                        this._doc.synth.loopBarEnd = -1;
+                        this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
                         if (event.ctrlKey || event.metaKey) {
                             this._doc.selection.insertChannel();
                         }
@@ -48025,8 +48101,9 @@ You should be redirected to the song at:<br /><br />
                         event.preventDefault();
                         break;
                     case 8:
-                        this._doc.synth.loopBar = -1;
-                        this._loopEditor.setLoopAt(this._doc.synth.loopBar);
+                        this._doc.synth.loopBarStart = -1;
+                        this._doc.synth.loopBarEnd = -1;
+                        this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
                         if (event.ctrlKey || event.metaKey) {
                             this._doc.selection.deleteChannel();
                         }
@@ -48070,8 +48147,9 @@ You should be redirected to the song at:<br /><br />
                         if (canPlayNotes)
                             break;
                         if (needControlForShortcuts == (event.ctrlKey || event.metaKey)) {
-                            this._doc.synth.loopBar = -1;
-                            this._loopEditor.setLoopAt(this._doc.synth.loopBar);
+                            this._doc.synth.loopBarStart = -1;
+                            this._doc.synth.loopBarEnd = -1;
+                            this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
                             this._doc.synth.snapToStart();
                             this._doc.synth.initModFilters(this._doc.song);
                             this._doc.synth.computeLatestModValues();
@@ -48085,14 +48163,15 @@ You should be redirected to the song at:<br /><br />
                         if (canPlayNotes)
                             break;
                         if (needControlForShortcuts == (event.ctrlKey || event.metaKey)) {
-                            if (this._doc.synth.loopBar != this._doc.bar) {
-                                this._doc.synth.loopBar = -1;
-                                this._loopEditor.setLoopAt(this._doc.synth.loopBar);
-                            }
                             this._doc.synth.goToBar(this._doc.bar);
                             this._doc.synth.snapToBar();
                             this._doc.synth.initModFilters(this._doc.song);
                             this._doc.synth.computeLatestModValues();
+                            if (Math.floor(this._doc.synth.playhead) < this._doc.synth.loopBarStart || Math.floor(this._doc.synth.playhead) > this._doc.synth.loopBarEnd) {
+                                this._doc.synth.loopBarStart = -1;
+                                this._doc.synth.loopBarEnd = -1;
+                                this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
+                            }
                             if (this._doc.prefs.autoFollow) {
                                 this._doc.selection.setChannelBar(this._doc.channel, Math.floor(this._doc.synth.playhead));
                             }
@@ -48290,11 +48369,14 @@ You should be redirected to the song at:<br /><br />
                         if (canPlayNotes)
                             break;
                         if (needControlForShortcuts == (event.ctrlKey || event.metaKey)) {
-                            this._doc.synth.loopBar = -1;
-                            this._loopEditor.setLoopAt(this._doc.synth.loopBar);
                             this._doc.synth.goToPrevBar();
                             this._doc.synth.initModFilters(this._doc.song);
                             this._doc.synth.computeLatestModValues();
+                            if (Math.floor(this._doc.synth.playhead) < this._doc.synth.loopBarStart || Math.floor(this._doc.synth.playhead) > this._doc.synth.loopBarEnd) {
+                                this._doc.synth.loopBarStart = -1;
+                                this._doc.synth.loopBarEnd = -1;
+                                this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
+                            }
                             if (this._doc.prefs.autoFollow) {
                                 this._doc.selection.setChannelBar(this._doc.channel, Math.floor(this._doc.synth.playhead));
                             }
@@ -48305,11 +48387,14 @@ You should be redirected to the song at:<br /><br />
                         if (canPlayNotes)
                             break;
                         if (needControlForShortcuts == (event.ctrlKey || event.metaKey)) {
-                            this._doc.synth.loopBar = -1;
-                            this._loopEditor.setLoopAt(this._doc.synth.loopBar);
                             this._doc.synth.goToNextBar();
                             this._doc.synth.initModFilters(this._doc.song);
                             this._doc.synth.computeLatestModValues();
+                            if (Math.floor(this._doc.synth.playhead) < this._doc.synth.loopBarStart || Math.floor(this._doc.synth.playhead) > this._doc.synth.loopBarEnd) {
+                                this._doc.synth.loopBarStart = -1;
+                                this._doc.synth.loopBarEnd = -1;
+                                this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
+                            }
                             if (this._doc.prefs.autoFollow) {
                                 this._doc.selection.setChannelBar(this._doc.channel, Math.floor(this._doc.synth.playhead));
                             }
@@ -48486,16 +48571,22 @@ You should be redirected to the song at:<br /><br />
                 this._keyboardLayout.handleKeyEvent(event, false);
             };
             this._whenPrevBarPressed = () => {
-                this._doc.synth.loopBar = -1;
-                this._loopEditor.setLoopAt(this._doc.synth.loopBar);
                 this._doc.synth.goToPrevBar();
                 this._barScrollBar.animatePlayhead();
+                if (Math.floor(this._doc.synth.playhead) < this._doc.synth.loopBarStart || Math.floor(this._doc.synth.playhead) > this._doc.synth.loopBarEnd) {
+                    this._doc.synth.loopBarStart = -1;
+                    this._doc.synth.loopBarEnd = -1;
+                    this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
+                }
             };
             this._whenNextBarPressed = () => {
-                this._doc.synth.loopBar = -1;
-                this._loopEditor.setLoopAt(this._doc.synth.loopBar);
                 this._doc.synth.goToNextBar();
                 this._barScrollBar.animatePlayhead();
+                if (Math.floor(this._doc.synth.playhead) < this._doc.synth.loopBarStart || Math.floor(this._doc.synth.playhead) > this._doc.synth.loopBarEnd) {
+                    this._doc.synth.loopBarStart = -1;
+                    this._doc.synth.loopBarEnd = -1;
+                    this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
+                }
             };
             this.togglePlay = () => {
                 if (this._doc.synth.playing) {
@@ -48847,17 +48938,22 @@ You should be redirected to the song at:<br /><br />
                 this._doc.selection.transpose(false, false);
             };
             this._loopBar = () => {
-                if (this._doc.synth.loopBar != this._doc.bar) {
-                    this._doc.synth.loopBar = this._doc.bar;
+                const leftSel = Math.min(this._doc.selection.boxSelectionX0, this._doc.selection.boxSelectionX1);
+                const rightSel = Math.max(this._doc.selection.boxSelectionX0, this._doc.selection.boxSelectionX1);
+                if ((leftSel < this._doc.synth.loopBarStart || this._doc.synth.loopBarStart == -1)
+                    || (rightSel > this._doc.synth.loopBarEnd || this._doc.synth.loopBarEnd == -1)) {
+                    this._doc.synth.loopBarStart = leftSel;
+                    this._doc.synth.loopBarEnd = rightSel;
                     if (!this._doc.synth.playing) {
                         this._doc.synth.snapToBar();
                         this._doc.performance.play();
                     }
                 }
                 else {
-                    this._doc.synth.loopBar = -1;
+                    this._doc.synth.loopBarStart = -1;
+                    this._doc.synth.loopBarEnd = -1;
                 }
-                if (this._doc.bar != Math.floor(this._doc.synth.playhead) && this._doc.synth.loopBar != -1) {
+                if (this._doc.bar != Math.floor(this._doc.synth.playhead) && this._doc.synth.loopBarStart != -1) {
                     this._doc.synth.goToBar(this._doc.bar);
                     this._doc.synth.snapToBar();
                     this._doc.synth.initModFilters(this._doc.song);
@@ -48866,7 +48962,7 @@ You should be redirected to the song at:<br /><br />
                         this._doc.selection.setChannelBar(this._doc.channel, Math.floor(this._doc.synth.playhead));
                     }
                 }
-                this._loopEditor.setLoopAt(this._doc.synth.loopBar);
+                this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
             };
             this._goFullscreen = () => {
                 this.isMobileFullscreen = !this.isMobileFullscreen;

@@ -1062,7 +1062,7 @@ var beepbox = (function (exports) {
         { name: "echo delay", pianoName: "Echo Delay", maxRawVol: Config.echoDelayRange, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: 12,
             promptName: "Instrument Echo Delay", promptDesc: ["This setting controls the echo delay of your instrument, just like the echo delay slider.", "At $LO, your instrument will have very little echo delay, and this increases up to 2 beats of delay at $HI.", "[OVERWRITING] [$LO - $HI] [~beats ÷12]"]
         },
-        { name: "chorus", pianoName: "Chorus", maxRawVol: Config.chorusRange, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: 1,
+        { name: "chorus", pianoName: "Chorus", maxRawVol: Config.chorusRange - 1, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: 1,
             promptName: "Instrument Chorus", promptDesc: ["This setting controls the chorus strength of your instrument, just like the chorus slider.", "At $LO, the chorus effect will be disabled. The strength of the chorus effect increases up to the max value, $HI.", "[OVERWRITING] [$LO - $HI]"] },
         { name: "eq filt cut", pianoName: "EQFlt Cut", maxRawVol: Config.filterSimpleCutRange - 1, newNoteVol: Config.filterSimpleCutRange - 1, forSong: false, convertRealFactor: 0, associatedEffect: 12,
             promptName: "EQ Filter Cutoff Frequency", promptDesc: ["This setting controls the filter cut position of your instrument, just like the filter cut slider.", "This setting is roughly analagous to the horizontal position of a single low-pass dot on the advanced filter editor. At lower values, a wider range of frequencies is cut off.", "[OVERWRITING] [$LO - $HI]"] },
@@ -1464,7 +1464,7 @@ var beepbox = (function (exports) {
             return (_a = EditorConfig.presetCategories[0].presets.dictionary) === null || _a === void 0 ? void 0 : _a[TypePresets === null || TypePresets === void 0 ? void 0 : TypePresets[instrument]];
         }
     }
-    EditorConfig.version = "1.1";
+    EditorConfig.version = "1.1.1";
     EditorConfig.versionDisplayName = "AbyssBox " + EditorConfig.version;
     EditorConfig.releaseNotesURL = "./patch_notes.html";
     EditorConfig.isOnMac = /^Mac/i.test(navigator.platform) || /Mac OS X/i.test(navigator.userAgent) || /^(iPhone|iPad|iPod)/i.test(navigator.platform) || /(iPhone|iPad|iPod)/i.test(navigator.userAgent);
@@ -4058,6 +4058,7 @@ var beepbox = (function (exports) {
             if (instrumentObject["spectrum"] != undefined) {
                 for (let i = 0; i < Config.spectrumControlPoints; i++) {
                     this.spectrumWave.spectrum[i] = Math.max(0, Math.min(Config.spectrumMax, Math.round(Config.spectrumMax * (+instrumentObject["spectrum"][i]) / 100)));
+                    this.spectrumWave.markCustomWaveDirty();
                 }
             }
             else {
@@ -6153,7 +6154,7 @@ var beepbox = (function (exports) {
                                 this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].unison = clamp(0, Config.unisons.length + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                             }
                             const instrument = this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator];
-                            if ((fromUltraBox && !beforeFive) && (instrument.unison == Config.unisons.length)) {
+                            if ((fromUltraBox && !beforeFour) && (instrument.unison == Config.unisons.length)) {
                                 instrument.unisonVoices = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
                                 const unisonSpreadNegative = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
                                 const unisonSpread = base64CharCodeToInt[compressed.charCodeAt(charIndex++)] + ((base64CharCodeToInt[compressed.charCodeAt(charIndex++)] + (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] * 63)) * 63);
@@ -9712,7 +9713,8 @@ var beepbox = (function (exports) {
             this.browserAutomaticallyClearsAudioBuffer = true;
             this.tempDrumSetControlPoint = new FilterControlPoint();
             this.tempFrequencyResponse = new FrequencyResponse();
-            this.loopBar = -1;
+            this.loopBarStart = -1;
+            this.loopBarEnd = -1;
             this.channels = [];
             this.tonePool = new Deque();
             this.tempMatchedPitchTones = Array(Config.maxChordSize).fill(null);
@@ -10015,10 +10017,10 @@ var beepbox = (function (exports) {
                     nextBar = this.song.barCount - 1;
                 }
             }
-            else if (this.bar == this.loopBar && !this.renderingSong) {
-                nextBar = this.bar;
+            else if (this.bar == this.loopBarEnd && !this.renderingSong) {
+                nextBar = this.loopBarStart;
             }
-            else if (this.loopRepeatCount != 0 && nextBar == this.song.loopStart + this.song.loopLength) {
+            else if (this.loopRepeatCount != 0 && nextBar == Math.max(this.loopBarEnd + 1, this.song.loopStart + this.song.loopLength)) {
                 nextBar = this.song.loopStart;
             }
             return nextBar;
@@ -10027,13 +10029,17 @@ var beepbox = (function (exports) {
             if (!this.song)
                 return;
             const samplesPerTick = this.getSamplesPerTick();
-            this.bar++;
+            if (this.loopBarEnd != this.bar)
+                this.bar++;
+            else {
+                this.bar = this.loopBarStart;
+            }
             this.beat = 0;
             this.part = 0;
             this.tick = 0;
             this.tickSampleCountdown = samplesPerTick;
             this.isAtStartOfTick = true;
-            if (this.loopRepeatCount != 0 && this.bar == this.song.loopStart + this.song.loopLength) {
+            if (this.loopRepeatCount != 0 && this.bar == Math.max(this.song.loopStart + this.song.loopLength, this.loopBarEnd)) {
                 this.bar = this.song.loopStart;
                 if (this.loopRepeatCount > 0)
                     this.loopRepeatCount--;
@@ -10138,8 +10144,10 @@ var beepbox = (function (exports) {
                 }
                 if (this.wantToSkip) {
                     let barVisited = skippedBars.includes(this.bar);
-                    if (barVisited && bufferIndex == firstSkippedBufferIndex)
+                    if (barVisited && bufferIndex == firstSkippedBufferIndex) {
+                        this.pause();
                         return;
+                    }
                     if (firstSkippedBufferIndex == -1) {
                         firstSkippedBufferIndex = bufferIndex;
                     }
