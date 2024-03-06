@@ -49958,6 +49958,7 @@ You should be redirected to the song at:<br /><br />
                 const octave = this._doc.song.channels[this._doc.channel].octave;
                 if (this._doc.synth.liveInputChannel != this._doc.channel || this._doc.synth.liveBassInputChannel != this._getBassOffsetChannel() || this._channelIsDrum != isDrum || this._channelOctave != octave || this._songKey != this._doc.song.key) {
                     this._doc.synth.liveInputChannel = this._doc.channel;
+                    this._doc.synth.liveBassInputChannel = this._getBassOffsetChannel();
                     this._channelIsDrum = isDrum;
                     this._channelOctave = octave;
                     this._songKey = this._doc.song.key;
