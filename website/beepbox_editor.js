@@ -42240,7 +42240,7 @@ You should be redirected to the song at:<br /><br />
                     if (this._renderedPitchCount != this._pitchCount) {
                         this._pianoContainer.innerHTML = "";
                         for (let i = 0; i < this._pitchCount; i++) {
-                            const pianoLabel = HTML.div({ class: "piano-label", style: "font-weight: bold; -webkit-text-stroke-width: 0; font-size: 11px; font-family: sans-serif; position: absolute; padding-left: 15px; white-space: nowrap;" });
+                            const pianoLabel = HTML.div({ class: "piano-label", style: "font-weight: bold; -webkit-text-stroke-width: 0; font-size: 11px; font-family: sans-serif; position: absolute; padding-left: 15px;" });
                             const pianoKey = HTML.div({ class: "piano-button", style: "background: gray;" }, pianoLabel);
                             this._pianoContainer.appendChild(pianoKey);
                             this._pianoLabels[i] = pianoLabel;
@@ -46725,21 +46725,10 @@ You should be redirected to the song at:<br /><br />
                     "> Set Theme",
                     "> Note Recording",
                 ];
-                for (let i = 0; i < 13; i++) {
-                    if (i == 12) {
-                        const optionGroup = this._optionsMenu.children[i + 1];
-                        for (let i = 0; i < 12; i++) {
-                            const option = optionGroup.children[i];
-                            console.log(option);
-                            if (option.textContent != optionCommands[i + 13])
-                                option.textContent = optionCommands[i + 13];
-                        }
-                    }
-                    else {
-                        const option = this._optionsMenu.children[i + 1];
-                        if (option.textContent != optionCommands[i])
-                            option.textContent = optionCommands[i];
-                    }
+                for (let i = 0; i < optionCommands.length; i++) {
+                    const option = this._optionsMenu.children[i + 1];
+                    if (option.textContent != optionCommands[i])
+                        option.textContent = optionCommands[i];
                 }
                 const channel = this._doc.song.channels[this._doc.channel];
                 const instrumentIndex = this._doc.getCurrentInstrument();
@@ -49969,7 +49958,6 @@ You should be redirected to the song at:<br /><br />
                 const octave = this._doc.song.channels[this._doc.channel].octave;
                 if (this._doc.synth.liveInputChannel != this._doc.channel || this._doc.synth.liveBassInputChannel != this._getBassOffsetChannel() || this._channelIsDrum != isDrum || this._channelOctave != octave || this._songKey != this._doc.song.key) {
                     this._doc.synth.liveInputChannel = this._doc.channel;
-                    this._doc.synth.liveBassInputChannel = this._getBassOffsetChannel();
                     this._channelIsDrum = isDrum;
                     this._channelOctave = octave;
                     this._songKey = this._doc.song.key;

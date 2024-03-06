@@ -819,7 +819,7 @@ export class SongEditor {
             option({ value: "showDescription" }, "Show Description"),
             option({ value: "layout" }, "> Set Layout"),
             option({ value: "colorTheme" }, "> Set Theme"),
-            option({ value: "recordingSetup" }, "> Note Recording"), 
+            option({ value: "recordingSetup" }, "> Note Recording"),
     );
 
     public isMobileFullscreen?: boolean;
@@ -2347,24 +2347,10 @@ export class SongEditor {
             "> Set Theme",
             "> Note Recording",
         ];
-                // todo: automatically get dropdown location instead of putting in number manually
-                for (let i: number = 0; i < 13; i++) {
-                    if(i == 12) {
-                        // Appearance dropdown
-                        const optionGroup: HTMLOptGroupElement = <HTMLOptGroupElement>this._optionsMenu.children[i + 1];
-        
-                        // how do you get the length of an optgroup?
-                        for (let i: number = 0; i < 12; i++) {
-                            const option: HTMLOptionElement = <HTMLOptionElement>optionGroup.children[i];
-                            console.log(option);
-                            if (option.textContent != optionCommands[i + 13]) option.textContent = optionCommands[i + 13];
-                        }
-                    } else {
-                        // Preferences before Appearance dropdown
-                        const option: HTMLOptionElement = <HTMLOptionElement>this._optionsMenu.children[i + 1];
-                        if (option.textContent != optionCommands[i]) option.textContent = optionCommands[i];
-                    }
-                }
+        for (let i: number = 0; i < optionCommands.length; i++) {
+            const option: HTMLOptionElement = <HTMLOptionElement>this._optionsMenu.children[i + 1];
+            if (option.textContent != optionCommands[i]) option.textContent = optionCommands[i];
+        }
 
         const channel: Channel = this._doc.song.channels[this._doc.channel];
         const instrumentIndex: number = this._doc.getCurrentInstrument();
