@@ -385,66 +385,67 @@ export class SongPerformance {
 		this._doc.synth.maintainLiveInput();
 
 		if (pitch > Piano.getBassCutoffPitch(this._doc) || this._getBassOffsetChannel() == this._doc.channel) {
-		this._updateRecordedNotes();
-		if (this._pitchesAreTemporary) {
-			this.clearAllPitches();
-			this._pitchesAreTemporary = false;
-		}
-		if (this._doc.prefs.ignorePerformedNotesNotInScale && !Config.scales[this._doc.song.scale].flags[pitch % Config.pitchesPerOctave]) {
-			return;
-		}
-		if (this._doc.synth.liveInputPitches.indexOf(pitch) == -1) {
-			this._doc.synth.liveInputPitches.push(pitch);
-			this._pitchesChanged = true;
-			while (this._doc.synth.liveInputPitches.length > Config.maxChordSize) {
-				this._doc.synth.liveInputPitches.shift();
+			this._updateRecordedNotes();
+			if (this._pitchesAreTemporary) {
+				this.clearAllPitches();
+				this._pitchesAreTemporary = false;
 			}
-			this._doc.synth.liveInputDuration = Number.MAX_SAFE_INTEGER;
+			if (this._doc.prefs.ignorePerformedNotesNotInScale && !Config.scales[this._doc.song.scale].flags[pitch % Config.pitchesPerOctave]) {
+				return;
+			}
+			if (this._doc.synth.liveInputPitches.indexOf(pitch) == -1) {
+				this._doc.synth.liveInputPitches.push(pitch);
+				this._pitchesChanged = true;
+				while (this._doc.synth.liveInputPitches.length > Config.maxChordSize) {
+					this._doc.synth.liveInputPitches.shift();
+				}
+				this._doc.synth.liveInputDuration = Number.MAX_SAFE_INTEGER;
 			
-			if (this._recordingChange != null) {
-				const recentIndex: number = this._recentlyAddedPitches.indexOf(pitch);
-				if (recentIndex != -1) {
-					// If the latest pitch is already in _recentlyAddedPitches, remove it before adding it back at the end.
-					this._recentlyAddedPitches.splice(recentIndex, 1);
+				if (this._recordingChange != null) {
+					const recentIndex: number = this._recentlyAddedPitches.indexOf(pitch);
+					if (recentIndex != -1) {
+						// If the latest pitch is already in _recentlyAddedPitches, remove it before adding it back at the end.
+						this._recentlyAddedPitches.splice(recentIndex, 1);
+					}
+					this._recentlyAddedPitches.push(pitch);
+					while (this._recentlyAddedPitches.length > Config.maxChordSize * 4) {
+						this._recentlyAddedPitches.shift();
+					}
 				}
-				this._recentlyAddedPitches.push(pitch);
-				while (this._recentlyAddedPitches.length > Config.maxChordSize * 4) {
-					this._recentlyAddedPitches.shift();
+			}
+		}
+		else {
+			this._updateRecordedBassNotes();
+			if (this._bassPitchesAreTemporary) {
+				this.clearAllBassPitches();
+				this._bassPitchesAreTemporary = false;
+			}
+			if (this._doc.prefs.ignorePerformedNotesNotInScale && !Config.scales[this._doc.song.scale].flags[pitch % Config.pitchesPerOctave]) {
+				return;
+			}
+			if (this._doc.synth.liveBassInputPitches.indexOf(pitch) == -1) {
+				this._doc.synth.liveBassInputPitches.push(pitch);
+				this._bassPitchesChanged = true;
+				while (this._doc.synth.liveBassInputPitches.length > Config.maxChordSize) {
+					this._doc.synth.liveBassInputPitches.shift();
+				}
+				this._doc.synth.liveBassInputDuration = Number.MAX_SAFE_INTEGER;
+			
+				if (this._recordingChange != null) {
+					const recentIndex: number = this._recentlyAddedPitches.indexOf(pitch);
+					if (recentIndex != -1) {
+						// If the latest pitch is already in _recentlyAddedPitches, remove it before adding it back at the end.
+						this._recentlyAddedBassPitches.splice(recentIndex, 1);
+					}
+					this._recentlyAddedBassPitches.push(pitch);
+					while (this._recentlyAddedBassPitches.length > Config.maxChordSize * 4) {
+						this._recentlyAddedBassPitches.shift();
+					}
 				}
 			}
 		}
 	}
-	else {
-		this._updateRecordedBassNotes();
-		if (this._bassPitchesAreTemporary) {
-			this.clearAllBassPitches();
-			this._bassPitchesAreTemporary = false;
-		}
-		if (this._doc.prefs.ignorePerformedNotesNotInScale && !Config.scales[this._doc.song.scale].flags[pitch % Config.pitchesPerOctave]) {
-			return;
-		}
-		if (this._doc.synth.liveBassInputPitches.indexOf(pitch) == -1) {
-			this._doc.synth.liveBassInputPitches.push(pitch);
-			this._bassPitchesChanged = true;
-			while (this._doc.synth.liveBassInputPitches.length > Config.maxChordSize) {
-				this._doc.synth.liveBassInputPitches.shift();
-			}
-			this._doc.synth.liveBassInputDuration = Number.MAX_SAFE_INTEGER;
-
-			if (this._recordingChange != null) {
-				const recentIndex: number = this._recentlyAddedPitches.indexOf(pitch);
-				if (recentIndex != -1) {
-					// If the latest pitch is already in _recentlyAddedPitches, remove it before adding it back at the end.
-					this._recentlyAddedBassPitches.splice(recentIndex, 1);
-				}
-				this._recentlyAddedBassPitches.push(pitch);
-				while (this._recentlyAddedBassPitches.length > Config.maxChordSize * 4) {
-					this._recentlyAddedBassPitches.shift();
-				}
-			}
-		}
-	}
-}
+	
 	public removePerformedPitch(pitch: number): void {
 		if (pitch > Piano.getBassCutoffPitch(this._doc) || this._getBassOffsetChannel() == this._doc.channel) {
 		this._updateRecordedNotes();
@@ -485,6 +486,7 @@ export class SongPerformance {
 		const octave: number = this._doc.song.channels[this._doc.channel].octave;
 		if (this._doc.synth.liveInputChannel != this._doc.channel || this._doc.synth.liveBassInputChannel != this._getBassOffsetChannel() || this._channelIsDrum != isDrum || this._channelOctave != octave || this._songKey != this._doc.song.key) {
 			this._doc.synth.liveInputChannel = this._doc.channel;
+			this._doc.synth.liveBassInputChannel = this._getBassOffsetChannel();
 			this._channelIsDrum = isDrum;
 			this._channelOctave = octave;
 			this._songKey = this._doc.song.key;
