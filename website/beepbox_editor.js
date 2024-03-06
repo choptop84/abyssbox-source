@@ -46790,7 +46790,7 @@ You should be redirected to the song at:<br /><br />
                         option.textContent = optionCommands[i + 1];
                 }
                 const appearanceOptionGroup = this._optionsMenu.children[2];
-                for (let i = 0; i < 12; i++) {
+                for (let i = 0; i < 11; i++) {
                     const option = appearanceOptionGroup.children[i];
                     if (option.textContent != optionCommands[i + 14])
                         option.textContent = optionCommands[i + 14];

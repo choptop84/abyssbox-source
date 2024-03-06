@@ -2366,7 +2366,7 @@ export class SongEditor {
                 const appearanceOptionGroup: HTMLOptGroupElement = <HTMLOptGroupElement>this._optionsMenu.children[2];
         
                 // how do you get the length of an optgroup?
-                for (let i: number = 0; i < 12; i++) {
+                for (let i: number = 0; i < 11; i++) { // Hi choptop84, past you here. If you add a new preference to the list, you need to change the number on the left, yeah the one that says 11 rn. That.
                     const option: HTMLOptionElement = <HTMLOptionElement>appearanceOptionGroup.children[i];
                     if (option.textContent != optionCommands[i + 14]) option.textContent = optionCommands[i + 14];
         }
