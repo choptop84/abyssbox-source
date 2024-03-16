@@ -5131,7 +5131,7 @@ export class SongEditor {
                 window.open("https://tinyurl.com/api-create.php?url=" + encodeURIComponent(new URL("#" + this._doc.song.toBase64String(), location.href).href));
                 break;
             case "viewPlayer":
-                location.href = "player/index.html#song=" + this._doc.song.toBase64String();
+                location.href = "player/#song=" + this._doc.song.toBase64String();
                 break;
             case "copyEmbed":
                 this._copyTextToClipboard(`<iframe width="384" height="60" style="border: none;" src="${new URL("player/#song=" + this._doc.song.toBase64String(), location.href).href}"></iframe>`);

@@ -65,7 +65,6 @@ let doReload = false;
 		option({ value: "brucebox" }, "Brucebox"),
 		option({ value: "shitbox 3.0" }, "Shitbox 1.0/3.0"),
 		option({ value: "shitbox 2.0" }, "Shitbox 2.0"),
-		option({ value: "shitbox4" }, "shitbox4"),
 		option({ value: "nerdbox" }, "NerdBox"),
 		option({ value: "zefbox" }, "Zefbox"),
 		option({ value: "cardboardbox classic" }, "Cardboardbox"),

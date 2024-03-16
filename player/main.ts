@@ -6,7 +6,7 @@ import { NotePin, Note, Pattern, Instrument, Channel, Synth } from "../synth/syn
 import "./style";
 import { oscilascopeCanvas } from "../global/Oscilascope";
 import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
-//import { SongPlayerLayout } from "./Layout";
+import { SongPlayerLayout } from "./Layout";
 
 	const {a, button, div, h1, input, canvas, form, label,h2} = HTML;
 	const {svg, circle, rect, path} = SVG;
@@ -34,10 +34,10 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 	}
 
 	const closePrompt: HTMLButtonElement = button({class:"closePrompt",style:"width: 32px; height: 32px; float: right; position: absolute;top: 8px;right: 8px;"});
-	const _okayButton: HTMLButtonElement = button({class: "okayButton", style: "width:45%;"}, "Okay");
+	const _okayButton: HTMLButtonElement = button({class: "okayButton", style: "width:45%; height: 32px;"}, "Okay");
 
 	const _form: HTMLFormElement = form({style: "display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;"},
-			label({class: "layout-option",style:"width:90px;"},
+			label({class: "layout-option",style:"width:90px; color: var(--secondary-text)"},
 				input({type: "radio", name: "spLayout", value: "classic",style:"display:none;"}),
 				SVG(`\
 					<svg viewBox="-1 -1 28 22">
@@ -56,7 +56,7 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 				`),
 				div("Classic"),
 			),
-			label({class: "layout-option",style:"width:90px;"},
+			label({class: "layout-option",style:"width:90px; color: var(--secondary-text)"},
 				input({type: "radio", name: "spLayout", value: "top",style:"display:none;"}),
 				SVG(`\
 					<svg viewBox="-1 -1 28 22">
@@ -75,6 +75,45 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 				`),
 				div("Top"),
 			),
+			label({class: "layout-option",style:"width:90px; color: var(--secondary-text)"},
+				input({type: "radio", name: "spLayout", value: "shitbox4", style:"display:none;"}),
+				SVG(`\
+					<svg viewBox="-1 -1 28 22">
+						<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
+						<rect x="2" y="15" width="22" height="3" fill="currentColor"/>
+
+						<rect x="2" y="2"  width="22" height="1" fill="currentColor" style="transform: skew(0.1deg,10deg);"/>
+						<rect x="2" y="3"  width="1"  height="5" fill="currentColor" style="transform: skew(0.1deg,10deg);"/>
+						<rect x="23" y="3" width="1" height="5" fill="currentColor" style="transform: skew(0.1deg,10deg);"/>
+						<rect x="2" y="8"  width="22" height="1" fill="currentColor" style="transform: skew(0.1deg,10deg);"/>
+	
+						<rect x="2" y="6" width="22" height="1" fill="currentColor" style="transform: skew(0.1deg,10deg);"/>
+						<rect x="2" y="4" width="22" height="1" fill="currentColor" style="transform: skew(0.1deg,10deg);"/>
+					</svg>
+				`),
+				div("shitBox4"),
+			),
+			label({class: "layout-option",style:"width:90px; color: var(--secondary-text)"},
+				input({type: "radio", name: "spLayout", value: "boxbeep", style:"display:none;"}),
+				SVG(`\
+				<svg viewBox="-1 -1 28 22">
+				<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
+					<rect x="2" y="3" width="22" height="1" fill="currentColor"/>
+					<rect x="2" y="4" width="1" height="7" fill="currentColor"/>
+					<rect x="23" y="4" width="1" height="7" fill="currentColor"/>
+					<rect x="2" y="11" width="22" height="1" fill="currentColor"/>
+
+					<rect x="2" y="5" width="18" height="1" fill="currentColor"/>
+					<rect x="2" y="7" width="18" height="1" fill="currentColor"/>
+					<rect x="2" y="9" width="18" height="1" fill="currentColor"/>
+
+					<rect x="21" y="5" width="1" height="5" fill="currentColor"/>
+
+					<rect x="2" y="15" width="22" height="3" fill="currentColor"/>
+				</svg>
+				`),
+				div("BoxBeep"),
+			),
 		);
 
 		const layoutContainer: HTMLDivElement = div({class: "prompt noSelection", style: "width: 300px; margin: auto;text-align: center;background: var(--editor-background);border-radius: 15px;border: 4px solid var(--ui-widget-background);color: var(--primary-text);padding: 20px;display: flex;flex-direction: column;position: relative;box-shadow: 5px 5px 20px 10px rgba(0,0,0,0.5);"},
@@ -87,7 +126,7 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 		);
 
 	let titleText: HTMLHeadingElement = h1({ style: "flex-grow: 1; margin: 0 1px; margin-left: 10px; overflow: hidden;" }, "");
-		let layoutStuffs: HTMLButtonElement = button({style: "margin: 0 4px; height: 42px; width: 90px;"}, "> Layouts");
+		let layoutStuffs: HTMLButtonElement = button({style: "margin: 0 4px; height: 42px; width: 90px;"}, "Layouts");
 		let editLink: HTMLAnchorElement = a({target: "_top", style: "margin: 0 4px;"}, "✎ Edit");
 		let copyLink: HTMLAnchorElement = a({href: "javascript:void(0)", style: "margin: 0 4px;"}, "⎘ Copy URL");
 		let shareLink: HTMLAnchorElement = a({href: "javascript:void(0)", style: "margin: 0 4px;"}, "⤳ Share");
@@ -142,7 +181,7 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 	);
 	const promptContainer: HTMLDivElement = div({class:"promptContainer",style:"display:none; backdrop-filter: saturate(1.5) blur(4px); width: 100%; height: 100%; position: fixed; z-index: 999; display: flex; justify-content: center; align-items: center;"});
 	promptContainer.style.display = "none";
-	const songPlayerContainer: HTMLDivElement = div({class:"songPlayerContainer",style:"display:grid; grid-template-areas: 'visualizer visualizer' 'control-center control-center'; grid-template-rows: 92.6vh 20vh; grid-template-columns: minmax(0px,0px);"});
+	const songPlayerContainer: HTMLDivElement = div({class:"songPlayerContainer"});
 	songPlayerContainer.appendChild(visualizationContainer);
 	songPlayerContainer.appendChild(
 			div({class: "control-center",style: `flex-shrink: 0; height: 20vh; min-height: 22px; max-height: 70px; display: flex; align-items: center; grid-area: control-center;`},
@@ -210,7 +249,7 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 		synth.setSong(songString);
 		synth.snapToStart();
 		const updatedSongString: string = synth.song!.toBase64String();
-		editLink.href = "../index.html#" + updatedSongString;
+		editLink.href = "../#" + updatedSongString;
 		//@jummbus - these lines convert old url vers loaded into the player to the new url ver. The problem is, if special chars are included,
 		// they appear to get double-encoded (e.g. the '%' in %20 is encoded again), which breaks the link. Disabled for now until I have a chance
 		// to look into it more.
@@ -341,6 +380,8 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 		renderPlayButton();
 	}
 	
+			// I know you're blind so I'll put comments before and after these events so you can easily spot them later. No you don't need to thank me :eeheehee:
+
 	function onLayoutButton(): void {
 		promptContainer.style.display = "flex";
 	}
@@ -350,8 +391,11 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 	}
 	
 	function onLayoutPicked(): void {
+		SongPlayerLayout.setLayout((<any> _form.elements)["spLayout"].value);
 		promptContainer.style.display = "none";
 	}
+
+		// The end of the layout event code.
 
 	function onToggleLoop(): void {
 		if (synth.loopRepeatCount == -1) {
@@ -395,7 +439,7 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 	
 	function onTimelineCursorMove(mouseX: number): void {
 		if (draggingPlayhead && synth.song != null) {
-			const boundingRect: ClientRect = visualizationContainer.getBoundingClientRect();
+			const boundingRect: DOMRect = visualizationContainer.getBoundingClientRect();
 			synth.playhead = synth.song.barCount * (mouseX - boundingRect.left) / (boundingRect.right - boundingRect.left);
 			synth.computeLatestModValues();
 			renderPlayhead();
@@ -415,11 +459,12 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 		
 		if (synth.song != null) {
 			let pos: number = synth.playhead / synth.song.barCount;
-			playhead.style.left = (timelineWidth * pos) + "px";
+			playhead.style.left = (timelineWidth * pos) + "px"; 
 				
-			const boundingRect: ClientRect = visualizationContainer.getBoundingClientRect();
-			visualizationContainer.scrollLeft = pos * (timelineWidth - boundingRect.width);
+			const boundingRect: DOMRect = visualizationContainer.getBoundingClientRect();
+				visualizationContainer.scrollLeft = pos * (timelineWidth - boundingRect.width); 
 
+			// this is note flash shit so don't worry bout it
 			if (notesFlashWhenPlayed) {
 				const playheadBar: number = Math.floor(synth.playhead);
 				const modPlayhead: number = synth.playhead - playheadBar;
@@ -463,7 +508,7 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 		timeline.innerHTML = "";
 		if (synth.song == null) return;
 			
-		const boundingRect: ClientRect = visualizationContainer.getBoundingClientRect();
+		const boundingRect: DOMRect = visualizationContainer.getBoundingClientRect();
 			
 		let timelineHeight: number;
 		let windowOctaves: number;
