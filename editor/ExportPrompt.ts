@@ -303,6 +303,9 @@ export class ExportPrompt implements Prompt {
         else if (type == "mp3") {
             this.synth.samplesPerSecond = 44100; // Use consumer CD standard sample rate for .mp3 export.
         }
+        /*else if (type == "ogg") {
+            this.synth.samplesPerSecond = 44100; // Wikipedia says ogg typically uses 44.1 kHz.
+        } */
         else {
             throw new Error("Unrecognized file export type chosen!");
         }

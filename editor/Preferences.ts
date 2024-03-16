@@ -40,6 +40,7 @@ export class Preferences {
 	public showDescription: boolean;
 	public closePromptByClickoff: boolean;
 	public notesFlashWhenPlayed: boolean;
+	public spLayout: string;
 
 	constructor() {
 		this.reload();
@@ -91,6 +92,7 @@ export class Preferences {
 			window.localStorage.removeItem("fullScreen");
 		}
 		this.closePromptByClickoff = window.localStorage.getItem("closePromptByClickoff") != "false";
+		this.spLayout = window.localStorage.getItem("spLayout") || "small";
 	}
 	
 	public save(): void {
@@ -129,5 +131,6 @@ export class Preferences {
 		window.localStorage.setItem("volume", String(this.volume));
 		window.localStorage.setItem("visibleOctaves", String(this.visibleOctaves));
 		window.localStorage.setItem("closePromptByClickoff", this.closePromptByClickoff ? "true" : "false");
+		window.localStorage.setItem("spLayout", this.spLayout);
 	}
 }

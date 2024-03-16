@@ -3,18 +3,19 @@
 import { Dictionary, DictionaryArray, EnvelopeType, InstrumentType, Transition, Chord, Envelope, Config } from "../synth/SynthConfig";
 import { ColorConfig } from "../editor/ColorConfig";
 import { NotePin, Note, Pattern, Instrument, Channel, Synth } from "../synth/synth";
-import { oscilascopeCanvas } from "../global/Oscilascope";
 import "./style";
+import { oscilascopeCanvas } from "../global/Oscilascope";
 import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
+//import { SongPlayerLayout } from "./Layout";
 
-	const {a, button, div, h1, input, canvas} = HTML;
+	const {a, button, div, h1, input, canvas, form, label,h2} = HTML;
 	const {svg, circle, rect, path} = SVG;
 
 	const isMobile: boolean = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|android|ipad|playbook|silk/i.test(navigator.userAgent);
 
 	const colorTheme: string | null = getLocalStorage("colorTheme");
 	ColorConfig.setTheme(colorTheme === null ? "AbyssBox Classic" : colorTheme);
-	
+
 	let prevHash: string | null = null;
 	let id: string = ((Math.random() * 0xffffffff) >>> 0).toString(16);
 	let pauseButtonDisplayed: boolean = false;
@@ -31,12 +32,68 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 		oscilascope.canvas.style.display = "none";
 		synth.oscEnabled = false;
 	}
+
+	const closePrompt: HTMLButtonElement = button({class:"closePrompt",style:"width: 32px; height: 32px; float: right; position: absolute;top: 8px;right: 8px;"});
+	const _okayButton: HTMLButtonElement = button({class: "okayButton", style: "width:45%;"}, "Okay");
+
+	const _form: HTMLFormElement = form({style: "display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;"},
+			label({class: "layout-option",style:"width:90px;"},
+				input({type: "radio", name: "spLayout", value: "classic",style:"display:none;"}),
+				SVG(`\
+					<svg viewBox="-1 -1 28 22">
+					<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
+					<rect x="2" y="3" width="22" height="1" fill="currentColor"/>
+					<rect x="2" y="4" width="1" height="7" fill="currentColor"/>
+					<rect x="23" y="4" width="1" height="7" fill="currentColor"/>
+					<rect x="2" y="11" width="22" height="1" fill="currentColor"/>
+
+					<rect x="2" y="5" width="22" height="1" fill="currentColor"/>
+					<rect x="2" y="7" width="22" height="1" fill="currentColor"/>
+					<rect x="2" y="9" width="22" height="1" fill="currentColor"/>
+
+					<rect x="2" y="15" width="22" height="3" fill="currentColor"/>
+					</svg>
+				`),
+				div("Classic"),
+			),
+			label({class: "layout-option",style:"width:90px;"},
+				input({type: "radio", name: "spLayout", value: "top",style:"display:none;"}),
+				SVG(`\
+					<svg viewBox="-1 -1 28 22">
+						<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
+						<rect x="2" y="2" width="22" height="3" fill="currentColor"/>
+
+						<rect x="2" y="8" width="22" height="1" fill="currentColor"/>
+						<rect x="2" y="9" width="1" height="7" fill="currentColor"/>
+						<rect x="23" y="9" width="1" height="7" fill="currentColor"/>
+						<rect x="2" y="16" width="22" height="1" fill="currentColor"/>
+	
+						<rect x="2" y="10" width="22" height="1" fill="currentColor"/>
+						<rect x="2" y="12" width="22" height="1" fill="currentColor"/>
+						<rect x="2" y="14" width="22" height="1" fill="currentColor"/>
+					</svg>
+				`),
+				div("Top"),
+			),
+		);
+
+		const layoutContainer: HTMLDivElement = div({class: "prompt noSelection", style: "width: 300px; margin: auto;text-align: center;background: var(--editor-background);border-radius: 15px;border: 4px solid var(--ui-widget-background);color: var(--primary-text);padding: 20px;display: flex;flex-direction: column;position: relative;box-shadow: 5px 5px 20px 10px rgba(0,0,0,0.5);"},
+			div({class:"promptTitle"}, h2({class:"layoutExt",style:"text-align: inherit;"}, ""), h2({class:"layoutTitle"}, "Layout")),
+				_form,
+				div({style: "margin-top: 1em;"},
+				_okayButton,
+				),
+				closePrompt,
+		);
+
 	let titleText: HTMLHeadingElement = h1({ style: "flex-grow: 1; margin: 0 1px; margin-left: 10px; overflow: hidden;" }, "");
+		let layoutStuffs: HTMLButtonElement = button({style: "margin: 0 4px; height: 42px; width: 90px;"}, "> Layouts");
 		let editLink: HTMLAnchorElement = a({target: "_top", style: "margin: 0 4px;"}, "✎ Edit");
 		let copyLink: HTMLAnchorElement = a({href: "javascript:void(0)", style: "margin: 0 4px;"}, "⎘ Copy URL");
 		let shareLink: HTMLAnchorElement = a({href: "javascript:void(0)", style: "margin: 0 4px;"}, "⤳ Share");
 		let fullscreenLink: HTMLAnchorElement = a({target: "_top", style: "margin: 0 4px;"}, "⇱ Fullscreen");
-	
+		//let shortenSongLink: HTMLAnchorElement = a({target: "_top", style: "margin: 0 4px;"}, "… Shorten URL");
+
 	let draggingPlayhead: boolean = false;
 		const playButton: HTMLButtonElement = button({style: "width: 100%; height: 100%; max-height: 50px;"});
 		const playButtonContainer: HTMLDivElement = div({class: "playButtonContainer",style: "flex-shrink: 0; display: flex; padding: 2px; width: 80px; height: 100%; box-sizing: border-box; align-items: center;"},
@@ -60,10 +117,10 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 		zoomIcon,
 	);
 	
-		const timeline: SVGSVGElement = svg({style: "min-width: 0; min-height: 0; touch-action: pan-y pinch-zoom;"});
+		const timeline: SVGSVGElement = svg({class: "timeline",style: "min-width: 0; min-height: 0; touch-action: pan-y pinch-zoom;"});
 		const playhead: HTMLDivElement = div({class: "playhead",style: `position: absolute; left: 0; top: 0; width: 2px; height: 100%; background: ${ColorConfig.playhead}; pointer-events: none;`});
-		const timelineContainer: HTMLDivElement = div({class: "timeline",style: "display: flex; flex-grow: 1; flex-shrink: 1; position: relative;"}, timeline, playhead);
-		const visualizationContainer: HTMLDivElement = div({class: "visualizer",style: "display: flex; flex-grow: 1; flex-shrink: 1; height: 0; position: relative; align-items: center; overflow: hidden;"}, timelineContainer);
+		const timelineContainer: HTMLDivElement = div({class: "timelineContainer",style: "display: flex; flex-grow: 1; flex-shrink: 1; position: relative;"}, timeline, playhead);
+		const visualizationContainer: HTMLDivElement = div({class: "visualizer",style: "display: flex; flex-grow: 1; flex-shrink: 1; position: relative; align-items: center; overflow: hidden; grid-area: visualizer;"}, timelineContainer);
 		let noteFlashElementsPerBar: (SVGPathElement[])[];
 		let currentNoteFlashElements: SVGPathElement[] = [];
 		let currentNoteFlashBar: number = -1;
@@ -83,9 +140,12 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 		outVolumeBar,
 		outVolumeCap,
 	);
-	document.body.appendChild(visualizationContainer);
-	document.body.appendChild(
-			div({class: "control-center",style: `flex-shrink: 0; height: 20vh; min-height: 22px; max-height: 70px; display: flex; align-items: center;`},
+	const promptContainer: HTMLDivElement = div({class:"promptContainer",style:"display:none; backdrop-filter: saturate(1.5) blur(4px); width: 100%; height: 100%; position: fixed; z-index: 999; display: flex; justify-content: center; align-items: center;"});
+	promptContainer.style.display = "none";
+	const songPlayerContainer: HTMLDivElement = div({class:"songPlayerContainer",style:"display:grid; grid-template-areas: 'visualizer visualizer' 'control-center control-center'; grid-template-rows: 92.6vh 20vh; grid-template-columns: minmax(0px,0px);"});
+	songPlayerContainer.appendChild(visualizationContainer);
+	songPlayerContainer.appendChild(
+			div({class: "control-center",style: `flex-shrink: 0; height: 20vh; min-height: 22px; max-height: 70px; display: flex; align-items: center; grid-area: control-center;`},
 			playButtonContainer,
 			loopButton,
 			volumeIcon,
@@ -94,12 +154,18 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 			volumeBarContainer,
 			oscilascope.canvas, //make it auto remove itself later
 			titleText,
+			//layoutDropdown,
+			layoutStuffs,
 			editLink,
 			copyLink,
 			shareLink,
 			fullscreenLink,
+			//shortenSongLink,
 		),
 	);
+	document.body.appendChild(songPlayerContainer);
+	songPlayerContainer.appendChild(promptContainer);
+	promptContainer.appendChild(layoutContainer);
 	
 	// Some browsers have an option to "block third-party cookies" (it's enabled by
 	// default in icognito Chrome windows) that throws an error on trying to access
@@ -144,7 +210,7 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 		synth.setSong(songString);
 		synth.snapToStart();
 		const updatedSongString: string = synth.song!.toBase64String();
-		editLink.href = "../#" + updatedSongString;
+		editLink.href = "../index.html#" + updatedSongString;
 		//@jummbus - these lines convert old url vers loaded into the player to the new url ver. The problem is, if special chars are included,
 		// they appear to get double-encoded (e.g. the '%' in %20 is encoded again), which breaks the link. Disabled for now until I have a chance
 		// to look into it more.
@@ -275,6 +341,18 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 		renderPlayButton();
 	}
 	
+	function onLayoutButton(): void {
+		promptContainer.style.display = "flex";
+	}
+
+	function onExitButton(): void {
+		promptContainer.style.display = "none";
+	}
+	
+	function onLayoutPicked(): void {
+		promptContainer.style.display = "none";
+	}
+
 	function onToggleLoop(): void {
 		if (synth.loopRepeatCount == -1) {
 			synth.loopRepeatCount = 0;
@@ -608,6 +686,9 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 	timeline.addEventListener("touchend", onTimelineCursorUp);
 	timeline.addEventListener("touchcancel", onTimelineCursorUp);
 	
+	layoutStuffs.addEventListener("click", onLayoutButton);
+	closePrompt.addEventListener("click", onExitButton);
+	_okayButton.addEventListener("click", onLayoutPicked);
 	playButton.addEventListener("click", onTogglePlay);
 	loopButton.addEventListener("click", onToggleLoop);
 	volumeSlider.addEventListener("input", onVolumeChange);
@@ -620,6 +701,6 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 	renderLoopIcon();
 	renderZoomIcon();
 	renderPlayButton();
-	
+
 	// When compiling synth.ts as a standalone module named "beepbox", expose these classes as members to JavaScript:
 		export {Dictionary, DictionaryArray, EnvelopeType, InstrumentType, Transition, Chord, Envelope, Config, NotePin, Note, Pattern, Instrument, Channel, Synth};

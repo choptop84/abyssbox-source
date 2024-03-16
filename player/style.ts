@@ -7,12 +7,37 @@ document.head.appendChild(HTML.style({type: "text/css"}, `
 		color: ${ColorConfig.primaryText};
 		background: ${ColorConfig.editorBackground};
 	}
+	songPlayerContainer {
+		display:grid; 
+		grid-template-areas: 'visualizer visualizer' 'control-center control-center'; 
+		grid-template-rows: 92.6vh 7.4vh; 
+		grid-template-columns: minmax(0px,0px);
+	}
+	.layout-option {
+		width: 25%;
+	}
 	h1 {
 		font-weight: bold;
 		font-size: 14px;
 		line-height: 22px;
 		text-align: initial;
 		margin: 0;
+	}
+	button.closePrompt::before {
+		content: "";
+		position: absolute;
+		width: var(--button-size);
+		height: var(--button-size);
+		left: 0;
+		top: 0;
+		pointer-events: none;
+		background: currentColor;
+		mask-image: var(--close-symbol);
+		mask-repeat: no-repeat;
+		mask-position: center;
+		-webkit-mask-image: var(--close-symbol);
+		-webkit-mask-repeat: no-repeat;
+		-webkit-mask-position: center;
 	}
 	a {
 		font-weight: bold;

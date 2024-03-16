@@ -2743,6 +2743,11 @@ var beepbox = (function (exports) {
 			--note-flash: #ffffff;
 			--note-flash-secondary: #ffffff77;
 				}
+
+				.promptContainerBG::before {
+					box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
+				}
+
 				/* sets background image */
 				body {
 				background-image: url("https://choptop84.github.io/abyssbox-source/website/stripesbg_light.gif") !important;
@@ -3067,6 +3072,22 @@ var beepbox = (function (exports) {
 	
 
 		/* Frutiger Aero Icons */
+
+		.beepboxEditor .promptContainer::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: #fff0;
+			opacity: 0.5;
+			display: flex;
+		}
+
+		div.promptContainerBG {
+			display: none;
+		}
 
 		div.mute-button::before {
 			background: #fff0 !important;
@@ -4328,6 +4349,22 @@ var beepbox = (function (exports) {
 		  --stop-symbol:url("https://choptop84.github.io/choptop84s-image-repository/stopsign.png");
 		  }
 
+		  .beepboxEditor .promptContainer::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: var(#2e538c);
+			opacity: 0.5;
+			display: flex;
+		}
+
+		div.promptContainerBG {
+			display: none;
+		}
+
 		  button.playButton::before {
 
 			background-image: url("https://choptop84.github.io/choptop84s-image-repository/Greenflag.png") !important;
@@ -4643,6 +4680,22 @@ var beepbox = (function (exports) {
 			--disabled-note-primary: #ff6680;
 			--disabled-note-secondary: #ff3355;
 		   }
+
+		   .beepboxEditor .promptContainer::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: var(--editor-background);
+			opacity: 0.5;
+			display: flex;
+		}
+
+		div.promptContainerBG {
+			display: none;
+		}
 
 		   * {
 		   --play-symbol:url("https://choptop84.github.io/choptop84s-image-repository/Greenflag.png");
@@ -5117,6 +5170,22 @@ var beepbox = (function (exports) {
 					--text-enabled-icon:❤️ ;
 					}
 			
+					.beepboxEditor .promptContainer::before {
+						content: "";
+						position: absolute;
+						top: 0;
+						left: 0;
+						width: 100%;
+						height: 100%;
+						background: var(--editor-background);
+						opacity: 0.5;
+						display: flex;
+					}
+			
+					div.promptContainerBG {
+						display: none;
+					}
+
 			/* sets background image */
 			body {
 			background-image: url("https://cdn.discordapp.com/attachments/804372822931668994/1165384144948305960/spr_battlebg_1.png") !important;
@@ -5328,6 +5397,10 @@ var beepbox = (function (exports) {
 					 image-rendering: pixelated !important;                 /* Future browsers */
 					 image-rendering: optimizeSpeed !important;             /* IE */
 
+				}
+		
+				div.promptContainerBG {
+					display: none;
 				}
 
 				html {
@@ -5909,7 +5982,6 @@ var beepbox = (function (exports) {
 
 			`,
         "Terminal 2.0 (AB)": `
-
 			:root { 
 			--page-margin: black; 
 			--editor-background: black; 
@@ -6030,53 +6102,11 @@ var beepbox = (function (exports) {
 			--note-flash: #a4ff82; 
 			--note-flash-secondary: #dffbd57a; }
 			
-						.beepboxEditor button,
-						button.playButton,
-						button.pauseButton, 
-						button.recordButton, 
-						button.stopButton,
-						button.nextBarButton, 
-						button.prevBarButton, 
-						button.copyButton, 
-						button.pasteButton, 
-						button.exportInstrumentButton, 
-						button.importInstrumentButton,
-						.beepboxEditor select, 
-						.beepboxEditor .select2-selection__rendered {
-							background-image: url("https://choptop84.github.io/choptop84s-image-repository/lines2.png") !important;
-							background-size: 75% !important;
-							}
-			
-						.beepboxEditor .playButton::before,
-						.beepboxEditor .pauseButton::before, 
-						.beepboxEditor .recordButton::before, 
-						.beepboxEditor .stopButton::before,
-						.beepboxEditor .nextBarButton::before, 
-						.beepboxEditor .prevBarButton::before, 
-						.beepboxEditor .copyButton::before, 
-						.beepboxEditor .pasteButton::before,
-						.beepboxEditor .copyPatternButton::before, 
-						.beepboxEditor .pastePatternButton::before,
-						.beepboxEditor .undoButton::before,
-						.beepboxEditor .redoButton::before,
-						.beepboxEditor .insertChannelButton::before,
-						.beepboxEditor .deleteChannelButton::before,
-						.beepboxEditor .selectAllButton::before,
-						.beepboxEditor .duplicateButton::before,
-						.beepboxEditor .notesUpButton::before,
-						.beepboxEditor .notesDownButton::before,
-						.beepboxEditor .loopBarButton::before,
-						.beepboxEditor .menu.file::before,
-						.beepboxEditor .menu.edit::before,
-						.beepboxEditor .menu.preferences::before,
-						.beepboxEditor .volume-speaker,
-						.beepboxEditor .mute-button::before,
-						.beepboxEditor .mute-button.modMute::before,
-						div.noSelection  {
-							border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/lines2.png") !important;
-							border-image-width: 46% !important;
-							}
-			
+			.overlay {
+				background-image: url("https://choptop84.github.io/choptop84s-image-repository/lines2.png") !important;
+				background-size: 10%;
+			}
+
 						@font-face {
 					   font-family: "Workbench";
 					   src:
@@ -6098,18 +6128,9 @@ var beepbox = (function (exports) {
 								opacity: 70%;
 							}
 			
-						.beepboxEditor input[type="range"]::-moz-range-thumb {
-							border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/lines2.png") !important;
-							border-image-width: 46% !important;
-						}    
-			
 						.modTitle::before {
 							content: "> AbyssBox Terminal 2.0" !important;
 						}
-
-						div.channelBox {
-						background-image: url("https://choptop84.github.io/choptop84s-image-repository/lines2.png") !important;
-					  }
 			`,
         "2012 Video Tutorial": `
 			:root {
@@ -6746,6 +6767,10 @@ var beepbox = (function (exports) {
 
 			}
 			
+			.promptContainerBG::before {
+				box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
+			}
+
 			.beepboxEditor button, .beepboxEditor select {
 				box-shadow: inset 0 0 0 1px var(--secondary-text);
 			}
@@ -7435,7 +7460,7 @@ var beepbox = (function (exports) {
 			
 		}
 	`,
-        "jummbox light": `
+        "gold light": `
 				:root {
 					-webkit-text-stroke-width: 0.5px;
 					--page-margin: #cab1d3;
@@ -7553,6 +7578,10 @@ var beepbox = (function (exports) {
 
 					
 					
+				}
+
+				.promptContainerBG::before {
+					box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
 				}
 
 				.beepboxEditor button, .beepboxEditor select {
@@ -9466,10 +9495,133 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: black;
 			--disabled-note-primary: #616161;
 			--disabled-note-secondary: #474747;
-
-			
-			
-		}`,
+		}
+		.promptContainerBG::before {
+			box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
+		}
+		`,
+        "jummbox light": `
+		:root {
+			-webkit-text-stroke-width: 0.5px;
+			--page-margin: #fefdff;
+			--editor-background: #fefdff;
+			--hover-preview: #302880;
+			--playhead: rgba(62, 32, 120, 0.9);
+			--primary-text: #401890;
+			--secondary-text: #8769af;
+			--inverted-text: #fefdff;
+			--text-selection: rgba(255,160,235,0.99);
+			--box-selection-fill: rgba(30,62,220,0.5);
+			--loop-accent: #4c35d4;
+			--link-accent: #7af;
+			--ui-widget-background: #bf9cec;
+			--ui-widget-focus: #e9c4ff;
+			--pitch-background: #e2d9f9;
+			--tonic: #c288cc;
+			--fifth-note: #d8c9fd;
+			--white-piano-key: #e2e2ff;
+			--black-piano-key: #66667a;
+			--use-color-formula: true;
+			--track-editor-bg-pitch: #d9e5ec;
+			--track-editor-bg-pitch-dim: #eaeef5;
+			--track-editor-bg-noise: #ffc3ae;
+			--track-editor-bg-noise-dim: #ffe0cf;
+			--track-editor-bg-mod: #c9accc;
+			--track-editor-bg-mod-dim: #ebe3ef;
+			--multiplicative-mod-slider: #807caf;
+			--overwriting-mod-slider: #909cdf;
+			--indicator-primary: #ae38ff;
+			--indicator-secondary: #bbd4ec;
+			--select2-opt-group: #c1b7f1;
+			--input-box-outline: #bbb;
+			--mute-button-normal: #e9b752;
+			--mute-button-mod: #9558ee;
+			--mod-label-primary: #ececff;
+			--mod-label-secondary-text: rgb(197, 145, 247);
+			--mod-label-primary-text: #302880;
+			--pitch-secondary-channel-hue: 0;
+			--pitch-secondary-channel-hue-scale: 8.1;
+			--pitch-secondary-channel-sat: 53.3;
+			--pitch-secondary-channel-sat-scale: -0.1;
+			--pitch-secondary-channel-lum: 72;
+			--pitch-secondary-channel-lum-scale: -0.05;
+			--pitch-primary-channel-hue: 0;
+			--pitch-primary-channel-hue-scale: 8.1;
+			--pitch-primary-channel-sat: 97;
+			--pitch-primary-channel-sat-scale: -0.1;
+			--pitch-primary-channel-lum: 45.5;
+			--pitch-primary-channel-lum-scale: -0.05;
+			--pitch-secondary-note-hue: 0;
+			--pitch-secondary-note-hue-scale: 8.1;
+			--pitch-secondary-note-sat: 93.9;
+			--pitch-secondary-note-sat-scale: -0.1;
+			--pitch-secondary-note-lum: 95;
+			--pitch-secondary-note-lum-scale: -0.05;
+			--pitch-primary-note-hue: 0;
+			--pitch-primary-note-hue-scale: 8.1;
+			--pitch-primary-note-sat: 100;
+			--pitch-primary-note-sat-scale: 0.05;
+			--pitch-primary-note-lum: 43.6;
+			--pitch-primary-note-lum-scale: -0.025;
+			--noise-secondary-channel-hue: 220;
+			--noise-secondary-channel-hue-scale: 2;
+			--noise-secondary-channel-sat: 25;
+			--noise-secondary-channel-sat-scale: 0;
+			--noise-secondary-channel-lum: 62;
+			--noise-secondary-channel-lum-scale: -0.1;
+			--noise-primary-channel-hue: 220;
+			--noise-primary-channel-hue-scale: 2;
+			--noise-primary-channel-sat: 53;
+			--noise-primary-channel-sat-scale: 0;
+			--noise-primary-channel-lum: 53.5;
+			--noise-primary-channel-lum-scale: -0.1;
+			--noise-secondary-note-hue: 220;
+			--noise-secondary-note-hue-scale: 2;
+			--noise-secondary-note-sat: 58.5;
+			--noise-secondary-note-sat-scale: 0;
+			--noise-secondary-note-lum: 85;
+			--noise-secondary-note-lum-scale: -1;
+			--noise-primary-note-hue: 220;
+			--noise-primary-note-hue-scale: 2;
+			--noise-primary-note-sat: 56.5;
+			--noise-primary-note-sat-scale: 0;
+			--noise-primary-note-lum: 54;
+			--noise-primary-note-lum-scale: -1;
+			--mod-secondary-channel-hue: 90;
+			--mod-secondary-channel-hue-scale: 1.5;
+			--mod-secondary-channel-sat: 88;
+			--mod-secondary-channel-sat-scale: 0;
+			--mod-secondary-channel-lum: 60;
+			--mod-secondary-channel-lum-scale: 0;
+			--mod-primary-channel-hue: 90;
+			--mod-primary-channel-hue-scale: 1.5;
+			--mod-primary-channel-sat: 100;
+			--mod-primary-channel-sat-scale: 0;
+			--mod-primary-channel-lum: 65;
+			--mod-primary-channel-lum-scale: 0;
+			--mod-secondary-note-hue: 90;
+			--mod-secondary-note-hue-scale: 1.5;
+			--mod-secondary-note-sat: 92;
+			--mod-secondary-note-sat-scale: 0;
+			--mod-secondary-note-lum: 95;
+			--mod-secondary-note-lum-scale: 0;
+			--mod-primary-note-hue: 90;
+			--mod-primary-note-hue-scale: 1.5;
+			--mod-primary-note-sat: 96;
+			--mod-primary-note-sat-scale: 0;
+			--mod-primary-note-lum: 55;
+			--mod-primary-note-lum-scale: 0;
+		}
+		.beepboxEditor button, .beepboxEditor select {
+			box-shadow: inset 0 0 0 1px var(--secondary-text);
+		}
+		.select2-selection__rendered {
+			box-shadow: inset 0 0 0 1px var(--secondary-text);
+		}
+		.promptContainerBG::before {
+			box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
+		}
+		`,
         "energized": `
 		:root {
 			--page-margin: #000a08;
@@ -10440,7 +10592,7 @@ var beepbox = (function (exports) {
 				}
 			`,
         "brucebox": `
-		:root {
+			:root {
 				font: 16px/2 cursive;
 				--page-margin: #4667CE;
 				--editor-background: #4667CE;
@@ -10451,7 +10603,7 @@ var beepbox = (function (exports) {
 				--inverted-text: black;
 				--text-selection: rgba(119,68,255,0.99);
 				--box-selection-fill: rgba(255,255,255,0.2);
-				--loop-accent: #9900cc;
+				--loop-accent: #74f;
 				--link-accent: #98f;
 				--ui-widget-background: #444;
 				--ui-widget-focus: #777;
@@ -10464,9 +10616,9 @@ var beepbox = (function (exports) {
 				--black-piano-key-text: #fff;
 					--use-color-formula: false;
 					--track-editor-bg-pitch: #444;
-					--track-editor-bg-pitch-dim: #333;
+					--track-editor-bg-pitch-dim: #444;
 					--track-editor-bg-noise: #444;
-					--track-editor-bg-noise-dim: #333;
+					--track-editor-bg-noise-dim: #444;
 					--track-editor-bg-mod: #234;
 					--track-editor-bg-mod-dim: #123;
 					--multiplicative-mod-slider: #456;
@@ -10561,9 +10713,26 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
+				}
 
-					
-					
+				span input, 
+				div.harmonics svg,
+				div.spectrum svg,
+				div.filterEditor svg,
+				div.fadeInOut svg,
+				div.loopEditor svg,
+				svg#firstImage,
+				div.trackContainer div.noSelection
+				{
+					background: black !important;
+				}
+
+				input, textarea {
+					background-color: black !important;
+				}
+
+				#text-content > section > h1 {
+					color: white;
 				}
 			`,
         "shitbox 2.0": `
@@ -10693,19 +10862,19 @@ var beepbox = (function (exports) {
 			`,
         "shitbox 3.0": `
 			
-			:root {
+			 :root {
 				font: 20px/2 monospace;
 				--page-margin: #252525;
-				--editor-background: black;
+				--editor-background: #252525;
 				--hover-preview: white;
 				--playhead: white;
-				--primary-text: white;
+				--primary-text: #C8C8C8;
 				--secondary-text: #999;
 				--inverted-text: black;
 				--text-selection: rgba(119,68,255,0.99);
 				--box-selection-fill: rgba(255,255,255,0.2);
 				--loop-accent: #74f;
-				--link-accent: #98f;
+				--link-accent: #945800;
 				--ui-widget-background: #444;
 				--ui-widget-focus: #777;
 				--pitch-background: #444;
@@ -10717,9 +10886,9 @@ var beepbox = (function (exports) {
 				--black-piano-key-text: #fff;
 					--use-color-formula: false;
 					--track-editor-bg-pitch: #444;
-					--track-editor-bg-pitch-dim: #333;
+					--track-editor-bg-pitch-dim: #444;
 					--track-editor-bg-noise: #444;
-					--track-editor-bg-noise-dim: #333;
+					--track-editor-bg-noise-dim: #444;
 					--track-editor-bg-mod: #234;
 					--track-editor-bg-mod-dim: #123;
 					--multiplicative-mod-slider: #456;
@@ -10813,12 +10982,213 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
-
-					
-					
 				}
-			
+
+				.beepboxEditor input[type="range"]::-moz-range-thumb {
+					width: 8px !important;
+				  }
+
+				button.playButton {
+					width: 80px;
+				}
+				button.prevBarButton {
+					width: 40px;
+					left:-5px;
+				}
+				button.nextBarButton {
+					width: 40px;
+				}
+
+				span input, 
+				div.harmonics svg,
+				div.spectrum svg,
+				div.filterEditor svg,
+				div.fadeInOut svg,
+				div.loopEditor svg,
+				svg#firstImage 
+				{
+					background: black !important;
+				}
+
+				.beepboxEditor {
+					line-height: 1.25;
+				}
+
+				#text-content {
+					font-size: 32px;
+					line-height: 40px;
+				}
+
+				#text-content > section > h1 {
+					color: #C8C8C8;
+					}
 			`,
+        "shitbox4": `
+			:root {
+			   font: 20px/2 monospace;
+			   --page-margin: #252525;
+			   --editor-background: #252525;
+			   --hover-preview: white;
+			   --playhead: white;
+			   --primary-text: #C8C8C8;
+			   --secondary-text: #999;
+			   --inverted-text: black;
+			   --text-selection: rgba(119,68,255,0.99);
+			   --box-selection-fill: rgba(255,255,255,0.2);
+			   --loop-accent: #74f;
+			   --link-accent: #945800;
+			   --ui-widget-background: #444;
+			   --ui-widget-focus: #777;
+			   --pitch-background: #444;
+			   --tonic: #864;
+			   --fifth-note: #468;
+			   --white-piano-key: #bbb;
+			   --black-piano-key: #444;
+			   --white-piano-key-text: #131200;
+			   --black-piano-key-text: #fff;
+				   --use-color-formula: false;
+				   --track-editor-bg-pitch: #444;
+				   --track-editor-bg-pitch-dim: #444;
+				   --track-editor-bg-noise: #444;
+				   --track-editor-bg-noise-dim: #444;
+				   --track-editor-bg-mod: #234;
+				   --track-editor-bg-mod-dim: #123;
+				   --multiplicative-mod-slider: #456;
+				   --overwriting-mod-slider: #654;
+				   --indicator-primary: #74f;
+				   --indicator-secondary: #444;
+				   --select2-opt-group: #585858;
+				   --input-box-outline: #333;
+				   --mute-button-normal: #ffa033;
+				   --mute-button-mod: #9a6bff;
+				   --pitch-channel-limit: 6;
+				   --noise-channel-limit: 3;
+			   --pitch1-secondary-channel: #0099A1;
+			   --pitch1-primary-channel:   #25F3FF;
+			   --pitch1-secondary-note:    #00BDC7;
+			   --pitch1-primary-note:      #92F9FF;
+			   --pitch2-secondary-channel: #A1A100;
+			   --pitch2-primary-channel:   #FFFF25;
+			   --pitch2-secondary-note:    #C7C700;
+			   --pitch2-primary-note:      #FFFF92;
+			   --pitch3-secondary-channel: #C75000;
+			   --pitch3-primary-channel:   #FF9752;
+			   --pitch3-secondary-note:    #FF771C;
+			   --pitch3-primary-note:      #FFCDAB;
+			   --pitch4-secondary-channel: #00A100;
+			   --pitch4-primary-channel:   #50FF50;
+			   --pitch4-secondary-note:    #00C700;
+			   --pitch4-primary-note:      #A0FFA0;
+			   --pitch5-secondary-channel: #D020D0;
+			   --pitch5-primary-channel:   #FF90FF;
+			   --pitch5-secondary-note:    #E040E0;
+			   --pitch5-primary-note:      #FFC0FF;
+			   --pitch6-secondary-channel: #7777B0;
+			   --pitch6-primary-channel:   #A0A0FF;
+			   --pitch6-secondary-note:    #8888D0;
+			   --pitch6-primary-note:      #D0D0FF;
+			   --pitch7-secondary-channel: #8AA100;
+			   --pitch7-primary-channel:   #DEFF25;
+			   --pitch7-secondary-note:    #AAC700;
+			   --pitch7-primary-note:      #E6FF92;
+			   --pitch8-secondary-channel: #DF0019;
+			   --pitch8-primary-channel:   #FF98A4;
+			   --pitch8-secondary-note:    #FF4E63;
+			   --pitch8-primary-note:      #FFB2BB;
+			   --pitch9-secondary-channel: #00A170;
+			   --pitch9-primary-channel:   #50FFC9;
+			   --pitch9-secondary-note:    #00C78A;
+			   --pitch9-primary-note:      #83FFD9;
+			   --pitch10-secondary-channel:#A11FFF;
+			   --pitch10-primary-channel:  #CE8BFF;
+			   --pitch10-secondary-note:   #B757FF;
+			   --pitch10-primary-note:     #DFACFF;
+			   --noise1-secondary-channel: #6F6F6F;
+			   --noise1-primary-channel:   #AAAAAA;
+			   --noise1-secondary-note:    #A7A7A7;
+			   --noise1-primary-note:      #E0E0E0;
+			   --noise2-secondary-channel: #996633;
+			   --noise2-primary-channel:   #DDAA77;
+			   --noise2-secondary-note:    #CC9966;
+			   --noise2-primary-note:      #F0D0BB;
+			   --noise3-secondary-channel: #4A6D8F;
+			   --noise3-primary-channel:   #77AADD;
+			   --noise3-secondary-note:    #6F9FCF;
+			   --noise3-primary-note:      #BBD7FF;
+			   --noise4-secondary-channel: #7A4F9A;
+			   --noise4-primary-channel:   #AF82D2;
+			   --noise4-secondary-note:    #9E71C1;
+			   --noise4-primary-note:      #D4C1EA;
+			   --noise5-secondary-channel: #607837;
+			   --noise5-primary-channel:   #A2BB77;
+			   --noise5-secondary-note:    #91AA66;
+			   --noise5-primary-note:      #C5E2B2;
+		 --mod1-secondary-channel:   #339955;
+				   --mod1-primary-channel:     #77fc55;
+				   --mod1-secondary-note:      #77ff8a;
+				   --mod1-primary-note:        #cdffee;
+				   --mod2-secondary-channel:   #993355;
+				   --mod2-primary-channel:     #f04960;
+				   --mod2-secondary-note:      #f057a0;
+				   --mod2-primary-note:        #ffb8de;
+				   --mod3-secondary-channel:   #553399;
+				   --mod3-primary-channel:     #8855fc;
+				   --mod3-secondary-note:      #aa64ff;
+				   --mod3-primary-note:	    #f8ddff;
+				   --mod4-secondary-channel:   #a86436;
+				   --mod4-primary-channel:     #c8a825;
+				   --mod4-secondary-note:      #e8ba46;
+				   --mod4-primary-note:        #fff6d3;
+				   --mod-label-primary:        #999;
+				   --mod-label-secondary-text: #333;
+				   --mod-label-primary-text:   black;
+				   --disabled-note-primary:    #999;
+				   --disabled-note-secondary:  #666;
+			   }
+
+			   .beepboxEditor input[type="range"]::-moz-range-thumb {
+				   width: 8px !important;
+				 }
+
+			   button.playButton {
+				   width: 80px;
+			   }
+			   button.prevBarButton {
+				   width: 40px;
+				   left:-5px;
+			   }
+			   button.nextBarButton {
+				   width: 40px;
+			   }
+
+			   span input, 
+			   div.harmonics svg,
+			   div.spectrum svg,
+			   div.filterEditor svg,
+			   div.fadeInOut svg,
+			   div.loopEditor svg,
+			   svg#firstImage 
+			   {
+				   background: black !important;
+			   }
+
+			   div.visualizer {
+				transform: skew(30deg,20deg) scale(0.5);
+				}
+
+			   .beepboxEditor {
+				   line-height: 1.25;
+			   }
+
+			   #text-content {
+				   font-size: 32px;
+				   line-height: 40px;
+			   }
+
+			   #text-content > section > h1 {
+				   color: #C8C8C8;
+				   }
+		   `,
         "nerdbox": `
 			:root {
 				--page-margin: black;
@@ -12838,6 +13208,12 @@ var beepbox = (function (exports) {
 		  
 		  
 			}
+
+		.promptContainerBG::before {
+			box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
+		}
+
+	
 		/* replaces hotdog (in a hacky way) with an image of the girls using the same scratch sprites from the 404 page*/
 		#Hotdog {
 		display: none;
@@ -13000,6 +13376,225 @@ var beepbox = (function (exports) {
 		opacity: 0.8 !important;
 	}
 `,
+        "BoxBeep Dark": `
+		:root {
+			--page-margin: #97a277;
+			--editor-background: black;
+			--hover-preview: white;
+			--playhead: rgba(255,255,255,255.5);
+			--primary-text: white;
+			--secondary-text: #888;
+			--inverted-text: black;
+			--text-selection: rgba(55, 85, 0, 0.99);
+			--box-selection-fill: rgba(225,255,255,0.1);
+			--loop-accent: #670;
+			--link-accent: #8b0;
+			--ui-widget-background: #131313;
+			--ui-widget-focus: #111;
+			--pitch-background: #131313;
+			--tonic: #0f2949;
+			--fifth-note: #44220f;
+			--white-piano-key: #111111;
+			--black-piano-key: #999999;
+			--white-piano-key-text: #fff;
+			--black-piano-key-text: #000;
+
+			--pitch1-secondary-channel: #932612;
+			--pitch1-primary-channel:   #ff5f42;
+			--pitch1-secondary-note:    #cb3d23;
+			--pitch1-primary-note:      #ff8a75;
+
+			--pitch2-secondary-channel: #1c36be;
+			--pitch2-primary-channel:   #4b68ff;
+			--pitch2-secondary-note:    #2e49d7;
+			--pitch2-primary-note:      #7c91ff;
+
+			--pitch3-secondary-channel: #00629e;
+			--pitch3-primary-channel:   #1eb1ff;
+			--pitch3-secondary-note:    #0982c3;
+			--pitch3-primary-note:      #49bfff;
+
+			--pitch4-secondary-channel: #b41db4;
+			--pitch4-primary-channel:   #ff57ff;
+			--pitch4-secondary-note:    #d237d2;
+			--pitch4-primary-note:      #ff7fff;
+
+			--pitch5-secondary-channel: #006f00;
+			--pitch5-primary-channel:   #1ed120;
+			--pitch5-secondary-note:    #139113;
+			--pitch5-primary-note:      #59ff5a;
+
+			--pitch6-secondary-channel: #4a4a01;
+			--pitch6-primary-channel:   #969602;
+			--pitch6-secondary-note:    #6c6c01;
+			--pitch6-primary-note:      #b5b528;
+
+			--pitch7-secondary-channel: #3d27b7;
+			--pitch7-primary-channel:   #7157ff;
+			--pitch7-secondary-note:    #4f37d2;
+			--pitch7-primary-note:      #937fff;
+
+			--pitch8-secondary-channel: #006f5b;
+			--pitch8-primary-channel:   #1ed1b2;
+			--pitch8-secondary-note:    #13917a;
+			--pitch8-primary-note:      #59ffe2;
+
+			--pitch9-secondary-channel: #be1c4a;
+			--pitch9-primary-channel:   #ff4b7e;
+			--pitch9-secondary-note:    #d72e5e;
+			--pitch9-primary-note:      #ff7ca1;
+
+			--pitch10-secondary-channel:#358800;
+			--pitch10-primary-channel:  #69f600;
+			--pitch10-secondary-note:   #4ab000;
+			--pitch10-primary-note:     #7bff1c;
+
+			--noise1-secondary-channel: #3e3e3e;
+			--noise1-primary-channel:   #767676;
+			--noise1-secondary-note:    #525252;
+			--noise1-primary-note:      #939393;
+
+			--noise2-secondary-channel: #174473;
+			--noise2-primary-channel:   #4282c5;
+			--noise2-secondary-note:    #2e5c8b;
+			--noise2-primary-note:      #7c9cbd;
+
+			--noise3-secondary-channel: #643b14;
+			--noise3-primary-channel:   #bb7e41;
+			--noise3-secondary-note:    #83582c;
+			--noise3-primary-note:      #b8997a;
+
+			--noise4-secondary-channel: #3a5a1f;
+			--noise4-primary-channel:   #7aac51;
+			--noise4-secondary-note:    #4d6f33;
+			--noise4-primary-note:      #97b082;
+
+			--noise5-secondary-channel: #47316c;
+			--noise5-primary-channel:   #87A74F;
+			--noise5-secondary-note:    #7858b0;
+			--noise5-primary-note:      #9787b3;
+		}
+		
+		.beepboxEditor button, .beepboxEditor select {
+			box-shadow: inset 0 0 0 1px var(--secondary-text);
+		}
+		
+		a.tip {
+			display:none;
+		}
+
+		div.visualizer {
+			transform: scaleX(-1);
+		}
+
+		`,
+        "BoxBeep light": `
+		:root {
+			--page-margin: white;
+			--editor-background: white;
+			--hover-preview: black;
+			--playhead: black;
+			--primary-text: black;
+			--secondary-text: #666666;
+			--inverted-text: white;
+			--text-selection: rgba(136, 187, 0,0.99);
+			--box-selection-fill: rgba(0,0,0,0.2);
+			--loop-accent: #88bb00;
+			--link-accent: #667700;
+			--ui-widget-background: #bbbbbb;
+			--ui-widget-focus: #888888;
+			--pitch-background: #bbbbbb;
+			--tonic: #7799bb;
+			--fifth-note: #bb9977;
+			--white-piano-key: #444444;
+			--black-piano-key: #bbbbbb;
+			--white-piano-key-text: #fff;
+			--black-piano-key-text: #000;
+
+			--pitch1-secondary-channel: #ff665e;
+			--pitch1-primary-channel:   #da0c00;
+			--pitch1-secondary-note:    #ff4238;
+			--pitch1-primary-note:      #6d0600;
+
+			--pitch2-secondary-channel: #5e5eff;
+			--pitch2-primary-channel:   #0000da;
+			--pitch2-secondary-note:   	#3838ff;
+			--pitch2-primary-note:      #00006d;
+
+			--pitch3-secondary-channel: #38afff;
+			--pitch3-primary-channel:   #0068ad;
+			--pitch3-secondary-note:    #0088e3;
+			--pitch3-primary-note:      #003254;
+
+			--pitch4-secondary-channel: #ff5eff;
+			--pitch4-primary-channel:   #af00af;
+			--pitch4-secondary-note:    #ff38ff;
+			--pitch4-primary-note:      #5f005f;
+
+			--pitch5-secondary-channel: #2fdf2f;
+			--pitch5-primary-channel:   #006f00;
+			--pitch5-secondary-note:    #1fbf1f;
+			--pitch5-primary-note:      #003f00;
+
+			--pitch6-secondary-channel: #88884f;
+			--pitch6-primary-channel:   #5f5f00;
+			--pitch6-secondary-note:    #77772f;
+			--pitch6-primary-note:      #2f2f00;
+
+			--pitch7-secondary-channel: #755eff;
+			--pitch7-primary-channel:   #2100da;
+			--pitch7-secondary-note:    #5538ff;
+			--pitch7-primary-note:      #19006d;
+
+			--pitch8-secondary-channel: #20ffe6;
+			--pitch8-primary-channel:   #00675b;
+			--pitch8-secondary-note:    #00b19c;
+			--pitch8-primary-note:      #004d44;
+
+			--pitch9-secondary-channel: #ff5e8f;
+			--pitch9-primary-channel:   #af0036;
+			--pitch9-secondary-note:    #ff3875;
+			--pitch9-primary-note:      #7c0026;
+
+			--pitch10-secondary-channel:#5ee000;
+			--pitch10-primary-channel:  #317400;
+			--pitch10-secondary-note:   #48a800;
+			--pitch10-primary-note:     #205300;
+
+			--noise1-secondary-channel: #909090;
+			--noise1-primary-channel:   #555555;
+			--noise1-secondary-note:    #585858;
+			--noise1-primary-note:      #1f1f1f;
+
+			--noise2-secondary-channel: #6699cc;
+			--noise2-primary-channel:   #225588;
+			--noise2-secondary-note:    #336699;
+			--noise2-primary-note:      #0f2f44;
+
+			--noise3-secondary-channel: #b59270;
+			--noise3-primary-channel:   #885522;
+			--noise3-secondary-note:    #906030;
+			--noise3-primary-note:      #442800;
+
+			--noise4-secondary-channel: #85b065;
+			--noise4-primary-channel:   #507d2d;
+			--noise4-secondary-note:    #618e3e;
+			--noise4-primary-note:      #2b3e15;
+
+			--noise5-secondary-channel: #9f87c8;
+			--noise5-primary-channel:   #5d4488;
+			--noise5-secondary-note:    #6e5599;
+			--noise5-primary-note:      #3a1d4d;
+		}
+
+		div.visualizer {
+			transform: scaleX(-1);
+		}
+
+		a.tip {
+			display:none;
+		}
+		`,
         "Protanopia": `
 :root { 
 --page-margin: #000000; 
@@ -26151,41 +26746,19 @@ var beepbox = (function (exports) {
 				const operator#Scaled   = operator#OutputMult * operator#Output;
 		`).split("\n");
 
-    class oscilascopeCanvas {
-        constructor(canvas, scale = 1) {
-            this.canvas = canvas;
-            this.scale = scale;
-            this._EventUpdateCanvas = function (directlinkL, directlinkR) {
-                if (directlinkR) {
-                    var ctx = canvas.getContext("2d");
-                    ctx.fillStyle = ColorConfig.getComputed("--editor-background");
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    ctx.fillStyle = ColorConfig.getComputed("--oscilloscope-line-L") !== "" ? ColorConfig.getComputed("--oscilloscope-line-L") : ColorConfig.getComputed("--primary-text");
-                    for (let i = directlinkL.length - 1; i >= directlinkL.length - 1 - (canvas.width / scale); i--) {
-                        let x = i - (directlinkL.length - 1) + (canvas.width / scale);
-                        let yl = (directlinkL[i] * (canvas.height / scale / 2) + (canvas.height / scale / 2));
-                        ctx.fillRect((x - 1) * scale, (yl - 1) * scale, 1 * scale, 1.5 * scale);
-                        if (x == 0)
-                            break;
-                    }
-                    ctx.fillStyle = ColorConfig.getComputed("--oscilloscope-line-R") !== "" ? ColorConfig.getComputed("--oscilloscope-line-R") : ColorConfig.getComputed("--text-selection");
-                    for (let i = directlinkR.length - 1; i >= directlinkR.length - 1 - (canvas.width / scale); i--) {
-                        let x = i - (directlinkR.length - 1) + (canvas.width / scale);
-                        let yr = (directlinkR[i] * (canvas.height / scale / 2) + (canvas.height / scale / 2));
-                        ctx.fillRect((x - 1) * scale, (yr - 1) * scale, 1 * scale, 1.5 * scale);
-                        if (x == 0)
-                            break;
-                    }
-                }
-            };
-            events.listen("oscillascopeUpdate", this._EventUpdateCanvas);
-        }
-    }
-
     document.head.appendChild(HTML.style({ type: "text/css" }, `
 	body {
 		color: ${ColorConfig.primaryText};
 		background: ${ColorConfig.editorBackground};
+	}
+	songPlayerContainer {
+		display:grid; 
+		grid-template-areas: 'visualizer visualizer' 'control-center control-center'; 
+		grid-template-rows: 92.6vh 7.4vh; 
+		grid-template-columns: minmax(0px,0px);
+	}
+	.layout-option {
+		width: 25%;
 	}
 	h1 {
 		font-weight: bold;
@@ -26193,6 +26766,22 @@ var beepbox = (function (exports) {
 		line-height: 22px;
 		text-align: initial;
 		margin: 0;
+	}
+	button.closePrompt::before {
+		content: "";
+		position: absolute;
+		width: var(--button-size);
+		height: var(--button-size);
+		left: 0;
+		top: 0;
+		pointer-events: none;
+		background: currentColor;
+		mask-image: var(--close-symbol);
+		mask-repeat: no-repeat;
+		mask-position: center;
+		-webkit-mask-image: var(--close-symbol);
+		-webkit-mask-repeat: no-repeat;
+		-webkit-mask-position: center;
 	}
 	a {
 		font-weight: bold;
@@ -26321,7 +26910,38 @@ var beepbox = (function (exports) {
 	}
 `));
 
-    const { a, button, div, h1, input, canvas } = HTML;
+    class oscilascopeCanvas {
+        constructor(canvas, scale = 1) {
+            this.canvas = canvas;
+            this.scale = scale;
+            this._EventUpdateCanvas = function (directlinkL, directlinkR) {
+                if (directlinkR) {
+                    var ctx = canvas.getContext("2d");
+                    ctx.fillStyle = ColorConfig.getComputed("--editor-background");
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = ColorConfig.getComputed("--oscilloscope-line-L") !== "" ? ColorConfig.getComputed("--oscilloscope-line-L") : ColorConfig.getComputed("--primary-text");
+                    for (let i = directlinkL.length - 1; i >= directlinkL.length - 1 - (canvas.width / scale); i--) {
+                        let x = i - (directlinkL.length - 1) + (canvas.width / scale);
+                        let yl = (directlinkL[i] * (canvas.height / scale / 2) + (canvas.height / scale / 2));
+                        ctx.fillRect((x - 1) * scale, (yl - 1) * scale, 1 * scale, 1.5 * scale);
+                        if (x == 0)
+                            break;
+                    }
+                    ctx.fillStyle = ColorConfig.getComputed("--oscilloscope-line-R") !== "" ? ColorConfig.getComputed("--oscilloscope-line-R") : ColorConfig.getComputed("--text-selection");
+                    for (let i = directlinkR.length - 1; i >= directlinkR.length - 1 - (canvas.width / scale); i--) {
+                        let x = i - (directlinkR.length - 1) + (canvas.width / scale);
+                        let yr = (directlinkR[i] * (canvas.height / scale / 2) + (canvas.height / scale / 2));
+                        ctx.fillRect((x - 1) * scale, (yr - 1) * scale, 1 * scale, 1.5 * scale);
+                        if (x == 0)
+                            break;
+                    }
+                }
+            };
+            events.listen("oscillascopeUpdate", this._EventUpdateCanvas);
+        }
+    }
+
+    const { a, button, div, h1, input, canvas, form, label, h2 } = HTML;
     const { svg, circle, rect, path } = SVG;
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|android|ipad|playbook|silk/i.test(navigator.userAgent);
     const colorTheme = getLocalStorage("colorTheme");
@@ -26341,7 +26961,40 @@ var beepbox = (function (exports) {
         oscilascope.canvas.style.display = "none";
         synth.oscEnabled = false;
     }
+    const closePrompt = button({ class: "closePrompt", style: "width: 32px; height: 32px; float: right; position: absolute;top: 8px;right: 8px;" });
+    const _okayButton = button({ class: "okayButton", style: "width:45%;" }, "Okay");
+    const _form = form({ style: "display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;" }, label({ class: "layout-option", style: "width:90px;" }, input({ type: "radio", name: "spLayout", value: "classic", style: "display:none;" }), SVG(`\
+					<svg viewBox="-1 -1 28 22">
+					<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
+					<rect x="2" y="3" width="22" height="1" fill="currentColor"/>
+					<rect x="2" y="4" width="1" height="7" fill="currentColor"/>
+					<rect x="23" y="4" width="1" height="7" fill="currentColor"/>
+					<rect x="2" y="11" width="22" height="1" fill="currentColor"/>
+
+					<rect x="2" y="5" width="22" height="1" fill="currentColor"/>
+					<rect x="2" y="7" width="22" height="1" fill="currentColor"/>
+					<rect x="2" y="9" width="22" height="1" fill="currentColor"/>
+
+					<rect x="2" y="15" width="22" height="3" fill="currentColor"/>
+					</svg>
+				`), div("Classic")), label({ class: "layout-option", style: "width:90px;" }, input({ type: "radio", name: "spLayout", value: "top", style: "display:none;" }), SVG(`\
+					<svg viewBox="-1 -1 28 22">
+						<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
+						<rect x="2" y="2" width="22" height="3" fill="currentColor"/>
+
+						<rect x="2" y="8" width="22" height="1" fill="currentColor"/>
+						<rect x="2" y="9" width="1" height="7" fill="currentColor"/>
+						<rect x="23" y="9" width="1" height="7" fill="currentColor"/>
+						<rect x="2" y="16" width="22" height="1" fill="currentColor"/>
+	
+						<rect x="2" y="10" width="22" height="1" fill="currentColor"/>
+						<rect x="2" y="12" width="22" height="1" fill="currentColor"/>
+						<rect x="2" y="14" width="22" height="1" fill="currentColor"/>
+					</svg>
+				`), div("Top")));
+    const layoutContainer = div({ class: "prompt noSelection", style: "width: 300px; margin: auto;text-align: center;background: var(--editor-background);border-radius: 15px;border: 4px solid var(--ui-widget-background);color: var(--primary-text);padding: 20px;display: flex;flex-direction: column;position: relative;box-shadow: 5px 5px 20px 10px rgba(0,0,0,0.5);" }, div({ class: "promptTitle" }, h2({ class: "layoutExt", style: "text-align: inherit;" }, ""), h2({ class: "layoutTitle" }, "Layout")), _form, div({ style: "margin-top: 1em;" }, _okayButton), closePrompt);
     let titleText = h1({ style: "flex-grow: 1; margin: 0 1px; margin-left: 10px; overflow: hidden;" }, "");
+    let layoutStuffs = button({ style: "margin: 0 4px; height: 42px; width: 90px;" }, "> Layouts");
     let editLink = a({ target: "_top", style: "margin: 0 4px;" }, "✎ Edit");
     let copyLink = a({ href: "javascript:void(0)", style: "margin: 0 4px;" }, "⎘ Copy URL");
     let shareLink = a({ href: "javascript:void(0)", style: "margin: 0 4px;" }, "⤳ Share");
@@ -26355,10 +27008,10 @@ var beepbox = (function (exports) {
     const volumeSlider = input({ title: "volume", type: "range", value: 75, min: 0, max: 75, step: 1, style: "width: 12vw; max-width: 100px; margin: 0 1px;" });
     const zoomIcon = svg({ width: 12, height: 12, viewBox: "0 0 12 12" }, circle({ cx: "5", cy: "5", r: "4.5", "stroke-width": "1", stroke: "currentColor", fill: "none" }), path({ stroke: "currentColor", "stroke-width": "2", d: "M 8 8 L 11 11 M 5 2 L 5 8 M 2 5 L 8 5", fill: "none" }));
     const zoomButton = button({ title: "zoom", style: "background: none; flex: 0 0 12px; margin: 0 3px; width: 12px; height: 12px; display: flex;" }, zoomIcon);
-    const timeline = svg({ style: "min-width: 0; min-height: 0; touch-action: pan-y pinch-zoom;" });
+    const timeline = svg({ class: "timeline", style: "min-width: 0; min-height: 0; touch-action: pan-y pinch-zoom;" });
     const playhead = div({ class: "playhead", style: `position: absolute; left: 0; top: 0; width: 2px; height: 100%; background: ${ColorConfig.playhead}; pointer-events: none;` });
-    const timelineContainer = div({ class: "timeline", style: "display: flex; flex-grow: 1; flex-shrink: 1; position: relative;" }, timeline, playhead);
-    const visualizationContainer = div({ class: "visualizer", style: "display: flex; flex-grow: 1; flex-shrink: 1; height: 0; position: relative; align-items: center; overflow: hidden;" }, timelineContainer);
+    const timelineContainer = div({ class: "timelineContainer", style: "display: flex; flex-grow: 1; flex-shrink: 1; position: relative;" }, timeline, playhead);
+    const visualizationContainer = div({ class: "visualizer", style: "display: flex; flex-grow: 1; flex-shrink: 1; position: relative; align-items: center; overflow: hidden; grid-area: visualizer;" }, timelineContainer);
     let noteFlashElementsPerBar;
     let currentNoteFlashElements = [];
     let currentNoteFlashBar = -1;
@@ -26372,8 +27025,14 @@ var beepbox = (function (exports) {
     const gradient = SVG.linearGradient({ id: "volumeGrad2", gradientUnits: "userSpaceOnUse" }, stop1, stop2, stop3);
     const defs = SVG.defs({}, gradient);
     const volumeBarContainer = SVG.svg({ style: `touch-action: none; overflow: hidden; margin: auto;`, width: "160px", height: "10px", preserveAspectRatio: "none" }, defs, outVolumeBarBg, outVolumeBar, outVolumeCap);
-    document.body.appendChild(visualizationContainer);
-    document.body.appendChild(div({ class: "control-center", style: `flex-shrink: 0; height: 20vh; min-height: 22px; max-height: 70px; display: flex; align-items: center;` }, playButtonContainer, loopButton, volumeIcon, volumeSlider, zoomButton, volumeBarContainer, oscilascope.canvas, titleText, editLink, copyLink, shareLink, fullscreenLink));
+    const promptContainer = div({ class: "promptContainer", style: "display:none; backdrop-filter: saturate(1.5) blur(4px); width: 100%; height: 100%; position: fixed; z-index: 999; display: flex; justify-content: center; align-items: center;" });
+    promptContainer.style.display = "none";
+    const songPlayerContainer = div({ class: "songPlayerContainer", style: "display:grid; grid-template-areas: 'visualizer visualizer' 'control-center control-center'; grid-template-rows: 92.6vh 20vh; grid-template-columns: minmax(0px,0px);" });
+    songPlayerContainer.appendChild(visualizationContainer);
+    songPlayerContainer.appendChild(div({ class: "control-center", style: `flex-shrink: 0; height: 20vh; min-height: 22px; max-height: 70px; display: flex; align-items: center; grid-area: control-center;` }, playButtonContainer, loopButton, volumeIcon, volumeSlider, zoomButton, volumeBarContainer, oscilascope.canvas, titleText, layoutStuffs, editLink, copyLink, shareLink, fullscreenLink));
+    document.body.appendChild(songPlayerContainer);
+    songPlayerContainer.appendChild(promptContainer);
+    promptContainer.appendChild(layoutContainer);
     function setLocalStorage(key, value) {
         try {
             localStorage.setItem(key, value);
@@ -26405,7 +27064,7 @@ var beepbox = (function (exports) {
         synth.setSong(songString);
         synth.snapToStart();
         const updatedSongString = synth.song.toBase64String();
-        editLink.href = "../#" + updatedSongString;
+        editLink.href = "../index.html#" + updatedSongString;
     }
     function hashUpdatedExternally() {
         let myHash = location.hash;
@@ -26508,6 +27167,15 @@ var beepbox = (function (exports) {
             }
         }
         renderPlayButton();
+    }
+    function onLayoutButton() {
+        promptContainer.style.display = "flex";
+    }
+    function onExitButton() {
+        promptContainer.style.display = "none";
+    }
+    function onLayoutPicked() {
+        promptContainer.style.display = "none";
     }
     function onToggleLoop() {
         if (synth.loopRepeatCount == -1) {
@@ -26798,6 +27466,9 @@ var beepbox = (function (exports) {
     timeline.addEventListener("touchmove", onTimelineTouchMove);
     timeline.addEventListener("touchend", onTimelineCursorUp);
     timeline.addEventListener("touchcancel", onTimelineCursorUp);
+    layoutStuffs.addEventListener("click", onLayoutButton);
+    closePrompt.addEventListener("click", onExitButton);
+    _okayButton.addEventListener("click", onLayoutPicked);
     playButton.addEventListener("click", onTogglePlay);
     loopButton.addEventListener("click", onToggleLoop);
     volumeSlider.addEventListener("input", onVolumeChange);

@@ -113,6 +113,21 @@
             display: inline;
         }
 
+        .promptContainerBG::before {
+            content: "";
+            position: absolute;
+            background: inherit;
+            z-index: -1;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            box-shadow: inset 0 0 2000px rgba(0, 0, 0, .5);
+            filter: blur(10px);
+            margin: -20px;
+        }
+
+
         .donation input[type="submit"] {
             appearance: none;
             -webkit-appearance: none;
@@ -147,6 +162,7 @@
 				min-width: 0;
             }
 
+        }
         /* narrow screen */
 		@media (max-width: 710px) {
             body {

@@ -6,6 +6,7 @@ import {Pattern, Channel, Song, Synth} from "../synth/synth";
 import { SongRecovery, generateUid, errorAlert } from "./SongRecovery";
 import { ColorConfig } from "./ColorConfig";
 import { Layout } from "./Layout";
+import { SongPlayerLayout } from "../player/Layout";
 import { SongPerformance } from "./SongPerformance";
 import { Selection } from "./Selection";
 import { Preferences } from "./Preferences";
@@ -67,6 +68,7 @@ export class SongDocument {
 		
 		ColorConfig.setTheme(this.prefs.colorTheme);
 		Layout.setLayout(this.prefs.layout);
+		SongPlayerLayout.setLayout(this.prefs.spLayout);
 		
 		if (window.sessionStorage.getItem("currentUndoIndex") == null) {
 			window.sessionStorage.setItem("currentUndoIndex", "0");

@@ -1229,6 +1229,7 @@ export class SongEditor {
         SVG.path({ d: "M150 65 c0 -8 -7 -15 -15 -15 -8 0 -15 -4 -15 -10 0 -14 23 -13 38 2 15 15 16 38 2 38 -5 0 -10 -7 -10 -15z" })]);
 
     private readonly _promptContainer: HTMLDivElement = div({ class: "promptContainer", style: "display: none;" });
+    private readonly _promptContainerBG: HTMLDivElement = div({ class: "promptContainerBG", style: "display: none; height: 100%; width: 100%; position: fixed;z-index: 99; background-color: rgba(0,0,0, 0); overflow-x: hidden; pointer-events: none; backdrop-filter: brightness(0.9) blur(14px);" });
     private readonly _zoomInButton: HTMLButtonElement = button({ class: "zoomInButton", type: "button", title: "Zoom In" });
     private readonly _zoomOutButton: HTMLButtonElement = button({ class: "zoomOutButton", type: "button", title: "Zoom Out" });
     private readonly _undoButton: HTMLButtonElement = button({ class: "undoButton", type: "button", title: "Undo Changes" });
@@ -1725,9 +1726,9 @@ export class SongEditor {
             this._promptContainer.addEventListener("click", (event) => {
                 if (this._doc.prefs.closePromptByClickoff === true) {
                     if (this.prompt != null && this.prompt.gotMouseUp === true ) return;
-                    if (event.target == this._promptContainer) {
-                    this._doc.undo();
-                    } 
+                        if (event.target == this._promptContainer) {
+                        this._doc.undo();
+                        } 
                 }
             }); 
 
@@ -2044,6 +2045,7 @@ export class SongEditor {
             }
             this._wasPlaying = false;
             this._promptContainer.style.display = "none";
+            this._promptContainerBG.style.display = "none";
             this._promptContainer.removeChild(this.prompt.container);
             this.prompt.cleanUp();
             this.prompt = null;
@@ -2132,7 +2134,9 @@ export class SongEditor {
                     this._doc.performance.pause();
                 }
                 this._promptContainer.style.display = "";
+                this._promptContainerBG.style.display = "";
                 this._promptContainer.appendChild(this.prompt.container);
+                document.body.appendChild(this._promptContainerBG);
             }
         }
     }
@@ -5127,7 +5131,7 @@ export class SongEditor {
                 window.open("https://tinyurl.com/api-create.php?url=" + encodeURIComponent(new URL("#" + this._doc.song.toBase64String(), location.href).href));
                 break;
             case "viewPlayer":
-                location.href = "player/#song=" + this._doc.song.toBase64String();
+                location.href = "player/index.html#song=" + this._doc.song.toBase64String();
                 break;
             case "copyEmbed":
                 this._copyTextToClipboard(`<iframe width="384" height="60" style="border: none;" src="${new URL("player/#song=" + this._doc.song.toBase64String(), location.href).href}"></iframe>`);

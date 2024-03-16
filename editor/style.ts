@@ -1020,18 +1020,6 @@ document.head.appendChild(HTML.style({ type: "text/css" }, `
 	z-index: 100;
 }
 
-.beepboxEditor .promptContainer::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: ${ColorConfig.editorBackground};
-	opacity: 0.5;
-	display: flex;
-}
-
 .beepboxEditor .prompt {
 	margin: auto;
 	text-align: center;
