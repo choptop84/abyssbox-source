@@ -3791,7 +3791,7 @@ export class Song {
             case SongTagCode.channelCount: {
                 this.pitchChannelCount = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
                 this.noiseChannelCount = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
-                if (fromBeepBox || beforeTwo) {
+                if (fromBeepBox || (fromJummBox && beforeTwo)) {
                     // No mod channel support before jummbox v2
                     this.modChannelCount = 0;
                 } else {
@@ -4229,7 +4229,7 @@ export class Song {
             } break;
             case SongTagCode.filterResonance: {
                 if (fromUltraBox || fromAbyssBox) {
-                    if (beforeThree) {
+                    if (fromUltraBox && beforeThree) {
                         // Still have to support the old and bad loop control data format written as a test, sigh.
                         const sampleLoopInfoEncodedLength = decode32BitNumber(compressed, charIndex);
                         charIndex += 6;

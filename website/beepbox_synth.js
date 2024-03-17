@@ -5379,7 +5379,7 @@ var beepbox = (function (exports) {
                         {
                             this.pitchChannelCount = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
                             this.noiseChannelCount = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
-                            if (fromBeepBox || beforeTwo) {
+                            if (fromBeepBox || (fromJummBox && beforeTwo)) {
                                 this.modChannelCount = 0;
                             }
                             else {
@@ -5847,7 +5847,7 @@ var beepbox = (function (exports) {
                     case 121:
                         {
                             if (fromUltraBox || fromAbyssBox) {
-                                if (beforeThree) {
+                                if (fromUltraBox && beforeThree) {
                                     const sampleLoopInfoEncodedLength = decode32BitNumber(compressed, charIndex);
                                     charIndex += 6;
                                     const sampleLoopInfoEncoded = compressed.slice(charIndex, charIndex + sampleLoopInfoEncodedLength);
