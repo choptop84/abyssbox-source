@@ -634,7 +634,7 @@ export class ColorConfig {
 			--loop-accent: #8c346a; 		
 			--link-accent: #8c346a; 		
 			--ui-widget-background: #f5e9f0;		
-			--ui-widget-focus: #8c346a; 		
+			--ui-widget-focus: #f5e9f0; 		
 			--pitch-background: #eddadf; 		
 			--tonic: #f5f0f1; 		
 			--fifth-note: #ffb5c9; 		
