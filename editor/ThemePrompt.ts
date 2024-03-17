@@ -83,7 +83,7 @@ let doReload = false;
 		option({ value: "nepbox" }, "Nepbox"),
 		option({ value: "WeebBox"}, "WeebBox"),
 		option({ value: "BoxBeep Dark" }, "BoxBeep Dark"),
-		option({ value: "BoxBeep Light"}, "BoxBeep Light"),
+		option({ value: "BoxBeep light"}, "BoxBeep Light"),
 		option({ value: "AWeebyssBox"}, "AWeebyssBox"),
 		option({ value: "Deuteranopia"}, "Deuteranopia"),
 		option({ value: "Protanopia"}, "Protanopia"),
