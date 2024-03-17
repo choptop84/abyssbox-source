@@ -626,8 +626,8 @@ export class ColorConfig {
 			--editor-background: #e0adbc; 		
 			--hover-preview: white; 		
 			--playhead: rgba(255, 255, 255, 0.9); 		
-			--primary-text: #f5f0f1; 		
-			--secondary-text: #eddadf; 		
+			--primary-text: #6110d9; 		
+			--secondary-text: #cc1338;		
 			--inverted-text:  #e8bcc9;	 		
 			--text-selection: rgba(119,68,255,0.99); 		
 			--box-selection-fill: #bf2c5d; 		
@@ -643,12 +643,12 @@ export class ColorConfig {
 			--white-piano-key-text: #131200;		
 			--black-piano-key-text: #fff;	 		
 			--use-color-formula: true; 		
-			--track-editor-bg-pitch: #decad8; 		
-			--track-editor-bg-pitch-dim: #bfb0bb; 		
-			--track-editor-bg-noise: #d6a3ca; 		
-			--track-editor-bg-noise-dim: #b389a9; 		
-			--track-editor-bg-mod: #b0649e; 		
-			--track-editor-bg-mod-dim: #915683; 		
+			--track-editor-bg-pitch: #edbecc;	
+			--track-editor-bg-pitch-dim: #e0adbc; 		
+			--track-editor-bg-noise: #edbecc;		
+			--track-editor-bg-noise-dim: #e0adbc;		
+			--track-editor-bg-mod: #edbecc; 		
+			--track-editor-bg-mod-dim: #e0adbc;		
 			--multiplicative-mod-slider: #9f6082; 		
 			--overwriting-mod-slider: #9e3470; 		
 			--indicator-primary: #b3498f; 		
@@ -660,6 +660,7 @@ export class ColorConfig {
 			--mod-label-primary: #541625; 		
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
+			--mod-title: #cc1338;
 		
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale 0; 		
