@@ -1166,6 +1166,7 @@ export class ColorConfig {
 			div.prompt.noSelection{
 				background: linear-gradient(#84aef080, #2a3d6a80) !important; 
 				opacity: 77;
+				backdrop-filter: blur(14px);
 			}  
 
 			svg#firstImage {
@@ -1189,13 +1190,15 @@ export class ColorConfig {
   				border-color: lightblue;
 				padding-bottom: 5px;
 				--inverted-text: black;
-				backdrop-filter: blur(10px);
+				backdrop-filter: blur(14px);
+				box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
 			}
 			#text-content {
 				background: linear-gradient(#395eb380, #03112f80);
 				border-style: solid;
   				border-color: lightblue;
-				  backdrop-filter: blur(10px);
+				  backdrop-filter: blur(14px);
+				  box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
 			}
 
 				.beepboxEditor select
