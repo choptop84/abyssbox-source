@@ -19,6 +19,7 @@ let doReload = false;
 		option({ value: "AbyssBox Classic"}, "AbyssBox Classic"),
 		option({ value: "AbyssBox Competitive"}, "AbyssBox Competitive"),
 		option({ value: "AbyssBox Light"}, "AbyssBox Light"),
+		option({ value: "AbyssBox 0.8"}, "AbyssBox 0.8"),
 		option({ value: "Half-Life"}, "Half-Life"),
 		option({ value: "Half-Life: Source"}, "Half-Life: Source"),
 		option({ value: "Doom 1993"}, "Doom 1993"),
