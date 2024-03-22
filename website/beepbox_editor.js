@@ -3551,20 +3551,10 @@ var beepbox = (function (exports) {
 
 		/* Frutiger Aero Icons */
 
-		.beepboxEditor .promptContainer::before {
-			content: "";
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: #fff0;
-			opacity: 0.5;
-			display: flex;
-		}
-
 		div.promptContainerBG {
-			display: none;
+			background-color: var(--editor-background) !important;
+			backdrop-filter: unset !important;
+			opacity: 0 !important;
 		}
 
 		div.mute-button::before {
@@ -4830,20 +4820,10 @@ var beepbox = (function (exports) {
 		  --stop-symbol:url("https://choptop84.github.io/choptop84s-image-repository/stopsign.png");
 		  }
 
-		  .beepboxEditor .promptContainer::before {
-			content: "";
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: var(#2e538c);
-			opacity: 0.5;
-			display: flex;
-		}
-
 		div.promptContainerBG {
-			display: none;
+			background-color: var(--editor-background) !important;
+			backdrop-filter: unset !important;
+			opacity: 0.5 !important;
 		}
 
 		  button.playButton::before {
@@ -5162,20 +5142,10 @@ var beepbox = (function (exports) {
 			--disabled-note-secondary: #ff3355;
 		   }
 
-		   .beepboxEditor .promptContainer::before {
-			content: "";
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: var(--editor-background);
-			opacity: 0.5;
-			display: flex;
-		}
-
 		div.promptContainerBG {
-			display: none;
+			background-color: var(--editor-background) !important;
+			backdrop-filter: unset !important;
+			opacity: 0.5 !important;
 		}
 
 		   * {
@@ -5650,21 +5620,12 @@ var beepbox = (function (exports) {
 					--preferences-gear-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-preferences.png");
 					--text-enabled-icon:❤️ ;
 					}
-			
-					.beepboxEditor .promptContainer::before {
-						content: "";
-						position: absolute;
-						top: 0;
-						left: 0;
-						width: 100%;
-						height: 100%;
-						background: var(--editor-background);
-						opacity: 0.5;
-						display: flex;
-					}
+		
 			
 					div.promptContainerBG {
-						display: none;
+						background-color: var(--editor-background) !important;
+						backdrop-filter: unset !important;
+						opacity: 0.5 !important;
 					}
 
 			/* sets background image */
@@ -5881,7 +5842,7 @@ var beepbox = (function (exports) {
 				}
 		
 				div.promptContainerBG {
-					display: none;
+					display: none !important;
 				}
 
 				html {
@@ -5902,7 +5863,7 @@ var beepbox = (function (exports) {
 					border-radius: 15px;
 					border: 0px solid var(--ui-widget-background) !important;
 					padding-left: 20px !important;
-					box-shadow: 0px 0px 0px 0px rgba(0,0,0,0) !important;
+					box-shadow: 6px 6px 27px 4px rgba(0, 0, 0, 0.5) !important
 					padding-top: 6px !important;
 					padding-right: 20px !important;
 					padding-bottom: 20px !important;
@@ -44175,6 +44136,7 @@ You should be redirected to the song at:<br /><br />
                 this._okayButton.removeEventListener("click", this._close);
                 this._cancelButton.removeEventListener("click", this._close);
                 this._resetButton.removeEventListener("click", this._reset);
+                this._colorpicker.destroy();
             };
             this._reset = () => {
                 window.localStorage.removeItem("colorTheme");
@@ -47126,7 +47088,7 @@ You should be redirected to the song at:<br /><br />
             this._volumeBarBox = div({ class: "playback-volume-bar", style: "height: 12px; align-self: center;" }, this._volumeBarContainer);
             this._fileMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "File"), option({ value: "new" }, "+ New Blank Song"), option({ value: "import" }, "↑ > Import Song (" + EditorConfig.ctrlSymbol + "O)"), option({ value: "export" }, "↓ > Export Song (" + EditorConfig.ctrlSymbol + "S)"), option({ value: "copyUrl" }, "⎘ Copy Song URL"), option({ value: "shareUrl" }, "⤳ Share Song URL"), option({ value: "shortenUrl" }, "… Shorten Song URL"), option({ value: "viewPlayer" }, "▶ View in Song Player"), option({ value: "copyEmbed" }, "⎘ Copy HTML Embed Code"), option({ value: "songRecovery" }, "⚠ > Recover Recent Song"));
             this._editMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Edit"), option({ value: "undo" }, "Undo (Z)"), option({ value: "redo" }, "Redo (Y)"), option({ value: "copy" }, "Copy Pattern (C)"), option({ value: "pasteNotes" }, "Paste Pattern Notes (V)"), option({ value: "pasteNumbers" }, "Paste Pattern Numbers (" + EditorConfig.ctrlSymbol + "⇧V)"), option({ value: "insertBars" }, "Insert Bar (⏎)"), option({ value: "deleteBars" }, "Delete Selected Bars (⌫)"), option({ value: "insertChannel" }, "Insert Channel (" + EditorConfig.ctrlSymbol + "⏎)"), option({ value: "deleteChannel" }, "Delete Selected Channels (" + EditorConfig.ctrlSymbol + "⌫)"), option({ value: "selectChannel" }, "Select Channel (⇧A)"), option({ value: "selectAll" }, "Select All (A)"), option({ value: "duplicatePatterns" }, "Duplicate Reused Patterns (D)"), option({ value: "transposeUp" }, "Move Notes Up (+ or ⇧+)"), option({ value: "transposeDown" }, "Move Notes Down (- or ⇧-)"), option({ value: "moveNotesSideways" }, "> Move All Notes Sideways (W)"), option({ value: "generateEuclideanRhythm" }, "> Generate Euclidean Rhythm (E)"), option({ value: "beatsPerBar" }, "> Change Beats Per Bar (B)"), option({ value: "barCount" }, "> Change Song Length (L)"), option({ value: "channelSettings" }, "> Channel Settings (Q)"), option({ value: "limiterSettings" }, "> Limiter Settings (⇧L)"), option({ value: "addExternal" }, "> Add Custom Samples (⇧Q)"));
-            this._optionsMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Preferences"), optgroup({ label: "Technical" }, option({ value: "autoPlay" }, "Auto Play on Load"), option({ value: "autoFollow" }, "Auto Follow Playhead"), option({ value: "enableNotePreview" }, "Hear Added Notes"), option({ value: "notesOutsideScale" }, "Place Notes Out of Scale"), option({ value: "setDefaultScale" }, "Set Current Scale as Default"), option({ value: "alwaysFineNoteVol" }, "Always Fine Note Volume"), option({ value: "enableChannelMuting" }, "Enable Channel Muting"), option({ value: "instrumentCopyPaste" }, "Enable Copy/Paste Buttons"), option({ value: "instrumentImportExport" }, "Enable Import/Export Buttons"), option({ value: "displayBrowserUrl" }, "Enable Song Data in URL"), option({ value: "closePromptByClickoff" }, "Close prompts on click off"), option({ value: "recordingSetup" }, "Note Recording...")), optgroup({ label: "Appearance" }, option({ value: "showFifth" }, 'Highlight "Fifth" Note'), option({ value: "notesFlashWhenPlayed" }, "Notes Flash When Played (DB2)"), option({ value: "showChannels" }, "Show All Channels"), option({ value: "showScrollBar" }, "Show Octave Scroll Bar"), option({ value: "showLetters" }, "Show Piano Keys"), option({ value: "displayVolumeBar" }, "Show Playback Volume"), option({ value: "showOscilloscope" }, "Show Oscilloscope"), option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"), option({ value: "showDescription" }, "Show Description"), option({ value: "layout" }, "> Set Layout"), option({ value: "colorTheme" }, "> Set Theme")));
+            this._optionsMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Preferences"), optgroup({ label: "Technical" }, option({ value: "autoPlay" }, "Auto Play on Load"), option({ value: "autoFollow" }, "Auto Follow Playhead"), option({ value: "enableNotePreview" }, "Hear Added Notes"), option({ value: "notesOutsideScale" }, "Place Notes Out of Scale"), option({ value: "setDefaultScale" }, "Set Current Scale as Default"), option({ value: "alwaysFineNoteVol" }, "Always Fine Note Volume"), option({ value: "enableChannelMuting" }, "Enable Channel Muting"), option({ value: "instrumentCopyPaste" }, "Enable Copy/Paste Buttons"), option({ value: "instrumentImportExport" }, "Enable Import/Export Buttons"), option({ value: "displayBrowserUrl" }, "Enable Song Data in URL"), option({ value: "closePromptByClickoff" }, "Close prompts on click off"), option({ value: "recordingSetup" }, "Note Recording...")), optgroup({ label: "Appearance" }, option({ value: "showFifth" }, 'Highlight "Fifth" Note'), option({ value: "notesFlashWhenPlayed" }, "Notes Flash When Played (DB2)"), option({ value: "showChannels" }, "Show All Channels"), option({ value: "showScrollBar" }, "Show Octave Scroll Bar"), option({ value: "showLetters" }, "Show Piano Keys"), option({ value: "displayVolumeBar" }, "Show Playback Volume"), option({ value: "showOscilloscope" }, "Show Oscilloscope"), option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"), option({ value: "showDescription" }, "Show Description"), option({ value: "frostedGlassBackground" }, "Use Frosted Glass Prompt Backdrops"), option({ value: "layout" }, "> Set Layout"), option({ value: "colorTheme" }, "> Set Theme")));
             this._scaleSelect = buildOptions(select(), Config.scales.map(scale => scale.name));
             this._keySelect = buildOptions(select(), Config.keys.map(key => key.name).reverse());
             this._octaveStepper = input({ type: "number", min: Config.octaveMin, max: Config.octaveMax, value: "0" });
@@ -47353,7 +47315,7 @@ You should be redirected to the song at:<br /><br />
                 SVG.path({ d: "M150 65 c0 -8 -7 -15 -15 -15 -8 0 -15 -4 -15 -10 0 -14 23 -13 38 2 15 15 16 38 2 38 -5 0 -10 -7 -10 -15z" })
             ]);
             this._promptContainer = div({ class: "promptContainer", style: "display: none;" });
-            this._promptContainerBG = div({ class: "promptContainerBG", style: "display: none; height: 100%; width: 100%; position: fixed;z-index: 99; background-color: rgba(0,0,0, 0); overflow-x: hidden; pointer-events: none; backdrop-filter: brightness(0.9) blur(14px);" });
+            this._promptContainerBG = div({ class: "promptContainerBG", style: "display: none; height: 100%; width: 100%; position: fixed; z-index: 99; overflow-x: hidden; pointer-events: none;" });
             this._zoomInButton = button({ class: "zoomInButton", type: "button", title: "Zoom In" });
             this._zoomOutButton = button({ class: "zoomOutButton", type: "button", title: "Zoom Out" });
             this._undoButton = button({ class: "undoButton", type: "button", title: "Undo Changes" });
@@ -47615,6 +47577,7 @@ You should be redirected to the song at:<br /><br />
                     (prefs.showOscilloscope ? textOnIcon : textOffIcon) + "Show Oscilloscope",
                     (prefs.showSampleLoadingStatus ? textOnIcon : textOffIcon) + "Show Sample Loading Status",
                     (prefs.showDescription ? textOnIcon : textOffIcon) + "Show Description",
+                    (prefs.frostedGlassBackground ? textOnIcon : textOffIcon) + "Use Frosted Glass Prompt Backdrop",
                     "> Set Layout",
                     "> Set Theme",
                 ];
@@ -47625,7 +47588,7 @@ You should be redirected to the song at:<br /><br />
                         option.textContent = optionCommands[i + 1];
                 }
                 const appearanceOptionGroup = this._optionsMenu.children[2];
-                for (let i = 0; i < 11; i++) {
+                for (let i = 0; i < 12; i++) {
                     const option = appearanceOptionGroup.children[i];
                     if (option.textContent != optionCommands[i + 14])
                         option.textContent = optionCommands[i + 14];
@@ -49985,6 +49948,9 @@ You should be redirected to the song at:<br /><br />
                     case "instrumentImportExport":
                         this._doc.prefs.instrumentImportExport = !this._doc.prefs.instrumentImportExport;
                         break;
+                    case "frostedGlassBackground":
+                        this._doc.prefs.frostedGlassBackground = !this._doc.prefs.frostedGlassBackground;
+                        break;
                 }
                 this._optionsMenu.selectedIndex = 0;
                 this._doc.notifier.changed();
@@ -50596,7 +50562,18 @@ You should be redirected to the song at:<br /><br />
                         this._doc.performance.pause();
                     }
                     this._promptContainer.style.display = "";
-                    this._promptContainerBG.style.display = "";
+                    if (this._doc.prefs.frostedGlassBackground == true) {
+                        this._promptContainerBG.style.display = "";
+                        this._promptContainerBG.style.backgroundColor = "rgba(0,0,0, 0)";
+                        this._promptContainerBG.style.backdropFilter = "brightness(0.9) blur(14px)";
+                        this._promptContainerBG.style.opacity = "1";
+                    }
+                    else {
+                        this._promptContainerBG.style.display = "";
+                        this._promptContainerBG.style.backgroundColor = "var(--editor-background)";
+                        this._promptContainerBG.style.backdropFilter = "";
+                        this._promptContainerBG.style.opacity = "0.5";
+                    }
                     this._promptContainer.appendChild(this.prompt.container);
                     document.body.appendChild(this._promptContainerBG);
                 }
@@ -50856,60 +50833,6 @@ You should be redirected to the song at:<br /><br />
             }
         }
     }
-
-    class SongPlayerLayout {
-        static setLayout(layout) {
-            this._styleElement.textContent = this._spLayoutMap[layout];
-        }
-    }
-    SongPlayerLayout.layoutLookup = new Map();
-    SongPlayerLayout._spLayoutMap = {
-        "classic": `
-        .songPlayerContainer {
-            display:grid; 
-            grid-template-areas: 'visualizer visualizer' 'control-center control-center'; 
-            grid-template-rows: 92.6vh 7.4vh; 
-            grid-template-columns: minmax(0px,0px);
-        }
-        div.visualizer {
-            transform: scale(1);
-            }
-        `,
-        "top": `
-        .songPlayerContainer {
-            display:grid; 
-            grid-template-areas: 'control-center control-center' 'visualizer visualizer'; 
-            grid-template-rows: 7.4vh 92.6vh; 
-            grid-template-columns: minmax(0px,0px);
-        }
-        div.visualizer {
-            transform: scale(1);
-            }
-        `,
-        "shitbox4": `
-        .songPlayerContainer {
-            display:grid; 
-            grid-template-areas: 'visualizer visualizer' 'control-center control-center'; 
-            grid-template-rows: 92.6vh 7.4vh; 
-            grid-template-columns: minmax(0px,0px);
-        }
-        div.visualizer {
-            transform: skew(30deg,20deg) scale(0.5);
-            }
-        `,
-        "boxbeep": `
-        .songPlayerContainer {
-            display:grid; 
-            grid-template-areas: 'visualizer visualizer' 'control-center control-center'; 
-            grid-template-rows: 92.6vh 7.4vh; 
-            grid-template-columns: minmax(0px,0px);
-        }
-        div.visualizer {
-            transform: scale(-1);
-            }
-        `,
-    };
-    SongPlayerLayout._styleElement = document.head.appendChild(HTML.style({ type: "text/css" }));
 
     class SongPerformance {
         constructor(_doc) {
@@ -52206,7 +52129,7 @@ You should be redirected to the song at:<br /><br />
                 window.localStorage.removeItem("fullScreen");
             }
             this.closePromptByClickoff = window.localStorage.getItem("closePromptByClickoff") != "false";
-            this.spLayout = window.localStorage.getItem("spLayout") || "small";
+            this.frostedGlassBackground = window.localStorage.getItem("frostedGlassBackground") != "true";
         }
         save() {
             window.localStorage.setItem("autoPlay", this.autoPlay ? "true" : "false");
@@ -52244,7 +52167,7 @@ You should be redirected to the song at:<br /><br />
             window.localStorage.setItem("volume", String(this.volume));
             window.localStorage.setItem("visibleOctaves", String(this.visibleOctaves));
             window.localStorage.setItem("closePromptByClickoff", this.closePromptByClickoff ? "true" : "false");
-            window.localStorage.setItem("spLayout", this.spLayout);
+            window.localStorage.setItem("frostedGlassBackground", this.frostedGlassBackground ? "true" : "false");
         }
     }
     Preferences.defaultVisibleOctaves = 3;
@@ -52446,7 +52369,6 @@ You should be redirected to the song at:<br /><br />
             this.notifier.watch(this._validateDocState);
             ColorConfig.setTheme(this.prefs.colorTheme);
             Layout.setLayout(this.prefs.layout);
-            SongPlayerLayout.setLayout(this.prefs.spLayout);
             if (window.sessionStorage.getItem("currentUndoIndex") == null) {
                 window.sessionStorage.setItem("currentUndoIndex", "0");
                 window.sessionStorage.setItem("oldestUndoIndex", "0");

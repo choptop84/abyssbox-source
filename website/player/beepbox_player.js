@@ -3203,20 +3203,10 @@ var beepbox = (function (exports) {
 
 		/* Frutiger Aero Icons */
 
-		.beepboxEditor .promptContainer::before {
-			content: "";
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: #fff0;
-			opacity: 0.5;
-			display: flex;
-		}
-
 		div.promptContainerBG {
-			display: none;
+			background-color: var(--editor-background) !important;
+			backdrop-filter: unset !important;
+			opacity: 0 !important;
 		}
 
 		div.mute-button::before {
@@ -4482,20 +4472,10 @@ var beepbox = (function (exports) {
 		  --stop-symbol:url("https://choptop84.github.io/choptop84s-image-repository/stopsign.png");
 		  }
 
-		  .beepboxEditor .promptContainer::before {
-			content: "";
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: var(#2e538c);
-			opacity: 0.5;
-			display: flex;
-		}
-
 		div.promptContainerBG {
-			display: none;
+			background-color: var(--editor-background) !important;
+			backdrop-filter: unset !important;
+			opacity: 0.5 !important;
 		}
 
 		  button.playButton::before {
@@ -4814,20 +4794,10 @@ var beepbox = (function (exports) {
 			--disabled-note-secondary: #ff3355;
 		   }
 
-		   .beepboxEditor .promptContainer::before {
-			content: "";
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: var(--editor-background);
-			opacity: 0.5;
-			display: flex;
-		}
-
 		div.promptContainerBG {
-			display: none;
+			background-color: var(--editor-background) !important;
+			backdrop-filter: unset !important;
+			opacity: 0.5 !important;
 		}
 
 		   * {
@@ -5302,21 +5272,12 @@ var beepbox = (function (exports) {
 					--preferences-gear-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-preferences.png");
 					--text-enabled-icon:❤️ ;
 					}
-			
-					.beepboxEditor .promptContainer::before {
-						content: "";
-						position: absolute;
-						top: 0;
-						left: 0;
-						width: 100%;
-						height: 100%;
-						background: var(--editor-background);
-						opacity: 0.5;
-						display: flex;
-					}
+		
 			
 					div.promptContainerBG {
-						display: none;
+						background-color: var(--editor-background) !important;
+						backdrop-filter: unset !important;
+						opacity: 0.5 !important;
 					}
 
 			/* sets background image */
@@ -5533,7 +5494,7 @@ var beepbox = (function (exports) {
 				}
 		
 				div.promptContainerBG {
-					display: none;
+					display: none !important;
 				}
 
 				html {
@@ -5554,7 +5515,7 @@ var beepbox = (function (exports) {
 					border-radius: 15px;
 					border: 0px solid var(--ui-widget-background) !important;
 					padding-left: 20px !important;
-					box-shadow: 0px 0px 0px 0px rgba(0,0,0,0) !important;
+					box-shadow: 6px 6px 27px 4px rgba(0, 0, 0, 0.5) !important
 					padding-top: 6px !important;
 					padding-right: 20px !important;
 					padding-bottom: 20px !important;
@@ -27275,7 +27236,9 @@ var beepbox = (function (exports) {
     const { svg, circle, rect, path } = SVG;
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|android|ipad|playbook|silk/i.test(navigator.userAgent);
     const colorTheme = getLocalStorage("colorTheme");
+    const setSpLayout = getLocalStorage("spLayout");
     ColorConfig.setTheme(colorTheme === null ? "AbyssBox Classic" : colorTheme);
+    SongPlayerLayout.setLayout(setSpLayout === null ? "classic" : setSpLayout);
     let prevHash = null;
     let id = ((Math.random() * 0xffffffff) >>> 0).toString(16);
     let pauseButtonDisplayed = false;
@@ -27536,6 +27499,7 @@ var beepbox = (function (exports) {
     function onLayoutPicked() {
         SongPlayerLayout.setLayout(_form.elements["spLayout"].value);
         promptContainer.style.display = "none";
+        window.localStorage.setItem("spLayout", _form.elements["spLayout"].value);
     }
     function onToggleLoop() {
         if (synth.loopRepeatCount == -1) {

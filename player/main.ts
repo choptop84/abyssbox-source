@@ -13,8 +13,11 @@ import { SongPlayerLayout } from "./Layout";
 
 	const isMobile: boolean = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|android|ipad|playbook|silk/i.test(navigator.userAgent);
 
+
 	const colorTheme: string | null = getLocalStorage("colorTheme");
+	const setSpLayout: string | null = getLocalStorage("spLayout");
 	ColorConfig.setTheme(colorTheme === null ? "AbyssBox Classic" : colorTheme);
+	SongPlayerLayout.setLayout(setSpLayout === null ? "classic" : setSpLayout);
 
 	let prevHash: string | null = null;
 	let id: string = ((Math.random() * 0xffffffff) >>> 0).toString(16);
@@ -393,6 +396,7 @@ import { SongPlayerLayout } from "./Layout";
 	function onLayoutPicked(): void {
 		SongPlayerLayout.setLayout((<any> _form.elements)["spLayout"].value);
 		promptContainer.style.display = "none";
+		window.localStorage.setItem("spLayout", (<any> _form.elements)["spLayout"].value);
 	}
 
 		// The end of the layout event code.
@@ -746,6 +750,8 @@ import { SongPlayerLayout } from "./Layout";
 	renderLoopIcon();
 	renderZoomIcon();
 	renderPlayButton();
+
+
 
 	// When compiling synth.ts as a standalone module named "beepbox", expose these classes as members to JavaScript:
 		export {Dictionary, DictionaryArray, EnvelopeType, InstrumentType, Transition, Chord, Envelope, Config, NotePin, Note, Pattern, Instrument, Channel, Synth};

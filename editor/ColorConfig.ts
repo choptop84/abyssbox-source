@@ -1207,20 +1207,10 @@ export class ColorConfig {
 
 		/* Frutiger Aero Icons */
 
-		.beepboxEditor .promptContainer::before {
-			content: "";
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: #fff0;
-			opacity: 0.5;
-			display: flex;
-		}
-
 		div.promptContainerBG {
-			display: none;
+			background-color: var(--editor-background) !important;
+			backdrop-filter: unset !important;
+			opacity: 0 !important;
 		}
 
 		div.mute-button::before {
@@ -2486,20 +2476,10 @@ export class ColorConfig {
 		  --stop-symbol:url("https://choptop84.github.io/choptop84s-image-repository/stopsign.png");
 		  }
 
-		  .beepboxEditor .promptContainer::before {
-			content: "";
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: var(#2e538c);
-			opacity: 0.5;
-			display: flex;
-		}
-
 		div.promptContainerBG {
-			display: none;
+			background-color: var(--editor-background) !important;
+			backdrop-filter: unset !important;
+			opacity: 0.5 !important;
 		}
 
 		  button.playButton::before {
@@ -2818,20 +2798,10 @@ export class ColorConfig {
 			--disabled-note-secondary: #ff3355;
 		   }
 
-		   .beepboxEditor .promptContainer::before {
-			content: "";
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: var(--editor-background);
-			opacity: 0.5;
-			display: flex;
-		}
-
 		div.promptContainerBG {
-			display: none;
+			background-color: var(--editor-background) !important;
+			backdrop-filter: unset !important;
+			opacity: 0.5 !important;
 		}
 
 		   * {
@@ -3306,21 +3276,12 @@ export class ColorConfig {
 					--preferences-gear-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-preferences.png");
 					--text-enabled-icon:❤️ ;
 					}
-			
-					.beepboxEditor .promptContainer::before {
-						content: "";
-						position: absolute;
-						top: 0;
-						left: 0;
-						width: 100%;
-						height: 100%;
-						background: var(--editor-background);
-						opacity: 0.5;
-						display: flex;
-					}
+		
 			
 					div.promptContainerBG {
-						display: none;
+						background-color: var(--editor-background) !important;
+						backdrop-filter: unset !important;
+						opacity: 0.5 !important;
 					}
 
 			/* sets background image */
@@ -3537,7 +3498,7 @@ export class ColorConfig {
 				}
 		
 				div.promptContainerBG {
-					display: none;
+					display: none !important;
 				}
 
 				html {
@@ -3558,7 +3519,7 @@ export class ColorConfig {
 					border-radius: 15px;
 					border: 0px solid var(--ui-widget-background) !important;
 					padding-left: 20px !important;
-					box-shadow: 0px 0px 0px 0px rgba(0,0,0,0) !important;
+					box-shadow: 6px 6px 27px 4px rgba(0, 0, 0, 0.5) !important
 					padding-top: 6px !important;
 					padding-right: 20px !important;
 					padding-bottom: 20px !important;

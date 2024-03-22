@@ -821,6 +821,7 @@ export class SongEditor {
             option({ value: "showOscilloscope" }, "Show Oscilloscope"),
             option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"),
             option({ value: "showDescription" }, "Show Description"),
+            option({ value: "frostedGlassBackground" }, "Use Frosted Glass Prompt Backdrops"),
             option({ value: "layout" }, "> Set Layout"),
             option({ value: "colorTheme" }, "> Set Theme"),
             ),
@@ -1229,7 +1230,7 @@ export class SongEditor {
         SVG.path({ d: "M150 65 c0 -8 -7 -15 -15 -15 -8 0 -15 -4 -15 -10 0 -14 23 -13 38 2 15 15 16 38 2 38 -5 0 -10 -7 -10 -15z" })]);
 
     private readonly _promptContainer: HTMLDivElement = div({ class: "promptContainer", style: "display: none;" });
-    private readonly _promptContainerBG: HTMLDivElement = div({ class: "promptContainerBG", style: "display: none; height: 100%; width: 100%; position: fixed;z-index: 99; background-color: rgba(0,0,0, 0); overflow-x: hidden; pointer-events: none; backdrop-filter: brightness(0.9) blur(14px);" });
+    private readonly _promptContainerBG: HTMLDivElement = div({ class: "promptContainerBG", style: "display: none; height: 100%; width: 100%; position: fixed; z-index: 99; overflow-x: hidden; pointer-events: none;" });
     private readonly _zoomInButton: HTMLButtonElement = button({ class: "zoomInButton", type: "button", title: "Zoom In" });
     private readonly _zoomOutButton: HTMLButtonElement = button({ class: "zoomOutButton", type: "button", title: "Zoom Out" });
     private readonly _undoButton: HTMLButtonElement = button({ class: "undoButton", type: "button", title: "Undo Changes" });
@@ -2134,7 +2135,17 @@ export class SongEditor {
                     this._doc.performance.pause();
                 }
                 this._promptContainer.style.display = "";
-                this._promptContainerBG.style.display = "";
+                    if (this._doc.prefs.frostedGlassBackground == true) {
+                    this._promptContainerBG.style.display = ""; 
+                    this._promptContainerBG.style.backgroundColor = "rgba(0,0,0, 0)"; 
+                    this._promptContainerBG.style.backdropFilter = "brightness(0.9) blur(14px)"; 
+                    this._promptContainerBG.style.opacity = "1"; 
+                } else {
+                    this._promptContainerBG.style.display = ""; 
+                    this._promptContainerBG.style.backgroundColor = "var(--editor-background)"; 
+                    this._promptContainerBG.style.backdropFilter = ""; 
+                    this._promptContainerBG.style.opacity = "0.5"; 
+                }
                 this._promptContainer.appendChild(this.prompt.container);
                 document.body.appendChild(this._promptContainerBG);
             }
@@ -2354,6 +2365,7 @@ export class SongEditor {
             (prefs.showOscilloscope ? textOnIcon : textOffIcon) + "Show Oscilloscope",
             (prefs.showSampleLoadingStatus ? textOnIcon : textOffIcon) + "Show Sample Loading Status",
             (prefs.showDescription ? textOnIcon : textOffIcon) + "Show Description",
+            (prefs.frostedGlassBackground ? textOnIcon : textOffIcon) + "Use Frosted Glass Prompt Backdrop",
             "> Set Layout",
             "> Set Theme",
         ];
@@ -2370,7 +2382,7 @@ export class SongEditor {
                 const appearanceOptionGroup: HTMLOptGroupElement = <HTMLOptGroupElement>this._optionsMenu.children[2];
         
                 // how do you get the length of an optgroup?
-                for (let i: number = 0; i < 11; i++) { // Hi choptop84, past you here. If you add a new preference to the list, you need to change the number on the left, yeah the one that says 11 rn. That.
+                for (let i: number = 0; i < 12; i++) { // Hi choptop84, past you here. If you add a new preference to the list, you need to change the number on the left, yeah the one that says 12 rn. That.
                     const option: HTMLOptionElement = <HTMLOptionElement>appearanceOptionGroup.children[i];
                     if (option.textContent != optionCommands[i + 14]) option.textContent = optionCommands[i + 14];
         }
@@ -5286,6 +5298,9 @@ export class SongEditor {
                 break;
             case "instrumentImportExport":
                 this._doc.prefs.instrumentImportExport = !this._doc.prefs.instrumentImportExport;
+                break;
+            case "frostedGlassBackground":
+                this._doc.prefs.frostedGlassBackground = !this._doc.prefs.frostedGlassBackground;
                 break;
         }
         this._optionsMenu.selectedIndex = 0;

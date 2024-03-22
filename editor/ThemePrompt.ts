@@ -495,6 +495,7 @@ let doReload = false;
 				// The prompt seems to get stuck if reloading is done too quickly.
 				setTimeout(() => { window.location.reload(); }, 50);
 			}
+			
 		}
 	
 		public cleanUp = (): void => {
@@ -502,6 +503,7 @@ let doReload = false;
 			this._cancelButton.removeEventListener("click", this._close);
 			// this.container.removeEventListener("keydown", this._whenKeyPressed);
 			this._resetButton.removeEventListener("click", this._reset);
+			this._colorpicker.destroy();
 		}
 		private _reset = (): void => {
 			window.localStorage.removeItem("colorTheme");
