@@ -36070,7 +36070,7 @@ li.select2-results__option[role=group] > strong:hover {
             this._fileName = input$c({ type: "text", style: "width: 10em;", value: "BeepBox-Song", maxlength: 250, "autofocus": "autofocus" });
             this._computedSamplesLabel = div$f({ style: "width: 10em;" }, new Text("0:00"));
             this._enableIntro = input$c({ type: "checkbox" });
-            this._loopDropDown = input$c({ style: "width: 2em;", type: "number", min: "1", max: "4", step: "1" });
+            this._loopDropDown = input$c({ style: "width: 3em;", type: "number", min: "1", max: "16", step: "1" });
             this._enableOutro = input$c({ type: "checkbox" });
             this._formatSelect = select$9({ style: "width: 100%;" }, option$9({ value: "wav" }, "Export to .wav file."), option$9({ value: "mp3" }, "Export to .mp3 file."), option$9({ value: "midi" }, "Export to .mid file."), option$9({ value: "json" }, "Export to .json file."), option$9({ value: "html" }, "Export to .html file."));
             this._cancelButton = button$f({ class: "cancelButton" });
@@ -47438,6 +47438,10 @@ You should be redirected to the song at:<br /><br />
                         const maxBeatWidth = this._patternEditorRow.clientWidth / (this._doc.song.beatsPerBar + 2);
                         const beatWidth = Math.max(minBeatWidth, Math.min(maxBeatWidth, targetBeatWidth));
                         const patternEditorWidth = beatWidth * this._doc.song.beatsPerBar;
+                        if (this._doc.prefs.showDescription == false) {
+                            beepboxEditorContainer$1.style.paddingBottom = "0 !important";
+                            beepboxEditorContainer$1.style.borderStyle = "none !important";
+                        }
                         this._patternEditorPrev.container.style.width = patternEditorWidth + "px";
                         this._patternEditor.container.style.width = patternEditorWidth + "px";
                         this._patternEditorNext.container.style.width = patternEditorWidth + "px";

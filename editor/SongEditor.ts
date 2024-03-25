@@ -2210,7 +2210,7 @@ export class SongEditor {
         // if (document.getElementById('text-content'))
         if (document.getElementById('text-content'))
             document.getElementById('text-content')!.style.display = this._doc.prefs.showDescription ? "" : "none";
-
+        
             if (!isMobile) {
         if (this._doc.getFullScreen()) {
             const semitoneHeight: number = this._patternEditorRow.clientHeight / this._doc.getVisiblePitchCount();
@@ -2219,6 +2219,11 @@ export class SongEditor {
             const maxBeatWidth: number = this._patternEditorRow.clientWidth / (this._doc.song.beatsPerBar + 2);
             const beatWidth: number = Math.max(minBeatWidth, Math.min(maxBeatWidth, targetBeatWidth));
             const patternEditorWidth: number = beatWidth * this._doc.song.beatsPerBar;
+
+            if (this._doc.prefs.showDescription == false) {
+                beepboxEditorContainer.style.paddingBottom = "0 !important";
+                beepboxEditorContainer.style.borderStyle = "none !important";
+            }
 
             this._patternEditorPrev.container.style.width = patternEditorWidth + "px";
             this._patternEditor.container.style.width = patternEditorWidth + "px";
