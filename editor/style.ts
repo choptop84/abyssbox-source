@@ -1619,7 +1619,6 @@ document.head.appendChild(HTML.style({ type: "text/css" }, `
 
 .beepboxEditor .trackContainer {
 	flex-grow: 1;
-	--track-font: "sans-serif"
 }
 
 .beepboxEditor .trackAndMuteContainer {

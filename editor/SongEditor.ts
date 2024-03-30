@@ -2221,8 +2221,11 @@ export class SongEditor {
             const patternEditorWidth: number = beatWidth * this._doc.song.beatsPerBar;
 
             if (this._doc.prefs.showDescription == false) {
-                beepboxEditorContainer.style.paddingBottom = "0 !important";
-                beepboxEditorContainer.style.borderStyle = "none !important";
+                beepboxEditorContainer.style.paddingBottom = "0";
+                beepboxEditorContainer.style.borderStyle = "none";
+            } else {
+                beepboxEditorContainer.style.paddingBottom = "";
+                beepboxEditorContainer.style.borderStyle = "";
             }
 
             this._patternEditorPrev.container.style.width = patternEditorWidth + "px";
@@ -2292,6 +2295,8 @@ export class SongEditor {
             this._notesDownButton.style.left = prefs.showScrollBar ? "-50px" : "-50px"; 
             this._loopBarButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";
             this._fullscreenButton.style.display = "none";
+            beepboxEditorContainer.style.paddingBottom = "";
+            beepboxEditorContainer.style.borderStyle = "";
 
         }
     } else {

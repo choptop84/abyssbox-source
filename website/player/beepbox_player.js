@@ -4384,7 +4384,6 @@ var beepbox = (function (exports) {
 			--black-piano-key-text: #fff;
 			--note-flash: #4cbf56;
 			--note-flash-secondary: #b84848;
-			--track-font: sans-serif;
 			--oscilloscope-line-L: #d587e6;
 			--oscilloscope-line-R: #b11cc7;
 			--pitch1-secondary-channel: #3373cc;
@@ -4710,7 +4709,6 @@ var beepbox = (function (exports) {
 			--black-piano-key-text: #fff;
 			--note-flash: #ff0;
 			--note-flash-secondary: #ff7b00;
-			--track-font: sans-serif;
 			--oscilloscope-line-L: #d587e6;
 			--oscilloscope-line-R: #b11cc7;
 		   
@@ -14016,7 +14014,6 @@ var beepbox = (function (exports) {
     --mute-button-normal: #ffdc00;
     --mute-button-mod: #0027ff;
     --mod-label-primary: #2b2b2b;
-    --track-font: sans-serif;
 
     --pitch1-secondary-channel: #0082BB;
   --pitch1-primary-channel: #B1E8FF;
@@ -14566,7 +14563,7 @@ var beepbox = (function (exports) {
             return (_a = EditorConfig.presetCategories[0].presets.dictionary) === null || _a === void 0 ? void 0 : _a[TypePresets === null || TypePresets === void 0 ? void 0 : TypePresets[instrument]];
         }
     }
-    EditorConfig.version = "1.1.1";
+    EditorConfig.version = "1.2";
     EditorConfig.versionDisplayName = "AbyssBox " + EditorConfig.version;
     EditorConfig.releaseNotesURL = "./patch_notes.html";
     EditorConfig.isOnMac = /^Mac/i.test(navigator.platform) || /Mac OS X/i.test(navigator.userAgent) || /^(iPhone|iPad|iPod)/i.test(navigator.platform) || /(iPhone|iPad|iPod)/i.test(navigator.userAgent);

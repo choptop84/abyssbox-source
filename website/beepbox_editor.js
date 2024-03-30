@@ -1481,7 +1481,7 @@ var beepbox = (function (exports) {
             return (_a = EditorConfig.presetCategories[0].presets.dictionary) === null || _a === void 0 ? void 0 : _a[TypePresets === null || TypePresets === void 0 ? void 0 : TypePresets[instrument]];
         }
     }
-    EditorConfig.version = "1.1.1";
+    EditorConfig.version = "1.2";
     EditorConfig.versionDisplayName = "AbyssBox " + EditorConfig.version;
     EditorConfig.releaseNotesURL = "./patch_notes.html";
     EditorConfig.isOnMac = /^Mac/i.test(navigator.platform) || /Mac OS X/i.test(navigator.userAgent) || /^(iPhone|iPad|iPod)/i.test(navigator.platform) || /(iPhone|iPad|iPod)/i.test(navigator.userAgent);
@@ -4732,7 +4732,6 @@ var beepbox = (function (exports) {
 			--black-piano-key-text: #fff;
 			--note-flash: #4cbf56;
 			--note-flash-secondary: #b84848;
-			--track-font: sans-serif;
 			--oscilloscope-line-L: #d587e6;
 			--oscilloscope-line-R: #b11cc7;
 			--pitch1-secondary-channel: #3373cc;
@@ -5058,7 +5057,6 @@ var beepbox = (function (exports) {
 			--black-piano-key-text: #fff;
 			--note-flash: #ff0;
 			--note-flash-secondary: #ff7b00;
-			--track-font: sans-serif;
 			--oscilloscope-line-L: #d587e6;
 			--oscilloscope-line-R: #b11cc7;
 		   
@@ -14364,7 +14362,6 @@ var beepbox = (function (exports) {
     --mute-button-normal: #ffdc00;
     --mute-button-mod: #0027ff;
     --mod-label-primary: #2b2b2b;
-    --track-font: sans-serif;
 
     --pitch1-secondary-channel: #0082BB;
   --pitch1-primary-channel: #B1E8FF;
@@ -16488,7 +16485,6 @@ var beepbox = (function (exports) {
 
 .beepboxEditor .trackContainer {
 	flex-grow: 1;
-	--track-font: "sans-serif"
 }
 
 .beepboxEditor .trackAndMuteContainer {
@@ -47439,8 +47435,12 @@ You should be redirected to the song at:<br /><br />
                         const beatWidth = Math.max(minBeatWidth, Math.min(maxBeatWidth, targetBeatWidth));
                         const patternEditorWidth = beatWidth * this._doc.song.beatsPerBar;
                         if (this._doc.prefs.showDescription == false) {
-                            beepboxEditorContainer$1.style.paddingBottom = "0 !important";
-                            beepboxEditorContainer$1.style.borderStyle = "none !important";
+                            beepboxEditorContainer$1.style.paddingBottom = "0";
+                            beepboxEditorContainer$1.style.borderStyle = "none";
+                        }
+                        else {
+                            beepboxEditorContainer$1.style.paddingBottom = "";
+                            beepboxEditorContainer$1.style.borderStyle = "";
                         }
                         this._patternEditorPrev.container.style.width = patternEditorWidth + "px";
                         this._patternEditor.container.style.width = patternEditorWidth + "px";
@@ -47508,6 +47508,8 @@ You should be redirected to the song at:<br /><br />
                         this._notesDownButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";
                         this._loopBarButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";
                         this._fullscreenButton.style.display = "none";
+                        beepboxEditorContainer$1.style.paddingBottom = "";
+                        beepboxEditorContainer$1.style.borderStyle = "";
                     }
                 }
                 else {

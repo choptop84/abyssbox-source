@@ -2388,7 +2388,6 @@ export class ColorConfig {
 			--black-piano-key-text: #fff;
 			--note-flash: #4cbf56;
 			--note-flash-secondary: #b84848;
-			--track-font: sans-serif;
 			--oscilloscope-line-L: #d587e6;
 			--oscilloscope-line-R: #b11cc7;
 			--pitch1-secondary-channel: #3373cc;
@@ -2714,7 +2713,6 @@ export class ColorConfig {
 			--black-piano-key-text: #fff;
 			--note-flash: #ff0;
 			--note-flash-secondary: #ff7b00;
-			--track-font: sans-serif;
 			--oscilloscope-line-L: #d587e6;
 			--oscilloscope-line-R: #b11cc7;
 		   
@@ -12024,7 +12022,6 @@ export class ColorConfig {
     --mute-button-normal: #ffdc00;
     --mute-button-mod: #0027ff;
     --mod-label-primary: #2b2b2b;
-    --track-font: sans-serif;
 
     --pitch1-secondary-channel: #0082BB;
   --pitch1-primary-channel: #B1E8FF;
