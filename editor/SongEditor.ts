@@ -1794,10 +1794,16 @@ export class SongEditor {
         this._doc.synth.loopRepeatCount = 0;
         this._loopEditor.container.style.display = "none"; // setting the display to none instead of the opacity to 0 makes it so then you can't edit the values when in this mode
         SongEditor._styleElement.textContent = SongEditor._setLoopIcon[3];
+        this._doc.synth.loopBarStart = -1;
+        this._doc.synth.loopBarEnd = -1;
+        this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
         } else if (_loopType == 2) {
             this._doc.synth.loopRepeatCount = -1;
             this._loopEditor.container.style.display = "none";
             SongEditor._styleElement.textContent = SongEditor._setLoopIcon[2];	
+            this._doc.synth.loopBarStart = -1;
+            this._doc.synth.loopBarEnd = -1;
+            this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
         } else if (_loopType == 1) {
             this._doc.synth.loopRepeatCount = -1;
             this._loopEditor.container.style.display = "";
@@ -2303,7 +2309,7 @@ export class SongEditor {
                 this._deleteChannelButton.style.display = "none";
                 this._selectAllButton.style.display = "none";
                 this._duplicateButton.style.display = "none";
-                this._loopBarButton.style.display = "none";
+                this._loopBarButton.style.display = "none"; 
                 this._notesDownButton.style.display = "none";
                 this._notesUpButton.style.display = "none"; 
             } else {
@@ -2315,7 +2321,9 @@ export class SongEditor {
             this._deleteChannelButton.style.display ="";
             this._selectAllButton.style.display = "";
             this._duplicateButton.style.display = "";
-            this._loopBarButton.style.display = "";
+            if (_loopType != 1) {
+            this._loopBarButton.style.display = "none"; } else if (_loopType == 1) {
+            this._loopBarButton.style.display = ""; }
             this._notesDownButton.style.display = "";
             this._notesUpButton.style.display = "";
             }
@@ -2361,7 +2369,9 @@ export class SongEditor {
             this._deleteChannelButton.style.display ="";
             this._selectAllButton.style.display = "";
             this._duplicateButton.style.display = "";
-            this._loopBarButton.style.display = "";
+            if (_loopType != 1) {
+                this._loopBarButton.style.display = "none"; } else if (_loopType == 1) {
+                this._loopBarButton.style.display = ""; }
             this._notesDownButton.style.display = "";
             this._notesUpButton.style.display = "";
             }
@@ -4095,34 +4105,36 @@ export class SongEditor {
 
                 if (needControlForShortcuts == (event.ctrlKey || event.metaKey)) {
                     if (event.shiftKey) {
-                        const leftSel = Math.min(this._doc.selection.boxSelectionX0, this._doc.selection.boxSelectionX1);
-                        const rightSel = Math.max(this._doc.selection.boxSelectionX0, this._doc.selection.boxSelectionX1);
-                        if ((leftSel < this._doc.synth.loopBarStart || this._doc.synth.loopBarStart == -1)
-                            || (rightSel > this._doc.synth.loopBarEnd || this._doc.synth.loopBarEnd == -1)
-                        ) {
-                            this._doc.synth.loopBarStart = leftSel;
-                            this._doc.synth.loopBarEnd = rightSel;
+                        if (_loopType == 1) {
+                            const leftSel = Math.min(this._doc.selection.boxSelectionX0, this._doc.selection.boxSelectionX1);
+                            const rightSel = Math.max(this._doc.selection.boxSelectionX0, this._doc.selection.boxSelectionX1);
+                            if ((leftSel < this._doc.synth.loopBarStart || this._doc.synth.loopBarStart == -1)
+                                || (rightSel > this._doc.synth.loopBarEnd || this._doc.synth.loopBarEnd == -1)
+                            ) {
+                                this._doc.synth.loopBarStart = leftSel;
+                                this._doc.synth.loopBarEnd = rightSel;
 
-                            if (!this._doc.synth.playing) {
+                                if (!this._doc.synth.playing) {
+                                    this._doc.synth.snapToBar();
+                                    this._doc.performance.play();
+                                }
+                            }
+                            else {
+                                this._doc.synth.loopBarStart = -1;
+                                this._doc.synth.loopBarEnd = -1;
+                            }
+                            // Pressed while viewing a different bar than the current synth playhead.
+                            if (this._doc.bar != Math.floor(this._doc.synth.playhead) && this._doc.synth.loopBarStart != -1) {
+                                this._doc.synth.goToBar(this._doc.bar);
                                 this._doc.synth.snapToBar();
-                                this._doc.performance.play();
+                                this._doc.synth.initModFilters(this._doc.song);
+                                this._doc.synth.computeLatestModValues();
+                                if (this._doc.prefs.autoFollow) {
+                                    this._doc.selection.setChannelBar(this._doc.channel, Math.floor(this._doc.synth.playhead));
+                                }
                             }
-                        }
-                        else {
-                            this._doc.synth.loopBarStart = -1;
-                            this._doc.synth.loopBarEnd = -1;
-                        }
-                        // Pressed while viewing a different bar than the current synth playhead.
-                        if (this._doc.bar != Math.floor(this._doc.synth.playhead) && this._doc.synth.loopBarStart != -1) {
-                            this._doc.synth.goToBar(this._doc.bar);
-                            this._doc.synth.snapToBar();
-                            this._doc.synth.initModFilters(this._doc.song);
-                            this._doc.synth.computeLatestModValues();
-                            if (this._doc.prefs.autoFollow) {
-                                this._doc.selection.setChannelBar(this._doc.channel, Math.floor(this._doc.synth.playhead));
-                            }
-                        }
                         this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
+                    }
                     } else { 
                         this._openPrompt("beatsPerBar");
                     }
