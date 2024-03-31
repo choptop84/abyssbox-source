@@ -47132,7 +47132,7 @@ You should be redirected to the song at:<br /><br />
             this._volumeBarBox = div({ class: "playback-volume-bar", style: "height: 12px; align-self: center;" }, this._volumeBarContainer);
             this._fileMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "File"), option({ value: "new" }, "+ New Blank Song"), option({ value: "import" }, "↑ > Import Song (" + EditorConfig.ctrlSymbol + "O)"), option({ value: "export" }, "↓ > Export Song (" + EditorConfig.ctrlSymbol + "S)"), option({ value: "copyUrl" }, "⎘ Copy Song URL"), option({ value: "shareUrl" }, "⤳ Share Song URL"), option({ value: "shortenUrl" }, "… Shorten Song URL"), option({ value: "viewPlayer" }, "▶ View in Song Player"), option({ value: "copyEmbed" }, "⎘ Copy HTML Embed Code"), option({ value: "songRecovery" }, "⚠ > Recover Recent Song"));
             this._editMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Edit"), option({ value: "undo" }, "Undo (Z)"), option({ value: "redo" }, "Redo (Y)"), option({ value: "copy" }, "Copy Pattern (C)"), option({ value: "pasteNotes" }, "Paste Pattern Notes (V)"), option({ value: "pasteNumbers" }, "Paste Pattern Numbers (" + EditorConfig.ctrlSymbol + "⇧V)"), option({ value: "insertBars" }, "Insert Bar (⏎)"), option({ value: "deleteBars" }, "Delete Selected Bars (⌫)"), option({ value: "insertChannel" }, "Insert Channel (" + EditorConfig.ctrlSymbol + "⏎)"), option({ value: "deleteChannel" }, "Delete Selected Channels (" + EditorConfig.ctrlSymbol + "⌫)"), option({ value: "selectChannel" }, "Select Channel (⇧A)"), option({ value: "selectAll" }, "Select All (A)"), option({ value: "duplicatePatterns" }, "Duplicate Reused Patterns (D)"), option({ value: "transposeUp" }, "Move Notes Up (+ or ⇧+)"), option({ value: "transposeDown" }, "Move Notes Down (- or ⇧-)"), option({ value: "moveNotesSideways" }, "> Move All Notes Sideways (W)"), option({ value: "generateEuclideanRhythm" }, "> Generate Euclidean Rhythm (E)"), option({ value: "beatsPerBar" }, "> Change Beats Per Bar (B)"), option({ value: "barCount" }, "> Change Song Length (L)"), option({ value: "channelSettings" }, "> Channel Settings (Q)"), option({ value: "limiterSettings" }, "> Limiter Settings (⇧L)"), option({ value: "addExternal" }, "> Add Custom Samples (⇧Q)"));
-            this._optionsMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Preferences"), optgroup({ label: "Technical" }, option({ value: "autoPlay" }, "Auto Play on Load"), option({ value: "autoFollow" }, "Auto Follow Playhead"), option({ value: "enableNotePreview" }, "Hear Added Notes"), option({ value: "notesOutsideScale" }, "Place Notes Out of Scale"), option({ value: "setDefaultScale" }, "Set Current Scale as Default"), option({ value: "alwaysFineNoteVol" }, "Always Fine Note Volume"), option({ value: "enableChannelMuting" }, "Enable Channel Muting"), option({ value: "instrumentCopyPaste" }, "Enable Copy/Paste Buttons"), option({ value: "instrumentImportExport" }, "Enable Import/Export Buttons"), option({ value: "displayBrowserUrl" }, "Enable Song Data in URL"), option({ value: "closePromptByClickoff" }, "Close prompts on click off"), option({ value: "recordingSetup" }, "Note Recording...")), optgroup({ label: "Appearance" }, option({ value: "showFifth" }, 'Highlight "Fifth" Note'), option({ value: "notesFlashWhenPlayed" }, "Notes Flash When Played (DB2)"), option({ value: "showChannels" }, "Show All Channels"), option({ value: "showScrollBar" }, "Show Octave Scroll Bar"), option({ value: "showLetters" }, "Show Piano Keys"), option({ value: "displayVolumeBar" }, "Show Playback Volume"), option({ value: "showOscilloscope" }, "Show Oscilloscope"), option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"), option({ value: "showDescription" }, "Show Description"), option({ value: "frostedGlassBackground" }, "Use Frosted Glass Prompt Backdrops"), option({ value: "layout" }, "> Set Layout"), option({ value: "colorTheme" }, "> Set Theme")));
+            this._optionsMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Preferences"), optgroup({ label: "Technical" }, option({ value: "autoPlay" }, "Auto Play on Load"), option({ value: "autoFollow" }, "Auto Follow Playhead"), option({ value: "enableNotePreview" }, "Hear Added Notes"), option({ value: "notesOutsideScale" }, "Place Notes Out of Scale"), option({ value: "setDefaultScale" }, "Set Current Scale as Default"), option({ value: "alwaysFineNoteVol" }, "Always Fine Note Volume"), option({ value: "enableChannelMuting" }, "Enable Channel Muting"), option({ value: "instrumentCopyPaste" }, "Enable Copy/Paste Buttons"), option({ value: "instrumentImportExport" }, "Enable Import/Export Buttons"), option({ value: "displayBrowserUrl" }, "Enable Song Data in URL"), option({ value: "closePromptByClickoff" }, "Close prompts on click off"), option({ value: "recordingSetup" }, "Note Recording...")), optgroup({ label: "Appearance" }, option({ value: "showFifth" }, 'Highlight "Fifth" Note'), option({ value: "notesFlashWhenPlayed" }, "Notes Flash When Played (DB2)"), option({ value: "showChannels" }, "Show All Channels"), option({ value: "showScrollBar" }, "Show Octave Scroll Bar"), option({ value: "showLetters" }, "Show Piano Keys"), option({ value: "displayVolumeBar" }, "Show Playback Volume"), option({ value: "showOscilloscope" }, "Show Oscilloscope"), option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"), option({ value: "showDescription" }, "Show Description"), option({ value: "frostedGlassBackground" }, "Use Frosted Glass Prompt Backdrops"), option({ value: "displayShortcutButtons" }, "Display Mobile Shortcut Buttons"), option({ value: "layout" }, "> Set Layout"), option({ value: "colorTheme" }, "> Set Theme")));
             this._scaleSelect = buildOptions(select(), Config.scales.map(scale => scale.name));
             this._keySelect = buildOptions(select(), Config.keys.map(key => key.name).reverse());
             this._octaveStepper = input({ type: "number", min: Config.octaveMin, max: Config.octaveMax, value: "0" });
@@ -47521,15 +47521,32 @@ You should be redirected to the song at:<br /><br />
                         this._zoomOutButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
                         this._zoomInButton.style.right = prefs.showScrollBar ? "24px" : "4px";
                         this._zoomOutButton.style.right = prefs.showScrollBar ? "24px" : "4px";
-                        this._undoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._redoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._copyPatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._pastePatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._insertChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._deleteChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._selectAllButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._duplicateButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._loopBarButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+                        if (this._doc.prefs.displayShortcutButtons == false) {
+                            this._undoButton.style.display = "none";
+                            this._redoButton.style.display = "none";
+                            this._copyPatternButton.style.display = "none";
+                            this._pastePatternButton.style.display = "none";
+                            this._insertChannelButton.style.display = "none";
+                            this._deleteChannelButton.style.display = "none";
+                            this._selectAllButton.style.display = "none";
+                            this._duplicateButton.style.display = "none";
+                            this._loopBarButton.style.display = "none";
+                            this._notesDownButton.style.display = "none";
+                            this._notesUpButton.style.display = "none";
+                        }
+                        else {
+                            this._undoButton.style.display = "";
+                            this._redoButton.style.display = "";
+                            this._copyPatternButton.style.display = "";
+                            this._pastePatternButton.style.display = "";
+                            this._insertChannelButton.style.display = "";
+                            this._deleteChannelButton.style.display = "";
+                            this._selectAllButton.style.display = "";
+                            this._duplicateButton.style.display = "";
+                            this._loopBarButton.style.display = "";
+                            this._notesDownButton.style.display = "";
+                            this._notesUpButton.style.display = "";
+                        }
                         this._undoButton.style.left = prefs.showScrollBar ? "40px" : "40px";
                         this._redoButton.style.left = prefs.showScrollBar ? "70px" : "70px";
                         this._copyPatternButton.style.left = prefs.showScrollBar ? "40px" : "40px";
@@ -47550,17 +47567,32 @@ You should be redirected to the song at:<br /><br />
                         this._patternEditorNext.container.style.display = "none";
                         this._zoomInButton.style.display = "none";
                         this._zoomOutButton.style.display = "none";
-                        this._undoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._redoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._copyPatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._pastePatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._insertChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._deleteChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._selectAllButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._duplicateButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._notesUpButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._notesDownButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                        this._loopBarButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+                        if (this._doc.prefs.displayShortcutButtons == false) {
+                            this._undoButton.style.display = "none";
+                            this._redoButton.style.display = "none";
+                            this._copyPatternButton.style.display = "none";
+                            this._pastePatternButton.style.display = "none";
+                            this._insertChannelButton.style.display = "none";
+                            this._deleteChannelButton.style.display = "none";
+                            this._selectAllButton.style.display = "none";
+                            this._duplicateButton.style.display = "none";
+                            this._loopBarButton.style.display = "none";
+                            this._notesDownButton.style.display = "none";
+                            this._notesUpButton.style.display = "none";
+                        }
+                        else {
+                            this._undoButton.style.display = "";
+                            this._redoButton.style.display = "";
+                            this._copyPatternButton.style.display = "";
+                            this._pastePatternButton.style.display = "";
+                            this._insertChannelButton.style.display = "";
+                            this._deleteChannelButton.style.display = "";
+                            this._selectAllButton.style.display = "";
+                            this._duplicateButton.style.display = "";
+                            this._loopBarButton.style.display = "";
+                            this._notesDownButton.style.display = "";
+                            this._notesUpButton.style.display = "";
+                        }
                         this._undoButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
                         this._redoButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";
                         this._copyPatternButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
@@ -47582,17 +47614,17 @@ You should be redirected to the song at:<br /><br />
                     this._patternEditor.container.style.flexShrink = "";
                     this._patternEditorPrev.container.style.display = "none";
                     this._patternEditorNext.container.style.display = "none";
-                    this._undoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                    this._redoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                    this._copyPatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                    this._pastePatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                    this._insertChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                    this._deleteChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                    this._selectAllButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                    this._duplicateButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                    this._notesUpButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                    this._notesDownButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-                    this._loopBarButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+                    this._undoButton.style.display = "";
+                    this._redoButton.style.display = "";
+                    this._copyPatternButton.style.display = "";
+                    this._pastePatternButton.style.display = "";
+                    this._insertChannelButton.style.display = "";
+                    this._deleteChannelButton.style.display = "";
+                    this._selectAllButton.style.display = "";
+                    this._duplicateButton.style.display = "";
+                    this._loopBarButton.style.display = "";
+                    this._notesDownButton.style.display = "";
+                    this._notesUpButton.style.display = "";
                     this._undoButton.style.top = prefs.showScrollBar ? "0px" : "0px";
                     this._undoButton.style.left = prefs.showScrollBar ? "2px" : "2px";
                     this._redoButton.style.top = prefs.showScrollBar ? "30px" : "30px";
@@ -47649,6 +47681,7 @@ You should be redirected to the song at:<br /><br />
                     (prefs.showSampleLoadingStatus ? textOnIcon : textOffIcon) + "Show Sample Loading Status",
                     (prefs.showDescription ? textOnIcon : textOffIcon) + "Show Description",
                     (prefs.frostedGlassBackground ? textOnIcon : textOffIcon) + "Use Frosted Glass Prompt Backdrop",
+                    (prefs.displayShortcutButtons ? textOnIcon : textOffIcon) + "Display Mobile Shortcut Buttons",
                     "> Set Layout",
                     "> Set Theme",
                 ];
@@ -47659,7 +47692,7 @@ You should be redirected to the song at:<br /><br />
                         option.textContent = optionCommands[i + 1];
                 }
                 const appearanceOptionGroup = this._optionsMenu.children[2];
-                for (let i = 0; i < 12; i++) {
+                for (let i = 0; i < 13; i++) {
                     const option = appearanceOptionGroup.children[i];
                     if (option.textContent != optionCommands[i + 14])
                         option.textContent = optionCommands[i + 14];
@@ -50024,6 +50057,9 @@ You should be redirected to the song at:<br /><br />
                     case "frostedGlassBackground":
                         this._doc.prefs.frostedGlassBackground = !this._doc.prefs.frostedGlassBackground;
                         break;
+                    case "displayShortcutButtons":
+                        this._doc.prefs.displayShortcutButtons = !this._doc.prefs.displayShortcutButtons;
+                        break;
                 }
                 this._optionsMenu.selectedIndex = 0;
                 this._doc.notifier.changed();
@@ -50298,6 +50334,9 @@ You should be redirected to the song at:<br /><br />
                 const layoutOption = this._optionsMenu.querySelector("[value=layout]");
                 layoutOption.disabled = true;
                 layoutOption.setAttribute("hidden", "");
+                const MobileButtonOption = this._optionsMenu.querySelector("[value=displayShortcutButtons]");
+                MobileButtonOption.disabled = true;
+                MobileButtonOption.setAttribute("hidden", "");
             }
         }
         _updateSampleLoadingBar(_e) {
@@ -52224,7 +52263,8 @@ You should be redirected to the song at:<br /><br />
                 window.localStorage.removeItem("fullScreen");
             }
             this.closePromptByClickoff = window.localStorage.getItem("closePromptByClickoff") != "false";
-            this.frostedGlassBackground = window.localStorage.getItem("frostedGlassBackground") != "true";
+            this.frostedGlassBackground = window.localStorage.getItem("frostedGlassBackground") == "true";
+            this.displayShortcutButtons = window.localStorage.getItem("displayShortcutButtons") != "false";
         }
         save() {
             window.localStorage.setItem("autoPlay", this.autoPlay ? "true" : "false");
@@ -52263,6 +52303,7 @@ You should be redirected to the song at:<br /><br />
             window.localStorage.setItem("visibleOctaves", String(this.visibleOctaves));
             window.localStorage.setItem("closePromptByClickoff", this.closePromptByClickoff ? "true" : "false");
             window.localStorage.setItem("frostedGlassBackground", this.frostedGlassBackground ? "true" : "false");
+            window.localStorage.setItem("displayShortcutButtons", this.displayShortcutButtons ? "true" : "false");
         }
     }
     Preferences.defaultVisibleOctaves = 3;

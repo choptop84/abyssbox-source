@@ -41,6 +41,7 @@ export class Preferences {
 	public closePromptByClickoff: boolean;
 	public notesFlashWhenPlayed: boolean;
 	public frostedGlassBackground: boolean;
+	public displayShortcutButtons: boolean;
 
 	constructor() {
 		this.reload();
@@ -92,7 +93,8 @@ export class Preferences {
 			window.localStorage.removeItem("fullScreen");
 		}
 		this.closePromptByClickoff = window.localStorage.getItem("closePromptByClickoff") != "false";
-		this.frostedGlassBackground = window.localStorage.getItem("frostedGlassBackground") != "true";
+		this.frostedGlassBackground = window.localStorage.getItem("frostedGlassBackground") == "true";
+		this.displayShortcutButtons = window.localStorage.getItem("displayShortcutButtons") != "false";
 	}
 	
 	public save(): void {
@@ -133,5 +135,6 @@ export class Preferences {
 		window.localStorage.setItem("closePromptByClickoff", this.closePromptByClickoff ? "true" : "false");
 
 		window.localStorage.setItem("frostedGlassBackground", this.frostedGlassBackground ? "true" : "false");
+		window.localStorage.setItem("displayShortcutButtons", this.displayShortcutButtons ? "true" : "false");
 	}
 }

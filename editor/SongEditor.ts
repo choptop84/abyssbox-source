@@ -826,6 +826,7 @@ export class SongEditor {
             option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"),
             option({ value: "showDescription" }, "Show Description"),
             option({ value: "frostedGlassBackground" }, "Use Frosted Glass Prompt Backdrops"),
+            option({ value: "displayShortcutButtons" }, "Display Mobile Shortcut Buttons"),
             option({ value: "layout" }, "> Set Layout"),
             option({ value: "colorTheme" }, "> Set Theme"),
             ),
@@ -1753,6 +1754,10 @@ export class SongEditor {
             const layoutOption: HTMLOptionElement = <HTMLOptionElement>this._optionsMenu.querySelector("[value=layout]");
             layoutOption.disabled = true;
             layoutOption.setAttribute("hidden", "");
+
+            const MobileButtonOption: HTMLOptionElement = <HTMLOptionElement>this._optionsMenu.querySelector("[value=displayShortcutButtons]");
+            MobileButtonOption.disabled = true;
+            MobileButtonOption.setAttribute("hidden", "");
         }
     }
 
@@ -2289,16 +2294,32 @@ export class SongEditor {
             this._zoomInButton.style.right = prefs.showScrollBar ? "24px" : "4px";
             this._zoomOutButton.style.right = prefs.showScrollBar ? "24px" : "4px";
 
-            this._undoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._redoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._copyPatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._pastePatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";            
-            this._insertChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._deleteChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._selectAllButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._duplicateButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._loopBarButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            
+            if (this._doc.prefs.displayShortcutButtons == false) {
+                this._undoButton.style.display = "none";
+                this._redoButton.style.display = "none";
+                this._copyPatternButton.style.display = "none";
+                this._pastePatternButton.style.display = "none";            
+                this._insertChannelButton.style.display = "none";
+                this._deleteChannelButton.style.display = "none";
+                this._selectAllButton.style.display = "none";
+                this._duplicateButton.style.display = "none";
+                this._loopBarButton.style.display = "none";
+                this._notesDownButton.style.display = "none";
+                this._notesUpButton.style.display = "none"; 
+            } else {
+            this._undoButton.style.display = "";
+            this._redoButton.style.display = "";
+            this._copyPatternButton.style.display = "";
+            this._pastePatternButton.style.display ="";            
+            this._insertChannelButton.style.display = "";
+            this._deleteChannelButton.style.display ="";
+            this._selectAllButton.style.display = "";
+            this._duplicateButton.style.display = "";
+            this._loopBarButton.style.display = "";
+            this._notesDownButton.style.display = "";
+            this._notesUpButton.style.display = "";
+            }
+
             this._undoButton.style.left = prefs.showScrollBar ? "40px" : "40px";
             this._redoButton.style.left = prefs.showScrollBar ? "70px" : "70px";
             this._copyPatternButton.style.left = prefs.showScrollBar ? "40px" : "40px";
@@ -2318,17 +2339,32 @@ export class SongEditor {
             this._patternEditorNext.container.style.display = "none";
             this._zoomInButton.style.display = "none";
             this._zoomOutButton.style.display = "none";
-            this._undoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._redoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._copyPatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._pastePatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";            
-            this._insertChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._deleteChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._selectAllButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._duplicateButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._notesUpButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._notesDownButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._loopBarButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+
+            if (this._doc.prefs.displayShortcutButtons == false) {
+                this._undoButton.style.display = "none";
+                this._redoButton.style.display = "none";
+                this._copyPatternButton.style.display = "none";
+                this._pastePatternButton.style.display = "none";            
+                this._insertChannelButton.style.display = "none";
+                this._deleteChannelButton.style.display = "none";
+                this._selectAllButton.style.display = "none";
+                this._duplicateButton.style.display = "none";
+                this._loopBarButton.style.display = "none";
+                this._notesDownButton.style.display = "none";
+                this._notesUpButton.style.display = "none"; 
+            } else {
+            this._undoButton.style.display = "";
+            this._redoButton.style.display = "";
+            this._copyPatternButton.style.display = "";
+            this._pastePatternButton.style.display ="";            
+            this._insertChannelButton.style.display = "";
+            this._deleteChannelButton.style.display ="";
+            this._selectAllButton.style.display = "";
+            this._duplicateButton.style.display = "";
+            this._loopBarButton.style.display = "";
+            this._notesDownButton.style.display = "";
+            this._notesUpButton.style.display = "";
+            }
             this._undoButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
             this._redoButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";
             this._copyPatternButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
@@ -2351,17 +2387,17 @@ export class SongEditor {
             this._patternEditor.container.style.flexShrink = "";
             this._patternEditorPrev.container.style.display = "none";
             this._patternEditorNext.container.style.display = "none";
-            this._undoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._redoButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._copyPatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._pastePatternButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";            
-            this._insertChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._deleteChannelButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._selectAllButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._duplicateButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._notesUpButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._notesDownButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
-            this._loopBarButton.style.display = (this._doc.channel < this._doc.song.pitchChannelCount) ? "" : "none";
+            this._undoButton.style.display = "";
+            this._redoButton.style.display = "";
+            this._copyPatternButton.style.display = "";
+            this._pastePatternButton.style.display ="";            
+            this._insertChannelButton.style.display = "";
+            this._deleteChannelButton.style.display ="";
+            this._selectAllButton.style.display = "";
+            this._duplicateButton.style.display = "";
+            this._loopBarButton.style.display = "";
+            this._notesDownButton.style.display = "";
+            this._notesUpButton.style.display = "";
             this._undoButton.style.top = prefs.showScrollBar ? "0px" : "0px";
             this._undoButton.style.left = prefs.showScrollBar ? "2px" : "2px";
             this._redoButton.style.top = prefs.showScrollBar ? "30px" : "30px";
@@ -2422,6 +2458,7 @@ export class SongEditor {
             (prefs.showSampleLoadingStatus ? textOnIcon : textOffIcon) + "Show Sample Loading Status",
             (prefs.showDescription ? textOnIcon : textOffIcon) + "Show Description",
             (prefs.frostedGlassBackground ? textOnIcon : textOffIcon) + "Use Frosted Glass Prompt Backdrop",
+            (prefs.displayShortcutButtons ? textOnIcon : textOffIcon) + "Display Mobile Shortcut Buttons",
             "> Set Layout",
             "> Set Theme",
         ];
@@ -2438,7 +2475,7 @@ export class SongEditor {
                 const appearanceOptionGroup: HTMLOptGroupElement = <HTMLOptGroupElement>this._optionsMenu.children[2];
         
                 // how do you get the length of an optgroup?
-                for (let i: number = 0; i < 12; i++) { // Hi choptop84, past you here. If you add a new preference to the list, you need to change the number on the left, yeah the one that says 12 rn. That.
+                for (let i: number = 0; i < 13; i++) { // Hi choptop84, past you here. If you add a new preference to the list, you need to change the number on the left, yeah the one that says 13 rn. That.
                     const option: HTMLOptionElement = <HTMLOptionElement>appearanceOptionGroup.children[i];
                     if (option.textContent != optionCommands[i + 14]) option.textContent = optionCommands[i + 14];
         }
@@ -5360,6 +5397,9 @@ export class SongEditor {
                 break;
             case "frostedGlassBackground":
                 this._doc.prefs.frostedGlassBackground = !this._doc.prefs.frostedGlassBackground;
+                break;
+            case "displayShortcutButtons":
+                this._doc.prefs.displayShortcutButtons = !this._doc.prefs.displayShortcutButtons;
                 break;
         }
         this._optionsMenu.selectedIndex = 0;
