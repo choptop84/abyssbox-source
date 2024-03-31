@@ -53,10 +53,12 @@ import {oscilascopeCanvas} from "../global/Oscilascope";
 import { VisualLoopControlsPrompt } from "./VisualLoopControlsPrompt";
 import { SampleLoadingStatusPrompt } from "./SampleLoadingStatusPrompt";
 import { AddSamplesPrompt } from "./AddSamplesPrompt";
+import { _loopType } from "../synth/synth";
 
 const { button, div, input, select, span, optgroup, option, canvas } = HTML;
 
 const beepboxEditorContainer: HTMLElement = document.getElementById("beepboxEditorContainer")!;
+
 
 function buildOptions(menu: HTMLSelectElement, items: ReadonlyArray<string | number>): HTMLSelectElement {
     for (let index: number = 0; index < items.length; index++) {
@@ -771,6 +773,8 @@ export class SongEditor {
         option({ value: "copyEmbed" }, "⎘ Copy HTML Embed Code"),
         option({ value: "songRecovery" }, "⚠ > Recover Recent Song"),
     );
+
+
     private readonly _editMenu: HTMLSelectElement = select({ style: "width: 100%;" },
         option({ selected: true, disabled: true, hidden: false }, "Edit"), // todo: "hidden" should be true but looks wrong on mac chrome, adds checkmark next to first visible option even though it's not selected. :(
         option({ value: "undo" }, "Undo (Z)"),
@@ -1624,6 +1628,7 @@ export class SongEditor {
         this._pauseButton.addEventListener("click", this.togglePlay);
         this._recordButton.addEventListener("click", this._toggleRecord);
         this._stopButton.addEventListener("click", this._toggleRecord);
+        this._muteEditor._loopButtonInput.addEventListener("click", this._loopTypeEvent);
         // Start recording instead of opening context menu when control-clicking the record button on a Mac.
         this._recordButton.addEventListener("contextmenu", (event: MouseEvent) => {
             if (event.ctrlKey) {
@@ -1652,7 +1657,7 @@ export class SongEditor {
         this._duplicateButton.addEventListener("click", this._duplicate);
         this._notesUpButton.addEventListener("click", this._notesUp);
         this._notesDownButton.addEventListener("click", this._notesDown);
-        this._loopBarButton.addEventListener("click", this._loopBar);
+        this._loopBarButton.addEventListener("click", this._tempLoopBar);
         this._fullscreenButton.addEventListener("click", this._goFullscreen);
         this._patternArea.addEventListener("mousedown", this._refocusStageNotEditing);
         this._trackArea.addEventListener("mousedown", this.refocusStage);
@@ -1753,6 +1758,47 @@ export class SongEditor {
 
     private _whenSampleLoadingStatusClicked = (): void => {
         this._openPrompt("sampleLoadingStatus");
+    }
+
+    public static readonly _styleElement: HTMLStyleElement = document.head.appendChild(HTML.style({type: "text/css"}));
+
+    public static readonly _setLoopIcon: {[K: string]: string} = { 
+        "1": `
+        .songLoopButton::before {
+              mask-image: var(--loop-within-bar-symbol);
+              -webkit-mask-image: var(--loop-within-bar-symbol);
+            }
+        `,
+        "2": `
+        .songLoopButton::before {
+            mask-image: var(--loop-full-song-symbol);
+            -webkit-mask-image: var(--loop-full-song-symbol);
+          }
+        `,
+        "3": `
+        .songLoopButton::before {
+            mask-image: var(--dont-loop-symbol);
+            -webkit-mask-image: var(--dont-loop-symbol);
+          }
+        `,
+    }
+
+    private _loopTypeEvent = (): void => {
+    // This stuff makes it so then the loop shit only works when the value is NOT 3
+    if (_loopType == 3) {
+        this._doc.synth.loopRepeatCount = 0;
+        this._loopEditor.container.style.display = "none"; // setting the display to none instead of the opacity to 0 makes it so then you can't edit the values when in this mode
+        SongEditor._styleElement.textContent = SongEditor._setLoopIcon[3];
+        } else if (_loopType == 2) {
+            this._doc.synth.loopRepeatCount = -1;
+            this._loopEditor.container.style.display = "none";
+            SongEditor._styleElement.textContent = SongEditor._setLoopIcon[2];	
+        } else if (_loopType == 1) {
+            this._doc.synth.loopRepeatCount = -1;
+            this._loopEditor.container.style.display = "";
+            SongEditor._styleElement.textContent = SongEditor._setLoopIcon[1];	
+        }
+
     }
 
     private _updateSampleLoadingBar(_e: Event): void {
@@ -5090,14 +5136,14 @@ export class SongEditor {
         this._doc.selection.transpose(false, false);
     }
 
-    private _loopBar = (): void => {
+    private _tempLoopBar = (): void => {
         const leftSel = Math.min(this._doc.selection.boxSelectionX0, this._doc.selection.boxSelectionX1);
                         const rightSel = Math.max(this._doc.selection.boxSelectionX0, this._doc.selection.boxSelectionX1);
                         if ((leftSel < this._doc.synth.loopBarStart || this._doc.synth.loopBarStart == -1)
                             || (rightSel > this._doc.synth.loopBarEnd || this._doc.synth.loopBarEnd == -1)
                         ) {
-                            this._doc.synth.loopBarStart = leftSel;
-                            this._doc.synth.loopBarEnd = rightSel;
+                                this._doc.synth.loopBarStart = leftSel;
+                                this._doc.synth.loopBarEnd = rightSel; 
 
                             if (!this._doc.synth.playing) {
                                 this._doc.synth.snapToBar();
@@ -5269,6 +5315,9 @@ export class SongEditor {
             case "enableChannelMuting":
                 this._doc.prefs.enableChannelMuting = !this._doc.prefs.enableChannelMuting;
                 for (const channel of this._doc.song.channels) channel.muted = false;
+                _loopType == 1;
+                this._doc.synth.loopRepeatCount = -1;
+                this._loopEditor.container.style.display = "";
                 break;
             case "displayBrowserUrl":
                 this._doc.toggleDisplayBrowserUrl();

@@ -23128,16 +23128,18 @@ var beepbox = (function (exports) {
         }
         getNextBar() {
             let nextBar = this.bar + 1;
-            if (this.isRecording) {
-                if (nextBar >= this.song.barCount) {
-                    nextBar = this.song.barCount - 1;
+            {
+                if (this.isRecording) {
+                    if (nextBar >= this.song.barCount) {
+                        nextBar = this.song.barCount - 1;
+                    }
                 }
-            }
-            else if (this.bar == this.loopBarEnd && !this.renderingSong) {
-                nextBar = this.loopBarStart;
-            }
-            else if (this.loopRepeatCount != 0 && nextBar == Math.max(this.loopBarEnd + 1, this.song.loopStart + this.song.loopLength)) {
-                nextBar = this.song.loopStart;
+                else if ((this.bar == this.loopBarEnd && !this.renderingSong)) {
+                    nextBar = this.loopBarStart;
+                }
+                else if (this.loopRepeatCount != 0 && nextBar == Math.max(this.loopBarEnd + 1, this.song.loopStart + this.song.loopLength)) {
+                    nextBar = this.song.loopStart;
+                }
             }
             return nextBar;
         }

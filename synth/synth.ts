@@ -7,6 +7,16 @@ import { Deque } from "./Deque";
 import { events } from "../global/Events";
 import { FilterCoefficients, FrequencyResponse, DynamicBiquadFilter, warpInfinityToNyquist } from "./filtering";
 
+export let _loopType: number = 1;
+
+export function changeLoopType() {
+	if (_loopType < 3) {
+	_loopType += 1;} else {
+	_loopType = 1;
+	}
+	console.log("Loop count: "+_loopType);
+}
+
 declare global {
     interface Window {
         AudioContext: any;
@@ -8850,6 +8860,7 @@ export class Synth {
         this.tickSampleCountdown = 0;
     }
 
+    // this thing is relating to shift+b btw
     public jumpIntoLoop(): void {
         if (!this.song) return;
         if (this.bar < this.song.loopStart || this.bar >= this.song.loopStart + this.song.loopLength) {
@@ -8859,9 +8870,9 @@ export class Synth {
 
             if (this.playing)
                 this.computeLatestModValues();
-        }
+        } 
     }
-
+    
     public goToNextBar(): void {
         if (!this.song) return;
         this.prevBar = this.bar;
@@ -8890,17 +8901,23 @@ export class Synth {
             this.computeLatestModValues();
     }
 
+
+    // Idk if this is doing what I think its doing
     private getNextBar(): number {
         let nextBar: number = this.bar + 1;
-        if (this.isRecording) {
-            if (nextBar >= this.song!.barCount) {
-                nextBar = this.song!.barCount - 1;
-            }
-        } else if (this.bar == this.loopBarEnd && !this.renderingSong) {
-            nextBar = this.loopBarStart;
-        }
-        else if (this.loopRepeatCount != 0 && nextBar == Math.max(this.loopBarEnd+1, this.song!.loopStart + this.song!.loopLength)) {
-            nextBar = this.song!.loopStart;
+        if (_loopType != 2) { 
+            if (this.isRecording) {
+                if (nextBar >= this.song!.barCount) {
+                    nextBar = this.song!.barCount - 1;
+                }
+            } else if ((this.bar == this.loopBarEnd && !this.renderingSong) /*) || (_loopType == 2 && (this.bar == this.song!.barCount-1))*/ ) {
+                    nextBar = this.loopBarStart; 
+                }
+                else if (this.loopRepeatCount != 0 && nextBar == Math.max(this.loopBarEnd+1, this.song!.loopStart + this.song!.loopLength)) {
+                    nextBar = this.song!.loopStart;
+                }
+        } else if (_loopType == 2 && (this.bar == this.song!.barCount-1)) {
+            nextBar = 0; 
         }
         return nextBar;
     }

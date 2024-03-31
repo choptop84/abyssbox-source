@@ -2206,6 +2206,16 @@ var beepbox = (function (exports) {
         return 2.0 * Math.atan(radians * 0.5);
     }
 
+    exports._loopType = 1;
+    function changeLoopType() {
+        if (exports._loopType < 3) {
+            exports._loopType += 1;
+        }
+        else {
+            exports._loopType = 1;
+        }
+        console.log("Loop count: " + exports._loopType);
+    }
     const epsilon = (1.0e-24);
     function clamp(min, max, val) {
         max = max - 1;
@@ -10029,16 +10039,21 @@ var beepbox = (function (exports) {
         }
         getNextBar() {
             let nextBar = this.bar + 1;
-            if (this.isRecording) {
-                if (nextBar >= this.song.barCount) {
-                    nextBar = this.song.barCount - 1;
+            if (exports._loopType != 2) {
+                if (this.isRecording) {
+                    if (nextBar >= this.song.barCount) {
+                        nextBar = this.song.barCount - 1;
+                    }
+                }
+                else if ((this.bar == this.loopBarEnd && !this.renderingSong)) {
+                    nextBar = this.loopBarStart;
+                }
+                else if (this.loopRepeatCount != 0 && nextBar == Math.max(this.loopBarEnd + 1, this.song.loopStart + this.song.loopLength)) {
+                    nextBar = this.song.loopStart;
                 }
             }
-            else if (this.bar == this.loopBarEnd && !this.renderingSong) {
-                nextBar = this.loopBarStart;
-            }
-            else if (this.loopRepeatCount != 0 && nextBar == Math.max(this.loopBarEnd + 1, this.song.loopStart + this.song.loopLength)) {
-                nextBar = this.song.loopStart;
+            else if (exports._loopType == 2 && (this.bar == this.song.barCount - 1)) {
+                nextBar = 0;
             }
             return nextBar;
         }
@@ -13770,6 +13785,7 @@ var beepbox = (function (exports) {
     exports.Song = Song;
     exports.SpectrumWave = SpectrumWave;
     exports.Synth = Synth;
+    exports.changeLoopType = changeLoopType;
     exports.clamp = clamp;
     exports.makeNotePin = makeNotePin;
     exports.parseFloatWithDefault = parseFloatWithDefault;

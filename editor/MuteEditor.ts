@@ -8,12 +8,14 @@ import { InputBox } from "./HTMLWrapper";
 import { ChangeChannelOrder, ChangeChannelName, ChangeRemoveChannel } from "./changes";
 import { Config } from "../synth/SynthConfig";
 import { SongEditor } from "./SongEditor";
+import { _loopType, changeLoopType } from "../synth/synth";
 
 //namespace beepbox {
 export class MuteEditor {
-	
+
 	private _cornerFiller: HTMLDivElement = HTML.div({style: `background: ${ColorConfig.editorBackground}; position: sticky; bottom: 0; left: 0; width: 32px; height: 30px;`});
-	
+	public _loopButtonInput: HTMLButtonElement = HTML.button({class: "songLoopButton",style: 'width: 100%;'})
+
 	private readonly _buttons: HTMLDivElement[] = [];
 	private readonly _channelCounts: HTMLDivElement[] = [];
 	private readonly _channelNameDisplay: HTMLDivElement = HTML.div({ style: `background-color: ${ColorConfig.uiWidgetFocus}; white-space:nowrap; display: none; transform:translate(20px); width: auto; pointer-events: none; position: absolute; border-radius: 0.2em; z-index: 2;`, "color": ColorConfig.primaryText }, "");
@@ -56,6 +58,7 @@ export class MuteEditor {
 		this._channelNameInput.input.addEventListener("blur", this._channelNameInputHide);
 		this._channelNameInput.input.addEventListener("mousedown", this._channelNameInputClicked);
 		this._channelNameInput.input.addEventListener("input", this._channelNameInputWhenInput);
+		this._loopButtonInput.addEventListener("click", this._changeLoopType);
 	}
 
 	private _channelNameInputWhenInput = (): void => {
@@ -67,6 +70,10 @@ export class MuteEditor {
 
 	private _channelNameInputClicked = (event: MouseEvent): void => {
 		event.stopPropagation();
+	}
+
+	private _changeLoopType = (): void => {
+		changeLoopType();
 	}
 
 	private _channelNameInputHide = (): void => {
@@ -310,6 +317,7 @@ export class MuteEditor {
 			this._buttons.length = this._doc.song.getChannelCount();
 
 			this.container.appendChild(this._cornerFiller);
+			this._cornerFiller.appendChild(this._loopButtonInput);
 		}
 
 		for (let y: number = 0; y < this._doc.song.getChannelCount(); y++) {

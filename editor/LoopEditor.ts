@@ -5,6 +5,7 @@ import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 import { ChangeLoop, ChangeChannelBar } from "./changes";
 import { ColorConfig } from "./ColorConfig";
 import { TrackEditor } from "./TrackEditor";
+import { _loopType } from "../synth/synth";
 
 interface Cursor {
 	startBar: number;
@@ -29,7 +30,7 @@ export class LoopEditor {
 		private readonly _barLoop: SVGPathElement = SVG.path({fill: "none", stroke: ColorConfig.uiWidgetFocus, "stroke-width": 2});
 		private readonly _highlight: SVGPathElement = SVG.path({fill: ColorConfig.hoverPreview, "pointer-events": "none"});
 		
-	private readonly _svg: SVGSVGElement = SVG.svg({style: `touch-action: pan-y; position: absolute;`, height: this._editorHeight},
+	public readonly _svg: SVGSVGElement = SVG.svg({style: `touch-action: pan-y; position: absolute;`, height: this._editorHeight},
 		this._loop,
 		this._highlight,
 		this._barLoop
@@ -93,14 +94,14 @@ export class LoopEditor {
 	private _findEndPoints(middle: number): Endpoints {
 		let start: number = Math.round(middle - this._doc.song.loopLength / 2);
 		let end: number = start + this._doc.song.loopLength;
-		if (start < 0) {
-			end -= start;
-			start = 0;
-		}
-		if (end > this._doc.song.barCount) {
-			start -= end - this._doc.song.barCount;
-			end = this._doc.song.barCount;
-		}
+			if (start < 0) {
+				end -= start;
+				start = 0;
+			}
+			if (end > this._doc.song.barCount) {
+				start -= end - this._doc.song.barCount;
+				end = this._doc.song.barCount;
+			}
 			return {start: start, length: end - start};
 	}
 		

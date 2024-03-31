@@ -11,7 +11,10 @@ import {ExportPrompt} from "./ExportPrompt";
 import {ChangePreset} from "./changes";
 
 
+
 //namespace beepbox {
+
+
 const doc: SongDocument = new SongDocument();//debug only
 const editor: SongEditor = new SongEditor(doc);//same as above
 // const doc: SongDocument = new SongDocument();
@@ -28,6 +31,8 @@ editor.mainLayer.getElementsByClassName("editor-song-settings")[0].className += 
 editor.mainLayer.getElementsByClassName("instrument-settings-area")[0].className += " load";
 editor.mainLayer.getElementsByClassName("trackAndMuteContainer")[0].className += " load";
 editor.mainLayer.getElementsByClassName("barScrollBar")[0].className += " load";
+
+
 
 // Give select2 class to these
 $('#pitchPresetSelect').select2({ dropdownAutoWidth: true });

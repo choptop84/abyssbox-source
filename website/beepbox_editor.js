@@ -14903,7 +14903,7 @@ var beepbox = (function (exports) {
 	--edit-pencil-symbol: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="-5 -21 26 26"><path d="M 0 0 L 1 -4 L 4 -1 z M 2 -5 L 10 -13 L 13 -10 L 5 -2 zM 11 -14 L 13 -16 L 14 -16 L 16 -14 L 16 -13 L 14 -11 z" fill="gray"/></svg>');
 	--preferences-gear-symbol: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="-13 -13 26 26"><path d="M 5.78 -1.6 L 7.93 -0.94 L 7.93 0.94 L 5.78 1.6 L 4.85 3.53 L 5.68 5.61 L 4.21 6.78 L 2.36 5.52 L 0.27 5.99 L -0.85 7.94 L -2.68 7.52 L -2.84 5.28 L -4.52 3.95 L -6.73 4.28 L -7.55 2.59 L -5.9 1.07 L -5.9 -1.07 L -7.55 -2.59 L -6.73 -4.28 L -4.52 -3.95 L -2.84 -5.28 L -2.68 -7.52 L -0.85 -7.94 L 0.27 -5.99 L 2.36 -5.52 L 4.21 -6.78 L 5.68 -5.61 L 4.85 -3.53 M 2.92 0.67 L 2.92 -0.67 L 2.35 -1.87 L 1.3 -2.7 L 0 -3 L -1.3 -2.7 L -2.35 -1.87 L -2.92 -0.67 L -2.92 0.67 L -2.35 1.87 L -1.3 2.7 L -0 3 L 1.3 2.7 L 2.35 1.87 z" fill="gray"/></svg>');
 	--customize-dial-symbol: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="-13 -13 26 26"> \
-			<g transform="translate(0,1)" fill="gray"> \
+		<g transform="translate(0,1)" fill="gray"> \
 				<circle cx="0" cy="0" r="6.5" stroke="gray" stroke-width="1" fill="none"/> \
 				<rect x="-1" y="-5" width="2" height="4" transform="rotate(30)"/> \
 				<circle cx="-7.79" cy="4.5" r="0.75"/> \
@@ -14936,6 +14936,11 @@ var beepbox = (function (exports) {
 	--notes-down-symbol: url("https://choptop84.github.io/abyssbox-app/moveNotesDown.png");
 	--loop-bar-symbol: url("https://choptop84.github.io/abyssbox-app/icon-singleBarLoop.png");
 	--fullscreen-symbol: url("https://choptop84.github.io/abyssbox-app/icon-fullscreen.png");
+
+	--loop-within-bar-symbol: url("https://choptop84.github.io/abyssbox-app/icon-loop-bar.png");
+	--loop-full-song-symbol: url("https://choptop84.github.io/abyssbox-app/icon-loop-song.png");
+	--dont-loop-symbol: url("https://choptop84.github.io/abyssbox-app/icon-loop-once.png");
+
 	--checkmark-symbol: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="-13 -13 26 26"><path fill="gray" d="M -9 -2 L -8 -3 L -3 2 L 9 -8 L 10 -7 L -3 8 z"/></svg>');
 	--drum-symbol: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="40" viewBox="0 0 32 40"> \
 			<defs> \
@@ -15023,6 +15028,28 @@ var beepbox = (function (exports) {
 .obtrusive-scrollbars::-webkit-scrollbar-thumb, .obtrusive-scrollbars *::-webkit-scrollbar-thumb {
 	background-color: ${ColorConfig.uiWidgetBackground};
 	border: 3px solid ${ColorConfig.editorBackground};
+}
+
+.songLoopButton::before {
+content: "";
+  position: absolute;
+  width: var(--button-size);
+  height: var(--button-size);
+  left: 3px;
+  top: 0;
+  mask-image: var(--loop-within-bar-symbol);
+  -webkit-mask-image: var(--loop-within-bar-symbol);
+  pointer-events: none;
+  background: currentColor;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  image-rendering: -moz-crisp-edges !important;
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: -o-crisp-edges !important;
+  image-rendering: pixelated !important;
+  image-rendering: optimizeSpeed !important;
 }
 
 .beepboxEditor {
@@ -17485,6 +17512,16 @@ li.select2-results__option[role=group] > strong:hover {
         return 2.0 * Math.atan(radians * 0.5);
     }
 
+    let _loopType = 1;
+    function changeLoopType() {
+        if (_loopType < 3) {
+            _loopType += 1;
+        }
+        else {
+            _loopType = 1;
+        }
+        console.log("Loop count: " + _loopType);
+    }
     const epsilon = (1.0e-24);
     function clamp(min, max, val) {
         max = max - 1;
@@ -25308,16 +25345,21 @@ li.select2-results__option[role=group] > strong:hover {
         }
         getNextBar() {
             let nextBar = this.bar + 1;
-            if (this.isRecording) {
-                if (nextBar >= this.song.barCount) {
-                    nextBar = this.song.barCount - 1;
+            if (_loopType != 2) {
+                if (this.isRecording) {
+                    if (nextBar >= this.song.barCount) {
+                        nextBar = this.song.barCount - 1;
+                    }
+                }
+                else if ((this.bar == this.loopBarEnd && !this.renderingSong)) {
+                    nextBar = this.loopBarStart;
+                }
+                else if (this.loopRepeatCount != 0 && nextBar == Math.max(this.loopBarEnd + 1, this.song.loopStart + this.song.loopLength)) {
+                    nextBar = this.song.loopStart;
                 }
             }
-            else if (this.bar == this.loopBarEnd && !this.renderingSong) {
-                nextBar = this.loopBarStart;
-            }
-            else if (this.loopRepeatCount != 0 && nextBar == Math.max(this.loopBarEnd + 1, this.song.loopStart + this.song.loopLength)) {
-                nextBar = this.song.loopStart;
+            else if (_loopType == 2 && (this.bar == this.song.barCount - 1)) {
+                nextBar = 0;
             }
             return nextBar;
         }
@@ -39781,6 +39823,7 @@ You should be redirected to the song at:<br /><br />
             this._doc = _doc;
             this._editor = _editor;
             this._cornerFiller = HTML.div({ style: `background: ${ColorConfig.editorBackground}; position: sticky; bottom: 0; left: 0; width: 32px; height: 30px;` });
+            this._loopButtonInput = HTML.button({ class: "songLoopButton", style: 'width: 100%;' });
             this._buttons = [];
             this._channelCounts = [];
             this._channelNameDisplay = HTML.div({ style: `background-color: ${ColorConfig.uiWidgetFocus}; white-space:nowrap; display: none; transform:translate(20px); width: auto; pointer-events: none; position: absolute; border-radius: 0.2em; z-index: 2;`, "color": ColorConfig.primaryText }, "");
@@ -39803,6 +39846,9 @@ You should be redirected to the song at:<br /><br />
             };
             this._channelNameInputClicked = (event) => {
                 event.stopPropagation();
+            };
+            this._changeLoopType = () => {
+                changeLoopType();
             };
             this._channelNameInputHide = () => {
                 this._channelNameInput.input.style.setProperty("display", "none");
@@ -39986,6 +40032,7 @@ You should be redirected to the song at:<br /><br />
             this._channelNameInput.input.addEventListener("blur", this._channelNameInputHide);
             this._channelNameInput.input.addEventListener("mousedown", this._channelNameInputClicked);
             this._channelNameInput.input.addEventListener("input", this._channelNameInputWhenInput);
+            this._loopButtonInput.addEventListener("click", this._changeLoopType);
         }
         onKeyUp(event) {
             switch (event.keyCode) {
@@ -40020,6 +40067,7 @@ You should be redirected to the song at:<br /><br />
                 }
                 this._buttons.length = this._doc.song.getChannelCount();
                 this.container.appendChild(this._cornerFiller);
+                this._cornerFiller.appendChild(this._loopButtonInput);
             }
             for (let y = 0; y < this._doc.song.getChannelCount(); y++) {
                 if (this._doc.song.channels[y].muted) {
@@ -47383,6 +47431,23 @@ You should be redirected to the song at:<br /><br />
             this._whenSampleLoadingStatusClicked = () => {
                 this._openPrompt("sampleLoadingStatus");
             };
+            this._loopTypeEvent = () => {
+                if (_loopType == 3) {
+                    this._doc.synth.loopRepeatCount = 0;
+                    this._loopEditor.container.style.display = "none";
+                    SongEditor._styleElement.textContent = SongEditor._setLoopIcon[3];
+                }
+                else if (_loopType == 2) {
+                    this._doc.synth.loopRepeatCount = -1;
+                    this._loopEditor.container.style.display = "none";
+                    SongEditor._styleElement.textContent = SongEditor._setLoopIcon[2];
+                }
+                else if (_loopType == 1) {
+                    this._doc.synth.loopRepeatCount = -1;
+                    this._loopEditor.container.style.display = "";
+                    SongEditor._styleElement.textContent = SongEditor._setLoopIcon[1];
+                }
+            };
             this.refocusStage = () => {
                 this.mainLayer.focus({ preventScroll: true });
             };
@@ -49741,7 +49806,7 @@ You should be redirected to the song at:<br /><br />
             this._notesDown = () => {
                 this._doc.selection.transpose(false, false);
             };
-            this._loopBar = () => {
+            this._tempLoopBar = () => {
                 const leftSel = Math.min(this._doc.selection.boxSelectionX0, this._doc.selection.boxSelectionX1);
                 const rightSel = Math.max(this._doc.selection.boxSelectionX0, this._doc.selection.boxSelectionX1);
                 if ((leftSel < this._doc.synth.loopBarStart || this._doc.synth.loopBarStart == -1)
@@ -49914,6 +49979,8 @@ You should be redirected to the song at:<br /><br />
                         this._doc.prefs.enableChannelMuting = !this._doc.prefs.enableChannelMuting;
                         for (const channel of this._doc.song.channels)
                             channel.muted = false;
+                        this._doc.synth.loopRepeatCount = -1;
+                        this._loopEditor.container.style.display = "";
                         break;
                     case "displayBrowserUrl":
                         this._doc.toggleDisplayBrowserUrl();
@@ -50125,6 +50192,7 @@ You should be redirected to the song at:<br /><br />
             this._pauseButton.addEventListener("click", this.togglePlay);
             this._recordButton.addEventListener("click", this._toggleRecord);
             this._stopButton.addEventListener("click", this._toggleRecord);
+            this._muteEditor._loopButtonInput.addEventListener("click", this._loopTypeEvent);
             this._recordButton.addEventListener("contextmenu", (event) => {
                 if (event.ctrlKey) {
                     event.preventDefault();
@@ -50152,7 +50220,7 @@ You should be redirected to the song at:<br /><br />
             this._duplicateButton.addEventListener("click", this._duplicate);
             this._notesUpButton.addEventListener("click", this._notesUp);
             this._notesDownButton.addEventListener("click", this._notesDown);
-            this._loopBarButton.addEventListener("click", this._loopBar);
+            this._loopBarButton.addEventListener("click", this._tempLoopBar);
             this._fullscreenButton.addEventListener("click", this._goFullscreen);
             this._patternArea.addEventListener("mousedown", this._refocusStageNotEditing);
             this._trackArea.addEventListener("mousedown", this.refocusStage);
@@ -50839,6 +50907,27 @@ You should be redirected to the song at:<br /><br />
             }
         }
     }
+    SongEditor._styleElement = document.head.appendChild(HTML.style({ type: "text/css" }));
+    SongEditor._setLoopIcon = {
+        "1": `
+        .songLoopButton::before {
+              mask-image: var(--loop-within-bar-symbol);
+              -webkit-mask-image: var(--loop-within-bar-symbol);
+            }
+        `,
+        "2": `
+        .songLoopButton::before {
+            mask-image: var(--loop-full-song-symbol);
+            -webkit-mask-image: var(--loop-full-song-symbol);
+          }
+        `,
+        "3": `
+        .songLoopButton::before {
+            mask-image: var(--dont-loop-symbol);
+            -webkit-mask-image: var(--dont-loop-symbol);
+          }
+        `,
+    };
 
     class SongPerformance {
         constructor(_doc) {
