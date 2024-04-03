@@ -206,7 +206,8 @@
         var meta = document.querySelector('meta[name="application-name"]');
 
         // Change the content attribute
-        meta.setAttribute('content', document.title);
+        if (meta.getAttribute('content') != document.title) {
+        meta.setAttribute('content', document.title);}
     </script>
     <div id="beepboxEditorContainer">
         <noscript>
