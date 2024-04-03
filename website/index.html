@@ -14,7 +14,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AbyssBox</title>
-    <meta name="application-name" content="AbyssBox" />
+    <!--meta content="Embed Title" property="og:title" />
+    <meta content="Site Description" property="og:description" />
+    <meta content="" property="og:url" />
+    <meta content="" property="og:image" />
+    <meta content="#43B581" data-react-helmet="true" name="theme-color" /-->
+    <meta name="application-name" content="AbyssBox 1.2" />
     <meta name="apple-mobile-web-app-title" content="AbyssBox">
     <meta name="description" content="Abyssbox is an online tool for sketching and sharing instrumental music." />
     <meta name="keywords" content="chiptune, instrumental, music, song, melody, composition, tool, free, online, square wave, NES, NSF, abyssbox, ultrabox, beepbox, jummbox, pandorasbox, modbox, sandbox, goldbox, wackybox, todbox" />
@@ -25,7 +30,7 @@
     <meta name="msapplication-TileColor" content="#dba600" />
     <meta name="msapplication-config" content="/browserconfig.xml" />
     <meta name="format-detection" content="telephone=no" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/icon_32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icon_32.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="icon_32.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link href="https://fonts.googleapis.com/css?family=B612" rel="stylesheet" media="none" onload="if (this.media != 'all') this.media='all';" /> <!-- this is a trick to load CSS asynchronously. -->
@@ -197,6 +202,11 @@
             el.style.backgroundImage="url(" + image + ")";
             el.style.backgroundRepeat= "repeat";
         }
+        // Get the meta tag
+        var meta = document.querySelector('meta[name="application-name"]');
+
+        // Change the content attribute
+        meta.setAttribute('content', document.title);
     </script>
     <div id="beepboxEditorContainer">
         <noscript>
