@@ -4479,13 +4479,10 @@ export class ChangeSongTitle extends Change {
         if (newValue.length > 30) {
             newValue = newValue.substring(0, 30);
         }
-
-        var meta = document.querySelector('meta[name="application-name"]');
         
         doc.song.title = newValue;
         document.title = newValue + " - " + EditorConfig.versionDisplayName;
         doc.notifier.changed();
-        meta!.setAttribute('content', document.title);
         if (oldValue != newValue) this._didSomething();
     }
 }
