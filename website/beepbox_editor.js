@@ -2506,12 +2506,37 @@ var beepbox = (function (exports) {
 		--zoom-in-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomIn.png");
 		--zoom-out-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomOut.png");
 		--export-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-export.png");
+		--import-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-import.png");
 		}
 		
 			@font-face {
 		   font-family: "AbyssType";
 		   src:
  		   url("abysstype.otf") format("opentype") tech(color-COLRv1),
+			}
+
+			.selectRow .copyButton svg {
+				-webkit-mask-image: var(--copy-symbol);
+				image-rendering: optimizeSpeed !important;
+				background: currentColor;
+			}
+
+			.selectRow .pasteButton svg {
+				-webkit-mask-image: var(--paste-symbol);
+				image-rendering: optimizeSpeed !important;
+				background: currentColor;
+			}
+
+			.selectRow .exportInstrumentButton svg {
+				-webkit-mask-image: var(--export-symbol);
+				image-rendering: optimizeSpeed !important;
+				background: currentColor;
+			}
+
+			.selectRow .importInstrumentButton svg {
+				-webkit-mask-image: var(--import-symbol);
+				image-rendering: optimizeSpeed !important;
+				background: currentColor;
 			}
 
 			/* sets background image */
@@ -2827,7 +2852,39 @@ var beepbox = (function (exports) {
 		--zoom-in-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomIn.png");
 		--zoom-out-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomOut.png");
 		--export-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-export.png");
+		--import-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-import.png");
 		}
+		
+			@font-face {
+		   font-family: "AbyssType";
+		   src:
+ 		   url("abysstype.otf") format("opentype") tech(color-COLRv1),
+			}
+
+			.selectRow .copyButton svg {
+				-webkit-mask-image: var(--copy-symbol);
+				image-rendering: optimizeSpeed !important;
+				background: currentColor;
+			}
+
+			.selectRow .pasteButton svg {
+				-webkit-mask-image: var(--paste-symbol);
+				image-rendering: optimizeSpeed !important;
+				background: currentColor;
+			}
+
+			.selectRow .exportInstrumentButton svg {
+				-webkit-mask-image: var(--export-symbol);
+				image-rendering: optimizeSpeed !important;
+				background: currentColor;
+			}
+
+			.selectRow .importInstrumentButton svg {
+				-webkit-mask-image: var(--import-symbol);
+				image-rendering: optimizeSpeed !important;
+				background: currentColor;
+			}
+
 			@font-face {
 		   font-family: "AbyssType";
 		   src:
@@ -3192,7 +3249,38 @@ var beepbox = (function (exports) {
 		--zoom-in-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomIn.png");
 		--zoom-out-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomOut.png");
 		--export-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-export.png");
+		--import-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-import.png");
 		}
+		
+			@font-face {
+		   font-family: "AbyssType";
+		   src:
+ 		   url("abysstype.otf") format("opentype") tech(color-COLRv1),
+			}
+
+			.selectRow .copyButton svg {
+				-webkit-mask-image: var(--copy-symbol);
+				image-rendering: optimizeSpeed !important;
+				background: currentColor;
+			}
+
+			.selectRow .pasteButton svg {
+				-webkit-mask-image: var(--paste-symbol);
+				image-rendering: optimizeSpeed !important;
+				background: currentColor;
+			}
+
+			.selectRow .exportInstrumentButton svg {
+				-webkit-mask-image: var(--export-symbol);
+				image-rendering: optimizeSpeed !important;
+				background: currentColor;
+			}
+
+			.selectRow .importInstrumentButton svg {
+				-webkit-mask-image: var(--import-symbol);
+				image-rendering: optimizeSpeed !important;
+				background: currentColor;
+			}
 			@font-face {
 		   font-family: "AbyssType";
 		   src:
