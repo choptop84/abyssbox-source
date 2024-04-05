@@ -63,7 +63,7 @@
             padding-left: 30px;
             padding-right: 30px;
         }
-        
+
         #text-content {
             overflow: auto;
             background: var(--editor-background, black);
@@ -184,6 +184,7 @@
 </head>
 	 <!--WIP, DO NOT USE-->
 	 <!--<center>THIS URL IS MEANT FOR TESTING THE CHANGES MADE IN ULTRABOX 2.0. THIS URL WILL BE DELETED WHEN ULTRABOX 2.0 RELEASES, AND ANY SONGS YOU MAKE HERE MAY BE UNRECOVERABLE. YOU'VE BEEN WARNED.</center>-->
+
 <body id="secondImage">
 
     <div id="overlay" class="overlay">
@@ -191,12 +192,15 @@
 
     <script>
         const image = localStorage.getItem('customTheme2');
-        const el  = document.getElementById('secondImage');
+        const el  = document.getElementsById('secondImage');
+        const op  = document.getElementsById('opacityVal');
+        
         // console.log(image, el);
         if (image != null && image !== "null" && image !== "undefined") {
             el.style.backgroundImage="url(" + image + ")";
             el.style.backgroundRepeat= "repeat";
-        }
+            op.style.display = "";
+        } 
     </script>
     <div id="beepboxEditorContainer">
         <noscript>

@@ -311,7 +311,6 @@ content: "";
 
 .beepboxEditor .track-area {
 	grid-area: track-area;
-	background-image: url(${getLocalStorageItem("customTheme2", "")});
 }
 
 .beepboxEditor .loopEditor {
@@ -1752,6 +1751,10 @@ content: "";
 	pointer-events: none;
 }
 
+#secondImage {
+	background-image: url(${getLocalStorageItem('customTheme2', '')});
+}
+
 .beepboxEditor .pitchShiftMarker {
 	width: 0;
 	height: 0;
@@ -1899,7 +1902,6 @@ li.select2-results__option[role=group] > strong:hover {
 /* wide screen */
 @media (min-width: 711px) {
 	#beepboxEditorContainer {
-		background-image: url(${getLocalStorageItem("customTheme2", "")});
 		display: table;
 	}
 	.beepboxEditor {

@@ -98,8 +98,8 @@ let doReload = false;
 
 		private _currentThemeProperty: string = "--page-margin";
 	
-		private readonly _fileInput: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose editor background image"});
-		private readonly _fileInput2: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose website background image" });
+		private readonly _fileInput: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg,.gif", text: "choose editor background image"});
+		private readonly _fileInput2: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg,.gif", text: "choose website background image" });
 	
 		//private readonly _useColorFomula: HTMLInputElement = input({ type:""});
 	
@@ -407,7 +407,9 @@ let doReload = false;
 		
 		private readonly _cancelButton: HTMLButtonElement = button({ class: "cancelButton" });
 		private readonly _okayButton: HTMLButtonElement = button({ class: "okayButton", style: "width:45%;" }, "Okay");
-		private readonly _resetButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size);" }, "Reset to defaults");
+		private readonly _resetButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin-bottom: 0.5em;" }, "Reset to defaults");
+		private readonly _removeFirstImageButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin-bottom: 0.5em;" }, "Remove First Image");
+		private readonly _removeSecondImageButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin-bottom: 0.5em;" }, "Remove Second Image");
 	
 		private _colorpicker: Alwan;
 		public readonly container: HTMLDivElement = div({ class: "prompt noSelection", style: "width: 500px; left: 4;"},
@@ -434,7 +436,7 @@ let doReload = false;
 				"Editor Background Image:",
 				this._fileInput
 			),
-			p({ style: "text-align: left; margin: 0.5em 0;"},
+			p({ style: "text-align: left;"},
 				"Website Background Image:",
 				this._fileInput2
 			),
@@ -446,7 +448,9 @@ let doReload = false;
 				"Pick a color: ",
 				this._colorpickerInput,
 			),
-			div({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" },
+			div({ style: "display: flex; flex-direction: column; justify-content: space-between; width: 30%; align-self: end; margin: 0.5em;" },
+				this._removeFirstImageButton,
+				this._removeSecondImageButton,
 				this._resetButton
 			),
 			p({ style: "text-align: center; margin: 1em 0;"},
@@ -475,6 +479,8 @@ let doReload = false;
 			this._okayButton.addEventListener("click", this._close);
 			this._cancelButton.addEventListener("click", this._close);
 			this._resetButton.addEventListener("click", this._reset);
+			this._removeFirstImageButton.addEventListener("click", this._removeCustomTheme1);
+			this._removeSecondImageButton.addEventListener("click", this._removeCustomTheme2);
 			//this._colorpicker.on("change", this._whenColorsPicked);
 			this._hexColorInput.addEventListener("change", this._whenHexColorsPicked);
 			this._colorMenu.addEventListener("change", this._whenMenuChanged);
@@ -510,6 +516,7 @@ let doReload = false;
 			window.localStorage.removeItem("customTheme");
 			window.localStorage.removeItem("customTheme2");
 			window.localStorage.removeItem("customColors");
+			window.localStorage.removeItem("customThemeImageOpacity");
 			this._pattern._svg.style.backgroundImage = "";
 			document.body.style.backgroundImage = "";
 			this._pattern2.style.backgroundImage = "";
@@ -522,6 +529,23 @@ let doReload = false;
 			this._close();
 		}
 	
+		private _removeCustomTheme1 = (): void => {
+			window.localStorage.removeItem("customTheme");
+			window.localStorage.removeItem("customThemeImageOpacity");
+			this._pattern._svg.style.backgroundImage = "";
+			document.body.style.backgroundImage = "";
+			doReload = true;
+		}
+
+		private _removeCustomTheme2 = (): void => {
+			window.localStorage.removeItem("customTheme2");
+			const secondImage: HTMLElement | null = document.getElementById("secondImage");
+			if (secondImage != null) {
+				secondImage.style.backgroundImage = "";
+			}
+			doReload = true;
+		}
+
 	/*	private _whenColorFormula = (): void => {
 	
 	
@@ -553,6 +577,7 @@ let doReload = false;
 		}
 		private _whenFileSelected = (): void => {
 			const file: File = this._fileInput.files![0];
+			const opacityValue = "0.2";
 			if (!file) return;
 			const reader: FileReader = new FileReader();
 			reader.addEventListener("load", (event: Event): void => {
@@ -566,6 +591,8 @@ let doReload = false;
 				console.log('done')
 			});
 			reader.readAsDataURL(file);
+			localStorage.setItem("customThemeImageOpacity", opacityValue);
+			doReload = true;
 		}
 	
 		private _whenColorsPicked = (ev: alwanEvent): void => {
@@ -598,10 +625,10 @@ let doReload = false;
 			reader.addEventListener("load", (event: Event): void => {
 				let base64 = <string>reader.result;
 				window.localStorage.setItem("customTheme2", base64);
-				const value = `url("${window.localStorage.getItem('customTheme2')}")`
+				//const value = `url("${window.localStorage.getItem('customTheme2')}")`
 				document.body.style.backgroundImage = `url(${base64})`;
-				this._pattern2.style.backgroundImage = value;
-				this._pattern3.style.backgroundImage = value;
+				//this._pattern2.style.backgroundImage = value;
+				//this._pattern3.style.backgroundImage = value;
 				const secondImage: HTMLElement | null = document.getElementById("secondImage");
 				if (secondImage != null) {
 					secondImage.style.backgroundImage = `url(${base64})`;
@@ -609,4 +636,5 @@ let doReload = false;
 			});
 			reader.readAsDataURL(file);
 		}
+
 	}

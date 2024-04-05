@@ -15265,7 +15265,6 @@ content: "";
 
 .beepboxEditor .track-area {
 	grid-area: track-area;
-	background-image: url(${getLocalStorageItem("customTheme2", "")});
 }
 
 .beepboxEditor .loopEditor {
@@ -16706,6 +16705,10 @@ content: "";
 	pointer-events: none;
 }
 
+#secondImage {
+	background-image: url(${getLocalStorageItem('customTheme2', '')});
+}
+
 .beepboxEditor .pitchShiftMarker {
 	width: 0;
 	height: 0;
@@ -16853,7 +16856,6 @@ li.select2-results__option[role=group] > strong:hover {
 /* wide screen */
 @media (min-width: 711px) {
 	#beepboxEditorContainer {
-		background-image: url(${getLocalStorageItem("customTheme2", "")});
 		display: table;
 	}
 	.beepboxEditor {
@@ -40826,7 +40828,7 @@ You should be redirected to the song at:<br /><br />
             this._svgNoteBackground = SVG.pattern({ id: "patternEditorNoteBackground" + this._barOffset, x: "0", y: "0", patternUnits: "userSpaceOnUse" });
             this._svgDrumBackground = SVG.pattern({ id: "patternEditorDrumBackground" + this._barOffset, x: "0", y: "0", patternUnits: "userSpaceOnUse" });
             this._svgModBackground = SVG.pattern({ id: "patternEditorModBackground" + this._barOffset, x: "0", y: "0", patternUnits: "userSpaceOnUse" });
-            this._svgBackground = SVG.rect({ x: "0", y: "0", "pointer-events": "none", fill: "url(#patternEditorNoteBackground" + this._barOffset + ")" });
+            this._svgBackground = SVG.rect({ id: "pitchEditorBackground", x: "0", y: "0", style: `opacity: ${getLocalStorageItem("customThemeImageOpacity", "1")};`, "pointer-events": "none", fill: "url(#patternEditorNoteBackground" + this._barOffset + ")" });
             this._svgNoteContainer = SVG.svg();
             this._svgPlayhead = SVG.rect({ x: "0", y: "0", width: "4", fill: ColorConfig.playhead, "pointer-events": "none" });
             this._selectionRect = SVG.rect({ class: "dashed-line dash-move", fill: ColorConfig.boxSelectionFill, stroke: ColorConfig.hoverPreview, "stroke-width": 2, "stroke-dasharray": "5, 3", "fill-opacity": "0.4", "pointer-events": "none", visibility: "hidden" });
@@ -44127,8 +44129,8 @@ You should be redirected to the song at:<br /><br />
             this._pattern3 = _pattern3;
             this._themeSelect = select$3({ style: "width: 100%;" }, option$3({ value: "AbyssBox Classic" }, "AbyssBox Classic"), option$3({ value: "AbyssBox Competitive" }, "AbyssBox Competitive"), option$3({ value: "AbyssBox Light" }, "AbyssBox Light"), option$3({ value: "AbyssBox 0.8" }, "AbyssBox 0.8"), option$3({ value: "Half-Life" }, "Half-Life"), option$3({ value: "Half-Life: Source" }, "Half-Life: Source"), option$3({ value: "Doom 1993" }, "Doom 1993"), option$3({ value: "Undertale" }, "Undertale"), option$3({ value: "Scratch" }, "Scratch"), option$3({ value: "Scratch Addons" }, "Scratch Addons"), option$3({ value: "Windows Xp" }, "Windows Xp"), option$3({ value: "Frutiger Aero" }, "Frutiger Aero"), option$3({ value: "Glyde" }, "Glyde"), option$3({ value: "Terminal 2.0 (AB)" }, "Terminal 2.0 (AB)"), option$3({ value: "dark classic" }, "BeepBox Dark"), option$3({ value: "light classic" }, "BeepBox Light"), option$3({ value: "dark competition" }, "BeepBox Competition Dark"), option$3({ value: "jummbox classic" }, "JummBox Dark"), option$3({ value: "jummbox light" }, "JummBox Light"), option$3({ value: "gold light" }, "Gold Light"), option$3({ value: "forest" }, "Forest"), option$3({ value: "forest 2" }, "Forest 2"), option$3({ value: "canyon" }, "Canyon"), option$3({ value: "midnight" }, "Midnight"), option$3({ value: "beachcombing" }, "Beachcombing"), option$3({ value: "violet verdant" }, "Violet Verdant"), option$3({ value: "sunset" }, "Sunset"), option$3({ value: "autumn" }, "Autumn"), option$3({ value: "fruit" }, "Shadowfruit"), option$3({ value: "toxic" }, "Toxic"), option$3({ value: "roe" }, "Roe"), option$3({ value: "moonlight" }, "Moonlight"), option$3({ value: "portal" }, "Portal"), option$3({ value: "fusion" }, "Fusion"), option$3({ value: "inverse" }, "Inverse"), option$3({ value: "nebula" }, "Nebula"), option$3({ value: "Nebula 2" }, "Nebula 2"), option$3({ value: "roe light" }, "Roe Light"), option$3({ value: "amoled dark" }, "High Contrast Dark"), option$3({ value: "energized" }, "Energized"), option$3({ value: "neapolitan" }, "Neapolitan"), option$3({ value: "mono" }, "Poly"), option$3({ value: "blutonium" }, "Blutonium"), option$3({ value: "azur lane" }, "Azur Lane"), option$3({ value: "modbox classic" }, "Modbox"), option$3({ value: "sandbox classic" }, "Sandbox"), option$3({ value: "harrybox" }, "Haileybox"), option$3({ value: "brucebox" }, "Brucebox"), option$3({ value: "shitbox 3.0" }, "Shitbox 1.0/3.0"), option$3({ value: "shitbox 2.0" }, "Shitbox 2.0"), option$3({ value: "nerdbox" }, "NerdBox"), option$3({ value: "zefbox" }, "Zefbox"), option$3({ value: "cardboardbox classic" }, "Cardboardbox"), option$3({ value: "blubox classic" }, "Blubox"), option$3({ value: "dogebox classic" }, "Dogebox"), option$3({ value: "wackybox" }, "Wackybox"), option$3({ value: "todbox dark mode" }, "Todbox Dark Mode"), option$3({ value: "mainbox 1.0" }, "Mainbox"), option$3({ value: "microbox" }, "MicroBox"), option$3({ value: "paandorasbox" }, "PaandorasBox"), option$3({ value: "foxbox" }, "FoxBox"), option$3({ value: "midbox" }, "Midbox"), option$3({ value: "dogebox2" }, "Dogebox2"), option$3({ value: "nepbox" }, "Nepbox"), option$3({ value: "WeebBox" }, "WeebBox"), option$3({ value: "BoxBeep Dark" }, "BoxBeep Dark"), option$3({ value: "BoxBeep light" }, "BoxBeep Light"), option$3({ value: "AWeebyssBox" }, "AWeebyssBox"), option$3({ value: "Deuteranopia" }, "Deuteranopia"), option$3({ value: "Protanopia" }, "Protanopia"), option$3({ value: "Tritanopia" }, "Tritanopia"), option$3({ value: "2012 Video Tutorial" }, "2012 Video Tutorial"), option$3({ value: "I am on fire" }, "I am on fire"), option$3({ value: "custom" }, "Custom"));
             this._currentThemeProperty = "--page-margin";
-            this._fileInput = input$4({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose editor background image" });
-            this._fileInput2 = input$4({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose website background image" });
+            this._fileInput = input$4({ type: "file", accept: ".png,.jpg,.jpeg,.gif", text: "choose editor background image" });
+            this._fileInput2 = input$4({ type: "file", accept: ".png,.jpg,.jpeg,.gif", text: "choose website background image" });
             this._colorMenu = select$3({ style: "width: 100%;" }, option$3({ selected: true, disabled: true, hidden: false }, "Select an asset to change"), option$3({ selected: false, disabled: true, hidden: false }, "General Items"), option$3({ value: "--page-margin" }, "Page Margin"), option$3({ value: "--editor-background" }, "Editor Background"), option$3({ value: "--primary-text" }, "Primary Text"), option$3({ value: "--secondary-text" }, "Secondary Text"), option$3({ value: "--inverted-text" }, "Inverted Text"), option$3({ value: "--loop-accent" }, "Loop Accent"), option$3({ value: "--link-accent" }, "Link Accent"), option$3({ value: "--ui-widget-background" }, "UI Widget Background"), option$3({ value: "--ui-widget-focus" }, "UI Widget Focus"), option$3({ value: "--pitch-background" }, "Pitch Background"), option$3({ value: "--tonic" }, "Tonic"), option$3({ value: "--fifth-note" }, "Fifth note"), option$3({ value: "--white-piano-key" }, "White Piano Key"), option$3({ value: "--black-piano-key" }, "Black Piano Key"), option$3({ value: "--white-piano-key-text" }, "White Piano Key Text"), option$3({ value: "--black-piano-key-text" }, "Black Piano Key Text"), option$3({ selected: false, disabled: true, hidden: false }, "Track Editor Backgrounds"), option$3({ value: "--track-editor-bg-pitch" }, "Track Editor Pitch BG"), option$3({ value: "--track-editor-bg-pitch-dim" }, "Empty Track Editor Pitch BG"), option$3({ value: "--track-editor-bg-noise" }, "Track Editor Noise BG"), option$3({ value: "--track-editor-bg-noise-dim" }, "Empty Track Editor Noise BG"), option$3({ value: "--track-editor-bg-mod" }, "Track Editor Mod BG"), option$3({ value: "--track-editor-bg-mod-dim" }, "Empty Track Editor Mod BG"), option$3({ selected: false, disabled: true, hidden: false }, "Extras"), option$3({ value: "--multiplicative-mod-slider" }, "Multiplicative Mod Slider"), option$3({ value: "--overwriting-mod-slider" }, "Overwriting Mod Slider"), option$3({ value: "--indicator-primary" }, "Primary Indicator"), option$3({ value: "--indicator-secondary" }, "Secondary Indicator"), option$3({ value: "--select2-opt-group" }, "Preset Catagory Background"), option$3({ value: "--input-box-outline" }, "Input Box Outline"), option$3({ value: "--mute-button-normal" }, "Mute Button (Normal)"), option$3({ value: "--mute-button-mod" }, "Mute Button (Mod)"), option$3({ value: "--mod-label-primary" }, "Mod Label Primary"), option$3({ value: "--mod-label-secondary-text" }, "Mod Label Secondary"), option$3({ value: "--mod-label-primary-text" }, "Mod Label Primary Text"), option$3({ value: "--note-flash" }, "Note Flash"), option$3({ value: "--note-flash-secondary" }, "Note Flash Secondary"));
             this._colorInput = input$4({ type: "text", value: localStorage.getItem("customColors") || `:root {
 			--page-margin: black;
@@ -44254,8 +44256,10 @@ You should be redirected to the song at:<br /><br />
             this._hexColorInput = input$4({ type: "text", value: "#000000", style: "width: 25%; height: 30px;" });
             this._cancelButton = button$5({ class: "cancelButton" });
             this._okayButton = button$5({ class: "okayButton", style: "width:45%;" }, "Okay");
-            this._resetButton = button$5({ style: "height: auto; min-height: var(--button-size);" }, "Reset to defaults");
-            this.container = div$5({ class: "prompt noSelection", style: "width: 500px; left: 4;" }, div$5({ class: "promptTitle" }, h2$4({ class: "set-themeExt", style: "text-align: inherit;" }, ""), h2$4({ class: "set-themeTitle" }, "Set Theme")), div$5({ style: "display: flex; flex-direction: row; align-items: center; height: 1em; justify-content: flex-end;" }, div$5({ class: "selectContainer", style: "width: 40%; margin: 0 auto;" }, this._themeSelect)), h2$4("Custom Theme Editor"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Thank you to leoV on discord for basically writing the whole system on how this works, without him this wouldn't be possible!"), p$1({ style: "text-align: left; margin: 0em auto; font-size: 26px; color: red;" }, "PLEASE READ THIS!"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Before you use the Custom Theme Editor! Setting your theme above and changing one of the assets causes your custom theme to be overwritten! Do NOT change an asset unless your current custom theme is custom or your theme will be lost!"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "To use the custom theme editor, simply use the options below!"), div$5(), p$1({ style: "text-align: left; margin: 0;" }, "Editor Background Image:", this._fileInput), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Website Background Image:", this._fileInput2), div$5(), p$1({ style: "text-align: center; margin: 1em 0;" }, this._colorMenu), p$1({ style: "text-align: center; margin: 1em 0;" }, "Pick a color: ", this._colorpickerInput), div$5({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._resetButton), p$1({ style: "text-align: center; margin: 1em 0;" }, this._colorInput), div$5({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
+            this._resetButton = button$5({ style: "height: auto; min-height: var(--button-size); margin-bottom: 0.5em;" }, "Reset to defaults");
+            this._removeFirstImageButton = button$5({ style: "height: auto; min-height: var(--button-size); margin-bottom: 0.5em;" }, "Remove First Image");
+            this._removeSecondImageButton = button$5({ style: "height: auto; min-height: var(--button-size); margin-bottom: 0.5em;" }, "Remove Second Image");
+            this.container = div$5({ class: "prompt noSelection", style: "width: 500px; left: 4;" }, div$5({ class: "promptTitle" }, h2$4({ class: "set-themeExt", style: "text-align: inherit;" }, ""), h2$4({ class: "set-themeTitle" }, "Set Theme")), div$5({ style: "display: flex; flex-direction: row; align-items: center; height: 1em; justify-content: flex-end;" }, div$5({ class: "selectContainer", style: "width: 40%; margin: 0 auto;" }, this._themeSelect)), h2$4("Custom Theme Editor"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Thank you to leoV on discord for basically writing the whole system on how this works, without him this wouldn't be possible!"), p$1({ style: "text-align: left; margin: 0em auto; font-size: 26px; color: red;" }, "PLEASE READ THIS!"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "Before you use the Custom Theme Editor! Setting your theme above and changing one of the assets causes your custom theme to be overwritten! Do NOT change an asset unless your current custom theme is custom or your theme will be lost!"), p$1({ style: "text-align: left; margin: 0.5em 0;" }, "To use the custom theme editor, simply use the options below!"), div$5(), p$1({ style: "text-align: left; margin: 0;" }, "Editor Background Image:", this._fileInput), p$1({ style: "text-align: left;" }, "Website Background Image:", this._fileInput2), div$5(), p$1({ style: "text-align: center; margin: 1em 0;" }, this._colorMenu), p$1({ style: "text-align: center; margin: 1em 0;" }, "Pick a color: ", this._colorpickerInput), div$5({ style: "display: flex; flex-direction: column; justify-content: space-between; width: 30%; align-self: end; margin: 0.5em;" }, this._removeFirstImageButton, this._removeSecondImageButton, this._resetButton), p$1({ style: "text-align: center; margin: 1em 0;" }, this._colorInput), div$5({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
             this.lastTheme = window.localStorage.getItem("colorTheme");
             this._close = () => {
                 this._doc.prompt = null;
@@ -44275,6 +44279,7 @@ You should be redirected to the song at:<br /><br />
                 window.localStorage.removeItem("customTheme");
                 window.localStorage.removeItem("customTheme2");
                 window.localStorage.removeItem("customColors");
+                window.localStorage.removeItem("customThemeImageOpacity");
                 this._pattern._svg.style.backgroundImage = "";
                 document.body.style.backgroundImage = "";
                 this._pattern2.style.backgroundImage = "";
@@ -44285,6 +44290,21 @@ You should be redirected to the song at:<br /><br />
                 }
                 doReload = true;
                 this._close();
+            };
+            this._removeCustomTheme1 = () => {
+                window.localStorage.removeItem("customTheme");
+                window.localStorage.removeItem("customThemeImageOpacity");
+                this._pattern._svg.style.backgroundImage = "";
+                document.body.style.backgroundImage = "";
+                doReload = true;
+            };
+            this._removeCustomTheme2 = () => {
+                window.localStorage.removeItem("customTheme2");
+                const secondImage = document.getElementById("secondImage");
+                if (secondImage != null) {
+                    secondImage.style.backgroundImage = "";
+                }
+                doReload = true;
             };
             this._whenKeyPressed = (event) => {
                 if (event.target.tagName != "BUTTON" && event.keyCode == 13) {
@@ -44309,6 +44329,7 @@ You should be redirected to the song at:<br /><br />
             };
             this._whenFileSelected = () => {
                 const file = this._fileInput.files[0];
+                const opacityValue = "0.2";
                 if (!file)
                     return;
                 const reader = new FileReader();
@@ -44321,6 +44342,8 @@ You should be redirected to the song at:<br /><br />
                     console.log('done');
                 });
                 reader.readAsDataURL(file);
+                localStorage.setItem("customThemeImageOpacity", opacityValue);
+                doReload = true;
             };
             this._whenColorsPicked = (ev) => {
                 ColorConfig.setThemeProperty(this._currentThemeProperty, ev.hex);
@@ -44344,10 +44367,7 @@ You should be redirected to the song at:<br /><br />
                 reader.addEventListener("load", (event) => {
                     let base64 = reader.result;
                     window.localStorage.setItem("customTheme2", base64);
-                    const value = `url("${window.localStorage.getItem('customTheme2')}")`;
                     document.body.style.backgroundImage = `url(${base64})`;
-                    this._pattern2.style.backgroundImage = value;
-                    this._pattern3.style.backgroundImage = value;
                     const secondImage = document.getElementById("secondImage");
                     if (secondImage != null) {
                         secondImage.style.backgroundImage = `url(${base64})`;
@@ -44368,6 +44388,8 @@ You should be redirected to the song at:<br /><br />
             this._okayButton.addEventListener("click", this._close);
             this._cancelButton.addEventListener("click", this._close);
             this._resetButton.addEventListener("click", this._reset);
+            this._removeFirstImageButton.addEventListener("click", this._removeCustomTheme1);
+            this._removeSecondImageButton.addEventListener("click", this._removeCustomTheme2);
             this._hexColorInput.addEventListener("change", this._whenHexColorsPicked);
             this._colorMenu.addEventListener("change", this._whenMenuChanged);
             if (this.lastTheme != null) {
