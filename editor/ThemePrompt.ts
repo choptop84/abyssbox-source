@@ -98,8 +98,8 @@ let doReload = false;
 
 		private _currentThemeProperty: string = "--page-margin";
 	
-		private readonly _fileInput: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg,.gif,.webp", text: "choose editor background image"});
-		private readonly _fileInput2: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg,.gif,.webp", text: "choose website background image" });
+		private readonly _fileInput: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg,.gif", text: "choose editor background image"});
+		private readonly _fileInput2: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg,.gif", text: "choose website background image" });
 	
 		//private readonly _useColorFomula: HTMLInputElement = input({ type:""});
 	
