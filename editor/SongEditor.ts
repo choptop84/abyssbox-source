@@ -2534,8 +2534,8 @@ export class SongEditor {
 
         const mobilePatternArea = document.getElementById('pattern-area');
 
-        mobilePatternArea!.style.maxHeight = "80vh";
-        mobilePatternArea!.style.height = "80vh";
+        mobilePatternArea!.style.maxHeight = "75vh";
+        mobilePatternArea!.style.height = "75vh";
 
         document.body.appendChild(this._mobileMenu);
         this._mobileMenu.appendChild(this._mobilePatternButton);
