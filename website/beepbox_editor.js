@@ -47917,6 +47917,7 @@ You should be redirected to the song at:<br /><br />
                     this._mobileSettingsButton.style.display = "";
                     this._mobileMenu.style.display = "";
                     this._instOptionsDiv.style.display = "";
+                    beepboxEditorContainer$1.style.minHeight = "10vh";
                     const bbEditorMobile = document.getElementById('beepboxEditorContainer');
                     bbEditorMobile.appendChild(this._playPauseAreaMobile);
                     const playPauseArea = document.getElementById('play-pause-area');

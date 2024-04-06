@@ -2515,6 +2515,8 @@ export class SongEditor {
         this._mobileMenu.style.display = "";
         this._instOptionsDiv.style.display = "";
 
+        beepboxEditorContainer.style.minHeight = "10vh";
+        
         const bbEditorMobile = document.getElementById('beepboxEditorContainer');
 
         bbEditorMobile!.appendChild(this._playPauseAreaMobile)
