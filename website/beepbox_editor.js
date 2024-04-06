@@ -47929,7 +47929,7 @@ You should be redirected to the song at:<br /><br />
                     playPauseArea.style.flexDirection = "column";
                     const mobilePatternArea = document.getElementById('pattern-area');
                     mobilePatternArea.style.maxHeight = "75vh";
-                    mobilePatternArea.style.height = "75vh";
+                    mobilePatternArea.style.height = "70vh";
                     document.body.appendChild(this._mobileMenu);
                     this._mobileMenu.appendChild(this._mobilePatternButton);
                     this._mobileMenu.appendChild(this._mobileTrackButton);
