@@ -239,6 +239,13 @@ export class ColorConfig {
     				image-rendering: optimizeSpeed !important;             /* IE */ 
 				}
 			.beepboxEditor button,
+			button.mobilePatternButton,
+			button.mobileTrackButton,
+			button.mobileSettingsButton,
+			button.mobilePlayButton,
+			button.mobilePauseButton,
+			button.mobileNextBarButton,
+			button.mobilePrevBarButton,
 			button.playButton,
 			button.pauseButton, 
 			button.recordButton, 
@@ -554,6 +561,13 @@ export class ColorConfig {
 			}
 
 			.beepboxEditor button,
+			button.mobilePatternButton,
+			button.mobileTrackButton,
+			button.mobileSettingsButton,
+			button.mobilePlayButton,
+			button.mobilePauseButton,
+			button.mobileNextBarButton,
+			button.mobilePrevBarButton,
 			button.playButton,
 			button.pauseButton, 
 			button.recordButton, 
@@ -849,6 +863,13 @@ export class ColorConfig {
     				image-rendering: optimizeSpeed !important;             /* IE */ 
 				}
 				.beepboxEditor button,
+				button.mobilePatternButton,
+				button.mobileTrackButton,
+				button.mobileSettingsButton,
+				button.mobilePlayButton,
+				button.mobilePauseButton,
+				button.mobileNextBarButton,
+				button.mobilePrevBarButton,
 				button.playButton,
 				button.pauseButton, 
 				button.recordButton, 
@@ -1469,7 +1490,7 @@ export class ColorConfig {
    					border-image-width: 4px !important; 
 					border-image-repeat: stretch; 
 				}
-				.beepboxEditor button
+				.beepboxEditor button, button
 				{
 					--ui-widget-background: linear-gradient(#84aef0, #2a3d6a) !important;
 					box-shadow:
@@ -1480,6 +1501,7 @@ export class ColorConfig {
 				}
 				.beepboxEditor .select2-container--open .select2-selection__rendered,
 				.beepboxEditor button:focus,
+				button:focus,
 				.beepboxEditor .instrument-bar .selected-instrument,
 				.beepboxEditor .eq-filter-type-bar button:not(.deactivated),
 				.beepboxEditor .note-filter-type-bar button:not(.deactivated)
@@ -2655,7 +2677,7 @@ export class ColorConfig {
 		  .beepboxEditor .instrument-bar .selected-instrument {
 			border-color: rgba(255, 255, 255, 1) !important;
 		  }
-		  .beepboxEditor button {
+		  .beepboxEditor button, button {
 			color: #fff;
 			background: #3c236f;
 		  }
@@ -2966,7 +2988,7 @@ export class ColorConfig {
 		   .beepboxEditor .instrument-bar .selected-instrument {
 			 border-color: #111111 !important;
 		   }
-		   .beepboxEditor button {
+		   .beepboxEditor button, button {
 			 color: #fff;
 			 background: #3c236f;
 		   }
@@ -3752,6 +3774,13 @@ export class ColorConfig {
 		}
 
 		.beepboxEditor button,
+		button.mobilePatternButton,
+		button.mobileTrackButton,
+		button.mobileSettingsButton,
+		button.mobilePlayButton,
+		button.mobilePauseButton,
+		button.mobileNextBarButton,
+		button.mobilePrevBarButton,
 		button.playButton,
 		button.pauseButton, 
 		button.recordButton, 
@@ -4956,7 +4985,7 @@ export class ColorConfig {
 				box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
 			}
 
-			.beepboxEditor button, .beepboxEditor select {
+			.beepboxEditor button, .beepboxEditor select, button {
 				box-shadow: inset 0 0 0 1px var(--secondary-text);
 			}
 
@@ -5363,7 +5392,7 @@ export class ColorConfig {
 							image-rendering: pixelated !important;                 /* Future browsers */
 							image-rendering: optimizeSpeed !important;             /* IE */ 
 						}
-					.beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered {
+					.beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered, button {
 							border-image-source: url("https://choptop84.github.io/abyssbox-app/forest2_border2.png") !important;
 							border-image-slice: 4 fill !important; 
 						   border-image-width: 4px !important; 
@@ -5769,7 +5798,7 @@ export class ColorConfig {
 					box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
 				}
 
-				.beepboxEditor button, .beepboxEditor select {
+				.beepboxEditor button, .beepboxEditor select, button {
 					background-color: var(--secondary-text);
 				}
 
@@ -7518,7 +7547,7 @@ export class ColorConfig {
 					image-rendering: pixelated !important;                 /* Future browsers */
 					image-rendering: optimizeSpeed !important;             /* IE */ 
 				}
-			.beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered {
+			.beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered, button {
 					border-image-source: url("https://choptop84.github.io/abyssbox-app/nebula2_border2.png") !important;
 					border-image-slice: 4 fill !important; 
 				   border-image-width: 4px !important; 
@@ -7797,7 +7826,7 @@ export class ColorConfig {
 			--mod-primary-note-lum: 55;
 			--mod-primary-note-lum-scale: 0;
 		}
-		.beepboxEditor button, .beepboxEditor select {
+		.beepboxEditor button, .beepboxEditor select, button {
 			box-shadow: inset 0 0 0 1px var(--secondary-text);
 		}
 		.select2-selection__rendered {
@@ -10257,7 +10286,7 @@ export class ColorConfig {
 					
 					
 				}
-				.beepboxEditor button, .beepboxEditor select {
+				.beepboxEditor button, .beepboxEditor select, button {
 					box-shadow: inset 0 0 0 1px var(--secondary-text);
 				}
 			`,
@@ -11662,7 +11691,7 @@ export class ColorConfig {
 			--noise5-primary-note:      #9787b3;
 		}
 		
-		.beepboxEditor button, .beepboxEditor select {
+		.beepboxEditor button, .beepboxEditor select, button {
 			box-shadow: inset 0 0 0 1px var(--secondary-text);
 		}
 		

@@ -2583,6 +2583,13 @@ var beepbox = (function (exports) {
     				image-rendering: optimizeSpeed !important;             /* IE */ 
 				}
 			.beepboxEditor button,
+			button.mobilePatternButton,
+			button.mobileTrackButton,
+			button.mobileSettingsButton,
+			button.mobilePlayButton,
+			button.mobilePauseButton,
+			button.mobileNextBarButton,
+			button.mobilePrevBarButton,
 			button.playButton,
 			button.pauseButton, 
 			button.recordButton, 
@@ -2898,6 +2905,13 @@ var beepbox = (function (exports) {
 			}
 
 			.beepboxEditor button,
+			button.mobilePatternButton,
+			button.mobileTrackButton,
+			button.mobileSettingsButton,
+			button.mobilePlayButton,
+			button.mobilePauseButton,
+			button.mobileNextBarButton,
+			button.mobilePrevBarButton,
 			button.playButton,
 			button.pauseButton, 
 			button.recordButton, 
@@ -3193,6 +3207,13 @@ var beepbox = (function (exports) {
     				image-rendering: optimizeSpeed !important;             /* IE */ 
 				}
 				.beepboxEditor button,
+				button.mobilePatternButton,
+				button.mobileTrackButton,
+				button.mobileSettingsButton,
+				button.mobilePlayButton,
+				button.mobilePauseButton,
+				button.mobileNextBarButton,
+				button.mobilePrevBarButton,
 				button.playButton,
 				button.pauseButton, 
 				button.recordButton, 
@@ -3813,7 +3834,7 @@ var beepbox = (function (exports) {
    					border-image-width: 4px !important; 
 					border-image-repeat: stretch; 
 				}
-				.beepboxEditor button
+				.beepboxEditor button, button
 				{
 					--ui-widget-background: linear-gradient(#84aef0, #2a3d6a) !important;
 					box-shadow:
@@ -3824,6 +3845,7 @@ var beepbox = (function (exports) {
 				}
 				.beepboxEditor .select2-container--open .select2-selection__rendered,
 				.beepboxEditor button:focus,
+				button:focus,
 				.beepboxEditor .instrument-bar .selected-instrument,
 				.beepboxEditor .eq-filter-type-bar button:not(.deactivated),
 				.beepboxEditor .note-filter-type-bar button:not(.deactivated)
@@ -4999,7 +5021,7 @@ var beepbox = (function (exports) {
 		  .beepboxEditor .instrument-bar .selected-instrument {
 			border-color: rgba(255, 255, 255, 1) !important;
 		  }
-		  .beepboxEditor button {
+		  .beepboxEditor button, button {
 			color: #fff;
 			background: #3c236f;
 		  }
@@ -5310,7 +5332,7 @@ var beepbox = (function (exports) {
 		   .beepboxEditor .instrument-bar .selected-instrument {
 			 border-color: #111111 !important;
 		   }
-		   .beepboxEditor button {
+		   .beepboxEditor button, button {
 			 color: #fff;
 			 background: #3c236f;
 		   }
@@ -6096,6 +6118,13 @@ var beepbox = (function (exports) {
 		}
 
 		.beepboxEditor button,
+		button.mobilePatternButton,
+		button.mobileTrackButton,
+		button.mobileSettingsButton,
+		button.mobilePlayButton,
+		button.mobilePauseButton,
+		button.mobileNextBarButton,
+		button.mobilePrevBarButton,
 		button.playButton,
 		button.pauseButton, 
 		button.recordButton, 
@@ -7299,7 +7328,7 @@ var beepbox = (function (exports) {
 				box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
 			}
 
-			.beepboxEditor button, .beepboxEditor select {
+			.beepboxEditor button, .beepboxEditor select, button {
 				box-shadow: inset 0 0 0 1px var(--secondary-text);
 			}
 
@@ -7706,7 +7735,7 @@ var beepbox = (function (exports) {
 							image-rendering: pixelated !important;                 /* Future browsers */
 							image-rendering: optimizeSpeed !important;             /* IE */ 
 						}
-					.beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered {
+					.beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered, button {
 							border-image-source: url("https://choptop84.github.io/abyssbox-app/forest2_border2.png") !important;
 							border-image-slice: 4 fill !important; 
 						   border-image-width: 4px !important; 
@@ -8112,7 +8141,7 @@ var beepbox = (function (exports) {
 					box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
 				}
 
-				.beepboxEditor button, .beepboxEditor select {
+				.beepboxEditor button, .beepboxEditor select, button {
 					background-color: var(--secondary-text);
 				}
 
@@ -9861,7 +9890,7 @@ var beepbox = (function (exports) {
 					image-rendering: pixelated !important;                 /* Future browsers */
 					image-rendering: optimizeSpeed !important;             /* IE */ 
 				}
-			.beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered {
+			.beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered, button {
 					border-image-source: url("https://choptop84.github.io/abyssbox-app/nebula2_border2.png") !important;
 					border-image-slice: 4 fill !important; 
 				   border-image-width: 4px !important; 
@@ -10140,7 +10169,7 @@ var beepbox = (function (exports) {
 			--mod-primary-note-lum: 55;
 			--mod-primary-note-lum-scale: 0;
 		}
-		.beepboxEditor button, .beepboxEditor select {
+		.beepboxEditor button, .beepboxEditor select, button {
 			box-shadow: inset 0 0 0 1px var(--secondary-text);
 		}
 		.select2-selection__rendered {
@@ -12599,7 +12628,7 @@ var beepbox = (function (exports) {
 					
 					
 				}
-				.beepboxEditor button, .beepboxEditor select {
+				.beepboxEditor button, .beepboxEditor select, button {
 					box-shadow: inset 0 0 0 1px var(--secondary-text);
 				}
 			`,
@@ -14003,7 +14032,7 @@ var beepbox = (function (exports) {
 			--noise5-primary-note:      #9787b3;
 		}
 		
-		.beepboxEditor button, .beepboxEditor select {
+		.beepboxEditor button, .beepboxEditor select, button {
 			box-shadow: inset 0 0 0 1px var(--secondary-text);
 		}
 		
@@ -16251,7 +16280,7 @@ content: "";
 	.beepboxEditor select { padding: 0 2px; }
 }
 */
-.beepboxEditor button {
+.beepboxEditor button, button {
 	margin: 0;
 	position: relative;
 	height: var(--button-size);
@@ -16264,6 +16293,64 @@ content: "";
 	font-weight: inherit;
 	cursor: pointer;
 }
+.mobileEditMenuIcon {
+  content: "";
+  pointer-events: none;
+  background: currentColor;
+  mask-image: var(--edit-pencil-symbol);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-image: var(--edit-pencil-symbol);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  image-rendering: -moz-crisp-edges !important;
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: -o-crisp-edges !important;
+  image-rendering: pixelated !important;
+  image-rendering: optimizeSpeed !important;
+  width: 100%;
+  height: 100%;
+  mask-size: 50%;
+  
+}
+.mobileTrackMenuIcon {
+	content: "";
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--insert-channel-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--insert-channel-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;
+	image-rendering: -webkit-optimize-contrast !important;
+	image-rendering: -o-crisp-edges !important;
+	image-rendering: pixelated !important;
+	image-rendering: optimizeSpeed !important;
+	width: 100%;
+	height: 100%;
+	mask-size: 50%;
+  }
+.mobileSettingsMenuIcon {
+	content: "";
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--preferences-gear-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--preferences-gear-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;
+	image-rendering: -webkit-optimize-contrast !important;
+	image-rendering: -o-crisp-edges !important;
+	image-rendering: pixelated !important;
+	image-rendering: optimizeSpeed !important;
+	width: 100%;
+	height: 100%;
+	mask-size: 50%;
+  }
 .beepboxEditor button:focus {
 	background: ${ColorConfig.uiWidgetFocus};
 	outline: none;
@@ -16320,6 +16407,42 @@ content: "";
 	mask-repeat: no-repeat;
 	mask-position: center;
 }
+button.mobilePlayButton::before {
+	content: "";
+	flex-shrink: 0;
+	position: absolute;
+	left: 39%;
+	top: 50%;
+	transform: translateY(-50%);
+	pointer-events: none;
+	width: var(--button-size);
+	height: var(--button-size);
+	background: currentColor;
+	-webkit-mask-image: var(--play-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	mask-image: var(--play-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+}
+button.mobilePauseButton::before {
+	content: "";
+	flex-shrink: 0;
+	position: absolute;
+	left: 39%;
+	top: 50%;
+	transform: translateY(-50%);
+	pointer-events: none;
+	width: var(--button-size);
+	height: var(--button-size);
+	background: currentColor;
+	-webkit-mask-image: var(--pause-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	mask-image: var(--pause-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+}
 .beepboxEditor button.recordButton::before {
 	content: "";
 	flex-shrink: 0;
@@ -16357,7 +16480,7 @@ content: "";
 	mask-position: center;
 }
 
-.beepboxEditor button.prevBarButton::before {
+.beepboxEditor button.prevBarButton::before, button.mobilePrevBarButton::before {
 	content: "";
 	flex-shrink: 0;
 	position: absolute;
@@ -16376,7 +16499,7 @@ content: "";
 	mask-position: center;
 }
 
-.beepboxEditor button.nextBarButton::before {
+.beepboxEditor button.nextBarButton::before, button.mobileNextBarButton::before {
 	content: "";
 	flex-shrink: 0;
 	position: absolute;
@@ -47214,6 +47337,14 @@ You should be redirected to the song at:<br /><br />
         constructor(_doc) {
             this._doc = _doc;
             this.prompt = null;
+            this._menuMode = 1;
+            this._mobilePatternButton = button({ class: "mobilePatternButton", type: "button", style: "display:none; width: 33vw; height: 75%; left: 0; position: absolute; bottom: 0px;" });
+            this._mobileTrackButton = button({ class: "mobileTrackButton", type: "button", style: "display:none; width: 34vw; height: 60%; right: 33vw; position: absolute; bottom: 0px;" });
+            this._mobileSettingsButton = button({ class: "mobileSettingsButton", type: "button", style: "display:none; width: 33vw; height: 60%; right: 0; position: absolute; bottom: 0px;" });
+            this._mobileMenu = div({ class: "mobileMenu", style: "position: absolute; bottom: 0px; height: 20vh; width: 100vw; display:none; background: var(--editor-background); z-index: 5;" });
+            this._mobileEditMenuIcon = div({ class: "mobileEditMenuIcon" });
+            this._mobileTrackMenuIcon = div({ class: "mobileTrackMenuIcon" });
+            this._mobileSettingsMenuIcon = div({ class: "mobileSettingsMenuIcon" });
             this._keyboardLayout = new KeyboardLayout(this._doc);
             this._patternEditorPrev = new PatternEditor(this._doc, false, -1);
             this._patternEditor = new PatternEditor(this._doc, true, 0);
@@ -47229,6 +47360,10 @@ You should be redirected to the song at:<br /><br />
             this._stopButton = button({ class: "stopButton", style: "display: none;", type: "button", title: "Stop Recording (Space)" }, "Stop Recording");
             this._prevBarButton = button({ class: "prevBarButton", type: "button", title: "Previous Bar (left bracket)" });
             this._nextBarButton = button({ class: "nextBarButton", type: "button", title: "Next Bar (right bracket)" });
+            this._mobilePlayButton = button({ class: "mobilePlayButton", style: "width: 33%;", type: "button", title: "Play" });
+            this._mobilePauseButton = button({ class: "mobilePauseButton", style: "display: none; width: 33%;", type: "button", title: "Pause", });
+            this._mobilePrevBarButton = button({ class: "mobilePrevBarButton", type: "button", title: "Previous Bar", style: "width:34%" });
+            this._mobileNextBarButton = button({ class: "mobileNextBarButton", type: "button", title: "Next Bar", style: "width:33%" });
             this._volumeSlider = new Slider(input({ title: "main volume", style: "width: 5em; flex-grow: 1; margin: 0;", type: "range", min: "0", max: "75", value: "50", step: "1" }), this._doc, null, false);
             this._outVolumeBarBg = SVG.rect({ "pointer-events": "none", width: "90%", height: "50%", x: "5%", y: "25%", fill: ColorConfig.uiWidgetBackground });
             this._outVolumeBar = SVG.rect({ "pointer-events": "none", height: "50%", width: "0%", x: "5%", y: "25%", fill: "url('#volumeGrad2')" });
@@ -47453,11 +47588,45 @@ You should be redirected to the song at:<br /><br />
             this._feedbackAmplitudeSlider = new Slider(input({ type: "range", min: "0", max: Config.operatorAmplitudeMax, value: "0", step: "1", title: "Feedback Amplitude" }), this._doc, (oldValue, newValue) => new ChangeFeedbackAmplitude(this._doc, oldValue, newValue), false);
             this._feedbackRow2 = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("feedbackVolume") }, "Fdback Vol:"), this._feedbackAmplitudeSlider.container);
             this._addEnvelopeButton = button({ type: "button", class: "add-envelope" });
-            this._customInstrumentSettingsGroup = div({ class: "editor-controls" }, this._panSliderRow, this._panDropdownGroup, this._chipWaveSelectRow, this._chipNoiseSelectRow, this._useChipWaveAdvancedLoopControlsRow, this._chipWaveLoopModeSelectRow, this._chipWaveLoopStartRow, this._chipWaveLoopEndRow, this._chipWaveStartOffsetRow, this._chipWavePlayBackwardsRow, this._customWaveDraw, this._eqFilterTypeRow, this._eqFilterRow, this._eqFilterSimpleCutRow, this._eqFilterSimplePeakRow, this._fadeInOutRow, this._algorithmSelectRow, this._algorithm6OpSelectRow, this._phaseModGroup, this._feedbackRow1, this._feedback6OpRow1, this._feedbackRow2, this._spectrumRow, this._harmonicsRow, this._drumsetGroup, this._supersawDynamismRow, this._supersawSpreadRow, this._supersawShapeRow, this._pulseWidthRow, this._pulseWidthDropdownGroup, this._stringSustainRow, this._unisonSelectRow, this._unisonDropdownGroup, div({ style: `padding: 2px 0; margin-left: 2em; display: flex; align-items: center;` }, span({ style: `flex-grow: 1; text-align: center;` }, span({ class: "tip", onclick: () => this._openPrompt("effects") }, "Effects")), div({ class: "effects-menu" }, this._effectsSelect)), this._transitionRow, this._transitionDropdownGroup, this._chordSelectRow, this._chordDropdownGroup, this._pitchShiftRow, this._detuneSliderRow, this._vibratoSelectRow, this._vibratoDropdownGroup, this._noteFilterTypeRow, this._noteFilterRow, this._noteFilterSimpleCutRow, this._noteFilterSimplePeakRow, this._distortionRow, this._aliasingRow, this._bitcrusherQuantizationRow, this._bitcrusherFreqRow, this._chorusRow, this._echoSustainRow, this._echoDelayRow, this._reverbRow, div({ style: `padding: 2px 0; margin-left: 2em; display: flex; align-items: center;` }, span({ style: `flex-grow: 1; text-align: center;` }, span({ class: "tip", onclick: () => this._openPrompt("envelopes") }, "Envelopes")), this._envelopeDropdown, this._addEnvelopeButton), this._envelopeDropdownGroup, this._envelopeEditor.container);
+            this._customInstrumentSettingsGroup = div({ class: "editor-controls" }, div({ id: "InstrumentDiv" }, this._panSliderRow, this._panDropdownGroup, this._chipWaveSelectRow, this._chipNoiseSelectRow, this._useChipWaveAdvancedLoopControlsRow, this._chipWaveLoopModeSelectRow, this._chipWaveLoopStartRow, this._chipWaveLoopEndRow, this._chipWaveStartOffsetRow, this._chipWavePlayBackwardsRow, this._customWaveDraw, this._eqFilterTypeRow, this._eqFilterRow, this._eqFilterSimpleCutRow, this._eqFilterSimplePeakRow, this._fadeInOutRow, this._algorithmSelectRow, this._algorithm6OpSelectRow, this._phaseModGroup, this._feedbackRow1, this._feedback6OpRow1, this._feedbackRow2, this._spectrumRow, this._harmonicsRow, this._drumsetGroup, this._supersawDynamismRow, this._supersawSpreadRow, this._supersawShapeRow, this._pulseWidthRow, this._pulseWidthDropdownGroup, this._stringSustainRow, this._unisonSelectRow, this._unisonDropdownGroup), div({ id: "effectsDiv" }, div({ class: "effectsNameDiv", style: `padding: 2px 0; margin-left: 2em; display: flex; align-items: center;` }, span({ style: `flex-grow: 1; text-align: center;` }, span({ class: "tip", onclick: () => this._openPrompt("effects") }, "Effects")), div({ class: "effects-menu" }, this._effectsSelect)), div({ class: "effectsOpDiv" }, this._transitionRow, this._transitionDropdownGroup, this._chordSelectRow, this._chordDropdownGroup, this._pitchShiftRow, this._detuneSliderRow, this._vibratoSelectRow, this._vibratoDropdownGroup, this._noteFilterTypeRow, this._noteFilterRow, this._noteFilterSimpleCutRow, this._noteFilterSimplePeakRow, this._distortionRow, this._aliasingRow, this._bitcrusherQuantizationRow, this._bitcrusherFreqRow, this._chorusRow, this._echoSustainRow, this._echoDelayRow, this._reverbRow)), div({ id: "envelopesDiv" }, div({ class: "envelopesNameDiv", style: `padding: 2px 0; margin-left: 2em; display: flex; align-items: center;` }, span({ style: `flex-grow: 1; text-align: center;` }, span({ class: "tip", onclick: () => this._openPrompt("envelopes") }, "Envelopes")), this._envelopeDropdown, this._addEnvelopeButton), div({ class: "envelopesOpDiv" }, this._envelopeDropdownGroup, this._envelopeEditor.container)));
             this._instrumentCopyGroup = div({ class: "editor-controls" }, div({ class: "selectRow" }, this._instrumentCopyButton, this._instrumentPasteButton));
             this._instrumentExportGroup = div({ class: "editor-controls" }, div({ class: "selectRow" }, this._instrumentExportButton, this._instrumentImportButton));
             this._instrumentSettingsTextRow = div({ id: "instrumentSettingsText", style: `padding: 3px 0; max-width: 15em; text-align: center; color: ${ColorConfig.secondaryText};` }, "Instrument Settings");
             this._instrumentTypeSelectRow = div({ class: "selectRow", id: "typeSelectRow" }, span({ class: "tip", onclick: () => this._openPrompt("instrumentType") }, "Type:"), div(div({ class: "pitchSelect" }, this._pitchedPresetSelect), div({ class: "drumSelect" }, this._drumPresetSelect)));
+            this._mobileInstSettingsButton = button({ class: "mobileInstButton", type: "button", style: "width:33%;", onclick: () => this._setSettingToInstrument() }, "Settings");
+            this._mobileEffectsButton = button({ class: "mobileEffectsButton", type: "button", style: "width:30%;", onclick: () => this._setSettingToEffect() }, "Effects");
+            this._mobileEnvelopesButton = button({ class: "mobileEnvelopesButton", type: "button", style: "width:37%;", onclick: () => this._setSettingToEnvelope() }, "Envelope");
+            this._instOptionsDiv = div({ class: "instMobileOptions", style: "display:none;" }, this._mobileInstSettingsButton, this._mobileEffectsButton, this._mobileEnvelopesButton);
+            this._setSettingToInstrument = () => {
+                const instNameStuffs = document.getElementById('instrumentSettingsText');
+                const instStuffs = document.getElementById('InstrumentDiv');
+                const effectStuffs = document.getElementById('effectsDiv');
+                const envelopeStuffs = document.getElementById('envelopesDiv');
+                instNameStuffs.style.display = "";
+                instStuffs.style.display = "";
+                effectStuffs.style.display = "none";
+                envelopeStuffs.style.display = "none";
+            };
+            this._setSettingToEffect = () => {
+                const instNameStuffs = document.getElementById('instrumentSettingsText');
+                const instStuffs = document.getElementById('InstrumentDiv');
+                const effectStuffs = document.getElementById('effectsDiv');
+                const envelopeStuffs = document.getElementById('envelopesDiv');
+                instNameStuffs.style.display = "none";
+                instStuffs.style.display = "none";
+                effectStuffs.style.display = "";
+                envelopeStuffs.style.display = "none";
+            };
+            this._setSettingToEnvelope = () => {
+                const instNameStuffs = document.getElementById('instrumentSettingsText');
+                const instStuffs = document.getElementById('InstrumentDiv');
+                const effectStuffs = document.getElementById('effectsDiv');
+                const envelopeStuffs = document.getElementById('envelopesDiv');
+                instNameStuffs.style.display = "none";
+                instStuffs.style.display = "none";
+                effectStuffs.style.display = "none";
+                envelopeStuffs.style.display = "";
+            };
             this._instrumentSettingsGroup = div({ class: "editor-controls" }, this._instrumentSettingsTextRow, this._instrumentsButtonRow, this._instrumentTypeSelectRow, this._instrumentVolumeSliderRow, this._customInstrumentSettingsGroup);
             this._usedPatternIndicator = SVG.path({ d: "M -6 -6 H 6 V 6 H -6 V -6 M -2 -3 L -2 -3 L -1 -4 H 1 V 4 H -1 V -1.2 L -1.2 -1 H -2 V -3 z", fill: ColorConfig.indicatorSecondary, "fill-rule": "evenodd" });
             this._usedInstrumentIndicator = SVG.path({ d: "M -6 -0.8 H -3.8 V -6 H 0.8 V 4.4 H 2.2 V -0.8 H 6 V 0.8 H 3.8 V 6 H -0.8 V -4.4 H -2.2 V 0.8 H -6 z", fill: ColorConfig.indicatorSecondary });
@@ -47485,7 +47654,7 @@ You should be redirected to the song at:<br /><br />
             this._loopBarButton = button({ class: "loopBarButton", type: "button", title: "Loop only on the Currently Selected Bar" });
             this._fullscreenButton = button({ class: "fullscreenButton", type: "button", title: "Make the screen fit fully in your browser (Mobile Only)" });
             this._patternEditorRow = div({ style: "flex: 1; height: 100%; display: flex; overflow: hidden; justify-content: center;" }, this._patternEditorPrev.container, this._patternEditor.container, this._patternEditorNext.container);
-            this._patternArea = div({ class: "pattern-area" }, this._piano.container, this._patternEditorRow, this._octaveScrollBar.container, this._zoomInButton, this._zoomOutButton, this._undoButton, this._redoButton, this._copyPatternButton, this._pastePatternButton, this._insertChannelButton, this._deleteChannelButton, this._selectAllButton, this._duplicateButton, this._notesUpButton, this._notesDownButton, this._loopBarButton, this._fullscreenButton);
+            this._patternArea = div({ class: "pattern-area", id: "pattern-area" }, this._piano.container, this._patternEditorRow, this._octaveScrollBar.container, this._zoomInButton, this._zoomOutButton, this._undoButton, this._redoButton, this._copyPatternButton, this._pastePatternButton, this._insertChannelButton, this._deleteChannelButton, this._selectAllButton, this._duplicateButton, this._notesUpButton, this._notesDownButton, this._loopBarButton, this._fullscreenButton);
             this._trackContainer = div({ class: "trackContainer" }, this._trackEditor.container, this._loopEditor.container);
             this._trackVisibleArea = div({ style: "position: absolute; width: 100%; height: 100%; pointer-events: none;" });
             this._trackAndMuteContainer = div({ class: "trackAndMuteContainer" }, this._muteEditor.container, this._trackContainer, this._trackVisibleArea);
@@ -47496,8 +47665,9 @@ You should be redirected to the song at:<br /><br />
             this._sampleLoadingBarContainer = div({ style: `width: 80%; height: 4px; overflow: hidden; margin-left: auto; margin-right: auto; margin-top: 0.5em; cursor: pointer; background-color: ${ColorConfig.indicatorSecondary};` }, this._sampleLoadingBar);
             this._sampleLoadingStatusContainer = div({ style: "cursor: pointer;" }, div({ style: `margin-top: 0.5em; text-align: center; color: ${ColorConfig.secondaryText};` }, "Sample Loading Status"), div({ class: "selectRow", style: "height: 6px; margin-bottom: 0.5em;" }, this._sampleLoadingBarContainer));
             this._songSettingsArea = div({ class: "song-settings-area" }, div({ class: "editor-controls" }, div({ class: "editor-song-settings" }, div({ style: "margin: 3px 0; position: relative; text-align: center; color: ${ColorConfig.secondaryText};" }, div({ class: "tip", style: "flex-shrink: 0; position:absolute; left: 0; top: 0; width: 12px; height: 12px", onclick: () => this._openPrompt("usedPattern") }, SVG.svg({ style: "flex-shrink: 0; position: absolute; left: 0; top: 0; pointer-events: none;", width: "12px", height: "12px", "margin-right": "0.5em", viewBox: "-6 -6 12 12" }, this._usedPatternIndicator)), div({ class: "tip", style: "flex-shrink: 0; position: absolute; left: 14px; top: 0; width: 12px; height: 12px", onclick: () => this._openPrompt("usedInstrument") }, SVG.svg({ style: "flex-shrink: 0; position: absolute; left: 0; top: 0; pointer-events: none;", width: "12px", height: "12px", "margin-right": "1em", viewBox: "-6 -6 12 12" }, this._usedInstrumentIndicator)), "Song Settings", div({ style: "width: 100%; left: 0; top: -1px; position:absolute; overflow-x:clip;" }, this._jumpToModIndicator))), div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("scale") }, "Scale: "), div({ class: "selectContainer" }, this._scaleSelect)), div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("key") }, "Key: "), div({ class: "selectContainer" }, this._keySelect)), div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("key_octave") }, "Octave: "), this._octaveStepper), div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("tempo") }, "Tempo: "), span({ style: "display: flex;" }, this._tempoSlider.container, this._tempoStepper)), div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("rhythm") }, "Rhythm: "), div({ class: "selectContainer" }, this._rhythmSelect)), this._sampleLoadingStatusContainer));
-            this._instrumentSettingsArea = div({ class: "instrument-settings-area" }, this._instrumentSettingsGroup, this._modulatorGroup);
-            this._settingsArea = div({ class: "settings-area noSelection" }, div({ class: "version-area" }, div({ style: `text-align: center; margin: 3px 0; color: ${ColorConfig.secondaryText};` }, this._songTitleInputBox.input)), div({ class: "play-pause-area" }, this._volumeBarBox, div({ class: "playback-bar-controls" }, this._playButton, this._pauseButton, this._recordButton, this._stopButton, this._prevBarButton, this._nextBarButton), div({ class: "playback-volume-controls" }, span({ class: "volume-speaker" }), this._volumeSlider.container), this._globalOscscopeContainer), this._menuArea, this._songSettingsArea, this._instrumentSettingsArea);
+            this._instrumentSettingsArea = div({ class: "instrument-settings-area" }, this._instOptionsDiv, this._instrumentSettingsGroup, this._modulatorGroup);
+            this._playPauseAreaMobile = div({ class: "play-pause-area2", id: "play-pause-area2", style: 'flex-direction:row; position: absolute; width: 100%; display: flex;' }, div({ class: "playback-bar-controls2", style: 'width: 100%; display: flex; background: var(--editor-background); z-index: 6;' }, this._mobilePlayButton, this._mobilePauseButton, this._mobilePrevBarButton, this._mobileNextBarButton));
+            this._settingsArea = div({ class: "settings-area noSelection" }, div({ class: "version-area" }, div({ style: `text-align: center; margin: 3px 0; color: ${ColorConfig.secondaryText};` }, this._songTitleInputBox.input)), div({ class: "play-pause-area", id: "play-pause-area" }, this._volumeBarBox, div({ class: "playback-bar-controls" }, this._playButton, this._pauseButton, this._recordButton, this._stopButton, this._prevBarButton, this._nextBarButton), div({ class: "playback-volume-controls" }, span({ class: "volume-speaker" }), this._volumeSlider.container), this._globalOscscopeContainer), this._menuArea, this._songSettingsArea, this._instrumentSettingsArea);
             this.mainLayer = div({ class: "beepboxEditor", tabIndex: "0" }, this._patternArea, this._trackArea, this._settingsArea, this._promptContainer);
             this._wasPlaying = false;
             this._currentPromptName = null;
@@ -47608,6 +47778,7 @@ You should be redirected to the song at:<br /><br />
                 if (document.getElementById('text-content'))
                     document.getElementById('text-content').style.display = this._doc.prefs.showDescription ? "" : "none";
                 if (!isMobile) {
+                    this._playPauseAreaMobile.style.display = "none";
                     if (this._doc.getFullScreen()) {
                         const semitoneHeight = this._patternEditorRow.clientHeight / this._doc.getVisiblePitchCount();
                         const targetBeatWidth = semitoneHeight * 5;
@@ -47736,6 +47907,37 @@ You should be redirected to the song at:<br /><br />
                     }
                 }
                 else {
+                    const effectStuffs = document.getElementById('effectsDiv');
+                    const envelopeStuffs = document.getElementById('envelopesDiv');
+                    effectStuffs.style.display = "none";
+                    envelopeStuffs.style.display = "none";
+                    this._mobilePatternButton.style.display = "";
+                    this._mobileTrackButton.style.display = "";
+                    this._mobileSettingsButton.style.display = "";
+                    this._mobileMenu.style.display = "";
+                    this._instOptionsDiv.style.display = "";
+                    const bbEditorMobile = document.getElementById('beepboxEditorContainer');
+                    bbEditorMobile.appendChild(this._playPauseAreaMobile);
+                    const playPauseArea = document.getElementById('play-pause-area');
+                    const textContentMobile = document.getElementById('text-content');
+                    textContentMobile.style.display = "none";
+                    bbEditorMobile.style.minHeight = "720px";
+                    this._trackAndMuteContainer.style.maxHeight = "85vh";
+                    this._settingsArea.style.gridTemplateRows = "min-content min-content min-content min-content 1fr";
+                    this._settingsArea.style.gridTemplateAreas = '"version-area version-area" "play-pause-area instrument-settings-area" "play-pause-area instrument-settings-area" "menu-area instrument-settings-area" "song-settings-area instrument-settings-area"';
+                    playPauseArea.style.display = "flex";
+                    playPauseArea.style.flexDirection = "column";
+                    const mobilePatternArea = document.getElementById('pattern-area');
+                    mobilePatternArea.style.maxHeight = "80vh";
+                    mobilePatternArea.style.height = "80vh";
+                    document.body.appendChild(this._mobileMenu);
+                    this._mobileMenu.appendChild(this._mobilePatternButton);
+                    this._mobileMenu.appendChild(this._mobileTrackButton);
+                    this._mobileMenu.appendChild(this._mobileSettingsButton);
+                    this._mobilePatternButton.appendChild(this._mobileEditMenuIcon);
+                    this._mobileTrackButton.appendChild(this._mobileTrackMenuIcon);
+                    this._mobileSettingsButton.appendChild(this._mobileSettingsMenuIcon);
+                    this._instrumentSettingsArea.appendChild(this._instOptionsDiv);
                     this._patternEditor.container.style.width = "";
                     this._patternEditor.container.style.flexShrink = "";
                     this._patternEditorPrev.container.style.display = "none";
@@ -48830,12 +49032,15 @@ You should be redirected to the song at:<br /><br />
                         this.refocusStage();
                     }
                     this._playButton.style.display = "none";
+                    this._mobilePlayButton.style.display = "none";
                     this._pauseButton.style.display = "none";
+                    this._mobilePauseButton.style.display = "none";
                     this._recordButton.style.display = "none";
                     this._stopButton.style.display = "none";
                     this._prevBarButton.style.display = "";
                     this._nextBarButton.style.display = "";
                     this._playButton.classList.remove("shrunk");
+                    this._mobilePlayButton.classList.remove("shrunk");
                     this._recordButton.classList.remove("shrunk");
                     this._patternEditorRow.style.pointerEvents = "";
                     this._octaveScrollBar.container.style.pointerEvents = "";
@@ -48866,11 +49071,13 @@ You should be redirected to the song at:<br /><br />
                     }
                     else if (this._doc.synth.playing) {
                         this._pauseButton.style.display = "";
+                        this._mobilePauseButton.style.display = "";
                     }
                     else if (this._doc.prefs.showRecordButton) {
                         this._playButton.style.display = "";
                         this._recordButton.style.display = "";
                         this._playButton.classList.add("shrunk");
+                        this._mobilePlayButton.classList.add("shrunk");
                         this._recordButton.classList.add("shrunk");
                     }
                     else if (this._ctrlHeld) {
@@ -48878,6 +49085,7 @@ You should be redirected to the song at:<br /><br />
                     }
                     else {
                         this._playButton.style.display = "";
+                        this._mobilePlayButton.style.display = "";
                     }
                 }
                 window.requestAnimationFrame(this.updatePlayButton);
@@ -49636,6 +49844,48 @@ You should be redirected to the song at:<br /><br />
                     this._doc.performance.record();
                 }
             };
+            this._displayPatternEditor = () => {
+                this._menuMode = 1;
+                if (this._menuMode == 1) {
+                    this._patternArea.style.display = "";
+                    this._trackArea.style.display = "none";
+                    this._settingsArea.style.display = "none";
+                    this._mobilePatternButton.style.height = "75%";
+                    this._mobileTrackButton.style.height = "60%";
+                    this._mobileSettingsButton.style.height = "60%";
+                    this._mobileMenu.style.height = "20vh";
+                    this._playPauseAreaMobile.style.display = "flex";
+                }
+                this.whenUpdated();
+            };
+            this._displayTrackEditor = () => {
+                this._menuMode = 2;
+                if (this._menuMode == 2) {
+                    this._patternArea.style.display = "none";
+                    this._trackArea.style.display = "";
+                    this._settingsArea.style.display = "none";
+                    this._mobilePatternButton.style.height = "80%";
+                    this._mobileTrackButton.style.height = "100%";
+                    this._mobileSettingsButton.style.height = "80%";
+                    this._mobileMenu.style.height = "15vh";
+                    this._playPauseAreaMobile.style.display = "none";
+                }
+                this.whenUpdated();
+            };
+            this._displaySettingsEditor = () => {
+                this._menuMode = 3;
+                if (this._menuMode == 3) {
+                    this._patternArea.style.display = "none";
+                    this._trackArea.style.display = "none";
+                    this._settingsArea.style.display = "";
+                    this._mobilePatternButton.style.height = "80%";
+                    this._mobileTrackButton.style.height = "80%";
+                    this._mobileSettingsButton.style.height = "100%";
+                    this._mobileMenu.style.height = "15vh";
+                    this._playPauseAreaMobile.style.display = "none";
+                }
+                this.whenUpdated();
+            };
             this._animate = () => {
                 this._modSliderUpdate();
                 if (this._doc.prefs.displayVolumeBar) {
@@ -50354,8 +50604,11 @@ You should be redirected to the song at:<br /><br />
             this._vibratoTypeSelect.addEventListener("change", this._whenSetVibratoType);
             this._playButton.addEventListener("click", this.togglePlay);
             this._pauseButton.addEventListener("click", this.togglePlay);
-            this._recordButton.addEventListener("click", this._toggleRecord);
-            this._stopButton.addEventListener("click", this._toggleRecord);
+            this._mobilePlayButton.addEventListener("click", this.togglePlay);
+            this._mobilePauseButton.addEventListener("click", this.togglePlay);
+            this._mobilePatternButton.addEventListener("click", this._displayPatternEditor);
+            this._mobileTrackButton.addEventListener("click", this._displayTrackEditor);
+            this._mobileSettingsButton.addEventListener("click", this._displaySettingsEditor);
             this._muteEditor._loopButtonInput.addEventListener("click", this._loopTypeEvent);
             this._recordButton.addEventListener("contextmenu", (event) => {
                 if (event.ctrlKey) {
@@ -50371,6 +50624,8 @@ You should be redirected to the song at:<br /><br />
             });
             this._prevBarButton.addEventListener("click", this._whenPrevBarPressed);
             this._nextBarButton.addEventListener("click", this._whenNextBarPressed);
+            this._mobilePrevBarButton.addEventListener("click", this._whenPrevBarPressed);
+            this._mobileNextBarButton.addEventListener("click", this._whenNextBarPressed);
             this._volumeSlider.input.addEventListener("input", this._setVolumeSlider);
             this._zoomInButton.addEventListener("click", this._zoomIn);
             this._zoomOutButton.addEventListener("click", this._zoomOut);
@@ -50465,6 +50720,9 @@ You should be redirected to the song at:<br /><br />
                 const MobileButtonOption = this._optionsMenu.querySelector("[value=displayShortcutButtons]");
                 MobileButtonOption.disabled = true;
                 MobileButtonOption.setAttribute("hidden", "");
+                const showDescOption = this._optionsMenu.querySelector("[value=showDescription]");
+                showDescOption.disabled = true;
+                showDescOption.setAttribute("hidden", "");
             }
         }
         _updateSampleLoadingBar(_e) {

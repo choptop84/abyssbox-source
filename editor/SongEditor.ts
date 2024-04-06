@@ -727,6 +727,18 @@ class CustomAlgorythmCanvas {
 export class SongEditor {
     public prompt: Prompt | null = null;
 
+    private _menuMode: number = 1;
+
+     // comment for ctrl+f mobile stuffs
+    private readonly _mobilePatternButton: HTMLButtonElement = button({class: "mobilePatternButton", type:"button", style:"display:none; width: 33vw; height: 75%; left: 0; position: absolute; bottom: 0px;"});
+    private readonly _mobileTrackButton: HTMLButtonElement = button({class: "mobileTrackButton", type:"button", style:"display:none; width: 34vw; height: 60%; right: 33vw; position: absolute; bottom: 0px;"});
+    private readonly _mobileSettingsButton: HTMLButtonElement = button({class: "mobileSettingsButton", type:"button", style:"display:none; width: 33vw; height: 60%; right: 0; position: absolute; bottom: 0px;"});
+    public _mobileMenu: HTMLDivElement = div({class:"mobileMenu", style:"position: absolute; bottom: 0px; height: 20vh; width: 100vw; display:none; background: var(--editor-background); z-index: 5;"});
+    private readonly _mobileEditMenuIcon: HTMLDivElement = div({class:"mobileEditMenuIcon"});
+    private readonly _mobileTrackMenuIcon: HTMLDivElement = div({class:"mobileTrackMenuIcon"});
+    private readonly _mobileSettingsMenuIcon: HTMLDivElement = div({class:"mobileSettingsMenuIcon"});
+
+
     private readonly _keyboardLayout: KeyboardLayout = new KeyboardLayout(this._doc);
     private readonly _patternEditorPrev: PatternEditor = new PatternEditor(this._doc, false, -1);
     private readonly _patternEditor: PatternEditor = new PatternEditor(this._doc, true, 0);
@@ -742,6 +754,14 @@ export class SongEditor {
     private readonly _stopButton: HTMLButtonElement = button({ class: "stopButton", style: "display: none;", type: "button", title: "Stop Recording (Space)" }, "Stop Recording");
     private readonly _prevBarButton: HTMLButtonElement = button({ class: "prevBarButton", type: "button", title: "Previous Bar (left bracket)" });
     private readonly _nextBarButton: HTMLButtonElement = button({ class: "nextBarButton", type: "button", title: "Next Bar (right bracket)" });
+
+    // comment for ctrl+f mobile stuffs
+
+    private readonly _mobilePlayButton: HTMLButtonElement = button({ class: "mobilePlayButton", style: "width: 33%;", type: "button", title: "Play" });
+    private readonly _mobilePauseButton: HTMLButtonElement = button({ class: "mobilePauseButton", style: "display: none; width: 33%;", type: "button", title: "Pause",});
+    private readonly _mobilePrevBarButton: HTMLButtonElement = button({ class: "mobilePrevBarButton", type: "button", title: "Previous Bar", style:"width:34%" });
+    private readonly _mobileNextBarButton: HTMLButtonElement = button({ class: "mobileNextBarButton", type: "button", title: "Next Bar", style:"width:33%" });
+
     private readonly _volumeSlider: Slider = new Slider(input({ title: "main volume", style: "width: 5em; flex-grow: 1; margin: 0;", type: "range", min: "0", max: "75", value: "50", step: "1" }), this._doc, null, false);
     private readonly _outVolumeBarBg: SVGRectElement = SVG.rect({ "pointer-events": "none", width: "90%", height: "50%", x: "5%", y: "25%", fill: ColorConfig.uiWidgetBackground });
     private readonly _outVolumeBar: SVGRectElement = SVG.rect({ "pointer-events": "none", height: "50%", width: "0%", x: "5%", y: "25%", fill: "url('#volumeGrad2')" });
@@ -1126,6 +1146,7 @@ export class SongEditor {
     */
     private readonly _addEnvelopeButton: HTMLButtonElement = button({ type: "button", class: "add-envelope" });
     private readonly _customInstrumentSettingsGroup: HTMLDivElement = div({ class: "editor-controls" },
+    div({ id:"InstrumentDiv"},
         this._panSliderRow,
         this._panDropdownGroup,
         this._chipWaveSelectRow,
@@ -1160,37 +1181,46 @@ export class SongEditor {
         this._stringSustainRow,
         this._unisonSelectRow,
         this._unisonDropdownGroup,
-        div({ style: `padding: 2px 0; margin-left: 2em; display: flex; align-items: center;` },
+        ),
+        div({ id:"effectsDiv"},
+        div({ class:"effectsNameDiv", style: `padding: 2px 0; margin-left: 2em; display: flex; align-items: center;` },
             span({ style: `flex-grow: 1; text-align: center;` }, span({ class: "tip", onclick: () => this._openPrompt("effects") }, "Effects")),
             div({ class: "effects-menu" }, this._effectsSelect),
         ),
-        this._transitionRow,
-        this._transitionDropdownGroup,
-        this._chordSelectRow,
-        this._chordDropdownGroup,
-        this._pitchShiftRow,
-        this._detuneSliderRow,
-        this._vibratoSelectRow,
-        this._vibratoDropdownGroup,
-        this._noteFilterTypeRow,
-        this._noteFilterRow,
-        this._noteFilterSimpleCutRow,
-        this._noteFilterSimplePeakRow,
-        this._distortionRow,
-        this._aliasingRow,
-        this._bitcrusherQuantizationRow,
-        this._bitcrusherFreqRow,
-        this._chorusRow,
-        this._echoSustainRow,
-        this._echoDelayRow,
-        this._reverbRow,
-        div({ style: `padding: 2px 0; margin-left: 2em; display: flex; align-items: center;` },
+        div({ class:"effectsOpDiv"},
+            this._transitionRow,
+            this._transitionDropdownGroup,
+            this._chordSelectRow,
+            this._chordDropdownGroup,
+            this._pitchShiftRow,
+            this._detuneSliderRow,
+            this._vibratoSelectRow,
+            this._vibratoDropdownGroup,
+            this._noteFilterTypeRow,
+            this._noteFilterRow,
+            this._noteFilterSimpleCutRow,
+            this._noteFilterSimplePeakRow,
+            this._distortionRow,
+            this._aliasingRow,
+            this._bitcrusherQuantizationRow,
+            this._bitcrusherFreqRow,
+            this._chorusRow,
+            this._echoSustainRow,
+            this._echoDelayRow,
+            this._reverbRow,
+        ),
+    ),
+    div({ id:"envelopesDiv"},
+        div({ class:"envelopesNameDiv", style: `padding: 2px 0; margin-left: 2em; display: flex; align-items: center;` },
             span({ style: `flex-grow: 1; text-align: center;` }, span({ class: "tip", onclick: () => this._openPrompt("envelopes") }, "Envelopes")),
             this._envelopeDropdown,
             this._addEnvelopeButton,
         ),
+        div({ class:"envelopesOpDiv"},
         this._envelopeDropdownGroup,
         this._envelopeEditor.container,
+        ),
+    ),
     );
     private readonly _instrumentCopyGroup: HTMLDivElement = div({ class: "editor-controls" },
         div({ class: "selectRow" },
@@ -1214,6 +1244,56 @@ export class SongEditor {
             div({ class: "drumSelect" }, this._drumPresetSelect)
         ),
     );
+
+    // comment for ctrl+f: mobile stuffs
+    private readonly _mobileInstSettingsButton: HTMLButtonElement = button({class:"mobileInstButton", type:"button", style:"width:33%;", onclick: () => this._setSettingToInstrument()}, "Settings");
+    private readonly _mobileEffectsButton: HTMLButtonElement = button({class:"mobileEffectsButton", type:"button", style:"width:30%;", onclick: () => this._setSettingToEffect()}, "Effects" );
+    private readonly _mobileEnvelopesButton: HTMLButtonElement = button({class:"mobileEnvelopesButton", type:"button", style:"width:37%;", onclick: () => this._setSettingToEnvelope()}, "Envelope");
+    private readonly _instOptionsDiv: HTMLDivElement = div({class:"instMobileOptions",style:"display:none;"}, 
+        this._mobileInstSettingsButton, 
+        this._mobileEffectsButton,
+        this._mobileEnvelopesButton
+    );
+
+    private _setSettingToInstrument = (): void => {
+        const instNameStuffs = document.getElementById('instrumentSettingsText');
+        const instStuffs = document.getElementById('InstrumentDiv');
+        const effectStuffs = document.getElementById('effectsDiv');
+        const envelopeStuffs = document.getElementById('envelopesDiv');
+
+        instNameStuffs!.style.display = "";
+        instStuffs!.style.display = "";
+        effectStuffs!.style.display = "none";
+        envelopeStuffs!.style.display = "none";
+    } 
+
+    private _setSettingToEffect = (): void => {
+
+        const instNameStuffs = document.getElementById('instrumentSettingsText');
+        const instStuffs = document.getElementById('InstrumentDiv');
+        const effectStuffs = document.getElementById('effectsDiv');
+        const envelopeStuffs = document.getElementById('envelopesDiv');
+
+        instNameStuffs!.style.display = "none";
+
+        instStuffs!.style.display = "none";
+        effectStuffs!.style.display = "";
+        envelopeStuffs!.style.display = "none";
+    } 
+
+    private _setSettingToEnvelope = (): void => {
+
+        const instNameStuffs = document.getElementById('instrumentSettingsText');
+        const instStuffs = document.getElementById('InstrumentDiv');
+        const effectStuffs = document.getElementById('effectsDiv');
+        const envelopeStuffs = document.getElementById('envelopesDiv');
+
+        instNameStuffs!.style.display = "none";
+        instStuffs!.style.display = "none";
+        effectStuffs!.style.display = "none";
+        envelopeStuffs!.style.display = "";
+    } 
+
     private readonly _instrumentSettingsGroup: HTMLDivElement = div({ class: "editor-controls" },
         this._instrumentSettingsTextRow,
         this._instrumentsButtonRow,
@@ -1255,7 +1335,7 @@ export class SongEditor {
         this._patternEditor.container,
         this._patternEditorNext.container,
     );
-    private readonly _patternArea: HTMLDivElement = div({ class: "pattern-area" },
+    private readonly _patternArea: HTMLDivElement = div({ class: "pattern-area", id: "pattern-area" },
         this._piano.container,
         this._patternEditorRow,
         this._octaveScrollBar.container,
@@ -1356,15 +1436,25 @@ export class SongEditor {
         ),
     );
     private readonly _instrumentSettingsArea: HTMLDivElement = div({ class: "instrument-settings-area" },
+        this._instOptionsDiv,
         this._instrumentSettingsGroup,
         this._modulatorGroup);
+        // comment for ctrl+f mobile stuffs
+    public readonly _playPauseAreaMobile: HTMLDivElement = div({class: "play-pause-area2", id: "play-pause-area2", style:'flex-direction:row; position: absolute; width: 100%; display: flex;'}, 
+            div({ class: "playback-bar-controls2", style:'width: 100%; display: flex; background: var(--editor-background); z-index: 6;' },
+                this._mobilePlayButton,
+                this._mobilePauseButton,
+                this._mobilePrevBarButton,
+                this._mobileNextBarButton,
+            )
+    );
     public readonly _settingsArea: HTMLDivElement = div({ class: "settings-area noSelection" },
         div({ class: "version-area" },
             div({ style: `text-align: center; margin: 3px 0; color: ${ColorConfig.secondaryText};` },
                 this._songTitleInputBox.input,
             ),
         ),
-        div({ class: "play-pause-area" },
+        div({ class: "play-pause-area", id: "play-pause-area" },
             this._volumeBarBox,
             div({ class: "playback-bar-controls" },
                 this._playButton,
@@ -1627,8 +1717,12 @@ export class SongEditor {
         this._vibratoTypeSelect.addEventListener("change", this._whenSetVibratoType);
         this._playButton.addEventListener("click", this.togglePlay);
         this._pauseButton.addEventListener("click", this.togglePlay);
-        this._recordButton.addEventListener("click", this._toggleRecord);
-        this._stopButton.addEventListener("click", this._toggleRecord);
+        this._mobilePlayButton.addEventListener("click", this.togglePlay);
+        this._mobilePauseButton.addEventListener("click", this.togglePlay);
+         // comment for ctrl+f mobile stuffs
+        this._mobilePatternButton.addEventListener("click", this._displayPatternEditor);
+        this._mobileTrackButton.addEventListener("click", this._displayTrackEditor);
+        this._mobileSettingsButton.addEventListener("click", this._displaySettingsEditor);
         this._muteEditor._loopButtonInput.addEventListener("click", this._loopTypeEvent);
         // Start recording instead of opening context menu when control-clicking the record button on a Mac.
         this._recordButton.addEventListener("contextmenu", (event: MouseEvent) => {
@@ -1645,6 +1739,8 @@ export class SongEditor {
         });
         this._prevBarButton.addEventListener("click", this._whenPrevBarPressed);
         this._nextBarButton.addEventListener("click", this._whenNextBarPressed);
+        this._mobilePrevBarButton.addEventListener("click", this._whenPrevBarPressed);
+        this._mobileNextBarButton.addEventListener("click", this._whenNextBarPressed);
         this._volumeSlider.input.addEventListener("input", this._setVolumeSlider);
         this._zoomInButton.addEventListener("click", this._zoomIn);
         this._zoomOutButton.addEventListener("click", this._zoomOut);
@@ -1758,6 +1854,10 @@ export class SongEditor {
             const MobileButtonOption: HTMLOptionElement = <HTMLOptionElement>this._optionsMenu.querySelector("[value=displayShortcutButtons]");
             MobileButtonOption.disabled = true;
             MobileButtonOption.setAttribute("hidden", "");
+
+            const showDescOption: HTMLOptionElement = <HTMLOptionElement>this._optionsMenu.querySelector("[value=showDescription]");
+            showDescOption.disabled = true;
+            showDescOption.setAttribute("hidden", "");
         }
     }
 
@@ -2231,6 +2331,11 @@ export class SongEditor {
         this._barScrollBar.changePos(offset);
     }
 
+    // comment for ctrl+f mobile stuffs
+
+    
+    
+
     public whenUpdated = (): void => {
         const prefs: Preferences = this._doc.prefs;
         this._muteEditor.container.style.display = prefs.enableChannelMuting ? "" : "none";
@@ -2269,6 +2374,7 @@ export class SongEditor {
             document.getElementById('text-content')!.style.display = this._doc.prefs.showDescription ? "" : "none";
         
             if (!isMobile) {
+                this._playPauseAreaMobile.style.display = "none";
         if (this._doc.getFullScreen()) {
             const semitoneHeight: number = this._patternEditorRow.clientHeight / this._doc.getVisiblePitchCount();
             const targetBeatWidth: number = semitoneHeight * 5;
@@ -2392,7 +2498,52 @@ export class SongEditor {
 
         }
     } else {
-            // Default Mobile Layout with buttons and stuff //
+
+         // comment for ctrl+f mobile stuffs
+
+        const effectStuffs = document.getElementById('effectsDiv');
+        const envelopeStuffs = document.getElementById('envelopesDiv');
+
+        effectStuffs!.style.display = "none";
+        envelopeStuffs!.style.display = "none";
+
+        this._mobilePatternButton.style.display = "";
+        this._mobileTrackButton.style.display = "";
+        this._mobileSettingsButton.style.display = "";
+        this._mobileMenu.style.display = "";
+        this._instOptionsDiv.style.display = "";
+
+        const bbEditorMobile = document.getElementById('beepboxEditorContainer');
+
+        bbEditorMobile!.appendChild(this._playPauseAreaMobile)
+
+        const playPauseArea = document.getElementById('play-pause-area');
+        const textContentMobile = document.getElementById('text-content');
+        textContentMobile!.style.display = "none";
+        bbEditorMobile!.style.minHeight = "720px";
+
+        this._trackAndMuteContainer.style.maxHeight = "85vh";
+        this._settingsArea.style.gridTemplateRows = "min-content min-content min-content min-content 1fr";
+        this._settingsArea.style.gridTemplateAreas = '"version-area version-area" "play-pause-area instrument-settings-area" "play-pause-area instrument-settings-area" "menu-area instrument-settings-area" "song-settings-area instrument-settings-area"';
+        playPauseArea!.style.display = "flex";
+        playPauseArea!.style.flexDirection = "column";
+
+        const mobilePatternArea = document.getElementById('pattern-area');
+
+        mobilePatternArea!.style.maxHeight = "80vh";
+        mobilePatternArea!.style.height = "80vh";
+
+        document.body.appendChild(this._mobileMenu);
+        this._mobileMenu.appendChild(this._mobilePatternButton);
+        this._mobileMenu.appendChild(this._mobileTrackButton);
+        this._mobileMenu.appendChild(this._mobileSettingsButton );
+        this._mobilePatternButton.appendChild(this._mobileEditMenuIcon);
+        this._mobileTrackButton.appendChild(this._mobileTrackMenuIcon);
+        this._mobileSettingsButton.appendChild(this._mobileSettingsMenuIcon);
+        this._instrumentSettingsArea.appendChild(this._instOptionsDiv);
+            // Default Mobile Layout with buttons and stuff
+
+
             this._patternEditor.container.style.width = "";
             this._patternEditor.container.style.flexShrink = "";
             this._patternEditorPrev.container.style.display = "none";
@@ -3767,12 +3918,15 @@ export class SongEditor {
             }
 
             this._playButton.style.display = "none";
+            this._mobilePlayButton.style.display = "none";
             this._pauseButton.style.display = "none";
+            this._mobilePauseButton.style.display = "none";
             this._recordButton.style.display = "none";
             this._stopButton.style.display = "none";
             this._prevBarButton.style.display = "";
             this._nextBarButton.style.display = "";
             this._playButton.classList.remove("shrunk");
+            this._mobilePlayButton.classList.remove("shrunk");
             this._recordButton.classList.remove("shrunk");
             this._patternEditorRow.style.pointerEvents = "";
             this._octaveScrollBar.container.style.pointerEvents = "";
@@ -3803,15 +3957,18 @@ export class SongEditor {
                 this._songSettingsArea.style.opacity = "0.5";
             } else if (this._doc.synth.playing) {
                 this._pauseButton.style.display = "";
+                this._mobilePauseButton.style.display = "";
             } else if (this._doc.prefs.showRecordButton) {
                 this._playButton.style.display = "";
                 this._recordButton.style.display = "";
                 this._playButton.classList.add("shrunk");
+                this._mobilePlayButton.classList.add("shrunk");
                 this._recordButton.classList.add("shrunk");
             } else if (this._ctrlHeld) {
                 this._recordButton.style.display = "";
             } else {
                 this._playButton.style.display = "";
+                this._mobilePlayButton.style.display = "";
             }
         }
         window.requestAnimationFrame(this.updatePlayButton);
@@ -4698,6 +4855,61 @@ export class SongEditor {
             this._doc.performance.record();
         }
     }
+
+    // comment for ctrl+f mobile stuffs
+
+    private _displayPatternEditor = (): void => {
+        this._menuMode = 1;
+
+        if (this._menuMode == 1) {
+            this._patternArea.style.display = "";
+            this._trackArea.style.display = "none";
+            this._settingsArea.style.display = "none";
+
+            this._mobilePatternButton.style.height = "75%";
+            this._mobileTrackButton.style.height = "60%";
+            this._mobileSettingsButton.style.height = "60%";
+            this._mobileMenu.style.height = "20vh";
+            this._playPauseAreaMobile.style.display = "flex";
+            } 
+            this.whenUpdated();
+
+    }
+
+    private _displayTrackEditor = (): void => {
+        this._menuMode = 2;
+
+        if (this._menuMode == 2) { 
+            this._patternArea.style.display = "none";
+            this._trackArea.style.display = "";
+            this._settingsArea.style.display = "none";
+
+            this._mobilePatternButton.style.height = "80%";
+            this._mobileTrackButton.style.height = "100%";
+            this._mobileSettingsButton.style.height = "80%";
+            this._mobileMenu.style.height = "15vh";
+            this._playPauseAreaMobile.style.display = "none";
+           }
+           this.whenUpdated();
+    }
+
+    private _displaySettingsEditor = (): void => {
+        this._menuMode = 3;
+
+        if (this._menuMode == 3) { 
+            this._patternArea.style.display = "none";
+            this._trackArea.style.display = "none";
+            this._settingsArea.style.display = "";
+
+            this._mobilePatternButton.style.height = "80%";
+            this._mobileTrackButton.style.height = "80%";
+            this._mobileSettingsButton.style.height = "100%";
+            this._mobileMenu.style.height = "15vh";
+            this._playPauseAreaMobile.style.display = "none";
+           }
+           this.whenUpdated();
+    }
+
 
     public _animate = (): void => {
         // Need to update mods once more to clear the slider display

@@ -1297,7 +1297,7 @@ content: "";
 	.beepboxEditor select { padding: 0 2px; }
 }
 */
-.beepboxEditor button {
+.beepboxEditor button, button {
 	margin: 0;
 	position: relative;
 	height: var(--button-size);
@@ -1310,6 +1310,64 @@ content: "";
 	font-weight: inherit;
 	cursor: pointer;
 }
+.mobileEditMenuIcon {
+  content: "";
+  pointer-events: none;
+  background: currentColor;
+  mask-image: var(--edit-pencil-symbol);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-image: var(--edit-pencil-symbol);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  image-rendering: -moz-crisp-edges !important;
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: -o-crisp-edges !important;
+  image-rendering: pixelated !important;
+  image-rendering: optimizeSpeed !important;
+  width: 100%;
+  height: 100%;
+  mask-size: 50%;
+  
+}
+.mobileTrackMenuIcon {
+	content: "";
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--insert-channel-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--insert-channel-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;
+	image-rendering: -webkit-optimize-contrast !important;
+	image-rendering: -o-crisp-edges !important;
+	image-rendering: pixelated !important;
+	image-rendering: optimizeSpeed !important;
+	width: 100%;
+	height: 100%;
+	mask-size: 50%;
+  }
+.mobileSettingsMenuIcon {
+	content: "";
+	pointer-events: none;
+	background: currentColor;
+	mask-image: var(--preferences-gear-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-image: var(--preferences-gear-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: -moz-crisp-edges !important;
+	image-rendering: -webkit-optimize-contrast !important;
+	image-rendering: -o-crisp-edges !important;
+	image-rendering: pixelated !important;
+	image-rendering: optimizeSpeed !important;
+	width: 100%;
+	height: 100%;
+	mask-size: 50%;
+  }
 .beepboxEditor button:focus {
 	background: ${ColorConfig.uiWidgetFocus};
 	outline: none;
@@ -1366,6 +1424,42 @@ content: "";
 	mask-repeat: no-repeat;
 	mask-position: center;
 }
+button.mobilePlayButton::before {
+	content: "";
+	flex-shrink: 0;
+	position: absolute;
+	left: 39%;
+	top: 50%;
+	transform: translateY(-50%);
+	pointer-events: none;
+	width: var(--button-size);
+	height: var(--button-size);
+	background: currentColor;
+	-webkit-mask-image: var(--play-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	mask-image: var(--play-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+}
+button.mobilePauseButton::before {
+	content: "";
+	flex-shrink: 0;
+	position: absolute;
+	left: 39%;
+	top: 50%;
+	transform: translateY(-50%);
+	pointer-events: none;
+	width: var(--button-size);
+	height: var(--button-size);
+	background: currentColor;
+	-webkit-mask-image: var(--pause-symbol);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	mask-image: var(--pause-symbol);
+	mask-repeat: no-repeat;
+	mask-position: center;
+}
 .beepboxEditor button.recordButton::before {
 	content: "";
 	flex-shrink: 0;
@@ -1403,7 +1497,7 @@ content: "";
 	mask-position: center;
 }
 
-.beepboxEditor button.prevBarButton::before {
+.beepboxEditor button.prevBarButton::before, button.mobilePrevBarButton::before {
 	content: "";
 	flex-shrink: 0;
 	position: absolute;
@@ -1422,7 +1516,7 @@ content: "";
 	mask-position: center;
 }
 
-.beepboxEditor button.nextBarButton::before {
+.beepboxEditor button.nextBarButton::before, button.mobileNextBarButton::before {
 	content: "";
 	flex-shrink: 0;
 	position: absolute;
