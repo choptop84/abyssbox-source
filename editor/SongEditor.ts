@@ -1440,7 +1440,7 @@ export class SongEditor {
         this._instrumentSettingsGroup,
         this._modulatorGroup);
         // comment for ctrl+f mobile stuffs
-    public readonly _playPauseAreaMobile: HTMLDivElement = div({class: "play-pause-area2", id: "play-pause-area2", style:'flex-direction:row; position: absolute; width: 100%; display: flex;'}, 
+    public readonly _playPauseAreaMobile: HTMLDivElement = div({class: "play-pause-area2", id: "play-pause-area2", style:'flex-direction:row; position: absolute; width: 100%; display: flex; bottom: 16vh;'}, 
             div({ class: "playback-bar-controls2", style:'width: 100%; display: flex; background: var(--editor-background); z-index: 6;' },
                 this._mobilePlayButton,
                 this._mobilePauseButton,
@@ -2506,6 +2506,8 @@ export class SongEditor {
 
         effectStuffs!.style.display = "none";
         envelopeStuffs!.style.display = "none";
+
+        beepboxEditorContainer.style.maxHeight = "75vh";
 
         this._mobilePatternButton.style.display = "";
         this._mobileTrackButton.style.display = "";
