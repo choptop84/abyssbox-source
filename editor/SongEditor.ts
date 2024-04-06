@@ -2507,7 +2507,7 @@ export class SongEditor {
         effectStuffs!.style.display = "none";
         envelopeStuffs!.style.display = "none";
 
-        beepboxEditorContainer.style.maxHeight = "75vh";
+        beepboxEditorContainer.style.maxHeight = "80vh";
 
         this._mobilePatternButton.style.display = "";
         this._mobileTrackButton.style.display = "";
@@ -2515,7 +2515,7 @@ export class SongEditor {
         this._mobileMenu.style.display = "";
         this._instOptionsDiv.style.display = "";
 
-        beepboxEditorContainer.style.minHeight = "80vh";
+        beepboxEditorContainer.style.minHeight = "60vh";
 
         beepboxEditorContainer!.appendChild(this._playPauseAreaMobile)
 
@@ -2531,8 +2531,8 @@ export class SongEditor {
 
         const mobilePatternArea = document.getElementById('pattern-area');
 
-        mobilePatternArea!.style.maxHeight = "80vh";
-        mobilePatternArea!.style.height = "80vh";
+        mobilePatternArea!.style.maxHeight = "75vh";
+        mobilePatternArea!.style.height = "75vh";
 
         document.body.appendChild(this._mobileMenu);
         this._mobileMenu.appendChild(this._mobilePatternButton);

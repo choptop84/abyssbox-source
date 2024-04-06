@@ -47911,13 +47911,13 @@ You should be redirected to the song at:<br /><br />
                     const envelopeStuffs = document.getElementById('envelopesDiv');
                     effectStuffs.style.display = "none";
                     envelopeStuffs.style.display = "none";
-                    beepboxEditorContainer$1.style.maxHeight = "75vh";
+                    beepboxEditorContainer$1.style.maxHeight = "80vh";
                     this._mobilePatternButton.style.display = "";
                     this._mobileTrackButton.style.display = "";
                     this._mobileSettingsButton.style.display = "";
                     this._mobileMenu.style.display = "";
                     this._instOptionsDiv.style.display = "";
-                    beepboxEditorContainer$1.style.minHeight = "80vh";
+                    beepboxEditorContainer$1.style.minHeight = "60vh";
                     beepboxEditorContainer$1.appendChild(this._playPauseAreaMobile);
                     const playPauseArea = document.getElementById('play-pause-area');
                     const textContentMobile = document.getElementById('text-content');
@@ -47928,8 +47928,8 @@ You should be redirected to the song at:<br /><br />
                     playPauseArea.style.display = "flex";
                     playPauseArea.style.flexDirection = "column";
                     const mobilePatternArea = document.getElementById('pattern-area');
-                    mobilePatternArea.style.maxHeight = "80vh";
-                    mobilePatternArea.style.height = "80vh";
+                    mobilePatternArea.style.maxHeight = "75vh";
+                    mobilePatternArea.style.height = "75vh";
                     document.body.appendChild(this._mobileMenu);
                     this._mobileMenu.appendChild(this._mobilePatternButton);
                     this._mobileMenu.appendChild(this._mobileTrackButton);
