@@ -2515,16 +2515,13 @@ export class SongEditor {
         this._mobileMenu.style.display = "";
         this._instOptionsDiv.style.display = "";
 
-        beepboxEditorContainer.style.minHeight = "10vh";
-        
-        const bbEditorMobile = document.getElementById('beepboxEditorContainer');
+        beepboxEditorContainer.style.minHeight = "80vh";
 
-        bbEditorMobile!.appendChild(this._playPauseAreaMobile)
+        beepboxEditorContainer!.appendChild(this._playPauseAreaMobile)
 
         const playPauseArea = document.getElementById('play-pause-area');
         const textContentMobile = document.getElementById('text-content');
         textContentMobile!.style.display = "none";
-        bbEditorMobile!.style.minHeight = "720px";
 
         this._trackAndMuteContainer.style.maxHeight = "85vh";
         this._settingsArea.style.gridTemplateRows = "min-content min-content min-content min-content 1fr";
@@ -2534,8 +2531,8 @@ export class SongEditor {
 
         const mobilePatternArea = document.getElementById('pattern-area');
 
-        mobilePatternArea!.style.maxHeight = "75vh";
-        mobilePatternArea!.style.height = "75vh";
+        mobilePatternArea!.style.maxHeight = "80vh";
+        mobilePatternArea!.style.height = "80vh";
 
         document.body.appendChild(this._mobileMenu);
         this._mobileMenu.appendChild(this._mobilePatternButton);
