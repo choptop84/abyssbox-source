@@ -42,6 +42,7 @@ export class Preferences {
 	public notesFlashWhenPlayed: boolean;
 	public frostedGlassBackground: boolean;
 	public displayShortcutButtons: boolean;
+	public oldMobileLayout: boolean;
 
 	constructor() {
 		this.reload();
@@ -95,6 +96,7 @@ export class Preferences {
 		this.closePromptByClickoff = window.localStorage.getItem("closePromptByClickoff") != "false";
 		this.frostedGlassBackground = window.localStorage.getItem("frostedGlassBackground") == "true";
 		this.displayShortcutButtons = window.localStorage.getItem("displayShortcutButtons") != "false";
+		this.oldMobileLayout = window.localStorage.getItem("oldMobileLayout") == "true";
 	}
 	
 	public save(): void {
@@ -136,5 +138,6 @@ export class Preferences {
 
 		window.localStorage.setItem("frostedGlassBackground", this.frostedGlassBackground ? "true" : "false");
 		window.localStorage.setItem("displayShortcutButtons", this.displayShortcutButtons ? "true" : "false");
+		window.localStorage.setItem("oldMobileLayout", this.oldMobileLayout ? "true" : "false");
 	}
 }

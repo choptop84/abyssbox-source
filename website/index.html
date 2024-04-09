@@ -193,13 +193,11 @@
     <script>
         const image = localStorage.getItem('customTheme2');
         const el  = document.getElementById('secondImage');
-        const op  = document.getElementById('opacityVal');
         
         // console.log(image, el);
         if (image != null && image !== "null" && image !== "undefined") {
             el.style.backgroundImage="url(" + image + ")";
             el.style.backgroundRepeat= "repeat";
-            op.style.display = "";
         } 
     </script>
     <div id="beepboxEditorContainer">

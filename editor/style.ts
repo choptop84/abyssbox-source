@@ -1428,9 +1428,9 @@ button.mobilePlayButton::before {
 	content: "";
 	flex-shrink: 0;
 	position: absolute;
-	left: 39%;
+	left: 50%;
 	top: 50%;
-	transform: translateY(-50%);
+	transform: translate(-50%, -50%);
 	pointer-events: none;
 	width: var(--button-size);
 	height: var(--button-size);
@@ -1446,9 +1446,9 @@ button.mobilePauseButton::before {
 	content: "";
 	flex-shrink: 0;
 	position: absolute;
-	left: 39%;
+	left: 50%;
 	top: 50%;
-	transform: translateY(-50%);
+	transform: translate(-50%, -50%);
 	pointer-events: none;
 	width: var(--button-size);
 	height: var(--button-size);

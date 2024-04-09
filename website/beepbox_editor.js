@@ -16411,9 +16411,9 @@ button.mobilePlayButton::before {
 	content: "";
 	flex-shrink: 0;
 	position: absolute;
-	left: 39%;
+	left: 50%;
 	top: 50%;
-	transform: translateY(-50%);
+	transform: translate(-50%, -50%);
 	pointer-events: none;
 	width: var(--button-size);
 	height: var(--button-size);
@@ -16429,9 +16429,9 @@ button.mobilePauseButton::before {
 	content: "";
 	flex-shrink: 0;
 	position: absolute;
-	left: 39%;
+	left: 50%;
 	top: 50%;
-	transform: translateY(-50%);
+	transform: translate(-50%, -50%);
 	pointer-events: none;
 	width: var(--button-size);
 	height: var(--button-size);
@@ -47338,10 +47338,11 @@ You should be redirected to the song at:<br /><br />
             this._doc = _doc;
             this.prompt = null;
             this._menuMode = 1;
+            this._instSettingMode = 1;
             this._mobilePatternButton = button({ class: "mobilePatternButton", type: "button", style: "display:none; width: 33vw; height: 75%; left: 0; position: absolute; bottom: 0px;" });
             this._mobileTrackButton = button({ class: "mobileTrackButton", type: "button", style: "display:none; width: 34vw; height: 60%; right: 33vw; position: absolute; bottom: 0px;" });
             this._mobileSettingsButton = button({ class: "mobileSettingsButton", type: "button", style: "display:none; width: 33vw; height: 60%; right: 0; position: absolute; bottom: 0px;" });
-            this._mobileMenu = div({ class: "mobileMenu", style: "position: absolute; bottom: 0px; height: 20vh; width: 100vw; display:none; background: var(--editor-background); z-index: 5;" });
+            this._mobileMenu = div({ class: "mobileMenu", style: "position: fixed; bottom: 0px; height: 20vh; width: 100vw; display:none; background: var(--editor-background); z-index: 5;" });
             this._mobileEditMenuIcon = div({ class: "mobileEditMenuIcon" });
             this._mobileTrackMenuIcon = div({ class: "mobileTrackMenuIcon" });
             this._mobileSettingsMenuIcon = div({ class: "mobileSettingsMenuIcon" });
@@ -47377,7 +47378,7 @@ You should be redirected to the song at:<br /><br />
             this._volumeBarBox = div({ class: "playback-volume-bar", style: "height: 12px; align-self: center;" }, this._volumeBarContainer);
             this._fileMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "File"), option({ value: "new" }, "+ New Blank Song"), option({ value: "import" }, "↑ > Import Song (" + EditorConfig.ctrlSymbol + "O)"), option({ value: "export" }, "↓ > Export Song (" + EditorConfig.ctrlSymbol + "S)"), option({ value: "copyUrl" }, "⎘ Copy Song URL"), option({ value: "shareUrl" }, "⤳ Share Song URL"), option({ value: "shortenUrl" }, "… Shorten Song URL"), option({ value: "viewPlayer" }, "▶ View in Song Player"), option({ value: "copyEmbed" }, "⎘ Copy HTML Embed Code"), option({ value: "songRecovery" }, "⚠ > Recover Recent Song"));
             this._editMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Edit"), option({ value: "undo" }, "Undo (Z)"), option({ value: "redo" }, "Redo (Y)"), option({ value: "copy" }, "Copy Pattern (C)"), option({ value: "pasteNotes" }, "Paste Pattern Notes (V)"), option({ value: "pasteNumbers" }, "Paste Pattern Numbers (" + EditorConfig.ctrlSymbol + "⇧V)"), option({ value: "insertBars" }, "Insert Bar (⏎)"), option({ value: "deleteBars" }, "Delete Selected Bars (⌫)"), option({ value: "insertChannel" }, "Insert Channel (" + EditorConfig.ctrlSymbol + "⏎)"), option({ value: "deleteChannel" }, "Delete Selected Channels (" + EditorConfig.ctrlSymbol + "⌫)"), option({ value: "selectChannel" }, "Select Channel (⇧A)"), option({ value: "selectAll" }, "Select All (A)"), option({ value: "duplicatePatterns" }, "Duplicate Reused Patterns (D)"), option({ value: "transposeUp" }, "Move Notes Up (+ or ⇧+)"), option({ value: "transposeDown" }, "Move Notes Down (- or ⇧-)"), option({ value: "moveNotesSideways" }, "> Move All Notes Sideways (W)"), option({ value: "generateEuclideanRhythm" }, "> Generate Euclidean Rhythm (E)"), option({ value: "beatsPerBar" }, "> Change Beats Per Bar (B)"), option({ value: "barCount" }, "> Change Song Length (L)"), option({ value: "channelSettings" }, "> Channel Settings (Q)"), option({ value: "limiterSettings" }, "> Limiter Settings (⇧L)"), option({ value: "addExternal" }, "> Add Custom Samples (⇧Q)"));
-            this._optionsMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Preferences"), optgroup({ label: "Technical" }, option({ value: "autoPlay" }, "Auto Play on Load"), option({ value: "autoFollow" }, "Auto Follow Playhead"), option({ value: "enableNotePreview" }, "Hear Added Notes"), option({ value: "notesOutsideScale" }, "Place Notes Out of Scale"), option({ value: "setDefaultScale" }, "Set Current Scale as Default"), option({ value: "alwaysFineNoteVol" }, "Always Fine Note Volume"), option({ value: "enableChannelMuting" }, "Enable Channel Muting"), option({ value: "instrumentCopyPaste" }, "Enable Copy/Paste Buttons"), option({ value: "instrumentImportExport" }, "Enable Import/Export Buttons"), option({ value: "displayBrowserUrl" }, "Enable Song Data in URL"), option({ value: "closePromptByClickoff" }, "Close prompts on click off"), option({ value: "recordingSetup" }, "Note Recording...")), optgroup({ label: "Appearance" }, option({ value: "showFifth" }, 'Highlight "Fifth" Note'), option({ value: "notesFlashWhenPlayed" }, "Notes Flash When Played (DB2)"), option({ value: "showChannels" }, "Show All Channels"), option({ value: "showScrollBar" }, "Show Octave Scroll Bar"), option({ value: "showLetters" }, "Show Piano Keys"), option({ value: "displayVolumeBar" }, "Show Playback Volume"), option({ value: "showOscilloscope" }, "Show Oscilloscope"), option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"), option({ value: "showDescription" }, "Show Description"), option({ value: "frostedGlassBackground" }, "Use Frosted Glass Prompt Backdrops"), option({ value: "displayShortcutButtons" }, "Display Mobile Shortcut Buttons"), option({ value: "layout" }, "> Set Layout"), option({ value: "colorTheme" }, "> Set Theme")));
+            this._optionsMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Preferences"), optgroup({ label: "Technical" }, option({ value: "autoPlay" }, "Auto Play on Load"), option({ value: "autoFollow" }, "Auto Follow Playhead"), option({ value: "enableNotePreview" }, "Hear Added Notes"), option({ value: "notesOutsideScale" }, "Place Notes Out of Scale"), option({ value: "setDefaultScale" }, "Set Current Scale as Default"), option({ value: "alwaysFineNoteVol" }, "Always Fine Note Volume"), option({ value: "enableChannelMuting" }, "Enable Channel Muting"), option({ value: "instrumentCopyPaste" }, "Enable Copy/Paste Buttons"), option({ value: "instrumentImportExport" }, "Enable Import/Export Buttons"), option({ value: "displayBrowserUrl" }, "Enable Song Data in URL"), option({ value: "closePromptByClickoff" }, "Close prompts on click off"), option({ value: "oldMobileLayout" }, "Use the Old mobile layout (Reload)"), option({ value: "recordingSetup" }, "Note Recording...")), optgroup({ label: "Appearance" }, option({ value: "showFifth" }, 'Highlight "Fifth" Note'), option({ value: "notesFlashWhenPlayed" }, "Notes Flash When Played (DB2)"), option({ value: "showChannels" }, "Show All Channels"), option({ value: "showScrollBar" }, "Show Octave Scroll Bar"), option({ value: "showLetters" }, "Show Piano Keys"), option({ value: "displayVolumeBar" }, "Show Playback Volume"), option({ value: "showOscilloscope" }, "Show Oscilloscope"), option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"), option({ value: "showDescription" }, "Show Description"), option({ value: "frostedGlassBackground" }, "Use Frosted Glass Prompt Backdrops"), option({ value: "displayShortcutButtons" }, "Display Mobile Shortcut Buttons"), option({ value: "layout" }, "> Set Layout"), option({ value: "colorTheme" }, "> Set Theme")));
             this._scaleSelect = buildOptions(select(), Config.scales.map(scale => scale.name));
             this._keySelect = buildOptions(select(), Config.keys.map(key => key.name).reverse());
             this._octaveStepper = input({ type: "number", min: Config.octaveMin, max: Config.octaveMax, value: "0" });
@@ -47596,38 +47597,35 @@ You should be redirected to the song at:<br /><br />
             this._mobileInstSettingsButton = button({ class: "mobileInstButton", type: "button", style: "width:33%;", onclick: () => this._setSettingToInstrument() }, "Settings");
             this._mobileEffectsButton = button({ class: "mobileEffectsButton", type: "button", style: "width:30%;", onclick: () => this._setSettingToEffect() }, "Effects");
             this._mobileEnvelopesButton = button({ class: "mobileEnvelopesButton", type: "button", style: "width:37%;", onclick: () => this._setSettingToEnvelope() }, "Envelope");
-            this._instOptionsDiv = div({ class: "instMobileOptions", style: "display:none;" }, this._mobileInstSettingsButton, this._mobileEffectsButton, this._mobileEnvelopesButton);
+            this._instOptionsDiv = div({ class: "instMobileOptions", style: "display:none; padding-bottom: 4px;" }, this._mobileInstSettingsButton, this._mobileEffectsButton, this._mobileEnvelopesButton);
             this._setSettingToInstrument = () => {
-                const instNameStuffs = document.getElementById('instrumentSettingsText');
                 const instStuffs = document.getElementById('InstrumentDiv');
                 const effectStuffs = document.getElementById('effectsDiv');
                 const envelopeStuffs = document.getElementById('envelopesDiv');
-                instNameStuffs.style.display = "";
+                this._instSettingMode = 1;
                 instStuffs.style.display = "";
                 effectStuffs.style.display = "none";
                 envelopeStuffs.style.display = "none";
             };
             this._setSettingToEffect = () => {
-                const instNameStuffs = document.getElementById('instrumentSettingsText');
                 const instStuffs = document.getElementById('InstrumentDiv');
                 const effectStuffs = document.getElementById('effectsDiv');
                 const envelopeStuffs = document.getElementById('envelopesDiv');
-                instNameStuffs.style.display = "none";
+                this._instSettingMode = 2;
                 instStuffs.style.display = "none";
                 effectStuffs.style.display = "";
                 envelopeStuffs.style.display = "none";
             };
             this._setSettingToEnvelope = () => {
-                const instNameStuffs = document.getElementById('instrumentSettingsText');
                 const instStuffs = document.getElementById('InstrumentDiv');
                 const effectStuffs = document.getElementById('effectsDiv');
                 const envelopeStuffs = document.getElementById('envelopesDiv');
-                instNameStuffs.style.display = "none";
+                this._instSettingMode = 3;
                 instStuffs.style.display = "none";
                 effectStuffs.style.display = "none";
                 envelopeStuffs.style.display = "";
             };
-            this._instrumentSettingsGroup = div({ class: "editor-controls" }, this._instrumentSettingsTextRow, this._instrumentsButtonRow, this._instrumentTypeSelectRow, this._instrumentVolumeSliderRow, this._customInstrumentSettingsGroup);
+            this._instrumentSettingsGroup = div({ class: "editor-controls" }, this._instrumentSettingsTextRow, this._instOptionsDiv, this._instrumentsButtonRow, this._instrumentTypeSelectRow, this._instrumentVolumeSliderRow, this._customInstrumentSettingsGroup);
             this._usedPatternIndicator = SVG.path({ d: "M -6 -6 H 6 V 6 H -6 V -6 M -2 -3 L -2 -3 L -1 -4 H 1 V 4 H -1 V -1.2 L -1.2 -1 H -2 V -3 z", fill: ColorConfig.indicatorSecondary, "fill-rule": "evenodd" });
             this._usedInstrumentIndicator = SVG.path({ d: "M -6 -0.8 H -3.8 V -6 H 0.8 V 4.4 H 2.2 V -0.8 H 6 V 0.8 H 3.8 V 6 H -0.8 V -4.4 H -2.2 V 0.8 H -6 z", fill: ColorConfig.indicatorSecondary });
             this._jumpToModIndicator = SVG.svg({ style: "width: 92%; height: 1.3em; flex-shrink: 0; position: absolute;", viewBox: "0 0 200 200" }, [
@@ -47665,8 +47663,9 @@ You should be redirected to the song at:<br /><br />
             this._sampleLoadingBarContainer = div({ style: `width: 80%; height: 4px; overflow: hidden; margin-left: auto; margin-right: auto; margin-top: 0.5em; cursor: pointer; background-color: ${ColorConfig.indicatorSecondary};` }, this._sampleLoadingBar);
             this._sampleLoadingStatusContainer = div({ style: "cursor: pointer;" }, div({ style: `margin-top: 0.5em; text-align: center; color: ${ColorConfig.secondaryText};` }, "Sample Loading Status"), div({ class: "selectRow", style: "height: 6px; margin-bottom: 0.5em;" }, this._sampleLoadingBarContainer));
             this._songSettingsArea = div({ class: "song-settings-area" }, div({ class: "editor-controls" }, div({ class: "editor-song-settings" }, div({ style: "margin: 3px 0; position: relative; text-align: center; color: ${ColorConfig.secondaryText};" }, div({ class: "tip", style: "flex-shrink: 0; position:absolute; left: 0; top: 0; width: 12px; height: 12px", onclick: () => this._openPrompt("usedPattern") }, SVG.svg({ style: "flex-shrink: 0; position: absolute; left: 0; top: 0; pointer-events: none;", width: "12px", height: "12px", "margin-right": "0.5em", viewBox: "-6 -6 12 12" }, this._usedPatternIndicator)), div({ class: "tip", style: "flex-shrink: 0; position: absolute; left: 14px; top: 0; width: 12px; height: 12px", onclick: () => this._openPrompt("usedInstrument") }, SVG.svg({ style: "flex-shrink: 0; position: absolute; left: 0; top: 0; pointer-events: none;", width: "12px", height: "12px", "margin-right": "1em", viewBox: "-6 -6 12 12" }, this._usedInstrumentIndicator)), "Song Settings", div({ style: "width: 100%; left: 0; top: -1px; position:absolute; overflow-x:clip;" }, this._jumpToModIndicator))), div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("scale") }, "Scale: "), div({ class: "selectContainer" }, this._scaleSelect)), div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("key") }, "Key: "), div({ class: "selectContainer" }, this._keySelect)), div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("key_octave") }, "Octave: "), this._octaveStepper), div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("tempo") }, "Tempo: "), span({ style: "display: flex;" }, this._tempoSlider.container, this._tempoStepper)), div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("rhythm") }, "Rhythm: "), div({ class: "selectContainer" }, this._rhythmSelect)), this._sampleLoadingStatusContainer));
-            this._instrumentSettingsArea = div({ class: "instrument-settings-area" }, this._instOptionsDiv, this._instrumentSettingsGroup, this._modulatorGroup);
-            this._playPauseAreaMobile = div({ class: "play-pause-area2", id: "play-pause-area2", style: 'flex-direction:row; position: absolute; width: 100%; display: flex; bottom: 16vh;' }, div({ class: "playback-bar-controls2", style: 'width: 100%; display: flex; background: var(--editor-background); z-index: 6;' }, this._mobilePlayButton, this._mobilePauseButton, this._mobilePrevBarButton, this._mobileNextBarButton));
+            this._instrumentSettingsArea = div({ class: "instrument-settings-area" }, this._instrumentSettingsGroup, this._modulatorGroup);
+            this._playbackMobileDiv = div({ class: "playback-bar-controls2", id: 'playback-bar-controls2', style: 'width: 100%; display: flex; background: var(--editor-background); z-index: 6;' }, this._mobilePlayButton, this._mobilePauseButton, this._mobilePrevBarButton, this._mobileNextBarButton);
+            this._playPauseAreaMobile = div({ class: "play-pause-area2", id: "play-pause-area2", style: 'flex-direction:row; position: absolute; width: 100%; display: flex; bottom: 16vh;' }, this._playbackMobileDiv);
             this._settingsArea = div({ class: "settings-area noSelection" }, div({ class: "version-area" }, div({ style: `text-align: center; margin: 3px 0; color: ${ColorConfig.secondaryText};` }, this._songTitleInputBox.input)), div({ class: "play-pause-area", id: "play-pause-area" }, this._volumeBarBox, div({ class: "playback-bar-controls" }, this._playButton, this._pauseButton, this._recordButton, this._stopButton, this._prevBarButton, this._nextBarButton), div({ class: "playback-volume-controls" }, span({ class: "volume-speaker" }), this._volumeSlider.container), this._globalOscscopeContainer), this._menuArea, this._songSettingsArea, this._instrumentSettingsArea);
             this.mainLayer = div({ class: "beepboxEditor", tabIndex: "0" }, this._patternArea, this._trackArea, this._settingsArea, this._promptContainer);
             this._wasPlaying = false;
@@ -47907,29 +47906,254 @@ You should be redirected to the song at:<br /><br />
                     }
                 }
                 else {
-                    const effectStuffs = document.getElementById('effectsDiv');
-                    const envelopeStuffs = document.getElementById('envelopesDiv');
-                    effectStuffs.style.display = "none";
-                    envelopeStuffs.style.display = "none";
-                    beepboxEditorContainer$1.style.maxHeight = "80vh";
-                    this._mobilePatternButton.style.display = "";
-                    this._mobileTrackButton.style.display = "";
-                    this._mobileSettingsButton.style.display = "";
-                    this._mobileMenu.style.display = "";
-                    this._instOptionsDiv.style.display = "";
-                    beepboxEditorContainer$1.style.minHeight = "60vh";
-                    beepboxEditorContainer$1.appendChild(this._playPauseAreaMobile);
-                    const playPauseArea = document.getElementById('play-pause-area');
-                    const textContentMobile = document.getElementById('text-content');
-                    textContentMobile.style.display = "none";
-                    this._trackAndMuteContainer.style.maxHeight = "85vh";
-                    this._settingsArea.style.gridTemplateRows = "min-content min-content min-content min-content 1fr";
-                    this._settingsArea.style.gridTemplateAreas = '"version-area version-area" "play-pause-area instrument-settings-area" "play-pause-area instrument-settings-area" "menu-area instrument-settings-area" "song-settings-area instrument-settings-area"';
-                    playPauseArea.style.display = "flex";
-                    playPauseArea.style.flexDirection = "column";
-                    const mobilePatternArea = document.getElementById('pattern-area');
-                    mobilePatternArea.style.maxHeight = "75vh";
-                    mobilePatternArea.style.height = "70vh";
+                    if (this._doc.prefs.oldMobileLayout != true) {
+                        const effectStuffs = document.getElementById('effectsDiv');
+                        const envelopeStuffs = document.getElementById('envelopesDiv');
+                        const instStuffs = document.getElementById('InstrumentDiv');
+                        if (this._instSettingMode == 1) {
+                            instStuffs.style.display = "";
+                            effectStuffs.style.display = "none";
+                            envelopeStuffs.style.display = "none";
+                            console.log("Instrument Settings");
+                        }
+                        else if (this._instSettingMode == 2) {
+                            instStuffs.style.display = "none";
+                            effectStuffs.style.display = "";
+                            envelopeStuffs.style.display = "none";
+                            console.log("Effects Settings");
+                        }
+                        else if (this._instSettingMode == 3) {
+                            instStuffs.style.display = "none";
+                            effectStuffs.style.display = "none";
+                            envelopeStuffs.style.display = "";
+                            console.log("Envelopes Settings");
+                        }
+                        console.log("Current Setting: " + this._instSettingMode);
+                        beepboxEditorContainer$1.style.borderImageSource = "";
+                        this._settingsArea.style.display = "none";
+                        this._trackArea.style.display = "none";
+                        this._patternArea.style.display = "";
+                        this.mainLayer.style.display = "unset";
+                        if (window.innerWidth > window.innerHeight) {
+                            this._mobileMenu.style.right = "0px";
+                            this._mobileMenu.style.left = "";
+                            this._mobileMenu.style.height = "100vh";
+                            this._mobileMenu.style.width = "15vw";
+                            this._patternArea.style.width = "75vw";
+                            this._patternArea.style.height = "100vh";
+                            this._patternArea.style.maxHeight = "100vh";
+                            beepboxEditorContainer$1.style.maxWidth = "100vw";
+                            this._playPauseAreaMobile.style.height = "100vh";
+                            this._playPauseAreaMobile.style.width = "4vw";
+                            this._playPauseAreaMobile.style.right = "16vw";
+                            this._playPauseAreaMobile.style.bottom = "0";
+                            this._playPauseAreaMobile.style.left = "";
+                            this._playbackMobileDiv.style.flexDirection = "column";
+                            this._mobilePlayButton.style.width = "100%";
+                            this._mobilePauseButton.style.width = "100%";
+                            this._mobileNextBarButton.style.width = "100%";
+                            this._mobilePrevBarButton.style.width = "100%";
+                            this._mobilePlayButton.style.height = "33vh";
+                            this._mobilePauseButton.style.height = "33vh";
+                            this._mobileNextBarButton.style.height = "34vh";
+                            this._mobilePrevBarButton.style.height = "33vh";
+                            this._settingsArea.style.gridTemplateColumns = "33% 34% 33%";
+                            this._settingsArea.style.gridTemplateRows = "min-content min-content min-content min-content 1fr";
+                            this._mobilePatternButton.style.right = "0";
+                            this._mobilePatternButton.style.bottom = "";
+                            this._mobileTrackButton.style.right = "0";
+                            this._mobileTrackButton.style.bottom = "";
+                            this._mobileSettingsButton.style.right = "0";
+                            this._mobileSettingsButton.style.bottom = "";
+                            this._settingsArea.style.gridTemplateAreas = '"version-area version-area version-area" "play-pause-area menu-area instrument-settings-area" "play-pause-area menu-area instrument-settings-area" "song-settings-area song-settings-area instrument-settings-area" "song-settings-area song-settings-area instrument-settings-area"';
+                            this._settingsArea.style.width = "78vw";
+                            this._trackArea.style.width = "78vw";
+                            if (this._menuMode == 1) {
+                                this._patternArea.style.display = "";
+                                this._trackArea.style.display = "none";
+                                this._settingsArea.style.display = "none";
+                                this._mobilePatternButton.style.width = "100%";
+                                this._mobileTrackButton.style.width = "80%";
+                                this._mobileSettingsButton.style.width = "80%";
+                                this._mobilePatternButton.style.height = "33vh";
+                                this._mobileTrackButton.style.height = "34vh";
+                                this._mobileSettingsButton.style.height = "33vh";
+                                this._mobilePatternButton.style.left = "";
+                                this._mobileTrackButton.style.left = "";
+                                this._mobilePatternButton.style.top = "0";
+                                this._mobileTrackButton.style.top = "33vh";
+                                this._mobileSettingsButton.style.bottom = "0";
+                                this._mobileMenu.style.width = "15vw";
+                                this._mobileMenu.style.height = "100vh";
+                                this._mobileMenu.style.right = "0";
+                                this._playPauseAreaMobile.style.display = "flex";
+                            }
+                            if (this._menuMode == 2) {
+                                this._patternArea.style.display = "none";
+                                this._trackArea.style.display = "";
+                                this._settingsArea.style.display = "none";
+                                this._mobilePatternButton.style.width = "80%";
+                                this._mobileTrackButton.style.width = "100%";
+                                this._mobileSettingsButton.style.width = "80%";
+                                this._mobilePatternButton.style.height = "33vh";
+                                this._mobileTrackButton.style.height = "34vh";
+                                this._mobileSettingsButton.style.height = "33vh";
+                                this._mobilePatternButton.style.top = "0";
+                                this._mobileTrackButton.style.top = "33vh";
+                                this._mobileSettingsButton.style.bottom = "0";
+                                this._mobileTrackButton.style.left = "";
+                                this._mobilePatternButton.style.left = "";
+                                this._mobileMenu.style.width = "15vw";
+                                this._mobileMenu.style.height = "100vh";
+                                this._mobileMenu.style.right = "0";
+                                this._playPauseAreaMobile.style.display = "none";
+                            }
+                            if (this._menuMode == 3) {
+                                this._patternArea.style.display = "none";
+                                this._trackArea.style.display = "none";
+                                this._settingsArea.style.display = "";
+                                this._mobilePatternButton.style.width = "80%";
+                                this._mobileTrackButton.style.width = "80%";
+                                this._mobileSettingsButton.style.width = "100%";
+                                this._mobilePatternButton.style.height = "33vh";
+                                this._mobileTrackButton.style.height = "34vh";
+                                this._mobileSettingsButton.style.height = "33vh";
+                                this._mobilePatternButton.style.top = "0";
+                                this._mobileTrackButton.style.top = "33vh";
+                                this._mobileSettingsButton.style.bottom = "0";
+                                this._mobileTrackButton.style.left = "";
+                                this._mobilePatternButton.style.left = "";
+                                this._mobileMenu.style.width = "15vw";
+                                this._mobileMenu.style.height = "100vh";
+                                this._mobileMenu.style.right = "0";
+                                this._playPauseAreaMobile.style.display = "none";
+                            }
+                        }
+                        else if (window.innerWidth < window.innerHeight) {
+                            this._playPauseAreaMobile.style.height = "";
+                            this._playPauseAreaMobile.style.width = "100vw";
+                            this._playPauseAreaMobile.style.bottom = "16vh";
+                            this._playPauseAreaMobile.style.left = "0";
+                            this._playbackMobileDiv.style.flexDirection = "row";
+                            this._mobilePlayButton.style.height = "";
+                            this._mobilePauseButton.style.height = "";
+                            this._mobileNextBarButton.style.height = "";
+                            this._mobilePrevBarButton.style.height = "";
+                            this._mobilePlayButton.style.width = "33vh";
+                            this._mobilePauseButton.style.width = "33vh";
+                            this._mobileNextBarButton.style.width = "34vh";
+                            this._mobilePrevBarButton.style.width = "33vh";
+                            beepboxEditorContainer$1.style.maxWidth = "710px";
+                            this._settingsArea.style.gridTemplateRows = "min-content min-content min-content min-content 1fr";
+                            this._settingsArea.style.gridTemplateAreas = '"version-area version-area" "play-pause-area instrument-settings-area" "play-pause-area instrument-settings-area" "menu-area instrument-settings-area" "song-settings-area instrument-settings-area"';
+                            this._mobileMenu.style.bottom = "0px";
+                            this._mobileMenu.style.width = "100vw";
+                            this._mobileMenu.style.height = "20vh";
+                            this._settingsArea.style.width = "98vw";
+                            this._patternArea.style.width = "91vw";
+                            this._trackArea.style.width = "98vw";
+                            this._mobileMenu.style.right = "";
+                            this._mobileMenu.style.left = "";
+                            this._mobileMenu.style.height = "100vh";
+                            this._mobileMenu.style.width = "15vw";
+                            beepboxEditorContainer$1.style.maxWidth = "100vw";
+                            this._settingsArea.style.gridTemplateColumns = "50% 50%";
+                            this._mobilePatternButton.style.bottom = "0";
+                            this._mobileTrackButton.style.bottom = "0";
+                            this._mobileSettingsButton.style.bottom = "0";
+                            if (this._menuMode == 1) {
+                                this._patternArea.style.width = "91vw";
+                                this._patternArea.style.display = "";
+                                this._trackArea.style.display = "none";
+                                this._settingsArea.style.display = "none";
+                                this._mobilePatternButton.style.height = "100%";
+                                this._mobileTrackButton.style.height = "80%";
+                                this._mobileSettingsButton.style.height = "80%";
+                                this._mobilePatternButton.style.width = "33vw";
+                                this._mobileTrackButton.style.width = "34vw";
+                                this._mobileSettingsButton.style.width = "33vw";
+                                this._mobilePatternButton.style.top = "";
+                                this._mobilePatternButton.style.left = "0";
+                                this._mobileTrackButton.style.left = "33vw";
+                                this._mobileSettingsButton.style.right = "0";
+                                this._mobilePatternButton.style.bottom = "0";
+                                this._mobileTrackButton.style.bottom = "0";
+                                this._mobileTrackButton.style.top = "";
+                                this._mobileTrackButton.style.right = "";
+                                this._mobileSettingsButton.style.bottom = "0";
+                                this._mobileMenu.style.height = "15vh";
+                                this._mobileMenu.style.width = "100vw";
+                                this._mobileMenu.style.right = "";
+                                this._playPauseAreaMobile.style.display = "flex";
+                            }
+                            else if (this._menuMode == 2) {
+                                this._trackArea.style.width = "100vw";
+                                this._patternArea.style.display = "none";
+                                this._trackArea.style.display = "";
+                                this._settingsArea.style.display = "none";
+                                this._mobilePatternButton.style.height = "80%";
+                                this._mobileTrackButton.style.height = "100%";
+                                this._mobileSettingsButton.style.height = "80%";
+                                this._mobilePatternButton.style.width = "33vw";
+                                this._mobileTrackButton.style.width = "34vw";
+                                this._mobileSettingsButton.style.width = "33vw";
+                                this._mobilePatternButton.style.top = "";
+                                this._mobilePatternButton.style.left = "0";
+                                this._mobileTrackButton.style.left = "33vw";
+                                this._mobileSettingsButton.style.right = "0";
+                                this._mobilePatternButton.style.bottom = "0";
+                                this._mobileTrackButton.style.bottom = "0";
+                                this._mobileTrackButton.style.top = "";
+                                this._mobileTrackButton.style.right = "";
+                                this._mobileSettingsButton.style.bottom = "0";
+                                this._mobileMenu.style.height = "15vh";
+                                this._mobileMenu.style.width = "100vw";
+                                this._playPauseAreaMobile.style.display = "none";
+                            }
+                            else if (this._menuMode == 3) {
+                                this._settingsArea.style.width = "96vw";
+                                this._patternArea.style.display = "none";
+                                this._trackArea.style.display = "none";
+                                this._settingsArea.style.display = "";
+                                this._mobilePatternButton.style.height = "80%";
+                                this._mobileTrackButton.style.height = "80%";
+                                this._mobileSettingsButton.style.height = "100%";
+                                this._mobilePatternButton.style.width = "33vw";
+                                this._mobileTrackButton.style.width = "34vw";
+                                this._mobileSettingsButton.style.width = "33vw";
+                                this._mobilePatternButton.style.top = "";
+                                this._mobilePatternButton.style.left = "0";
+                                this._mobileTrackButton.style.left = "33vw";
+                                this._mobileSettingsButton.style.right = "0";
+                                this._mobilePatternButton.style.bottom = "0";
+                                this._mobileTrackButton.style.bottom = "0";
+                                this._mobileTrackButton.style.top = "";
+                                this._mobileTrackButton.style.right = "";
+                                this._mobileSettingsButton.style.bottom = "0";
+                                this._mobileMenu.style.height = "15vh";
+                                this._mobileMenu.style.width = "100vw";
+                                this._playPauseAreaMobile.style.display = "none";
+                            }
+                            this._patternArea.style.maxHeight = "75vh";
+                            this._patternArea.style.height = "70vh";
+                        }
+                        effectStuffs.style.display = "none";
+                        envelopeStuffs.style.display = "none";
+                        this.mainLayer.style.minHeight = "80vh";
+                        beepboxEditorContainer$1.style.maxHeight = "80vh";
+                        this._mobilePatternButton.style.display = "";
+                        this._mobileTrackButton.style.display = "";
+                        this._mobileSettingsButton.style.display = "";
+                        this._mobileMenu.style.display = "";
+                        this._instOptionsDiv.style.display = "";
+                        beepboxEditorContainer$1.appendChild(this._playPauseAreaMobile);
+                        const playPauseArea = document.getElementById('play-pause-area');
+                        const textContentMobile = document.getElementById('text-content');
+                        textContentMobile.style.display = "none";
+                        this._trackAndMuteContainer.style.maxHeight = "85vh";
+                        playPauseArea.style.display = "flex";
+                        playPauseArea.style.flexDirection = "column";
+                    }
                     document.body.appendChild(this._mobileMenu);
                     this._mobileMenu.appendChild(this._mobilePatternButton);
                     this._mobileMenu.appendChild(this._mobileTrackButton);
@@ -47937,7 +48161,6 @@ You should be redirected to the song at:<br /><br />
                     this._mobilePatternButton.appendChild(this._mobileEditMenuIcon);
                     this._mobileTrackButton.appendChild(this._mobileTrackMenuIcon);
                     this._mobileSettingsButton.appendChild(this._mobileSettingsMenuIcon);
-                    this._instrumentSettingsArea.appendChild(this._instOptionsDiv);
                     this._patternEditor.container.style.width = "";
                     this._patternEditor.container.style.flexShrink = "";
                     this._patternEditorPrev.container.style.display = "none";
@@ -47997,6 +48220,7 @@ You should be redirected to the song at:<br /><br />
                     (prefs.instrumentImportExport ? textOnIcon : textOffIcon) + "Enable Import/Export Buttons",
                     (prefs.displayBrowserUrl ? textOnIcon : textOffIcon) + "Enable Song Data in URL",
                     (prefs.closePromptByClickoff ? textOnIcon : textOffIcon) + "Close Prompts on Click Off",
+                    (prefs.oldMobileLayout ? textOnIcon : textOffIcon) + "Use the Old mobile layout (Reload)",
                     "> Note Recording",
                     "Appearance",
                     (prefs.showFifth ? textOnIcon : textOffIcon) + 'Highlight "Fifth" Note',
@@ -48014,16 +48238,16 @@ You should be redirected to the song at:<br /><br />
                     "> Set Theme",
                 ];
                 const technicalOptionGroup = this._optionsMenu.children[1];
-                for (let i = 0; i < 12; i++) {
+                for (let i = 0; i < technicalOptionGroup.children.length; i++) {
                     const option = technicalOptionGroup.children[i];
                     if (option.textContent != optionCommands[i + 1])
                         option.textContent = optionCommands[i + 1];
                 }
                 const appearanceOptionGroup = this._optionsMenu.children[2];
-                for (let i = 0; i < 13; i++) {
+                for (let i = 0; i < appearanceOptionGroup.children.length; i++) {
                     const option = appearanceOptionGroup.children[i];
-                    if (option.textContent != optionCommands[i + 14])
-                        option.textContent = optionCommands[i + 14];
+                    if (option.textContent != optionCommands[i + (technicalOptionGroup.children.length + 2)])
+                        option.textContent = optionCommands[i + (technicalOptionGroup.children.length + 2)];
                 }
                 const channel = this._doc.song.channels[this._doc.channel];
                 const instrumentIndex = this._doc.getCurrentInstrument();
@@ -49850,13 +50074,47 @@ You should be redirected to the song at:<br /><br />
                     this._patternArea.style.display = "";
                     this._trackArea.style.display = "none";
                     this._settingsArea.style.display = "none";
-                    this._mobilePatternButton.style.height = "75%";
-                    this._mobileTrackButton.style.height = "60%";
-                    this._mobileSettingsButton.style.height = "60%";
-                    this._mobileMenu.style.height = "20vh";
-                    this._playPauseAreaMobile.style.display = "flex";
+                    this.whenUpdated();
+                    if (window.innerWidth < window.innerHeight) {
+                        this._mobilePatternButton.style.height = "100%";
+                        this._mobileTrackButton.style.height = "80%";
+                        this._mobileSettingsButton.style.height = "80%";
+                        this._mobilePatternButton.style.width = "33vw";
+                        this._mobileTrackButton.style.width = "34vw";
+                        this._mobileSettingsButton.style.width = "33vw";
+                        this._mobilePatternButton.style.top = "";
+                        this._mobilePatternButton.style.left = "0";
+                        this._mobileTrackButton.style.left = "33vw";
+                        this._mobileSettingsButton.style.right = "0";
+                        this._mobilePatternButton.style.bottom = "0";
+                        this._mobileTrackButton.style.bottom = "0";
+                        this._mobileTrackButton.style.top = "";
+                        this._mobileTrackButton.style.right = "33vw";
+                        this._mobileSettingsButton.style.bottom = "0";
+                        this._mobileMenu.style.height = "15vh";
+                        this._mobileMenu.style.width = "100vw";
+                        this._mobileMenu.style.right = "";
+                        this._patternArea.style.width = "98vw";
+                        this._playPauseAreaMobile.style.display = "flex";
+                    }
+                    else if (window.innerWidth > window.innerHeight) {
+                        this._mobilePatternButton.style.width = "100%";
+                        this._mobileTrackButton.style.width = "80%";
+                        this._mobileSettingsButton.style.width = "80%";
+                        this._mobilePatternButton.style.height = "33vh";
+                        this._mobileTrackButton.style.height = "34vh";
+                        this._mobileSettingsButton.style.height = "33vh";
+                        this._mobilePatternButton.style.left = "";
+                        this._mobileTrackButton.style.left = "";
+                        this._mobilePatternButton.style.top = "0";
+                        this._mobileTrackButton.style.top = "33vh";
+                        this._mobileSettingsButton.style.bottom = "0";
+                        this._mobileMenu.style.width = "15vw";
+                        this._mobileMenu.style.height = "100vh";
+                        this._mobileMenu.style.right = "0";
+                        this._playPauseAreaMobile.style.display = "flex";
+                    }
                 }
-                this.whenUpdated();
             };
             this._displayTrackEditor = () => {
                 this._menuMode = 2;
@@ -49864,27 +50122,114 @@ You should be redirected to the song at:<br /><br />
                     this._patternArea.style.display = "none";
                     this._trackArea.style.display = "";
                     this._settingsArea.style.display = "none";
-                    this._mobilePatternButton.style.height = "80%";
-                    this._mobileTrackButton.style.height = "100%";
-                    this._mobileSettingsButton.style.height = "80%";
-                    this._mobileMenu.style.height = "15vh";
-                    this._playPauseAreaMobile.style.display = "none";
+                    this.whenUpdated();
+                    if (window.innerWidth < window.innerHeight) {
+                        this._mobilePatternButton.style.height = "80%";
+                        this._mobileTrackButton.style.height = "100%";
+                        this._mobileSettingsButton.style.height = "80%";
+                        this._mobilePatternButton.style.width = "33vw";
+                        this._mobileTrackButton.style.width = "34vw";
+                        this._mobileSettingsButton.style.width = "33vw";
+                        this._mobilePatternButton.style.top = "";
+                        this._mobilePatternButton.style.left = "0";
+                        this._mobileTrackButton.style.left = "33vw";
+                        this._mobileSettingsButton.style.right = "0";
+                        this._mobilePatternButton.style.bottom = "0";
+                        this._mobileTrackButton.style.left = "";
+                        this._mobileTrackButton.style.top = "";
+                        this._mobileTrackButton.style.right = "33vw";
+                        this._mobileTrackButton.style.bottom = "0";
+                        this._mobileSettingsButton.style.bottom = "0";
+                        this._patternArea.style.width = "98vw";
+                        this._mobileMenu.style.height = "15vh";
+                        this._mobileMenu.style.width = "100vw";
+                        this._playPauseAreaMobile.style.display = "none";
+                    }
+                    else if (window.innerWidth > window.innerHeight) {
+                        this._mobilePatternButton.style.width = "80%";
+                        this._mobileTrackButton.style.width = "100%";
+                        this._mobileSettingsButton.style.width = "80%";
+                        this._mobilePatternButton.style.height = "33vh";
+                        this._mobileTrackButton.style.height = "34vh";
+                        this._mobileSettingsButton.style.height = "33vh";
+                        this._mobilePatternButton.style.top = "0";
+                        this._mobileTrackButton.style.top = "33vh";
+                        this._mobileSettingsButton.style.bottom = "0";
+                        this._mobileTrackButton.style.left = "";
+                        this._mobilePatternButton.style.left = "";
+                        this._mobileMenu.style.width = "15vw";
+                        this._mobileMenu.style.height = "100vh";
+                        this._mobileMenu.style.right = "0";
+                        this._playPauseAreaMobile.style.display = "none";
+                    }
                 }
-                this.whenUpdated();
             };
             this._displaySettingsEditor = () => {
                 this._menuMode = 3;
+                const effectStuffs = document.getElementById('effectsDiv');
+                const envelopeStuffs = document.getElementById('envelopesDiv');
+                const instStuffs = document.getElementById('InstrumentDiv');
                 if (this._menuMode == 3) {
                     this._patternArea.style.display = "none";
                     this._trackArea.style.display = "none";
                     this._settingsArea.style.display = "";
-                    this._mobilePatternButton.style.height = "80%";
-                    this._mobileTrackButton.style.height = "80%";
-                    this._mobileSettingsButton.style.height = "100%";
-                    this._mobileMenu.style.height = "15vh";
-                    this._playPauseAreaMobile.style.display = "none";
+                    this.whenUpdated();
+                    if (this._instSettingMode == 1) {
+                        instStuffs.style.display = "";
+                        effectStuffs.style.display = "none";
+                        envelopeStuffs.style.display = "none";
+                        console.log("Instrument Settings");
+                    }
+                    else if (this._instSettingMode == 2) {
+                        instStuffs.style.display = "none";
+                        effectStuffs.style.display = "";
+                        envelopeStuffs.style.display = "none";
+                        console.log("Effects Settings");
+                    }
+                    else if (this._instSettingMode == 3) {
+                        instStuffs.style.display = "none";
+                        effectStuffs.style.display = "none";
+                        envelopeStuffs.style.display = "";
+                        console.log("Envelopes Settings");
+                    }
+                    if (window.innerWidth < window.innerHeight) {
+                        this._mobilePatternButton.style.height = "80%";
+                        this._mobileTrackButton.style.height = "80%";
+                        this._mobileSettingsButton.style.height = "100%";
+                        this._mobilePatternButton.style.width = "33vw";
+                        this._mobileTrackButton.style.width = "34vw";
+                        this._mobileSettingsButton.style.width = "33vw";
+                        this._mobilePatternButton.style.top = "";
+                        this._mobilePatternButton.style.left = "0";
+                        this._mobileSettingsButton.style.right = "0";
+                        this._mobilePatternButton.style.bottom = "0";
+                        this._mobileTrackButton.style.top = "";
+                        this._mobileTrackButton.style.right = "33vw";
+                        this._mobileTrackButton.style.bottom = "0";
+                        this._mobileSettingsButton.style.bottom = "0";
+                        this._patternArea.style.width = "98vw";
+                        this._mobileMenu.style.height = "15vh";
+                        this._mobileMenu.style.width = "100vw";
+                        this._playPauseAreaMobile.style.display = "none";
+                    }
+                    else if (window.innerWidth > window.innerHeight) {
+                        this._mobilePatternButton.style.width = "80%";
+                        this._mobileTrackButton.style.width = "80%";
+                        this._mobileSettingsButton.style.width = "100%";
+                        this._mobilePatternButton.style.height = "33vh";
+                        this._mobileTrackButton.style.height = "34vh";
+                        this._mobileSettingsButton.style.height = "33vh";
+                        this._mobilePatternButton.style.top = "0";
+                        this._mobileTrackButton.style.top = "33vh";
+                        this._mobileSettingsButton.style.bottom = "0";
+                        this._mobileTrackButton.style.left = "";
+                        this._mobilePatternButton.style.left = "";
+                        this._mobileMenu.style.width = "15vw";
+                        this._mobileMenu.style.height = "100vh";
+                        this._mobileMenu.style.right = "0";
+                        this._playPauseAreaMobile.style.display = "none";
+                    }
                 }
-                this.whenUpdated();
             };
             this._animate = () => {
                 this._modSliderUpdate();
@@ -50438,6 +50783,10 @@ You should be redirected to the song at:<br /><br />
                     case "displayShortcutButtons":
                         this._doc.prefs.displayShortcutButtons = !this._doc.prefs.displayShortcutButtons;
                         break;
+                    case "oldMobileLayout":
+                        this._doc.prefs.oldMobileLayout = !this._doc.prefs.oldMobileLayout;
+                        location.reload();
+                        break;
                 }
                 this._optionsMenu.selectedIndex = 0;
                 this._doc.notifier.changed();
@@ -50713,6 +51062,11 @@ You should be redirected to the song at:<br /><br />
                 autoPlayOption.disabled = true;
                 autoPlayOption.setAttribute("hidden", "");
             }
+            else {
+                const oldMobileLayoutOption = this._optionsMenu.querySelector("[value=oldMobileLayout]");
+                oldMobileLayoutOption.disabled = true;
+                oldMobileLayoutOption.setAttribute("hidden", "");
+            }
             if (window.screen.availWidth < 710) {
                 const layoutOption = this._optionsMenu.querySelector("[value=layout]");
                 layoutOption.disabled = true;
@@ -50720,9 +51074,11 @@ You should be redirected to the song at:<br /><br />
                 const MobileButtonOption = this._optionsMenu.querySelector("[value=displayShortcutButtons]");
                 MobileButtonOption.disabled = true;
                 MobileButtonOption.setAttribute("hidden", "");
-                const showDescOption = this._optionsMenu.querySelector("[value=showDescription]");
-                showDescOption.disabled = true;
-                showDescOption.setAttribute("hidden", "");
+                if (this._doc.prefs.oldMobileLayout == false) {
+                    const showDescOption = this._optionsMenu.querySelector("[value=showDescription]");
+                    showDescOption.disabled = true;
+                    showDescOption.setAttribute("hidden", "");
+                }
             }
         }
         _updateSampleLoadingBar(_e) {
@@ -52651,6 +53007,7 @@ You should be redirected to the song at:<br /><br />
             this.closePromptByClickoff = window.localStorage.getItem("closePromptByClickoff") != "false";
             this.frostedGlassBackground = window.localStorage.getItem("frostedGlassBackground") == "true";
             this.displayShortcutButtons = window.localStorage.getItem("displayShortcutButtons") != "false";
+            this.oldMobileLayout = window.localStorage.getItem("oldMobileLayout") == "true";
         }
         save() {
             window.localStorage.setItem("autoPlay", this.autoPlay ? "true" : "false");
@@ -52690,6 +53047,7 @@ You should be redirected to the song at:<br /><br />
             window.localStorage.setItem("closePromptByClickoff", this.closePromptByClickoff ? "true" : "false");
             window.localStorage.setItem("frostedGlassBackground", this.frostedGlassBackground ? "true" : "false");
             window.localStorage.setItem("displayShortcutButtons", this.displayShortcutButtons ? "true" : "false");
+            window.localStorage.setItem("oldMobileLayout", this.oldMobileLayout ? "true" : "false");
         }
     }
     Preferences.defaultVisibleOctaves = 3;

@@ -60,6 +60,8 @@ const { button, div, input, select, span, optgroup, option, canvas } = HTML;
 const beepboxEditorContainer: HTMLElement = document.getElementById("beepboxEditorContainer")!;
 
 
+
+
 function buildOptions(menu: HTMLSelectElement, items: ReadonlyArray<string | number>): HTMLSelectElement {
     for (let index: number = 0; index < items.length; index++) {
         menu.appendChild(option({ value: index }, items[index]));
@@ -728,12 +730,13 @@ export class SongEditor {
     public prompt: Prompt | null = null;
 
     private _menuMode: number = 1;
+    private _instSettingMode: number = 1;
 
      // comment for ctrl+f mobile stuffs
     private readonly _mobilePatternButton: HTMLButtonElement = button({class: "mobilePatternButton", type:"button", style:"display:none; width: 33vw; height: 75%; left: 0; position: absolute; bottom: 0px;"});
     private readonly _mobileTrackButton: HTMLButtonElement = button({class: "mobileTrackButton", type:"button", style:"display:none; width: 34vw; height: 60%; right: 33vw; position: absolute; bottom: 0px;"});
     private readonly _mobileSettingsButton: HTMLButtonElement = button({class: "mobileSettingsButton", type:"button", style:"display:none; width: 33vw; height: 60%; right: 0; position: absolute; bottom: 0px;"});
-    public _mobileMenu: HTMLDivElement = div({class:"mobileMenu", style:"position: absolute; bottom: 0px; height: 20vh; width: 100vw; display:none; background: var(--editor-background); z-index: 5;"});
+    public _mobileMenu: HTMLDivElement = div({class:"mobileMenu", style:"position: fixed; bottom: 0px; height: 20vh; width: 100vw; display:none; background: var(--editor-background); z-index: 5;"});
     private readonly _mobileEditMenuIcon: HTMLDivElement = div({class:"mobileEditMenuIcon"});
     private readonly _mobileTrackMenuIcon: HTMLDivElement = div({class:"mobileTrackMenuIcon"});
     private readonly _mobileSettingsMenuIcon: HTMLDivElement = div({class:"mobileSettingsMenuIcon"});
@@ -819,7 +822,7 @@ export class SongEditor {
         option({ value: "limiterSettings" }, "> Limiter Settings (⇧L)"),
 	option({ value: "addExternal" }, "> Add Custom Samples (⇧Q)"),
     );
-    private readonly _optionsMenu: HTMLSelectElement = select({ style: "width: 100%;" },
+    private readonly _optionsMenu: HTMLSelectElement = select({ style: "width: 100%;" }, // ctrl+f for: preferences stuff
         option({ selected: true, disabled: true, hidden: false }, "Preferences"), // todo: "hidden" should be true but looks wrong on mac chrome, adds checkmark next to first visible option even though it's not selected. :(
             optgroup({ label: "Technical" },
             option({ value: "autoPlay" }, "Auto Play on Load"),
@@ -833,6 +836,7 @@ export class SongEditor {
             option({ value: "instrumentImportExport" }, "Enable Import/Export Buttons"),
             option({ value: "displayBrowserUrl" }, "Enable Song Data in URL"),
             option({ value: "closePromptByClickoff" }, "Close prompts on click off"),
+            option({ value: "oldMobileLayout" }, "Use the Old mobile layout (Reload)"),
             option({ value: "recordingSetup" }, "Note Recording..."),
             ),
             optgroup({ label: "Appearance" },
@@ -1249,19 +1253,19 @@ export class SongEditor {
     private readonly _mobileInstSettingsButton: HTMLButtonElement = button({class:"mobileInstButton", type:"button", style:"width:33%;", onclick: () => this._setSettingToInstrument()}, "Settings");
     private readonly _mobileEffectsButton: HTMLButtonElement = button({class:"mobileEffectsButton", type:"button", style:"width:30%;", onclick: () => this._setSettingToEffect()}, "Effects" );
     private readonly _mobileEnvelopesButton: HTMLButtonElement = button({class:"mobileEnvelopesButton", type:"button", style:"width:37%;", onclick: () => this._setSettingToEnvelope()}, "Envelope");
-    private readonly _instOptionsDiv: HTMLDivElement = div({class:"instMobileOptions",style:"display:none;"}, 
+    private readonly _instOptionsDiv: HTMLDivElement = div({class:"instMobileOptions",style:"display:none; padding-bottom: 4px;"}, 
         this._mobileInstSettingsButton, 
         this._mobileEffectsButton,
         this._mobileEnvelopesButton
     );
 
     private _setSettingToInstrument = (): void => {
-        const instNameStuffs = document.getElementById('instrumentSettingsText');
         const instStuffs = document.getElementById('InstrumentDiv');
         const effectStuffs = document.getElementById('effectsDiv');
         const envelopeStuffs = document.getElementById('envelopesDiv');
 
-        instNameStuffs!.style.display = "";
+        this._instSettingMode = 1;
+
         instStuffs!.style.display = "";
         effectStuffs!.style.display = "none";
         envelopeStuffs!.style.display = "none";
@@ -1269,12 +1273,11 @@ export class SongEditor {
 
     private _setSettingToEffect = (): void => {
 
-        const instNameStuffs = document.getElementById('instrumentSettingsText');
         const instStuffs = document.getElementById('InstrumentDiv');
         const effectStuffs = document.getElementById('effectsDiv');
         const envelopeStuffs = document.getElementById('envelopesDiv');
 
-        instNameStuffs!.style.display = "none";
+        this._instSettingMode = 2;
 
         instStuffs!.style.display = "none";
         effectStuffs!.style.display = "";
@@ -1283,12 +1286,12 @@ export class SongEditor {
 
     private _setSettingToEnvelope = (): void => {
 
-        const instNameStuffs = document.getElementById('instrumentSettingsText');
         const instStuffs = document.getElementById('InstrumentDiv');
         const effectStuffs = document.getElementById('effectsDiv');
         const envelopeStuffs = document.getElementById('envelopesDiv');
 
-        instNameStuffs!.style.display = "none";
+        this._instSettingMode = 3;
+
         instStuffs!.style.display = "none";
         effectStuffs!.style.display = "none";
         envelopeStuffs!.style.display = "";
@@ -1296,6 +1299,7 @@ export class SongEditor {
 
     private readonly _instrumentSettingsGroup: HTMLDivElement = div({ class: "editor-controls" },
         this._instrumentSettingsTextRow,
+        this._instOptionsDiv,
         this._instrumentsButtonRow,
         // these could've been put into _instrumentSettingsGroup as well but I decided not to
         // this._instrumentCopyGroup,
@@ -1436,17 +1440,17 @@ export class SongEditor {
         ),
     );
     private readonly _instrumentSettingsArea: HTMLDivElement = div({ class: "instrument-settings-area" },
-        this._instOptionsDiv,
         this._instrumentSettingsGroup,
         this._modulatorGroup);
         // comment for ctrl+f mobile stuffs
-    public readonly _playPauseAreaMobile: HTMLDivElement = div({class: "play-pause-area2", id: "play-pause-area2", style:'flex-direction:row; position: absolute; width: 100%; display: flex; bottom: 16vh;'}, 
-            div({ class: "playback-bar-controls2", style:'width: 100%; display: flex; background: var(--editor-background); z-index: 6;' },
-                this._mobilePlayButton,
-                this._mobilePauseButton,
-                this._mobilePrevBarButton,
-                this._mobileNextBarButton,
-            )
+    public readonly _playbackMobileDiv: HTMLDivElement = div({ class: "playback-bar-controls2", id: 'playback-bar-controls2', style:'width: 100%; display: flex; background: var(--editor-background); z-index: 6;' },
+        this._mobilePlayButton,
+        this._mobilePauseButton,
+        this._mobilePrevBarButton,
+        this._mobileNextBarButton,
+    )    
+    public readonly _playPauseAreaMobile: HTMLDivElement = div({class: "play-pause-area2", id: "play-pause-area2", style:'flex-direction:row; position: absolute; width: 100%; display: flex; bottom: 16vh;'},
+        this._playbackMobileDiv
     );
     public readonly _settingsArea: HTMLDivElement = div({ class: "settings-area noSelection" },
         div({ class: "version-area" },
@@ -1843,6 +1847,10 @@ export class SongEditor {
             const autoPlayOption: HTMLOptionElement = <HTMLOptionElement>this._optionsMenu.querySelector("[value=autoPlay]");
             autoPlayOption.disabled = true;
             autoPlayOption.setAttribute("hidden", "");
+        } else {
+            const oldMobileLayoutOption: HTMLOptionElement = <HTMLOptionElement>this._optionsMenu.querySelector("[value=oldMobileLayout]");
+            oldMobileLayoutOption.disabled = true;
+            oldMobileLayoutOption.setAttribute("hidden", "");
         }
 
         // Beepbox uses availHeight too, but I have a display that fails the check even when one of the other layouts would look better on it. -jummbus
@@ -1855,9 +1863,10 @@ export class SongEditor {
             MobileButtonOption.disabled = true;
             MobileButtonOption.setAttribute("hidden", "");
 
+            if (this._doc.prefs.oldMobileLayout == false) {
             const showDescOption: HTMLOptionElement = <HTMLOptionElement>this._optionsMenu.querySelector("[value=showDescription]");
             showDescOption.disabled = true;
-            showDescOption.setAttribute("hidden", "");
+            showDescOption.setAttribute("hidden", ""); }
         }
     }
 
@@ -2208,6 +2217,7 @@ export class SongEditor {
             this.prompt.cleanUp();
             this.prompt = null;
             this.refocusStage();
+
         }
 
         if (promptName) {
@@ -2330,12 +2340,7 @@ export class SongEditor {
     public changeBarScrollPos(offset: number) {
         this._barScrollBar.changePos(offset);
     }
-
-    // comment for ctrl+f mobile stuffs
-
     
-    
-
     public whenUpdated = (): void => {
         const prefs: Preferences = this._doc.prefs;
         this._muteEditor.container.style.display = prefs.enableChannelMuting ? "" : "none";
@@ -2373,6 +2378,9 @@ export class SongEditor {
         if (document.getElementById('text-content'))
             document.getElementById('text-content')!.style.display = this._doc.prefs.showDescription ? "" : "none";
         
+
+        // comment for ctrl+f mobile stuffs
+
             if (!isMobile) {
                 this._playPauseAreaMobile.style.display = "none";
         if (this._doc.getFullScreen()) {
@@ -2501,12 +2509,309 @@ export class SongEditor {
 
          // comment for ctrl+f mobile stuffs
 
-        const effectStuffs = document.getElementById('effectsDiv');
-        const envelopeStuffs = document.getElementById('envelopesDiv');
+
+        // notes for future me and anyone else that's crazy enough to try and add this to their mod. If you are the latter then hello, I am choptop84, and I am mentally exausted of this.
+        // I have been working on this all day for 2 days and I've now been working on this from around 9:00 AM to 2:47 PM just trying to fix the shit I was trying to do yesterday. 
+        // Please don't mind the mess, I stopped caring about it being nice and tidy when I got to adding the landscape view.
+
+
+
+        if (this._doc.prefs.oldMobileLayout != true) {
+
+            this._promptContainer.style.left = "50vw";
+
+            const effectStuffs = document.getElementById('effectsDiv');
+            const envelopeStuffs = document.getElementById('envelopesDiv');
+            const instStuffs = document.getElementById('InstrumentDiv');
+
+            if (this._instSettingMode == 1) {
+                instStuffs!.style.display = "";
+                effectStuffs!.style.display = "none";
+                envelopeStuffs!.style.display = "none";
+                console.log("Instrument Settings");
+            } else if (this._instSettingMode == 2) {
+                instStuffs!.style.display = "none";
+                effectStuffs!.style.display = "";
+                envelopeStuffs!.style.display = "none";
+                console.log("Effects Settings");
+            } else if (this._instSettingMode == 3) {
+                instStuffs!.style.display = "none";
+                effectStuffs!.style.display = "none";
+                envelopeStuffs!.style.display = "";
+                console.log("Envelopes Settings");
+
+            }
+                console.log("Current Setting: "+this._instSettingMode);
+            beepboxEditorContainer.style.borderImageSource = "";
+
+            this._settingsArea.style.display = "none";
+            this._trackArea.style.display = "none";
+            this._patternArea.style.display = "";
+            this.mainLayer.style.display = "unset";
+
+        if (window.innerWidth > window.innerHeight) { // landscape view
+            this._mobileMenu.style.right = "0px";
+            this._mobileMenu.style.left = "";
+            this._mobileMenu.style.height = "100vh";
+            this._mobileMenu.style.width = "15vw";
+
+            this._patternArea.style.width = "75vw";
+            this._patternArea.style.height = "100vh";
+            this._patternArea.style.maxHeight = "100vh"; 
+
+            beepboxEditorContainer.style.maxWidth = "100vw";
+
+            this._playPauseAreaMobile.style.height = "100vh";
+            this._playPauseAreaMobile.style.width = "4vw";
+            this._playPauseAreaMobile.style.right = "16vw";
+            this._playPauseAreaMobile.style.bottom = "0";
+            this._playPauseAreaMobile.style.left = "";
+
+            this._playbackMobileDiv.style.flexDirection = "column";
+
+            this._mobilePlayButton.style.width = "100%";
+            this._mobilePauseButton.style.width = "100%";
+            this._mobileNextBarButton.style.width = "100%";
+            this._mobilePrevBarButton.style.width = "100%";
+
+            this._mobilePlayButton.style.height = "33vh";
+            this._mobilePauseButton.style.height = "33vh";
+            this._mobileNextBarButton.style.height = "34vh";
+            this._mobilePrevBarButton.style.height = "33vh";
+
+            this._settingsArea.style.gridTemplateColumns = "33% 34% 33%";
+            this._settingsArea.style.gridTemplateRows = "min-content min-content min-content min-content 1fr";
+
+
+            this._mobilePatternButton.style.right = "0";
+            this._mobilePatternButton.style.bottom = "";
+            this._mobileTrackButton.style.right = "0";
+            this._mobileTrackButton.style.bottom = "";
+            this._mobileSettingsButton.style.right = "0";
+            this._mobileSettingsButton.style.bottom = "";
+
+            this._settingsArea.style.gridTemplateAreas = '"version-area version-area version-area" "play-pause-area menu-area instrument-settings-area" "play-pause-area menu-area instrument-settings-area" "song-settings-area song-settings-area instrument-settings-area" "song-settings-area song-settings-area instrument-settings-area"';
+            this._settingsArea.style.width = "78vw";
+            this._trackArea.style.width = "78vw";
+
+            if (this._menuMode == 1) {
+                        this._patternArea.style.display = "";
+                        this._trackArea.style.display = "none";
+                        this._settingsArea.style.display = "none";
+
+                        this._mobilePatternButton.style.width = "100%";
+                        this._mobileTrackButton.style.width = "80%";
+                        this._mobileSettingsButton.style.width = "80%";
+    
+                        this._mobilePatternButton.style.height = "33vh";
+                        this._mobileTrackButton.style.height = "34vh";
+                        this._mobileSettingsButton.style.height = "33vh";
+    
+                        this._mobilePatternButton.style.left = "";
+                        this._mobileTrackButton.style.left = "";
+    
+                        this._mobilePatternButton.style.top = "0";
+                        this._mobileTrackButton.style.top = "33vh";
+                        this._mobileSettingsButton.style.bottom = "0";
+    
+                        this._mobileMenu.style.width = "15vw";
+                        this._mobileMenu.style.height = "100vh";
+                        this._mobileMenu.style.right = "0";
+                        this._playPauseAreaMobile.style.display = "flex";
+                } 
+                if (this._menuMode == 2) {
+
+                        this._patternArea.style.display = "none";
+                        this._trackArea.style.display = "";
+                        this._settingsArea.style.display = "none";
+                        this._mobilePatternButton.style.width = "80%";
+                        this._mobileTrackButton.style.width = "100%";
+                        this._mobileSettingsButton.style.width = "80%";
+            
+                                this._mobilePatternButton.style.height = "33vh";
+                                this._mobileTrackButton.style.height = "34vh";
+                                this._mobileSettingsButton.style.height = "33vh";
+            
+                        this._mobilePatternButton.style.top = "0";
+                        this._mobileTrackButton.style.top = "33vh";
+                        this._mobileSettingsButton.style.bottom = "0";
+                        
+                        this._mobileTrackButton.style.left = "";
+                        this._mobilePatternButton.style.left = "";
+            
+                        this._mobileMenu.style.width = "15vw";
+                        this._mobileMenu.style.height = "100vh";
+            
+                        this._mobileMenu.style.right = "0";
+                        this._playPauseAreaMobile.style.display = "none";
+
+                } 
+                if (this._menuMode == 3) {
+                    this._patternArea.style.display = "none";
+                    this._trackArea.style.display = "none";
+                    this._settingsArea.style.display = "";
+                    this._mobilePatternButton.style.width = "80%";
+                    this._mobileTrackButton.style.width = "80%";
+                    this._mobileSettingsButton.style.width = "100%";
+        
+                    this._mobilePatternButton.style.height = "33vh";
+                    this._mobileTrackButton.style.height = "34vh";
+                    this._mobileSettingsButton.style.height = "33vh";
+        
+                    this._mobilePatternButton.style.top = "0";
+                    this._mobileTrackButton.style.top = "33vh";
+                    this._mobileSettingsButton.style.bottom = "0";
+                    this._mobileTrackButton.style.left = "";
+        
+                    this._mobilePatternButton.style.left = "";
+        
+                    this._mobileMenu.style.width = "15vw";
+                    this._mobileMenu.style.height = "100vh";
+        
+                    this._mobileMenu.style.right = "0";
+                    this._playPauseAreaMobile.style.display = "none";
+                }
+
+        } else if (window.innerWidth < window.innerHeight) { // portrait view
+
+            this._playPauseAreaMobile.style.height = "";
+            this._playPauseAreaMobile.style.width = "100vw";
+            this._playPauseAreaMobile.style.bottom = "16vh";
+            this._playPauseAreaMobile.style.left = "0";
+
+            this._playbackMobileDiv.style.flexDirection = "row";
+
+            this._mobilePlayButton.style.height = "";
+            this._mobilePauseButton.style.height = "";
+            this._mobileNextBarButton.style.height = "";
+            this._mobilePrevBarButton.style.height = "";
+
+            this._mobilePlayButton.style.width = "33vh";
+            this._mobilePauseButton.style.width = "33vh";
+            this._mobileNextBarButton.style.width = "34vh";
+            this._mobilePrevBarButton.style.width = "33vh";
+
+            beepboxEditorContainer.style.maxWidth = "710px";
+
+            this._settingsArea.style.gridTemplateRows = "min-content min-content min-content min-content 1fr";
+            this._settingsArea.style.gridTemplateAreas = '"version-area version-area" "play-pause-area instrument-settings-area" "play-pause-area instrument-settings-area" "menu-area instrument-settings-area" "song-settings-area instrument-settings-area"';
+
+            this._mobileMenu.style.bottom = "0px";
+            this._mobileMenu.style.width = "100vw";
+            this._mobileMenu.style.height = "20vh";
+            this._settingsArea.style.width = "98vw";
+            this._patternArea.style.width = "91vw";
+            this._trackArea.style.width = "98vw";
+            
+            this._mobileMenu.style.right = "";
+            this._mobileMenu.style.left = "";
+            this._mobileMenu.style.height = "100vh";
+            this._mobileMenu.style.width = "15vw";
+
+            beepboxEditorContainer.style.maxWidth = "100vw";
+
+            this._settingsArea.style.gridTemplateColumns = "50% 50%";
+
+            this._mobilePatternButton.style.bottom = "0";
+            this._mobileTrackButton.style.bottom = "0";
+            this._mobileSettingsButton.style.bottom = "0";
+        
+
+            if (this._menuMode == 1) {
+                this._patternArea.style.width = "91vw";
+                this._patternArea.style.display = "";
+                this._trackArea.style.display = "none";
+                this._settingsArea.style.display = "none";
+                this._mobilePatternButton.style.height = "100%";
+                this._mobileTrackButton.style.height = "80%";
+                this._mobileSettingsButton.style.height = "80%";
+
+                this._mobilePatternButton.style.width = "33vw";
+                this._mobileTrackButton.style.width = "34vw";
+                this._mobileSettingsButton.style.width = "33vw";
+
+                this._mobilePatternButton.style.top = "";
+
+                this._mobilePatternButton.style.left = "0";
+                this._mobileTrackButton.style.left = "33vw";
+                this._mobileSettingsButton.style.right = "0";
+                this._mobilePatternButton.style.bottom = "0";
+                this._mobileTrackButton.style.bottom = "0";
+                this._mobileTrackButton.style.top = "";
+                this._mobileTrackButton.style.right = "";
+                this._mobileSettingsButton.style.bottom = "0";
+
+                this._mobileMenu.style.height = "15vh";
+                this._mobileMenu.style.width = "100vw"
+                this._mobileMenu.style.right = "";
+
+                this._playPauseAreaMobile.style.display = "flex";
+
+                } else if (this._menuMode == 2) {
+                    this._trackArea.style.width = "100vw";
+                    this._patternArea.style.display = "none";
+                    this._trackArea.style.display = "";
+                    this._settingsArea.style.display = "none";
+                    this._mobilePatternButton.style.height = "80%";
+                    this._mobileTrackButton.style.height = "100%";
+                    this._mobileSettingsButton.style.height = "80%";
+        
+                    this._mobilePatternButton.style.width = "33vw";
+                    this._mobileTrackButton.style.width = "34vw";
+                    this._mobileSettingsButton.style.width = "33vw";
+        
+                    this._mobilePatternButton.style.top = "";
+        
+                    this._mobilePatternButton.style.left = "0";
+                    this._mobileTrackButton.style.left = "33vw";
+                    this._mobileSettingsButton.style.right = "0";
+                    this._mobilePatternButton.style.bottom = "0";
+                    this._mobileTrackButton.style.bottom = "0";
+                    this._mobileTrackButton.style.top = "";
+                    this._mobileTrackButton.style.right = "";
+                    this._mobileSettingsButton.style.bottom = "0";
+        
+                    this._mobileMenu.style.height = "15vh";
+                    this._mobileMenu.style.width = "100vw";
+                    this._playPauseAreaMobile.style.display = "none";
+
+                } else if (this._menuMode == 3) {
+                    this._settingsArea.style.width = "96vw";
+                    this._patternArea.style.display = "none";
+                    this._trackArea.style.display = "none";
+                    this._settingsArea.style.display = "";
+                    this._mobilePatternButton.style.height = "80%";
+                    this._mobileTrackButton.style.height = "80%";
+                    this._mobileSettingsButton.style.height = "100%";
+        
+                    this._mobilePatternButton.style.width = "33vw";
+                    this._mobileTrackButton.style.width = "34vw";
+                    this._mobileSettingsButton.style.width = "33vw";
+        
+                    this._mobilePatternButton.style.top = "";
+        
+                    this._mobilePatternButton.style.left = "0";
+                    this._mobileTrackButton.style.left = "33vw";
+                    this._mobileSettingsButton.style.right = "0";
+                    this._mobilePatternButton.style.bottom = "0";
+                    this._mobileTrackButton.style.bottom = "0";
+                    this._mobileTrackButton.style.top = "";
+                    this._mobileTrackButton.style.right = "";
+                    this._mobileSettingsButton.style.bottom = "0";
+        
+                    this._mobileMenu.style.height = "15vh";
+                    this._mobileMenu.style.width = "100vw";
+                    this._playPauseAreaMobile.style.display = "none";
+                }
+
+                this._patternArea.style.maxHeight = "75vh";
+                this._patternArea.style.height = "70vh";
+        }
 
         effectStuffs!.style.display = "none";
         envelopeStuffs!.style.display = "none";
 
+        this.mainLayer.style.minHeight = "80vh";
         beepboxEditorContainer.style.maxHeight = "80vh";
 
         this._mobilePatternButton.style.display = "";
@@ -2514,8 +2819,8 @@ export class SongEditor {
         this._mobileSettingsButton.style.display = "";
         this._mobileMenu.style.display = "";
         this._instOptionsDiv.style.display = "";
-
-        beepboxEditorContainer.style.minHeight = "60vh";
+    
+        //beepboxEditorContainer.style.minHeight = "60vh"; 
 
         beepboxEditorContainer!.appendChild(this._playPauseAreaMobile)
 
@@ -2524,15 +2829,10 @@ export class SongEditor {
         textContentMobile!.style.display = "none";
 
         this._trackAndMuteContainer.style.maxHeight = "85vh";
-        this._settingsArea.style.gridTemplateRows = "min-content min-content min-content min-content 1fr";
-        this._settingsArea.style.gridTemplateAreas = '"version-area version-area" "play-pause-area instrument-settings-area" "play-pause-area instrument-settings-area" "menu-area instrument-settings-area" "song-settings-area instrument-settings-area"';
         playPauseArea!.style.display = "flex";
         playPauseArea!.style.flexDirection = "column";
 
-        const mobilePatternArea = document.getElementById('pattern-area');
-
-        mobilePatternArea!.style.maxHeight = "75vh";
-        mobilePatternArea!.style.height = "70vh";
+        }
 
         document.body.appendChild(this._mobileMenu);
         this._mobileMenu.appendChild(this._mobilePatternButton);
@@ -2541,8 +2841,7 @@ export class SongEditor {
         this._mobilePatternButton.appendChild(this._mobileEditMenuIcon);
         this._mobileTrackButton.appendChild(this._mobileTrackMenuIcon);
         this._mobileSettingsButton.appendChild(this._mobileSettingsMenuIcon);
-        this._instrumentSettingsArea.appendChild(this._instOptionsDiv);
-            // Default Mobile Layout with buttons and stuff
+            // Default Mobile Layout with buttons and stuff 
 
 
             this._patternEditor.container.style.width = "";
@@ -2595,7 +2894,7 @@ export class SongEditor {
         // the theme variables are named "icon" to prevent people getting confused and thinking they're svg
         const textOnIcon: string = ColorConfig.getComputed("--text-enabled-icon") !== "" ? ColorConfig.getComputed("--text-enabled-icon") : "✓ ";
         const textOffIcon: string = ColorConfig.getComputed("--text-disabled-icon") !== "" ? ColorConfig.getComputed("--text-disabled-icon") : "　";
-        const optionCommands: ReadonlyArray<string> = [
+        const optionCommands: ReadonlyArray<string> = [ // ctrl+f for: preferences stuff
             "Technical",
             (prefs.autoPlay ? textOnIcon : textOffIcon) + "Auto Play on Load",
             (prefs.autoFollow ? textOnIcon : textOffIcon) + "Auto Follow Playhead",
@@ -2608,6 +2907,7 @@ export class SongEditor {
             (prefs.instrumentImportExport ? textOnIcon : textOffIcon) + "Enable Import/Export Buttons",
             (prefs.displayBrowserUrl ? textOnIcon : textOffIcon) + "Enable Song Data in URL",
             (prefs.closePromptByClickoff ? textOnIcon : textOffIcon) + "Close Prompts on Click Off",
+            (prefs.oldMobileLayout ? textOnIcon : textOffIcon) + "Use the Old mobile layout (Reload)",
             "> Note Recording",
             "Appearance",
             (prefs.showFifth ? textOnIcon : textOffIcon) + 'Highlight "Fifth" Note',
@@ -2628,7 +2928,7 @@ export class SongEditor {
                 const technicalOptionGroup: HTMLOptGroupElement = <HTMLOptGroupElement>this._optionsMenu.children[1];
 
                 // how do you get the length of an optgroup?
-                for (let i: number = 0; i < 12; i++) {
+                for (let i: number = 0; i < technicalOptionGroup.children.length; i++) {
                     const option: HTMLOptionElement = <HTMLOptionElement>technicalOptionGroup.children[i];
                     if (option.textContent != optionCommands[i + 1]) option.textContent = optionCommands[i + 1];
                 }
@@ -2637,9 +2937,9 @@ export class SongEditor {
                 const appearanceOptionGroup: HTMLOptGroupElement = <HTMLOptGroupElement>this._optionsMenu.children[2];
         
                 // how do you get the length of an optgroup?
-                for (let i: number = 0; i < 13; i++) { // Hi choptop84, past you here. If you add a new preference to the list, you need to change the number on the left, yeah the one that says 13 rn. That.
+                for (let i: number = 0; i < appearanceOptionGroup.children.length; i++) { 
                     const option: HTMLOptionElement = <HTMLOptionElement>appearanceOptionGroup.children[i];
-                    if (option.textContent != optionCommands[i + 14]) option.textContent = optionCommands[i + 14];
+                    if (option.textContent != optionCommands[i + (technicalOptionGroup.children.length+2)]) option.textContent = optionCommands[i + (technicalOptionGroup.children.length+2)];
         }
 
         const channel: Channel = this._doc.song.channels[this._doc.channel];
@@ -4866,15 +5166,57 @@ export class SongEditor {
             this._patternArea.style.display = "";
             this._trackArea.style.display = "none";
             this._settingsArea.style.display = "none";
-
-            this._mobilePatternButton.style.height = "75%";
-            this._mobileTrackButton.style.height = "60%";
-            this._mobileSettingsButton.style.height = "60%";
-            this._mobileMenu.style.height = "20vh";
-            this._playPauseAreaMobile.style.display = "flex";
-            } 
             this.whenUpdated();
+                if (window.innerWidth < window.innerHeight) { //portrait (w)
+                    this._mobilePatternButton.style.height = "100%";
+                    this._mobileTrackButton.style.height = "80%";
+                    this._mobileSettingsButton.style.height = "80%";
 
+                    this._mobilePatternButton.style.width = "33vw";
+                    this._mobileTrackButton.style.width = "34vw";
+                    this._mobileSettingsButton.style.width = "33vw";
+
+                    this._mobilePatternButton.style.top = "";
+
+                    this._mobilePatternButton.style.left = "0";
+                    this._mobileTrackButton.style.left = "33vw";
+                    this._mobileSettingsButton.style.right = "0";
+                    this._mobilePatternButton.style.bottom = "0";
+                    this._mobileTrackButton.style.bottom = "0";
+                    this._mobileTrackButton.style.top = "";
+                    this._mobileTrackButton.style.right = "33vw";
+                    this._mobileSettingsButton.style.bottom = "0";
+
+                    this._mobileMenu.style.height = "15vh";
+                    this._mobileMenu.style.width = "100vw"
+                    this._mobileMenu.style.right = "";
+
+                    this._patternArea.style.width = "98vw";
+
+                    this._playPauseAreaMobile.style.display = "flex";
+ 
+                } else if (window.innerWidth > window.innerHeight) { //landscape (h)
+                    this._mobilePatternButton.style.width = "100%";
+                    this._mobileTrackButton.style.width = "80%";
+                    this._mobileSettingsButton.style.width = "80%";
+
+                    this._mobilePatternButton.style.height = "33vh";
+                    this._mobileTrackButton.style.height = "34vh";
+                    this._mobileSettingsButton.style.height = "33vh";
+
+                    this._mobilePatternButton.style.left = "";
+                    this._mobileTrackButton.style.left = "";
+
+                    this._mobilePatternButton.style.top = "0";
+                    this._mobileTrackButton.style.top = "33vh";
+                    this._mobileSettingsButton.style.bottom = "0";
+
+                    this._mobileMenu.style.width = "15vw";
+                    this._mobileMenu.style.height = "100vh";
+                    this._mobileMenu.style.right = "0";
+                    this._playPauseAreaMobile.style.display = "flex";
+                }
+            } 
     }
 
     private _displayTrackEditor = (): void => {
@@ -4884,31 +5226,134 @@ export class SongEditor {
             this._patternArea.style.display = "none";
             this._trackArea.style.display = "";
             this._settingsArea.style.display = "none";
+            this.whenUpdated();
+            if (window.innerWidth < window.innerHeight) {//portrait (w)
 
             this._mobilePatternButton.style.height = "80%";
             this._mobileTrackButton.style.height = "100%";
             this._mobileSettingsButton.style.height = "80%";
+
+            this._mobilePatternButton.style.width = "33vw";
+            this._mobileTrackButton.style.width = "34vw";
+            this._mobileSettingsButton.style.width = "33vw";
+
+            this._mobilePatternButton.style.top = "";
+
+            this._mobilePatternButton.style.left = "0";
+            this._mobileTrackButton.style.left = "33vw";
+            this._mobileSettingsButton.style.right = "0";
+            this._mobilePatternButton.style.bottom = "0";
+            this._mobileTrackButton.style.left = "";
+            this._mobileTrackButton.style.top = "";
+            this._mobileTrackButton.style.right = "33vw";
+            this._mobileTrackButton.style.bottom = "0";
+            this._mobileSettingsButton.style.bottom = "0";
+
+            this._patternArea.style.width = "98vw";
+
             this._mobileMenu.style.height = "15vh";
+            this._mobileMenu.style.width = "100vw";
             this._playPauseAreaMobile.style.display = "none";
+        } else if (window.innerWidth > window.innerHeight) {//landscape (h)
+            this._mobilePatternButton.style.width = "80%";
+            this._mobileTrackButton.style.width = "100%";
+            this._mobileSettingsButton.style.width = "80%";
+
+                    this._mobilePatternButton.style.height = "33vh";
+                    this._mobileTrackButton.style.height = "34vh";
+                    this._mobileSettingsButton.style.height = "33vh";
+
+            this._mobilePatternButton.style.top = "0";
+            this._mobileTrackButton.style.top = "33vh";
+            this._mobileSettingsButton.style.bottom = "0";
+            
+            this._mobileTrackButton.style.left = "";
+            this._mobilePatternButton.style.left = "";
+
+            this._mobileMenu.style.width = "15vw";
+            this._mobileMenu.style.height = "100vh";
+
+            this._mobileMenu.style.right = "0";
+            this._playPauseAreaMobile.style.display = "none";
+        }
            }
-           this.whenUpdated();
     }
 
     private _displaySettingsEditor = (): void => {
         this._menuMode = 3;
-
+        const effectStuffs = document.getElementById('effectsDiv');
+        const envelopeStuffs = document.getElementById('envelopesDiv');
+        const instStuffs = document.getElementById('InstrumentDiv');
         if (this._menuMode == 3) { 
             this._patternArea.style.display = "none";
             this._trackArea.style.display = "none";
             this._settingsArea.style.display = "";
+            this.whenUpdated();
+                if (this._instSettingMode == 1) {
+                    instStuffs!.style.display = "";
+                    effectStuffs!.style.display = "none";
+                    envelopeStuffs!.style.display = "none";
+                    console.log("Instrument Settings");
+                } else if (this._instSettingMode == 2) {
+                    instStuffs!.style.display = "none";
+                    effectStuffs!.style.display = "";
+                    envelopeStuffs!.style.display = "none";
+                    console.log("Effects Settings");
+                } else if (this._instSettingMode == 3) {
+                    instStuffs!.style.display = "none";
+                    effectStuffs!.style.display = "none";
+                    envelopeStuffs!.style.display = "";
+                    console.log("Envelopes Settings");
+
+                }
+            if (window.innerWidth < window.innerHeight) {//portrait (w)
 
             this._mobilePatternButton.style.height = "80%";
             this._mobileTrackButton.style.height = "80%";
             this._mobileSettingsButton.style.height = "100%";
+
+            this._mobilePatternButton.style.width = "33vw";
+            this._mobileTrackButton.style.width = "34vw";
+            this._mobileSettingsButton.style.width = "33vw";
+
+            this._mobilePatternButton.style.top = "";
+
+            this._mobilePatternButton.style.left = "0";
+            this._mobileSettingsButton.style.right = "0";
+            this._mobilePatternButton.style.bottom = "0";
+            this._mobileTrackButton.style.top = "";
+            this._mobileTrackButton.style.right = "33vw";
+            this._mobileTrackButton.style.bottom = "0";
+            this._mobileSettingsButton.style.bottom = "0";
+
+            this._patternArea.style.width = "98vw";
+
             this._mobileMenu.style.height = "15vh";
+            this._mobileMenu.style.width = "100vw";
             this._playPauseAreaMobile.style.display = "none";
+        } else if (window.innerWidth > window.innerHeight) {//landscape (h)
+            this._mobilePatternButton.style.width = "80%";
+            this._mobileTrackButton.style.width = "80%";
+            this._mobileSettingsButton.style.width = "100%";
+
+            this._mobilePatternButton.style.height = "33vh";
+            this._mobileTrackButton.style.height = "34vh";
+            this._mobileSettingsButton.style.height = "33vh";
+
+            this._mobilePatternButton.style.top = "0";
+            this._mobileTrackButton.style.top = "33vh";
+            this._mobileSettingsButton.style.bottom = "0";
+            this._mobileTrackButton.style.left = "";
+
+            this._mobilePatternButton.style.left = "";
+
+            this._mobileMenu.style.width = "15vw";
+            this._mobileMenu.style.height = "100vh";
+
+            this._mobileMenu.style.right = "0";
+            this._playPauseAreaMobile.style.display = "none";
+        }
            }
-           this.whenUpdated();
     }
 
 
@@ -5542,7 +5987,7 @@ export class SongEditor {
         this._editMenu.selectedIndex = 0;
     }
 
-    private _optionsMenuHandler = (event: Event): void => {
+    private _optionsMenuHandler = (event: Event): void => { // ctrl+f for: preferences stuff
         switch (this._optionsMenu.value) {
             case "autoPlay":
                 this._doc.prefs.autoPlay = !this._doc.prefs.autoPlay;
@@ -5625,6 +6070,10 @@ export class SongEditor {
                 break;
             case "displayShortcutButtons":
                 this._doc.prefs.displayShortcutButtons = !this._doc.prefs.displayShortcutButtons;
+                break;
+            case "oldMobileLayout":
+                this._doc.prefs.oldMobileLayout = !this._doc.prefs.oldMobileLayout;
+                location.reload();
                 break;
         }
         this._optionsMenu.selectedIndex = 0;
