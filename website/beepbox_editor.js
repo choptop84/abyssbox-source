@@ -47907,6 +47907,7 @@ You should be redirected to the song at:<br /><br />
                 }
                 else {
                     if (this._doc.prefs.oldMobileLayout != true) {
+                        this._promptContainer.style.left = "50vw";
                         const effectStuffs = document.getElementById('effectsDiv');
                         const envelopeStuffs = document.getElementById('envelopesDiv');
                         const instStuffs = document.getElementById('InstrumentDiv');
