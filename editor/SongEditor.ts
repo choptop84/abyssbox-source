@@ -2808,9 +2808,6 @@ export class SongEditor {
                 this._patternArea.style.height = "70vh";
         }
 
-        effectStuffs!.style.display = "none";
-        envelopeStuffs!.style.display = "none";
-
         this.mainLayer.style.minHeight = "80vh";
         beepboxEditorContainer.style.maxHeight = "80vh";
 

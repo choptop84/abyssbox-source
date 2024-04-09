@@ -48138,8 +48138,6 @@ You should be redirected to the song at:<br /><br />
                             this._patternArea.style.maxHeight = "75vh";
                             this._patternArea.style.height = "70vh";
                         }
-                        effectStuffs.style.display = "none";
-                        envelopeStuffs.style.display = "none";
                         this.mainLayer.style.minHeight = "80vh";
                         beepboxEditorContainer$1.style.maxHeight = "80vh";
                         this._mobilePatternButton.style.display = "";
