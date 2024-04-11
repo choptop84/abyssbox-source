@@ -388,44 +388,6 @@ var beepbox = (function (exports) {
                 }
             });
         }
-        else if (set == 3) {
-            const chipWaves = [
-                { name: "choptop84s announcement", expression: 4.0, isSampled: true, isPercussion: false, extraSampleDetune: 0 },
-            ];
-            sampleLoadingState.totalSamples += chipWaves.length;
-            const startIndex = Config.rawRawChipWaves.length;
-            for (const chipWave of chipWaves) {
-                const chipWaveIndex = Config.rawRawChipWaves.length;
-                const rawChipWave = { index: chipWaveIndex, name: chipWave.name, expression: chipWave.expression, isSampled: chipWave.isSampled, isPercussion: chipWave.isPercussion, extraSampleDetune: chipWave.extraSampleDetune, samples: defaultSamples };
-                const rawRawChipWave = { index: chipWaveIndex, name: chipWave.name, expression: chipWave.expression, isSampled: chipWave.isSampled, isPercussion: chipWave.isPercussion, extraSampleDetune: chipWave.extraSampleDetune, samples: defaultSamples };
-                const integratedChipWave = { index: chipWaveIndex, name: chipWave.name, expression: chipWave.expression, isSampled: chipWave.isSampled, isPercussion: chipWave.isPercussion, extraSampleDetune: chipWave.extraSampleDetune, samples: defaultIntegratedSamples };
-                Config.rawRawChipWaves[chipWaveIndex] = rawRawChipWave;
-                Config.rawRawChipWaves.dictionary[chipWave.name] = rawRawChipWave;
-                Config.rawChipWaves[chipWaveIndex] = rawChipWave;
-                Config.rawChipWaves.dictionary[chipWave.name] = rawChipWave;
-                Config.chipWaves[chipWaveIndex] = integratedChipWave;
-                Config.chipWaves.dictionary[chipWave.name] = rawChipWave;
-                sampleLoadingState.statusTable[chipWaveIndex] = 0;
-                sampleLoadingState.urlTable[chipWaveIndex] = "secretSamples";
-            }
-            loadScript("secretsamples.js")
-                .then(() => {
-                const chipWaveSamples = [
-                    centerWave(secretsample1),
-                ];
-                let chipWaveIndexOffset = 0;
-                for (const chipWaveSample of chipWaveSamples) {
-                    const chipWaveIndex = startIndex + chipWaveIndexOffset;
-                    Config.rawChipWaves[chipWaveIndex].samples = chipWaveSample;
-                    Config.rawRawChipWaves[chipWaveIndex].samples = chipWaveSample;
-                    Config.chipWaves[chipWaveIndex].samples = performIntegral(chipWaveSample);
-                    sampleLoadingState.statusTable[chipWaveIndex] = 1;
-                    sampleLoadingState.samplesLoaded++;
-                    sampleLoadEvents.dispatchEvent(new SampleLoadedEvent(sampleLoadingState.totalSamples, sampleLoadingState.samplesLoaded));
-                    chipWaveIndexOffset++;
-                }
-            });
-        }
         else {
             console.log("invalid set of built-in samples");
         }
@@ -5341,7 +5303,6 @@ var beepbox = (function (exports) {
                     let willLoadLegacySamples = false;
                     let willLoadNintariboxSamples = false;
                     let willLoadMarioPaintboxSamples = false;
-                    let willLoadSecretSamples = false;
                     const customSampleUrls = [];
                     const customSamplePresets = [];
                     sampleLoadingState.statusTable = {};
@@ -5369,13 +5330,6 @@ var beepbox = (function (exports) {
                                 willLoadMarioPaintboxSamples = true;
                                 customSampleUrls.push(url);
                                 loadBuiltInSamples(2);
-                            }
-                        }
-                        else if (url.toLowerCase() === "secretsamples") {
-                            if (!willLoadSecretSamples) {
-                                willLoadSecretSamples = true;
-                                customSampleUrls.push(url);
-                                loadBuiltInSamples(3);
                             }
                         }
                         else {
@@ -7572,7 +7526,6 @@ var beepbox = (function (exports) {
                     let willLoadLegacySamples = false;
                     let willLoadNintariboxSamples = false;
                     let willLoadMarioPaintboxSamples = false;
-                    let willLoadSecretSamples = false;
                     const customSampleUrls = [];
                     const customSamplePresets = [];
                     for (const url of customSamples) {
@@ -7595,13 +7548,6 @@ var beepbox = (function (exports) {
                                 willLoadMarioPaintboxSamples = true;
                                 customSampleUrls.push(url);
                                 loadBuiltInSamples(2);
-                            }
-                        }
-                        else if (url.toLowerCase() === "secretsamples") {
-                            if (!willLoadSecretSamples) {
-                                willLoadSecretSamples = true;
-                                customSampleUrls.push(url);
-                                loadBuiltInSamples(3);
                             }
                         }
                         else {

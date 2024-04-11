@@ -440,7 +440,6 @@ export class AddSamplesPrompt {
         let useLegacySamples: boolean = false;
         let useNintariboxSamples: boolean = false;
         let useMarioPaintboxSamples: boolean = false;
-        let useSecretSamples: boolean = false;
         const parsedEntries: SampleEntry[] = [];
         for (const url of urls) {
             if (url === "") continue;
@@ -489,22 +488,8 @@ export class AddSamplesPrompt {
                     });
                 }
                 useMarioPaintboxSamples = true;
-            } else if (url.toLowerCase() === "secretsamples") {
-                if (!useSecretSamples) {
-                    parsedEntries.push({
-                        url: "secretSamples",
-                        sampleRate: 44100,
-                        rootKey: 60,
-                        percussion: false,
-                        chipWaveLoopStart: null,
-                        chipWaveLoopEnd: null,
-                        chipWaveStartOffset: null,
-                        chipWaveLoopMode: null,
-                        chipWavePlayBackwards: false,
-                    });
-                }
-                useSecretSamples = true;
-            } else {
+            } 
+            else {
                 let urlSliced: string = url;
                 let sampleRate: number = 44100;
                 let rootKey: number = 60;
@@ -609,7 +594,6 @@ export class AddSamplesPrompt {
             urlInLowerCase === "legacysamples"
             || urlInLowerCase === "nintariboxsamples"
             || urlInLowerCase === "mariopaintboxsamples"
-            || urlInLowerCase === "secretsamples"
         );
         const options: string[] = [];
         if (sampleRate !== 44100) options.push("s" + sampleRate);

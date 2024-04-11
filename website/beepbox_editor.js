@@ -402,44 +402,6 @@ var beepbox = (function (exports) {
                 }
             });
         }
-        else if (set == 3) {
-            const chipWaves = [
-                { name: "choptop84s announcement", expression: 4.0, isSampled: true, isPercussion: false, extraSampleDetune: 0 },
-            ];
-            sampleLoadingState.totalSamples += chipWaves.length;
-            const startIndex = Config.rawRawChipWaves.length;
-            for (const chipWave of chipWaves) {
-                const chipWaveIndex = Config.rawRawChipWaves.length;
-                const rawChipWave = { index: chipWaveIndex, name: chipWave.name, expression: chipWave.expression, isSampled: chipWave.isSampled, isPercussion: chipWave.isPercussion, extraSampleDetune: chipWave.extraSampleDetune, samples: defaultSamples };
-                const rawRawChipWave = { index: chipWaveIndex, name: chipWave.name, expression: chipWave.expression, isSampled: chipWave.isSampled, isPercussion: chipWave.isPercussion, extraSampleDetune: chipWave.extraSampleDetune, samples: defaultSamples };
-                const integratedChipWave = { index: chipWaveIndex, name: chipWave.name, expression: chipWave.expression, isSampled: chipWave.isSampled, isPercussion: chipWave.isPercussion, extraSampleDetune: chipWave.extraSampleDetune, samples: defaultIntegratedSamples };
-                Config.rawRawChipWaves[chipWaveIndex] = rawRawChipWave;
-                Config.rawRawChipWaves.dictionary[chipWave.name] = rawRawChipWave;
-                Config.rawChipWaves[chipWaveIndex] = rawChipWave;
-                Config.rawChipWaves.dictionary[chipWave.name] = rawChipWave;
-                Config.chipWaves[chipWaveIndex] = integratedChipWave;
-                Config.chipWaves.dictionary[chipWave.name] = rawChipWave;
-                sampleLoadingState.statusTable[chipWaveIndex] = 0;
-                sampleLoadingState.urlTable[chipWaveIndex] = "secretSamples";
-            }
-            loadScript("secretsamples.js")
-                .then(() => {
-                const chipWaveSamples = [
-                    centerWave(secretsample1),
-                ];
-                let chipWaveIndexOffset = 0;
-                for (const chipWaveSample of chipWaveSamples) {
-                    const chipWaveIndex = startIndex + chipWaveIndexOffset;
-                    Config.rawChipWaves[chipWaveIndex].samples = chipWaveSample;
-                    Config.rawRawChipWaves[chipWaveIndex].samples = chipWaveSample;
-                    Config.chipWaves[chipWaveIndex].samples = performIntegral(chipWaveSample);
-                    sampleLoadingState.statusTable[chipWaveIndex] = 1;
-                    sampleLoadingState.samplesLoaded++;
-                    sampleLoadEvents.dispatchEvent(new SampleLoadedEvent(sampleLoadingState.totalSamples, sampleLoadingState.samplesLoaded));
-                    chipWaveIndexOffset++;
-                }
-            });
-        }
         else {
             console.log("invalid set of built-in samples");
         }
@@ -20860,7 +20822,6 @@ li.select2-results__option[role=group] > strong:hover {
                     let willLoadLegacySamples = false;
                     let willLoadNintariboxSamples = false;
                     let willLoadMarioPaintboxSamples = false;
-                    let willLoadSecretSamples = false;
                     const customSampleUrls = [];
                     const customSamplePresets = [];
                     sampleLoadingState.statusTable = {};
@@ -20886,13 +20847,6 @@ li.select2-results__option[role=group] > strong:hover {
                         else if (url.toLowerCase() === "mariopaintboxsamples") {
                             if (!willLoadMarioPaintboxSamples) {
                                 willLoadMarioPaintboxSamples = true;
-                                customSampleUrls.push(url);
-                                loadBuiltInSamples(2);
-                            }
-                        }
-                        else if (url.toLowerCase() === "secretsamples") {
-                            if (!willLoadSecretSamples) {
-                                willLoadSecretSamples = true;
                                 customSampleUrls.push(url);
                                 loadBuiltInSamples(2);
                             }
@@ -23091,7 +23045,6 @@ li.select2-results__option[role=group] > strong:hover {
                     let willLoadLegacySamples = false;
                     let willLoadNintariboxSamples = false;
                     let willLoadMarioPaintboxSamples = false;
-                    let willLoadSecretSamples = false;
                     const customSampleUrls = [];
                     const customSamplePresets = [];
                     for (const url of customSamples) {
@@ -23112,13 +23065,6 @@ li.select2-results__option[role=group] > strong:hover {
                         else if (url.toLowerCase() === "mariopaintboxsamples") {
                             if (!willLoadMarioPaintboxSamples) {
                                 willLoadMarioPaintboxSamples = true;
-                                customSampleUrls.push(url);
-                                loadBuiltInSamples(2);
-                            }
-                        }
-                        else if (url.toLowerCase() === "secretsamples") {
-                            if (!willLoadSecretSamples) {
-                                willLoadSecretSamples = true;
                                 customSampleUrls.push(url);
                                 loadBuiltInSamples(2);
                             }
@@ -46495,7 +46441,6 @@ You should be redirected to the song at:<br /><br />
                 let useLegacySamples = false;
                 let useNintariboxSamples = false;
                 let useMarioPaintboxSamples = false;
-                let useSecretSamples = false;
                 const parsedEntries = [];
                 for (const url of urls) {
                     if (url === "")
@@ -46547,22 +46492,6 @@ You should be redirected to the song at:<br /><br />
                             });
                         }
                         useMarioPaintboxSamples = true;
-                    }
-                    else if (url.toLowerCase() === "secretsamples") {
-                        if (!useSecretSamples) {
-                            parsedEntries.push({
-                                url: "secretSamples",
-                                sampleRate: 44100,
-                                rootKey: 60,
-                                percussion: false,
-                                chipWaveLoopStart: null,
-                                chipWaveLoopEnd: null,
-                                chipWaveStartOffset: null,
-                                chipWaveLoopMode: null,
-                                chipWavePlayBackwards: false,
-                            });
-                        }
-                        useSecretSamples = true;
                     }
                     else {
                         let urlSliced = url;
@@ -46670,8 +46599,7 @@ You should be redirected to the song at:<br /><br />
                 const urlInLowerCase = url.toLowerCase();
                 const isBundledSamplePack = (urlInLowerCase === "legacysamples"
                     || urlInLowerCase === "nintariboxsamples"
-                    || urlInLowerCase === "mariopaintboxsamples"
-                    || urlInLowerCase === "secretsamples");
+                    || urlInLowerCase === "mariopaintboxsamples");
                 const options = [];
                 if (sampleRate !== 44100)
                     options.push("s" + sampleRate);
