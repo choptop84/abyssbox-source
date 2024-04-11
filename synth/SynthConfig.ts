@@ -476,6 +476,7 @@ declare global {
     const oinkpaintbox: number[];
     const swanpaintboxsample: number[];
     const facepaintboxsample: number[];
+    const secretsample1: number[];
 }
 
 function loadScript(url: string): Promise<void> {
@@ -817,6 +818,55 @@ export function loadBuiltInSamples(set: number): void {
 		chipWaveIndexOffset++;
 	    }
 	});
+    } else if (set == 3) {
+        // Create chip waves with the wrong sound.
+        const chipWaves = [
+            { name: "choptop84s announcement", expression: 4.0, isSampled: true, isPercussion: false, extraSampleDetune: 0 },
+        ];
+
+        sampleLoadingState.totalSamples += chipWaves.length;
+
+        // This assumes that Config.rawRawChipWaves and Config.chipWaves have
+        // the same number of elements.
+        const startIndex: number = Config.rawRawChipWaves.length;
+        for (const chipWave of chipWaves) {
+            const chipWaveIndex: number = Config.rawRawChipWaves.length;
+            const rawChipWave = { index: chipWaveIndex, name: chipWave.name, expression: chipWave.expression, isSampled: chipWave.isSampled, isPercussion: chipWave.isPercussion, extraSampleDetune: chipWave.extraSampleDetune, samples: defaultSamples };
+            const rawRawChipWave = { index: chipWaveIndex, name: chipWave.name, expression: chipWave.expression, isSampled: chipWave.isSampled, isPercussion: chipWave.isPercussion, extraSampleDetune: chipWave.extraSampleDetune, samples: defaultSamples };
+            const integratedChipWave = { index: chipWaveIndex, name: chipWave.name, expression: chipWave.expression, isSampled: chipWave.isSampled, isPercussion: chipWave.isPercussion, extraSampleDetune: chipWave.extraSampleDetune, samples: defaultIntegratedSamples };
+            Config.rawRawChipWaves[chipWaveIndex] = rawRawChipWave;
+            Config.rawRawChipWaves.dictionary[chipWave.name] = rawRawChipWave;
+            Config.rawChipWaves[chipWaveIndex] = rawChipWave;
+            Config.rawChipWaves.dictionary[chipWave.name] = rawChipWave;
+            Config.chipWaves[chipWaveIndex] = integratedChipWave;
+            Config.chipWaves.dictionary[chipWave.name] = rawChipWave;
+            sampleLoadingState.statusTable[chipWaveIndex] = SampleLoadingStatus.loading;
+            sampleLoadingState.urlTable[chipWaveIndex] = "secretSamples";
+        }
+
+        loadScript("secretsamples.js")
+        .then(() => {
+            // Now put the right sounds in there after everything
+            // got loaded.
+            const chipWaveSamples: Float32Array[] = [
+            centerWave(secretsample1),
+            ];
+            let chipWaveIndexOffset: number = 0;
+            for (const chipWaveSample of chipWaveSamples) {
+            const chipWaveIndex: number = startIndex + chipWaveIndexOffset;
+            Config.rawChipWaves[chipWaveIndex].samples = chipWaveSample;
+            Config.rawRawChipWaves[chipWaveIndex].samples = chipWaveSample;
+            Config.chipWaves[chipWaveIndex].samples = performIntegral(chipWaveSample);
+            sampleLoadingState.statusTable[chipWaveIndex] = SampleLoadingStatus.loaded;
+            sampleLoadingState.samplesLoaded++;
+            sampleLoadEvents.dispatchEvent(new SampleLoadedEvent(
+                sampleLoadingState.totalSamples,
+                sampleLoadingState.samplesLoaded
+            ));
+            chipWaveIndexOffset++;
+            }
+        });
+
     }
     else {
         console.log("invalid set of built-in samples");

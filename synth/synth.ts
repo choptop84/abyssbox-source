@@ -3693,6 +3693,7 @@ export class Song {
                     let willLoadLegacySamples = false;
                     let willLoadNintariboxSamples = false;
                     let willLoadMarioPaintboxSamples = false;
+                    let willLoadSecretSamples = false;
                     const customSampleUrls = [];
                     const customSamplePresets: Preset[] = [];
                     sampleLoadingState.statusTable = {};
@@ -3723,6 +3724,13 @@ export class Song {
                                 willLoadMarioPaintboxSamples = true;
                                 customSampleUrls.push(url);
                                 loadBuiltInSamples(2);
+                            }
+                        }
+                        else if (url.toLowerCase() === "secretsamples") {
+                            if (!willLoadSecretSamples) {
+                                willLoadSecretSamples = true;
+                                customSampleUrls.push(url);
+                                loadBuiltInSamples(3);
                             }
                         }
                         
@@ -6037,6 +6045,7 @@ export class Song {
                 let willLoadLegacySamples: boolean = false;
                 let willLoadNintariboxSamples: boolean = false;
                 let willLoadMarioPaintboxSamples: boolean = false;
+                let willLoadSecretSamples: boolean = false;
                 const customSampleUrls: string[] = [];
                 const customSamplePresets: Preset[] = [];
                 for (const url of customSamples) {
@@ -6061,7 +6070,14 @@ export class Song {
                             loadBuiltInSamples(2);
                         }
                     }
-                    
+                    else if (url.toLowerCase() === "secretsamples") {
+                        if (!willLoadSecretSamples) {
+                            willLoadSecretSamples = true;
+                            customSampleUrls.push(url);
+                            loadBuiltInSamples(3);
+                        }
+                    }
+
                     else {
                         // When EditorConfig.customSamples is saved in the json
                         // export, it should be using the new syntax, unless

@@ -388,6 +388,44 @@ var beepbox = (function (exports) {
                 }
             });
         }
+        else if (set == 3) {
+            const chipWaves = [
+                { name: "choptop84s announcement", expression: 4.0, isSampled: true, isPercussion: false, extraSampleDetune: 0 },
+            ];
+            sampleLoadingState.totalSamples += chipWaves.length;
+            const startIndex = Config.rawRawChipWaves.length;
+            for (const chipWave of chipWaves) {
+                const chipWaveIndex = Config.rawRawChipWaves.length;
+                const rawChipWave = { index: chipWaveIndex, name: chipWave.name, expression: chipWave.expression, isSampled: chipWave.isSampled, isPercussion: chipWave.isPercussion, extraSampleDetune: chipWave.extraSampleDetune, samples: defaultSamples };
+                const rawRawChipWave = { index: chipWaveIndex, name: chipWave.name, expression: chipWave.expression, isSampled: chipWave.isSampled, isPercussion: chipWave.isPercussion, extraSampleDetune: chipWave.extraSampleDetune, samples: defaultSamples };
+                const integratedChipWave = { index: chipWaveIndex, name: chipWave.name, expression: chipWave.expression, isSampled: chipWave.isSampled, isPercussion: chipWave.isPercussion, extraSampleDetune: chipWave.extraSampleDetune, samples: defaultIntegratedSamples };
+                Config.rawRawChipWaves[chipWaveIndex] = rawRawChipWave;
+                Config.rawRawChipWaves.dictionary[chipWave.name] = rawRawChipWave;
+                Config.rawChipWaves[chipWaveIndex] = rawChipWave;
+                Config.rawChipWaves.dictionary[chipWave.name] = rawChipWave;
+                Config.chipWaves[chipWaveIndex] = integratedChipWave;
+                Config.chipWaves.dictionary[chipWave.name] = rawChipWave;
+                sampleLoadingState.statusTable[chipWaveIndex] = 0;
+                sampleLoadingState.urlTable[chipWaveIndex] = "secretSamples";
+            }
+            loadScript("secretsamples.js")
+                .then(() => {
+                const chipWaveSamples = [
+                    centerWave(secretsample1),
+                ];
+                let chipWaveIndexOffset = 0;
+                for (const chipWaveSample of chipWaveSamples) {
+                    const chipWaveIndex = startIndex + chipWaveIndexOffset;
+                    Config.rawChipWaves[chipWaveIndex].samples = chipWaveSample;
+                    Config.rawRawChipWaves[chipWaveIndex].samples = chipWaveSample;
+                    Config.chipWaves[chipWaveIndex].samples = performIntegral(chipWaveSample);
+                    sampleLoadingState.statusTable[chipWaveIndex] = 1;
+                    sampleLoadingState.samplesLoaded++;
+                    sampleLoadEvents.dispatchEvent(new SampleLoadedEvent(sampleLoadingState.totalSamples, sampleLoadingState.samplesLoaded));
+                    chipWaveIndexOffset++;
+                }
+            });
+        }
         else {
             console.log("invalid set of built-in samples");
         }
@@ -2235,6 +2273,13 @@ var beepbox = (function (exports) {
     				image-rendering: optimizeSpeed !important;             /* IE */ 
 				}
 			.beepboxEditor button,
+			button.mobilePatternButton,
+			button.mobileTrackButton,
+			button.mobileSettingsButton,
+			button.mobilePlayButton,
+			button.mobilePauseButton,
+			button.mobileNextBarButton,
+			button.mobilePrevBarButton,
 			button.playButton,
 			button.pauseButton, 
 			button.recordButton, 
@@ -2550,6 +2595,13 @@ var beepbox = (function (exports) {
 			}
 
 			.beepboxEditor button,
+			button.mobilePatternButton,
+			button.mobileTrackButton,
+			button.mobileSettingsButton,
+			button.mobilePlayButton,
+			button.mobilePauseButton,
+			button.mobileNextBarButton,
+			button.mobilePrevBarButton,
 			button.playButton,
 			button.pauseButton, 
 			button.recordButton, 
@@ -2845,6 +2897,13 @@ var beepbox = (function (exports) {
     				image-rendering: optimizeSpeed !important;             /* IE */ 
 				}
 				.beepboxEditor button,
+				button.mobilePatternButton,
+				button.mobileTrackButton,
+				button.mobileSettingsButton,
+				button.mobilePlayButton,
+				button.mobilePauseButton,
+				button.mobileNextBarButton,
+				button.mobilePrevBarButton,
 				button.playButton,
 				button.pauseButton, 
 				button.recordButton, 
@@ -3465,7 +3524,7 @@ var beepbox = (function (exports) {
    					border-image-width: 4px !important; 
 					border-image-repeat: stretch; 
 				}
-				.beepboxEditor button
+				.beepboxEditor button, button
 				{
 					--ui-widget-background: linear-gradient(#84aef0, #2a3d6a) !important;
 					box-shadow:
@@ -3476,6 +3535,7 @@ var beepbox = (function (exports) {
 				}
 				.beepboxEditor .select2-container--open .select2-selection__rendered,
 				.beepboxEditor button:focus,
+				button:focus,
 				.beepboxEditor .instrument-bar .selected-instrument,
 				.beepboxEditor .eq-filter-type-bar button:not(.deactivated),
 				.beepboxEditor .note-filter-type-bar button:not(.deactivated)
@@ -4651,7 +4711,7 @@ var beepbox = (function (exports) {
 		  .beepboxEditor .instrument-bar .selected-instrument {
 			border-color: rgba(255, 255, 255, 1) !important;
 		  }
-		  .beepboxEditor button {
+		  .beepboxEditor button, button {
 			color: #fff;
 			background: #3c236f;
 		  }
@@ -4962,7 +5022,7 @@ var beepbox = (function (exports) {
 		   .beepboxEditor .instrument-bar .selected-instrument {
 			 border-color: #111111 !important;
 		   }
-		   .beepboxEditor button {
+		   .beepboxEditor button, button {
 			 color: #fff;
 			 background: #3c236f;
 		   }
@@ -5748,6 +5808,13 @@ var beepbox = (function (exports) {
 		}
 
 		.beepboxEditor button,
+		button.mobilePatternButton,
+		button.mobileTrackButton,
+		button.mobileSettingsButton,
+		button.mobilePlayButton,
+		button.mobilePauseButton,
+		button.mobileNextBarButton,
+		button.mobilePrevBarButton,
 		button.playButton,
 		button.pauseButton, 
 		button.recordButton, 
@@ -6951,7 +7018,7 @@ var beepbox = (function (exports) {
 				box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
 			}
 
-			.beepboxEditor button, .beepboxEditor select {
+			.beepboxEditor button, .beepboxEditor select, button {
 				box-shadow: inset 0 0 0 1px var(--secondary-text);
 			}
 
@@ -7358,7 +7425,7 @@ var beepbox = (function (exports) {
 							image-rendering: pixelated !important;                 /* Future browsers */
 							image-rendering: optimizeSpeed !important;             /* IE */ 
 						}
-					.beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered {
+					.beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered, button {
 							border-image-source: url("https://choptop84.github.io/abyssbox-app/forest2_border2.png") !important;
 							border-image-slice: 4 fill !important; 
 						   border-image-width: 4px !important; 
@@ -7764,7 +7831,7 @@ var beepbox = (function (exports) {
 					box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
 				}
 
-				.beepboxEditor button, .beepboxEditor select {
+				.beepboxEditor button, .beepboxEditor select, button {
 					background-color: var(--secondary-text);
 				}
 
@@ -9513,7 +9580,7 @@ var beepbox = (function (exports) {
 					image-rendering: pixelated !important;                 /* Future browsers */
 					image-rendering: optimizeSpeed !important;             /* IE */ 
 				}
-			.beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered {
+			.beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered, button {
 					border-image-source: url("https://choptop84.github.io/abyssbox-app/nebula2_border2.png") !important;
 					border-image-slice: 4 fill !important; 
 				   border-image-width: 4px !important; 
@@ -9792,7 +9859,7 @@ var beepbox = (function (exports) {
 			--mod-primary-note-lum: 55;
 			--mod-primary-note-lum-scale: 0;
 		}
-		.beepboxEditor button, .beepboxEditor select {
+		.beepboxEditor button, .beepboxEditor select, button {
 			box-shadow: inset 0 0 0 1px var(--secondary-text);
 		}
 		.select2-selection__rendered {
@@ -12251,7 +12318,7 @@ var beepbox = (function (exports) {
 					
 					
 				}
-				.beepboxEditor button, .beepboxEditor select {
+				.beepboxEditor button, .beepboxEditor select, button {
 					box-shadow: inset 0 0 0 1px var(--secondary-text);
 				}
 			`,
@@ -13655,7 +13722,7 @@ var beepbox = (function (exports) {
 			--noise5-primary-note:      #9787b3;
 		}
 		
-		.beepboxEditor button, .beepboxEditor select {
+		.beepboxEditor button, .beepboxEditor select, button {
 			box-shadow: inset 0 0 0 1px var(--secondary-text);
 		}
 		
@@ -18480,6 +18547,7 @@ var beepbox = (function (exports) {
                     let willLoadLegacySamples = false;
                     let willLoadNintariboxSamples = false;
                     let willLoadMarioPaintboxSamples = false;
+                    let willLoadSecretSamples = false;
                     const customSampleUrls = [];
                     const customSamplePresets = [];
                     sampleLoadingState.statusTable = {};
@@ -18505,6 +18573,13 @@ var beepbox = (function (exports) {
                         else if (url.toLowerCase() === "mariopaintboxsamples") {
                             if (!willLoadMarioPaintboxSamples) {
                                 willLoadMarioPaintboxSamples = true;
+                                customSampleUrls.push(url);
+                                loadBuiltInSamples(2);
+                            }
+                        }
+                        else if (url.toLowerCase() === "secretsamples") {
+                            if (!willLoadSecretSamples) {
+                                willLoadSecretSamples = true;
                                 customSampleUrls.push(url);
                                 loadBuiltInSamples(2);
                             }
@@ -20703,6 +20778,7 @@ var beepbox = (function (exports) {
                     let willLoadLegacySamples = false;
                     let willLoadNintariboxSamples = false;
                     let willLoadMarioPaintboxSamples = false;
+                    let willLoadSecretSamples = false;
                     const customSampleUrls = [];
                     const customSamplePresets = [];
                     for (const url of customSamples) {
@@ -20723,6 +20799,13 @@ var beepbox = (function (exports) {
                         else if (url.toLowerCase() === "mariopaintboxsamples") {
                             if (!willLoadMarioPaintboxSamples) {
                                 willLoadMarioPaintboxSamples = true;
+                                customSampleUrls.push(url);
+                                loadBuiltInSamples(2);
+                            }
+                        }
+                        else if (url.toLowerCase() === "secretsamples") {
+                            if (!willLoadSecretSamples) {
+                                willLoadSecretSamples = true;
                                 customSampleUrls.push(url);
                                 loadBuiltInSamples(2);
                             }
