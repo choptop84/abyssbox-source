@@ -287,7 +287,7 @@
                     }
                 }
 				</script>
-		
+
                     </p>
                     <p>
                         Notes go into patterns, and you can edit one pattern at a time.
@@ -389,6 +389,27 @@
                 <!-- </div> -->
             <!-- </aside> -->
         </div>
+    </div>
+
+    <div>
+        <img id="egg" src="./egg/egg.png" style="display: none; cursor:pointer; width: 10px; height: 13px; left:0; bottom: 0; position: fixed;" onclick="toEgg()"/>
+        <script>
+
+            function getRandomInt(max) {
+                return Math.floor(Math.random() * max);
+                }
+
+            var egg = document.getElementById('egg');
+            var doesEggDisplay = getRandomInt(100);
+
+            if (doesEggDisplay == 1) {
+                egg.style.display = "";
+            }
+
+            function toEgg() {
+                location.href = 'http://choptop84.github.io/abyssbox-app/egg';
+            }
+        </script>
     </div>
 
     <!--
