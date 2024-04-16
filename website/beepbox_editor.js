@@ -10308,7 +10308,7 @@ var beepbox = (function (exports) {
 			}
 
 			.prompt.noSelection {
-				background: #040410;
+				background: #040410 !important;
 			}
 
 			body {

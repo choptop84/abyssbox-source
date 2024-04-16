@@ -7961,7 +7961,7 @@ export class ColorConfig {
 			}
 
 			.prompt.noSelection {
-				background: #040410;
+				background: #040410 !important;
 			}
 
 			body {
