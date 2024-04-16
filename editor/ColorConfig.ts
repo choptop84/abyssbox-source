@@ -4861,6 +4861,23 @@ export class ColorConfig {
 								cursor: url("https://choptop84.github.io/abyssbox-app/abyssbox_cursor_hand.png"), pointer !important;
 							}
 			
+						.beepboxEditor .channelBox {
+							clip-path: polygon(
+								0px calc(100% - 2px),
+								2px calc(100% - 2px),
+								2px 100%,
+								calc(100% - 2px) 100%,
+								calc(100% - 2px) calc(100% - 2px),
+								100% calc(100% - 2px),
+								100% 2px,
+								calc(100% - 2px) 2px,
+								calc(100% - 2px) 0px,
+								2px 0px,
+								2px 2px,
+								0px 2px
+							  );
+							}
+							
 						div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
 							--ui-widget-background: #1e0915 !important;
 							border-image-source:none !important;

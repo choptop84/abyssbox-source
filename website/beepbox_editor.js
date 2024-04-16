@@ -7208,6 +7208,23 @@ var beepbox = (function (exports) {
 								cursor: url("https://choptop84.github.io/abyssbox-app/abyssbox_cursor_hand.png"), pointer !important;
 							}
 			
+						.beepboxEditor .channelBox {
+							clip-path: polygon(
+								0px calc(100% - 2px),
+								2px calc(100% - 2px),
+								2px 100%,
+								calc(100% - 2px) 100%,
+								calc(100% - 2px) calc(100% - 2px),
+								100% calc(100% - 2px),
+								100% 2px,
+								calc(100% - 2px) 2px,
+								calc(100% - 2px) 0px,
+								2px 0px,
+								2px 2px,
+								0px 2px
+							  );
+							}
+							
 						div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
 							--ui-widget-background: #1e0915 !important;
 							border-image-source:none !important;
@@ -43424,6 +43441,7 @@ You should be redirected to the song at:<br /><br />
                         let colorSecondary = (disabled ? ColorConfig.disabledNoteSecondary : ColorConfig.getChannelColor(this._doc.song, this._doc.channel).secondaryNote);
                         notePath.setAttribute("fill", colorSecondary);
                         notePath.setAttribute("pointer-events", "none");
+                        notePath.setAttribute("class", "note-secondary");
                         this._drawNote(notePath, pitch, note.start, note.pins, (this._pitchHeight - this._pitchBorder) / 2 + 1, false, this._octaveOffset);
                         this._svgNoteContainer.appendChild(notePath);
                         notePath = SVG.path();
@@ -43431,6 +43449,7 @@ You should be redirected to the song at:<br /><br />
                         notePath.setAttribute("pointer-events", "none");
                         this._drawNote(notePath, pitch, note.start, note.pins, (this._pitchHeight - this._pitchBorder) / 2 + 1, true, this._octaveOffset);
                         this._svgNoteContainer.appendChild(notePath);
+                        notePath.setAttribute("class", "note-primary");
                         if (this._doc.prefs.notesFlashWhenPlayed && !disabled) {
                             notePath = SVG.path();
                             const noteFlashColor = ColorConfig.getComputed("--note-flash") !== "" ? "var(--note-flash)" : "#ffffff";
