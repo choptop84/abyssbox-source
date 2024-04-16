@@ -55,7 +55,8 @@ export class ColorConfig {
 			--mod-label-primary: #541625; 		
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
-		
+			--mod-title: #bf2c5d;
+
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 43; 		
@@ -142,6 +143,9 @@ export class ColorConfig {
 
 			--note-flash: #ffffff;
 			--note-flash-secondary: #ffffff77;
+
+			--oscilloscope-line-L: var(--ui-widget-background);
+			--oscilloscope-line-R: var(--secondary-text);
 				}
 		* {
 		cursor: url("abyssbox_cursor.png"), auto;
@@ -384,7 +388,8 @@ export class ColorConfig {
 			--mod-label-primary: #541625; 		
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
-		
+			--mod-title: #bf2c5d;
+
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 43; 		
@@ -471,6 +476,9 @@ export class ColorConfig {
 
 			--note-flash: #ffffff;
 			--note-flash-secondary: #ffffff77;
+
+			--oscilloscope-line-L: var(--ui-widget-background);
+			--oscilloscope-line-R: var(--secondary-text);
 				}		
 		/* sets cursor */ 
 		* {
@@ -772,6 +780,9 @@ export class ColorConfig {
 			--mod-primary-note-lum-scale: 0; 	
 			--note-flash: #ffffff;
 			--note-flash-secondary: #ffffff77;
+
+			--oscilloscope-line-L: var(--ui-widget-background);
+			--oscilloscope-line-R: var(--secondary-text);
 				}
 
 				.promptContainerBG::before {
