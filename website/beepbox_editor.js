@@ -7136,7 +7136,7 @@ var beepbox = (function (exports) {
 			
 						/* sets background image */
 						body {
-						background-image: url("https://choptop84.github.io/abyssbox-source/website/stripesbg.gif") !important;
+						background-image: url("https://choptop84.github.io/abyssbox-source/website/diamondsbg.gif") !important;
 						background-position: center;
 						background-repeat: repeat;
 			
