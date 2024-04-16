@@ -5607,7 +5607,9 @@ export class ColorConfig {
 					--tonic: #4dac5b; 
 					--fifth-note: #458343; 
 					--white-piano-key: #bee9bf; 
-					--black-piano-key: #395e3c; 
+					--black-piano-key: #395e3c;
+					--white-piano-key-text: #024a0c;		
+					--black-piano-key-text: #96d69f; 
 					--use-color-formula: true; 
 					--track-editor-bg-pitch: #43a631; 
 					--track-editor-bg-pitch-dim: #387e34; 
