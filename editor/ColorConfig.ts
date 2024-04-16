@@ -4800,12 +4800,8 @@ export class ColorConfig {
 						image-rendering: optimizeSpeed !important;             /* IE */
 							}
 			
-						/*#Hotdog {
-							content: url("https://choptop84.github.io/choptop84s-image-repository/abclassic_hotdog.png");
-						} */
-			
 						#text-content {
-								border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png");
+								border-image-source: url("https://choptop84.github.io/abyssbox-source/website/beepbox_pixel_border.png");
 								border-image-slice: 4 fill; 
 							   border-image-width: 8px; 
 							border-image-repeat: stretch; 
@@ -4818,7 +4814,7 @@ export class ColorConfig {
 								image-rendering: optimizeSpeed !important;             /* IE */
 							}
 						#beepboxEditorContainer {
-								border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png");
+								border-image-source: url("https://choptop84.github.io/abyssbox-source/website/beepbox_pixel_border.png");
 								border-image-slice: 4 fill; 
 							   border-image-width: 8px; 
 							border-image-repeat: stretch;
@@ -4850,7 +4846,7 @@ export class ColorConfig {
 						button.importInstrumentButton, 
 						.beepboxEditor select, 
 						.beepboxEditor .select2-selection__rendered {
-								border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png") !important;
+								border-image-source: url("https://choptop84.github.io/abyssbox-source/website/beepbox_pixel_border.png") !important;
 								border-image-slice: 4 fill !important; 
 							   border-image-width: 4px !important; 
 							border-image-repeat: stretch !important;
