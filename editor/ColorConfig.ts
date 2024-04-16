@@ -3627,7 +3627,7 @@ export class ColorConfig {
 					border-radius: 15px;
 					border: 0px solid var(--ui-widget-background) !important;
 					padding-left: 20px !important;
-					box-shadow: 6px 6px 27px 4px rgba(0, 0, 0, 0.5) !important
+					box-shadow: 6px 6px 27px 4px rgba(0, 0, 0, 0.5) !important;
 					padding-top: 6px !important;
 					padding-right: 20px !important;
 					padding-bottom: 20px !important;
@@ -4615,7 +4615,350 @@ export class ColorConfig {
 				}
 
 			`,
-
+			"BeepBox Pixel": `
+			:root {
+				--page-margin: black;
+				--editor-background: black;
+				--hover-preview: white;
+				--playhead: white;
+				--primary-text: white;
+				--secondary-text: #999;
+				--inverted-text: black;
+				--text-selection: rgba(119,68,255,0.99);
+				--box-selection-fill: rgba(255,255,255,0.2);
+				--loop-accent: #74f;
+				--link-accent: #98f;
+				--ui-widget-background: #444;
+				--ui-widget-focus: #777;
+				--pitch-background: #444;
+				--tonic: #864;
+				--fifth-note: #468;
+				--white-piano-key: #bbb;
+				--black-piano-key: #444;
+				--white-piano-key-text: #131200;
+				--black-piano-key-text: #fff;
+					--use-color-formula: false;
+					--track-editor-bg-pitch: #444;
+					--track-editor-bg-pitch-dim: #333;
+					--track-editor-bg-noise: #444;
+					--track-editor-bg-noise-dim: #333;
+					--track-editor-bg-mod: #234;
+					--track-editor-bg-mod-dim: #123;
+					--multiplicative-mod-slider: #456;
+					--overwriting-mod-slider: #654;
+					--indicator-primary: #74f;
+					--indicator-secondary: #444;
+					--select2-opt-group: #585858;
+					--input-box-outline: #333;
+					--mute-button-normal: #ffa033;
+					--mute-button-mod: #9a6bff;
+				--pitch1-secondary-channel: #0099A1;
+				--pitch1-primary-channel:   #25F3FF;
+				--pitch1-secondary-note:    #00BDC7;
+				--pitch1-primary-note:      #92F9FF;
+				--pitch2-secondary-channel: #A1A100;
+				--pitch2-primary-channel:   #FFFF25;
+				--pitch2-secondary-note:    #C7C700;
+				--pitch2-primary-note:      #FFFF92;
+				--pitch3-secondary-channel: #C75000;
+				--pitch3-primary-channel:   #FF9752;
+				--pitch3-secondary-note:    #FF771C;
+				--pitch3-primary-note:      #FFCDAB;
+				--pitch4-secondary-channel: #00A100;
+				--pitch4-primary-channel:   #50FF50;
+				--pitch4-secondary-note:    #00C700;
+				--pitch4-primary-note:      #A0FFA0;
+				--pitch5-secondary-channel: #D020D0;
+				--pitch5-primary-channel:   #FF90FF;
+				--pitch5-secondary-note:    #E040E0;
+				--pitch5-primary-note:      #FFC0FF;
+				--pitch6-secondary-channel: #7777B0;
+				--pitch6-primary-channel:   #A0A0FF;
+				--pitch6-secondary-note:    #8888D0;
+				--pitch6-primary-note:      #D0D0FF;
+				--pitch7-secondary-channel: #8AA100;
+				--pitch7-primary-channel:   #DEFF25;
+				--pitch7-secondary-note:    #AAC700;
+				--pitch7-primary-note:      #E6FF92;
+				--pitch8-secondary-channel: #DF0019;
+				--pitch8-primary-channel:   #FF98A4;
+				--pitch8-secondary-note:    #FF4E63;
+				--pitch8-primary-note:      #FFB2BB;
+				--pitch9-secondary-channel: #00A170;
+				--pitch9-primary-channel:   #50FFC9;
+				--pitch9-secondary-note:    #00C78A;
+				--pitch9-primary-note:      #83FFD9;
+				--pitch10-secondary-channel:#A11FFF;
+				--pitch10-primary-channel:  #CE8BFF;
+				--pitch10-secondary-note:   #B757FF;
+				--pitch10-primary-note:     #DFACFF;
+				--noise1-secondary-channel: #6F6F6F;
+				--noise1-primary-channel:   #AAAAAA;
+				--noise1-secondary-note:    #A7A7A7;
+				--noise1-primary-note:      #E0E0E0;
+				--noise2-secondary-channel: #996633;
+				--noise2-primary-channel:   #DDAA77;
+				--noise2-secondary-note:    #CC9966;
+				--noise2-primary-note:      #F0D0BB;
+				--noise3-secondary-channel: #4A6D8F;
+				--noise3-primary-channel:   #77AADD;
+				--noise3-secondary-note:    #6F9FCF;
+				--noise3-primary-note:      #BBD7FF;
+				--noise4-secondary-channel: #7A4F9A;
+				--noise4-primary-channel:   #AF82D2;
+				--noise4-secondary-note:    #9E71C1;
+				--noise4-primary-note:      #D4C1EA;
+				--noise5-secondary-channel: #607837;
+				--noise5-primary-channel:   #A2BB77;
+				--noise5-secondary-note:    #91AA66;
+				--noise5-primary-note:      #C5E2B2;
+          --mod1-secondary-channel:   #339955;
+					--mod1-primary-channel:     #77fc55;
+					--mod1-secondary-note:      #77ff8a;
+					--mod1-primary-note:        #cdffee;
+					--mod2-secondary-channel:   #993355;
+					--mod2-primary-channel:     #f04960;
+					--mod2-secondary-note:      #f057a0;
+					--mod2-primary-note:        #ffb8de;
+					--mod3-secondary-channel:   #553399;
+					--mod3-primary-channel:     #8855fc;
+					--mod3-secondary-note:      #aa64ff;
+					--mod3-primary-note:	    #f8ddff;
+					--mod4-secondary-channel:   #a86436;
+					--mod4-primary-channel:     #c8a825;
+					--mod4-secondary-note:      #e8ba46;
+					--mod4-primary-note:        #fff6d3;
+					--mod-label-primary:        #999;
+					--mod-label-secondary-text: #333;
+					--mod-label-primary-text:   black;
+					--disabled-note-primary:    #999;
+					--disabled-note-secondary:  #666;
+				}		
+				
+				* {
+					cursor: url("abyssbox_cursor.png"), auto;
+					--file-page-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-file.png");
+					--edit-pencil-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-edit.png");
+					--preferences-gear-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-preferences.png");
+					--instrument-copy-symbol: url("https://choptop84.github.io/abyssbox-app/icon-copy.png");
+					--instrument-paste-symbol: url("https://choptop84.github.io/abyssbox-app/icon-paste.png");
+					--play-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-play.png");
+					--pause-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-pause.png");
+					--record-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-record.png");
+					--stop-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-stop.png");
+					--prev-bar-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-prev.png");
+					--next-bar-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-next.png");
+					--muted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speakerMuted.png");
+					--unmuted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speaker.png");
+					--volume-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speaker.png");
+					--zoom-in-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomIn.png");
+					--zoom-out-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomOut.png");
+					--export-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-export.png");
+					--import-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-import.png");
+					}
+					
+						@font-face {
+					   font-family: "AbyssType";
+					   src:
+						url("abysstype.otf") format("opentype") tech(color-COLRv1),
+						}
+			
+						.selectRow .copyButton svg {
+							-webkit-mask-image: var(--copy-symbol);
+							image-rendering: optimizeSpeed !important;
+							background: currentColor;
+						}
+			
+						.selectRow .pasteButton svg {
+							-webkit-mask-image: var(--paste-symbol);
+							image-rendering: optimizeSpeed !important;
+							background: currentColor;
+						}
+			
+						.selectRow .exportInstrumentButton svg {
+							-webkit-mask-image: var(--export-symbol);
+							image-rendering: optimizeSpeed !important;
+							background: currentColor;
+						}
+			
+						.selectRow .importInstrumentButton svg {
+							-webkit-mask-image: var(--import-symbol);
+							image-rendering: optimizeSpeed !important;
+							background: currentColor;
+						}
+			
+						/* sets background image */
+						body {
+						background-image: url("https://choptop84.github.io/abyssbox-source/website/stripesbg.gif") !important;
+						background-position: center;
+						background-repeat: repeat;
+			
+						image-rendering: -moz-crisp-edges !important;         /* Firefox */
+						image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+						image-rendering: -o-crisp-edges !important;            /* Opera */
+						image-rendering: pixelated !important;                 /* Future browsers */
+						image-rendering: optimizeSpeed !important;             /* IE */
+							}
+			
+						/*#Hotdog {
+							content: url("https://choptop84.github.io/choptop84s-image-repository/abclassic_hotdog.png");
+						} */
+			
+						#text-content {
+								border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png");
+								border-image-slice: 4 fill; 
+							   border-image-width: 8px; 
+							border-image-repeat: stretch; 
+								padding: 12px; 
+			
+								image-rendering: -moz-crisp-edges !important;         /* Firefox */
+								image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+								image-rendering: -o-crisp-edges !important;            /* Opera */
+								image-rendering: pixelated !important;                 /* Future browsers */
+								image-rendering: optimizeSpeed !important;             /* IE */
+							}
+						#beepboxEditorContainer {
+								border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png");
+								border-image-slice: 4 fill; 
+							   border-image-width: 8px; 
+							border-image-repeat: stretch;
+								padding: 12px;
+			
+								image-rendering: -moz-crisp-edges !important;         /* Firefox */
+								image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+								image-rendering: -o-crisp-edges !important;            /* Opera */
+								image-rendering: pixelated !important;                 /* Future browsers */
+								image-rendering: optimizeSpeed !important;             /* IE */ 
+							}
+						.beepboxEditor button,
+						button.mobilePatternButton,
+						button.mobileTrackButton,
+						button.mobileSettingsButton,
+						button.mobilePlayButton,
+						button.mobilePauseButton,
+						button.mobileNextBarButton,
+						button.mobilePrevBarButton,
+						button.playButton,
+						button.pauseButton, 
+						button.recordButton, 
+						button.stopButton,
+						button.nextBarButton, 
+						button.prevBarButton, 
+						button.copyButton, 
+						button.pasteButton, 
+						button.exportInstrumentButton, 
+						button.importInstrumentButton, 
+						.beepboxEditor select, 
+						.beepboxEditor .select2-selection__rendered {
+								border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png") !important;
+								border-image-slice: 4 fill !important; 
+							   border-image-width: 4px !important; 
+							border-image-repeat: stretch !important;
+								padding: 4px !important; 
+			
+								image-rendering: -moz-crisp-edges !important;         /* Firefox */
+								image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+								image-rendering: -o-crisp-edges !important;            /* Opera */
+								image-rendering: pixelated !important;                 /* Future browsers */
+								image-rendering: optimizeSpeed !important;             /* IE */
+			
+								cursor: url("https://choptop84.github.io/abyssbox-app/abyssbox_cursor_hand.png"), pointer !important;
+							}
+			
+						div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+							--ui-widget-background: #1e0915 !important;
+							border-image-source:none !important;
+						}
+			
+							select.trackSelectBox {
+								border-image: none !important;
+							}
+							
+						@font-face {
+					   font-family: "AbyssType_small";
+					   src:
+						url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
+						}
+			
+						html {
+							font-family: 'AbyssType';
+						}
+			
+						div.channelBoxLabel {
+							font-family: 'AbyssType_small' !important;
+						}
+			
+						.beepboxEditor input[type="range"]::-webkit-slider-thumb
+						{
+							cursor: url("https://choptop84.github.io/abyssbox-app/abyssbox_cursor_hand.png"), pointer !important;
+						}
+						 
+						.beepboxEditor input[type="range"]::-webkit-slider-runnable-track
+						{
+							cursor: url("https://choptop84.github.io/abyssbox-app/abyssbox_cursor_hand.png"), pointer !important;
+						}
+						 
+						.beepboxEditor input[type="range"]:focus::-webkit-slider-runnable-track
+						{
+							cursor: url("https://choptop84.github.io/abyssbox-app/abyssbox_cursor_hand.png"), pointer !important;
+						}
+						 
+						.beepboxEditor input[type="range"]::-ms-thumb
+						{
+							cursor: url("https://choptop84.github.io/abyssbox-app/abyssbox_cursor_hand.png"), pointer !important;
+						}
+						 
+						.beepboxEditor input[type="range"]::-ms-track
+						{
+							cursor: url("https://choptop84.github.io/abyssbox-app/abyssbox_cursor_hand.png"), pointer !important;
+						}
+						 
+						.beepboxEditor input[type="range"]:focus::-ms-track
+						{
+							cursor: url("https://choptop84.github.io/abyssbox-app/abyssbox_cursor_hand.png"), pointer !important;
+						}
+						 
+						.beepboxEditor input[type="range"]::-moz-range-thumb
+						{
+							cursor: url("https://choptop84.github.io/abyssbox-app/abyssbox_cursor_hand.png"), pointer !important;
+						}
+						 
+						.beepboxEditor input[type="range"]::-moz-range-track
+						{
+							cursor: url("https://choptop84.github.io/abyssbox-app/abyssbox_cursor_hand.png"), pointer !important;
+						}
+						 
+						.beepboxEditor input[type="range"]:focus::-moz-range-track
+						{
+							cursor: url("https://choptop84.github.io/abyssbox-app/abyssbox_cursor_hand.png"), pointer !important;
+						}
+						 
+						.beepboxEditor input[type="text"],
+						.beepboxEditor input[type="number"]
+						{
+							cursor: url("https://choptop84.github.io/abyssbox-app/abyssbox_cursor_hand.png"), pointer !important;
+						}
+						 
+						.beepboxEditor input[type="checkbox"]
+						{
+							cursor: url("https://choptop84.github.io/abyssbox-app/abyssbox_cursor_hand.png"), pointer !important;
+						}
+						 
+						.beepboxEditor input[type="checkbox"]:checked
+						{
+							cursor: url("https://choptop84.github.io/abyssbox-app/abyssbox_cursor_hand.png"), pointer !important;
+						}
+						 
+						.beepboxEditor input[type="checkbox"]:checked:after
+						{
+							cursor: url("https://choptop84.github.io/abyssbox-app/abyssbox_cursor_hand.png"), pointer !important;
+						}
+			
+						div.selectRow span {
+							cursor: url("https://choptop84.github.io/abyssbox-app/abyssbox_cursor_hand.png"), pointer !important;
+						}
+			
+			`,
       "dark classic": `
 			:root {
 				--page-margin: black;

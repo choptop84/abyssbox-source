@@ -33,6 +33,7 @@ let doReload = false;
 		option({ value: "dark classic" }, "BeepBox Dark"),
 		option({ value: "light classic" }, "BeepBox Light"),
 		option({ value: "dark competition" }, "BeepBox Competition Dark"),
+		option({ value: "BeepBox Pixel" }, "BeepBox Pixel"),
 		option({ value: "jummbox classic" }, "JummBox Dark"),
 		option({ value: "jummbox light" }, "JummBox Light"),
 		option({ value: "gold light" }, "Gold Light"),
