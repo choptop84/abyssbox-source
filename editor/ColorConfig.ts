@@ -5704,6 +5704,56 @@ export class ColorConfig {
 
 
 					}
+
+					.note-primary {
+						clip-path: polygon(
+							0px calc(100% - 4px),
+							4px calc(100% - 4px),
+							4px 100%,
+							calc(100% - 4px) 100%,
+							calc(100% - 4px) calc(100% - 4px),
+							100% calc(100% - 4px),
+							100% 4px,
+							calc(100% - 4px) 4px,
+							calc(100% - 4px) 0px,
+							4px 0px,
+							4px 4px,
+							0px 4px
+						  );
+					}
+					.note-secondary {
+						clip-path: polygon(
+							0px calc(100% - 4px),
+							4px calc(100% - 4px),
+							4px 100%,
+							calc(100% - 4px) 100%,
+							calc(100% - 4px) calc(100% - 4px),
+							100% calc(100% - 4px),
+							100% 4px,
+							calc(100% - 4px) 4px,
+							calc(100% - 4px) 0px,
+							4px 0px,
+							4px 4px,
+							0px 4px
+						  );
+					}
+					.note-flash {
+						clip-path: polygon(
+							0px calc(100% - 4px),
+							4px calc(100% - 4px),
+							4px 100%,
+							calc(100% - 4px) 100%,
+							calc(100% - 4px) calc(100% - 4px),
+							100% calc(100% - 4px),
+							100% 4px,
+							calc(100% - 4px) 4px,
+							calc(100% - 4px) 0px,
+							4px 0px,
+							4px 4px,
+							0px 4px
+						  );
+					}
+
 					/* sets background image */
 					body {
 						background-image: url("https://choptop84.github.io/abyssbox-app/Forest2Trees.png") !important;
@@ -7860,6 +7910,60 @@ export class ColorConfig {
 				
 				
 			}
+
+			.note-primary {
+				clip-path: polygon(
+					0px calc(100% - 4px),
+					4px calc(100% - 4px),
+					4px 100%,
+					calc(100% - 4px) 100%,
+					calc(100% - 4px) calc(100% - 4px),
+					100% calc(100% - 4px),
+					100% 4px,
+					calc(100% - 4px) 4px,
+					calc(100% - 4px) 0px,
+					4px 0px,
+					4px 4px,
+					0px 4px
+				  );
+			}
+			.note-secondary {
+				clip-path: polygon(
+					0px calc(100% - 4px),
+					4px calc(100% - 4px),
+					4px 100%,
+					calc(100% - 4px) 100%,
+					calc(100% - 4px) calc(100% - 4px),
+					100% calc(100% - 4px),
+					100% 4px,
+					calc(100% - 4px) 4px,
+					calc(100% - 4px) 0px,
+					4px 0px,
+					4px 4px,
+					0px 4px
+				  );
+			}
+			.note-flash {
+				clip-path: polygon(
+					0px calc(100% - 4px),
+					4px calc(100% - 4px),
+					4px 100%,
+					calc(100% - 4px) 100%,
+					calc(100% - 4px) calc(100% - 4px),
+					100% calc(100% - 4px),
+					100% 4px,
+					calc(100% - 4px) 4px,
+					calc(100% - 4px) 0px,
+					4px 0px,
+					4px 4px,
+					0px 4px
+				  );
+			}
+
+			.prompt.noSelection {
+				background: #040410;
+			}
+
 			body {
 				background-image: url("https://choptop84.github.io/abyssbox-app/stars.gif") !important;
 				background-size: contain;
