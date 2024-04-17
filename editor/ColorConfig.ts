@@ -5744,6 +5744,25 @@ export class ColorConfig {
 					} */
 					* {
 						cursor: url("https://choptop84.github.io/abyssbox-app/pixel_cursor.png"), auto !important;
+						--file-page-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-file.png");
+						--edit-pencil-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-edit.png");
+						--preferences-gear-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-preferences.png");
+						--instrument-copy-symbol: url("https://choptop84.github.io/abyssbox-app/icon-copy.png");
+						--instrument-paste-symbol: url("https://choptop84.github.io/abyssbox-app/icon-paste.png");
+						--play-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-play.png");
+						--pause-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-pause.png");
+						--record-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-record.png");
+						--stop-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-stop.png");
+						--prev-bar-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-prev.png");
+						--next-bar-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-next.png");
+						--muted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speakerMuted.png");
+						--unmuted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speaker.png");
+						--volume-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speaker.png");
+						--zoom-in-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomIn.png");
+						--zoom-out-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomOut.png");
+						--export-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-export.png");
+						--export-instrument-symbol: var(--export-symbol);
+						--import-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-import.png");
 						} 
 							@font-face {
 						   font-family: "AbyssType";
@@ -7950,6 +7969,25 @@ export class ColorConfig {
 			} */
 			* {
 				cursor: url("https://choptop84.github.io/abyssbox-app/pixel_cursor.png"), auto !important;
+				--file-page-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-file.png");
+				--edit-pencil-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-edit.png");
+				--preferences-gear-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-preferences.png");
+				--instrument-copy-symbol: url("https://choptop84.github.io/abyssbox-app/icon-copy.png");
+				--instrument-paste-symbol: url("https://choptop84.github.io/abyssbox-app/icon-paste.png");
+				--play-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-play.png");
+				--pause-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-pause.png");
+				--record-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-record.png");
+				--stop-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-stop.png");
+				--prev-bar-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-prev.png");
+				--next-bar-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-next.png");
+				--muted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speakerMuted.png");
+				--unmuted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speaker.png");
+				--volume-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speaker.png");
+				--zoom-in-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomIn.png");
+				--zoom-out-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomOut.png");
+				--export-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-export.png");
+				--export-instrument-symbol: var(--export-symbol);
+				--import-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-import.png");
 				} 
 					@font-face {
 				   font-family: "AbyssType";
