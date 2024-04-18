@@ -15,6 +15,9 @@ const {button, div, h2, input, p, option, select} = HTML;
 let doReload = false;
 	export class ThemePrompt implements Prompt {
 
+// theme option format:
+//		option({value:"the theme name from ColorConfig.ts"}, "Whatever you want it to be called"),
+
 		private readonly _themeSelect: HTMLSelectElement = select({ style: "width: 100%;" },
 		option({ value: "AbyssBox Classic"}, "AbyssBox Classic"),
 		option({ value: "AbyssBox Competitive"}, "AbyssBox Competitive"),
@@ -32,6 +35,7 @@ let doReload = false;
 		option({ value: "Glyde"}, "Glyde"),
 		option({ value: "Terminal 2.0 (AB)"}, "Terminal 2.0 (AB)"),
 		option({ value: "Slushie"}, "Slushie"),
+		option({ value: "Slushie Pixel"}, "Slushie 2"),
 		option({ value: "dark classic" }, "BeepBox Dark"),
 		option({ value: "light classic" }, "BeepBox Light"),
 		option({ value: "dark competition" }, "BeepBox Competition Dark"),
@@ -565,6 +569,7 @@ let doReload = false;
 			this._doc.prompt = null;
 			this._doc.prefs.colorTheme = this._themeSelect.value;
 			this._doc.undo();
+			
 		}
 
 		private _previewTheme = (): void => {
