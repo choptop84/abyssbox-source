@@ -6893,7 +6893,7 @@ export class ColorConfig {
 				--white-piano-key-text: #131200;
 				--black-piano-key-text: #ffffff;
 				--use-color-formula: true;
-				--track-editor-bg-pitch: #6d071b;
+				--track-editor-bg-pitch: #a80b2b;
 				--track-editor-bg-pitch-dim: #38030e;
 				--track-editor-bg-noise: #3a3551;
 				--track-editor-bg-noise-dim: #272732;
