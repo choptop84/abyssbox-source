@@ -4007,7 +4007,7 @@ var beepbox = (function (exports) {
 			`,
         "Skeuomorphic": `
 		:root {
-			--page-margin: #1e1e1e;
+			--page-margin: #020202;
 			--editor-background: #1e1e1e;
 			--hover-preview: white;
 			--playhead: rgba(255, 255, 255, 0.9);
