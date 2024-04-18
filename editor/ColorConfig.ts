@@ -263,6 +263,11 @@ export class ColorConfig {
 					border-image: none !important;
 				}
 				
+				button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+					--ui-widget-background: var(--editor-background) !important;
+					border-image-source: none !important;
+				}
+
 			@font-face {
 		   font-family: "AbyssType_small";
 		   src:
@@ -528,8 +533,10 @@ export class ColorConfig {
 			button.mobileSettingsButton,
 			button.mobilePlayButton,
 			button.mobilePauseButton,
+			button.cancelButton,
 			button.mobileNextBarButton,
 			button.mobilePrevBarButton,
+			button.insertChannelButton,
 			button.playButton,
 			button.pauseButton, 
 			button.recordButton, 
@@ -539,7 +546,9 @@ export class ColorConfig {
 			button.copyButton, 
 			button.pasteButton, 
 			button.exportInstrumentButton, 
-			button.importInstrumentButton, 
+			button.importInstrumentButton,
+			button.okayButton, 
+			button.songLoopButton,
 			.beepboxEditor select, 
 			.beepboxEditor .select2-selection__rendered {
 					border-style: double !important;
@@ -552,6 +561,7 @@ export class ColorConfig {
 			button.notesUpButton::before,
 			button.copyPatternButton::before,
 			button.pastePatternButton::before,
+			button.insertChannelButton::before,
 			button.undoButton::before,
 			button.redoButton::before,
 			button.loopBarButton::before,
@@ -559,9 +569,16 @@ export class ColorConfig {
 			button.selectAllButton::before,
 			button.deleteChannelButton::before, 
 			button.insertRowButton::before,
+			button.okayButton::before, 
+			button.songLoopButton::before,
 			.delete-envelope::before {
 				left: -3px !important;
 				top: -3px !important;
+			}
+
+			button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+				--ui-widget-background: var(--editor-background) !important;
+				border-image-source: none !important;
 			}
 
 			div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
@@ -911,6 +928,11 @@ export class ColorConfig {
 		   font-family: "AbyssType_small";
 		   src:
  		   url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
+			}
+
+			button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+				--ui-widget-background: var(--editor-background) !important;
+				border-image-source: none !important;
 			}
 
 			html {
@@ -2481,6 +2503,11 @@ export class ColorConfig {
 		   font-family: "AbyssType";
 		   src:
  		   url("abysstype.otf") format("opentype") tech(color-COLRv1),
+			}
+
+			button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+				--ui-widget-background: var(--editor-background) !important;
+				border-image-source: none !important;
 			}
 
 			#text-content {
@@ -4562,6 +4589,11 @@ export class ColorConfig {
 					image-rendering: optimizeSpeed !important;             /* IE */
 				}
 
+				button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+					--ui-widget-background: var(--editor-background) !important;
+					border-image-source: none !important;
+				}
+
 				.beepboxEditor input[type="range"]::-webkit-slider-thumb
 				{
 					cursor: url("https://choptop84.github.io/choptop84s-image-repository/xphandcursor.png"), pointer !important;
@@ -5137,6 +5169,11 @@ export class ColorConfig {
 							cursor: url("https://choptop84.github.io/choptop84s-image-repository/slush_pixel_hand.png"), pointer !important;
 						}
 			
+						button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+							--ui-widget-background: var(--editor-background) !important;
+							border-image-source: none !important;
+						}
+
 					html {
 					font-family: 'AbyssType';
 					}
@@ -5724,10 +5761,10 @@ export class ColorConfig {
 							  );
 							}
 							
-						div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
-							--ui-widget-background: #1e0915 !important;
-							border-image-source:none !important;
-						}
+							button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+								--ui-widget-background: var(--editor-background) !important;
+								border-image-source: none !important;
+							}
 			
 							select.trackSelectBox {
 								border-image: none !important;
@@ -6696,6 +6733,11 @@ export class ColorConfig {
 							url("abysstype.otf") format("opentype") tech(color-COLRv1),
 							}
 				
+							button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+								--ui-widget-background: var(--editor-background) !important;
+								border-image-source: none !important;
+							}
+
 							@font-face {
 						   font-family: "AbyssType_small";
 						   src:
@@ -6828,6 +6870,256 @@ export class ColorConfig {
 					
 				}
 			`,
+			"canyon 2": `
+			:root {
+				--page-margin: #0a0000;
+				--editor-background: #5a1616;
+				--hover-preview: white;
+				--playhead: rgba(247, 172, 196, 0.9);
+				--primary-text: #f5d6bf;
+				--secondary-text: #ff234d;
+				--inverted-text: #290505;
+				--text-selection: rgba(255, 208, 68, 0.99);
+				--box-selection-fill: #94044870;
+				--loop-accent: #ff1e1e;
+				--link-accent: #da7b76;
+				--ui-widget-background: #832d2d;
+				--ui-widget-focus: #832d2d;
+				--pitch-background: #832d2d;
+				--tonic: #bb5a5e;
+				--fifth-note: #5b3e6b;
+				--white-piano-key: #ff8383;
+				--black-piano-key: #2b0806;
+				--white-piano-key-text: #131200;
+				--black-piano-key-text: #ffffff;
+				--use-color-formula: true;
+				--track-editor-bg-pitch: #6d071b;
+				--track-editor-bg-pitch-dim: #38030e;
+				--track-editor-bg-noise: #3a3551;
+				--track-editor-bg-noise-dim: #272732;
+				--track-editor-bg-mod: #552045;
+				--track-editor-bg-mod-dim: #3e1442;
+				--multiplicative-mod-slider: #9f6095;
+				--overwriting-mod-slider: #b55050;
+				--indicator-primary: #f2f764;
+				--indicator-secondary: #4f3939;
+				--select2-opt-group: #673030;
+				--input-box-outline: #443131;
+				--mute-button-normal: #d81833;
+				--mute-button-mod: #9e2691;
+				--mod-label-primary: #5f2b39;
+				--mod-label-secondary-text: rgb(158, 66, 122);
+				--mod-label-primary-text: #e6caed;
+				--pitch-secondary-channel-hue: 0;
+				--pitch-secondary-channel-hue-scale: 11.8;
+				--pitch-secondary-channel-sat: 73.3;
+				--pitch-secondary-channel-sat-scale: 0.1;
+				--pitch-secondary-channel-lum: 40;
+				--pitch-secondary-channel-lum-scale: 0.05;
+				--pitch-primary-channel-hue: 0;
+				--pitch-primary-channel-hue-scale: 11.8;
+				--pitch-primary-channel-sat: 90;
+				--pitch-primary-channel-sat-scale: 0.1;
+				--pitch-primary-channel-lum: 67.5;
+				--pitch-primary-channel-lum-scale: 0.05;
+				--pitch-secondary-note-hue: 0;
+				--pitch-secondary-note-hue-scale: 11.8;
+				--pitch-secondary-note-sat: 83.9;
+				--pitch-secondary-note-sat-scale: 0.1;
+				--pitch-secondary-note-lum: 35;
+				--pitch-secondary-note-lum-scale: 0.05;
+				--pitch-primary-note-hue: 0;
+				--pitch-primary-note-hue-scale: 11.8;
+				--pitch-primary-note-sat: 100;
+				--pitch-primary-note-sat-scale: 0.05;
+				--pitch-primary-note-lum: 85.6;
+				--pitch-primary-note-lum-scale: 0.025;
+				--noise-secondary-channel-hue: 60;
+				--noise-secondary-channel-hue-scale: 2;
+				--noise-secondary-channel-sat: 25;
+				--noise-secondary-channel-sat-scale: 0;
+				--noise-secondary-channel-lum: 42;
+				--noise-secondary-channel-lum-scale: 0;
+				--noise-primary-channel-hue: 60;
+				--noise-primary-channel-hue-scale: 2;
+				--noise-primary-channel-sat: 33;
+				--noise-primary-channel-sat-scale: 0;
+				--noise-primary-channel-lum: 63.5;
+				--noise-primary-channel-lum-scale: 0;
+				--noise-secondary-note-hue: 60;
+				--noise-secondary-note-hue-scale: 2;
+				--noise-secondary-note-sat: 33.5;
+				--noise-secondary-note-sat-scale: 0;
+				--noise-secondary-note-lum: 55;
+				--noise-secondary-note-lum-scale: 0;
+				--noise-primary-note-hue: 60;
+				--noise-primary-note-hue-scale: 2;
+				--noise-primary-note-sat: 46.5;
+				--noise-primary-note-sat-scale: 0;
+				--noise-primary-note-lum: 74;
+				--noise-primary-note-lum-scale: 0;
+				--mod-secondary-channel-hue: 222;
+				--mod-secondary-channel-hue-scale: 1.5;
+				--mod-secondary-channel-sat: 88;
+				--mod-secondary-channel-sat-scale: 0;
+				--mod-secondary-channel-lum: 50;
+				--mod-secondary-channel-lum-scale: 0;
+				--mod-primary-channel-hue: 222;
+				--mod-primary-channel-hue-scale: 1.5;
+				--mod-primary-channel-sat: 96;
+				--mod-primary-channel-sat-scale: 0;
+				--mod-primary-channel-lum: 80;
+				--mod-primary-channel-lum-scale: 0;
+				--mod-secondary-note-hue: 222;
+				--mod-secondary-note-hue-scale: 1.5;
+				--mod-secondary-note-sat: 92;
+				--mod-secondary-note-sat-scale: 0;
+				--mod-secondary-note-lum: 54;
+				--mod-secondary-note-lum-scale: 0;
+				--mod-primary-note-hue: 222;
+				--mod-primary-note-hue-scale: 1.5;
+				--mod-primary-note-sat: 96;
+				--mod-primary-note-sat-scale: 0;
+				--mod-primary-note-lum: 75;
+				--mod-primary-note-lum-scale: 0;
+				--disabled-note-primary:    #515164;
+				--disabled-note-secondary:  #2a2a3a;
+			}
+			
+			* {
+				cursor: url("https://choptop84.github.io/abyssbox-app/pixel_cursor.png"), auto !important;
+				--file-page-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-file.png");
+				--edit-pencil-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-edit.png");
+				--preferences-gear-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-preferences.png");
+				--instrument-copy-symbol: url("https://choptop84.github.io/abyssbox-app/icon-copy.png");
+				--instrument-paste-symbol: url("https://choptop84.github.io/abyssbox-app/icon-paste.png");
+				--play-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-play.png");
+				--pause-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-pause.png");
+				--record-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-record.png");
+				--stop-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-stop.png");
+				--prev-bar-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-prev.png");
+				--next-bar-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-next.png");
+				--muted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speakerMuted.png");
+				--unmuted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speaker.png");
+				--volume-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speaker.png");
+				--zoom-in-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomIn.png");
+				--zoom-out-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomOut.png");
+				--export-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-export.png");
+				--export-instrument-symbol: var(--export-symbol);
+				--import-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-import.png");
+				} 
+			
+			@font-face {
+				font-family: "AbyssType";
+				src:
+				 url("abysstype.otf") format("opentype") tech(color-COLRv1),
+				 }
+			
+				 @font-face {
+				font-family: "AbyssType_small";
+				src:
+				 url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
+				 }
+			
+				 #pattern-area {
+					border-style: solid;
+					border-color: #0a0000;
+					border-bottom: 0;
+					border-right: 0;
+					border-top: 0;
+				 }
+			
+				 body {
+					background-image: url("https://choptop84.github.io/choptop84s-image-repository/canyonbg.png") !important;
+					background-size: 200%;
+					background-position: center top; /* Adjusted to align with the top */
+					  background-repeat: no-repeat !important;
+			
+					image-rendering: -moz-crisp-edges !important;         /* Firefox */
+					image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+					image-rendering: -o-crisp-edges !important;            /* Opera */
+					image-rendering: pixelated !important;                 /* Future browsers */
+					image-rendering: optimizeSpeed !important;             /* IE */ 
+					 }
+			
+				 #text-content {
+					border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/canyon2_border.png");
+					border-image-slice: 16 fill; 
+					border-image-width: 32px; 
+					border-image-repeat: repeat; 
+					padding-left: 36px; 
+					padding-right: 36px; 
+					padding-bottom: 6px; 
+				
+					image-rendering: -moz-crisp-edges !important;         /* Firefox */
+					image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+					image-rendering: -o-crisp-edges !important;            /* Opera */
+					image-rendering: pixelated !important;                 /* Future browsers */
+					image-rendering: optimizeSpeed !important;             /* IE */
+					background: #fff0;
+				 }
+			 #beepboxEditorContainer {
+					border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/canyon2_border.png");
+					border-image-slice: 16 fill; 
+					border-image-width: 32px; 
+					border-image-repeat: repeat; 
+					padding-left: 36px; 
+					padding-right: 36px; 
+					padding-bottom: 6px; 
+					
+					image-rendering: -moz-crisp-edges !important;         /* Firefox */
+					image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+					image-rendering: -o-crisp-edges !important;            /* Opera */
+					image-rendering: pixelated !important;                 /* Future browsers */
+					image-rendering: optimizeSpeed !important;             /* IE */
+					background: #fff0;
+				 }
+			
+				 .beepboxEditor button,
+				 button.mobilePatternButton,
+				 button.mobileTrackButton,
+				 button.mobileSettingsButton,
+				 button.mobilePlayButton,
+				 button.mobilePauseButton,
+				 button.mobileNextBarButton,
+				 button.mobilePrevBarButton,
+				 button.playButton,
+				 button.pauseButton, 
+				 button.recordButton, 
+				 button.stopButton,
+				 button.nextBarButton, 
+				 button.prevBarButton, 
+				 button.copyButton, 
+				 button.pasteButton, 
+				 button.exportInstrumentButton, 
+				 button.importInstrumentButton, 
+				 .beepboxEditor select, 
+				 .beepboxEditor .select2-selection__rendered {
+						 border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/canyon2_button.png") !important;
+						 border-image-slice: 4 fill !important; 
+						border-image-width: 4px !important; 
+					 border-image-repeat: stretch !important;
+						 padding: 4px !important; 
+			
+						 image-rendering: -moz-crisp-edges !important;         /* Firefox */
+						 image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+						 image-rendering: -o-crisp-edges !important;            /* Opera */
+						 image-rendering: pixelated !important;                 /* Future browsers */
+						 image-rendering: optimizeSpeed !important;             /* IE */
+					 }
+			
+				button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+						--ui-widget-background: var(--editor-background) !important;
+						border-image-source: none !important;
+					}
+
+				 html {
+				 font-family: 'AbyssType';
+				 }
+				 div.channelBoxLabel {
+					 font-family: 'AbyssType_small' !important;
+				 }
+		`,
         "midnight": `
 		:root {
 			--page-margin: #000;

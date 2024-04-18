@@ -46,6 +46,7 @@ let doReload = false;
 		option({ value: "forest" }, "Forest"),
 		option({ value: "forest 2" }, "Forest 2"),
 		option({ value: "canyon" }, "Canyon"),
+		option({ value: "canyon 2" }, "Canyon 2"),
 		option({ value: "midnight" }, "Midnight"),
 		option({ value: "beachcombing" }, "Beachcombing"),
 		option({ value: "violet verdant" }, "Violet Verdant"),
