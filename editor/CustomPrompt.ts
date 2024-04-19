@@ -25,167 +25,301 @@ export class CustomPrompt implements Prompt {
 
 	
     private readonly _colorMenu: HTMLSelectElement = select({ style: "width: 100%;" },
-        option({ selected: true, disabled: true, hidden: false }, "Select an asset to change"),
-        option({ value: "--page-margin" }, "Page Margin"),
-        option({ value: "--editor-background" }, "Editor Background"),
-        option({ value: "--primary-text" }, "Primary Text"),
-        option({ value: "--secondary-text" }, "Secondary Text"),
-        option({ value: "--inverted-text" }, "Inverted Text"),
-        option({ value: "--loop-accent" }, "Loop Accent"),
-        option({ value: "--link-accent" }, "Link Accent"),
-        option({ value: "--ui-widget-background" }, "UI Widget Background"),
-		option({ value: "--ui-widget-focus" }, "UI Widget Focus"),
-		option({ value: "--pitch-background" }, "Pitch Background"),
-		option({ value: "--tonic" }, "Tonic"),
-		option({ value: "--fifth-note" }, "Fifth note"),
-		option({ value: "--white-piano-key" }, "White Piano Key"),
-		option({ value: "--black-piano-key" }, "Black Piano Key"),
+			option({ selected: true, disabled: true, hidden: false }, "Select an asset to change"),
+			option({ selected: false, disabled: true, hidden: false }, "General Items"),
+			option({ value: "--page-margin" }, "Page Margin"),
+			option({ value: "--editor-background" }, "Editor Background"),
+			option({ value: "--primary-text" }, "Primary Text"),
+			option({ value: "--secondary-text" }, "Secondary Text"),
+			option({ value: "--inverted-text" }, "Inverted Text"),
+			option({ value: "--loop-accent" }, "Loop Accent"),
+			option({ value: "--link-accent" }, "Link Accent"),
+			option({ value: "--ui-widget-background" }, "UI Widget Background"),
+			option({ value: "--ui-widget-focus" }, "UI Widget Focus"),
+			option({ value: "--pitch-background" }, "Pitch Background"),
+			option({ value: "--tonic" }, "Tonic"),
+			option({ value: "--fifth-note" }, "Fifth note"),
+			option({ value: "--white-piano-key" }, "White Piano Key"),
+			option({ value: "--black-piano-key" }, "Black Piano Key"),
+			option({ value: "--white-piano-key-text" }, "White Piano Key Text"),
+			option({ value: "--black-piano-key-text" }, "Black Piano Key Text"),	
 
-		option({ value: "--track-editor-bg-pitch" }, "Track Editor Pitch BG"),
-		option({ value: "--track-editor-bg-pitch-dim" }, "Empty Track Editor Pitch BG"),
-		option({ value: "--track-editor-bg-noise" }, "Track Editor Noise BG"),
-		option({ value: "--track-editor-bg-noise-dim" }, "Empty Track Editor Noise BG"),
-		option({ value: "--track-editor-bg-mod" }, "Track Editor Mod BG"),
-		option({ value: "--track-editor-bg-mod-dim" }, "Empty Track Editor Mod BG"),
+			option({ selected: false, disabled: true, hidden: false }, "Track Editor Backgrounds"),
 
-		option({ value: "--multiplicative-mod-slider" }, "Multiplicative Mod Slider"),
-		option({ value: "--overwriting-mod-slider" }, "Overwriting Mod Slider"),
-		option({ value: "--indicator-primary" }, "Primary Indicator"),
-		option({ value: "--indicator-secondary" }, "Secondary Indicator"),
-		option({ value: "--select2-opt-group" }, "Preset Catagory Background"),
-		option({ value: "--input-box-outline" }, "Input Box Outline"),
+			option({ value: "--track-editor-bg-pitch" }, "Track Editor Pitch BG"),
+			option({ value: "--track-editor-bg-pitch-dim" }, "Empty Track Editor Pitch BG"),
+			option({ value: "--track-editor-bg-noise" }, "Track Editor Noise BG"),
+			option({ value: "--track-editor-bg-noise-dim" }, "Empty Track Editor Noise BG"),
+			option({ value: "--track-editor-bg-mod" }, "Track Editor Mod BG"),
+			option({ value: "--track-editor-bg-mod-dim" }, "Empty Track Editor Mod BG"),
+	
+			option({ selected: false, disabled: true, hidden: false }, "Extras"),
 
-		option({ value: "--mute-button-normal" }, "Mute Button (Normal)"),
-		option({ value: "--mute-button-mod" }, "Mute Button (Mod)"),
-		option({ value: "--mod-label-primary" }, "Mod Label Primary"),
-		option({ value: "--mod-label-secondary-text" }, "Mod Label Secondary"),
-		option({ value: "--mod-label-primary-text" }, "Mod Label Primary Text"),		
-		option({ value: "--note-flash" }, "Note Flash"),
-		option({ value: "--note-flash-secondary" }, "Note Flash Secondary"),		
+			option({ value: "--multiplicative-mod-slider" }, "Multiplicative Mod Slider"),
+			option({ value: "--overwriting-mod-slider" }, "Overwriting Mod Slider"),
+			option({ value: "--indicator-primary" }, "Primary Indicator"),
+			option({ value: "--indicator-secondary" }, "Secondary Indicator"),
+			option({ value: "--select2-opt-group" }, "Preset Catagory Background"),
+			option({ value: "--input-box-outline" }, "Input Box Outline"),
+	
+			option({ value: "--mute-button-normal" }, "Mute Button (Normal)"),
+			option({ value: "--mute-button-mod" }, "Mute Button (Mod)"),
+			option({ value: "--mod-label-primary" }, "Mod Label Primary"),
+			option({ value: "--mod-label-secondary-text" }, "Mod Label Secondary"),
+			option({ value: "--mod-label-primary-text" }, "Mod Label Primary Text"),		
+			option({ value: "--note-flash" }, "Note Flash"),
+			option({ value: "--note-flash-secondary" }, "Note Flash Secondary"),		
+	/*
+			option({ selected: false, disabled: true, hidden: false }, "Note Colors (Pitch)"),
+
+			option({ value: "--pitch1-Primary-note" }, "Pitch 1 Primary Color (Note)"),
+			option({ value: "--pitch1-secondary-note" }, "Pitch 1 Secondary Color (Note)"),	
+
+			option({ value: "--pitch2-Primary-note" }, "Pitch 2 Primary Color (Note)"),
+			option({ value: "--pitch2-secondary-note" }, "Pitch 2 Secondary Color (Note)"),	
+
+			option({ value: "--pitch3-Primary-note" }, "Pitch 3 Primary Color (Note)"),
+			option({ value: "--pitch3-secondary-note" }, "Pitch 3 Secondary Color (Note)"),	
+
+			option({ value: "--pitch4-Primary-note" }, "Pitch 4 Primary Color (Note)"),
+			option({ value: "--pitch4-secondary-note" }, "Pitch 4 Secondary Color (Note)"),	
+
+			option({ value: "--pitch5-Primary-note" }, "Pitch 5 Primary Color (Note)"),
+			option({ value: "--pitch5-secondary-note" }, "Pitch 5 Secondary Color (Note)"),	
+
+			option({ value: "--pitch6-Primary-note" }, "Pitch 6 Primary Color (Note)"),
+			option({ value: "--pitch6-secondary-note" }, "Pitch 6 Secondary Color (Note)"),	
+
+			option({ value: "--pitch7-Primary-note" }, "Pitch 7 Primary Color (Note)"),
+			option({ value: "--pitch7-secondary-note" }, "Pitch 7 Secondary Color (Note)"),	
+
+			option({ value: "--pitch8-Primary-note" }, "Pitch 8 Primary Color (Note)"),
+			option({ value: "--pitch8-secondary-note" }, "Pitch 8 Secondary Color (Note)"),	
+
+			option({ value: "--pitch9-Primary-note" }, "Pitch 9 Primary Color (Note)"),
+			option({ value: "--pitch9-secondary-note" }, "Pitch 9 Secondary Color (Note)"),	
+
+			option({ value: "--pitch10-Primary-note" }, "Pitch 10 Primary Color (Note)"),
+			option({ value: "--pitch10-secondary-note" }, "Pitch 10 Secondary Color (Note)"),	
+
+			option({ selected: false, disabled: true, hidden: false }, "Note Colors (Noise)"),
+
+			option({ value: "--noise1-Primary-note" }, "Noise 1 Primary Color (Note)"),
+			option({ value: "--noise1-secondary-note" }, "Noise 1 Secondary Color (Note)"),	
+
+			option({ value: "--noise2-Primary-note" }, "Noise 2 Primary Color (Note)"),
+			option({ value: "--noise2-secondary-note" }, "Noise 2 Secondary Color (Note)"),	
+
+			option({ value: "--noise3-Primary-note" }, "Noise 3 Primary Color (Note)"),
+			option({ value: "--noise3-secondary-note" }, "Noise 3 Secondary Color (Note)"),	
+
+			option({ value: "--noise4-Primary-note" }, "Noise 4 Primary Color (Note)"),
+			option({ value: "--noise4-secondary-note" }, "Noise 4 Secondary Color (Note)"),	
+
+			option({ value: "--noise5-Primary-note" }, "Noise 5 Primary Color (Note)"),
+			option({ value: "--noise5-secondary-note" }, "Noise 5 Secondary Color (Note)"),	
 
 
-    ); 
+			option({ selected: false, disabled: true, hidden: false }, "Note Colors (Mod)"),
 
-	private readonly _colorInput: HTMLInputElement = input({ type: "text", value: localStorage.getItem("customColors") || `:root {
-		--page-margin: black;
-		--editor-background: black;
-		--hover-preview: white;
-		--playhead: white;
-		--primary-text: white;
-		--secondary-text: #999;
-		--inverted-text: black;
-		--text-selection: rgba(119,68,255,0.99);
-		--box-selection-fill: rgba(255,255,255,0.2);
-		--loop-accent: #74f;
-		--link-accent: #98f;
-		--ui-widget-background: #444;
-		--ui-widget-focus: #777;
-		--pitch-background: #444;
-		--tonic: #864;
-		--fifth-note: #468;
-		--white-piano-key: #bbb;
-		--black-piano-key: #444;
-		--white-piano-key-text: #131200;
-		--black-piano-key-text: #fff;
-		--use-color-formula: false;
-		--track-editor-bg-pitch: #444;
-		--track-editor-bg-pitch-dim: #333;
-		--track-editor-bg-noise: #444;
-		--track-editor-bg-noise-dim: #333;
-		--track-editor-bg-mod: #234;
-		--track-editor-bg-mod-dim: #123;
-		--multiplicative-mod-slider: #456;
-		--overwriting-mod-slider: #654;
-		--indicator-primary: #74f;
-		--indicator-secondary: #444;
-		--select2-opt-group: #585858;
-		--input-box-outline: #333;
-		--mute-button-normal: #ffa033;
-		--mute-button-mod: #9a6bff;
-		--mod-label-primary:        #999;
-		--mod-label-secondary-text: #333;
-		--mod-label-primary-text:   black;
-		--disabled-note-primary:    #999;
-		--disabled-note-secondary:  #666;
-		--pitch1-secondary-channel: #0099A1;
-		--pitch1-primary-channel:   #25F3FF;
-		--pitch1-secondary-note:    #00BDC7;
-		--pitch1-primary-note:      #92F9FF;
-		--pitch2-secondary-channel: #A1A100;
-		--pitch2-primary-channel:   #FFFF25;
-		--pitch2-secondary-note:    #C7C700;
-		--pitch2-primary-note:      #FFFF92;
-		--pitch3-secondary-channel: #C75000;
-		--pitch3-primary-channel:   #FF9752;
-		--pitch3-secondary-note:    #FF771C;
-		--pitch3-primary-note:      #FFCDAB;
-		--pitch4-secondary-channel: #00A100;
-		--pitch4-primary-channel:   #50FF50;
-		--pitch4-secondary-note:    #00C700;
-		--pitch4-primary-note:      #A0FFA0;
-		--pitch5-secondary-channel: #D020D0;
-		--pitch5-primary-channel:   #FF90FF;
-		--pitch5-secondary-note:    #E040E0;
-		--pitch5-primary-note:      #FFC0FF;
-		--pitch6-secondary-channel: #7777B0;
-		--pitch6-primary-channel:   #A0A0FF;
-		--pitch6-secondary-note:    #8888D0;
-		--pitch6-primary-note:      #D0D0FF;
-		--pitch7-secondary-channel: #8AA100;
-		--pitch7-primary-channel:   #DEFF25;
-		--pitch7-secondary-note:    #AAC700;
-		--pitch7-primary-note:      #E6FF92;
-		--pitch8-secondary-channel: #DF0019;
-		--pitch8-primary-channel:   #FF98A4;
-		--pitch8-secondary-note:    #FF4E63;
-		--pitch8-primary-note:      #FFB2BB;
-		--pitch9-secondary-channel: #00A170;
-		--pitch9-primary-channel:   #50FFC9;
-		--pitch9-secondary-note:    #00C78A;
-		--pitch9-primary-note:      #83FFD9;
-		--pitch10-secondary-channel:#A11FFF;
-		--pitch10-primary-channel:  #CE8BFF;
-		--pitch10-secondary-note:   #B757FF;
-		--pitch10-primary-note:     #DFACFF;
-		--noise1-secondary-channel: #6F6F6F;
-		--noise1-primary-channel:   #AAAAAA;
-		--noise1-secondary-note:    #A7A7A7;
-		--noise1-primary-note:      #E0E0E0;
-		--noise2-secondary-channel: #996633;
-		--noise2-primary-channel:   #DDAA77;
-		--noise2-secondary-note:    #CC9966;
-		--noise2-primary-note:      #F0D0BB;
-		--noise3-secondary-channel: #4A6D8F;
-		--noise3-primary-channel:   #77AADD;
-		--noise3-secondary-note:    #6F9FCF;
-		--noise3-primary-note:      #BBD7FF;
-		--noise4-secondary-channel: #7A4F9A;
-		--noise4-primary-channel:   #AF82D2;
-		--noise4-secondary-note:    #9E71C1;
-		--noise4-primary-note:      #D4C1EA;
-		--noise5-secondary-channel: #607837;
-		--noise5-primary-channel:   #A2BB77;
-		--noise5-secondary-note:    #91AA66;
-		--noise5-primary-note:      #C5E2B2;
-  --mod1-secondary-channel:   #339955;
-			--mod1-primary-channel:     #77fc55;
-			--mod1-secondary-note:      #77ff8a;
-			--mod1-primary-note:        #cdffee;
-			--mod2-secondary-channel:   #993355;
-			--mod2-primary-channel:     #f04960;
-			--mod2-secondary-note:      #f057a0;
-			--mod2-primary-note:        #ffb8de;
-			--mod3-secondary-channel:   #553399;
-			--mod3-primary-channel:     #8855fc;
-			--mod3-secondary-note:      #aa64ff;
-			--mod3-primary-note:	    #f8ddff;
-			--mod4-secondary-channel:   #a86436;
-			--mod4-primary-channel:     #c8a825;
-			--mod4-secondary-note:      #e8ba46;
-			--mod4-primary-note:        #fff6d3;
-		--note-flash: #ffffff;
-		--note-flash-secondary: #badfe6;
-	}`});
+			option({ value: "--mod1-Primary-note" }, "Mod 1 Primary Color (Note)"),
+			option({ value: "--mod1-secondary-note" }, "Mod 1 Secondary Color (Note)"),	
+
+			option({ value: "--mod2-Primary-note" }, "Mod 2 Primary Color (Note)"),
+			option({ value: "--mod2-secondary-note" }, "Mod 2 Secondary Color (Note)"),	
+
+			option({ value: "--mod3-Primary-note" }, "Mod 3 Primary Color (Note)"),
+			option({ value: "--mod3-secondary-note" }, "Mod 3 Secondary Color (Note)"),	
+
+			option({ value: "--mod4-Primary-note" }, "Mod 4 Primary Color (Note)"),
+			option({ value: "--mod4-secondary-note" }, "Mod 4 Secondary Color (Note)"),	
+
+			option({ selected: false, disabled: true, hidden: false }, "Channel Colors (Pitch)"),
+
+			option({ value: "--pitch1-Primary-channel" }, "Pitch 1 Primary Color (Channel)"),
+			option({ value: "--pitch1-secondary-channel" }, "Pitch 1 Secondary Color (Channel)"),	
+	
+			option({ value: "--pitch2-Primary-channel" }, "Pitch 2 Primary Color (Channel)"),
+			option({ value: "--pitch2-secondary-channel" }, "Pitch 2 Secondary Color (Channel)"),	
+
+			option({ value: "--pitch3-Primary-channel" }, "Pitch 3 Primary Color (Channel)"),
+			option({ value: "--pitch3-secondary-channel" }, "Pitch 3 Secondary Color (Channel)"),	
+
+			option({ value: "--pitch4-Primary-channel" }, "Pitch 4 Primary Color (Channel)"),
+			option({ value: "--pitch4-secondary-channel" }, "Pitch 4 Secondary Color (Channel)"),	
+
+			option({ value: "--pitch5-Primary-channel" }, "Pitch 5 Primary Color (Channel)"),
+			option({ value: "--pitch5-secondary-channel" }, "Pitch 5 Secondary Color (Channel)"),	
+
+			option({ value: "--pitch6-Primary-channel" }, "Pitch 6 Primary Color (Channel)"),
+			option({ value: "--pitch6-secondary-channel" }, "Pitch 6 Secondary Color (Channel)"),	
+
+			option({ value: "--pitch7-Primary-channel" }, "Pitch 7 Primary Color (Channel)"),
+			option({ value: "--pitch7-secondary-channel" }, "Pitch 7 Secondary Color (Channel)"),	
+
+			option({ value: "--pitch8-Primary-channel" }, "Pitch 8 Primary Color (Channel)"),
+			option({ value: "--pitch8-secondary-channel" }, "Pitch 8 Secondary Color (Channel)"),	
+
+			option({ value: "--pitch9-Primary-channel" }, "Pitch 9 Primary Color (Channel)"),
+			option({ value: "--pitch9-secondary-channel" }, "Pitch 9 Secondary Color (Channel)"),	
+
+			option({ value: "--pitch10-Primary-channel" }, "Pitch 10 Primary Color (Channel)"),
+			option({ value: "--pitch10-secondary-channel" }, "Pitch 10 Secondary Color (Channel)"),	
+
+			option({ selected: false, disabled: true, hidden: false }, "Channel Colors (Noise)"),
+
+			option({ value: "--noise1-Primary-channel" }, "Noise 1 Primary Color (Channel)"),
+			option({ value: "--noise1-secondary-channel" }, "Noise 1 Secondary Color (Channel)"),	
+
+			option({ value: "--noise2-Primary-channel" }, "Noise 2 Primary Color (Channel)"),
+			option({ value: "--noise2-secondary-channel" }, "Noise 2 Secondary Color (Channel)"),	
+
+			option({ value: "--noise3-Primary-channel" }, "Noise 3 Primary Color (Channel)"),
+			option({ value: "--noise3-secondary-channel" }, "Noise 3 Secondary Color (Channel)"),	
+
+			option({ value: "--noise4-Primary-channel" }, "Noise 4 Primary Color (Channel)"),
+			option({ value: "--noise4-secondary-channel" }, "Noise 4 Secondary Color (Channel)"),	
+
+			option({ value: "--noise5-Primary-channel" }, "Noise 5 Primary Color (Channel)"),
+			option({ value: "--noise5-secondary-channel" }, "Noise 5 Secondary Color (Channel)"),	
+
+
+			option({ selected: false, disabled: true, hidden: false }, "Channel Colors (Mod)"),
+
+			option({ value: "--mod1-Primary-channel" }, "Mod 1 Primary Color (Channel)"),
+			option({ value: "--mod1-secondary-channel" }, "Mod 1 Secondary Color (Channel)"),	
+
+			option({ value: "--mod2-Primary-channel" }, "Mod 2 Primary Color (Channel)"),
+			option({ value: "--mod2-secondary-channel" }, "Mod 2 Secondary Color (Channel)"),	
+
+			option({ value: "--mod3-Primary-channel" }, "Mod 3 Primary Color (Channel)"),
+			option({ value: "--mod3-secondary-channel" }, "Mod 3 Secondary Color (Channel)"),	
+
+			option({ value: "--mod4-Primary-channel" }, "Mod 4 Primary Color (Channel)"),
+			option({ value: "--mod4-secondary-channel" }, "Mod 4 Secondary Color (Channel)"),	
+*/
+		); 
+
+		private readonly _colorInput: HTMLInputElement = input({ type: "text", value: localStorage.getItem("customColors") || `:root {
+			--page-margin: black;
+			--editor-background: black;
+			--hover-preview: white;
+			--playhead: white;
+			--primary-text: white;
+			--secondary-text: #999;
+			--inverted-text: black;
+			--text-selection: rgba(119,68,255,0.99);
+			--box-selection-fill: rgba(255,255,255,0.2);
+			--loop-accent: #74f;
+			--link-accent: #98f;
+			--ui-widget-background: #444;
+			--ui-widget-focus: #777;
+			--pitch-background: #444;
+			--tonic: #864;
+			--fifth-note: #468;
+			--white-piano-key: #bbb;
+			--black-piano-key: #444;
+			--white-piano-key-text: #131200;
+			--black-piano-key-text: #fff;
+			--use-color-formula: false;
+			--track-editor-bg-pitch: #444;
+			--track-editor-bg-pitch-dim: #333;
+			--track-editor-bg-noise: #444;
+			--track-editor-bg-noise-dim: #333;
+			--track-editor-bg-mod: #234;
+			--track-editor-bg-mod-dim: #123;
+			--multiplicative-mod-slider: #456;
+			--overwriting-mod-slider: #654;
+			--indicator-primary: #74f;
+			--indicator-secondary: #444;
+			--select2-opt-group: #585858;
+			--input-box-outline: #333;
+			--mute-button-normal: #ffa033;
+			--mute-button-mod: #9a6bff;
+			--mod-label-primary:        #999;
+			--mod-label-secondary-text: #333;
+			--mod-label-primary-text:   black;
+			--disabled-note-primary:    #999;
+			--disabled-note-secondary:  #666;
+			--pitch1-secondary-channel: #0099A1;
+			--pitch1-primary-channel:   #25F3FF;
+			--pitch1-secondary-note:    #00BDC7;
+			--pitch1-primary-note:      #92F9FF;
+			--pitch2-secondary-channel: #A1A100;
+			--pitch2-primary-channel:   #FFFF25;
+			--pitch2-secondary-note:    #C7C700;
+			--pitch2-primary-note:      #FFFF92;
+			--pitch3-secondary-channel: #C75000;
+			--pitch3-primary-channel:   #FF9752;
+			--pitch3-secondary-note:    #FF771C;
+			--pitch3-primary-note:      #FFCDAB;
+			--pitch4-secondary-channel: #00A100;
+			--pitch4-primary-channel:   #50FF50;
+			--pitch4-secondary-note:    #00C700;
+			--pitch4-primary-note:      #A0FFA0;
+			--pitch5-secondary-channel: #D020D0;
+			--pitch5-primary-channel:   #FF90FF;
+			--pitch5-secondary-note:    #E040E0;
+			--pitch5-primary-note:      #FFC0FF;
+			--pitch6-secondary-channel: #7777B0;
+			--pitch6-primary-channel:   #A0A0FF;
+			--pitch6-secondary-note:    #8888D0;
+			--pitch6-primary-note:      #D0D0FF;
+			--pitch7-secondary-channel: #8AA100;
+			--pitch7-primary-channel:   #DEFF25;
+			--pitch7-secondary-note:    #AAC700;
+			--pitch7-primary-note:      #E6FF92;
+			--pitch8-secondary-channel: #DF0019;
+			--pitch8-primary-channel:   #FF98A4;
+			--pitch8-secondary-note:    #FF4E63;
+			--pitch8-primary-note:      #FFB2BB;
+			--pitch9-secondary-channel: #00A170;
+			--pitch9-primary-channel:   #50FFC9;
+			--pitch9-secondary-note:    #00C78A;
+			--pitch9-primary-note:      #83FFD9;
+			--pitch10-secondary-channel:#A11FFF;
+			--pitch10-primary-channel:  #CE8BFF;
+			--pitch10-secondary-note:   #B757FF;
+			--pitch10-primary-note:     #DFACFF;
+			--noise1-secondary-channel: #6F6F6F;
+			--noise1-primary-channel:   #AAAAAA;
+			--noise1-secondary-note:    #A7A7A7;
+			--noise1-primary-note:      #E0E0E0;
+			--noise2-secondary-channel: #996633;
+			--noise2-primary-channel:   #DDAA77;
+			--noise2-secondary-note:    #CC9966;
+			--noise2-primary-note:      #F0D0BB;
+			--noise3-secondary-channel: #4A6D8F;
+			--noise3-primary-channel:   #77AADD;
+			--noise3-secondary-note:    #6F9FCF;
+			--noise3-primary-note:      #BBD7FF;
+			--noise4-secondary-channel: #7A4F9A;
+			--noise4-primary-channel:   #AF82D2;
+			--noise4-secondary-note:    #9E71C1;
+			--noise4-primary-note:      #D4C1EA;
+			--noise5-secondary-channel: #607837;
+			--noise5-primary-channel:   #A2BB77;
+			--noise5-secondary-note:    #91AA66;
+			--noise5-primary-note:      #C5E2B2;
+	  --mod1-secondary-channel:   #339955;
+				--mod1-primary-channel:     #77fc55;
+				--mod1-secondary-note:      #77ff8a;
+				--mod1-primary-note:        #cdffee;
+				--mod2-secondary-channel:   #993355;
+				--mod2-primary-channel:     #f04960;
+				--mod2-secondary-note:      #f057a0;
+				--mod2-primary-note:        #ffb8de;
+				--mod3-secondary-channel:   #553399;
+				--mod3-primary-channel:     #8855fc;
+				--mod3-secondary-note:      #aa64ff;
+				--mod3-primary-note:	    #f8ddff;
+				--mod4-secondary-channel:   #a86436;
+				--mod4-primary-channel:     #c8a825;
+				--mod4-secondary-note:      #e8ba46;
+				--mod4-primary-note:        #fff6d3;
+			--note-flash: #ffffff;
+			--note-flash-secondary: #badfe6;
+		}`});
 
 	private readonly _colorpickerInput: HTMLInputElement = input({ type: "color", id: "colorPicker", value:"#000000", style:"width: 50%; height: 30px;"});
 	private readonly _hexColorInput: HTMLInputElement = input({ type: "text", value:"#000000", style:"width: 25%; height: 30px;" });
@@ -193,46 +327,55 @@ export class CustomPrompt implements Prompt {
 	private readonly _cancelButton: HTMLButtonElement = button({ class: "cancelButton" });
 	private readonly _okayButton: HTMLButtonElement = button({ class: "okayButton", style: "width:45%;" }, "Okay");
 	private readonly _resetButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size);" }, "Reset to defaults");
+	private readonly _removeFirstImageButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin-bottom: 0.5em;" }, "Remove First Image");
+	private readonly _removeSecondImageButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin-bottom: 0.5em;" }, "Remove Second Image");
 
 	private _colorpicker: Alwan;
 	public readonly container: HTMLDivElement = div({ class: "prompt noSelection", style: "width: 500px; left: 4;"},
 	
-		h2("Custom Theme Editor"),
-		p({ style: "text-align: left; margin: 0.5em 0;" },
-		"Thank you to leoV on discord for basically writing the whole system on how this works, without him this wouldn't be possible!",
-		),
-
-		p({ style: "text-align: left; margin: 0.5em 0;" },
-		"To use the custom theme editor, simply use the options below!",
-		),
-		div(),
-		p({ style: "text-align: left; margin: 0;" },
-			"Editor Background Image:",
-			this._fileInput
-		),
-		p({ style: "text-align: left; margin: 0.5em 0;"},
-			"Website Background Image:",
-			this._fileInput2
-		),
-		div(),
-		p({ style: "text-align: center; margin: 1em 0;"},
-		this._colorMenu
-		),
-		p({ style: "text-align: center; margin: 1em 0;"},
-			"Pick a color: ",
-			this._colorpickerInput,
-		),
-		div({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" },
-			this._resetButton
-		),
-		p({ style: "text-align: center; margin: 1em 0;"},
-			this._colorInput,
-		),
-		div({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" },
-			this._okayButton,
-		),
-		this._cancelButton,
-	);
+	div({class:"promptTitle"}, h2({class:"customThemeExt",style:"text-align: inherit;"}, ""), h2({class:"customThemeTitle",style:"margin-bottom: 0.5em;"},"Custom Theme Editor")),
+	p({ style: "text-align: left; margin: 0.5em 0;" },
+	"Thank you to leoV on discord for basically writing the whole system on how this works, without him this wouldn't be possible!",
+	),
+	p({ style: "text-align: left; margin: 0em auto; font-size: 26px; color: red;" },
+	"PLEASE READ THIS!",
+	),
+	p({ style: "text-align: left; margin: 0.5em 0;" },
+	"Before you use the Custom Theme Editor! Setting your theme above and changing one of the assets causes your custom theme to be overwritten! Do NOT change an asset unless your current custom theme is custom or your theme will be lost!",
+	),
+	p({ style: "text-align: left; margin: 0.5em 0;" },
+	"To use the custom theme editor, simply use the options below!",
+	),
+	div(),
+	p({ style: "text-align: left; margin: 0;" },
+		"Editor Background Image:",
+		this._fileInput
+	),
+	p({ style: "text-align: left;"},
+		"Website Background Image:",
+		this._fileInput2
+	),
+	div(),
+	p({ style: "text-align: center; margin: 1em 0;"},
+	this._colorMenu
+	),
+	p({ style: "text-align: center; margin: 1em 0;"},
+		"Pick a color: ",
+		this._colorpickerInput,
+	),
+	div({ style: "display: flex; flex-direction: column; justify-content: space-between; width: 30%; align-self: end; margin: 0.5em;" },
+		this._removeFirstImageButton,
+		this._removeSecondImageButton,
+		this._resetButton
+	),
+	p({ style: "text-align: center; margin: 1em 0;"},
+		this._colorInput,
+	),
+	div({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" },
+		this._okayButton,
+	),
+	this._cancelButton,
+);
 	// private readonly lastTheme: string | null = window.localStorage.getItem("colorTheme")
 	constructor(private _doc: SongDocument, private _pattern: PatternEditor, private _pattern2: HTMLDivElement, private _pattern3: HTMLElement) {
 		setTimeout(() => {
@@ -251,6 +394,8 @@ export class CustomPrompt implements Prompt {
 		//this._colorpicker.on("change", this._whenColorsPicked);
 		this._hexColorInput.addEventListener("change", this._whenHexColorsPicked);
 		this._colorMenu.addEventListener("change", this._whenMenuChanged);
+		this._removeFirstImageButton.addEventListener("click", this._removeCustomTheme1);
+		this._removeSecondImageButton.addEventListener("click", this._removeCustomTheme2);
 		//this._useColorFomula.addEventListener("change", this._whenColorFormula);
 	}
 
@@ -263,11 +408,29 @@ export class CustomPrompt implements Prompt {
 		}
 	}
 
+	private _removeCustomTheme1 = (): void => {
+		window.localStorage.removeItem("customTheme");
+		window.localStorage.removeItem("customThemeImageOpacity");
+		this._pattern._svg.style.backgroundImage = "";
+		document.body.style.backgroundImage = "";
+		doReload = true;
+	}
+
+	private _removeCustomTheme2 = (): void => {
+		window.localStorage.removeItem("customTheme2");
+		const secondImage: HTMLElement | null = document.getElementById("secondImage");
+		if (secondImage != null) {
+			secondImage.style.backgroundImage = "";
+		}
+		doReload = true;
+	}
+
 	public cleanUp = (): void => {
 		this._okayButton.removeEventListener("click", this._close);
 		this._cancelButton.removeEventListener("click", this._close);
 		// this.container.removeEventListener("keydown", this._whenKeyPressed);
 		this._resetButton.removeEventListener("click", this._reset);
+		this._colorpicker.destroy();
 	}
 	private _reset = (): void => {
 		window.localStorage.removeItem("colorTheme");

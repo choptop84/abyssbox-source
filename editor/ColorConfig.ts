@@ -4120,12 +4120,6 @@ export class ColorConfig {
 					text-align: left !important;
 					color: white !important;
 				}
-				.set-themeExt::after {
-					content: "setTheme.exe";
-				}
-				.set-themeTitle {
-					display: none;
-				}
 				.layoutExt::before {
 					content: "layout.exe";
 				}
@@ -4211,6 +4205,20 @@ export class ColorConfig {
 				}
 				.mnsExt::after {
 					content: "moveNotesSideways.exe";
+				}
+
+				.themeExt::after {
+					content: "setTheme.exe";
+				}
+				.themeTitle {
+					display: none;
+				}
+
+				.customThemeExt::after {
+					content: "customThemeEditor.exe";
+				}
+				.customThemeTitle {
+					display: none;
 				}
 
 				.nrsTitle {
