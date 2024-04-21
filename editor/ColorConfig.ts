@@ -2720,9 +2720,9 @@ export class ColorConfig {
 		/* sets background image */
 		body {
 		background-image: url("https://choptop84.github.io/abyssbox-source/website/lambda.png") !important;
-		background-size: cover;
-		background-position: center;
-		background-repeat: no-repeat;
+		background-size: cover !important;
+		background-position: center !important;
+		background-repeat: no-repeat !important;
 			}
 			/* make editor background transparent */
 		#beepboxEditorContainer, .beepboxEditor, #text-content {
@@ -9135,9 +9135,9 @@ export class ColorConfig {
 
 			body {
 				background-image: url("https://choptop84.github.io/abyssbox-app/stars.gif") !important;
-				background-size: contain;
-				background-position: center top;
-				  background-repeat: repeat;
+				background-size: contain !important;
+				background-position: center top !important;
+				  background-repeat: repeat !important;
 
 			image-rendering: -moz-crisp-edges !important;         /* Firefox */
 			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
