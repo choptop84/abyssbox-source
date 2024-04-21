@@ -3864,7 +3864,7 @@ export class ColorConfig {
 
 			/* sets background image */
 			body {
-			background-image: url("https://cdn.discordapp.com/attachments/804372822931668994/1165384144948305960/spr_battlebg_1.png") !important;
+			background-image: url("https://choptop84.github.io/choptop84s-image-repository/battlebg.png") !important;
 			background-position: center;
 			background-size: contain;
 			background-attachment: fixed;
