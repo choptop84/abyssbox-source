@@ -128,7 +128,7 @@ document.head.appendChild(HTML.style({type: "text/css"}, `
 	}
 	body {
 		color: ${ColorConfig.primaryText};
-		background: ${ColorConfig.editorBackground};
+		background: ${ColorConfig.songPlayerMargin, ColorConfig.editorBackground};
 	}
 	.songPlayerContainer {
 		display:grid; 

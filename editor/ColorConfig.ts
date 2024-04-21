@@ -6992,6 +6992,7 @@ export class ColorConfig {
 				--mod-primary-note-lum-scale: 0;
 				--disabled-note-primary:    #515164;
 				--disabled-note-secondary:  #2a2a3a;
+				--song-player-margin: var(--page-margin);
 			}
 			
 			* {
@@ -7039,7 +7040,7 @@ export class ColorConfig {
 			
 				 body {
 					background-image: url("https://choptop84.github.io/choptop84s-image-repository/canyonbg.png") !important;
-					background-size: 200%;
+					background-size: 200% !important;
 					background-position: center top; /* Adjusted to align with the top */
 					  background-repeat: no-repeat !important;
 			
@@ -14381,6 +14382,7 @@ export class ColorConfig {
 	// public static readonly oscilloscopeLineR: string = "var(--oscilloscope-line-R)";
 	// modTitle can stay uncommented until it's used somwhere that's not index.html
 	// public static readonly modTitle: string = "var(--mod-title)";
+	public static readonly songPlayerMargin: string = "var(--song-player-margin)";
     public static readonly useColorFormula: string = "var(--use-color-formula)";
     public static readonly pitchSecondaryChannelHue: string = "var(--pitch-secondary-channel-hue)";
     public static readonly pitchSecondaryChannelHueScale: string = "var(--pitch-secondary-channel-hue-scale)";

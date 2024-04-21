@@ -8988,6 +8988,7 @@ var beepbox = (function (exports) {
 				--mod-primary-note-lum-scale: 0;
 				--disabled-note-primary:    #515164;
 				--disabled-note-secondary:  #2a2a3a;
+				--song-player-margin: var(--page-margin);
 			}
 			
 			* {
@@ -9035,7 +9036,7 @@ var beepbox = (function (exports) {
 			
 				 body {
 					background-image: url("https://choptop84.github.io/choptop84s-image-repository/canyonbg.png") !important;
-					background-size: 200%;
+					background-size: 200% !important;
 					background-position: center top; /* Adjusted to align with the top */
 					  background-repeat: no-repeat !important;
 			
@@ -16369,6 +16370,7 @@ var beepbox = (function (exports) {
     ColorConfig.blackPianoKey = "var(--black-piano-key)";
     ColorConfig.whitePianoKeyText = "var(--white-piano-key-text)";
     ColorConfig.blackPianoKeyText = "var(--black-piano-key-text)";
+    ColorConfig.songPlayerMargin = "var(--song-player-margin)";
     ColorConfig.useColorFormula = "var(--use-color-formula)";
     ColorConfig.pitchSecondaryChannelHue = "var(--pitch-secondary-channel-hue)";
     ColorConfig.pitchSecondaryChannelHueScale = "var(--pitch-secondary-channel-hue-scale)";
