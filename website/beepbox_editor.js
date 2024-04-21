@@ -9228,6 +9228,7 @@ var beepbox = (function (exports) {
         "canyon 2": `
 			:root {
 				--page-margin: #0a0000;
+				--song-player-margin: var(--page-margin);
 				--editor-background: #5a1616;
 				--hover-preview: white;
 				--playhead: rgba(247, 172, 196, 0.9);
@@ -9339,7 +9340,6 @@ var beepbox = (function (exports) {
 				--mod-primary-note-lum-scale: 0;
 				--disabled-note-primary:    #515164;
 				--disabled-note-secondary:  #2a2a3a;
-				--song-player-margin: var(--page-margin);
 			}
 			
 			* {

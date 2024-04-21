@@ -127,12 +127,6 @@ document.head.appendChild(HTML.style({type: "text/css"}, `
 			</svg>');
 	}
 
-	@property --song-player-margin {
-		syntax: "<color>";
-		inherits: false;
-		initial-value: ${ColorConfig.editorBackground};
-	  }
-
 	body {
 		color: ${ColorConfig.primaryText};
 		background: ${ColorConfig.songPlayerMargin};
