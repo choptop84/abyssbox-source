@@ -4529,6 +4529,7 @@ var beepbox = (function (exports) {
         "Glyde": `
 	  :root { 
 		--page-margin: #000000; 
+		--song-player-margin: #000;
 		--editor-background: #472434a8; 
 		--hover-preview: white; 
 		--playhead: rgba(255, 255, 255, 0.9); 
@@ -4651,7 +4652,7 @@ var beepbox = (function (exports) {
 			body {
 			background-image: url("https://choptop84.github.io/choptop84s-image-repository/glydebg.png") !important;
 			background-position: top right;
-			background-repeat: no-repeat;
+			background-repeat: no-repeat !important;
 
 			image-rendering: -moz-crisp-edges !important;         /* Firefox */
 			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
