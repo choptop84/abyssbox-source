@@ -29121,9 +29121,16 @@ var beepbox = (function (exports) {
 				<rect x="-1" y="-1" width="19" height="80" fill="url(%23shadow)"/> \
 			</svg>');
 	}
+
+	@property --song-player-margin {
+		syntax: "<color>";
+		inherits: false;
+		initial-value: ${ColorConfig.editorBackground};
+	  }
+
 	body {
 		color: ${ColorConfig.primaryText};
-		background: ${ColorConfig.editorBackground};
+		background: ${ColorConfig.songPlayerMargin};
 	}
 	.songPlayerContainer {
 		display:grid; 

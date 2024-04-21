@@ -126,9 +126,16 @@ document.head.appendChild(HTML.style({type: "text/css"}, `
 				<rect x="-1" y="-1" width="19" height="80" fill="url(%23shadow)"/> \
 			</svg>');
 	}
+
+	@property --song-player-margin {
+		syntax: "<color>";
+		inherits: false;
+		initial-value: ${ColorConfig.editorBackground};
+	  }
+
 	body {
 		color: ${ColorConfig.primaryText};
-		background: ${ColorConfig.songPlayerMargin, ColorConfig.editorBackground};
+		background: ${ColorConfig.songPlayerMargin};
 	}
 	.songPlayerContainer {
 		display:grid; 
