@@ -4178,6 +4178,7 @@ var beepbox = (function (exports) {
         "Glyde": `
 	  :root { 
 		--page-margin: #000000; 
+		--song-player-margin: #000;
 		--editor-background: #472434a8; 
 		--hover-preview: white; 
 		--playhead: rgba(255, 255, 255, 0.9); 
@@ -4300,7 +4301,7 @@ var beepbox = (function (exports) {
 			body {
 			background-image: url("https://choptop84.github.io/choptop84s-image-repository/glydebg.png") !important;
 			background-position: top right;
-			background-repeat: no-repeat;
+			background-repeat: no-repeat !important;
 
 			image-rendering: -moz-crisp-edges !important;         /* Firefox */
 			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
@@ -4715,9 +4716,9 @@ var beepbox = (function (exports) {
 		/* sets background image */
 		body {
 		background-image: url("https://choptop84.github.io/abyssbox-source/website/lambda.png") !important;
-		background-size: cover;
-		background-position: center;
-		background-repeat: no-repeat;
+		background-size: cover !important;
+		background-position: center !important;
+		background-repeat: no-repeat !important;
 			}
 			/* make editor background transparent */
 		#beepboxEditorContainer, .beepboxEditor, #text-content {
@@ -5859,7 +5860,7 @@ var beepbox = (function (exports) {
 
 			/* sets background image */
 			body {
-			background-image: url("https://cdn.discordapp.com/attachments/804372822931668994/1165384144948305960/spr_battlebg_1.png") !important;
+			background-image: url("https://choptop84.github.io/choptop84s-image-repository/battlebg.png") !important;
 			background-position: center;
 			background-size: contain;
 			background-attachment: fixed;
@@ -11130,9 +11131,9 @@ var beepbox = (function (exports) {
 
 			body {
 				background-image: url("https://choptop84.github.io/abyssbox-app/stars.gif") !important;
-				background-size: contain;
-				background-position: center top;
-				  background-repeat: repeat;
+				background-size: contain !important;
+				background-position: center top !important;
+				  background-repeat: repeat !important;
 
 			image-rendering: -moz-crisp-edges !important;         /* Firefox */
 			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
@@ -16998,6 +16999,8 @@ var beepbox = (function (exports) {
             ]) },
         { name: "AbyssBox 1.3 Presets", presets: toNameMap([
                 { name: "Ghost House", generalMidi: false, settings: { "type": "FM", "eqFilter": [], "eqFilterType": false, "eqSimpleCut": 10, "eqSimplePeak": 0, "envelopeSpeed": 12, "discreteEnvelope": false, "eqSubFilters0": [], "effects": ["transition type", "vibrato", "bitcrusher"], "transition": "normal", "clicklessTransition": false, "vibrato": "heavy", "vibratoDepth": 0.45, "vibratoDelay": 0, "vibratoSpeed": 10, "vibratoType": 0, "bitcrusherOctave": 3.5, "bitcrusherQuantization": 43, "panDelay": 10, "fadeInSeconds": 0, "fadeOutTicks": -3, "algorithm": "1←(2 3←4)", "feedbackType": "1⟲", "feedbackAmplitude": 0, "operators": [{ "frequency": "1×", "amplitude": 15, "waveform": "sine", "pulseWidth": 5 }, { "frequency": "1×", "amplitude": 4, "waveform": "sine", "pulseWidth": 5 }, { "frequency": "1×", "amplitude": 6, "waveform": "sine", "pulseWidth": 5 }, { "frequency": "1×", "amplitude": 7, "waveform": "sine", "pulseWidth": 5 }, { "frequency": "1×", "amplitude": 0, "waveform": "sine", "pulseWidth": 5 }, { "frequency": "1×", "amplitude": 0, "waveform": "sine", "pulseWidth": 5 }], "envelopes": [{ "target": "noteVolume", "envelope": "punch" }] } },
+                { name: "Supersaw Twang", generalMidi: false, settings: { "type": "supersaw", "eqFilter": [], "eqFilterType": false, "eqSimpleCut": 9, "eqSimplePeak": 0, "envelopeSpeed": 12, "discreteEnvelope": false, "eqSubFilters0": [], "eqSubFilters1": [], "effects": ["chord type", "note filter", "chorus", "echo", "reverb"], "chord": "simultaneous", "fastTwoNoteArp": true, "arpeggioSpeed": 12, "noteFilterType": true, "noteSimpleCut": 7, "noteSimplePeak": 1, "noteFilter": [{ "type": "low-pass", "cutoffHz": 3828.43, "linearGain": 0.5 }], "noteSubFilters1": [{ "type": "low-pass", "cutoffHz": 3828.43, "linearGain": 0.5 }], "panDelay": 10, "chorus": 14, "echoSustain": 29, "echoDelayBeats": 1, "reverb": 0, "fadeInSeconds": 0, "fadeOutTicks": 48, "pulseWidth": 40, "decimalOffset": 0, "dynamism": 67, "spread": 50, "shape": 0, "envelopes": [{ "target": "noteFilterAllFreqs", "envelope": "twang 1" }] } },
+                { name: "Credits Bass", generalMidi: false, settings: { "type": "chip", "eqFilter": [], "eqFilterType": false, "eqSimpleCut": 8, "eqSimplePeak": 0, "envelopeSpeed": 12, "discreteEnvelope": false, "effects": ["transition type", "chord type", "note filter"], "transition": "interrupt", "clicklessTransition": false, "chord": "arpeggio", "fastTwoNoteArp": true, "arpeggioSpeed": 9, "noteFilterType": true, "noteSimpleCut": 8, "noteSimplePeak": 0, "noteFilter": [{ "type": "low-pass", "cutoffHz": 16000, "linearGain": 0.3536 }], "noteSubFilters1": [{ "type": "low-pass", "cutoffHz": 16000, "linearGain": 0.3536 }], "panDelay": 10, "fadeInSeconds": 0, "fadeOutTicks": -1, "wave": "alto sax", "unison": "none", "isUsingAdvancedLoopControls": false, "chipWaveLoopStart": 0, "chipWaveLoopEnd": 2, "chipWaveLoopMode": 0, "chipWavePlayBackwards": false, "chipWaveStartOffset": 0, "envelopes": [{ "target": "noteFilterAllFreqs", "envelope": "decay 1" }] } },
             ]) },
     ]);
 
