@@ -129,7 +129,7 @@ import { SongPlayerLayout } from "./Layout";
 		);
 
 	let titleText: HTMLHeadingElement = h1({ style: "flex-grow: 1; margin: 0 1px; margin-left: 10px; overflow: hidden;" }, "");
-		let layoutStuffs: HTMLButtonElement = button({style: "margin: 0 4px; height: 42px; width: 90px;"}, "Layouts");
+		let layoutStuffs: HTMLButtonElement = button({class:"songPlayerLayoutsButton", style: "margin: 0 4px; height: 42px; width: 90px;"}, "Layouts");
 		let editLink: HTMLAnchorElement = a({target: "_top", style: "margin: 0 4px;"}, "✎ Edit");
 		let copyLink: HTMLAnchorElement = a({href: "javascript:void(0)", style: "margin: 0 4px;"}, "⎘ Copy URL");
 		let shareLink: HTMLAnchorElement = a({href: "javascript:void(0)", style: "margin: 0 4px;"}, "⤳ Share");
