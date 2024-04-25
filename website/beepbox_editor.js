@@ -17169,16 +17169,16 @@ var beepbox = (function (exports) {
 	width: 12px;
 }
 .songPlayerLayoutsButton {
-	display: none;
+	display: none !important;
 }
 .songPlayerContainer {
 	display: unset !important;
 }
 .songPlayerContainer .timelineContainer {
-	height: 38px;
+	height: 38px !important;
 }
 .songPlayerContainer .timeline {
-
+	height: 38px !important;
 }
 .obtrusive-scrollbars::-webkit-scrollbar-track, .obtrusive-scrollbars *::-webkit-scrollbar-track {
 	background: ${ColorConfig.editorBackground};
