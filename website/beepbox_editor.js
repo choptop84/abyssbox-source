@@ -17168,18 +17168,6 @@ var beepbox = (function (exports) {
 .obtrusive-scrollbars::-webkit-scrollbar, .obtrusive-scrollbars *::-webkit-scrollbar {
 	width: 12px;
 }
-.songPlayerLayoutsButton {
-	display: none !important;
-}
-.songPlayerContainer {
-	display: unset !important;
-}
-.songPlayerContainer .timelineContainer {
-	height: 38px !important;
-}
-.songPlayerContainer .timeline {
-	height: 38px !important;
-}
 .obtrusive-scrollbars::-webkit-scrollbar-track, .obtrusive-scrollbars *::-webkit-scrollbar-track {
 	background: ${ColorConfig.editorBackground};
 }
@@ -46032,12 +46020,12 @@ You should be redirected to the song at:<br /><br />
                     versionMenu.appendChild(option$6({ value: version.time }, version.name + ": " + new Date(version.time).toLocaleString()));
                 }
                 const player = iframe({ style: "width: 100%; height: 60px; border: none; display: block;" });
-                player.src = "player/#song=" + window.localStorage.getItem(versionToKey(song.versions[0]));
+                player.src = "sr-player/#song=" + window.localStorage.getItem(versionToKey(song.versions[0]));
                 const container = div$8({ style: "margin: 4px 0;" }, div$8({ class: "selectContainer", style: "width: 100%; margin: 2px 0;" }, versionMenu), player);
                 this._songContainer.appendChild(container);
                 versionMenu.addEventListener("change", () => {
                     const version = song.versions[versionMenu.selectedIndex];
-                    player.contentWindow.location.replace("player/#song=" + window.localStorage.getItem(versionToKey(version)));
+                    player.contentWindow.location.replace("sr-player/#song=" + window.localStorage.getItem(versionToKey(version)));
                     player.contentWindow.dispatchEvent(new Event("hashchange"));
                 });
             }
