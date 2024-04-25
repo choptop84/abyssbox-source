@@ -61,6 +61,9 @@ export class ExportPrompt implements Prompt {
         option({ value: "json" }, "Export to .json file."),
         option({ value: "html" }, "Export to .html file."),
     );
+    private readonly _removeWhitespace: HTMLInputElement = input({ type: "checkbox" });
+    private readonly _removeWhitespaceDiv: HTMLDivElement = div({ style: "vertical-align: middle; align-items: center; justify-content: space-between;" },
+    "Remove Whitespace: ", this._removeWhitespace);
     private readonly _cancelButton: HTMLButtonElement = button({ class: "cancelButton" });
     private readonly _exportButton: HTMLButtonElement = button({ class: "exportButton", style: "width:45%;" }, "Export");
     private readonly _outputProgressBar: HTMLDivElement = div({ style: `width: 0%; background: ${ColorConfig.loopAccent}; height: 100%; position: absolute; z-index: 2;` });
@@ -104,6 +107,8 @@ export class ExportPrompt implements Prompt {
             ),
         ),
         div({ class: "selectContainer", style: "width: 100%;" }, this._formatSelect),
+        this._removeWhitespaceDiv,
+        div({ class: "selectContainer", style: "width: 100%;" }, this._formatSelect),
         div({ style: "text-align: left;" }, "Exporting can be slow. Reloading the page or clicking the X will cancel it. Please be patient."),
         this._outputProgressContainer,
         div({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" },
@@ -135,6 +140,17 @@ export class ExportPrompt implements Prompt {
             this._formatSelect.value = lastExportFormat;
         }
 
+        const lastExportWhitespace: boolean = window.localStorage.getItem("exportWhitespace") == "true";
+        if (lastExportWhitespace != null) {
+            this._removeWhitespace.checked = lastExportWhitespace;
+        }
+
+        if (this._formatSelect.value == "json") {
+            this._removeWhitespaceDiv.style.display = "block";
+        } else {
+            this._removeWhitespaceDiv.style.display = "none";
+        }
+
         this._fileName.select();
         setTimeout(() => this._fileName.focus());
 
@@ -145,6 +161,7 @@ export class ExportPrompt implements Prompt {
         this._enableOutro.addEventListener("click", () => { (this._computedSamplesLabel.firstChild as Text).textContent = this.samplesToTime(this._doc.synth.getTotalSamples(this._enableIntro.checked, this._enableOutro.checked, +this._loopDropDown.value - 1)); });
         this._enableIntro.addEventListener("click", () => { (this._computedSamplesLabel.firstChild as Text).textContent = this.samplesToTime(this._doc.synth.getTotalSamples(this._enableIntro.checked, this._enableOutro.checked, +this._loopDropDown.value - 1)); });
         this._loopDropDown.addEventListener("change", () => { (this._computedSamplesLabel.firstChild as Text).textContent = this.samplesToTime(this._doc.synth.getTotalSamples(this._enableIntro.checked, this._enableOutro.checked, +this._loopDropDown.value - 1)); });
+        this._formatSelect.addEventListener("change", () => { if (this._formatSelect.value == "json") { this._removeWhitespaceDiv.style.display = "block"; } else {  this._removeWhitespaceDiv.style.display = "none"; } });
         this.container.addEventListener("keydown", this._whenKeyPressed);
 
         this._fileName.value = _doc.song.title;
@@ -214,6 +231,8 @@ export class ExportPrompt implements Prompt {
     private _export = (): void => {
         if (this.outputStarted == true)
             return;
+        window.localStorage.setItem("exportFormat", this._formatSelect.value);
+        window.localStorage.setItem("exportWhitespace", this._removeWhitespace.value);
         window.localStorage.setItem("exportFormat", this._formatSelect.value);
         switch (this._formatSelect.value) {
             case "wav":
@@ -877,11 +896,13 @@ export class ExportPrompt implements Prompt {
 	
 	private _exportToJson(): void {
 		const jsonObject: Object = this._doc.song.toJsonObject(this._enableIntro.checked, Number(this._loopDropDown.value), this._enableOutro.checked);
-		const jsonString: string = JSON.stringify(jsonObject, null, '\t');
+        let whiteSpaceParam: string | undefined = this._removeWhitespace.checked ? undefined : '\t';
+		const jsonString: string = JSON.stringify(jsonObject, null, whiteSpaceParam);
 		const blob: Blob = new Blob([jsonString], {type: "application/json"});
 		save(blob, this._fileName.value.trim() + ".json");
 		this._close();
     }
+
 
     private _exportToHtml(): void {
         const fileContents = `\

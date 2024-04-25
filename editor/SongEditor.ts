@@ -55,6 +55,7 @@ import { VisualLoopControlsPrompt } from "./VisualLoopControlsPrompt";
 import { SampleLoadingStatusPrompt } from "./SampleLoadingStatusPrompt";
 import { AddSamplesPrompt } from "./AddSamplesPrompt";
 import { _loopType } from "../synth/synth";
+import { ShortenerConfigPrompt } from "./ShortenerConfigPrompt";
 
 const { button, div, input, select, span, optgroup, option, canvas } = HTML;
 
@@ -792,7 +793,7 @@ export class SongEditor {
         option({ value: "copyUrl" }, "⎘ Copy Song URL"),
         option({ value: "shareUrl" }, "⤳ Share Song URL"),
         option({ value: "shortenUrl" }, "… Shorten Song URL"),
-        // option({ value: "customUrlShortener" }, " Customize Url Shortener"),
+        option({ value: "configureShortener" }, "🛠 Customize Url Shortener..."),
         option({ value: "viewPlayer" }, "▶ View in Song Player"),
         option({ value: "copyEmbed" }, "⎘ Copy HTML Embed Code"),
         option({ value: "songRecovery" }, "⚠ > Recover Recent Song"),
@@ -2282,6 +2283,9 @@ export class SongEditor {
                     break;
                 case "sampleLoadingStatus":
                     this.prompt = new SampleLoadingStatusPrompt(this._doc);
+                    break;
+                case "configureShortener":
+                    this.prompt = new ShortenerConfigPrompt(this._doc);
                     break;
                 default:
                     this.prompt = new TipPrompt(this._doc, promptName);
@@ -5893,7 +5897,16 @@ export class SongEditor {
                 (<any>navigator).share({ url: new URL("#" + this._doc.song.toBase64String(), location.href).href });
                 break;
             case "shortenUrl":
-                window.open("https://tinyurl.com/api-create.php?url=" + encodeURIComponent(new URL("#" + this._doc.song.toBase64String(), location.href).href));
+                    let shortenerStrategy: string = "https://tinyurl.com/api-create.php?url=";
+                    const localShortenerStrategy: string | null = window.localStorage.getItem("shortenerStrategySelect");
+    
+                    // if (localShortenerStrategy == "beepboxnet") shortenerStrategy = "https://www.beepbox.net/api-create.php?url=";
+                    if (localShortenerStrategy == "isgd") shortenerStrategy = "https://is.gd/create.php?format=simple&url=";
+    
+                    window.open(shortenerStrategy + encodeURIComponent(new URL("#" + this._doc.song.toBase64String(), location.href).href));
+                break;
+            case "configureShortener":
+                    this._openPrompt("configureShortener");
                 break;
             case "viewPlayer":
                 location.href = "player/#song=" + this._doc.song.toBase64String();
