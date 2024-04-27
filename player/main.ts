@@ -117,6 +117,25 @@ import { SongPlayerLayout } from "./Layout";
 				`),
 				div("BoxBeep"),
 			),
+			label({class: "layout-option",style:"width:90px; color: var(--secondary-text)"},
+				input({type: "radio", name: "spLayout", value: "piano", style:"display:none;"}),
+				SVG(`\
+				<svg viewBox="-1 -1 28 22">
+					<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
+					<rect x="4" y="3" width="20" height="1" fill="currentColor"/>
+					<rect x="2" y="3" width="1" height="9" fill="currentColor"/>
+					<rect x="23" y="4" width="1" height="7" fill="currentColor"/>
+					<rect x="4" y="11" width="20" height="1" fill="currentColor"/>
+
+					<rect x="4" y="5" width="20" height="1" fill="currentColor"/>
+					<rect x="4" y="7" width="20" height="1" fill="currentColor"/>
+					<rect x="4" y="9" width="20" height="1" fill="currentColor"/>
+
+					<rect x="2" y="15" width="22" height="3" fill="currentColor"/>
+					</svg>
+				`),
+				div("Piano"),
+			),
 		);
 
 		const layoutContainer: HTMLDivElement = div({class: "prompt noSelection", style: "width: 300px; margin: auto;text-align: center;background: var(--editor-background);border-radius: 15px;border: 4px solid var(--ui-widget-background);color: var(--primary-text);padding: 20px;display: flex;flex-direction: column;position: relative;box-shadow: 5px 5px 20px 10px rgba(0,0,0,0.5);"},
@@ -136,6 +155,8 @@ import { SongPlayerLayout } from "./Layout";
 		let fullscreenLink: HTMLAnchorElement = a({target: "_top", style: "margin: 0 4px;"}, "⇱ Fullscreen");
 		let shortenSongLink: HTMLAnchorElement = a({ href:"javascript:void(0)", target: "_top", style: "margin: 0 4px;"}, "… Shorten URL");
 
+	
+
 	let draggingPlayhead: boolean = false;
 		const playButton: HTMLButtonElement = button({style: "width: 100%; height: 100%; max-height: 50px;"});
 		const playButtonContainer: HTMLDivElement = div({class: "playButtonContainer",style: "flex-shrink: 0; display: flex; padding: 2px; width: 80px; height: 100%; box-sizing: border-box; align-items: center;"},
@@ -146,6 +167,7 @@ import { SongPlayerLayout } from "./Layout";
 		loopIcon,
 	));
 	
+
 		const volumeIcon: SVGSVGElement = svg({style: "flex: 0 0 12px; margin: 0 1px; width: 12px; height: 12px;", viewBox: "0 0 12 12"},
 			path({fill: ColorConfig.uiWidgetBackground, d: "M 1 9 L 1 3 L 4 3 L 7 0 L 7 12 L 4 9 L 1 9 M 9 3 Q 12 6 9 9 L 8 8 Q 10.5 6 8 4 L 9 3 z"}),
 	);
@@ -182,6 +204,10 @@ import { SongPlayerLayout } from "./Layout";
 		outVolumeBar,
 		outVolumeCap,
 	);
+	const timelineBarProgress: HTMLDivElement = div({ class:`timeline-bar-progress`, style: `pointer-events: none; overflow: hidden; width: 5%; height: 100%; z-index: 5;`});
+	const timelineBar: HTMLDivElement = div({ style:  `pointer-events: none; overflow: hidden; margin: auto; width: 90%; height: 50%; background: var(--ui-widget-background);`},timelineBarProgress);
+	const timelineBarContainer: HTMLDivElement = div({ style: `pointer-events: none; overflow: hidden; margin: auto; width: 160px; height: 10px; `}, timelineBar);
+	const volumeBarContainerDiv: HTMLDivElement = div({style:"display:flex; flex-direction:column;"}, volumeBarContainer, timelineBarContainer);
 	const promptContainer: HTMLDivElement = div({class:"promptContainer",style:"display:none; backdrop-filter: saturate(1.5) blur(4px); width: 100%; height: 100%; position: fixed; z-index: 999; display: flex; justify-content: center; align-items: center;"});
 	promptContainer.style.display = "none";
 	const songPlayerContainer: HTMLDivElement = div({class:"songPlayerContainer"});
@@ -193,7 +219,7 @@ import { SongPlayerLayout } from "./Layout";
 			volumeIcon,
 			volumeSlider,
 			zoomButton,
-			volumeBarContainer,
+			volumeBarContainerDiv,
 			oscilascope.canvas, //make it auto remove itself later
 			titleText,
 			//layoutDropdown,
@@ -466,12 +492,24 @@ import { SongPlayerLayout } from "./Layout";
 	
 	function renderPlayhead(): void {
 		
+		const maxPer = 144;
+
 		if (synth.song != null) {
 			let pos: number = synth.playhead / synth.song.barCount;
-			playhead.style.left = (timelineWidth * pos) + "px"; 
+
+			timelineBarProgress.style.width = Math.round((maxPer*pos/maxPer)*100)+"%";
+
+			if ((<any> _form.elements)["spLayout"].value == "piano") {
+				playhead.style.left = (timelineWidth * pos) + "px"; 
+				timelineContainer.style.left = "-"+(timelineWidth * pos) + "px"; 
+			} else {
+				playhead.style.left = (timelineWidth * pos) + "px"; 
+				timelineContainer.style.left = "0";
 				
-			const boundingRect: DOMRect = visualizationContainer.getBoundingClientRect();
-				visualizationContainer.scrollLeft = pos * (timelineWidth - boundingRect.width); 
+				const boundingRect: DOMRect = visualizationContainer.getBoundingClientRect();
+					visualizationContainer.scrollLeft = pos * (timelineWidth - boundingRect.width); 
+			}
+
 
 			// this is note flash shit so don't worry bout it
 			if (notesFlashWhenPlayed) {
@@ -516,7 +554,7 @@ import { SongPlayerLayout } from "./Layout";
 	function renderTimeline(): void {
 		timeline.innerHTML = "";
 		if (synth.song == null) return;
-			
+		
 		const boundingRect: DOMRect = visualizationContainer.getBoundingClientRect();
 			
 		let timelineHeight: number;

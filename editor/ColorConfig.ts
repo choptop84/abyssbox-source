@@ -56,7 +56,8 @@ export class ColorConfig {
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
 			--mod-title: #bf2c5d;
-
+			--progress-bar: #bf2c5d;
+			
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 43; 		
@@ -144,8 +145,8 @@ export class ColorConfig {
 			--note-flash: #ffffff;
 			--note-flash-secondary: #ffffff77;
 
-			--oscilloscope-line-L: var(--ui-widget-background);
-			--oscilloscope-line-R: var(--secondary-text);
+			--oscilloscope-line-R: var(--ui-widget-background);
+			--oscilloscope-line-L: var(--secondary-text);
 				}
 		* {
 		cursor: url("abyssbox_cursor.png"), auto;
@@ -394,6 +395,7 @@ export class ColorConfig {
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
 			--mod-title: #bf2c5d;
+			--progress-bar: #bf2c5d;
 
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale 0; 		
@@ -482,8 +484,8 @@ export class ColorConfig {
 			--note-flash: #ffffff;
 			--note-flash-secondary: #ffffff77;
 
-			--oscilloscope-line-L: var(--ui-widget-background);
-			--oscilloscope-line-R: var(--secondary-text);
+			--oscilloscope-line-R: var(--ui-widget-background);
+			--oscilloscope-line-L: var(--secondary-text);
 				}		
 		/* sets cursor */ 
 		* {
@@ -711,7 +713,8 @@ export class ColorConfig {
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
 			--mod-title: #cc1338;
-		
+			--progress-bar: #cc1338;
+
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 255; 		
@@ -798,8 +801,8 @@ export class ColorConfig {
 			--note-flash: #ffffff;
 			--note-flash-secondary: #ffffff77;
 
-			--oscilloscope-line-L: var(--ui-widget-background);
-			--oscilloscope-line-R: var(--secondary-text);
+			--oscilloscope-line-R: var(--ui-widget-background);
+			--oscilloscope-line-L: var(--secondary-text);
 				}
 
 				.promptContainerBG::before {
@@ -1182,7 +1185,8 @@ export class ColorConfig {
 			--mod-label-primary: #341a7b; 		
 			--mod-label-secondary-text: rgb(86, 93, 120);
 			--mod-label-primary-text: gray; 
-		
+			--progress-bar: #accdd9;
+
 			--pitch-secondary-channel-hue: 110; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 63; 		
@@ -1720,7 +1724,7 @@ export class ColorConfig {
 			--mod-label-primary: #282840;
 			--mod-label-secondary-text: rgb(87, 86, 120);
 			--mod-label-primary-text: white;
-		
+
 			--pitch1-secondary-channel: #bb1111;
 			--pitch1-primary-channel:   #ff5959;
 			--pitch1-secondary-note:    #7c0404;
@@ -2218,6 +2222,7 @@ export class ColorConfig {
 		--mod-label-primary: #2b080d; 
 		--mod-label-secondary-text: #421a20; 
 		--mod-label-primary-text: #ffc6cf; 
+		--progress-bar: #ffc9ff;
 		--pitch-secondary-channel-hue: 60; 
 		--pitch-secondary-channel-sat: 23; 
 		--pitch-secondary-channel-sat-scale: 0.1; 
@@ -2409,7 +2414,8 @@ export class ColorConfig {
 			--mod-label-primary: #541625; 		
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
-		
+			--progress-bar: #bf2c5d;
+
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 43; 		
@@ -2618,7 +2624,8 @@ export class ColorConfig {
 			--mod-label-primary: #542f16; 		
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
-		
+			--progress-bar: #ff6f00;
+
 			--pitch-secondary-channel-hue: 0; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 43; 		
@@ -2784,7 +2791,8 @@ export class ColorConfig {
 			--mod-label-primary: #542f16; 		
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
-		
+			--progress-bar: #ff6f00;
+
 			--pitch-secondary-channel-hue: 0; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 43; 		
@@ -3584,7 +3592,8 @@ export class ColorConfig {
 			--mod-label-primary: #541616; 		
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
-		
+			--progress-bar: #ff0000;
+
 			--pitch-secondary-channel-hue: 0; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 43; 		
@@ -3745,7 +3754,8 @@ export class ColorConfig {
 				--mute-button-normal: #ffffff;
 				--mute-button-mod: #4f4f4f;
 				--mod-label-primary: #f00;
-			
+				--progress-bar: #00ff00;
+
 				--pitch1-secondary-channel: #590000;
 			  --pitch1-primary-channel: #f00;
 			  --pitch1-secondary-note: #590000;
@@ -3974,7 +3984,8 @@ export class ColorConfig {
 			--mod-label-primary: #541625; 		
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray;
-		
+			--progress-bar: #00ff00;
+
 --pitch-secondary-channel-hue: 0;		
 --pitch-secondary-channel-hue-scale: 6.1;		
 --pitch-secondary-channel-sat: 43.3;		
@@ -4714,6 +4725,7 @@ export class ColorConfig {
 			--input-box-outline: #00ff00; 
 			--mute-button-normal: #00ff44; 
 			--mute-button-mod: #44ff00; 
+			--progress-bar: #00ff00;
 			--pitch1-secondary-channel: #0099A1; 
 			--pitch1-primary-channel: #25F3FF; 
 			--pitch1-secondary-note: #00BDC7; 
@@ -4967,6 +4979,7 @@ export class ColorConfig {
 				--fifth-note: #76469b; 
 				--white-piano-key: #abbce3; 
 				--black-piano-key: #2f235e; 
+				--progress-bar: #716fe3;
 				--use-color-formula: false; 
 				--track-editor-bg-pitch: #3a3b5c; 
 				--track-editor-bg-pitch-dim: #1f2036; 
@@ -14384,6 +14397,7 @@ export class ColorConfig {
 	// modTitle can stay uncommented until it's used somwhere that's not index.html
 	// public static readonly modTitle: string = "var(--mod-title)";
 	public static readonly songPlayerMargin: string = "var(--song-player-margin)";
+	public static readonly progressBar: string = "var(--progress-bar)";
     public static readonly useColorFormula: string = "var(--use-color-formula)";
     public static readonly pitchSecondaryChannelHue: string = "var(--pitch-secondary-channel-hue)";
     public static readonly pitchSecondaryChannelHueScale: string = "var(--pitch-secondary-channel-hue-scale)";

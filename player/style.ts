@@ -140,6 +140,9 @@ document.head.appendChild(HTML.style({type: "text/css"}, `
 	.layout-option {
 		width: 25%;
 	}
+	.timeline-bar-progress {
+		background: var(--progress-bar, var(--text-selection, rgb(0, 255, 0)));
+	}
 	.layout-option input:checked ~ * {
 		color:var(--primary-text) !important;
 	}

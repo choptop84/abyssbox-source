@@ -2052,7 +2052,8 @@ var beepbox = (function (exports) {
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
 			--mod-title: #bf2c5d;
-
+			--progress-bar: #bf2c5d;
+			
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 43; 		
@@ -2140,8 +2141,8 @@ var beepbox = (function (exports) {
 			--note-flash: #ffffff;
 			--note-flash-secondary: #ffffff77;
 
-			--oscilloscope-line-L: var(--ui-widget-background);
-			--oscilloscope-line-R: var(--secondary-text);
+			--oscilloscope-line-R: var(--ui-widget-background);
+			--oscilloscope-line-L: var(--secondary-text);
 				}
 		* {
 		cursor: url("abyssbox_cursor.png"), auto;
@@ -2390,6 +2391,7 @@ var beepbox = (function (exports) {
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
 			--mod-title: #bf2c5d;
+			--progress-bar: #bf2c5d;
 
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale 0; 		
@@ -2478,8 +2480,8 @@ var beepbox = (function (exports) {
 			--note-flash: #ffffff;
 			--note-flash-secondary: #ffffff77;
 
-			--oscilloscope-line-L: var(--ui-widget-background);
-			--oscilloscope-line-R: var(--secondary-text);
+			--oscilloscope-line-R: var(--ui-widget-background);
+			--oscilloscope-line-L: var(--secondary-text);
 				}		
 		/* sets cursor */ 
 		* {
@@ -2707,7 +2709,8 @@ var beepbox = (function (exports) {
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
 			--mod-title: #cc1338;
-		
+			--progress-bar: #cc1338;
+
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 255; 		
@@ -2794,8 +2797,8 @@ var beepbox = (function (exports) {
 			--note-flash: #ffffff;
 			--note-flash-secondary: #ffffff77;
 
-			--oscilloscope-line-L: var(--ui-widget-background);
-			--oscilloscope-line-R: var(--secondary-text);
+			--oscilloscope-line-R: var(--ui-widget-background);
+			--oscilloscope-line-L: var(--secondary-text);
 				}
 
 				.promptContainerBG::before {
@@ -3178,7 +3181,8 @@ var beepbox = (function (exports) {
 			--mod-label-primary: #341a7b; 		
 			--mod-label-secondary-text: rgb(86, 93, 120);
 			--mod-label-primary-text: gray; 
-		
+			--progress-bar: #accdd9;
+
 			--pitch-secondary-channel-hue: 110; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 63; 		
@@ -3716,7 +3720,7 @@ var beepbox = (function (exports) {
 			--mod-label-primary: #282840;
 			--mod-label-secondary-text: rgb(87, 86, 120);
 			--mod-label-primary-text: white;
-		
+
 			--pitch1-secondary-channel: #bb1111;
 			--pitch1-primary-channel:   #ff5959;
 			--pitch1-secondary-note:    #7c0404;
@@ -4214,6 +4218,7 @@ var beepbox = (function (exports) {
 		--mod-label-primary: #2b080d; 
 		--mod-label-secondary-text: #421a20; 
 		--mod-label-primary-text: #ffc6cf; 
+		--progress-bar: #ffc9ff;
 		--pitch-secondary-channel-hue: 60; 
 		--pitch-secondary-channel-sat: 23; 
 		--pitch-secondary-channel-sat-scale: 0.1; 
@@ -4405,7 +4410,8 @@ var beepbox = (function (exports) {
 			--mod-label-primary: #541625; 		
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
-		
+			--progress-bar: #bf2c5d;
+
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 43; 		
@@ -4614,7 +4620,8 @@ var beepbox = (function (exports) {
 			--mod-label-primary: #542f16; 		
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
-		
+			--progress-bar: #ff6f00;
+
 			--pitch-secondary-channel-hue: 0; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 43; 		
@@ -4780,7 +4787,8 @@ var beepbox = (function (exports) {
 			--mod-label-primary: #542f16; 		
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
-		
+			--progress-bar: #ff6f00;
+
 			--pitch-secondary-channel-hue: 0; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 43; 		
@@ -5580,7 +5588,8 @@ var beepbox = (function (exports) {
 			--mod-label-primary: #541616; 		
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
-		
+			--progress-bar: #ff0000;
+
 			--pitch-secondary-channel-hue: 0; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 43; 		
@@ -5741,7 +5750,8 @@ var beepbox = (function (exports) {
 				--mute-button-normal: #ffffff;
 				--mute-button-mod: #4f4f4f;
 				--mod-label-primary: #f00;
-			
+				--progress-bar: #00ff00;
+
 				--pitch1-secondary-channel: #590000;
 			  --pitch1-primary-channel: #f00;
 			  --pitch1-secondary-note: #590000;
@@ -5970,7 +5980,8 @@ var beepbox = (function (exports) {
 			--mod-label-primary: #541625; 		
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray;
-		
+			--progress-bar: #00ff00;
+
 --pitch-secondary-channel-hue: 0;		
 --pitch-secondary-channel-hue-scale: 6.1;		
 --pitch-secondary-channel-sat: 43.3;		
@@ -6710,6 +6721,7 @@ var beepbox = (function (exports) {
 			--input-box-outline: #00ff00; 
 			--mute-button-normal: #00ff44; 
 			--mute-button-mod: #44ff00; 
+			--progress-bar: #00ff00;
 			--pitch1-secondary-channel: #0099A1; 
 			--pitch1-primary-channel: #25F3FF; 
 			--pitch1-secondary-note: #00BDC7; 
@@ -6963,6 +6975,7 @@ var beepbox = (function (exports) {
 				--fifth-note: #76469b; 
 				--white-piano-key: #abbce3; 
 				--black-piano-key: #2f235e; 
+				--progress-bar: #716fe3;
 				--use-color-formula: false; 
 				--track-editor-bg-pitch: #3a3b5c; 
 				--track-editor-bg-pitch-dim: #1f2036; 
@@ -16372,6 +16385,7 @@ var beepbox = (function (exports) {
     ColorConfig.whitePianoKeyText = "var(--white-piano-key-text)";
     ColorConfig.blackPianoKeyText = "var(--black-piano-key-text)";
     ColorConfig.songPlayerMargin = "var(--song-player-margin)";
+    ColorConfig.progressBar = "var(--progress-bar)";
     ColorConfig.useColorFormula = "var(--use-color-formula)";
     ColorConfig.pitchSecondaryChannelHue = "var(--pitch-secondary-channel-hue)";
     ColorConfig.pitchSecondaryChannelHueScale = "var(--pitch-secondary-channel-hue-scale)";
@@ -29138,6 +29152,9 @@ var beepbox = (function (exports) {
 	.layout-option {
 		width: 25%;
 	}
+	.timeline-bar-progress {
+		background: var(--progress-bar, var(--text-selection, rgb(0, 255, 0)));
+	}
 	.layout-option input:checked ~ * {
 		color:var(--primary-text) !important;
 	}
@@ -29373,6 +29390,17 @@ var beepbox = (function (exports) {
             transform: scale(-1);
             }
         `,
+        "piano": `
+        .songPlayerContainer {
+            display:grid; 
+            grid-template-areas: 'visualizer visualizer' 'control-center control-center'; 
+            grid-template-rows: 92.6vh 7.4vh; 
+            grid-template-columns: minmax(0px,0px);
+        }
+        div.visualizer {
+            transform: scale(1);
+            }
+        `,
     };
     SongPlayerLayout._styleElement = document.head.appendChild(HTML.style({ type: "text/css" }));
 
@@ -29457,7 +29485,21 @@ var beepbox = (function (exports) {
 
 					<rect x="2" y="15" width="22" height="3" fill="currentColor"/>
 				</svg>
-				`), div("BoxBeep")));
+				`), div("BoxBeep")), label({ class: "layout-option", style: "width:90px; color: var(--secondary-text)" }, input({ type: "radio", name: "spLayout", value: "piano", style: "display:none;" }), SVG(`\
+				<svg viewBox="-1 -1 28 22">
+					<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
+					<rect x="4" y="3" width="20" height="1" fill="currentColor"/>
+					<rect x="2" y="3" width="1" height="9" fill="currentColor"/>
+					<rect x="23" y="4" width="1" height="7" fill="currentColor"/>
+					<rect x="4" y="11" width="20" height="1" fill="currentColor"/>
+
+					<rect x="4" y="5" width="20" height="1" fill="currentColor"/>
+					<rect x="4" y="7" width="20" height="1" fill="currentColor"/>
+					<rect x="4" y="9" width="20" height="1" fill="currentColor"/>
+
+					<rect x="2" y="15" width="22" height="3" fill="currentColor"/>
+					</svg>
+				`), div("Piano")));
     const layoutContainer = div({ class: "prompt noSelection", style: "width: 300px; margin: auto;text-align: center;background: var(--editor-background);border-radius: 15px;border: 4px solid var(--ui-widget-background);color: var(--primary-text);padding: 20px;display: flex;flex-direction: column;position: relative;box-shadow: 5px 5px 20px 10px rgba(0,0,0,0.5);" }, div({ class: "promptTitle" }, h2({ class: "layoutExt", style: "text-align: inherit;" }, ""), h2({ class: "layoutTitle" }, "Layout")), _form, div({ style: "margin-top: 1em;" }, _okayButton), closePrompt);
     let titleText = h1({ style: "flex-grow: 1; margin: 0 1px; margin-left: 10px; overflow: hidden;" }, "");
     let layoutStuffs = button({ class: "songPlayerLayoutsButton", style: "margin: 0 4px; height: 42px; width: 90px;" }, "Layouts");
@@ -29492,11 +29534,15 @@ var beepbox = (function (exports) {
     const gradient = SVG.linearGradient({ id: "volumeGrad2", gradientUnits: "userSpaceOnUse" }, stop1, stop2, stop3);
     const defs = SVG.defs({}, gradient);
     const volumeBarContainer = SVG.svg({ style: `touch-action: none; overflow: hidden; margin: auto;`, width: "160px", height: "10px", preserveAspectRatio: "none" }, defs, outVolumeBarBg, outVolumeBar, outVolumeCap);
+    const timelineBarProgress = div({ class: `timeline-bar-progress`, style: `pointer-events: none; overflow: hidden; width: 5%; height: 100%; z-index: 5;` });
+    const timelineBar = div({ style: `pointer-events: none; overflow: hidden; margin: auto; width: 90%; height: 50%; background: var(--ui-widget-background);` }, timelineBarProgress);
+    const timelineBarContainer = div({ style: `pointer-events: none; overflow: hidden; margin: auto; width: 160px; height: 10px; ` }, timelineBar);
+    const volumeBarContainerDiv = div({ style: "display:flex; flex-direction:column;" }, volumeBarContainer, timelineBarContainer);
     const promptContainer = div({ class: "promptContainer", style: "display:none; backdrop-filter: saturate(1.5) blur(4px); width: 100%; height: 100%; position: fixed; z-index: 999; display: flex; justify-content: center; align-items: center;" });
     promptContainer.style.display = "none";
     const songPlayerContainer = div({ class: "songPlayerContainer" });
     songPlayerContainer.appendChild(visualizationContainer);
-    songPlayerContainer.appendChild(div({ class: "control-center", style: `flex-shrink: 0; height: 20vh; min-height: 22px; max-height: 70px; display: flex; align-items: center; grid-area: control-center;` }, playButtonContainer, loopButton, volumeIcon, volumeSlider, zoomButton, volumeBarContainer, oscilascope.canvas, titleText, layoutStuffs, editLink, copyLink, shareLink, fullscreenLink, shortenSongLink));
+    songPlayerContainer.appendChild(div({ class: "control-center", style: `flex-shrink: 0; height: 20vh; min-height: 22px; max-height: 70px; display: flex; align-items: center; grid-area: control-center;` }, playButtonContainer, loopButton, volumeIcon, volumeSlider, zoomButton, volumeBarContainerDiv, oscilascope.canvas, titleText, layoutStuffs, editLink, copyLink, shareLink, fullscreenLink, shortenSongLink));
     document.body.appendChild(songPlayerContainer);
     songPlayerContainer.appendChild(promptContainer);
     promptContainer.appendChild(layoutContainer);
@@ -29701,11 +29747,20 @@ var beepbox = (function (exports) {
         synth.volume = Math.min(1.0, Math.pow(volume / 50.0, 0.5)) * Math.pow(2.0, (volume - 75.0) / 25.0);
     }
     function renderPlayhead() {
+        const maxPer = 144;
         if (synth.song != null) {
             let pos = synth.playhead / synth.song.barCount;
-            playhead.style.left = (timelineWidth * pos) + "px";
-            const boundingRect = visualizationContainer.getBoundingClientRect();
-            visualizationContainer.scrollLeft = pos * (timelineWidth - boundingRect.width);
+            timelineBarProgress.style.width = Math.round((maxPer * pos / maxPer) * 100) + "%";
+            if (_form.elements["spLayout"].value == "piano") {
+                playhead.style.left = (timelineWidth * pos) + "px";
+                timelineContainer.style.left = "-" + (timelineWidth * pos) + "px";
+            }
+            else {
+                playhead.style.left = (timelineWidth * pos) + "px";
+                timelineContainer.style.left = "0";
+                const boundingRect = visualizationContainer.getBoundingClientRect();
+                visualizationContainer.scrollLeft = pos * (timelineWidth - boundingRect.width);
+            }
             if (notesFlashWhenPlayed) {
                 const playheadBar = Math.floor(synth.playhead);
                 const modPlayhead = synth.playhead - playheadBar;

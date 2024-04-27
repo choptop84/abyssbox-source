@@ -16725,6 +16725,7 @@ var beepbox = (function (exports) {
     ColorConfig.whitePianoKeyText = "var(--white-piano-key-text)";
     ColorConfig.blackPianoKeyText = "var(--black-piano-key-text)";
     ColorConfig.songPlayerMargin = "var(--song-player-margin)";
+    ColorConfig.progressBar = "var(--progress-bar)";
     ColorConfig.useColorFormula = "var(--use-color-formula)";
     ColorConfig.pitchSecondaryChannelHue = "var(--pitch-secondary-channel-hue)";
     ColorConfig.pitchSecondaryChannelHueScale = "var(--pitch-secondary-channel-hue-scale)";
