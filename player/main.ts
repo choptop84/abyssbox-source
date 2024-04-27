@@ -134,7 +134,7 @@ import { SongPlayerLayout } from "./Layout";
 		let copyLink: HTMLAnchorElement = a({href: "javascript:void(0)", style: "margin: 0 4px;"}, "⎘ Copy URL");
 		let shareLink: HTMLAnchorElement = a({href: "javascript:void(0)", style: "margin: 0 4px;"}, "⤳ Share");
 		let fullscreenLink: HTMLAnchorElement = a({target: "_top", style: "margin: 0 4px;"}, "⇱ Fullscreen");
-		//let shortenSongLink: HTMLAnchorElement = a({target: "_top", style: "margin: 0 4px;"}, "… Shorten URL");
+		let shortenSongLink: HTMLAnchorElement = a({target: "_top", style: "margin: 0 4px;"}, "… Shorten URL");
 
 	let draggingPlayhead: boolean = false;
 		const playButton: HTMLButtonElement = button({style: "width: 100%; height: 100%; max-height: 50px;"});
@@ -202,7 +202,7 @@ import { SongPlayerLayout } from "./Layout";
 			copyLink,
 			shareLink,
 			fullscreenLink,
-			//shortenSongLink,
+			shortenSongLink,
 		),
 	);
 	document.body.appendChild(songPlayerContainer);
@@ -307,6 +307,11 @@ import { SongPlayerLayout } from "./Layout";
 	
 	function onWindowResize(): void {
 		renderTimeline();
+	}
+
+	function shortenSongPlayerUrl(): void {
+		let shortenerStrategy: string = "https://tinyurl.com/api-create.php?url=";
+		window.open(shortenerStrategy + encodeURIComponent(new URL("#song=" + synth.song!.toBase64String(), location.href).href));
 	}
 	
 	let pauseIfAnotherPlayerStartsHandle: ReturnType<typeof setInterval> | null = null;
@@ -745,6 +750,7 @@ import { SongPlayerLayout } from "./Layout";
 	copyLink.addEventListener("click", onCopyClicked);
 	shareLink.addEventListener("click", onShareClicked);
 	window.addEventListener("hashchange", hashUpdatedExternally);
+	shortenSongLink.addEventListener("click", shortenSongPlayerUrl);
 	
 	hashUpdatedExternally();
 	renderLoopIcon();
