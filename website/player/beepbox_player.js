@@ -29751,7 +29751,7 @@ var beepbox = (function (exports) {
         if (synth.song != null) {
             let pos = synth.playhead / synth.song.barCount;
             timelineBarProgress.style.width = Math.round((maxPer * pos / maxPer) * 100) + "%";
-            if (_form.elements["spLayout"].value == "piano") {
+            if ((_form.elements["spLayout"].value == "piano") || (window.localStorage.getItem("spLayout") == "piano")) {
                 playhead.style.left = (timelineWidth * pos) + "px";
                 timelineContainer.style.left = "-" + (timelineWidth * pos) + "px";
             }

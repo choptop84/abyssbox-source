@@ -499,7 +499,7 @@ import { SongPlayerLayout } from "./Layout";
 
 			timelineBarProgress.style.width = Math.round((maxPer*pos/maxPer)*100)+"%";
 
-			if ((<any> _form.elements)["spLayout"].value == "piano") {
+			if (((<any> _form.elements)["spLayout"].value == "piano")||(window.localStorage.getItem("spLayout") == "piano")) {
 				playhead.style.left = (timelineWidth * pos) + "px"; 
 				timelineContainer.style.left = "-"+(timelineWidth * pos) + "px"; 
 			} else {
