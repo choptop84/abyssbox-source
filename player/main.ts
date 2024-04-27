@@ -134,7 +134,7 @@ import { SongPlayerLayout } from "./Layout";
 		let copyLink: HTMLAnchorElement = a({href: "javascript:void(0)", style: "margin: 0 4px;"}, "⎘ Copy URL");
 		let shareLink: HTMLAnchorElement = a({href: "javascript:void(0)", style: "margin: 0 4px;"}, "⤳ Share");
 		let fullscreenLink: HTMLAnchorElement = a({target: "_top", style: "margin: 0 4px;"}, "⇱ Fullscreen");
-		let shortenSongLink: HTMLAnchorElement = a({target: "_top", style: "margin: 0 4px;"}, "… Shorten URL");
+		let shortenSongLink: HTMLAnchorElement = a({ href:"javascript:void(0)", target: "_top", style: "margin: 0 4px;"}, "… Shorten URL");
 
 	let draggingPlayhead: boolean = false;
 		const playButton: HTMLButtonElement = button({style: "width: 100%; height: 100%; max-height: 50px;"});
