@@ -29513,14 +29513,16 @@ var beepbox = (function (exports) {
 				`), div("Piano")), label({ class: "layout-option", style: "width:90px; color: var(--secondary-text)" }, input({ type: "radio", name: "spLayout", value: "vertical", style: "display:none;" }), SVG(`\
 				<svg viewBox="-1 -1 28 22">
 					<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
-					<rect x="4" y="3" width="20" height="1" fill="currentColor"/>
-					<rect x="2" y="3" width="1" height="9" fill="currentColor"/>
+					<rect x="2" y="3" width="22" height="1" fill="currentColor"/>
+					<rect x="2" y="4" width="1" height="7" fill="currentColor"/>
 					<rect x="23" y="4" width="1" height="7" fill="currentColor"/>
-					<rect x="4" y="11" width="20" height="1" fill="currentColor"/>
+					<rect x="2" y="11" width="22" height="1" fill="currentColor"/>
 
-					<rect x="4" y="5" width="20" height="1" fill="currentColor"/>
-					<rect x="4" y="7" width="20" height="1" fill="currentColor"/>
-					<rect x="4" y="9" width="20" height="1" fill="currentColor"/>
+					<rect x="5" y="4" width="1" height="7" fill="currentColor"/>
+					<rect x="8" y="4" width="1" height="7" fill="currentColor"/>
+					<rect x="12" y="4" width="1" height="7" fill="currentColor"/>
+					<rect x="16" y="4" width="1" height="7" fill="currentColor"/>
+					<rect x="20" y="4" width="1" height="7" fill="currentColor"/>
 
 					<rect x="2" y="15" width="22" height="3" fill="currentColor"/>
 					</svg>
