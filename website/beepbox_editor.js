@@ -956,6 +956,16 @@ var beepbox = (function (exports) {
     Config.detuneMin = 0;
     Config.songDetuneMin = 0;
     Config.songDetuneMax = 500;
+    Config.unisonVoicesMin = 1;
+    Config.unisonVoicesMax = 2;
+    Config.unisonSpreadMin = -96;
+    Config.unisonSpreadMax = 96;
+    Config.unisonOffsetMin = -96;
+    Config.unisonOffsetMax = 96;
+    Config.unisonExpressionMin = -2;
+    Config.unisonExpressionMax = 2;
+    Config.unisonSignMin = -2;
+    Config.unisonSignMax = 2;
     Config.sineWaveLength = 1 << 8;
     Config.sineWaveMask = Config.sineWaveLength - 1;
     Config.sineWave = generateSineWave();
@@ -978,7 +988,7 @@ var beepbox = (function (exports) {
         { name: "noteVolume", computeIndex: 0, displayName: "note volume", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: null },
         { name: "pulseWidth", computeIndex: 2, displayName: "pulse width", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [6, 8] },
         { name: "stringSustain", computeIndex: 3, displayName: "sustain", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [7] },
-        { name: "unison", computeIndex: 4, displayName: "unison", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [0, 5, 7, 9] },
+        { name: "unison", computeIndex: 4, displayName: "unison", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [0, 5, 7, 9, 6, 2, 3] },
         { name: "operatorFrequency", computeIndex: 5, displayName: "fm# freq", interleave: true, isFilter: false, maxCount: Config.operatorCount + 2, effect: null, compatibleInstruments: [1, 11] },
         { name: "operatorAmplitude", computeIndex: 11, displayName: "fm# volume", interleave: false, isFilter: false, maxCount: Config.operatorCount + 2, effect: null, compatibleInstruments: [1, 11] },
         { name: "feedbackAmplitude", computeIndex: 17, displayName: "fm feedback", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [1, 11] },
@@ -1452,7 +1462,7 @@ var beepbox = (function (exports) {
         static valueToPreset(presetValue) {
             const categoryIndex = presetValue >> 6;
             const presetIndex = presetValue & 0x3F;
-            return EditorConfig.presetCategories[categoryIndex].presets[presetIndex];
+            return EditorConfig === null || EditorConfig === void 0 ? void 0 : EditorConfig.presetCategories[categoryIndex].presets[presetIndex];
         }
         static midiProgramToPresetValue(program) {
             for (let categoryIndex = 0; categoryIndex < EditorConfig.presetCategories.length; categoryIndex++) {
@@ -2405,7 +2415,8 @@ var beepbox = (function (exports) {
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
 			--mod-title: #bf2c5d;
-
+			--progress-bar: #bf2c5d;
+			
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 43; 		
@@ -2493,8 +2504,8 @@ var beepbox = (function (exports) {
 			--note-flash: #ffffff;
 			--note-flash-secondary: #ffffff77;
 
-			--oscilloscope-line-L: var(--ui-widget-background);
-			--oscilloscope-line-R: var(--secondary-text);
+			--oscilloscope-line-R: var(--ui-widget-background);
+			--oscilloscope-line-L: var(--secondary-text);
 				}
 		* {
 		cursor: url("abyssbox_cursor.png"), auto;
@@ -2743,6 +2754,7 @@ var beepbox = (function (exports) {
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
 			--mod-title: #bf2c5d;
+			--progress-bar: #bf2c5d;
 
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale 0; 		
@@ -2831,8 +2843,8 @@ var beepbox = (function (exports) {
 			--note-flash: #ffffff;
 			--note-flash-secondary: #ffffff77;
 
-			--oscilloscope-line-L: var(--ui-widget-background);
-			--oscilloscope-line-R: var(--secondary-text);
+			--oscilloscope-line-R: var(--ui-widget-background);
+			--oscilloscope-line-L: var(--secondary-text);
 				}		
 		/* sets cursor */ 
 		* {
@@ -3060,7 +3072,8 @@ var beepbox = (function (exports) {
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
 			--mod-title: #cc1338;
-		
+			--progress-bar: #cc1338;
+
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 255; 		
@@ -3147,8 +3160,8 @@ var beepbox = (function (exports) {
 			--note-flash: #ffffff;
 			--note-flash-secondary: #ffffff77;
 
-			--oscilloscope-line-L: var(--ui-widget-background);
-			--oscilloscope-line-R: var(--secondary-text);
+			--oscilloscope-line-R: var(--ui-widget-background);
+			--oscilloscope-line-L: var(--secondary-text);
 				}
 
 				.promptContainerBG::before {
@@ -3531,7 +3544,8 @@ var beepbox = (function (exports) {
 			--mod-label-primary: #341a7b; 		
 			--mod-label-secondary-text: rgb(86, 93, 120);
 			--mod-label-primary-text: gray; 
-		
+			--progress-bar: #accdd9;
+
 			--pitch-secondary-channel-hue: 110; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 63; 		
@@ -4069,7 +4083,7 @@ var beepbox = (function (exports) {
 			--mod-label-primary: #282840;
 			--mod-label-secondary-text: rgb(87, 86, 120);
 			--mod-label-primary-text: white;
-		
+
 			--pitch1-secondary-channel: #bb1111;
 			--pitch1-primary-channel:   #ff5959;
 			--pitch1-secondary-note:    #7c0404;
@@ -4567,6 +4581,7 @@ var beepbox = (function (exports) {
 		--mod-label-primary: #2b080d; 
 		--mod-label-secondary-text: #421a20; 
 		--mod-label-primary-text: #ffc6cf; 
+		--progress-bar: #ffc9ff;
 		--pitch-secondary-channel-hue: 60; 
 		--pitch-secondary-channel-sat: 23; 
 		--pitch-secondary-channel-sat-scale: 0.1; 
@@ -4758,7 +4773,8 @@ var beepbox = (function (exports) {
 			--mod-label-primary: #541625; 		
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
-		
+			--progress-bar: #bf2c5d;
+
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 43; 		
@@ -4967,7 +4983,8 @@ var beepbox = (function (exports) {
 			--mod-label-primary: #542f16; 		
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
-		
+			--progress-bar: #ff6f00;
+
 			--pitch-secondary-channel-hue: 0; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 43; 		
@@ -5133,7 +5150,8 @@ var beepbox = (function (exports) {
 			--mod-label-primary: #542f16; 		
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
-		
+			--progress-bar: #ff6f00;
+
 			--pitch-secondary-channel-hue: 0; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 43; 		
@@ -5933,7 +5951,8 @@ var beepbox = (function (exports) {
 			--mod-label-primary: #541616; 		
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
-		
+			--progress-bar: #ff0000;
+
 			--pitch-secondary-channel-hue: 0; 		
 			--pitch-secondary-channel-hue-scale 0; 		
 			--pitch-secondary-channel-sat: 43; 		
@@ -6094,7 +6113,8 @@ var beepbox = (function (exports) {
 				--mute-button-normal: #ffffff;
 				--mute-button-mod: #4f4f4f;
 				--mod-label-primary: #f00;
-			
+				--progress-bar: #00ff00;
+
 				--pitch1-secondary-channel: #590000;
 			  --pitch1-primary-channel: #f00;
 			  --pitch1-secondary-note: #590000;
@@ -6323,7 +6343,8 @@ var beepbox = (function (exports) {
 			--mod-label-primary: #541625; 		
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray;
-		
+			--progress-bar: #00ff00;
+
 --pitch-secondary-channel-hue: 0;		
 --pitch-secondary-channel-hue-scale: 6.1;		
 --pitch-secondary-channel-sat: 43.3;		
@@ -7063,6 +7084,7 @@ var beepbox = (function (exports) {
 			--input-box-outline: #00ff00; 
 			--mute-button-normal: #00ff44; 
 			--mute-button-mod: #44ff00; 
+			--progress-bar: #00ff00;
 			--pitch1-secondary-channel: #0099A1; 
 			--pitch1-primary-channel: #25F3FF; 
 			--pitch1-secondary-note: #00BDC7; 
@@ -7316,6 +7338,7 @@ var beepbox = (function (exports) {
 				--fifth-note: #76469b; 
 				--white-piano-key: #abbce3; 
 				--black-piano-key: #2f235e; 
+				--progress-bar: #716fe3;
 				--use-color-formula: false; 
 				--track-editor-bg-pitch: #3a3b5c; 
 				--track-editor-bg-pitch-dim: #1f2036; 
@@ -31638,6 +31661,155 @@ li.select2-results__option[role=group] > strong:hover {
             newNotes.push(newNote);
         }
     }
+    function mod(a, b) {
+        return (a % b + b) % b;
+    }
+    function sigma(a, b, c) {
+        let result = 0;
+        for (let i = c; i <= a; i++) {
+            result += b(i);
+        }
+        return result;
+    }
+    function randomSineWave(wave) {
+        let randomRoundWave = new Float32Array(64);
+        let waveLength = 64;
+        let foundNonZero = false;
+        const roundedWaveType = (Math.random() * 2 + 1) | 0;
+        if (roundedWaveType == 1 || roundedWaveType == 3) {
+            let randomNumber1 = Math.random() * 2 + 0.5;
+            let randomNumber2 = Math.random() * 13 + 3;
+            let randomNumber3 = Math.random() * 48 - 24;
+            for (let i = 0; i < waveLength; i++) {
+                randomRoundWave[i] = clamp(-24, 24 + 1, Math.round(mod(randomNumber3 + ((Math.sin((i + randomNumber3) / randomNumber2) * 24) + i * randomNumber1), 48) - 24));
+            }
+        }
+        else if (roundedWaveType == 2) {
+            let randomNumber1 = Math.random() * 0.19 + 0.06;
+            let randomNumber2 = Math.random() * 2 + 1;
+            let randomNumber3 = Math.random() * 48 - 24;
+            let randomNumber4 = Math.random() * 2 - 1;
+            for (let i = 0; i < waveLength; i++) {
+                randomRoundWave[i] = clamp(-24, 24 + 1, Math.round(randomNumber4 * Math.abs(2 * Math.floor((Math.sin((i / randomNumber2) * randomNumber1 + randomNumber3) * Math.cos((i * randomNumber2) * (randomNumber1 / 2)) * 24))) - randomNumber4 * 24));
+            }
+        }
+        for (let i = 0; i < waveLength; i++) {
+            wave[i] = randomRoundWave[i];
+            let minimum = Infinity;
+            let maximum = -Infinity;
+            for (let i = 0; i < waveLength; i++) {
+                minimum = Math.min(minimum, wave[i]);
+                maximum = Math.max(maximum, wave[i]);
+            }
+            const distance = maximum - minimum;
+            if (distance >= 7) {
+                foundNonZero = true;
+            }
+        }
+        if (!foundNonZero)
+            randomSineWave(wave);
+    }
+    function randomPulses(wave) {
+        let randomPulse = new Float32Array(64);
+        let waveLength = 64;
+        let foundNonZero = false;
+        let randomNumber2 = Math.round(Math.random() * 15 + 15);
+        let randomNumber3 = Math.round(Math.random() * 3 + 1);
+        let randomNumber4 = Math.round(Math.random() * 13 + 2);
+        for (let i = 0; i < waveLength; i++) {
+            let randomNumber1 = sigma(mod(i, randomNumber2), (i) => 1, randomNumber4);
+            randomPulse[i] = clamp(-24, 24 + 1, Math.round(mod(24 * (sigma(i, (i) => randomNumber1, Math.round(randomNumber2 / randomNumber3))), 24.0000000000001)));
+        }
+        for (let i = 0; i < waveLength; i++) {
+            wave[i] = randomPulse[i];
+            let minimum = Infinity;
+            let maximum = -Infinity;
+            for (let i = 0; i < waveLength; i++) {
+                minimum = Math.min(minimum, wave[i]);
+                maximum = Math.max(maximum, wave[i]);
+            }
+            const distance = maximum - minimum;
+            if (distance >= 7) {
+                foundNonZero = true;
+            }
+        }
+        if (!foundNonZero)
+            randomPulses(wave);
+    }
+    function randomChipWave(wave) {
+        let randomChip = new Float32Array(64);
+        let waveLength = 64;
+        let foundNonZero = false;
+        const chipType = (Math.random() * 2 + 1) | 0;
+        if (chipType == 1) {
+            let randomNumber1 = Math.random() * 3;
+            let randomNumber2 = Math.random() * 0.99 - 1;
+            let randomNumber3 = Math.random() * 9 + 2;
+            let randomNumber4 = Math.random() * 2 - 1;
+            for (let i = 0; i < waveLength; i++) {
+                randomChip[i] = clamp(-24, 24 + 1, (Math.round(Math.abs(randomNumber4 * mod(((randomNumber2 / randomNumber3) * randomNumber3) + (sigma(i / (randomNumber1 * randomNumber1), (i) => randomNumber3, randomNumber1 * -randomNumber2)) * randomNumber4, 24)))) * 2 - 24);
+            }
+        }
+        else if (chipType == 2) {
+            let randomNumber1 = Math.random() * 3;
+            let randomNumber2 = Math.random() * 2 - 1;
+            let randomNumber3 = Math.random() * 100;
+            for (let i = 0; i < waveLength; i++) {
+                randomChip[i] = clamp(-24, 24 + 1, mod(Math.round(mod((sigma(i / randomNumber1, (i) => (randomNumber1 * randomNumber3), 0)), 25 + randomNumber2) * 24), 48) - 24);
+            }
+        }
+        for (let i = 0; i < waveLength; i++) {
+            wave[i] = randomChip[i];
+            let minimum = Infinity;
+            let maximum = -Infinity;
+            for (let i = 0; i < waveLength; i++) {
+                minimum = Math.min(minimum, wave[i]);
+                maximum = Math.max(maximum, wave[i]);
+            }
+            const distance = maximum - minimum;
+            if (distance >= 7) {
+                foundNonZero = true;
+            }
+        }
+        if (!foundNonZero)
+            randomChipWave(wave);
+    }
+    function biasedFullyRandom(wave) {
+        let fullyRandomWave = new Float32Array(64);
+        let waveLength = 64;
+        let foundNonZero = false;
+        for (let i = 0; i < waveLength; i++) {
+            const v = Math.random() * 2 - 1;
+            const bias = 6;
+            const biased = v > 0 ? Math.pow(v, bias) : -Math.pow(-v, bias);
+            fullyRandomWave[i] = clamp(-24, 24 + 1, Math.floor(biased * 24));
+        }
+        for (let i = 0; i < waveLength; i++) {
+            wave[i] = fullyRandomWave[i];
+            let minimum = Infinity;
+            let maximum = -Infinity;
+            for (let i = 0; i < waveLength; i++) {
+                minimum = Math.min(minimum, wave[i]);
+                maximum = Math.max(maximum, wave[i]);
+            }
+            const distance = maximum - minimum;
+            if (distance >= 7) {
+                foundNonZero = true;
+            }
+        }
+        if (!foundNonZero)
+            biasedFullyRandom(wave);
+    }
+    function fullyRandom(wave) {
+        let fullyRandomWave = new Float32Array(64);
+        let waveLength = 64;
+        for (let i = 0; i < waveLength; i++) {
+            fullyRandomWave[i] = clamp(-24, 24 + 1, ((Math.random() * 48) | 0) - 24);
+        }
+        for (let i = 0; i < waveLength; i++) {
+            wave[i] = fullyRandomWave[i];
+        }
+    }
     class ChangeMoveAndOverflowNotes extends ChangeGroup {
         constructor(doc, newBeatsPerBar, partsToMove) {
             super();
@@ -31970,12 +32142,15 @@ li.select2-results__option[role=group] > strong:hover {
             ]);
             if (isNoise) {
                 const type = selectWeightedRandom([
-                    { item: 2, weight: 1 },
+                    { item: 2, weight: 3 },
                     { item: 3, weight: 3 },
+                    { item: 4, weight: 1 },
                 ]);
                 instrument.preset = instrument.type = type;
-                instrument.fadeIn = (Math.random() < 0.8) ? 0 : selectCurvedDistribution(0, Config.fadeInRange - 1, 0, 2);
-                instrument.fadeOut = selectCurvedDistribution(0, Config.fadeOutTicks.length - 1, Config.fadeOutNeutral, 2);
+                if (type != 4) {
+                    instrument.fadeIn = (Math.random() < 0.8) ? 0 : selectCurvedDistribution(0, Config.fadeInRange - 1, 0, 2);
+                    instrument.fadeOut = selectCurvedDistribution(0, Config.fadeOutTicks.length - 1, Config.fadeOutNeutral, 2);
+                }
                 if (Math.random() < 0.1) {
                     instrument.effects |= 1 << 10;
                     instrument.transition = Config.transitions.dictionary[selectWeightedRandom([
@@ -32079,6 +32254,50 @@ li.select2-results__option[role=group] > strong:hover {
                     instrument.effects |= 1 << 0;
                     instrument.reverb = selectCurvedDistribution(1, Config.reverbRange - 1, 1, 1);
                 }
+                if (type == 2 || type == 3) {
+                    instrument.unison = Config.unisons.dictionary[selectWeightedRandom([
+                        { item: "none", weight: 100 },
+                        { item: "shimmer", weight: 10 },
+                        { item: "hum", weight: 8 },
+                        { item: "honky tonk", weight: 6 },
+                        { item: "dissonant", weight: 2 },
+                        { item: "fifth", weight: 4 },
+                        { item: "octave", weight: 5 },
+                        { item: "bowed", weight: 4 },
+                        { item: "piano", weight: 10 },
+                        { item: "warbled", weight: 5 },
+                        { item: "hecking gosh", weight: 3 },
+                        { item: "spinner", weight: 6 },
+                        { item: "detune", weight: 4 },
+                        { item: "rising", weight: 2 },
+                        { item: "vibrate", weight: 3 },
+                        { item: "bass", weight: 2 },
+                        { item: "recurve", weight: 3 },
+                        { item: "inject", weight: 2 },
+                        { item: "FART", weight: 1 },
+                    ])].index;
+                    if (instrument.unison != Config.unisons.dictionary["none"].index && Math.random() > 0.4)
+                        instrument.addEnvelope(Config.instrumentAutomationTargets.dictionary["unison"].index, 0, Config.envelopes.dictionary[selectWeightedRandom([
+                            { item: "twang -1", weight: 3 },
+                            { item: "twang 1", weight: 3 },
+                            { item: "twang 2", weight: 2 },
+                            { item: "swell 1", weight: 1 },
+                            { item: "decay -1", weight: 3 },
+                            { item: "decay 1", weight: 3 },
+                            { item: "decay 2", weight: 2 },
+                            { item: "wibble-1", weight: 2 },
+                            { item: "wibble 1", weight: 2 },
+                            { item: "wibble 2", weight: 1 },
+                            { item: "wibble 3", weight: 1 },
+                            { item: "linear-2", weight: 2 },
+                            { item: "linear-1", weight: 2 },
+                            { item: "linear 1", weight: 2 },
+                            { item: "linear 2", weight: 1 },
+                            { item: "linear 3", weight: 1 },
+                            { item: "rise 1", weight: 1 },
+                            { item: "rise 2", weight: 1 },
+                        ])].index);
+                }
                 function normalize(harmonics) {
                     let max = 0;
                     for (const value of harmonics) {
@@ -32133,24 +32352,49 @@ li.select2-results__option[role=group] > strong:hover {
                             instrument.spectrumWave.markCustomWaveDirty();
                         }
                         break;
+                    case 4:
+                        {
+                            for (let i = 0; i < Config.drumCount; i++) {
+                                instrument.drumsetEnvelopes[i] = Math.floor(Math.random() * Config.envelopes.length);
+                                const spectrum = [];
+                                let randomFactor = Math.floor(Math.random() * 3);
+                                for (let j = 0; j < Config.spectrumControlPoints; j++) {
+                                    if (randomFactor == 0 || randomFactor == 3)
+                                        spectrum[j] = Math.pow(Math.random(), 3) * 0.25;
+                                    else if (randomFactor == 1)
+                                        spectrum[j] = Math.pow(Math.random(), ((i / 8) + 1));
+                                    else if (randomFactor == 2)
+                                        spectrum[j] = (Math.pow(Math.random(), 2)) * ((i / 3) + 1);
+                                    else
+                                        spectrum[j] = Math.pow(Math.random(), 3) * 0.25;
+                                }
+                                normalize(spectrum);
+                                for (let j = 0; j < Config.spectrumControlPoints; j++) {
+                                    instrument.drumsetSpectrumWaves[i].spectrum[j] = Math.round(spectrum[j]);
+                                }
+                                instrument.drumsetSpectrumWaves[i].markCustomWaveDirty();
+                            }
+                        }
+                        break;
                     default: throw new Error("Unhandled noise instrument type in random generator.");
                 }
             }
             else {
                 const type = selectWeightedRandom([
-                    { item: 0, weight: 4 },
-                    { item: 6, weight: 4 },
-                    { item: 8, weight: 5 },
-                    { item: 5, weight: 5 },
-                    { item: 7, weight: 5 },
-                    { item: 3, weight: 1 },
-                    { item: 1, weight: 5 },
-                    { item: 11, weight: 3 },
+                    { item: 0, weight: 2 },
+                    { item: 6, weight: 2 },
+                    { item: 8, weight: 2 },
+                    { item: 9, weight: 2 },
+                    { item: 5, weight: 2 },
+                    { item: 7, weight: 2 },
+                    { item: 3, weight: 2 },
+                    { item: 1, weight: 2 },
+                    { item: 11, weight: 2 },
                 ]);
                 instrument.preset = instrument.type = type;
                 instrument.fadeIn = (Math.random() < 0.5) ? 0 : selectCurvedDistribution(0, Config.fadeInRange - 1, 0, 2);
                 instrument.fadeOut = selectCurvedDistribution(0, Config.fadeOutTicks.length - 1, Config.fadeOutNeutral, 2);
-                if (type == 0 || type == 5 || type == 7) {
+                if (type == 0 || type == 5 || type == 7 || type == 9 || type == 6 || type == 3) {
                     instrument.unison = Config.unisons.dictionary[selectWeightedRandom([
                         { item: "none", weight: 10 },
                         { item: "shimmer", weight: 5 },
@@ -32722,7 +32966,7 @@ li.select2-results__option[role=group] > strong:hover {
                             instrument.feedbackAmplitude = (Math.pow(Math.random(), 3) * Config.operatorAmplitudeMax) | 0;
                             if (instrument.envelopeCount < Config.maxEnvelopeCount && Math.random() < 0.4) {
                                 instrument.addEnvelope(Config.instrumentAutomationTargets.dictionary["feedbackAmplitude"].index, 0, Config.envelopes.dictionary[selectWeightedRandom([
-                                    { item: "steady", weight: 4 },
+                                    { item: "none", weight: 4 },
                                     { item: "punch", weight: 2 },
                                     { item: "flare -1", weight: 1 },
                                     { item: "flare 1", weight: 2 },
@@ -32763,6 +33007,34 @@ li.select2-results__option[role=group] > strong:hover {
                                     { item: "rise 3", weight: 1 },
                                 ])].index);
                             }
+                        }
+                        break;
+                    case 9:
+                        {
+                            let randomGeneratedArray = new Float32Array(64);
+                            let randomGeneratedArrayIntegral = new Float32Array(65);
+                            const algorithmFunction = selectWeightedRandom([
+                                { item: randomSineWave, weight: 4 },
+                                { item: randomPulses, weight: 4 },
+                                { item: randomChipWave, weight: 3 },
+                                { item: biasedFullyRandom, weight: 2 },
+                                { item: fullyRandom, weight: 1 },
+                            ]);
+                            algorithmFunction(randomGeneratedArray);
+                            let sum = 0.0;
+                            for (let i = 0; i < randomGeneratedArray.length; i++)
+                                sum += randomGeneratedArray[i];
+                            const average = sum / randomGeneratedArray.length;
+                            let cumulative = 0;
+                            let wavePrev = 0;
+                            for (let i = 0; i < randomGeneratedArray.length; i++) {
+                                cumulative += wavePrev;
+                                wavePrev = randomGeneratedArray[i] - average;
+                                randomGeneratedArrayIntegral[i] = cumulative;
+                            }
+                            randomGeneratedArrayIntegral[64] = 0.0;
+                            instrument.customChipWave = randomGeneratedArray;
+                            instrument.customChipWaveIntegral = randomGeneratedArrayIntegral;
                         }
                         break;
                     default: throw new Error("Unhandled pitched instrument type in random generator.");
@@ -33137,6 +33409,7 @@ li.select2-results__option[role=group] > strong:hover {
             if (oldValue != newValue || prevUnison != Config.unisons.length) {
                 instrument.unisonVoices = newValue;
                 instrument.unison = Config.unisons.length;
+                instrument.preset = instrument.type;
                 doc.notifier.changed();
                 this._didSomething();
             }
@@ -33150,6 +33423,7 @@ li.select2-results__option[role=group] > strong:hover {
             if (oldValue != newValue || prevUnison != Config.unisons.length) {
                 instrument.unisonSpread = newValue;
                 instrument.unison = Config.unisons.length;
+                instrument.preset = instrument.type;
                 doc.notifier.changed();
                 this._didSomething();
             }
@@ -33163,6 +33437,7 @@ li.select2-results__option[role=group] > strong:hover {
             if (oldValue != newValue || prevUnison != Config.unisons.length) {
                 instrument.unisonOffset = newValue;
                 instrument.unison = Config.unisons.length;
+                instrument.preset = instrument.type;
                 doc.notifier.changed();
                 this._didSomething();
             }
@@ -33176,6 +33451,7 @@ li.select2-results__option[role=group] > strong:hover {
             if (oldValue != newValue || prevUnison != Config.unisons.length) {
                 instrument.unisonExpression = newValue;
                 instrument.unison = Config.unisons.length;
+                instrument.preset = instrument.type;
                 doc.notifier.changed();
                 this._didSomething();
             }
@@ -33189,6 +33465,7 @@ li.select2-results__option[role=group] > strong:hover {
             if (oldValue != newValue || prevUnison != Config.unisons.length) {
                 instrument.unisonSign = newValue;
                 instrument.unison = Config.unisons.length;
+                instrument.preset = instrument.type;
                 doc.notifier.changed();
                 this._didSomething();
             }
@@ -33234,6 +33511,7 @@ li.select2-results__option[role=group] > strong:hover {
             if (oldValue != newValue || prevVibrato != Config.vibratos.length) {
                 instrument.vibratoDepth = newValue / 25;
                 instrument.vibrato = Config.vibratos.length;
+                instrument.preset = instrument.type;
                 doc.notifier.changed();
                 this._didSomething();
             }
@@ -33247,6 +33525,7 @@ li.select2-results__option[role=group] > strong:hover {
             doc.notifier.changed();
             if (oldValue != newValue) {
                 instrument.envelopeSpeed = newValue;
+                instrument.preset = instrument.type;
                 doc.notifier.changed();
                 this._didSomething();
             }
@@ -33262,6 +33541,7 @@ li.select2-results__option[role=group] > strong:hover {
             if (oldValue != newValue || prevVibrato != Config.vibratos.length) {
                 instrument.vibratoSpeed = newValue;
                 instrument.vibrato = Config.vibratos.length;
+                instrument.preset = instrument.type;
                 doc.notifier.changed();
                 this._didSomething();
             }
@@ -33277,6 +33557,7 @@ li.select2-results__option[role=group] > strong:hover {
             if (oldValue != newValue || prevVibrato != Config.vibratos.length) {
                 instrument.vibratoDelay = newValue;
                 instrument.vibrato = Config.vibratos.length;
+                instrument.preset = instrument.type;
                 doc.notifier.changed();
                 this._didSomething();
             }
@@ -33292,6 +33573,7 @@ li.select2-results__option[role=group] > strong:hover {
             if (oldValue != newValue || prevVibrato != Config.vibratos.length) {
                 instrument.vibratoType = newValue;
                 instrument.vibrato = Config.vibratos.length;
+                instrument.preset = instrument.type;
                 doc.notifier.changed();
                 this._didSomething();
             }
@@ -33304,8 +33586,10 @@ li.select2-results__option[role=group] > strong:hover {
             instrument.arpeggioSpeed = newValue;
             doc.synth.unsetMod(Config.modulators.dictionary["arp speed"].index, doc.channel, doc.getCurrentInstrument());
             doc.notifier.changed();
-            if (oldValue != newValue)
+            if (oldValue != newValue) {
+                instrument.preset = instrument.type;
                 this._didSomething();
+            }
         }
     }
     class ChangeFastTwoNoteArp extends Change {
@@ -33316,6 +33600,7 @@ li.select2-results__option[role=group] > strong:hover {
             doc.notifier.changed();
             if (oldValue != newValue) {
                 instrument.fastTwoNoteArp = newValue;
+                instrument.preset = instrument.type;
                 this._didSomething();
             }
         }
@@ -33328,6 +33613,7 @@ li.select2-results__option[role=group] > strong:hover {
             doc.notifier.changed();
             if (oldValue != newValue) {
                 instrument.clicklessTransition = newValue;
+                instrument.preset = instrument.type;
                 this._didSomething();
             }
         }
@@ -33340,6 +33626,7 @@ li.select2-results__option[role=group] > strong:hover {
             doc.notifier.changed();
             if (oldValue != newValue) {
                 instrument.aliases = newValue;
+                instrument.preset = instrument.type;
                 this._didSomething();
             }
         }
@@ -33352,6 +33639,7 @@ li.select2-results__option[role=group] > strong:hover {
             doc.notifier.changed();
             if (oldValue != newValue) {
                 instrument.discreteEnvelope = newValue;
+                instrument.preset = instrument.type;
                 this._didSomething();
             }
         }
@@ -49523,7 +49811,7 @@ You should be redirected to the song at:<br /><br />
             this._optionsMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Preferences"), optgroup({ label: "Technical" }, option({ value: "autoPlay" }, "Auto Play on Load"), option({ value: "autoFollow" }, "Auto Follow Playhead"), option({ value: "enableNotePreview" }, "Hear Added Notes"), option({ value: "notesOutsideScale" }, "Place Notes Out of Scale"), option({ value: "setDefaultScale" }, "Set Current Scale as Default"), option({ value: "alwaysFineNoteVol" }, "Always Fine Note Volume"), option({ value: "enableChannelMuting" }, "Enable Channel Muting"), option({ value: "instrumentCopyPaste" }, "Enable Copy/Paste Buttons"), option({ value: "instrumentImportExport" }, "Enable Import/Export Buttons"), option({ value: "displayBrowserUrl" }, "Enable Song Data in URL"), option({ value: "closePromptByClickoff" }, "Close prompts on click off"), option({ value: "oldMobileLayout" }, "Use the Old mobile layout (Reload)"), option({ value: "recordingSetup" }, "Note Recording...")), optgroup({ label: "Appearance" }, option({ value: "showFifth" }, 'Highlight "Fifth" Note'), option({ value: "notesFlashWhenPlayed" }, "Notes Flash When Played (DB2)"), option({ value: "showChannels" }, "Show All Channels"), option({ value: "showScrollBar" }, "Show Octave Scroll Bar"), option({ value: "showLetters" }, "Show Piano Keys"), option({ value: "displayVolumeBar" }, "Show Playback Volume"), option({ value: "showOscilloscope" }, "Show Oscilloscope"), option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"), option({ value: "showDescription" }, "Show Description"), option({ value: "frostedGlassBackground" }, "Use Frosted Glass Prompt Backdrops"), option({ value: "displayShortcutButtons" }, "Display Mobile Shortcut Buttons"), option({ value: "layout" }, "> Set Layout"), option({ value: "colorTheme" }, "> Set Theme"), option({ value: "customTheme" }, "> Custom Theme")));
             this._scaleSelect = buildOptions(select(), Config.scales.map(scale => scale.name));
             this._keySelect = buildOptions(select(), Config.keys.map(key => key.name).reverse());
-            this._octaveStepper = input({ type: "number", min: Config.octaveMin, max: Config.octaveMax, value: "0" });
+            this._octaveStepper = input({ style: "width: 59.5%;", type: "number", min: Config.octaveMin, max: Config.octaveMax, value: "0" });
             this._tempoSlider = new Slider(input({ style: "margin: 0; vertical-align: middle;", type: "range", min: "1", max: "500", value: "160", step: "1" }), this._doc, (oldValue, newValue) => new ChangeTempo(this._doc, oldValue, newValue), false);
             this._tempoStepper = input({ style: "width: 4em; font-size: 80%; margin-left: 0.4em; vertical-align: middle;", type: "number", step: "1" });
             this._chorusSlider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.chorusRange - 1, value: "0", step: "1" }), this._doc, (oldValue, newValue) => new ChangeChorus(this._doc, oldValue, newValue), false);
@@ -49609,11 +49897,11 @@ You should be redirected to the song at:<br /><br />
             this._supersawShapeSlider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.supersawShapeMax, value: "0", step: "1" }), this._doc, (oldValue, newValue) => new ChangeSupersawShape(this._doc, oldValue, newValue), false);
             this._supersawShapeRow = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("supersawShape"), style: "overflow: clip;" }, "Saw↔Pulse:"), this._supersawShapeSlider.container);
             this._pulseWidthSlider = new Slider(input({ style: "margin: 0;", type: "range", min: "1", max: Config.pulseWidthRange, value: "1", step: "1" }), this._doc, (oldValue, newValue) => new ChangePulseWidth(this._doc, oldValue, newValue), false);
-            this._pulseWidthDropdown = button({ style: "margin-right:10px; height:1.5em; width: 10px; padding: 0px; font-size: 8px;", onclick: () => this._toggleDropdownMenu(5) }, "▼");
+            this._pulseWidthDropdown = button({ style: "margin-left:53px; position: absolute; margin-top: 15px; height:1.5em; width: 10px; padding: 0px; font-size: 8px;", onclick: () => this._toggleDropdownMenu(5) }, "▼");
             this._pwmSliderInputBox = input({ style: "width: 4em; font-size: 80%;", id: "pwmSliderInputBox", type: "number", step: "1", min: "1", max: Config.pulseWidthRange, value: "1" });
-            this._pulseWidthRow = div({ class: "selectRow" }, div({}, span({ class: "tip", tabindex: "0", style: "height:1em; font-size: smaller;", onclick: () => this._openPrompt("pulseWidth") }, "Pulse", div, "Width:"), div({ style: `color: ${ColorConfig.secondaryText}; margin-top: -3px;` }, this._pwmSliderInputBox)), this._pulseWidthDropdown, this._pulseWidthSlider.container);
+            this._pulseWidthRow = div({ class: "selectRow" }, div({}, span({ class: "tip", tabindex: "0", style: "height:1em; font-size: smaller; white-space: nowrap;", onclick: () => this._openPrompt("pulseWidth") }, "Pulse", div, "Width:"), div({ style: `color: ${ColorConfig.secondaryText}; margin-top: -3px;` }, this._pwmSliderInputBox)), this._pulseWidthDropdown, this._pulseWidthSlider.container);
             this._decimalOffsetSlider = new Slider(input({ style: "margin: 0; transform: scaleX(-1);", type: "range", min: "0", max: "99", value: "0", step: "1" }), this._doc, (oldValue, newValue) => new ChangeDecimalOffset(this._doc, oldValue, newValue), false);
-            this._decimalOffsetRow = div({ class: "selectRow" }, span({ class: "tip", style: "margin-left:10px;", onclick: () => this._openPrompt("decimalOffset") }, "‣ Offset:"), this._decimalOffsetSlider.container);
+            this._decimalOffsetRow = div({ class: "selectRow dropFader" }, span({ class: "tip", style: "margin-left:10px;", onclick: () => this._openPrompt("decimalOffset") }, "‣ Offset:"), this._decimalOffsetSlider.container);
             this._pulseWidthDropdownGroup = div({ class: "editor-controls", style: "display: none;" }, this._decimalOffsetRow);
             this._pitchShiftSlider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.pitchShiftRange - 1, value: "0", step: "1" }), this._doc, (oldValue, newValue) => new ChangePitchShift(this._doc, oldValue, newValue), true);
             this._pitchShiftTonicMarkers = [div({ class: "pitchShiftMarker", style: { color: ColorConfig.tonic } }), div({ class: "pitchShiftMarker", style: { color: ColorConfig.tonic, left: "50%" } }), div({ class: "pitchShiftMarker", style: { color: ColorConfig.tonic, left: "100%" } })];
@@ -49637,16 +49925,16 @@ You should be redirected to the song at:<br /><br />
             this._unisonDropdown = button({ style: "margin-left:0em; height:1.5em; width: 10px; padding: 0px; font-size: 8px;", onclick: () => this._toggleDropdownMenu(6) }, "▼");
             this._unisonSelect = buildOptions(select(), Config.unisons.map(unison => unison.name));
             this._unisonSelectRow = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("unison") }, "Unison:"), this._unisonDropdown, div({ class: "selectContainer", style: "width: 61.5%;" }, this._unisonSelect));
-            this._unisonVoicesInputBox = input({ style: "width: 150%; height: 1.5em; font-size: 80%; margin-left: 0.4em; vertical-align: middle;", id: "unisonVoicesInputBox", type: "number", step: "1", min: 1, max: 2, value: 1 });
-            this._unisonVoicesRow = div({ class: "selectRow" }, div({}, span({ class: "tip", style: "height:1em; font-size: smaller;", onclick: () => this._openPrompt("unisonVoices") }, "‣ Voices: "), div({ style: "color: " + ColorConfig.secondaryText + "; margin-top: -3px;" }, this._unisonVoicesInputBox)));
-            this._unisonSpreadInputBox = input({ style: "width: 150%; height: 1.5em; font-size: 80%; margin-left: 0.4em; vertical-align: middle;", id: "unisonSpreadInputBox", type: "number", step: "0.001", min: -96, max: 96, value: 0.0 });
-            this._unisonSpreadRow = div({ class: "selectRow" }, div({}, span({ class: "tip", style: "height:1em; font-size: smaller;", onclick: () => this._openPrompt("unisonSpread") }, "‣ Spread: "), div({ style: "color: " + ColorConfig.secondaryText + "; margin-top: -3px;" }, this._unisonSpreadInputBox)));
-            this._unisonOffsetInputBox = input({ style: "width: 150%; height: 1.5em; font-size: 80%; margin-left: 0.4em; vertical-align: middle;", id: "unisonOffsetInputBox", type: "number", step: "0.001", min: -96, max: 96, value: 0.0 });
-            this._unisonOffsetRow = div({ class: "selectRow" }, div({}, span({ class: "tip", style: "height:1em; font-size: smaller;", onclick: () => this._openPrompt("unisonOffset") }, "‣ Offset: "), div({ style: "color: " + ColorConfig.secondaryText + "; margin-top: -3px;" }, this._unisonOffsetInputBox)));
-            this._unisonExpressionInputBox = input({ style: "width: 150%; height: 1.5em; font-size: 80%; margin-left: 0.4em; vertical-align: middle;", id: "unisonExpressionInputBox", type: "number", step: "0.001", min: -2, max: 2, value: 1.4 });
-            this._unisonExpressionRow = div({ class: "selectRow" }, div({}, span({ class: "tip", style: "height:1em; font-size: smaller;", onclick: () => this._openPrompt("unisonExpression") }, "‣ Expression: "), div({ style: "color: " + ColorConfig.secondaryText + "; margin-top: -3px;" }, this._unisonExpressionInputBox)));
-            this._unisonSignInputBox = input({ style: "width: 150%; height: 1.5em; font-size: 80%; margin-left: 0.4em; vertical-align: middle;", id: "unisonSignInputBox", type: "number", step: "0.001", min: -2, max: 2, value: 1.0 });
-            this._unisonSignRow = div({ class: "selectRow" }, div({}, span({ class: "tip", style: "height:1em; font-size: smaller;", onclick: () => this._openPrompt("unisonSign") }, "‣ Sign: "), div({ style: "color: " + ColorConfig.secondaryText + "; margin-top: -3px;" }, this._unisonSignInputBox)));
+            this._unisonVoicesInputBox = input({ style: "width: 150%; height: 1.5em; font-size: 80%; margin-left: 0.4em; vertical-align: middle;", id: "unisonVoicesInputBox", type: "number", step: "1", min: Config.unisonVoicesMin, max: Config.unisonVoicesMax, value: 1 });
+            this._unisonVoicesRow = div({ class: "selectRow dropFader" }, div({}, span({ class: "tip", style: "height:1em; font-size: smaller;", onclick: () => this._openPrompt("unisonVoices") }, "‣ Voices: "), div({ style: "color: " + ColorConfig.secondaryText + "; margin-top: -3px;" }, this._unisonVoicesInputBox)));
+            this._unisonSpreadInputBox = input({ style: "width: 150%; height: 1.5em; font-size: 80%; margin-left: 0.4em; vertical-align: middle;", id: "unisonSpreadInputBox", type: "number", step: "0.001", min: Config.unisonSpreadMin, max: Config.unisonSpreadMax, value: 0.0 });
+            this._unisonSpreadRow = div({ class: "selectRow dropFader" }, div({}, span({ class: "tip", style: "height:1em; font-size: smaller;", onclick: () => this._openPrompt("unisonSpread") }, "‣ Spread: "), div({ style: "color: " + ColorConfig.secondaryText + "; margin-top: -3px;" }, this._unisonSpreadInputBox)));
+            this._unisonOffsetInputBox = input({ style: "width: 150%; height: 1.5em; font-size: 80%; margin-left: 0.4em; vertical-align: middle;", id: "unisonOffsetInputBox", type: "number", step: "0.001", min: Config.unisonOffsetMin, max: Config.unisonOffsetMax, value: 0.0 });
+            this._unisonOffsetRow = div({ class: "selectRow dropFader" }, div({}, span({ class: "tip", style: "height:1em; font-size: smaller;", onclick: () => this._openPrompt("unisonOffset") }, "‣ Offset: "), div({ style: "color: " + ColorConfig.secondaryText + "; margin-top: -3px;" }, this._unisonOffsetInputBox)));
+            this._unisonExpressionInputBox = input({ style: "width: 150%; height: 1.5em; font-size: 80%; margin-left: 0.4em; vertical-align: middle;", id: "unisonExpressionInputBox", type: "number", step: "0.001", min: Config.unisonExpressionMin, max: Config.unisonExpressionMax, value: 1.4 });
+            this._unisonExpressionRow = div({ class: "selectRow dropFader" }, div({}, span({ class: "tip", style: "height:1em; font-size: smaller;", onclick: () => this._openPrompt("unisonExpression") }, "‣ Volume: "), div({ style: "color: " + ColorConfig.secondaryText + "; margin-top: -3px;" }, this._unisonExpressionInputBox)));
+            this._unisonSignInputBox = input({ style: "width: 150%; height: 1.5em; font-size: 80%; margin-left: 0.4em; vertical-align: middle;", id: "unisonSignInputBox", type: "number", step: "0.001", min: Config.unisonSignMin, max: Config.unisonSignMax, value: 1.0 });
+            this._unisonSignRow = div({ class: "selectRow dropFader" }, div({}, span({ class: "tip", style: "height:1em; font-size: smaller;", onclick: () => this._openPrompt("unisonSign") }, "‣ Sign: "), div({ style: "color: " + ColorConfig.secondaryText + "; margin-top: -3px;" }, this._unisonSignInputBox)));
             this._unisonDropdownGroup = div({ class: "editor-controls", style: "display: none;" }, this._unisonVoicesRow, this._unisonSpreadRow, this._unisonOffsetRow, this._unisonExpressionRow, this._unisonSignRow);
             this._chordSelect = buildOptions(select(), Config.chords.map(chord => chord.name));
             this._chordDropdown = button({ style: "margin-left:0em; height:1.5em; width: 10px; padding: 0px; font-size: 8px;", onclick: () => this._toggleDropdownMenu(2) }, "▼");
@@ -51724,6 +52012,8 @@ You should be redirected to the song at:<br /><br />
                         }
                         break;
                     case 69:
+                        if (canPlayNotes)
+                            break;
                         if (event.shiftKey) {
                             const instrument = this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()];
                             if (!instrument.eqFilterType && this._doc.channel < this._doc.song.pitchChannelCount + this._doc.song.noiseChannelCount)
@@ -53200,11 +53490,11 @@ You should be redirected to the song at:<br /><br />
             this._panSliderInputBox.addEventListener("input", () => { this._doc.record(new ChangePan(this._doc, this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()].pan, Math.min(100.0, Math.max(0.0, Math.round(+this._panSliderInputBox.value))))); });
             this._pwmSliderInputBox.addEventListener("input", () => { this._doc.record(new ChangePulseWidth(this._doc, this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()].pulseWidth, Math.min(Config.pulseWidthRange, Math.max(1.0, Math.round(+this._pwmSliderInputBox.value))))); });
             this._detuneSliderInputBox.addEventListener("input", () => { this._doc.record(new ChangeDetune(this._doc, this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()].detune, Math.min(Config.detuneMax - Config.detuneCenter, Math.max(Config.detuneMin - Config.detuneCenter, Math.round(+this._detuneSliderInputBox.value))))); });
-            this._unisonVoicesInputBox.addEventListener("input", () => { this._doc.record(new ChangeUnisonVoices(this._doc, this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()].unisonVoices, Math.min(2.0, Math.max(1.0, Math.round(+this._unisonVoicesInputBox.value))))); });
-            this._unisonSpreadInputBox.addEventListener("input", () => { this._doc.record(new ChangeUnisonSpread(this._doc, this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()].unisonSpread, Math.min(96.0, Math.max(-96.0, +this._unisonSpreadInputBox.value)))); });
-            this._unisonOffsetInputBox.addEventListener("input", () => { this._doc.record(new ChangeUnisonOffset(this._doc, this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()].unisonOffset, Math.min(96.0, Math.max(-96.0, +this._unisonOffsetInputBox.value)))); });
-            this._unisonExpressionInputBox.addEventListener("input", () => { this._doc.record(new ChangeUnisonExpression(this._doc, this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()].unisonExpression, Math.min(2.0, Math.max(-2.0, +this._unisonExpressionInputBox.value)))); });
-            this._unisonSignInputBox.addEventListener("input", () => { this._doc.record(new ChangeUnisonSign(this._doc, this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()].unisonSign, Math.min(2.0, Math.max(-2.0, +this._unisonSignInputBox.value)))); });
+            this._unisonVoicesInputBox.addEventListener("input", () => { this._doc.record(new ChangeUnisonVoices(this._doc, this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()].unisonVoices, Math.min(Config.unisonVoicesMax, Math.max(Config.unisonVoicesMin, Math.round(+this._unisonVoicesInputBox.value))))); });
+            this._unisonSpreadInputBox.addEventListener("input", () => { this._doc.record(new ChangeUnisonSpread(this._doc, this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()].unisonSpread, Math.min(Config.unisonSpreadMax, Math.max(Config.unisonSpreadMin, +this._unisonSpreadInputBox.value)))); });
+            this._unisonOffsetInputBox.addEventListener("input", () => { this._doc.record(new ChangeUnisonOffset(this._doc, this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()].unisonOffset, Math.min(Config.unisonOffsetMax, Math.max(Config.unisonOffsetMin, +this._unisonOffsetInputBox.value)))); });
+            this._unisonExpressionInputBox.addEventListener("input", () => { this._doc.record(new ChangeUnisonExpression(this._doc, this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()].unisonExpression, Math.min(Config.unisonExpressionMax, Math.max(Config.unisonExpressionMin, +this._unisonExpressionInputBox.value)))); });
+            this._unisonSignInputBox.addEventListener("input", () => { this._doc.record(new ChangeUnisonSign(this._doc, this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()].unisonSign, Math.min(Config.unisonSignMax, Math.max(Config.unisonSignMin, +this._unisonSignInputBox.value)))); });
             this._customWaveDraw.addEventListener("input", () => { this._doc.record(new ChangeCustomWave(this._doc, this._customWaveDrawCanvas.newArray)); });
             this._twoNoteArpBox.addEventListener("input", () => { this._doc.record(new ChangeFastTwoNoteArp(this._doc, this._twoNoteArpBox.checked)); });
             this._clicklessTransitionBox.addEventListener("input", () => { this._doc.record(new ChangeClicklessTransition(this._doc, this._clicklessTransitionBox.checked)); });

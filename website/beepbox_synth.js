@@ -942,6 +942,16 @@ var beepbox = (function (exports) {
     Config.detuneMin = 0;
     Config.songDetuneMin = 0;
     Config.songDetuneMax = 500;
+    Config.unisonVoicesMin = 1;
+    Config.unisonVoicesMax = 2;
+    Config.unisonSpreadMin = -96;
+    Config.unisonSpreadMax = 96;
+    Config.unisonOffsetMin = -96;
+    Config.unisonOffsetMax = 96;
+    Config.unisonExpressionMin = -2;
+    Config.unisonExpressionMax = 2;
+    Config.unisonSignMin = -2;
+    Config.unisonSignMax = 2;
     Config.sineWaveLength = 1 << 8;
     Config.sineWaveMask = Config.sineWaveLength - 1;
     Config.sineWave = generateSineWave();
@@ -964,7 +974,7 @@ var beepbox = (function (exports) {
         { name: "noteVolume", computeIndex: 0, displayName: "note volume", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: null },
         { name: "pulseWidth", computeIndex: 2, displayName: "pulse width", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [6, 8] },
         { name: "stringSustain", computeIndex: 3, displayName: "sustain", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [7] },
-        { name: "unison", computeIndex: 4, displayName: "unison", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [0, 5, 7, 9] },
+        { name: "unison", computeIndex: 4, displayName: "unison", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [0, 5, 7, 9, 6, 2, 3] },
         { name: "operatorFrequency", computeIndex: 5, displayName: "fm# freq", interleave: true, isFilter: false, maxCount: Config.operatorCount + 2, effect: null, compatibleInstruments: [1, 11] },
         { name: "operatorAmplitude", computeIndex: 11, displayName: "fm# volume", interleave: false, isFilter: false, maxCount: Config.operatorCount + 2, effect: null, compatibleInstruments: [1, 11] },
         { name: "feedbackAmplitude", computeIndex: 17, displayName: "fm feedback", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [1, 11] },
@@ -1435,7 +1445,7 @@ var beepbox = (function (exports) {
         static valueToPreset(presetValue) {
             const categoryIndex = presetValue >> 6;
             const presetIndex = presetValue & 0x3F;
-            return EditorConfig.presetCategories[categoryIndex].presets[presetIndex];
+            return EditorConfig === null || EditorConfig === void 0 ? void 0 : EditorConfig.presetCategories[categoryIndex].presets[presetIndex];
         }
         static midiProgramToPresetValue(program) {
             for (let categoryIndex = 0; categoryIndex < EditorConfig.presetCategories.length; categoryIndex++) {
@@ -1761,7 +1771,7 @@ var beepbox = (function (exports) {
             ]) },
         { name: "AbyssBox 1.3 Presets", presets: toNameMap([
                 { name: "Ghost House", generalMidi: false, settings: { "type": "FM", "eqFilter": [], "eqFilterType": false, "eqSimpleCut": 10, "eqSimplePeak": 0, "envelopeSpeed": 12, "discreteEnvelope": false, "eqSubFilters0": [], "effects": ["transition type", "vibrato", "bitcrusher"], "transition": "normal", "clicklessTransition": false, "vibrato": "heavy", "vibratoDepth": 0.45, "vibratoDelay": 0, "vibratoSpeed": 10, "vibratoType": 0, "bitcrusherOctave": 3.5, "bitcrusherQuantization": 43, "panDelay": 10, "fadeInSeconds": 0, "fadeOutTicks": -3, "algorithm": "1←(2 3←4)", "feedbackType": "1⟲", "feedbackAmplitude": 0, "operators": [{ "frequency": "1×", "amplitude": 15, "waveform": "sine", "pulseWidth": 5 }, { "frequency": "1×", "amplitude": 4, "waveform": "sine", "pulseWidth": 5 }, { "frequency": "1×", "amplitude": 6, "waveform": "sine", "pulseWidth": 5 }, { "frequency": "1×", "amplitude": 7, "waveform": "sine", "pulseWidth": 5 }, { "frequency": "1×", "amplitude": 0, "waveform": "sine", "pulseWidth": 5 }, { "frequency": "1×", "amplitude": 0, "waveform": "sine", "pulseWidth": 5 }], "envelopes": [{ "target": "noteVolume", "envelope": "punch" }] } },
-                { name: "Supersaw Twang", generalMidi: false, settings: { "type": "supersaw", "eqFilter": [], "eqFilterType": false, "eqSimpleCut": 9, "eqSimplePeak": 0, "envelopeSpeed": 12, "discreteEnvelope": false, "eqSubFilters0": [], "eqSubFilters1": [], "effects": ["chord type", "note filter", "chorus", "echo", "reverb"], "chord": "simultaneous", "fastTwoNoteArp": true, "arpeggioSpeed": 12, "noteFilterType": true, "noteSimpleCut": 7, "noteSimplePeak": 1, "noteFilter": [{ "type": "low-pass", "cutoffHz": 3828.43, "linearGain": 0.5 }], "noteSubFilters1": [{ "type": "low-pass", "cutoffHz": 3828.43, "linearGain": 0.5 }], "panDelay": 10, "chorus": 14, "echoSustain": 29, "echoDelayBeats": 1, "reverb": 0, "fadeInSeconds": 0, "fadeOutTicks": 48, "pulseWidth": 40, "decimalOffset": 0, "dynamism": 67, "spread": 50, "shape": 0, "envelopes": [{ "target": "noteFilterAllFreqs", "envelope": "twang 1" }] } },
+                { name: "Supersaw Pluck", generalMidi: false, settings: { "type": "supersaw", "eqFilter": [], "eqFilterType": false, "eqSimpleCut": 9, "eqSimplePeak": 0, "envelopeSpeed": 12, "discreteEnvelope": false, "eqSubFilters0": [], "eqSubFilters1": [], "effects": ["chord type", "note filter", "chorus", "echo", "reverb"], "chord": "simultaneous", "fastTwoNoteArp": true, "arpeggioSpeed": 12, "noteFilterType": true, "noteSimpleCut": 7, "noteSimplePeak": 1, "noteFilter": [{ "type": "low-pass", "cutoffHz": 3828.43, "linearGain": 0.5 }], "noteSubFilters1": [{ "type": "low-pass", "cutoffHz": 3828.43, "linearGain": 0.5 }], "panDelay": 10, "chorus": 14, "echoSustain": 29, "echoDelayBeats": 1, "reverb": 0, "fadeInSeconds": 0, "fadeOutTicks": 48, "pulseWidth": 40, "decimalOffset": 0, "dynamism": 67, "spread": 50, "shape": 0, "envelopes": [{ "target": "noteFilterAllFreqs", "envelope": "twang 1" }] } },
                 { name: "Credits Bass", generalMidi: false, settings: { "type": "chip", "eqFilter": [], "eqFilterType": false, "eqSimpleCut": 8, "eqSimplePeak": 0, "envelopeSpeed": 12, "discreteEnvelope": false, "effects": ["transition type", "chord type", "note filter"], "transition": "interrupt", "clicklessTransition": false, "chord": "arpeggio", "fastTwoNoteArp": true, "arpeggioSpeed": 9, "noteFilterType": true, "noteSimpleCut": 8, "noteSimplePeak": 0, "noteFilter": [{ "type": "low-pass", "cutoffHz": 16000, "linearGain": 0.3536 }], "noteSubFilters1": [{ "type": "low-pass", "cutoffHz": 16000, "linearGain": 0.3536 }], "panDelay": 10, "fadeInSeconds": 0, "fadeOutTicks": -1, "wave": "alto sax", "unison": "none", "isUsingAdvancedLoopControls": false, "chipWaveLoopStart": 0, "chipWaveLoopEnd": 2, "chipWaveLoopMode": 0, "chipWavePlayBackwards": false, "chipWaveStartOffset": 0, "envelopes": [{ "target": "noteFilterAllFreqs", "envelope": "decay 1" }] } },
             ]) },
     ]);

@@ -345,7 +345,7 @@ export class EditorConfig {
     public static valueToPreset(presetValue: number): Preset | null {
         const categoryIndex: number = presetValue >> 6;
         const presetIndex: number = presetValue & 0x3F;
-        return EditorConfig.presetCategories[categoryIndex].presets[presetIndex];
+        return EditorConfig?.presetCategories[categoryIndex].presets[presetIndex];
     }
 
     public static midiProgramToPresetValue(program: number): number | null {
