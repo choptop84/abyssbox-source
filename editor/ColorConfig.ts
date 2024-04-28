@@ -1185,7 +1185,7 @@ export class ColorConfig {
 			--mod-label-primary: #341a7b; 		
 			--mod-label-secondary-text: rgb(86, 93, 120);
 			--mod-label-primary-text: gray; 
-			--progress-bar: #accdd9;
+			--progress-bar: #84aef0;
 
 			--pitch-secondary-channel-hue: 110; 		
 			--pitch-secondary-channel-hue-scale 0; 		
