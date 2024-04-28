@@ -136,6 +136,25 @@ import { SongPlayerLayout } from "./Layout";
 				`),
 				div("Piano"),
 			),
+			label({class: "layout-option",style:"width:90px; color: var(--secondary-text)"},
+				input({type: "radio", name: "spLayout", value: "vertical", style:"display:none;"}),
+				SVG(`\
+				<svg viewBox="-1 -1 28 22">
+					<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
+					<rect x="4" y="3" width="20" height="1" fill="currentColor"/>
+					<rect x="2" y="3" width="1" height="9" fill="currentColor"/>
+					<rect x="23" y="4" width="1" height="7" fill="currentColor"/>
+					<rect x="4" y="11" width="20" height="1" fill="currentColor"/>
+
+					<rect x="4" y="5" width="20" height="1" fill="currentColor"/>
+					<rect x="4" y="7" width="20" height="1" fill="currentColor"/>
+					<rect x="4" y="9" width="20" height="1" fill="currentColor"/>
+
+					<rect x="2" y="15" width="22" height="3" fill="currentColor"/>
+					</svg>
+				`),
+				div("Vertical"),
+			),
 		);
 
 		const layoutContainer: HTMLDivElement = div({class: "prompt noSelection", style: "width: 300px; margin: auto;text-align: center;background: var(--editor-background);border-radius: 15px;border: 4px solid var(--ui-widget-background);color: var(--primary-text);padding: 20px;display: flex;flex-direction: column;position: relative;box-shadow: 5px 5px 20px 10px rgba(0,0,0,0.5);"},
@@ -461,7 +480,12 @@ import { SongPlayerLayout } from "./Layout";
 	function onTimelineMouseMove(event: MouseEvent): void {
 		if (!draggingPlayhead) return;
 		event.preventDefault();
-		onTimelineCursorMove(event.clientX || event.pageX);
+		const useVertical = ((<any> _form.elements)["spLayout"].value == "vertical") || (window.localStorage.getItem("spLayout") == "vertical");
+		if (useVertical) {
+		onTimelineCursorMove(event.clientY || event.pageY); 
+		} else {
+		onTimelineCursorMove(event.clientX || event.pageX);	
+		}
 	}
 	
 	function onTimelineTouchDown(event: TouchEvent): void {
@@ -475,8 +499,14 @@ import { SongPlayerLayout } from "./Layout";
 	
 	function onTimelineCursorMove(mouseX: number): void {
 		if (draggingPlayhead && synth.song != null) {
+			
 			const boundingRect: DOMRect = visualizationContainer.getBoundingClientRect();
-			synth.playhead = synth.song.barCount * (mouseX - boundingRect.left) / (boundingRect.right - boundingRect.left);
+			const useVertical = ((<any> _form.elements)["spLayout"].value == "vertical") || (window.localStorage.getItem("spLayout") == "vertical");
+			if (!useVertical) {
+			synth.playhead = synth.song.barCount * (mouseX - boundingRect.left) / (boundingRect.right - boundingRect.left); 
+			} else {
+			synth.playhead = synth.song.barCount * (mouseX - boundingRect.bottom) / (boundingRect.top - boundingRect.bottom);	
+			}
 			synth.computeLatestModValues();
 			renderPlayhead();
 		}
@@ -500,9 +530,17 @@ import { SongPlayerLayout } from "./Layout";
 
 				timelineBarProgress.style.width = Math.round((maxPer*pos/maxPer)*100)+"%";
 
-				if (((<any> _form.elements)["spLayout"].value == "piano")||(window.localStorage.getItem("spLayout") == "piano")) {
+				const usePiano = ((<any> _form.elements)["spLayout"].value == "piano") || (window.localStorage.getItem("spLayout") == "piano");
+				const useVertical = ((<any> _form.elements)["spLayout"].value == "vertical") || (window.localStorage.getItem("spLayout") == "vertical");
+				if (usePiano) {
 					playhead.style.left = (timelineWidth * pos) + "px"; 
 					timelineContainer.style.left = "-"+(timelineWidth * pos) + "px"; 
+				} else if (useVertical) {
+					const boundingRect = visualizationContainer.getBoundingClientRect();
+                	const o = boundingRect.height / 2;
+                 	playhead.style.left = (timelineWidth * pos) + "px";
+                	timelineContainer.style.bottom = "-" + (timelineWidth * pos) + "px";
+	               	timelineContainer.style.top = (timelineWidth * pos + o) + "px";
 				} else {
 					playhead.style.left = (timelineWidth * pos) + "px"; 
 					timelineContainer.style.left = "0";
@@ -561,22 +599,31 @@ import { SongPlayerLayout } from "./Layout";
 		let timelineHeight: number;
 		let windowOctaves: number;
 		let windowPitchCount: number;
+		const useVertical = ((<any> _form.elements)["spLayout"].value == "vertical") || (window.localStorage.getItem("spLayout") == "vertical");
 
 				if (zoomEnabled) {
-					timelineHeight = boundingRect.height;
+					timelineHeight = useVertical ? boundingRect.width : boundingRect.height;
 					windowOctaves = Math.max(1, Math.min(Config.pitchOctaves, Math.round(timelineHeight / (12 * 2))));
 					windowPitchCount = windowOctaves * 12 + 1;
 					const semitoneHeight: number = (timelineHeight - 1) / windowPitchCount;
 					const targetBeatWidth: number = Math.max(8, semitoneHeight * 4);
 					timelineWidth = Math.max(boundingRect.width, targetBeatWidth * synth.song.barCount * synth.song.beatsPerBar);
+					if (useVertical) {
+						timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineHeight / 2}px) scaleY(-1)`;
+					 }
 				} else {
 					timelineWidth = boundingRect.width;
 					const targetSemitoneHeight: number = Math.max(1, timelineWidth / (synth.song.barCount * synth.song.beatsPerBar) / 6.0);
 					timelineHeight = Math.min(boundingRect.height, targetSemitoneHeight * (Config.maxPitch + 1) + 1);
 					windowOctaves = Math.max(3, Math.min(Config.pitchOctaves, Math.round(timelineHeight / (12 * targetSemitoneHeight))));
 					windowPitchCount = windowOctaves * 12 + 1;
+					if (useVertical) {
+						timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineWidth / 2}px) scaleY(-1)`;
+					 }
 				}
-			
+
+				
+
 				timelineContainer.style.width = timelineWidth + "px";
 				timelineContainer.style.height = timelineHeight + "px";
 				timeline.style.width = timelineWidth + "px";

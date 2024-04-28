@@ -29401,6 +29401,17 @@ var beepbox = (function (exports) {
             transform: scale(1);
             }
         `,
+        "vertical": `
+        .songPlayerContainer {
+            display:grid; 
+            grid-template-areas: 'visualizer visualizer' 'control-center control-center'; 
+            grid-template-rows: 92.6vh 7.4vh; 
+            grid-template-columns: minmax(0px,0px);
+        }
+        div.visualizer {
+            transform: scale(1);
+            }
+        `,
     };
     SongPlayerLayout._styleElement = document.head.appendChild(HTML.style({ type: "text/css" }));
 
@@ -29499,7 +29510,21 @@ var beepbox = (function (exports) {
 
 					<rect x="2" y="15" width="22" height="3" fill="currentColor"/>
 					</svg>
-				`), div("Piano")));
+				`), div("Piano")), label({ class: "layout-option", style: "width:90px; color: var(--secondary-text)" }, input({ type: "radio", name: "spLayout", value: "vertical", style: "display:none;" }), SVG(`\
+				<svg viewBox="-1 -1 28 22">
+					<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
+					<rect x="4" y="3" width="20" height="1" fill="currentColor"/>
+					<rect x="2" y="3" width="1" height="9" fill="currentColor"/>
+					<rect x="23" y="4" width="1" height="7" fill="currentColor"/>
+					<rect x="4" y="11" width="20" height="1" fill="currentColor"/>
+
+					<rect x="4" y="5" width="20" height="1" fill="currentColor"/>
+					<rect x="4" y="7" width="20" height="1" fill="currentColor"/>
+					<rect x="4" y="9" width="20" height="1" fill="currentColor"/>
+
+					<rect x="2" y="15" width="22" height="3" fill="currentColor"/>
+					</svg>
+				`), div("Vertical")));
     const layoutContainer = div({ class: "prompt noSelection", style: "width: 300px; margin: auto;text-align: center;background: var(--editor-background);border-radius: 15px;border: 4px solid var(--ui-widget-background);color: var(--primary-text);padding: 20px;display: flex;flex-direction: column;position: relative;box-shadow: 5px 5px 20px 10px rgba(0,0,0,0.5);" }, div({ class: "promptTitle" }, h2({ class: "layoutExt", style: "text-align: inherit;" }, ""), h2({ class: "layoutTitle" }, "Layout")), _form, div({ style: "margin-top: 1em;" }, _okayButton), closePrompt);
     let titleText = h1({ style: "flex-grow: 1; margin: 0 1px; margin-left: 10px; overflow: hidden;" }, "");
     let layoutStuffs = button({ class: "songPlayerLayoutsButton", style: "margin: 0 4px; height: 42px; width: 90px;" }, "Layouts");
@@ -29723,7 +29748,13 @@ var beepbox = (function (exports) {
         if (!draggingPlayhead)
             return;
         event.preventDefault();
-        onTimelineCursorMove(event.clientX || event.pageX);
+        const useVertical = (_form.elements["spLayout"].value == "vertical") || (window.localStorage.getItem("spLayout") == "vertical");
+        if (useVertical) {
+            onTimelineCursorMove(event.clientY || event.pageY);
+        }
+        else {
+            onTimelineCursorMove(event.clientX || event.pageX);
+        }
     }
     function onTimelineTouchDown(event) {
         draggingPlayhead = true;
@@ -29735,7 +29766,13 @@ var beepbox = (function (exports) {
     function onTimelineCursorMove(mouseX) {
         if (draggingPlayhead && synth.song != null) {
             const boundingRect = visualizationContainer.getBoundingClientRect();
-            synth.playhead = synth.song.barCount * (mouseX - boundingRect.left) / (boundingRect.right - boundingRect.left);
+            const useVertical = (_form.elements["spLayout"].value == "vertical") || (window.localStorage.getItem("spLayout") == "vertical");
+            if (!useVertical) {
+                synth.playhead = synth.song.barCount * (mouseX - boundingRect.left) / (boundingRect.right - boundingRect.left);
+            }
+            else {
+                synth.playhead = synth.song.barCount * (mouseX - boundingRect.bottom) / (boundingRect.top - boundingRect.bottom);
+            }
             synth.computeLatestModValues();
             renderPlayhead();
         }
@@ -29752,9 +29789,18 @@ var beepbox = (function (exports) {
         if (synth.song != null) {
             let pos = synth.playhead / synth.song.barCount;
             timelineBarProgress.style.width = Math.round((maxPer * pos / maxPer) * 100) + "%";
-            if ((_form.elements["spLayout"].value == "piano") || (window.localStorage.getItem("spLayout") == "piano")) {
+            const usePiano = (_form.elements["spLayout"].value == "piano") || (window.localStorage.getItem("spLayout") == "piano");
+            const useVertical = (_form.elements["spLayout"].value == "vertical") || (window.localStorage.getItem("spLayout") == "vertical");
+            if (usePiano) {
                 playhead.style.left = (timelineWidth * pos) + "px";
                 timelineContainer.style.left = "-" + (timelineWidth * pos) + "px";
+            }
+            else if (useVertical) {
+                const boundingRect = visualizationContainer.getBoundingClientRect();
+                const o = boundingRect.height / 2;
+                playhead.style.left = (timelineWidth * pos) + "px";
+                timelineContainer.style.bottom = "-" + (timelineWidth * pos) + "px";
+                timelineContainer.style.top = (timelineWidth * pos + o) + "px";
             }
             else {
                 playhead.style.left = (timelineWidth * pos) + "px";
@@ -29808,13 +29854,17 @@ var beepbox = (function (exports) {
         let timelineHeight;
         let windowOctaves;
         let windowPitchCount;
+        const useVertical = (_form.elements["spLayout"].value == "vertical") || (window.localStorage.getItem("spLayout") == "vertical");
         if (zoomEnabled) {
-            timelineHeight = boundingRect.height;
+            timelineHeight = useVertical ? boundingRect.width : boundingRect.height;
             windowOctaves = Math.max(1, Math.min(Config.pitchOctaves, Math.round(timelineHeight / (12 * 2))));
             windowPitchCount = windowOctaves * 12 + 1;
             const semitoneHeight = (timelineHeight - 1) / windowPitchCount;
             const targetBeatWidth = Math.max(8, semitoneHeight * 4);
             timelineWidth = Math.max(boundingRect.width, targetBeatWidth * synth.song.barCount * synth.song.beatsPerBar);
+            if (useVertical) {
+                timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineHeight / 2}px) scaleY(-1)`;
+            }
         }
         else {
             timelineWidth = boundingRect.width;
@@ -29822,6 +29872,9 @@ var beepbox = (function (exports) {
             timelineHeight = Math.min(boundingRect.height, targetSemitoneHeight * (Config.maxPitch + 1) + 1);
             windowOctaves = Math.max(3, Math.min(Config.pitchOctaves, Math.round(timelineHeight / (12 * targetSemitoneHeight))));
             windowPitchCount = windowOctaves * 12 + 1;
+            if (useVertical) {
+                timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineWidth / 2}px) scaleY(-1)`;
+            }
         }
         timelineContainer.style.width = timelineWidth + "px";
         timelineContainer.style.height = timelineHeight + "px";
