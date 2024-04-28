@@ -428,6 +428,7 @@ import { SongPlayerLayout } from "./Layout";
 		SongPlayerLayout.setLayout((<any> _form.elements)["spLayout"].value);
 		promptContainer.style.display = "none";
 		window.localStorage.setItem("spLayout", (<any> _form.elements)["spLayout"].value);
+		renderTimeline();
 	}
 
 		// The end of the layout event code.
@@ -491,64 +492,64 @@ import { SongPlayerLayout } from "./Layout";
 	}
 	
 	function renderPlayhead(): void {
+
+			const maxPer = 144;
+
+			if (synth.song != null) {
+				let pos: number = synth.playhead / synth.song.barCount;
+
+				timelineBarProgress.style.width = Math.round((maxPer*pos/maxPer)*100)+"%";
+
+				if (((<any> _form.elements)["spLayout"].value == "piano")||(window.localStorage.getItem("spLayout") == "piano")) {
+					playhead.style.left = (timelineWidth * pos) + "px"; 
+					timelineContainer.style.left = "-"+(timelineWidth * pos) + "px"; 
+				} else {
+					playhead.style.left = (timelineWidth * pos) + "px"; 
+					timelineContainer.style.left = "0";
+					
+					const boundingRect: DOMRect = visualizationContainer.getBoundingClientRect();
+						visualizationContainer.scrollLeft = pos * (timelineWidth - boundingRect.width); 
+				}
+
+
+				// this is note flash shit so don't worry bout it
+				if (notesFlashWhenPlayed) {
+					const playheadBar: number = Math.floor(synth.playhead);
+					const modPlayhead: number = synth.playhead - playheadBar;
+					const partsPerBar: number = synth.song.beatsPerBar * Config.partsPerBeat;
+					const noteFlashElementsForThisBar: SVGPathElement[] = noteFlashElementsPerBar[playheadBar];
 		
-		const maxPer = 144;
-
-		if (synth.song != null) {
-			let pos: number = synth.playhead / synth.song.barCount;
-
-			timelineBarProgress.style.width = Math.round((maxPer*pos/maxPer)*100)+"%";
-
-			if (((<any> _form.elements)["spLayout"].value == "piano")||(window.localStorage.getItem("spLayout") == "piano")) {
-				playhead.style.left = (timelineWidth * pos) + "px"; 
-				timelineContainer.style.left = "-"+(timelineWidth * pos) + "px"; 
-			} else {
-				playhead.style.left = (timelineWidth * pos) + "px"; 
-				timelineContainer.style.left = "0";
-				
-				const boundingRect: DOMRect = visualizationContainer.getBoundingClientRect();
-					visualizationContainer.scrollLeft = pos * (timelineWidth - boundingRect.width); 
-			}
-
-
-			// this is note flash shit so don't worry bout it
-			if (notesFlashWhenPlayed) {
-				const playheadBar: number = Math.floor(synth.playhead);
-				const modPlayhead: number = synth.playhead - playheadBar;
-				const partsPerBar: number = synth.song.beatsPerBar * Config.partsPerBeat;
-				const noteFlashElementsForThisBar: SVGPathElement[] = noteFlashElementsPerBar[playheadBar];
-	
-				if (noteFlashElementsForThisBar != null && playheadBar !== currentNoteFlashBar) {
-					for (var i = currentNoteFlashElements.length - 1; i >= 0; i--) {
-						var element: SVGPathElement = currentNoteFlashElements[i];
-						const outsideOfCurrentBar = Number(element.getAttribute("note-bar")) !== playheadBar;
-						const isInvisible: boolean = element.style.opacity === "0";
-						if (outsideOfCurrentBar && isInvisible) {
-							removeFromUnorderedArray(currentNoteFlashElements, i);
+					if (noteFlashElementsForThisBar != null && playheadBar !== currentNoteFlashBar) {
+						for (var i = currentNoteFlashElements.length - 1; i >= 0; i--) {
+							var element: SVGPathElement = currentNoteFlashElements[i];
+							const outsideOfCurrentBar = Number(element.getAttribute("note-bar")) !== playheadBar;
+							const isInvisible: boolean = element.style.opacity === "0";
+							if (outsideOfCurrentBar && isInvisible) {
+								removeFromUnorderedArray(currentNoteFlashElements, i);
+							}
+						}
+						for (var i = 0; i < noteFlashElementsForThisBar.length; i++) {
+							var element: SVGPathElement = noteFlashElementsForThisBar[i];
+							currentNoteFlashElements.push(element);
 						}
 					}
-					for (var i = 0; i < noteFlashElementsForThisBar.length; i++) {
-						var element: SVGPathElement = noteFlashElementsForThisBar[i];
-						currentNoteFlashElements.push(element);
-					}
-				}
-				if (currentNoteFlashElements != null) {
-					for (var i = 0; i < currentNoteFlashElements.length; i++) {
-						var element: SVGPathElement = currentNoteFlashElements[i];
-						const noteStart: number = Number(element.getAttribute("note-start")) / partsPerBar;
-						const noteEnd: number = Number(element.getAttribute("note-end")) / partsPerBar;
-						const noteBar: number = Number(element.getAttribute("note-bar"));
-						if ((modPlayhead >= noteStart) && (noteBar == playheadBar)) {
-							const dist: number = noteEnd - noteStart;
-							element.style.opacity = String((1 - (((modPlayhead - noteStart) - (dist / 2)) / (dist / 2))));
-						} else {
-							element.style.opacity = "0";
+					if (currentNoteFlashElements != null) {
+						for (var i = 0; i < currentNoteFlashElements.length; i++) {
+							var element: SVGPathElement = currentNoteFlashElements[i];
+							const noteStart: number = Number(element.getAttribute("note-start")) / partsPerBar;
+							const noteEnd: number = Number(element.getAttribute("note-end")) / partsPerBar;
+							const noteBar: number = Number(element.getAttribute("note-bar"));
+							if ((modPlayhead >= noteStart) && (noteBar == playheadBar)) {
+								const dist: number = noteEnd - noteStart;
+								element.style.opacity = String((1 - (((modPlayhead - noteStart) - (dist / 2)) / (dist / 2))));
+							} else {
+								element.style.opacity = "0";
+							}
 						}
 					}
+					currentNoteFlashBar = playheadBar;
 				}
-				currentNoteFlashBar = playheadBar;
 			}
-		}
 	}
 	
 	function renderTimeline(): void {
@@ -560,102 +561,101 @@ import { SongPlayerLayout } from "./Layout";
 		let timelineHeight: number;
 		let windowOctaves: number;
 		let windowPitchCount: number;
-			
-		if (zoomEnabled) {
-			timelineHeight = boundingRect.height;
-			windowOctaves = Math.max(1, Math.min(Config.pitchOctaves, Math.round(timelineHeight / (12 * 2))));
-			windowPitchCount = windowOctaves * 12 + 1;
-			const semitoneHeight: number = (timelineHeight - 1) / windowPitchCount;
-			const targetBeatWidth: number = Math.max(8, semitoneHeight * 4);
-			timelineWidth = Math.max(boundingRect.width, targetBeatWidth * synth.song.barCount * synth.song.beatsPerBar);
-		} else {
-			timelineWidth = boundingRect.width;
-			const targetSemitoneHeight: number = Math.max(1, timelineWidth / (synth.song.barCount * synth.song.beatsPerBar) / 6.0);
-			timelineHeight = Math.min(boundingRect.height, targetSemitoneHeight * (Config.maxPitch + 1) + 1);
-			windowOctaves = Math.max(3, Math.min(Config.pitchOctaves, Math.round(timelineHeight / (12 * targetSemitoneHeight))));
-			windowPitchCount = windowOctaves * 12 + 1;
-		}
-			
-		timelineContainer.style.width = timelineWidth + "px";
-		timelineContainer.style.height = timelineHeight + "px";
-		timeline.style.width = timelineWidth + "px";
-		timeline.style.height = timelineHeight + "px";
-			
-		const barWidth: number = timelineWidth / synth.song.barCount;
-		const partWidth: number = barWidth / (synth.song.beatsPerBar * Config.partsPerBeat);
-	
-			const wavePitchHeight: number = (timelineHeight-1) / windowPitchCount;
-			const drumPitchHeight: number =  (timelineHeight-1) / Config.drumCount;
-			
-		for (let bar: number = 0; bar < synth.song.barCount + 1; bar++) {
-			const color: string = (bar == synth.song.loopStart || bar == synth.song.loopStart + synth.song.loopLength) ? ColorConfig.loopAccent : ColorConfig.uiWidgetBackground;
-				timeline.appendChild(rect({x: bar * barWidth - 1, y: 0, width: 2, height: timelineHeight, fill: color}));
-		}
-			
-		for (let octave: number = 0; octave <= windowOctaves; octave++) {
-				timeline.appendChild(rect({x: 0, y: octave * 12 * wavePitchHeight, width: timelineWidth, height: wavePitchHeight + 1, fill: ColorConfig.tonic, opacity: 0.75}));
-		}
-		
-			// note flash colors
-		let noteFlashColor: string = "#ffffff";
-		let noteFlashColorSecondary: string = "#ffffff77";
-		if (notesFlashWhenPlayed) {
-			noteFlashColor = ColorConfig.getComputed("--note-flash") !== "" ? "var(--note-flash)" : "#ffffff";
-			noteFlashColorSecondary = ColorConfig.getComputed("--note-flash-secondary") !== "" ? "var(--note-flash-secondary)" : "#ffffff77";
-		}
 
-		if (notesFlashWhenPlayed) {
-			noteFlashElementsPerBar = [];
-			for (let bar: number = 0; bar < synth.song.barCount; bar++) {
-				noteFlashElementsPerBar.push([]);
-			}
-			currentNoteFlashBar = -1;
-		}
-
-		for (let channel: number = synth.song.channels.length - 1 - synth.song.modChannelCount; channel >= 0; channel--) {
-	
-			const isNoise: boolean = synth.song.getChannelIsNoise(channel);
-			const pitchHeight: number = isNoise ? drumPitchHeight : wavePitchHeight;
-				
-			const configuredOctaveScroll: number = synth.song.channels[channel].octave;
-			const newOctaveScroll: number = Math.max(0, Math.min(Config.pitchOctaves - windowOctaves, Math.ceil(configuredOctaveScroll - windowOctaves * 0.5)));
-				
-			const offsetY: number = newOctaveScroll * pitchHeight * 12 + timelineHeight - pitchHeight * 0.5 - 0.5;
-				
-			for (let bar: number = 0; bar < synth.song.barCount; bar++) {
-				const pattern: Pattern | null = synth.song.getPattern(channel, bar);
-				if (pattern == null) continue;
-				const offsetX: number = bar * barWidth;
+				if (zoomEnabled) {
+					timelineHeight = boundingRect.height;
+					windowOctaves = Math.max(1, Math.min(Config.pitchOctaves, Math.round(timelineHeight / (12 * 2))));
+					windowPitchCount = windowOctaves * 12 + 1;
+					const semitoneHeight: number = (timelineHeight - 1) / windowPitchCount;
+					const targetBeatWidth: number = Math.max(8, semitoneHeight * 4);
+					timelineWidth = Math.max(boundingRect.width, targetBeatWidth * synth.song.barCount * synth.song.beatsPerBar);
+				} else {
+					timelineWidth = boundingRect.width;
+					const targetSemitoneHeight: number = Math.max(1, timelineWidth / (synth.song.barCount * synth.song.beatsPerBar) / 6.0);
+					timelineHeight = Math.min(boundingRect.height, targetSemitoneHeight * (Config.maxPitch + 1) + 1);
+					windowOctaves = Math.max(3, Math.min(Config.pitchOctaves, Math.round(timelineHeight / (12 * targetSemitoneHeight))));
+					windowPitchCount = windowOctaves * 12 + 1;
+				}
+			
+				timelineContainer.style.width = timelineWidth + "px";
+				timelineContainer.style.height = timelineHeight + "px";
+				timeline.style.width = timelineWidth + "px";
+				timeline.style.height = timelineHeight + "px";
 					
-				for (let i: number = 0; i < pattern.notes.length; i++) {
-					const note: Note = pattern.notes[i];
-						
-					for (const pitch of note.pitches) {
-						const d: string = drawNote(pitch, note.start, note.pins, (pitchHeight + 1) / 2, offsetX, offsetY, partWidth, pitchHeight);
-							const noteElement: SVGPathElement = path({d: d, fill: ColorConfig.getChannelColor(synth.song, channel).primaryChannel});
-						if (isNoise) noteElement.style.opacity = String(0.6);
-						timeline.appendChild(noteElement);
+				const barWidth: number = timelineWidth / synth.song.barCount;
+				const partWidth: number = barWidth / (synth.song.beatsPerBar * Config.partsPerBeat);
+			
+					const wavePitchHeight: number = (timelineHeight-1) / windowPitchCount;
+					const drumPitchHeight: number =  (timelineHeight-1) / Config.drumCount;
+					
+				for (let bar: number = 0; bar < synth.song.barCount + 1; bar++) {
+					const color: string = (bar == synth.song.loopStart || bar == synth.song.loopStart + synth.song.loopLength) ? ColorConfig.loopAccent : ColorConfig.uiWidgetBackground;
+						timeline.appendChild(rect({x: bar * barWidth - 1, y: 0, width: 2, height: timelineHeight, fill: color}));
+				}
+					
+				for (let octave: number = 0; octave <= windowOctaves; octave++) {
+						timeline.appendChild(rect({x: 0, y: octave * 12 * wavePitchHeight, width: timelineWidth, height: wavePitchHeight + 1, fill: ColorConfig.tonic, opacity: 0.75}));
+				} 
+				// note flash colors
+			let noteFlashColor: string = "#ffffff";
+			let noteFlashColorSecondary: string = "#ffffff77";
+			if (notesFlashWhenPlayed) {
+				noteFlashColor = ColorConfig.getComputed("--note-flash") !== "" ? "var(--note-flash)" : "#ffffff";
+				noteFlashColorSecondary = ColorConfig.getComputed("--note-flash-secondary") !== "" ? "var(--note-flash-secondary)" : "#ffffff77";
+			}
 
-							if (notesFlashWhenPlayed) {
-							const dflash: string = drawNote(pitch, note.start, note.pins, (pitchHeight + 1) / 2, offsetX, offsetY, partWidth, pitchHeight);
-							//const noteFlashColorSecondary = ColorConfig.getComputed("--note-flash-secondary") !== "" ? "var(--note-flash-secondary)" : "#ffffff77";
-							//const noteFlashColor = ColorConfig.getComputed("--note-flash") !== "" ? "var(--note-flash)" : "#ffffff77";
-							const noteFlashElement: SVGPathElement = path({d: dflash, fill: (isNoise ? noteFlashColorSecondary : noteFlashColor)});
-							noteFlashElement.style.opacity = "0";
-							noteFlashElement.setAttribute('note-start', String(note.start));
-							noteFlashElement.setAttribute('note-end', String(
-								note.end
-								));
-							noteFlashElement.setAttribute('note-bar', String(bar));
-							timeline.appendChild(noteFlashElement);
-							const noteFlashElementsForThisBar: SVGPathElement[] = noteFlashElementsPerBar[bar];
-							noteFlashElementsForThisBar.push(noteFlashElement);
+			if (notesFlashWhenPlayed) {
+				noteFlashElementsPerBar = [];
+				for (let bar: number = 0; bar < synth.song.barCount; bar++) {
+					noteFlashElementsPerBar.push([]);
+				}
+				currentNoteFlashBar = -1;
+			}
+
+			for (let channel: number = synth.song.channels.length - 1 - synth.song.modChannelCount; channel >= 0; channel--) {
+
+				const isNoise: boolean = synth.song.getChannelIsNoise(channel);
+				const pitchHeight: number = isNoise ? drumPitchHeight : wavePitchHeight;
+					
+				const configuredOctaveScroll: number = synth.song.channels[channel].octave;
+				const newOctaveScroll: number = Math.max(0, Math.min(Config.pitchOctaves - windowOctaves, Math.ceil(configuredOctaveScroll - windowOctaves * 0.5)));
+					
+				const offsetY: number = newOctaveScroll * pitchHeight * 12 + timelineHeight - pitchHeight * 0.5 - 0.5;
+					
+				for (let bar: number = 0; bar < synth.song.barCount; bar++) {
+					const pattern: Pattern | null = synth.song.getPattern(channel, bar);
+					if (pattern == null) continue;
+					const offsetX: number = bar * barWidth;
+						
+					for (let i: number = 0; i < pattern.notes.length; i++) {
+						const note: Note = pattern.notes[i];
+							
+						for (const pitch of note.pitches) {
+							const d: string = drawNote(pitch, note.start, note.pins, (pitchHeight + 1) / 2, offsetX, offsetY, partWidth, pitchHeight);
+								const noteElement: SVGPathElement = path({d: d, fill: ColorConfig.getChannelColor(synth.song, channel).primaryChannel});
+							if (isNoise) noteElement.style.opacity = String(0.6);
+							timeline.appendChild(noteElement);
+
+								if (notesFlashWhenPlayed) {
+								const dflash: string = drawNote(pitch, note.start, note.pins, (pitchHeight + 1) / 2, offsetX, offsetY, partWidth, pitchHeight);
+								//const noteFlashColorSecondary = ColorConfig.getComputed("--note-flash-secondary") !== "" ? "var(--note-flash-secondary)" : "#ffffff77";
+								//const noteFlashColor = ColorConfig.getComputed("--note-flash") !== "" ? "var(--note-flash)" : "#ffffff77";
+								const noteFlashElement: SVGPathElement = path({d: dflash, fill: (isNoise ? noteFlashColorSecondary : noteFlashColor)});
+								noteFlashElement.style.opacity = "0";
+								noteFlashElement.setAttribute('note-start', String(note.start));
+								noteFlashElement.setAttribute('note-end', String(
+									note.end
+									));
+								noteFlashElement.setAttribute('note-bar', String(bar));
+								timeline.appendChild(noteFlashElement);
+								const noteFlashElementsForThisBar: SVGPathElement[] = noteFlashElementsPerBar[bar];
+								noteFlashElementsForThisBar.push(noteFlashElement);
+							}
 						}
 					}
 				}
-			}
-		}
-			
+	}
+	
 		renderPlayhead();
 	}
 	

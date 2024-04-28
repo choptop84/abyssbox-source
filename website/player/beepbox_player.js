@@ -29695,6 +29695,7 @@ var beepbox = (function (exports) {
         SongPlayerLayout.setLayout(_form.elements["spLayout"].value);
         promptContainer.style.display = "none";
         window.localStorage.setItem("spLayout", _form.elements["spLayout"].value);
+        renderTimeline();
     }
     function onToggleLoop() {
         if (synth.loopRepeatCount == -1) {
