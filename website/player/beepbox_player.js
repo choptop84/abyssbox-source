@@ -4498,6 +4498,10 @@ var beepbox = (function (exports) {
 				--disabled-note-secondary: #181c34; }
 
 				/* sets background image */
+			.beepboxEditor load {
+				background: #fff0;
+				}
+
 			body {
 			background-image: url("https://choptop84.github.io/choptop84s-image-repository/stars.gif") !important;
 			background-repeat: repeat !important;
@@ -16615,6 +16619,7 @@ var beepbox = (function (exports) {
     ColorConfig.modLabelPrimaryText = "var(--mod-label-primary-text)";
     ColorConfig.disabledNotePrimary = "var(--disabled-note-primary)";
     ColorConfig.disabledNoteSecondary = "var(--disabled-note-secondary)";
+    ColorConfig.scrollbarColor = "var(--scrollbar-color)";
     ColorConfig.c_pitchSecondaryChannelHue = 0;
     ColorConfig.c_pitchSecondaryChannelHueScale = 0;
     ColorConfig.c_pitchSecondaryChannelSat = 0;
@@ -29490,6 +29495,7 @@ var beepbox = (function (exports) {
             grid-template-rows: 92.6vh 7.4vh; 
             grid-template-columns: minmax(0px,0px);
         }
+        
         div.visualizer {
             transform: scale(1);
             }
@@ -29541,8 +29547,8 @@ var beepbox = (function (exports) {
         "vertical": `
         .songPlayerContainer {
             display:grid; 
-            grid-template-areas: 'visualizer visualizer' 'control-center control-center'; 
-            grid-template-rows: 92.6vh 7.4vh; 
+            grid-template-areas: 'visualizer visualizer' 'piano piano' 'control-center control-center'; 
+            grid-template-rows: 82.6vh 10vh 7.4vh; 
             grid-template-columns: minmax(0px,0px);
         }
         div.visualizer {
@@ -29683,6 +29689,8 @@ var beepbox = (function (exports) {
     const zoomButton = button({ title: "zoom", style: "background: none; flex: 0 0 12px; margin: 0 3px; width: 12px; height: 12px; display: flex;" }, zoomIcon);
     const timeline = svg({ class: "timeline", style: "min-width: 0; min-height: 0; touch-action: pan-y pinch-zoom;" });
     const playhead = div({ class: "playhead", style: `position: absolute; left: 0; top: 0; width: 2px; height: 100%; background: ${ColorConfig.playhead}; pointer-events: none;` });
+    const piano = svg({ style: "pointer-events: none; display: block; margin: 0 auto;" });
+    const pianoContainer = div({ class: "piano", style: "grid-area: piano;" }, piano);
     const timelineContainer = div({ class: "timelineContainer", style: "display: flex; flex-grow: 1; flex-shrink: 1; position: relative;" }, timeline, playhead);
     const visualizationContainer = div({ class: "visualizer", style: "display: flex; flex-grow: 1; flex-shrink: 1; position: relative; align-items: center; overflow: hidden; grid-area: visualizer;" }, timelineContainer);
     let noteFlashElementsPerBar;
@@ -29706,6 +29714,7 @@ var beepbox = (function (exports) {
     promptContainer.style.display = "none";
     const songPlayerContainer = div({ class: "songPlayerContainer" });
     songPlayerContainer.appendChild(visualizationContainer);
+    songPlayerContainer.appendChild(pianoContainer);
     songPlayerContainer.appendChild(div({ class: "control-center", style: `flex-shrink: 0; height: 20vh; min-height: 22px; max-height: 70px; display: flex; align-items: center; grid-area: control-center;` }, playButtonContainer, loopButton, volumeIcon, volumeSlider, zoomButton, volumeBarContainerDiv, oscilascope.canvas, titleText, layoutStuffs, editLink, copyLink, shareLink, fullscreenLink, shortenSongLink));
     document.body.appendChild(songPlayerContainer);
     songPlayerContainer.appendChild(promptContainer);
@@ -29973,6 +29982,12 @@ var beepbox = (function (exports) {
                         var element = noteFlashElementsForThisBar[i];
                         currentNoteFlashElements.push(element);
                     }
+                    const kc = piano.children.length;
+                    for (let i = 0; i < kc; i++) {
+                        const k = piano.children[i];
+                        const kf = k.getAttribute("original-fill");
+                        k.setAttribute("fill", kf);
+                    }
                 }
                 if (currentNoteFlashElements != null) {
                     for (var i = 0; i < currentNoteFlashElements.length; i++) {
@@ -29980,9 +29995,17 @@ var beepbox = (function (exports) {
                         const noteStart = Number(element.getAttribute("note-start")) / partsPerBar;
                         const noteEnd = Number(element.getAttribute("note-end")) / partsPerBar;
                         const noteBar = Number(element.getAttribute("note-bar"));
+                        const p = Number(element.getAttribute("note-pitch"));
+                        const isNoise = element.getAttribute("note-noise") === "true";
+                        const k = piano.children[p];
+                        const kf2 = "red";
                         if ((modPlayhead >= noteStart) && (noteBar == playheadBar)) {
                             const dist = noteEnd - noteStart;
-                            element.style.opacity = String((1 - (((modPlayhead - noteStart) - (dist / 2)) / (dist / 2))));
+                            const opacity = (1 - (((modPlayhead - noteStart) - (dist / 2)) / (dist / 2)));
+                            element.style.opacity = String(opacity);
+                            if (!isNoise)
+                                if (opacity > 0.05)
+                                    k === null || k === void 0 ? void 0 : k.setAttribute("fill", kf2);
                         }
                         else {
                             element.style.opacity = "0";
@@ -30011,12 +30034,17 @@ var beepbox = (function (exports) {
             timelineWidth = Math.max(boundingRect.width, targetBeatWidth * synth.song.barCount * synth.song.beatsPerBar);
             if (useVertical) {
                 timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineHeight / 2}px) scaleY(-1)`;
+                pianoContainer.style.display = "unset";
+                songPlayerContainer.style.gridTemplateRows = "";
             }
             else {
                 timelineContainer.style.transform = '';
+                pianoContainer.style.display = "none";
+                songPlayerContainer.style.gridTemplateRows = "";
             }
         }
         else {
+            pianoContainer.style.display = "none";
             timelineWidth = boundingRect.width;
             const targetSemitoneHeight = Math.max(1, timelineWidth / (synth.song.barCount * synth.song.beatsPerBar) / 6.0);
             timelineHeight = Math.min(boundingRect.height, targetSemitoneHeight * (Config.maxPitch + 1) + 1);
@@ -30024,9 +30052,11 @@ var beepbox = (function (exports) {
             windowPitchCount = windowOctaves * 12 + 1;
             if (useVertical) {
                 timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineWidth / 2}px) scaleY(-1)`;
+                songPlayerContainer.style.gridTemplateRows = "92.6vh 0vh 7.4vh";
             }
             else {
                 timelineContainer.style.transform = '';
+                songPlayerContainer.style.gridTemplateRows = "";
             }
         }
         timelineContainer.style.width = timelineWidth + "px";
@@ -30082,6 +30112,8 @@ var beepbox = (function (exports) {
                             noteFlashElement.style.opacity = "0";
                             noteFlashElement.setAttribute('note-start', String(note.start));
                             noteFlashElement.setAttribute('note-end', String(note.end));
+                            noteFlashElement.setAttribute('note-pitch', String(pitch));
+                            noteFlashElement.setAttribute('note-noise', String(isNoise));
                             noteFlashElement.setAttribute('note-bar', String(bar));
                             timeline.appendChild(noteFlashElement);
                             const noteFlashElementsForThisBar = noteFlashElementsPerBar[bar];
@@ -30092,6 +30124,8 @@ var beepbox = (function (exports) {
             }
         }
         renderPlayhead();
+        const pianoContainerBoundingRect = pianoContainer.getBoundingClientRect();
+        renderPiano(piano, timelineHeight, pianoContainerBoundingRect.height, windowOctaves, synth.song);
     }
     function drawNote(pitch, start, pins, radius, offsetX, offsetY, partWidth, pitchHeight) {
         let d = `M ${offsetX + partWidth * (start + pins[0].time)} ${offsetY - pitch * pitchHeight + radius * (pins[0].size / Config.noteSizeMax)} `;
@@ -30110,6 +30144,31 @@ var beepbox = (function (exports) {
             d += `L ${x} ${y + radius * expression} `;
         }
         return d;
+    }
+    function renderPiano(element, width, height, octaves, song) {
+        if (song == null)
+            return;
+        element.innerHTML = "";
+        element.style.width = width + "px";
+        element.style.height = height + "px";
+        const kc = octaves * 12 + 1;
+        const kw = width / kc;
+        const kh = height;
+        for (let i = 0; i < kc; i++) {
+            const pitchNameIndex = (i + Config.keys[song.key].basePitch) % Config.pitchesPerOctave;
+            const isWhiteKey = Config.keys[pitchNameIndex].isWhiteKey;
+            const color = isWhiteKey ? "white" : "black";
+            element.appendChild(rect({
+                x: i / kc * width,
+                y: 0,
+                width: kw,
+                height: kh,
+                stroke: "rgba(0, 0, 0, 0.5",
+                "stroke-width": 2,
+                "original-fill": color,
+                fill: color,
+            }));
+        }
     }
     function renderPlayButton() {
         if (synth.playing) {

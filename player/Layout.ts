@@ -10,6 +10,7 @@ export class SongPlayerLayout {
             grid-template-rows: 92.6vh 7.4vh; 
             grid-template-columns: minmax(0px,0px);
         }
+        
         div.visualizer {
             transform: scale(1);
             }
@@ -61,8 +62,8 @@ export class SongPlayerLayout {
         "vertical": `
         .songPlayerContainer {
             display:grid; 
-            grid-template-areas: 'visualizer visualizer' 'control-center control-center'; 
-            grid-template-rows: 92.6vh 7.4vh; 
+            grid-template-areas: 'visualizer visualizer' 'piano piano' 'control-center control-center'; 
+            grid-template-rows: 82.6vh 10vh 7.4vh; 
             grid-template-columns: minmax(0px,0px);
         }
         div.visualizer {

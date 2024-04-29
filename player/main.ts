@@ -2,7 +2,7 @@
 
 import { Dictionary, DictionaryArray, EnvelopeType, InstrumentType, Transition, Chord, Envelope, Config } from "../synth/SynthConfig";
 import { ColorConfig } from "../editor/ColorConfig";
-import { NotePin, Note, Pattern, Instrument, Channel, Synth } from "../synth/synth";
+import { NotePin, Note, Pattern, Instrument, Channel, Synth, Song } from "../synth/synth";
 import "./style";
 import { oscilascopeCanvas } from "../global/Oscilascope";
 import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
@@ -26,7 +26,7 @@ import { SongPlayerLayout } from "./Layout";
 	let timelineWidth: number = 1;
 	let outVolumeHistoricTimer: number = 0;
 	let outVolumeHistoricCap: number = 0;
-	
+
 	const synth: Synth = new Synth();
 	const oscilascope: oscilascopeCanvas = new oscilascopeCanvas(canvas({ width: isMobile? 144:288, height: isMobile?32:64, style: `border:2px solid ${ColorConfig.uiWidgetBackground}; overflow: hidden;` , id: "oscilascopeAll" }), isMobile?1:2);
 	const showOscilloscope: boolean = getLocalStorage("showOscilloscope") != "false";
@@ -192,7 +192,7 @@ import { SongPlayerLayout } from "./Layout";
 		const volumeIcon: SVGSVGElement = svg({style: "flex: 0 0 12px; margin: 0 1px; width: 12px; height: 12px;", viewBox: "0 0 12 12"},
 			path({fill: ColorConfig.uiWidgetBackground, d: "M 1 9 L 1 3 L 4 3 L 7 0 L 7 12 L 4 9 L 1 9 M 9 3 Q 12 6 9 9 L 8 8 Q 10.5 6 8 4 L 9 3 z"}),
 	);
-		const pianoContainer: HTMLDivElement = div({class:"pianoContainer", style:"position:absolute; width: 100vw; height: 15px;"})
+		
 	const volumeSlider: HTMLInputElement = input({ title: "volume", type: "range", value: 75, min: 0, max: 75, step: 1, style: "width: 12vw; max-width: 100px; margin: 0 1px;" });
 	
 		const zoomIcon: SVGSVGElement = svg({width: 12, height: 12, viewBox: "0 0 12 12"},
@@ -205,8 +205,10 @@ import { SongPlayerLayout } from "./Layout";
 	
 		const timeline: SVGSVGElement = svg({class: "timeline",style: "min-width: 0; min-height: 0; touch-action: pan-y pinch-zoom;"});
 		const playhead: HTMLDivElement = div({class: "playhead",style: `position: absolute; left: 0; top: 0; width: 2px; height: 100%; background: ${ColorConfig.playhead}; pointer-events: none;`});
+		const piano = svg({ style: "pointer-events: none; display: block; margin: 0 auto;" });
+	    const pianoContainer = div({ class: "piano", style: "grid-area: piano;" }, piano);
 		const timelineContainer: HTMLDivElement = div({class: "timelineContainer",style: "display: flex; flex-grow: 1; flex-shrink: 1; position: relative;"}, timeline, playhead);
-		const visualizationContainer: HTMLDivElement = div({class: "visualizer",style: "display: flex; flex-grow: 1; flex-shrink: 1; position: relative; align-items: center; overflow: hidden; grid-area: visualizer;"}, timelineContainer, pianoContainer);
+		const visualizationContainer: HTMLDivElement = div({class: "visualizer",style: "display: flex; flex-grow: 1; flex-shrink: 1; position: relative; align-items: center; overflow: hidden; grid-area: visualizer;"}, timelineContainer);
 		let noteFlashElementsPerBar: (SVGPathElement[])[];
 		let currentNoteFlashElements: SVGPathElement[] = [];
 		let currentNoteFlashBar: number = -1;
@@ -234,6 +236,7 @@ import { SongPlayerLayout } from "./Layout";
 	promptContainer.style.display = "none";
 	const songPlayerContainer: HTMLDivElement = div({class:"songPlayerContainer"});
 	songPlayerContainer.appendChild(visualizationContainer);
+	songPlayerContainer.appendChild(pianoContainer);
 	songPlayerContainer.appendChild(
 			div({class: "control-center",style: `flex-shrink: 0; height: 20vh; min-height: 22px; max-height: 70px; display: flex; align-items: center; grid-area: control-center;`},
 			playButtonContainer,
@@ -580,16 +583,28 @@ import { SongPlayerLayout } from "./Layout";
 							var element: SVGPathElement = noteFlashElementsForThisBar[i];
 							currentNoteFlashElements.push(element);
 						}
+						const kc = piano.children.length;
+						for (let i = 0; i < kc; i++) {
+							const k = piano.children[i];
+							const kf = k.getAttribute("original-fill");
+							k.setAttribute("fill", kf!);
+						}
 					}
 					if (currentNoteFlashElements != null) {
 						for (var i = 0; i < currentNoteFlashElements.length; i++) {
 							var element: SVGPathElement = currentNoteFlashElements[i];
 							const noteStart: number = Number(element.getAttribute("note-start")) / partsPerBar;
 							const noteEnd: number = Number(element.getAttribute("note-end")) / partsPerBar;
-							const noteBar: number = Number(element.getAttribute("note-bar"));
+							const noteBar: number = Number(element.getAttribute("note-bar"));const p = Number(element.getAttribute("note-pitch"));
+							const isNoise = element.getAttribute("note-noise") === "true";
+							const k = piano.children[p];
+							//const kf = k?.getAttribute("original-fill");
+							const kf2 = "red";
 							if ((modPlayhead >= noteStart) && (noteBar == playheadBar)) {
 								const dist: number = noteEnd - noteStart;
-								element.style.opacity = String((1 - (((modPlayhead - noteStart) - (dist / 2)) / (dist / 2))));
+								const opacity = (1 - (((modPlayhead - noteStart) - (dist / 2)) / (dist / 2)));
+	                            element.style.opacity = String(opacity);
+                            if (!isNoise) if (opacity > 0.05) k?.setAttribute("fill", kf2);
 							} else {
 								element.style.opacity = "0";
 							}
@@ -599,7 +614,7 @@ import { SongPlayerLayout } from "./Layout";
 				}
 			}
 	}
-	
+
 	function renderTimeline(): void {
 		timeline.innerHTML = "";
 		if (synth.song == null) return;
@@ -620,10 +635,15 @@ import { SongPlayerLayout } from "./Layout";
 					timelineWidth = Math.max(boundingRect.width, targetBeatWidth * synth.song.barCount * synth.song.beatsPerBar);
 					if (useVertical) {
 						timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineHeight / 2}px) scaleY(-1)`;
+						pianoContainer.style.display = "unset";
+						songPlayerContainer.style.gridTemplateRows = "";
 					 } else {
 						timelineContainer.style.transform = '';
+						pianoContainer.style.display = "none";
+						songPlayerContainer.style.gridTemplateRows = "";
 					 }
 				} else {
+					pianoContainer.style.display = "none";
 					timelineWidth = boundingRect.width;
 					const targetSemitoneHeight: number = Math.max(1, timelineWidth / (synth.song.barCount * synth.song.beatsPerBar) / 6.0);
 					timelineHeight = Math.min(boundingRect.height, targetSemitoneHeight * (Config.maxPitch + 1) + 1);
@@ -631,12 +651,12 @@ import { SongPlayerLayout } from "./Layout";
 					windowPitchCount = windowOctaves * 12 + 1;
 					if (useVertical) {
 						timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineWidth / 2}px) scaleY(-1)`;
+						songPlayerContainer.style.gridTemplateRows = "92.6vh 0vh 7.4vh";
 					 } else {
 						timelineContainer.style.transform = '';
+						songPlayerContainer.style.gridTemplateRows = "";
 					 }
 				}
-
-				
 
 				timelineContainer.style.width = timelineWidth + "px";
 				timelineContainer.style.height = timelineHeight + "px";
@@ -648,14 +668,14 @@ import { SongPlayerLayout } from "./Layout";
 			
 					const wavePitchHeight: number = (timelineHeight-1) / windowPitchCount;
 					const drumPitchHeight: number =  (timelineHeight-1) / Config.drumCount;
-					
+
 				for (let bar: number = 0; bar < synth.song.barCount + 1; bar++) {
 					const color: string = (bar == synth.song.loopStart || bar == synth.song.loopStart + synth.song.loopLength) ? ColorConfig.loopAccent : ColorConfig.uiWidgetBackground;
 						timeline.appendChild(rect({x: bar * barWidth - 1, y: 0, width: 2, height: timelineHeight, fill: color}));
 				}
 					
 				for (let octave: number = 0; octave <= windowOctaves; octave++) {
-						timeline.appendChild(rect({x: 0, y: octave * 12 * wavePitchHeight, width: timelineWidth, height: wavePitchHeight + 1, fill: ColorConfig.tonic, opacity: 0.75}));
+					timeline.appendChild(rect({x: 0, y: octave * 12 * wavePitchHeight, width: timelineWidth, height: wavePitchHeight + 1, fill: ColorConfig.tonic, opacity: 0.75}));
 				} 
 				// note flash colors
 			let noteFlashColor: string = "#ffffff";
@@ -682,7 +702,8 @@ import { SongPlayerLayout } from "./Layout";
 				const newOctaveScroll: number = Math.max(0, Math.min(Config.pitchOctaves - windowOctaves, Math.ceil(configuredOctaveScroll - windowOctaves * 0.5)));
 					
 				const offsetY: number = newOctaveScroll * pitchHeight * 12 + timelineHeight - pitchHeight * 0.5 - 0.5;
-					
+				
+
 				for (let bar: number = 0; bar < synth.song.barCount; bar++) {
 					const pattern: Pattern | null = synth.song.getPattern(channel, bar);
 					if (pattern == null) continue;
@@ -707,6 +728,8 @@ import { SongPlayerLayout } from "./Layout";
 								noteFlashElement.setAttribute('note-end', String(
 									note.end
 									));
+								noteFlashElement.setAttribute('note-pitch', String(pitch));
+	                           	noteFlashElement.setAttribute('note-noise', String(isNoise));
 								noteFlashElement.setAttribute('note-bar', String(bar));
 								timeline.appendChild(noteFlashElement);
 								const noteFlashElementsForThisBar: SVGPathElement[] = noteFlashElementsPerBar[bar];
@@ -718,6 +741,8 @@ import { SongPlayerLayout } from "./Layout";
 	}
 	
 		renderPlayhead();
+		const pianoContainerBoundingRect = pianoContainer.getBoundingClientRect();
+		renderPiano(piano, timelineHeight, pianoContainerBoundingRect.height, windowOctaves, synth.song);
 	}
 	
 	function drawNote(pitch: number, start: number, pins: NotePin[], radius: number, offsetX: number, offsetY: number, partWidth: number, pitchHeight: number): string {
@@ -739,6 +764,31 @@ import { SongPlayerLayout } from "./Layout";
 		return d;
 	}
 	
+	function renderPiano(element: SVGSVGElement, width: number, height: number, octaves: number, song: Song): void {
+		if (song == null) return;
+		element.innerHTML = "";
+		element.style.width = width + "px";
+		element.style.height = height + "px";
+		const kc = octaves * 12 + 1;
+		const kw = width / kc;
+		const kh = height;
+		for (let i = 0; i < kc; i++) {
+			const pitchNameIndex = (i + Config.keys[song.key].basePitch) % Config.pitchesPerOctave;
+			const isWhiteKey = Config.keys[pitchNameIndex].isWhiteKey;
+			const color = isWhiteKey ? "white" : "black";
+			element.appendChild(rect({
+				x: i / kc * width,
+				y: 0,
+				width: kw,
+				height: kh,
+				stroke: "rgba(0, 0, 0, 0.5",
+				"stroke-width": 2,
+				"original-fill": color,
+				fill: color,
+			}));
+		}
+	}
+
 	function renderPlayButton(): void {
 		if (synth.playing) {
 			playButton.classList.remove("playButton");
