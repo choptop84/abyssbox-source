@@ -29500,6 +29500,9 @@ var beepbox = (function (exports) {
         div.visualizer {
             transform: scale(1);
             }
+        .timelineContainer {
+            transform: translateX(0);
+        } 
         `,
         "top": `
         .songPlayerContainer {
@@ -29511,6 +29514,9 @@ var beepbox = (function (exports) {
         div.visualizer {
             transform: scale(1);
             }
+        .timelineContainer {
+            transform: translateX(0);
+        }    
         `,
         "shitbox4": `
         .songPlayerContainer {
@@ -29522,6 +29528,9 @@ var beepbox = (function (exports) {
         div.visualizer {
             transform: skew(30deg,20deg) scale(0.5);
             }
+        .timelineContainer {
+            transform: translateX(0);
+        }    
         `,
         "boxbeep": `
         .songPlayerContainer {
@@ -29533,6 +29542,9 @@ var beepbox = (function (exports) {
         div.visualizer {
             transform: scale(-1);
             }
+        .timelineContainer {
+            transform: translateX(0);
+        }
         `,
         "piano": `
         .songPlayerContainer {
@@ -29544,6 +29556,9 @@ var beepbox = (function (exports) {
         div.visualizer {
             transform: scale(1);
             }
+        .timelineContainer {
+            transform: translateX(0);
+        }
         `,
         "vertical": `
         .songPlayerContainer {
@@ -29555,6 +29570,23 @@ var beepbox = (function (exports) {
         div.visualizer {
             transform: scale(1);
             }
+        .timelineContainer {
+            transform: translateX(0);
+        }
+        `,
+        "middle": `
+        .songPlayerContainer {
+            display:grid; 
+            grid-template-areas: 'visualizer visualizer' 'control-center control-center'; 
+            grid-template-rows: 92.6vh 7.4vh; 
+            grid-template-columns: minmax(0px,0px);
+        }
+        div.visualizer {
+            transform: scale(1);
+            }
+        .timelineContainer {
+            transform: translateX(50vw);
+        }
         `,
     };
     SongPlayerLayout._styleElement = document.head.appendChild(HTML.style({ type: "text/css" }));
@@ -29670,7 +29702,31 @@ var beepbox = (function (exports) {
 
 					<rect x="2" y="15" width="22" height="3" fill="currentColor"/>
 					</svg>
-				`), div("Vertical")));
+				`), div("Vertical")), label({ class: "layout-option", style: "width:90px; color: var(--secondary-text)" }, input({ type: "radio", name: "spLayout", value: "middle", style: "display:none;" }), SVG(`\
+				<svg viewBox="-1 -1 28 22">
+				<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
+				<rect x="4" y="3" width="8" height="1" fill="currentColor"/>
+
+				<rect x="2" y="3" width="1" height="9" fill="currentColor"/>
+
+				<rect x="13" y="3" width="1" height="9" fill="currentColor"/>
+
+				<rect x="23" y="3" width="1" height="9" fill="currentColor"/>
+
+				<rect x="4" y="11" width="8" height="1" fill="currentColor"/>
+				<rect x="4" y="5" width="8" height="1" fill="currentColor"/>
+				<rect x="4" y="7" width="8" height="1" fill="currentColor"/>
+				<rect x="4" y="9" width="8" height="1" fill="currentColor"/>
+
+				<rect x="15" y="3" width="7" height="1" fill="currentColor"/>
+				<rect x="15" y="11" width="7" height="1" fill="currentColor"/>
+				<rect x="15" y="5" width="7" height="1" fill="currentColor"/>
+				<rect x="15" y="7" width="7" height="1" fill="currentColor"/>
+				<rect x="15" y="9" width="7" height="1" fill="currentColor"/>
+
+				<rect x="2" y="15" width="22" height="3" fill="currentColor"/>
+					</svg>
+				`), div("Middle")));
     const layoutContainer = div({ class: "prompt noSelection", style: "width: 300px; margin: auto;text-align: center;background: var(--editor-background);border-radius: 15px;border: 4px solid var(--ui-widget-background);color: var(--primary-text);padding: 20px;display: flex;flex-direction: column;position: relative;box-shadow: 5px 5px 20px 10px rgba(0,0,0,0.5);" }, div({ class: "promptTitle" }, h2({ class: "layoutExt", style: "text-align: inherit;" }, ""), h2({ class: "layoutTitle" }, "Layout")), _form, div({ style: "margin-top: 1em;" }, _okayButton), closePrompt);
     let titleText = h1({ style: "flex-grow: 1; margin: 0 1px; margin-left: 10px; overflow: hidden;" }, "");
     let layoutStuffs = button({ class: "songPlayerLayoutsButton", style: "margin: 0 4px; height: 42px; width: 90px;" }, "Layouts");
@@ -29944,8 +30000,15 @@ var beepbox = (function (exports) {
             let pos = synth.playhead / synth.song.barCount;
             timelineBarProgress.style.width = Math.round((maxPer * pos / maxPer) * 100) + "%";
             const usePiano = (_form.elements["spLayout"].value == "piano") || (window.localStorage.getItem("spLayout") == "piano");
+            const useMiddle = (_form.elements["spLayout"].value == "middle") || (window.localStorage.getItem("spLayout") == "middle");
             const useVertical = (_form.elements["spLayout"].value == "vertical") || (window.localStorage.getItem("spLayout") == "vertical");
             if (usePiano) {
+                playhead.style.left = (timelineWidth * pos) + "px";
+                timelineContainer.style.left = "-" + (timelineWidth * pos) + "px";
+                timelineContainer.style.bottom = "0";
+                timelineContainer.style.top = "0";
+            }
+            else if (useMiddle) {
                 playhead.style.left = (timelineWidth * pos) + "px";
                 timelineContainer.style.left = "-" + (timelineWidth * pos) + "px";
                 timelineContainer.style.bottom = "0";

@@ -156,6 +156,35 @@ import { SongPlayerLayout } from "./Layout";
 				`),
 				div("Vertical"),
 			),
+			label({class: "layout-option",style:"width:90px; color: var(--secondary-text)"},
+				input({type: "radio", name: "spLayout", value: "middle", style:"display:none;"}),
+				SVG(`\
+				<svg viewBox="-1 -1 28 22">
+				<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
+				<rect x="4" y="3" width="8" height="1" fill="currentColor"/>
+
+				<rect x="2" y="3" width="1" height="9" fill="currentColor"/>
+
+				<rect x="13" y="3" width="1" height="9" fill="currentColor"/>
+
+				<rect x="23" y="3" width="1" height="9" fill="currentColor"/>
+
+				<rect x="4" y="11" width="8" height="1" fill="currentColor"/>
+				<rect x="4" y="5" width="8" height="1" fill="currentColor"/>
+				<rect x="4" y="7" width="8" height="1" fill="currentColor"/>
+				<rect x="4" y="9" width="8" height="1" fill="currentColor"/>
+
+				<rect x="15" y="3" width="7" height="1" fill="currentColor"/>
+				<rect x="15" y="11" width="7" height="1" fill="currentColor"/>
+				<rect x="15" y="5" width="7" height="1" fill="currentColor"/>
+				<rect x="15" y="7" width="7" height="1" fill="currentColor"/>
+				<rect x="15" y="9" width="7" height="1" fill="currentColor"/>
+
+				<rect x="2" y="15" width="22" height="3" fill="currentColor"/>
+					</svg>
+				`),
+				div("Middle"),
+			),
 		);
 
 		const layoutContainer: HTMLDivElement = div({class: "prompt noSelection", style: "width: 300px; margin: auto;text-align: center;background: var(--editor-background);border-radius: 15px;border: 4px solid var(--ui-widget-background);color: var(--primary-text);padding: 20px;display: flex;flex-direction: column;position: relative;box-shadow: 5px 5px 20px 10px rgba(0,0,0,0.5);"},
@@ -541,8 +570,14 @@ import { SongPlayerLayout } from "./Layout";
 				timelineBarProgress.style.width = Math.round((maxPer*pos/maxPer)*100)+"%";
 
 				const usePiano = ((<any> _form.elements)["spLayout"].value == "piano") || (window.localStorage.getItem("spLayout") == "piano");
+				const useMiddle = ((<any> _form.elements)["spLayout"].value == "middle") || (window.localStorage.getItem("spLayout") == "middle");
 				const useVertical = ((<any> _form.elements)["spLayout"].value == "vertical") || (window.localStorage.getItem("spLayout") == "vertical");
 				if (usePiano) {
+					playhead.style.left = (timelineWidth * pos) + "px"; 
+					timelineContainer.style.left = "-"+(timelineWidth * pos) + "px"; 
+					timelineContainer.style.bottom = "0";
+					timelineContainer.style.top = "0";
+				} else if (useMiddle) {
 					playhead.style.left = (timelineWidth * pos) + "px"; 
 					timelineContainer.style.left = "-"+(timelineWidth * pos) + "px"; 
 					timelineContainer.style.bottom = "0";

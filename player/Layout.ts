@@ -14,6 +14,9 @@ export class SongPlayerLayout {
         div.visualizer {
             transform: scale(1);
             }
+        .timelineContainer {
+            transform: translateX(0);
+        } 
         `,
         "top": `
         .songPlayerContainer {
@@ -25,6 +28,9 @@ export class SongPlayerLayout {
         div.visualizer {
             transform: scale(1);
             }
+        .timelineContainer {
+            transform: translateX(0);
+        }    
         `,
         "shitbox4": `
         .songPlayerContainer {
@@ -36,6 +42,9 @@ export class SongPlayerLayout {
         div.visualizer {
             transform: skew(30deg,20deg) scale(0.5);
             }
+        .timelineContainer {
+            transform: translateX(0);
+        }    
         `,
         "boxbeep": `
         .songPlayerContainer {
@@ -47,6 +56,9 @@ export class SongPlayerLayout {
         div.visualizer {
             transform: scale(-1);
             }
+        .timelineContainer {
+            transform: translateX(0);
+        }
         `,
         "piano": `
         .songPlayerContainer {
@@ -58,6 +70,9 @@ export class SongPlayerLayout {
         div.visualizer {
             transform: scale(1);
             }
+        .timelineContainer {
+            transform: translateX(0);
+        }
         `,
         "vertical": `
         .songPlayerContainer {
@@ -69,6 +84,23 @@ export class SongPlayerLayout {
         div.visualizer {
             transform: scale(1);
             }
+        .timelineContainer {
+            transform: translateX(0);
+        }
+        `,
+        "middle": `
+        .songPlayerContainer {
+            display:grid; 
+            grid-template-areas: 'visualizer visualizer' 'control-center control-center'; 
+            grid-template-rows: 92.6vh 7.4vh; 
+            grid-template-columns: minmax(0px,0px);
+        }
+        div.visualizer {
+            transform: scale(1);
+            }
+        .timelineContainer {
+            transform: translateX(50vw);
+        }
         `,
     }
 
