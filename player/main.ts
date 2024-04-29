@@ -505,11 +505,11 @@ import { SongPlayerLayout } from "./Layout";
 			const boundingRect: DOMRect = visualizationContainer.getBoundingClientRect();
 			const useVertical = ((<any> _form.elements)["spLayout"].value == "vertical") || (window.localStorage.getItem("spLayout") == "vertical");
 			const useBoxBeep = ((<any> _form.elements)["spLayout"].value == "boxbeep") || (window.localStorage.getItem("spLayout") == "boxbeep");
-			if (!useVertical) {
+			if (!useVertical && !useBoxBeep) {
 				synth.playhead = synth.song.barCount * (mouseX - boundingRect.left) / (boundingRect.right - boundingRect.left); 
-			} else if (!useBoxBeep) {
+			} else if (useVertical) {
 				synth.playhead = synth.song.barCount * (mouseX - boundingRect.bottom) / (boundingRect.top - boundingRect.bottom);	
-			} else {
+			} else if (useBoxBeep) {
 				synth.playhead = synth.song.barCount * (mouseX - boundingRect.right) / (boundingRect.left - boundingRect.right);	
 			}
 			synth.computeLatestModValues();
