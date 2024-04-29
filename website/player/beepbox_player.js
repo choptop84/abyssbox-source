@@ -4382,6 +4382,133 @@ var beepbox = (function (exports) {
 
 
 			`,
+        "starry studio": `
+			:root {     
+				--page-margin: black;     
+				--editor-background: rgba(0, 0, 0, 0.65);     
+				--hover-preview: #f8f8f8;     
+				--playhead: rgba(255, 255, 255, 0.8);     
+				--primary-text: #f8f8f8;     
+				--secondary-text: #b8b4e8;     
+				--inverted-text: #3b2655;     
+				--text-selection: rgba(124, 91, 173, 0.9);     
+				--box-selection-fill: #b8b4e8;     
+				--loop-accent: #a80a61;     
+				--link-accent: #a286d7;     
+				--ui-widget-background: #31253f;     
+				--ui-widget-focus: #7c5bad;     
+				--pitch-background: rgba(40, 40, 44, 0.5);     
+				--tonic: rgba(83, 81, 95, 0.5);     
+				--fifth-note: rgba(59, 38, 85, 0.5);     
+				--white-piano-key: rgb(155, 151, 166);     
+				--black-piano-key: #39363e;     
+				--white-piano-key-text: #39363e;     
+				--black-piano-key-text: #9b97a6;     
+				--use-color-formula: true;     
+				--track-editor-bg-pitch: #423174;     
+				--track-editor-bg-pitch-dim: #252335;     
+				--track-editor-bg-noise: #39363e;     
+				--track-editor-bg-noise-dim: #28282c;     
+				--track-editor-bg-mod: #3b2655;     
+				--track-editor-bg-mod-dim: #252335;     
+				--multiplicative-mod-slider: #168ee4;     
+				--overwriting-mod-slider: #2457c6;     
+				--indicator-primary: #f8f8f8;     
+				--indicator-secondary: #423174;     
+				--select2-opt-group: #423174;     
+				--input-box-outline: #3b2655;     
+				--mute-button-normal: #00b176;     
+				--mute-button-mod: #e6a418;     
+				--mod-label-primary: #3b2655;     
+				--mod-label-secondary-text: rgb(124 91 173);     
+				--mod-label-primary-text: #b8b4e8;     
+				--pitch-secondary-channel-hue: 0;     
+				--pitch-secondary-channel-hue-scale: 6.5;     
+				--pitch-secondary-channel-sat: 83.3;     
+				--pitch-secondary-channel-sat-scale: 0.1;     
+				--pitch-secondary-channel-lum: 40;     
+				--pitch-secondary-channel-lum-scale: 0.05;     
+				--pitch-primary-channel-hue: 0;     
+				--pitch-primary-channel-hue-scale: 6.5;     
+				--pitch-primary-channel-sat: 100;     
+				--pitch-primary-channel-sat-scale: 0.1;     
+				--pitch-primary-channel-lum: 67.5;     
+				--pitch-primary-channel-lum-scale: 0.05;     
+				--pitch-secondary-note-hue: 0;     
+				--pitch-secondary-note-hue-scale: 6.5;     
+				--pitch-secondary-note-sat: 93.9;     
+				--pitch-secondary-note-sat-scale: 0.1;     
+				--pitch-secondary-note-lum: 25;     
+				--pitch-secondary-note-lum-scale: 0.05;     
+				--pitch-primary-note-hue: 0;     
+				--pitch-primary-note-hue-scale: 6.5;     
+				--pitch-primary-note-sat: 100;     
+				--pitch-primary-note-sat-scale: 0.05;     
+				--pitch-primary-note-lum: 85.6;     
+				--pitch-primary-note-lum-scale: 0.025;     
+				--noise-secondary-channel-hue: 0;     
+				--noise-secondary-channel-hue-scale: 2;     
+				--noise-secondary-channel-sat: 25;     
+				--noise-secondary-channel-sat-scale: 0;     
+				--noise-secondary-channel-lum: 42;     
+				--noise-secondary-channel-lum-scale: 0;     
+				--noise-primary-channel-hue: 0;     
+				--noise-primary-channel-hue-scale: 2;     
+				--noise-primary-channel-sat: 33;     
+				--noise-primary-channel-sat-scale: 0;     
+				--noise-primary-channel-lum: 63.5;     
+				--noise-primary-channel-lum-scale: 0;     
+				--noise-secondary-note-hue: 0;     
+				--noise-secondary-note-hue-scale: 2;     
+				--noise-secondary-note-sat: 33.5;     
+				--noise-secondary-note-sat-scale: 0;     
+				--noise-secondary-note-lum: 55;     
+				--noise-secondary-note-lum-scale: 0;     
+				--noise-primary-note-hue: 0;     
+				--noise-primary-note-hue-scale: 2;     
+				--noise-primary-note-sat: 46.5;     
+				--noise-primary-note-sat-scale: 0;     
+				--noise-primary-note-lum: 74;     
+				--noise-primary-note-lum-scale: 0;     
+				--mod-secondary-channel-hue: 192;     
+				--mod-secondary-channel-hue-scale: 1.5;     
+				--mod-secondary-channel-sat: 88;     
+				--mod-secondary-channel-sat-scale: 0;     
+				--mod-secondary-channel-lum: 50;     
+				--mod-secondary-channel-lum-scale: 0;     
+				--mod-primary-channel-hue: 192;     
+				--mod-primary-channel-hue-scale: 1.5;     
+				--mod-primary-channel-sat: 96;     
+				--mod-primary-channel-sat-scale: 0;     
+				--mod-primary-channel-lum: 80;     
+				--mod-primary-channel-lum-scale: 0;     
+				--mod-secondary-note-hue: 192;     
+				--mod-secondary-note-hue-scale: 1.5;     
+				--mod-secondary-note-sat: 92;     
+				--mod-secondary-note-sat-scale: 0;     
+				--mod-secondary-note-lum: 45;     
+				--mod-secondary-note-lum-scale: 0;     
+				--mod-primary-note-hue: 192;     
+				--mod-primary-note-hue-scale: 1.5;     
+				--mod-primary-note-sat: 96;     
+				--mod-primary-note-sat-scale: 0;     
+				--mod-primary-note-lum: 85;     
+				--mod-primary-note-lum-scale: 0;     
+				--disabled-note-primary: #252a46;     
+				--disabled-note-secondary: #181c34; }
+
+				/* sets background image */
+			body {
+			background-image: url("https://choptop84.github.io/choptop84s-image-repository/stars.gif") !important;
+			background-repeat: repeat !important;
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+				}
+			`,
         "AWeebyssBox": `
 			:root {		
 			--page-margin: #1e0915; 		

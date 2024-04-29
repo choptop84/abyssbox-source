@@ -26,6 +26,7 @@ export class ThemePrompt implements Prompt {
 		option({ value: "Frutiger Aero"}, "Frutiger Aero"),
 		option({ value: "Skeuomorphic"}, "Skeuomorphic/Early 2000's (LeoV)"),
 		option({ value: "Glyde"}, "Glyde"),
+		option({ value: "starry studio"}, "Starry Studio"),
 		option({ value: "Terminal 2.0 (AB)"}, "Terminal 2.0 (AB)"),
 		option({ value: "Slushie"}, "Slushie"),
 		option({ value: "Slushie Pixel"}, "Slushie 2"),

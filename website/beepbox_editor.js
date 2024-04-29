@@ -4735,6 +4735,137 @@ var beepbox = (function (exports) {
 
 
 			`,
+        "starry studio": `
+			:root {     
+				--page-margin: black;     
+				--editor-background: rgba(0, 0, 0, 0.65);     
+				--hover-preview: #f8f8f8;     
+				--playhead: rgba(255, 255, 255, 0.8);     
+				--primary-text: #f8f8f8;     
+				--secondary-text: #b8b4e8;     
+				--inverted-text: #3b2655;     
+				--text-selection: rgba(124, 91, 173, 0.9);     
+				--box-selection-fill: #b8b4e8;     
+				--loop-accent: #a80a61;     
+				--link-accent: #a286d7;     
+				--ui-widget-background: #31253f;     
+				--ui-widget-focus: #7c5bad;     
+				--pitch-background: rgba(40, 40, 44, 0.5);     
+				--tonic: rgba(83, 81, 95, 0.5);     
+				--fifth-note: rgba(59, 38, 85, 0.5);     
+				--white-piano-key: rgb(155, 151, 166);     
+				--black-piano-key: #39363e;     
+				--white-piano-key-text: #39363e;     
+				--black-piano-key-text: #9b97a6;     
+				--use-color-formula: true;     
+				--track-editor-bg-pitch: #423174;     
+				--track-editor-bg-pitch-dim: #252335;     
+				--track-editor-bg-noise: #39363e;     
+				--track-editor-bg-noise-dim: #28282c;     
+				--track-editor-bg-mod: #3b2655;     
+				--track-editor-bg-mod-dim: #252335;     
+				--multiplicative-mod-slider: #168ee4;     
+				--overwriting-mod-slider: #2457c6;     
+				--indicator-primary: #f8f8f8;     
+				--indicator-secondary: #423174;     
+				--select2-opt-group: #423174;     
+				--input-box-outline: #3b2655;     
+				--mute-button-normal: #00b176;     
+				--mute-button-mod: #e6a418;     
+				--mod-label-primary: #3b2655;     
+				--mod-label-secondary-text: rgb(124 91 173);     
+				--mod-label-primary-text: #b8b4e8;     
+				--pitch-secondary-channel-hue: 0;     
+				--pitch-secondary-channel-hue-scale: 6.5;     
+				--pitch-secondary-channel-sat: 83.3;     
+				--pitch-secondary-channel-sat-scale: 0.1;     
+				--pitch-secondary-channel-lum: 40;     
+				--pitch-secondary-channel-lum-scale: 0.05;     
+				--pitch-primary-channel-hue: 0;     
+				--pitch-primary-channel-hue-scale: 6.5;     
+				--pitch-primary-channel-sat: 100;     
+				--pitch-primary-channel-sat-scale: 0.1;     
+				--pitch-primary-channel-lum: 67.5;     
+				--pitch-primary-channel-lum-scale: 0.05;     
+				--pitch-secondary-note-hue: 0;     
+				--pitch-secondary-note-hue-scale: 6.5;     
+				--pitch-secondary-note-sat: 93.9;     
+				--pitch-secondary-note-sat-scale: 0.1;     
+				--pitch-secondary-note-lum: 25;     
+				--pitch-secondary-note-lum-scale: 0.05;     
+				--pitch-primary-note-hue: 0;     
+				--pitch-primary-note-hue-scale: 6.5;     
+				--pitch-primary-note-sat: 100;     
+				--pitch-primary-note-sat-scale: 0.05;     
+				--pitch-primary-note-lum: 85.6;     
+				--pitch-primary-note-lum-scale: 0.025;     
+				--noise-secondary-channel-hue: 0;     
+				--noise-secondary-channel-hue-scale: 2;     
+				--noise-secondary-channel-sat: 25;     
+				--noise-secondary-channel-sat-scale: 0;     
+				--noise-secondary-channel-lum: 42;     
+				--noise-secondary-channel-lum-scale: 0;     
+				--noise-primary-channel-hue: 0;     
+				--noise-primary-channel-hue-scale: 2;     
+				--noise-primary-channel-sat: 33;     
+				--noise-primary-channel-sat-scale: 0;     
+				--noise-primary-channel-lum: 63.5;     
+				--noise-primary-channel-lum-scale: 0;     
+				--noise-secondary-note-hue: 0;     
+				--noise-secondary-note-hue-scale: 2;     
+				--noise-secondary-note-sat: 33.5;     
+				--noise-secondary-note-sat-scale: 0;     
+				--noise-secondary-note-lum: 55;     
+				--noise-secondary-note-lum-scale: 0;     
+				--noise-primary-note-hue: 0;     
+				--noise-primary-note-hue-scale: 2;     
+				--noise-primary-note-sat: 46.5;     
+				--noise-primary-note-sat-scale: 0;     
+				--noise-primary-note-lum: 74;     
+				--noise-primary-note-lum-scale: 0;     
+				--mod-secondary-channel-hue: 192;     
+				--mod-secondary-channel-hue-scale: 1.5;     
+				--mod-secondary-channel-sat: 88;     
+				--mod-secondary-channel-sat-scale: 0;     
+				--mod-secondary-channel-lum: 50;     
+				--mod-secondary-channel-lum-scale: 0;     
+				--mod-primary-channel-hue: 192;     
+				--mod-primary-channel-hue-scale: 1.5;     
+				--mod-primary-channel-sat: 96;     
+				--mod-primary-channel-sat-scale: 0;     
+				--mod-primary-channel-lum: 80;     
+				--mod-primary-channel-lum-scale: 0;     
+				--mod-secondary-note-hue: 192;     
+				--mod-secondary-note-hue-scale: 1.5;     
+				--mod-secondary-note-sat: 92;     
+				--mod-secondary-note-sat-scale: 0;     
+				--mod-secondary-note-lum: 45;     
+				--mod-secondary-note-lum-scale: 0;     
+				--mod-primary-note-hue: 192;     
+				--mod-primary-note-hue-scale: 1.5;     
+				--mod-primary-note-sat: 96;     
+				--mod-primary-note-sat-scale: 0;     
+				--mod-primary-note-lum: 85;     
+				--mod-primary-note-lum-scale: 0;     
+				--disabled-note-primary: #252a46;     
+				--disabled-note-secondary: #181c34; }
+
+				/* sets background image */
+			.beepboxEditor load {
+				background: #fff0;
+				}
+
+			body {
+			background-image: url("https://choptop84.github.io/choptop84s-image-repository/stars.gif") !important;
+			background-repeat: repeat !important;
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+				}
+			`,
         "AWeebyssBox": `
 			:root {		
 			--page-margin: #1e0915; 		
@@ -46615,7 +46746,7 @@ You should be redirected to the song at:<br /><br />
     class ThemePrompt {
         constructor(_doc) {
             this._doc = _doc;
-            this._themeSelect = select$5({ style: "width: 100%;" }, option$5({ value: "AbyssBox Classic" }, "AbyssBox Classic"), option$5({ value: "AbyssBox Competitive" }, "AbyssBox Competitive"), option$5({ value: "AbyssBox Light" }, "AbyssBox Light"), option$5({ value: "AbyssBox 0.8" }, "AbyssBox 0.8"), option$5({ value: "Half-Life" }, "Half-Life"), option$5({ value: "Half-Life: Source" }, "Half-Life: Source"), option$5({ value: "Doom 1993" }, "Doom 1993"), option$5({ value: "Undertale" }, "Undertale"), option$5({ value: "Scratch" }, "Scratch"), option$5({ value: "Scratch Addons" }, "Scratch Addons"), option$5({ value: "Windows Xp" }, "Windows Xp"), option$5({ value: "Frutiger Aero" }, "Frutiger Aero"), option$5({ value: "Skeuomorphic" }, "Skeuomorphic/Early 2000's (LeoV)"), option$5({ value: "Glyde" }, "Glyde"), option$5({ value: "Terminal 2.0 (AB)" }, "Terminal 2.0 (AB)"), option$5({ value: "Slushie" }, "Slushie"), option$5({ value: "Slushie Pixel" }, "Slushie 2"), option$5({ value: "dark classic" }, "BeepBox Dark"), option$5({ value: "light classic" }, "BeepBox Light"), option$5({ value: "dark competition" }, "BeepBox Competition Dark"), option$5({ value: "BeepBox Pixel" }, "BeepBox Pixel"), option$5({ value: "jummbox classic" }, "JummBox Dark"), option$5({ value: "jummbox light" }, "JummBox Light"), option$5({ value: "gold light" }, "Gold Light"), option$5({ value: "forest" }, "Forest"), option$5({ value: "forest 2" }, "Forest 2"), option$5({ value: "canyon" }, "Canyon"), option$5({ value: "canyon 2" }, "Canyon 2"), option$5({ value: "midnight" }, "Midnight"), option$5({ value: "beachcombing" }, "Beachcombing"), option$5({ value: "violet verdant" }, "Violet Verdant"), option$5({ value: "sunset" }, "Sunset"), option$5({ value: "autumn" }, "Autumn"), option$5({ value: "fruit" }, "Shadowfruit"), option$5({ value: "toxic" }, "Toxic"), option$5({ value: "roe" }, "Roe"), option$5({ value: "moonlight" }, "Moonlight"), option$5({ value: "portal" }, "Portal"), option$5({ value: "fusion" }, "Fusion"), option$5({ value: "inverse" }, "Inverse"), option$5({ value: "nebula" }, "Nebula"), option$5({ value: "Nebula 2" }, "Nebula 2"), option$5({ value: "roe light" }, "Roe Light"), option$5({ value: "amoled dark" }, "High Contrast Dark"), option$5({ value: "energized" }, "Energized"), option$5({ value: "neapolitan" }, "Neapolitan"), option$5({ value: "mono" }, "Poly"), option$5({ value: "blutonium" }, "Blutonium"), option$5({ value: "Ghost House" }, "Ghost House"), option$5({ value: "Ghost House 2" }, "Ghost House 2"), option$5({ value: "azur lane" }, "Azur Lane"), option$5({ value: "modbox classic" }, "Modbox"), option$5({ value: "sandbox classic" }, "Sandbox"), option$5({ value: "harrybox" }, "Haileybox"), option$5({ value: "brucebox" }, "Brucebox"), option$5({ value: "shitbox 3.0" }, "Shitbox 1.0/3.0"), option$5({ value: "shitbox 2.0" }, "Shitbox 2.0"), option$5({ value: "nerdbox" }, "NerdBox"), option$5({ value: "zefbox" }, "Zefbox"), option$5({ value: "cardboardbox classic" }, "Cardboardbox"), option$5({ value: "blubox classic" }, "Blubox"), option$5({ value: "dogebox classic" }, "Dogebox"), option$5({ value: "wackybox" }, "Wackybox"), option$5({ value: "todbox dark mode" }, "Todbox Dark Mode"), option$5({ value: "mainbox 1.0" }, "Mainbox"), option$5({ value: "microbox" }, "MicroBox"), option$5({ value: "paandorasbox" }, "PaandorasBox"), option$5({ value: "foxbox" }, "FoxBox"), option$5({ value: "midbox" }, "Midbox"), option$5({ value: "dogebox2" }, "Dogebox2"), option$5({ value: "nepbox" }, "Nepbox"), option$5({ value: "WeebBox" }, "WeebBox"), option$5({ value: "BoxBeep Dark" }, "BoxBeep Dark"), option$5({ value: "BoxBeep light" }, "BoxBeep Light"), option$5({ value: "AWeebyssBox" }, "AWeebyssBox"), option$5({ value: "Deuteranopia" }, "Deuteranopia"), option$5({ value: "Protanopia" }, "Protanopia"), option$5({ value: "Tritanopia" }, "Tritanopia"), option$5({ value: "2012 Video Tutorial" }, "2012 Video Tutorial"), option$5({ value: "I am on fire" }, "I am on fire"), option$5({ value: "custom" }, "Custom"));
+            this._themeSelect = select$5({ style: "width: 100%;" }, option$5({ value: "AbyssBox Classic" }, "AbyssBox Classic"), option$5({ value: "AbyssBox Competitive" }, "AbyssBox Competitive"), option$5({ value: "AbyssBox Light" }, "AbyssBox Light"), option$5({ value: "AbyssBox 0.8" }, "AbyssBox 0.8"), option$5({ value: "Half-Life" }, "Half-Life"), option$5({ value: "Half-Life: Source" }, "Half-Life: Source"), option$5({ value: "Doom 1993" }, "Doom 1993"), option$5({ value: "Undertale" }, "Undertale"), option$5({ value: "Scratch" }, "Scratch"), option$5({ value: "Scratch Addons" }, "Scratch Addons"), option$5({ value: "Windows Xp" }, "Windows Xp"), option$5({ value: "Frutiger Aero" }, "Frutiger Aero"), option$5({ value: "Skeuomorphic" }, "Skeuomorphic/Early 2000's (LeoV)"), option$5({ value: "Glyde" }, "Glyde"), option$5({ value: "starry studio" }, "Starry Studio"), option$5({ value: "Terminal 2.0 (AB)" }, "Terminal 2.0 (AB)"), option$5({ value: "Slushie" }, "Slushie"), option$5({ value: "Slushie Pixel" }, "Slushie 2"), option$5({ value: "dark classic" }, "BeepBox Dark"), option$5({ value: "light classic" }, "BeepBox Light"), option$5({ value: "dark competition" }, "BeepBox Competition Dark"), option$5({ value: "BeepBox Pixel" }, "BeepBox Pixel"), option$5({ value: "jummbox classic" }, "JummBox Dark"), option$5({ value: "jummbox light" }, "JummBox Light"), option$5({ value: "gold light" }, "Gold Light"), option$5({ value: "forest" }, "Forest"), option$5({ value: "forest 2" }, "Forest 2"), option$5({ value: "canyon" }, "Canyon"), option$5({ value: "canyon 2" }, "Canyon 2"), option$5({ value: "midnight" }, "Midnight"), option$5({ value: "beachcombing" }, "Beachcombing"), option$5({ value: "violet verdant" }, "Violet Verdant"), option$5({ value: "sunset" }, "Sunset"), option$5({ value: "autumn" }, "Autumn"), option$5({ value: "fruit" }, "Shadowfruit"), option$5({ value: "toxic" }, "Toxic"), option$5({ value: "roe" }, "Roe"), option$5({ value: "moonlight" }, "Moonlight"), option$5({ value: "portal" }, "Portal"), option$5({ value: "fusion" }, "Fusion"), option$5({ value: "inverse" }, "Inverse"), option$5({ value: "nebula" }, "Nebula"), option$5({ value: "Nebula 2" }, "Nebula 2"), option$5({ value: "roe light" }, "Roe Light"), option$5({ value: "amoled dark" }, "High Contrast Dark"), option$5({ value: "energized" }, "Energized"), option$5({ value: "neapolitan" }, "Neapolitan"), option$5({ value: "mono" }, "Poly"), option$5({ value: "blutonium" }, "Blutonium"), option$5({ value: "Ghost House" }, "Ghost House"), option$5({ value: "Ghost House 2" }, "Ghost House 2"), option$5({ value: "azur lane" }, "Azur Lane"), option$5({ value: "modbox classic" }, "Modbox"), option$5({ value: "sandbox classic" }, "Sandbox"), option$5({ value: "harrybox" }, "Haileybox"), option$5({ value: "brucebox" }, "Brucebox"), option$5({ value: "shitbox 3.0" }, "Shitbox 1.0/3.0"), option$5({ value: "shitbox 2.0" }, "Shitbox 2.0"), option$5({ value: "nerdbox" }, "NerdBox"), option$5({ value: "zefbox" }, "Zefbox"), option$5({ value: "cardboardbox classic" }, "Cardboardbox"), option$5({ value: "blubox classic" }, "Blubox"), option$5({ value: "dogebox classic" }, "Dogebox"), option$5({ value: "wackybox" }, "Wackybox"), option$5({ value: "todbox dark mode" }, "Todbox Dark Mode"), option$5({ value: "mainbox 1.0" }, "Mainbox"), option$5({ value: "microbox" }, "MicroBox"), option$5({ value: "paandorasbox" }, "PaandorasBox"), option$5({ value: "foxbox" }, "FoxBox"), option$5({ value: "midbox" }, "Midbox"), option$5({ value: "dogebox2" }, "Dogebox2"), option$5({ value: "nepbox" }, "Nepbox"), option$5({ value: "WeebBox" }, "WeebBox"), option$5({ value: "BoxBeep Dark" }, "BoxBeep Dark"), option$5({ value: "BoxBeep light" }, "BoxBeep Light"), option$5({ value: "AWeebyssBox" }, "AWeebyssBox"), option$5({ value: "Deuteranopia" }, "Deuteranopia"), option$5({ value: "Protanopia" }, "Protanopia"), option$5({ value: "Tritanopia" }, "Tritanopia"), option$5({ value: "2012 Video Tutorial" }, "2012 Video Tutorial"), option$5({ value: "I am on fire" }, "I am on fire"), option$5({ value: "custom" }, "Custom"));
             this._cancelButton = button$7({ class: "cancelButton" });
             this._okayButton = button$7({ class: "okayButton", style: "width:45%;" }, "Okay");
             this.container = div$7({ class: "prompt noSelection", style: "width: 220px;" }, div$7({ class: "promptTitle" }, h2$6({ class: "themeExt", style: "text-align: inherit;" }, ""), h2$6({ class: "themeTitle", style: "margin-bottom: 0.5em;" }, "Set Theme")), div$7({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$7({ class: "selectContainer", style: "width: 100%;" }, this._themeSelect)), div$7({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
