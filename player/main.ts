@@ -818,7 +818,7 @@ import { SongPlayerLayout } from "./Layout";
 				y: 0,
 				width: kw,
 				height: kh,
-				stroke: "rgba(0, 0, 0, 0.5",
+				stroke: "rgba(0, 0, 0, 0.5)",
 				"stroke-width": 2,
 				"original-fill": color,
 				fill: color,
