@@ -13,7 +13,6 @@ import { SongPlayerLayout } from "./Layout";
 
 	const isMobile: boolean = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|android|ipad|playbook|silk/i.test(navigator.userAgent);
 
-
 	const colorTheme: string | null = getLocalStorage("colorTheme");
 	const setSpLayout: string | null = getLocalStorage("spLayout");
 	ColorConfig.setTheme(colorTheme === null ? "AbyssBox Classic" : colorTheme);
@@ -175,6 +174,7 @@ import { SongPlayerLayout } from "./Layout";
 		let shareLink: HTMLAnchorElement = a({href: "javascript:void(0)", style: "margin: 0 4px;"}, "⤳ Share");
 		let fullscreenLink: HTMLAnchorElement = a({target: "_top", style: "margin: 0 4px;"}, "⇱ Fullscreen");
 		let shortenSongLink: HTMLAnchorElement = a({ href:"javascript:void(0)", target: "_top", style: "margin: 0 4px;"}, "… Shorten URL");
+		//let hideUrlButton: HTMLAnchorElement = a({ href:"javascript:void(0)", target: "_top", style: "margin: 0 4px;"}, "Hide URL");
 
 	
 
@@ -416,7 +416,7 @@ import { SongPlayerLayout } from "./Layout";
 		outVolumeBar.setAttribute("width", "" + Math.min(144, useOutVolumeCap * 144));
 		outVolumeCap.setAttribute("x", "" + (8 + Math.min(144, historicOutCap * 144)));
 	}
-	
+
 	function onTogglePlay(): void {
 		if (synth.song != null) {
 			if (animationRequest != null) cancelAnimationFrame(animationRequest);
@@ -504,10 +504,13 @@ import { SongPlayerLayout } from "./Layout";
 			
 			const boundingRect: DOMRect = visualizationContainer.getBoundingClientRect();
 			const useVertical = ((<any> _form.elements)["spLayout"].value == "vertical") || (window.localStorage.getItem("spLayout") == "vertical");
+			const useBoxBeep = ((<any> _form.elements)["spLayout"].value == "boxbeep") || (window.localStorage.getItem("spLayout") == "boxbeep");
 			if (!useVertical) {
-			synth.playhead = synth.song.barCount * (mouseX - boundingRect.left) / (boundingRect.right - boundingRect.left); 
+				synth.playhead = synth.song.barCount * (mouseX - boundingRect.left) / (boundingRect.right - boundingRect.left); 
+			} else if (!useBoxBeep) {
+				synth.playhead = synth.song.barCount * (mouseX - boundingRect.bottom) / (boundingRect.top - boundingRect.bottom);	
 			} else {
-			synth.playhead = synth.song.barCount * (mouseX - boundingRect.bottom) / (boundingRect.top - boundingRect.bottom);	
+				synth.playhead = synth.song.barCount * (mouseX - boundingRect.right) / (boundingRect.left - boundingRect.right);	
 			}
 			synth.computeLatestModValues();
 			renderPlayhead();
@@ -537,6 +540,8 @@ import { SongPlayerLayout } from "./Layout";
 				if (usePiano) {
 					playhead.style.left = (timelineWidth * pos) + "px"; 
 					timelineContainer.style.left = "-"+(timelineWidth * pos) + "px"; 
+					timelineContainer.style.bottom = "0";
+					timelineContainer.style.top = "0";
 				} else if (useVertical) {
 					const boundingRect = visualizationContainer.getBoundingClientRect();
                 	const o = boundingRect.height / 2;
@@ -546,6 +551,8 @@ import { SongPlayerLayout } from "./Layout";
 				} else {
 					playhead.style.left = (timelineWidth * pos) + "px"; 
 					timelineContainer.style.left = "0";
+					timelineContainer.style.bottom = "0";
+					timelineContainer.style.top = "0";
 					
 					const boundingRect: DOMRect = visualizationContainer.getBoundingClientRect();
 						visualizationContainer.scrollLeft = pos * (timelineWidth - boundingRect.width); 
@@ -612,6 +619,8 @@ import { SongPlayerLayout } from "./Layout";
 					timelineWidth = Math.max(boundingRect.width, targetBeatWidth * synth.song.barCount * synth.song.beatsPerBar);
 					if (useVertical) {
 						timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineHeight / 2}px) scaleY(-1)`;
+					 } else {
+						timelineContainer.style.transform = '';
 					 }
 				} else {
 					timelineWidth = boundingRect.width;
@@ -621,6 +630,8 @@ import { SongPlayerLayout } from "./Layout";
 					windowPitchCount = windowOctaves * 12 + 1;
 					if (useVertical) {
 						timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineWidth / 2}px) scaleY(-1)`;
+					 } else {
+						timelineContainer.style.transform = '';
 					 }
 				}
 

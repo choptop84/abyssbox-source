@@ -942,6 +942,16 @@ var beepbox = (function (exports) {
     Config.detuneMin = 0;
     Config.songDetuneMin = 0;
     Config.songDetuneMax = 500;
+    Config.unisonVoicesMin = 1;
+    Config.unisonVoicesMax = 2;
+    Config.unisonSpreadMin = -96;
+    Config.unisonSpreadMax = 96;
+    Config.unisonOffsetMin = -96;
+    Config.unisonOffsetMax = 96;
+    Config.unisonExpressionMin = -2;
+    Config.unisonExpressionMax = 2;
+    Config.unisonSignMin = -2;
+    Config.unisonSignMax = 2;
     Config.sineWaveLength = 1 << 8;
     Config.sineWaveMask = Config.sineWaveLength - 1;
     Config.sineWave = generateSineWave();
@@ -964,7 +974,7 @@ var beepbox = (function (exports) {
         { name: "noteVolume", computeIndex: 0, displayName: "note volume", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: null },
         { name: "pulseWidth", computeIndex: 2, displayName: "pulse width", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [6, 8] },
         { name: "stringSustain", computeIndex: 3, displayName: "sustain", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [7] },
-        { name: "unison", computeIndex: 4, displayName: "unison", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [0, 5, 7, 9] },
+        { name: "unison", computeIndex: 4, displayName: "unison", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [0, 5, 7, 9, 6, 2, 3] },
         { name: "operatorFrequency", computeIndex: 5, displayName: "fm# freq", interleave: true, isFilter: false, maxCount: Config.operatorCount + 2, effect: null, compatibleInstruments: [1, 11] },
         { name: "operatorAmplitude", computeIndex: 11, displayName: "fm# volume", interleave: false, isFilter: false, maxCount: Config.operatorCount + 2, effect: null, compatibleInstruments: [1, 11] },
         { name: "feedbackAmplitude", computeIndex: 17, displayName: "fm feedback", interleave: false, isFilter: false, maxCount: 1, effect: null, compatibleInstruments: [1, 11] },
@@ -3181,7 +3191,7 @@ var beepbox = (function (exports) {
 			--mod-label-primary: #341a7b; 		
 			--mod-label-secondary-text: rgb(86, 93, 120);
 			--mod-label-primary-text: gray; 
-			--progress-bar: #accdd9;
+			--progress-bar: #84aef0;
 
 			--pitch-secondary-channel-hue: 110; 		
 			--pitch-secondary-channel-hue-scale 0; 		
@@ -16687,7 +16697,7 @@ var beepbox = (function (exports) {
         static valueToPreset(presetValue) {
             const categoryIndex = presetValue >> 6;
             const presetIndex = presetValue & 0x3F;
-            return EditorConfig.presetCategories[categoryIndex].presets[presetIndex];
+            return EditorConfig === null || EditorConfig === void 0 ? void 0 : EditorConfig.presetCategories[categoryIndex].presets[presetIndex];
         }
         static midiProgramToPresetValue(program) {
             for (let categoryIndex = 0; categoryIndex < EditorConfig.presetCategories.length; categoryIndex++) {
@@ -29769,11 +29779,15 @@ var beepbox = (function (exports) {
         if (draggingPlayhead && synth.song != null) {
             const boundingRect = visualizationContainer.getBoundingClientRect();
             const useVertical = (_form.elements["spLayout"].value == "vertical") || (window.localStorage.getItem("spLayout") == "vertical");
+            const useBoxBeep = (_form.elements["spLayout"].value == "boxbeep") || (window.localStorage.getItem("spLayout") == "boxbeep");
             if (!useVertical) {
                 synth.playhead = synth.song.barCount * (mouseX - boundingRect.left) / (boundingRect.right - boundingRect.left);
             }
-            else {
+            else if (!useBoxBeep) {
                 synth.playhead = synth.song.barCount * (mouseX - boundingRect.bottom) / (boundingRect.top - boundingRect.bottom);
+            }
+            else {
+                synth.playhead = synth.song.barCount * (mouseX - boundingRect.right) / (boundingRect.left - boundingRect.right);
             }
             synth.computeLatestModValues();
             renderPlayhead();
@@ -29796,6 +29810,8 @@ var beepbox = (function (exports) {
             if (usePiano) {
                 playhead.style.left = (timelineWidth * pos) + "px";
                 timelineContainer.style.left = "-" + (timelineWidth * pos) + "px";
+                timelineContainer.style.bottom = "0";
+                timelineContainer.style.top = "0";
             }
             else if (useVertical) {
                 const boundingRect = visualizationContainer.getBoundingClientRect();
@@ -29807,6 +29823,8 @@ var beepbox = (function (exports) {
             else {
                 playhead.style.left = (timelineWidth * pos) + "px";
                 timelineContainer.style.left = "0";
+                timelineContainer.style.bottom = "0";
+                timelineContainer.style.top = "0";
                 const boundingRect = visualizationContainer.getBoundingClientRect();
                 visualizationContainer.scrollLeft = pos * (timelineWidth - boundingRect.width);
             }
@@ -29867,6 +29885,9 @@ var beepbox = (function (exports) {
             if (useVertical) {
                 timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineHeight / 2}px) scaleY(-1)`;
             }
+            else {
+                timelineContainer.style.transform = '';
+            }
         }
         else {
             timelineWidth = boundingRect.width;
@@ -29876,6 +29897,9 @@ var beepbox = (function (exports) {
             windowPitchCount = windowOctaves * 12 + 1;
             if (useVertical) {
                 timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineWidth / 2}px) scaleY(-1)`;
+            }
+            else {
+                timelineContainer.style.transform = '';
             }
         }
         timelineContainer.style.width = timelineWidth + "px";
