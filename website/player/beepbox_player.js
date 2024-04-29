@@ -16620,6 +16620,7 @@ var beepbox = (function (exports) {
     ColorConfig.disabledNotePrimary = "var(--disabled-note-primary)";
     ColorConfig.disabledNoteSecondary = "var(--disabled-note-secondary)";
     ColorConfig.scrollbarColor = "var(--scrollbar-color)";
+    ColorConfig.songPlayerKeyColor = "var(--playing-key-color)";
     ColorConfig.c_pitchSecondaryChannelHue = 0;
     ColorConfig.c_pitchSecondaryChannelHueScale = 0;
     ColorConfig.c_pitchSecondaryChannelSat = 0;
@@ -29653,7 +29654,7 @@ var beepbox = (function (exports) {
 
 					<rect x="2" y="15" width="22" height="3" fill="currentColor"/>
 					</svg>
-				`), div("Piano")), label({ class: "layout-option", style: "width:90px; color: var(--secondary-text)" }, input({ type: "radio", name: "spLayout", value: "vertical", style: "display:none;" }), SVG(`\
+				`), div("Pinned")), label({ class: "layout-option", style: "width:90px; color: var(--secondary-text)" }, input({ type: "radio", name: "spLayout", value: "vertical", style: "display:none;" }), SVG(`\
 				<svg viewBox="-1 -1 28 22">
 					<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
 					<rect x="2" y="3" width="22" height="1" fill="currentColor"/>
@@ -29982,12 +29983,12 @@ var beepbox = (function (exports) {
                         var element = noteFlashElementsForThisBar[i];
                         currentNoteFlashElements.push(element);
                     }
-                    const kc = piano.children.length;
-                    for (let i = 0; i < kc; i++) {
-                        const k = piano.children[i];
-                        const kf = k.getAttribute("original-fill");
-                        k.setAttribute("fill", kf);
-                    }
+                }
+                const kc = piano.children.length;
+                for (let i = 0; i < kc; i++) {
+                    const k = piano.children[i];
+                    const kf = k.getAttribute("original-fill");
+                    k.setAttribute("fill", kf);
                 }
                 if (currentNoteFlashElements != null) {
                     for (var i = 0; i < currentNoteFlashElements.length; i++) {
@@ -29998,7 +29999,7 @@ var beepbox = (function (exports) {
                         const p = Number(element.getAttribute("note-pitch"));
                         const isNoise = element.getAttribute("note-noise") === "true";
                         const k = piano.children[p];
-                        const kf2 = "red";
+                        const kf2 = element.getAttribute("note-color");
                         if ((modPlayhead >= noteStart) && (noteBar == playheadBar)) {
                             const dist = noteEnd - noteStart;
                             const opacity = (1 - (((modPlayhead - noteStart) - (dist / 2)) / (dist / 2)));
@@ -30115,6 +30116,7 @@ var beepbox = (function (exports) {
                             noteFlashElement.setAttribute('note-pitch', String(pitch));
                             noteFlashElement.setAttribute('note-noise', String(isNoise));
                             noteFlashElement.setAttribute('note-bar', String(bar));
+                            noteFlashElement.setAttribute('note-color', String(noteElement.getAttribute("fill")));
                             timeline.appendChild(noteFlashElement);
                             const noteFlashElementsForThisBar = noteFlashElementsPerBar[bar];
                             noteFlashElementsForThisBar.push(noteFlashElement);

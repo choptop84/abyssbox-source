@@ -14622,6 +14622,7 @@ export class ColorConfig {
     public static readonly disabledNotePrimary: string = "var(--disabled-note-primary)";
     public static readonly disabledNoteSecondary: string = "var(--disabled-note-secondary)";
 	public static readonly scrollbarColor: string = "var(--scrollbar-color)";
+	public static readonly songPlayerKeyColor: string = "var(--playing-key-color)";
 
 	public static c_pitchSecondaryChannelHue: number = 0;
 	public static c_pitchSecondaryChannelHueScale: number = 0;

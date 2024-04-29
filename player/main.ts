@@ -133,7 +133,7 @@ import { SongPlayerLayout } from "./Layout";
 					<rect x="2" y="15" width="22" height="3" fill="currentColor"/>
 					</svg>
 				`),
-				div("Piano"),
+				div("Pinned"),
 			),
 			label({class: "layout-option",style:"width:90px; color: var(--secondary-text)"},
 				input({type: "radio", name: "spLayout", value: "vertical", style:"display:none;"}),
@@ -583,13 +583,13 @@ import { SongPlayerLayout } from "./Layout";
 							var element: SVGPathElement = noteFlashElementsForThisBar[i];
 							currentNoteFlashElements.push(element);
 						}
-						const kc = piano.children.length;
+					}
+					const kc = piano.children.length;
 						for (let i = 0; i < kc; i++) {
 							const k = piano.children[i];
 							const kf = k.getAttribute("original-fill");
 							k.setAttribute("fill", kf!);
 						}
-					}
 					if (currentNoteFlashElements != null) {
 						for (var i = 0; i < currentNoteFlashElements.length; i++) {
 							var element: SVGPathElement = currentNoteFlashElements[i];
@@ -599,12 +599,12 @@ import { SongPlayerLayout } from "./Layout";
 							const isNoise = element.getAttribute("note-noise") === "true";
 							const k = piano.children[p];
 							//const kf = k?.getAttribute("original-fill");
-							const kf2 = "red";
+							const kf2 = element.getAttribute("note-color")
 							if ((modPlayhead >= noteStart) && (noteBar == playheadBar)) {
 								const dist: number = noteEnd - noteStart;
 								const opacity = (1 - (((modPlayhead - noteStart) - (dist / 2)) / (dist / 2)));
 	                            element.style.opacity = String(opacity);
-                            if (!isNoise) if (opacity > 0.05) k?.setAttribute("fill", kf2);
+                            if (!isNoise) if (opacity > 0.05) k?.setAttribute("fill", kf2!);
 							} else {
 								element.style.opacity = "0";
 							}
@@ -731,6 +731,7 @@ import { SongPlayerLayout } from "./Layout";
 								noteFlashElement.setAttribute('note-pitch', String(pitch));
 	                           	noteFlashElement.setAttribute('note-noise', String(isNoise));
 								noteFlashElement.setAttribute('note-bar', String(bar));
+								noteFlashElement.setAttribute('note-color', String(noteElement.getAttribute("fill")));
 								timeline.appendChild(noteFlashElement);
 								const noteFlashElementsForThisBar: SVGPathElement[] = noteFlashElementsPerBar[bar];
 								noteFlashElementsForThisBar.push(noteFlashElement);
