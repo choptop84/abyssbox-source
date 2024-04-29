@@ -29654,7 +29654,7 @@ var beepbox = (function (exports) {
 
 					<rect x="2" y="15" width="22" height="3" fill="currentColor"/>
 					</svg>
-				`), div("Pinned")), label({ class: "layout-option", style: "width:90px; color: var(--secondary-text)" }, input({ type: "radio", name: "spLayout", value: "vertical", style: "display:none;" }), SVG(`\
+				`), div("Music Box")), label({ class: "layout-option", style: "width:90px; color: var(--secondary-text)" }, input({ type: "radio", name: "spLayout", value: "vertical", style: "display:none;" }), SVG(`\
 				<svg viewBox="-1 -1 28 22">
 					<rect x="0" y="0" width="26" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
 					<rect x="2" y="3" width="22" height="1" fill="currentColor"/>
@@ -29787,6 +29787,7 @@ var beepbox = (function (exports) {
         renderTimeline();
     }
     function onWindowResize() {
+        piano.style.width = "0";
         renderTimeline();
     }
     function shortenSongPlayerUrl() {

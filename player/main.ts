@@ -133,7 +133,7 @@ import { SongPlayerLayout } from "./Layout";
 					<rect x="2" y="15" width="22" height="3" fill="currentColor"/>
 					</svg>
 				`),
-				div("Pinned"),
+				div("Music Box"),
 			),
 			label({class: "layout-option",style:"width:90px; color: var(--secondary-text)"},
 				input({type: "radio", name: "spLayout", value: "vertical", style:"display:none;"}),
@@ -357,6 +357,7 @@ import { SongPlayerLayout } from "./Layout";
 	}
 	
 	function onWindowResize(): void {
+		piano.style.width = "0";
 		renderTimeline();
 	}
 
