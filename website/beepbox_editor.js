@@ -16972,6 +16972,7 @@ var beepbox = (function (exports) {
     ColorConfig.modLabelPrimaryText = "var(--mod-label-primary-text)";
     ColorConfig.disabledNotePrimary = "var(--disabled-note-primary)";
     ColorConfig.disabledNoteSecondary = "var(--disabled-note-secondary)";
+    ColorConfig.scrollbarColor = "var(--scrollbar-color)";
     ColorConfig.c_pitchSecondaryChannelHue = 0;
     ColorConfig.c_pitchSecondaryChannelHueScale = 0;
     ColorConfig.c_pitchSecondaryChannelSat = 0;
@@ -17318,7 +17319,7 @@ var beepbox = (function (exports) {
 
 .obtrusive-scrollbars, .obtrusive-scrollbars * {
 	scrollbar-width: thin;
-	scrollbar-color: ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
+	scrollbar-color: ${ColorConfig.scrollbarColor} ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
 }
 .obtrusive-scrollbars::-webkit-scrollbar, .obtrusive-scrollbars *::-webkit-scrollbar {
 	width: 12px;
@@ -39607,7 +39608,7 @@ You should be redirected to the song at:<br /><br />
 				}
 				.beepboxEditor .trackAndMuteContainer {
 					scrollbar-width: auto;
-					scrollbar-color: ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
+					scrollbar-color: ${ColorConfig.scrollbarColor} ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
 				}
 				.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar {
 					width: 20px;
@@ -39705,7 +39706,7 @@ You should be redirected to the song at:<br /><br />
 				}
 				.beepboxEditor .trackAndMuteContainer {
 					scrollbar-width: auto;
-					scrollbar-color: ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
+					scrollbar-color: ${ColorConfig.scrollbarColor} ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
 				}
 				.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar {
 					width: 20px;
@@ -39878,7 +39879,7 @@ You should be redirected to the song at:<br /><br />
 				}
 				.beepboxEditor .trackAndMuteContainer {
 					scrollbar-width: auto;
-					scrollbar-color: ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
+					scrollbar-color: ${ColorConfig.scrollbarColor} ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
 				}
 				.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar {
 					width: 20px;
@@ -39964,7 +39965,7 @@ You should be redirected to the song at:<br /><br />
 				}
 				.beepboxEditor .trackAndMuteContainer {
 					scrollbar-width: auto;
-					scrollbar-color: ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
+					scrollbar-color: ${ColorConfig.scrollbarColor} ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
 				}
 				.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar {
 					width: 20px;
@@ -40054,7 +40055,7 @@ You should be redirected to the song at:<br /><br />
 				}
 				.beepboxEditor .trackAndMuteContainer {
 					scrollbar-width: auto;
-					scrollbar-color: ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
+					scrollbar-color: ${ColorConfig.scrollbarColor} ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
 				}
 				.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar {
 					width: 20px;
@@ -40147,7 +40148,7 @@ You should be redirected to the song at:<br /><br />
 			}
 			.beepboxEditor .trackAndMuteContainer {
 				scrollbar-width: auto;
-				scrollbar-color: ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
+				scrollbar-color: ${ColorConfig.scrollbarColor} ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
 			}
 			.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar {
 				width: 20px;
@@ -40241,7 +40242,7 @@ You should be redirected to the song at:<br /><br />
 				}
 				.beepboxEditor .trackAndMuteContainer {
 					scrollbar-width: auto;
-					scrollbar-color: ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
+					scrollbar-color: ${ColorConfig.scrollbarColor} ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
 				}
 				.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar {
 					width: 20px;

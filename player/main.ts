@@ -192,6 +192,7 @@ import { SongPlayerLayout } from "./Layout";
 		const volumeIcon: SVGSVGElement = svg({style: "flex: 0 0 12px; margin: 0 1px; width: 12px; height: 12px;", viewBox: "0 0 12 12"},
 			path({fill: ColorConfig.uiWidgetBackground, d: "M 1 9 L 1 3 L 4 3 L 7 0 L 7 12 L 4 9 L 1 9 M 9 3 Q 12 6 9 9 L 8 8 Q 10.5 6 8 4 L 9 3 z"}),
 	);
+		const pianoContainer: HTMLDivElement = div({class:"pianoContainer", style:"position:absolute; width: 100vw; height: 15px;"})
 	const volumeSlider: HTMLInputElement = input({ title: "volume", type: "range", value: 75, min: 0, max: 75, step: 1, style: "width: 12vw; max-width: 100px; margin: 0 1px;" });
 	
 		const zoomIcon: SVGSVGElement = svg({width: 12, height: 12, viewBox: "0 0 12 12"},
@@ -205,7 +206,7 @@ import { SongPlayerLayout } from "./Layout";
 		const timeline: SVGSVGElement = svg({class: "timeline",style: "min-width: 0; min-height: 0; touch-action: pan-y pinch-zoom;"});
 		const playhead: HTMLDivElement = div({class: "playhead",style: `position: absolute; left: 0; top: 0; width: 2px; height: 100%; background: ${ColorConfig.playhead}; pointer-events: none;`});
 		const timelineContainer: HTMLDivElement = div({class: "timelineContainer",style: "display: flex; flex-grow: 1; flex-shrink: 1; position: relative;"}, timeline, playhead);
-		const visualizationContainer: HTMLDivElement = div({class: "visualizer",style: "display: flex; flex-grow: 1; flex-shrink: 1; position: relative; align-items: center; overflow: hidden; grid-area: visualizer;"}, timelineContainer);
+		const visualizationContainer: HTMLDivElement = div({class: "visualizer",style: "display: flex; flex-grow: 1; flex-shrink: 1; position: relative; align-items: center; overflow: hidden; grid-area: visualizer;"}, timelineContainer, pianoContainer);
 		let noteFlashElementsPerBar: (SVGPathElement[])[];
 		let currentNoteFlashElements: SVGPathElement[] = [];
 		let currentNoteFlashBar: number = -1;

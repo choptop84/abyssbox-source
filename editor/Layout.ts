@@ -79,7 +79,7 @@ export class Layout {
 				}
 				.beepboxEditor .trackAndMuteContainer {
 					scrollbar-width: auto;
-					scrollbar-color: ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
+					scrollbar-color: ${ColorConfig.scrollbarColor} ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
 				}
 				.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar {
 					width: 20px;
@@ -177,7 +177,7 @@ export class Layout {
 				}
 				.beepboxEditor .trackAndMuteContainer {
 					scrollbar-width: auto;
-					scrollbar-color: ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
+					scrollbar-color: ${ColorConfig.scrollbarColor} ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
 				}
 				.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar {
 					width: 20px;
@@ -350,7 +350,7 @@ export class Layout {
 				}
 				.beepboxEditor .trackAndMuteContainer {
 					scrollbar-width: auto;
-					scrollbar-color: ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
+					scrollbar-color: ${ColorConfig.scrollbarColor} ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
 				}
 				.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar {
 					width: 20px;
@@ -436,7 +436,7 @@ export class Layout {
 				}
 				.beepboxEditor .trackAndMuteContainer {
 					scrollbar-width: auto;
-					scrollbar-color: ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
+					scrollbar-color: ${ColorConfig.scrollbarColor} ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
 				}
 				.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar {
 					width: 20px;
@@ -526,7 +526,7 @@ export class Layout {
 				}
 				.beepboxEditor .trackAndMuteContainer {
 					scrollbar-width: auto;
-					scrollbar-color: ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
+					scrollbar-color: ${ColorConfig.scrollbarColor} ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
 				}
 				.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar {
 					width: 20px;
@@ -619,7 +619,7 @@ export class Layout {
 			}
 			.beepboxEditor .trackAndMuteContainer {
 				scrollbar-width: auto;
-				scrollbar-color: ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
+				scrollbar-color: ${ColorConfig.scrollbarColor} ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
 			}
 			.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar {
 				width: 20px;
@@ -713,7 +713,7 @@ export class Layout {
 				}
 				.beepboxEditor .trackAndMuteContainer {
 					scrollbar-width: auto;
-					scrollbar-color: ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
+					scrollbar-color: ${ColorConfig.scrollbarColor} ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
 				}
 				.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar {
 					width: 20px;
