@@ -29773,12 +29773,13 @@ var beepbox = (function (exports) {
     const songPlayerContainer = div({ class: "songPlayerContainer" });
     songPlayerContainer.appendChild(visualizationContainer);
     songPlayerContainer.appendChild(pianoContainer);
-    songPlayerContainer.appendChild(div({ class: "control-center", id: "control-center", style: `flex-shrink: 0; height: 20vh; min-height: 22px; max-height: 70px; display: flex; align-items: center; grid-area: control-center;` }, div({ class: "control-center row", id: "row1", style: `display: flex; align-items: center;` }, playButtonContainer, loopButton, volumeIcon, volumeSlider, zoomButton, volumeBarContainerDiv, oscilascope.canvas), div({ class: "control-center row", id: "row2", style: `display: flex; align-items: center;` }, titleText, layoutStuffs, editLink, copyLink, shareLink, shortenSongLink)));
+    songPlayerContainer.appendChild(div({ class: "control-center", id: "control-center", style: `flex-shrink: 0; height: 20vh; min-height: 22px; max-height: 70px; display: flex; align-items: center; grid-area: control-center;` }, div({ class: "control-center row", id: "row1", style: `display: flex; align-items: center;` }, playButtonContainer, loopButton, volumeIcon, volumeSlider, zoomButton, volumeBarContainerDiv, oscilascope.canvas), div({ class: "control-center row", id: "row2", style: `display: flex; align-items: center;` }, titleText, layoutStuffs, editLink, copyLink, shareLink, shortenSongLink), div({ class: "control-center row", id: "row3", style: `display: flex; align-items: center;` })));
     document.body.appendChild(songPlayerContainer);
     songPlayerContainer.appendChild(promptContainer);
     promptContainer.appendChild(layoutContainer);
     if (isMobile) {
         const controlCenterId = document.getElementById('control-center');
+        const controlCenterRow3 = document.getElementById('row3');
         oscilascope.canvas.style.display = 'none';
         copyLink.style.display = "none";
         controlCenterId.style.flexDirection = "column";
@@ -29788,13 +29789,16 @@ var beepbox = (function (exports) {
         zoomButton.style.width = "48px";
         zoomButton.style.height = "19px";
         zoomButton.style.flex = "unset";
+        controlCenterRow3 === null || controlCenterRow3 === void 0 ? void 0 : controlCenterRow3.appendChild(titleText);
     }
     else {
         const controlCenterId = document.getElementById('control-center');
         const controlCenterRow1 = document.getElementById('row1');
+        const controlCenterRow3 = document.getElementById('row3');
         controlCenterId.style.alignItems = "unset";
         controlCenterId.style.justifyContent = "space-between";
         controlCenterRow1 === null || controlCenterRow1 === void 0 ? void 0 : controlCenterRow1.appendChild(titleText);
+        controlCenterRow3.style.display = "none";
     }
     function setLocalStorage(key, value) {
         try {
@@ -30130,7 +30134,7 @@ var beepbox = (function (exports) {
                     songPlayerContainer.style.gridTemplateRows = "";
                 }
                 else {
-                    songPlayerContainer.style.gridTemplateRows = "84vh 0vh 7.4vh";
+                    songPlayerContainer.style.gridTemplateRows = "78vh 0vh 7.4vh";
                 }
             }
             else {
@@ -30149,7 +30153,7 @@ var beepbox = (function (exports) {
             if (useVertical) {
                 timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineWidth / 2}px) scaleY(-1)`;
                 if (isMobile) {
-                    songPlayerContainer.style.gridTemplateRows = "84vh 0vh 7.4vh";
+                    songPlayerContainer.style.gridTemplateRows = "78vh 0vh 7.4vh";
                 }
                 else {
                     songPlayerContainer.style.gridTemplateRows = "92.6vh 0vh 7.4vh";
@@ -30233,13 +30237,13 @@ var beepbox = (function (exports) {
             const useMiddle = (_form.elements["spLayout"].value == "middle") || (window.localStorage.getItem("spLayout") == "middle");
             if (isMobile) {
                 if (useClassic || useBoxBeep || useShitbox4 || useMusicbox || useMiddle) {
-                    songPlayerContainer.style.gridTemplateRows = "84vh 7.4vh";
+                    songPlayerContainer.style.gridTemplateRows = "78vh 7.4vh";
                 }
                 else if (useTop) {
-                    songPlayerContainer.style.gridTemplateRows = "7.4vh 84vh";
+                    songPlayerContainer.style.gridTemplateRows = "7.4vh 78vh";
                 }
                 else if (!useClassic && !useBoxBeep && !useShitbox4 && !useMusicbox && !useMiddle && !useVertical) {
-                    songPlayerContainer.style.gridTemplateRows = "84vh 7.4vh";
+                    songPlayerContainer.style.gridTemplateRows = "78vh 7.4vh";
                 }
             }
         }

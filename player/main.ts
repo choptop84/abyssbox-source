@@ -287,6 +287,8 @@ import { SongPlayerLayout } from "./Layout";
 					shareLink,
 					shortenSongLink,
 				),
+					div({class: "control-center row",id:"row3",style: `display: flex; align-items: center;`},
+					),
 			),
 	);
 	document.body.appendChild(songPlayerContainer);
@@ -295,6 +297,7 @@ import { SongPlayerLayout } from "./Layout";
 	
 	if (isMobile) {
 		const controlCenterId = document.getElementById('control-center');
+		const controlCenterRow3 = document.getElementById('row3');
 		oscilascope.canvas.style.display = 'none';
 		copyLink.style.display = "none";
 		controlCenterId!.style.flexDirection = "column";
@@ -304,12 +307,15 @@ import { SongPlayerLayout } from "./Layout";
 		zoomButton.style.width = "48px";
 		zoomButton.style.height = "19px";
 		zoomButton.style.flex = "unset";
+		controlCenterRow3?.appendChild(titleText);
 	} else {
 		const controlCenterId = document.getElementById('control-center');
 		const controlCenterRow1 = document.getElementById('row1');
+		const controlCenterRow3 = document.getElementById('row3');
 		controlCenterId!.style.alignItems = "unset";
 		controlCenterId!.style.justifyContent = "space-between";
 		controlCenterRow1?.appendChild(titleText);
+		controlCenterRow3!.style.display = "none";
 	}
 
 	// Some browsers have an option to "block third-party cookies" (it's enabled by
@@ -703,7 +709,7 @@ import { SongPlayerLayout } from "./Layout";
 						if (!isMobile) {
 							songPlayerContainer.style.gridTemplateRows = ""; }
 						else {
-							songPlayerContainer.style.gridTemplateRows = "84vh 0vh 7.4vh";
+							songPlayerContainer.style.gridTemplateRows = "78vh 0vh 7.4vh";
 						}
 					 } else {
 						timelineContainer.style.transform = '';
@@ -720,7 +726,7 @@ import { SongPlayerLayout } from "./Layout";
 					if (useVertical) {
 						timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineWidth / 2}px) scaleY(-1)`;
 						if (isMobile) {
-							songPlayerContainer.style.gridTemplateRows = "84vh 0vh 7.4vh"; }
+							songPlayerContainer.style.gridTemplateRows = "78vh 0vh 7.4vh"; }
 						else {
 							songPlayerContainer.style.gridTemplateRows = "92.6vh 0vh 7.4vh";
 						}
@@ -823,11 +829,11 @@ import { SongPlayerLayout } from "./Layout";
 			
 				if (isMobile) { 
 					if (useClassic || useBoxBeep || useShitbox4 || useMusicbox || useMiddle) {
-						songPlayerContainer.style.gridTemplateRows = "84vh 7.4vh";
+						songPlayerContainer.style.gridTemplateRows = "78vh 7.4vh";
 					} else if (useTop) {
-						songPlayerContainer.style.gridTemplateRows = "7.4vh 84vh";
+						songPlayerContainer.style.gridTemplateRows = "7.4vh 78vh";
 					} else if (!useClassic && !useBoxBeep && !useShitbox4 && !useMusicbox && !useMiddle && !useVertical) {
-						songPlayerContainer.style.gridTemplateRows = "84vh 7.4vh";
+						songPlayerContainer.style.gridTemplateRows = "78vh 7.4vh";
 					} 
 				} 
 
