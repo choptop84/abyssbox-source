@@ -228,8 +228,10 @@ import { SongPlayerLayout } from "./Layout";
 			circle({cx: "5", cy: "5", r: "4.5", "stroke-width": "1", stroke: "currentColor", fill: "none"}),
 			path({stroke: "currentColor", "stroke-width": "2", d: "M 8 8 L 11 11 M 5 2 L 5 8 M 2 5 L 8 5", fill: "none"}),
 	);
+		const zoomButton2: HTMLButtonElement = button({title: "zoom", style: "background: #581b3e; width: 100%; height: 100%; display: none;"}, "Zoom");
 		const zoomButton: HTMLButtonElement = button({title: "zoom", style: "background: none; flex: 0 0 12px; margin: 0 3px; width: 12px; height: 12px; display: flex;"},
 		zoomIcon,
+		zoomButton2,
 	);
 	
 		const timeline: SVGSVGElement = svg({class: "timeline",style: "min-width: 0; min-height: 0; touch-action: pan-y pinch-zoom;"});
@@ -267,28 +269,50 @@ import { SongPlayerLayout } from "./Layout";
 	songPlayerContainer.appendChild(visualizationContainer);
 	songPlayerContainer.appendChild(pianoContainer);
 	songPlayerContainer.appendChild(
-			div({class: "control-center",style: `flex-shrink: 0; height: 20vh; min-height: 22px; max-height: 70px; display: flex; align-items: center; grid-area: control-center;`},
-			playButtonContainer,
-			loopButton,
-			volumeIcon,
-			volumeSlider,
-			zoomButton,
-			volumeBarContainerDiv,
-			oscilascope.canvas, //make it auto remove itself later
-			titleText,
-			//layoutDropdown,
-			layoutStuffs,
-			editLink,
-			copyLink,
-			shareLink,
-			fullscreenLink,
-			shortenSongLink,
-		),
+			div({class: "control-center",id: "control-center",style: `flex-shrink: 0; height: 20vh; min-height: 22px; max-height: 70px; display: flex; align-items: center; grid-area: control-center;`},
+				div({class: "control-center row",id:"row1",style: `display: flex; align-items: center;`},
+					playButtonContainer,
+					loopButton,
+					volumeIcon,
+					volumeSlider,
+					zoomButton,
+					volumeBarContainerDiv,
+					oscilascope.canvas, //make it auto remove itself later
+					),
+					div({class: "control-center row",id:"row2",style: `display: flex; align-items: center;`},
+					titleText,
+					layoutStuffs,
+					editLink,
+					copyLink,
+					shareLink,
+					shortenSongLink,
+				),
+			),
 	);
 	document.body.appendChild(songPlayerContainer);
 	songPlayerContainer.appendChild(promptContainer);
 	promptContainer.appendChild(layoutContainer);
 	
+	if (isMobile) {
+		const controlCenterId = document.getElementById('control-center');
+		oscilascope.canvas.style.display = 'none';
+		copyLink.style.display = "none";
+		controlCenterId!.style.flexDirection = "column";
+		layoutStuffs.style.height = "24px";
+		zoomButton2.style.display = "unset";
+		zoomIcon.style.display = "none";
+		zoomButton.style.width = "48px";
+		zoomButton.style.height = "19px";
+		zoomButton.style.flex = "unset";
+	} else {
+		const controlCenterId = document.getElementById('control-center');
+		const controlCenterRow1 = document.getElementById('row1');
+		controlCenterId!.style.alignItems = "unset";
+		controlCenterId!.style.justifyContent = "space-between";
+		controlCenterRow1?.appendChild(titleText);
+		
+	}
+
 	// Some browsers have an option to "block third-party cookies" (it's enabled by
 	// default in icognito Chrome windows) that throws an error on trying to access
 	// localStorage from cross-domain iframe such as this song player, so wrap the
@@ -530,7 +554,11 @@ import { SongPlayerLayout } from "./Layout";
 	}
 	
 	function onTimelineTouchMove(event: TouchEvent): void {
-		onTimelineCursorMove(event.touches[0].clientX);
+		const useVertical = ((<any> _form.elements)["spLayout"].value == "vertical") || (window.localStorage.getItem("spLayout") == "vertical");
+		if (useVertical) {
+		onTimelineCursorMove(event.touches[0].clientY); }
+		else {
+		onTimelineCursorMove(event.touches[0].clientX); }
 	}
 	
 	function onTimelineCursorMove(mouseX: number): void {
@@ -670,9 +698,13 @@ import { SongPlayerLayout } from "./Layout";
 					const targetBeatWidth: number = Math.max(8, semitoneHeight * 4);
 					timelineWidth = Math.max(boundingRect.width, targetBeatWidth * synth.song.barCount * synth.song.beatsPerBar);
 					if (useVertical) {
-						timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineHeight / 2}px) scaleY(-1)`;
+						timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineHeight / 2}px) scaleY(-1)`; 
 						pianoContainer.style.display = "unset";
-						songPlayerContainer.style.gridTemplateRows = "";
+						if (!isMobile) {
+							songPlayerContainer.style.gridTemplateRows = ""; }
+						else {
+							songPlayerContainer.style.gridTemplateRows = "92.6vh 0vh 7.4vh";
+						}
 					 } else {
 						timelineContainer.style.transform = '';
 						pianoContainer.style.display = "none";

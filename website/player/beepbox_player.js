@@ -29743,7 +29743,8 @@ var beepbox = (function (exports) {
     const volumeIcon = svg({ style: "flex: 0 0 12px; margin: 0 1px; width: 12px; height: 12px;", viewBox: "0 0 12 12" }, path({ fill: ColorConfig.uiWidgetBackground, d: "M 1 9 L 1 3 L 4 3 L 7 0 L 7 12 L 4 9 L 1 9 M 9 3 Q 12 6 9 9 L 8 8 Q 10.5 6 8 4 L 9 3 z" }));
     const volumeSlider = input({ title: "volume", type: "range", value: 75, min: 0, max: 75, step: 1, style: "width: 12vw; max-width: 100px; margin: 0 1px;" });
     const zoomIcon = svg({ width: 12, height: 12, viewBox: "0 0 12 12" }, circle({ cx: "5", cy: "5", r: "4.5", "stroke-width": "1", stroke: "currentColor", fill: "none" }), path({ stroke: "currentColor", "stroke-width": "2", d: "M 8 8 L 11 11 M 5 2 L 5 8 M 2 5 L 8 5", fill: "none" }));
-    const zoomButton = button({ title: "zoom", style: "background: none; flex: 0 0 12px; margin: 0 3px; width: 12px; height: 12px; display: flex;" }, zoomIcon);
+    const zoomButton2 = button({ title: "zoom", style: "background: #581b3e; width: 100%; height: 100%; display: none;" }, "Zoom");
+    const zoomButton = button({ title: "zoom", style: "background: none; flex: 0 0 12px; margin: 0 3px; width: 12px; height: 12px; display: flex;" }, zoomIcon, zoomButton2);
     const timeline = svg({ class: "timeline", style: "min-width: 0; min-height: 0; touch-action: pan-y pinch-zoom;" });
     const playhead = div({ class: "playhead", style: `position: absolute; left: 0; top: 0; width: 2px; height: 100%; background: ${ColorConfig.playhead}; pointer-events: none;` });
     const piano = svg({ style: "pointer-events: none; display: block; margin: 0 auto;" });
@@ -29772,10 +29773,29 @@ var beepbox = (function (exports) {
     const songPlayerContainer = div({ class: "songPlayerContainer" });
     songPlayerContainer.appendChild(visualizationContainer);
     songPlayerContainer.appendChild(pianoContainer);
-    songPlayerContainer.appendChild(div({ class: "control-center", style: `flex-shrink: 0; height: 20vh; min-height: 22px; max-height: 70px; display: flex; align-items: center; grid-area: control-center;` }, playButtonContainer, loopButton, volumeIcon, volumeSlider, zoomButton, volumeBarContainerDiv, oscilascope.canvas, titleText, layoutStuffs, editLink, copyLink, shareLink, fullscreenLink, shortenSongLink));
+    songPlayerContainer.appendChild(div({ class: "control-center", id: "control-center", style: `flex-shrink: 0; height: 20vh; min-height: 22px; max-height: 70px; display: flex; align-items: center; grid-area: control-center;` }, div({ class: "control-center row", id: "row1", style: `display: flex; align-items: center;` }, playButtonContainer, loopButton, volumeIcon, volumeSlider, zoomButton, volumeBarContainerDiv, oscilascope.canvas), div({ class: "control-center row", id: "row2", style: `display: flex; align-items: center;` }, titleText, layoutStuffs, editLink, copyLink, shareLink, shortenSongLink)));
     document.body.appendChild(songPlayerContainer);
     songPlayerContainer.appendChild(promptContainer);
     promptContainer.appendChild(layoutContainer);
+    if (isMobile) {
+        const controlCenterId = document.getElementById('control-center');
+        oscilascope.canvas.style.display = 'none';
+        copyLink.style.display = "none";
+        controlCenterId.style.flexDirection = "column";
+        layoutStuffs.style.height = "24px";
+        zoomButton2.style.display = "unset";
+        zoomIcon.style.display = "none";
+        zoomButton.style.width = "48px";
+        zoomButton.style.height = "19px";
+        zoomButton.style.flex = "unset";
+    }
+    else {
+        const controlCenterId = document.getElementById('control-center');
+        const controlCenterRow1 = document.getElementById('row1');
+        controlCenterId.style.alignItems = "unset";
+        controlCenterId.style.justifyContent = "space-between";
+        controlCenterRow1 === null || controlCenterRow1 === void 0 ? void 0 : controlCenterRow1.appendChild(titleText);
+    }
     function setLocalStorage(key, value) {
         try {
             localStorage.setItem(key, value);
@@ -29967,7 +29987,13 @@ var beepbox = (function (exports) {
         onTimelineTouchMove(event);
     }
     function onTimelineTouchMove(event) {
-        onTimelineCursorMove(event.touches[0].clientX);
+        const useVertical = (_form.elements["spLayout"].value == "vertical") || (window.localStorage.getItem("spLayout") == "vertical");
+        if (useVertical) {
+            onTimelineCursorMove(event.touches[0].clientY);
+        }
+        else {
+            onTimelineCursorMove(event.touches[0].clientX);
+        }
     }
     function onTimelineCursorMove(mouseX) {
         if (draggingPlayhead && synth.song != null) {
@@ -30100,7 +30126,12 @@ var beepbox = (function (exports) {
             if (useVertical) {
                 timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineHeight / 2}px) scaleY(-1)`;
                 pianoContainer.style.display = "unset";
-                songPlayerContainer.style.gridTemplateRows = "";
+                if (!isMobile) {
+                    songPlayerContainer.style.gridTemplateRows = "";
+                }
+                else {
+                    songPlayerContainer.style.gridTemplateRows = "92.6vh 0vh 7.4vh";
+                }
             }
             else {
                 timelineContainer.style.transform = '';
