@@ -690,6 +690,7 @@ import { SongPlayerLayout } from "./Layout";
 		let windowPitchCount: number;
 		const useVertical = ((<any> _form.elements)["spLayout"].value == "vertical") || (window.localStorage.getItem("spLayout") == "vertical");
 
+
 				if (zoomEnabled) {
 					timelineHeight = useVertical ? boundingRect.width : boundingRect.height;
 					windowOctaves = Math.max(1, Math.min(Config.pitchOctaves, Math.round(timelineHeight / (12 * 2))));
@@ -703,7 +704,7 @@ import { SongPlayerLayout } from "./Layout";
 						if (!isMobile) {
 							songPlayerContainer.style.gridTemplateRows = ""; }
 						else {
-							songPlayerContainer.style.gridTemplateRows = "92.6vh 0vh 7.4vh";
+							songPlayerContainer.style.gridTemplateRows = "87vh 0vh 7.4vh";
 						}
 					 } else {
 						timelineContainer.style.transform = '';
@@ -719,11 +720,16 @@ import { SongPlayerLayout } from "./Layout";
 					windowPitchCount = windowOctaves * 12 + 1;
 					if (useVertical) {
 						timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineWidth / 2}px) scaleY(-1)`;
-						songPlayerContainer.style.gridTemplateRows = "92.6vh 0vh 7.4vh";
+						if (isMobile) {
+							songPlayerContainer.style.gridTemplateRows = "87vh 0vh 7.4vh"; }
+						else {
+							songPlayerContainer.style.gridTemplateRows = "92.6vh 0vh 7.4vh";
+						}
 					 } else {
 						timelineContainer.style.transform = '';
 						songPlayerContainer.style.gridTemplateRows = "";
 					 }
+					
 				}
 
 				timelineContainer.style.width = timelineWidth + "px";
@@ -807,6 +813,22 @@ import { SongPlayerLayout } from "./Layout";
 						}
 					}
 				}
+
+	const useClassic = ((<any> _form.elements)["spLayout"].value == "classic") || (window.localStorage.getItem("spLayout") == "classic");
+	const useTop = ((<any> _form.elements)["spLayout"].value == "top") || (window.localStorage.getItem("spLayout") == "top");
+	const useShitbox4 = ((<any> _form.elements)["spLayout"].value == "shitbox4") || (window.localStorage.getItem("spLayout") == "shitbox4");
+	const useBoxBeep = ((<any> _form.elements)["spLayout"].value == "boxbeep") || (window.localStorage.getItem("spLayout") == "boxbeep");
+	const useMusicbox = ((<any> _form.elements)["spLayout"].value == "piano") || (window.localStorage.getItem("spLayout") == "piano");
+	const useMiddle = ((<any> _form.elements)["spLayout"].value == "middle") || (window.localStorage.getItem("spLayout") == "middle");
+
+			if (isMobile) { 
+				if (useClassic || useBoxBeep || useShitbox4 || useMusicbox || useMiddle) {
+					songPlayerContainer.style.gridTemplateRows = "87vh 7.4vh";
+				} else if (useTop) {
+					songPlayerContainer.style.gridTemplateRows = "7.4vh 87vh";
+				} 
+			} 
+
 	}
 	
 		renderPlayhead();

@@ -30130,7 +30130,7 @@ var beepbox = (function (exports) {
                     songPlayerContainer.style.gridTemplateRows = "";
                 }
                 else {
-                    songPlayerContainer.style.gridTemplateRows = "92.6vh 0vh 7.4vh";
+                    songPlayerContainer.style.gridTemplateRows = "87vh 0vh 7.4vh";
                 }
             }
             else {
@@ -30148,7 +30148,12 @@ var beepbox = (function (exports) {
             windowPitchCount = windowOctaves * 12 + 1;
             if (useVertical) {
                 timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineWidth / 2}px) scaleY(-1)`;
-                songPlayerContainer.style.gridTemplateRows = "92.6vh 0vh 7.4vh";
+                if (isMobile) {
+                    songPlayerContainer.style.gridTemplateRows = "87vh 0vh 7.4vh";
+                }
+                else {
+                    songPlayerContainer.style.gridTemplateRows = "92.6vh 0vh 7.4vh";
+                }
             }
             else {
                 timelineContainer.style.transform = '';
@@ -30217,6 +30222,20 @@ var beepbox = (function (exports) {
                             noteFlashElementsForThisBar.push(noteFlashElement);
                         }
                     }
+                }
+            }
+            const useClassic = (_form.elements["spLayout"].value == "classic") || (window.localStorage.getItem("spLayout") == "classic");
+            const useTop = (_form.elements["spLayout"].value == "top") || (window.localStorage.getItem("spLayout") == "top");
+            const useShitbox4 = (_form.elements["spLayout"].value == "shitbox4") || (window.localStorage.getItem("spLayout") == "shitbox4");
+            const useBoxBeep = (_form.elements["spLayout"].value == "boxbeep") || (window.localStorage.getItem("spLayout") == "boxbeep");
+            const useMusicbox = (_form.elements["spLayout"].value == "piano") || (window.localStorage.getItem("spLayout") == "piano");
+            const useMiddle = (_form.elements["spLayout"].value == "middle") || (window.localStorage.getItem("spLayout") == "middle");
+            if (isMobile) {
+                if (useClassic || useBoxBeep || useShitbox4 || useMusicbox || useMiddle) {
+                    songPlayerContainer.style.gridTemplateRows = "87vh 7.4vh";
+                }
+                else if (useTop) {
+                    songPlayerContainer.style.gridTemplateRows = "7.4vh 87vh";
                 }
             }
         }
