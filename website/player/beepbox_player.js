@@ -30130,7 +30130,7 @@ var beepbox = (function (exports) {
                     songPlayerContainer.style.gridTemplateRows = "";
                 }
                 else {
-                    songPlayerContainer.style.gridTemplateRows = "87vh 0vh 7.4vh";
+                    songPlayerContainer.style.gridTemplateRows = "84vh 0vh 7.4vh";
                 }
             }
             else {
@@ -30149,7 +30149,7 @@ var beepbox = (function (exports) {
             if (useVertical) {
                 timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineWidth / 2}px) scaleY(-1)`;
                 if (isMobile) {
-                    songPlayerContainer.style.gridTemplateRows = "87vh 0vh 7.4vh";
+                    songPlayerContainer.style.gridTemplateRows = "84vh 0vh 7.4vh";
                 }
                 else {
                     songPlayerContainer.style.gridTemplateRows = "92.6vh 0vh 7.4vh";
@@ -30232,10 +30232,10 @@ var beepbox = (function (exports) {
             const useMiddle = (_form.elements["spLayout"].value == "middle") || (window.localStorage.getItem("spLayout") == "middle");
             if (isMobile) {
                 if (useClassic || useBoxBeep || useShitbox4 || useMusicbox || useMiddle) {
-                    songPlayerContainer.style.gridTemplateRows = "87vh 7.4vh";
+                    songPlayerContainer.style.gridTemplateRows = "84vh 7.4vh";
                 }
                 else if (useTop) {
-                    songPlayerContainer.style.gridTemplateRows = "7.4vh 87vh";
+                    songPlayerContainer.style.gridTemplateRows = "7.4vh 84vh";
                 }
             }
         }

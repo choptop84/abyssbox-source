@@ -704,7 +704,7 @@ import { SongPlayerLayout } from "./Layout";
 						if (!isMobile) {
 							songPlayerContainer.style.gridTemplateRows = ""; }
 						else {
-							songPlayerContainer.style.gridTemplateRows = "87vh 0vh 7.4vh";
+							songPlayerContainer.style.gridTemplateRows = "84vh 0vh 7.4vh";
 						}
 					 } else {
 						timelineContainer.style.transform = '';
@@ -721,7 +721,7 @@ import { SongPlayerLayout } from "./Layout";
 					if (useVertical) {
 						timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineWidth / 2}px) scaleY(-1)`;
 						if (isMobile) {
-							songPlayerContainer.style.gridTemplateRows = "87vh 0vh 7.4vh"; }
+							songPlayerContainer.style.gridTemplateRows = "84vh 0vh 7.4vh"; }
 						else {
 							songPlayerContainer.style.gridTemplateRows = "92.6vh 0vh 7.4vh";
 						}
@@ -823,9 +823,9 @@ import { SongPlayerLayout } from "./Layout";
 
 			if (isMobile) { 
 				if (useClassic || useBoxBeep || useShitbox4 || useMusicbox || useMiddle) {
-					songPlayerContainer.style.gridTemplateRows = "87vh 7.4vh";
+					songPlayerContainer.style.gridTemplateRows = "84vh 7.4vh";
 				} else if (useTop) {
-					songPlayerContainer.style.gridTemplateRows = "7.4vh 87vh";
+					songPlayerContainer.style.gridTemplateRows = "7.4vh 84vh";
 				} 
 			} 
 
