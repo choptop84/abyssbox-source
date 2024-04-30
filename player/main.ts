@@ -310,7 +310,6 @@ import { SongPlayerLayout } from "./Layout";
 		controlCenterId!.style.alignItems = "unset";
 		controlCenterId!.style.justifyContent = "space-between";
 		controlCenterRow1?.appendChild(titleText);
-		
 	}
 
 	// Some browsers have an option to "block third-party cookies" (it's enabled by
@@ -814,20 +813,23 @@ import { SongPlayerLayout } from "./Layout";
 					}
 				}
 
-	const useClassic = ((<any> _form.elements)["spLayout"].value == "classic") || (window.localStorage.getItem("spLayout") == "classic");
-	const useTop = ((<any> _form.elements)["spLayout"].value == "top") || (window.localStorage.getItem("spLayout") == "top");
-	const useShitbox4 = ((<any> _form.elements)["spLayout"].value == "shitbox4") || (window.localStorage.getItem("spLayout") == "shitbox4");
-	const useBoxBeep = ((<any> _form.elements)["spLayout"].value == "boxbeep") || (window.localStorage.getItem("spLayout") == "boxbeep");
-	const useMusicbox = ((<any> _form.elements)["spLayout"].value == "piano") || (window.localStorage.getItem("spLayout") == "piano");
-	const useMiddle = ((<any> _form.elements)["spLayout"].value == "middle") || (window.localStorage.getItem("spLayout") == "middle");
-
-			if (isMobile) { 
-				if (useClassic || useBoxBeep || useShitbox4 || useMusicbox || useMiddle) {
-					songPlayerContainer.style.gridTemplateRows = "84vh 7.4vh";
-				} else if (useTop) {
-					songPlayerContainer.style.gridTemplateRows = "7.4vh 84vh";
+				const useClassic = ((<any> _form.elements)["spLayout"].value == "classic") || (window.localStorage.getItem("spLayout") == "classic");
+				const useTop = ((<any> _form.elements)["spLayout"].value == "top") || (window.localStorage.getItem("spLayout") == "top");
+				const useShitbox4 = ((<any> _form.elements)["spLayout"].value == "shitbox4") || (window.localStorage.getItem("spLayout") == "shitbox4");
+				const useBoxBeep = ((<any> _form.elements)["spLayout"].value == "boxbeep") || (window.localStorage.getItem("spLayout") == "boxbeep");
+				const useMusicbox = ((<any> _form.elements)["spLayout"].value == "piano") || (window.localStorage.getItem("spLayout") == "piano");
+				const useVertical = ((<any> _form.elements)["spLayout"].value == "vertical") || (window.localStorage.getItem("spLayout") == "vertical");
+				const useMiddle = ((<any> _form.elements)["spLayout"].value == "middle") || (window.localStorage.getItem("spLayout") == "middle");
+			
+				if (isMobile) { 
+					if (useClassic || useBoxBeep || useShitbox4 || useMusicbox || useMiddle) {
+						songPlayerContainer.style.gridTemplateRows = "84vh 7.4vh";
+					} else if (useTop) {
+						songPlayerContainer.style.gridTemplateRows = "7.4vh 84vh";
+					} else if (!useClassic && !useBoxBeep && !useShitbox4 && !useMusicbox && !useMiddle && !useVertical) {
+						songPlayerContainer.style.gridTemplateRows = "84vh 7.4vh";
+					} 
 				} 
-			} 
 
 	}
 	

@@ -30229,6 +30229,7 @@ var beepbox = (function (exports) {
             const useShitbox4 = (_form.elements["spLayout"].value == "shitbox4") || (window.localStorage.getItem("spLayout") == "shitbox4");
             const useBoxBeep = (_form.elements["spLayout"].value == "boxbeep") || (window.localStorage.getItem("spLayout") == "boxbeep");
             const useMusicbox = (_form.elements["spLayout"].value == "piano") || (window.localStorage.getItem("spLayout") == "piano");
+            const useVertical = (_form.elements["spLayout"].value == "vertical") || (window.localStorage.getItem("spLayout") == "vertical");
             const useMiddle = (_form.elements["spLayout"].value == "middle") || (window.localStorage.getItem("spLayout") == "middle");
             if (isMobile) {
                 if (useClassic || useBoxBeep || useShitbox4 || useMusicbox || useMiddle) {
@@ -30236,6 +30237,9 @@ var beepbox = (function (exports) {
                 }
                 else if (useTop) {
                     songPlayerContainer.style.gridTemplateRows = "7.4vh 84vh";
+                }
+                else if (!useClassic && !useBoxBeep && !useShitbox4 && !useMusicbox && !useMiddle && !useVertical) {
+                    songPlayerContainer.style.gridTemplateRows = "84vh 7.4vh";
                 }
             }
         }
