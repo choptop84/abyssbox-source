@@ -462,6 +462,7 @@ export class CustomPrompt implements Prompt {
 	}
 	private _whenFileSelected = (): void => {
 		const file: File = this._fileInput.files![0];
+		const opacityValue = "0.2";
 		if (!file) return;
 		const reader: FileReader = new FileReader();
 		reader.addEventListener("load", (event: Event): void => {
@@ -475,6 +476,8 @@ export class CustomPrompt implements Prompt {
 			console.log('done')
 		});
 		reader.readAsDataURL(file);
+		localStorage.setItem("customThemeImageOpacity", opacityValue);
+		doReload = true;
 	}
 
 	private _whenColorsPicked = (ev: alwanEvent): void => {
@@ -512,10 +515,10 @@ export class CustomPrompt implements Prompt {
 			//this._doc.goBackToStart();
 			let base64 = <string>reader.result;
 			window.localStorage.setItem("customTheme2", base64);
-			const value = `url("${window.localStorage.getItem('customTheme2')}")`
+			//const value = `url("${window.localStorage.getItem('customTheme2')}")`
 			document.body.style.backgroundImage = `url(${base64})`;
-			this._pattern2.style.backgroundImage = value;
-			this._pattern3.style.backgroundImage = value;
+			//this._pattern2.style.backgroundImage = value;
+			//this._pattern3.style.backgroundImage = value;
 			const secondImage: HTMLElement | null = document.getElementById("secondImage");
 			if (secondImage != null) {
 				secondImage.style.backgroundImage = `url(${base64})`;

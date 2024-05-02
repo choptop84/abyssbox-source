@@ -16973,6 +16973,7 @@ var beepbox = (function (exports) {
     ColorConfig.disabledNotePrimary = "var(--disabled-note-primary)";
     ColorConfig.disabledNoteSecondary = "var(--disabled-note-secondary)";
     ColorConfig.scrollbarColor = "var(--scrollbar-color)";
+    ColorConfig.songPlayerKeyColor = "var(--playing-key-color)";
     ColorConfig.c_pitchSecondaryChannelHue = 0;
     ColorConfig.c_pitchSecondaryChannelHueScale = 0;
     ColorConfig.c_pitchSecondaryChannelSat = 0;
@@ -46985,6 +46986,7 @@ You should be redirected to the song at:<br /><br />
             };
             this._whenFileSelected = () => {
                 const file = this._fileInput.files[0];
+                const opacityValue = "0.2";
                 if (!file)
                     return;
                 const reader = new FileReader();
@@ -46997,6 +46999,8 @@ You should be redirected to the song at:<br /><br />
                     console.log('done');
                 });
                 reader.readAsDataURL(file);
+                localStorage.setItem("customThemeImageOpacity", opacityValue);
+                doReload = true;
             };
             this._whenColorsPicked = (ev) => {
                 ColorConfig.setThemeProperty(this._currentThemeProperty, ev.hex);
@@ -47020,10 +47024,7 @@ You should be redirected to the song at:<br /><br />
                 reader.addEventListener("load", (event) => {
                     let base64 = reader.result;
                     window.localStorage.setItem("customTheme2", base64);
-                    const value = `url("${window.localStorage.getItem('customTheme2')}")`;
                     document.body.style.backgroundImage = `url(${base64})`;
-                    this._pattern2.style.backgroundImage = value;
-                    this._pattern3.style.backgroundImage = value;
                     const secondImage = document.getElementById("secondImage");
                     if (secondImage != null) {
                         secondImage.style.backgroundImage = `url(${base64})`;
