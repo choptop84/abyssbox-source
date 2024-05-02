@@ -18,18 +18,23 @@ export class InstrumentImportPrompt implements Prompt {
 		);
 		private readonly _fileInput: HTMLInputElement = input({type: "file", accept: ".json,application/json"});
 
+		private readonly importStratSelectDiv: HTMLDivElement = div({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;"},
+		div({class: "selectContainer", style: "width: 100%;"}, this._importStrategySelect),
+		);
+
+		private readonly warningText: HTMLDivElement = div({},
+		div({ style: "text-align: left;" },
+		"You must enable either ",
+		code("Simultaneous instruments per channel"),
+		" or ",
+		code("Different instruments per pattern"),
+		" to change the import strategy.",
+		));
+
 		public readonly container: HTMLDivElement = div({ class: "prompt noSelection", style: "width: 300px;" },
 		div({class:"promptTitle"}, h2({class:"import-instrumentExt",style:"text-align: inherit;"}, ""), h2({class:"import-instrumentTitle"},"Import Instrument(s)")),
-			div({ style: "text-align: left;" },
-			"You must enable either ",
-			code("Simultaneous instruments per channel"),
-			" or ",
-			code("Different instruments per pattern"),
-			" to change the import strategy.",
-			),
-            div({style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;"},
-				div({class: "selectContainer", style: "width: 100%;"}, this._importStrategySelect),
-			),
+			this.warningText,
+			this.importStratSelectDiv,
 		this._fileInput,
 		this._cancelButton,
 
@@ -51,9 +56,13 @@ export class InstrumentImportPrompt implements Prompt {
 		if ((_doc.song.patternInstruments||_doc.song.layeredInstruments)==false) {
 			this._importStrategySelect.disabled = true;
 			this._importStrategySelect.value = "replace";
+			this.importStratSelectDiv.style.display = "none";
+			this.warningText.style.display = "";
 		} else {
 			const lastStrategy: string | null = window.localStorage.getItem("instrumentImportStrategy");
 			if (lastStrategy != null) this._importStrategySelect.value = lastStrategy;
+			this.importStratSelectDiv.style.display = "";
+			this.warningText.style.display = "none";
 		}
 		this._fileInput.addEventListener("change", this._whenFileSelected);
 		this._cancelButton.addEventListener("click", this._close);

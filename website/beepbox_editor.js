@@ -37425,7 +37425,9 @@ li.select2-results__option[role=group] > strong:hover {
             this._cancelButton = button$j({ class: "cancelButton" });
             this._importStrategySelect = select$c({ style: "width: 100%;" }, option$c({ value: "append" }, "Append instruments to the end of the list."), option$c({ value: "replace" }, "Replace only the selected instrument."), option$c({ value: "all" }, "Replace all instruments in the channel."));
             this._fileInput = input$e({ type: "file", accept: ".json,application/json" });
-            this.container = div$j({ class: "prompt noSelection", style: "width: 300px;" }, div$j({ class: "promptTitle" }, h2$i({ class: "import-instrumentExt", style: "text-align: inherit;" }, ""), h2$i({ class: "import-instrumentTitle" }, "Import Instrument(s)")), div$j({ style: "text-align: left;" }, "You must enable either ", code$1("Simultaneous instruments per channel"), " or ", code$1("Different instruments per pattern"), " to change the import strategy."), div$j({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$j({ class: "selectContainer", style: "width: 100%;" }, this._importStrategySelect)), this._fileInput, this._cancelButton);
+            this.importStratSelectDiv = div$j({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$j({ class: "selectContainer", style: "width: 100%;" }, this._importStrategySelect));
+            this.warningText = div$j({}, div$j({ style: "text-align: left;" }, "You must enable either ", code$1("Simultaneous instruments per channel"), " or ", code$1("Different instruments per pattern"), " to change the import strategy."));
+            this.container = div$j({ class: "prompt noSelection", style: "width: 300px;" }, div$j({ class: "promptTitle" }, h2$i({ class: "import-instrumentExt", style: "text-align: inherit;" }, ""), h2$i({ class: "import-instrumentTitle" }, "Import Instrument(s)")), this.warningText, this.importStratSelectDiv, this._fileInput, this._cancelButton);
             this._whenFileSelected = () => {
                 const file = this._fileInput.files[0];
                 if (!file)
@@ -37553,11 +37555,15 @@ li.select2-results__option[role=group] > strong:hover {
             if ((_doc.song.patternInstruments || _doc.song.layeredInstruments) == false) {
                 this._importStrategySelect.disabled = true;
                 this._importStrategySelect.value = "replace";
+                this.importStratSelectDiv.style.display = "none";
+                this.warningText.style.display = "";
             }
             else {
                 const lastStrategy = window.localStorage.getItem("instrumentImportStrategy");
                 if (lastStrategy != null)
                     this._importStrategySelect.value = lastStrategy;
+                this.importStratSelectDiv.style.display = "";
+                this.warningText.style.display = "none";
             }
             this._fileInput.addEventListener("change", this._whenFileSelected);
             this._cancelButton.addEventListener("click", this._close);
