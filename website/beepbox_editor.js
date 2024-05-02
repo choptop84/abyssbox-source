@@ -55744,7 +55744,7 @@ You should be redirected to the song at:<br /><br />
                 this._sequenceNumber = state.sequenceNumber;
                 this.prompt = state.prompt;
                 try {
-                    new ChangeSong(this, window.location.hash);
+                    new ChangeSong(this, this._getHash());
                 }
                 catch (error) {
                     errorAlert(error);
