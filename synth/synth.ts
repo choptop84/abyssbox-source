@@ -8702,6 +8702,7 @@ export class Synth {
                 this.nextModInsValues[channelIndex] = [];
             }
         }
+        this.preferLowerLatency = false;
     }
 
     public startRecording(): void {

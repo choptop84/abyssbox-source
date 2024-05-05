@@ -9873,6 +9873,7 @@ var beepbox = (function (exports) {
                     this.nextModInsValues[channelIndex] = [];
                 }
             }
+            this.preferLowerLatency = false;
         }
         startRecording() {
             this.preferLowerLatency = true;
