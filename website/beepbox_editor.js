@@ -53551,6 +53551,8 @@ You should be redirected to the song at:<br /><br />
             this._mobileTrackButton.addEventListener("click", this._displayTrackEditor);
             this._mobileSettingsButton.addEventListener("click", this._displaySettingsEditor);
             this._muteEditor._loopButtonInput.addEventListener("click", this._loopTypeEvent);
+            this._recordButton.addEventListener("click", this._toggleRecord);
+            this._stopButton.addEventListener("click", this._toggleRecord);
             this._recordButton.addEventListener("contextmenu", (event) => {
                 if (event.ctrlKey) {
                     event.preventDefault();
