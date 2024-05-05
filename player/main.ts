@@ -260,7 +260,7 @@ import { SongPlayerLayout } from "./Layout";
 		outVolumeCap,
 	);
 	const timelineBarProgress: HTMLDivElement = div({ class:`timeline-bar-progress`, style: `pointer-events: none; overflow: hidden; width: 5%; height: 100%; z-index: 5;`});
-	const timelineBar: HTMLDivElement = div({ style:  `pointer-events: none; overflow: hidden; margin: auto; width: 90%; height: 50%; background: var(--ui-widget-background);`},timelineBarProgress);
+	const timelineBar: HTMLDivElement = div({ style:  `overflow: hidden; margin: auto; width: 90%; height: 50%; background: var(--ui-widget-background);`},timelineBarProgress);
 	const timelineBarContainer: HTMLDivElement = div({ style: `pointer-events: none; overflow: hidden; margin: auto; width: 160px; height: 10px; `}, timelineBar);
 	const volumeBarContainerDiv: HTMLDivElement = div({style:"display:flex; flex-direction:column;"}, volumeBarContainer, timelineBarContainer);
 	const promptContainer: HTMLDivElement = div({class:"promptContainer",style:"display:none; backdrop-filter: saturate(1.5) blur(4px); width: 100%; height: 100%; position: fixed; z-index: 999; display: flex; justify-content: center; align-items: center;"});
@@ -987,7 +987,7 @@ import { SongPlayerLayout } from "./Layout";
 	timeline.addEventListener("touchmove", onTimelineTouchMove);
 	timeline.addEventListener("touchend", onTimelineCursorUp);
 	timeline.addEventListener("touchcancel", onTimelineCursorUp);
-	
+
 	layoutStuffs.addEventListener("click", onLayoutButton);
 	closePrompt.addEventListener("click", onExitButton);
 	_okayButton.addEventListener("click", onLayoutPicked);
