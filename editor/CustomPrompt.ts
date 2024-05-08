@@ -175,8 +175,8 @@ export class CustomPrompt implements Prompt {
 	option({ value: "css" }, "Import/Export"),
 	);
 	private readonly _basicCatagoryButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin: 0.5em; width: 34%; border-bottom: solid; border-bottom-color: var(--link-accent)" }, "Templates");
-	private readonly _editorCatagoryButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin: 0.5em; width:34%;" }, "Editor");
-	private readonly _cssCatagoryButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin: 0.5em; width:34%;" }, "Import/Export");
+	private readonly _editorCatagoryButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin: 0.5em; width:34%; color: var(--secondary-text);" }, "Editor");
+	private readonly _cssCatagoryButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin: 0.5em; width:34%; color: var(--secondary-text);" }, "Import/Export");
 	//private readonly _useColorFomula: HTMLInputElement = input({ type:""});
 
 	public readonly _fullThemeSelect: HTMLSelectElement = select({ style: "width: 100%;", id:"themeSelect" },
@@ -629,7 +629,7 @@ export class CustomPrompt implements Prompt {
 		private readonly _removeSecondImageButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin-bottom: 0.5em;" }, "Remove Second Image");
 	
 		private readonly _basicButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin: 0.5em; width: 50%; border-bottom: solid; border-bottom-color: var(--link-accent);" }, "Basic Template Editor");
-		private readonly _advancedButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin: 0.5em; width: 50%; border-bottom-color: var(--link-accent);" }, "Advanced Template Editor");
+		private readonly _advancedButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin: 0.5em; width: 50%; border-bottom-color: var(--link-accent); color: var(--secondary-text);" }, "Advanced Template Editor");
 
 
 		private readonly _cancelButton: HTMLButtonElement = button({ class: "cancelButton" });
@@ -879,8 +879,10 @@ export class CustomPrompt implements Prompt {
 
 			this._basicButton.style.borderBottom = "solid";
 			this._basicButton.style.borderBottomColor = "var(--link-accent)";
+			this._basicButton.style.color = "var(--primary-text)";
 
 			this._advancedButton.style.borderBottom = "none";
+			this._advancedButton.style.color = "var(--secondary-text)";
 		}
 
 		private _whenAdvancedButton = (): void => {
@@ -892,9 +894,11 @@ export class CustomPrompt implements Prompt {
 			this._overlaySelect.style.display = "unset";
 
 			this._basicButton.style.borderBottom = "none";
+			this._basicButton.style.color = "var(--secondary-text)";
 
 			this._advancedButton.style.borderBottom = "solid";
 			this._advancedButton.style.borderBottomColor = "var(--link-accent)";
+			this._advancedButton.style.color = "var(--primary-text)";
 		}
 
 		private _whenBaseColorsPicked = (): void => {
@@ -922,9 +926,12 @@ export class CustomPrompt implements Prompt {
 
 			this._basicCatagoryButton.style.borderBottom = "solid";
 			this._basicCatagoryButton.style.borderBottomColor = "var(--link-accent)";
+			this._basicCatagoryButton.style.color = "var(--primary-text)";
 
 			this._editorCatagoryButton.style.borderBottom = "none";
 			this._cssCatagoryButton.style.borderBottom = "none";
+			this._editorCatagoryButton.style.color = "var(--secondary-text)";
+			this._cssCatagoryButton.style.color = "var(--secondary-text)";
 		}
 
 		private _whenEditorCatagoryButton = (): void => { 
@@ -936,8 +943,12 @@ export class CustomPrompt implements Prompt {
 
 			this._editorCatagoryButton.style.borderBottom = "solid";
 			this._editorCatagoryButton.style.borderBottomColor = "var(--link-accent)";
+			this._editorCatagoryButton.style.color = "var(--primary-text)";
 
 			this._cssCatagoryButton.style.borderBottom = "none";
+
+			this._basicCatagoryButton.style.color = "var(--secondary-text)";
+			this._cssCatagoryButton.style.color = "var(--secondary-text)";
 		}
 
 		private _whenCssCatagoryButton = (): void => { 
@@ -951,6 +962,10 @@ export class CustomPrompt implements Prompt {
 
 			this._cssCatagoryButton.style.borderBottom = "solid";
 			this._cssCatagoryButton.style.borderBottomColor = "var(--link-accent)";
+
+			this._editorCatagoryButton.style.color = "var(--secondary-text)";
+			this._basicCatagoryButton.style.color = "var(--secondary-text)";
+			this._cssCatagoryButton.style.color = "var(--primary-text)";
 		}
 
 
