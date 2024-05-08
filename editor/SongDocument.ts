@@ -13,6 +13,8 @@ import { Change } from "./Change";
 import { ChangeNotifier } from "./ChangeNotifier";
 import { ChangeSong, setDefaultInstruments, discardInvalidPatternInstruments, ChangeHoldingModRecording} from "./changes";
 
+import {CustomThemeBases} from "./CustomThemeBases"
+
 interface HistoryState {
 	canUndo: boolean;
 	sequenceNumber: number;
@@ -66,6 +68,14 @@ export class SongDocument {
 		this.notifier.watch(this._validateDocState);
 		
 		ColorConfig.setTheme(this.prefs.colorTheme);
+
+		if (window.localStorage.getItem("colorTheme") == "custom") { 
+		CustomThemeBases.setFont(this.prefs.customFont);
+		CustomThemeBases.setBackground(this.prefs.customBG);
+		CustomThemeBases.setIcons(this.prefs.customIcons); 
+		CustomThemeBases.setBorder(this.prefs.customBorder);
+		CustomThemeBases.setCursor(this.prefs.customCursor);}
+
 		Layout.setLayout(this.prefs.layout);
 		
 		if (window.sessionStorage.getItem("currentUndoIndex") == null) {

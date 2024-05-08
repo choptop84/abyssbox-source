@@ -3,15 +3,21 @@
 import { HTML } from "imperative-html/dist/esm/elements-strict";
 import { Prompt } from "./Prompt";
 import { SongDocument } from "./SongDocument";
+
 import { ColorConfig } from "./ColorConfig";
 
+import {CustomThemeBases} from "./CustomThemeBases"
+
 //namespace beepbox {
-const {button, div, h2, select, option} = HTML;
+const {button, div, h2, option, select} = HTML;
 
 export class ThemePrompt implements Prompt {
+
+
+
 // theme option format:
 //		option({value:"the theme name from ColorConfig.ts"}, "Whatever you want it to be called"),
-		private readonly _themeSelect: HTMLSelectElement = select({ style: "width: 100%;" },
+		public readonly _themeSelect: HTMLSelectElement = select({ style: "width: 100%;", id:"themeSelect" },
 		option({ value: "AbyssBox Classic"}, "AbyssBox Classic"),
 		option({ value: "AbyssBox Competitive"}, "AbyssBox Competitive"),
 		option({ value: "AbyssBox Light"}, "AbyssBox Light"),
@@ -101,7 +107,11 @@ export class ThemePrompt implements Prompt {
 	private readonly _cancelButton: HTMLButtonElement = button({ class: "cancelButton" });
 	private readonly _okayButton: HTMLButtonElement = button({ class: "okayButton", style: "width:45%;" }, "Okay");
 
-	public readonly container: HTMLDivElement = div({ class: "prompt noSelection", style: "width: 220px;" },
+	private readonly lastTheme: string | null = window.localStorage.getItem("colorTheme")
+
+	//private readonly _useColorFomula: HTMLInputElement = input({ type:""});
+
+	public readonly container: HTMLDivElement = div({ class: "prompt noSelection",  id: "themeContainerPrompt", style: "width: 220px;" },
 		div({class:"promptTitle"}, h2({class:"themeExt",style:"text-align: inherit;"}, ""), h2({class:"themeTitle",style:"margin-bottom: 0.5em;"},"Set Theme")),
 		div({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" },
 			div({ class: "selectContainer", style: "width: 100%;" }, this._themeSelect),
@@ -111,7 +121,7 @@ export class ThemePrompt implements Prompt {
 		),
 		this._cancelButton,
 	);
-	private readonly lastTheme: string | null = window.localStorage.getItem("colorTheme")
+
 
 	constructor(private _doc: SongDocument) {
 		if (this.lastTheme != null) {
@@ -121,22 +131,20 @@ export class ThemePrompt implements Prompt {
 		this._cancelButton.addEventListener("click", this._close);
 		this.container.addEventListener("keydown", this._whenKeyPressed);
 		this._themeSelect.addEventListener("change", this._previewTheme);
+		//this._useColorFomula.addEventListener("change", this._whenColorFormula);
 	}
 
-	private _close = (): void => {
+
+
+
+	/*private _close = (): void => { // theme events begin
 		if (this.lastTheme != null) {
 			ColorConfig.setTheme(this.lastTheme);
 		} else {
 			ColorConfig.setTheme("dark classic");
 		}
 		this._doc.undo();
-	}
-
-	public cleanUp = (): void => {
-		this._okayButton.removeEventListener("click", this._saveChanges);
-		this._cancelButton.removeEventListener("click", this._close);
-		this.container.removeEventListener("keydown", this._whenKeyPressed);
-	}
+	} */
 
 	private _whenKeyPressed = (event: KeyboardEvent): void => {
 		if ((<Element>event.target).tagName != "BUTTON" && event.keyCode == 13) { // Enter key
@@ -153,6 +161,41 @@ export class ThemePrompt implements Prompt {
 
 	private _previewTheme = (): void => {
 		ColorConfig.setTheme(this._themeSelect.value);
-		this._doc.notifier.changed();
+		if (this._themeSelect.value != "custom") {
+			CustomThemeBases.setFont("none");
+			CustomThemeBases.setBackground("none");
+			CustomThemeBases.setBorder("none");
+			CustomThemeBases.setIcons("none");
+			CustomThemeBases.setCursor("none");
+		} else {
+			const localFont = window.localStorage.getItem("customFontName") || "none";
+			const localBG = window.localStorage.getItem("backgroundName") || "none";
+			const localBorder = window.localStorage.getItem("customBorderName") || "none";
+			const localIcons = window.localStorage.getItem("customIconsName") || "none";
+			const localCursor = window.localStorage.getItem("customCursorName") || "none";
+			CustomThemeBases.setFont(localFont);
+			CustomThemeBases.setBackground(localBG);
+			CustomThemeBases.setBackground(localIcons);
+			CustomThemeBases.setBorder(localBorder);
+			CustomThemeBases.setCursor(localCursor);
+		}
+		this._doc.notifier.changed();	
+
 	}
-}
+
+	private _close = (): void => { 
+			if (this.lastTheme != null) {
+				ColorConfig.setTheme(this.lastTheme);
+			} else {
+				ColorConfig.setTheme("AbyssBox Classic");
+			}
+			this._doc.undo();
+		
+	}
+	public cleanUp = (): void => {
+		this._okayButton.removeEventListener("click", this._close);
+		this._cancelButton.removeEventListener("click", this._close);
+		// this.container.removeEventListener("keydown", this._whenKeyPressed);
+
+	}
+} 

@@ -43,6 +43,11 @@ export class Preferences {
 	public frostedGlassBackground: boolean;
 	public displayShortcutButtons: boolean;
 	public oldMobileLayout: boolean;
+	public customFont: string;
+	public customBG: string;
+	public customIcons: string;
+	public customBorder: string;
+	public customCursor: string;
 
 	constructor() {
 		this.reload();
@@ -97,6 +102,12 @@ export class Preferences {
 		this.frostedGlassBackground = window.localStorage.getItem("frostedGlassBackground") == "true";
 		this.displayShortcutButtons = window.localStorage.getItem("displayShortcutButtons") != "false";
 		this.oldMobileLayout = window.localStorage.getItem("oldMobileLayout") == "true";
+
+		this.customFont = window.localStorage.getItem("customFontName") || "none";
+		this.customBG = window.localStorage.getItem("backgroundName") || "none";
+		this.customIcons = window.localStorage.getItem("customIconsName") || "none";
+		this.customBorder = window.localStorage.getItem("backgroundName") || "none";
+		this.customCursor = window.localStorage.getItem("customIconsName") || "none";
 	}
 	
 	public save(): void {
@@ -131,6 +142,11 @@ export class Preferences {
 		window.localStorage.setItem("layout", this.layout);
 		window.localStorage.setItem("colorTheme", this.colorTheme);
 		window.localStorage.setItem("customTheme", this.customTheme!);
+		window.localStorage.setItem("customFontName", this.customFont);
+		window.localStorage.setItem("backgroundName", this.customBG);
+		window.localStorage.setItem("customIconsName", this.customIcons);
+		window.localStorage.setItem("customBorderName", this.customBorder);
+		window.localStorage.setItem("customCursorName", this.customCursor);
                 window.localStorage.setItem("customTheme2", this.customTheme2!);
 		window.localStorage.setItem("volume", String(this.volume));
 		window.localStorage.setItem("visibleOctaves", String(this.visibleOctaves));

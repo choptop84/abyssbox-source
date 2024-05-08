@@ -2493,7 +2493,7 @@ export class ColorConfig {
 
 				/* sets background image */
 			.beepboxEditor load {
-				background: #fff0;
+				background: #fff0 !important;
 				}
 
 			body {
@@ -11242,7 +11242,6 @@ export class ColorConfig {
 			 "shitbox 3.0": `
 			
 			 :root {
-				font: 20px/2 monospace;
 				--page-margin: #252525;
 				--editor-background: #252525;
 				--hover-preview: white;
@@ -11400,6 +11399,10 @@ export class ColorConfig {
 
 				#text-content > section > h1 {
 					color: #C8C8C8;
+					}
+
+				html {
+					font-family: 20px/2 monospace;
 					}
 			`,
 			"shitbox4": `
@@ -12826,9 +12829,7 @@ export class ColorConfig {
 				}
 			`,
 			 "wackybox": `
-			
 			:root {
-				cursor: url('wackybox_cursor.png'), auto;
 				--page-margin: black;
 				--editor-background: black;
 				--hover-preview: white;
@@ -12947,10 +12948,12 @@ export class ColorConfig {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
-
-					
-					
 				}
+
+			* {
+				cursor: url('wackybox_cursor.png'), auto;
+			}
+
 
 .beepboxEditor {
 	cursor: url('wackybox_cursor.png'), auto !important;;
@@ -15112,6 +15115,10 @@ export class ColorConfig {
 
 	public static getThemeProperties(): string {
 		return this._styleElement.sheet?.cssRules[0].cssText as string;
+	}
+
+	public static getFullTheme(): string {
+		return this._styleElement.textContent as string;
 	}
 
     public static setTheme(name: string): void {
