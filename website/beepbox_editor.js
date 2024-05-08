@@ -58492,7 +58492,7 @@ button.playButton::before {
             this.customFont = window.localStorage.getItem("customFontName") || "none";
             this.customBG = window.localStorage.getItem("backgroundName") || "none";
             this.customIcons = window.localStorage.getItem("customIconsName") || "none";
-            this.customBorder = window.localStorage.getItem("backgroundName") || "none";
+            this.customBorder = window.localStorage.getItem("customBorderName") || "none";
             this.customCursor = window.localStorage.getItem("customIconsName") || "none";
         }
         save() {
