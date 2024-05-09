@@ -147,6 +147,8 @@ export class ColorConfig {
 
 			--oscilloscope-line-R: var(--ui-widget-background);
 			--oscilloscope-line-L: var(--secondary-text);
+
+			--scrollbar-color: #bf2c5d;
 				}
 		* {
 		cursor: url("abyssbox_cursor.png"), auto;
@@ -486,6 +488,8 @@ export class ColorConfig {
 
 			--oscilloscope-line-R: var(--ui-widget-background);
 			--oscilloscope-line-L: var(--secondary-text);
+
+			--scrollbar-color: #bf2c5d;
 				}		
 		/* sets cursor */ 
 		* {
@@ -803,6 +807,8 @@ export class ColorConfig {
 
 			--oscilloscope-line-R: var(--ui-widget-background);
 			--oscilloscope-line-L: var(--secondary-text);
+
+			--scrollbar-color: #bf2c5d;
 				}
 
 				.promptContainerBG::before {
@@ -14625,7 +14631,6 @@ export class ColorConfig {
     public static readonly disabledNotePrimary: string = "var(--disabled-note-primary)";
     public static readonly disabledNoteSecondary: string = "var(--disabled-note-secondary)";
 	public static readonly scrollbarColor: string = "var(--scrollbar-color)";
-	public static readonly songPlayerKeyColor: string = "var(--playing-key-color)";
 
 	public static c_pitchSecondaryChannelHue: number = 0;
 	public static c_pitchSecondaryChannelHueScale: number = 0;

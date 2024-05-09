@@ -2509,6 +2509,8 @@ var beepbox = (function (exports) {
 
 			--oscilloscope-line-R: var(--ui-widget-background);
 			--oscilloscope-line-L: var(--secondary-text);
+
+			--scrollbar-color: #bf2c5d;
 				}
 		* {
 		cursor: url("abyssbox_cursor.png"), auto;
@@ -2848,6 +2850,8 @@ var beepbox = (function (exports) {
 
 			--oscilloscope-line-R: var(--ui-widget-background);
 			--oscilloscope-line-L: var(--secondary-text);
+
+			--scrollbar-color: #bf2c5d;
 				}		
 		/* sets cursor */ 
 		* {
@@ -3165,6 +3169,8 @@ var beepbox = (function (exports) {
 
 			--oscilloscope-line-R: var(--ui-widget-background);
 			--oscilloscope-line-L: var(--secondary-text);
+
+			--scrollbar-color: #bf2c5d;
 				}
 
 				.promptContainerBG::before {
@@ -16979,7 +16985,6 @@ var beepbox = (function (exports) {
     ColorConfig.disabledNotePrimary = "var(--disabled-note-primary)";
     ColorConfig.disabledNoteSecondary = "var(--disabled-note-secondary)";
     ColorConfig.scrollbarColor = "var(--scrollbar-color)";
-    ColorConfig.songPlayerKeyColor = "var(--playing-key-color)";
     ColorConfig.c_pitchSecondaryChannelHue = 0;
     ColorConfig.c_pitchSecondaryChannelHueScale = 0;
     ColorConfig.c_pitchSecondaryChannelSat = 0;
@@ -17323,10 +17328,12 @@ var beepbox = (function (exports) {
 		</svg>');
 }
 
+html {
+	scrollbar-color: var(--scrollbar-color, var(--ui-widget-background)) var(--editor-background);
+}
 
 .obtrusive-scrollbars, .obtrusive-scrollbars * {
 	scrollbar-width: thin;
-	scrollbar-color: ${ColorConfig.scrollbarColor} ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
 }
 .obtrusive-scrollbars::-webkit-scrollbar, .obtrusive-scrollbars *::-webkit-scrollbar {
 	width: 12px;
@@ -39622,7 +39629,6 @@ You should be redirected to the song at:<br /><br />
 				}
 				.beepboxEditor .trackAndMuteContainer {
 					scrollbar-width: auto;
-					scrollbar-color: ${ColorConfig.scrollbarColor} ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
 				}
 				.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar {
 					width: 20px;
@@ -39720,7 +39726,6 @@ You should be redirected to the song at:<br /><br />
 				}
 				.beepboxEditor .trackAndMuteContainer {
 					scrollbar-width: auto;
-					scrollbar-color: ${ColorConfig.scrollbarColor} ${ColorConfig.uiWidgetBackground} ${ColorConfig.editorBackground};
 				}
 				.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar {
 					width: 20px;
