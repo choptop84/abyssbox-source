@@ -39564,7 +39564,7 @@ You should be redirected to the song at:<br /><br />
 				#beepboxEditorContainer {
 					max-width: initial;
 					height: 100vh;
-					padding-top: 0px;
+					padding-top: 0px !important;
 				}
 				.beepboxEditor {
 					width: 100%;
@@ -39653,7 +39653,7 @@ You should be redirected to the song at:<br /><br />
 				#beepboxEditorContainer {
 					max-width: initial;
 					height: 100vh;
-					padding-top: 0px;
+					padding-top: 0px !important;
 				}
 				.beepboxEditor {
 					width: 100%;
@@ -39750,7 +39750,7 @@ You should be redirected to the song at:<br /><br />
 				#beepboxEditorContainer {
 					max-width: initial;
 					height: 100vh;
-					padding-top: 0px;
+					padding-top: 0px !important;
 				}
 				.beepboxEditor {
 					width: 100%;
@@ -39833,7 +39833,7 @@ You should be redirected to the song at:<br /><br />
 				#beepboxEditorContainer {
 					max-width: initial;
 					height: 100vh;
-					padding-top: 0px;
+					padding-top: 0px !important;
 				}
 				.beepboxEditor {
 					width: 100%;
@@ -39924,7 +39924,7 @@ You should be redirected to the song at:<br /><br />
 				#beepboxEditorContainer {
 					max-width: initial;
 					height: 100vh;
-					padding-top: 0px;
+					padding-top: 0px !important;
 				}
 				.beepboxEditor {
 					width: 100%;
@@ -40010,7 +40010,7 @@ You should be redirected to the song at:<br /><br />
 				#beepboxEditorContainer {
 					max-width: initial;
 					height: 100vh;
-					padding-top: 0px;
+					padding-top: 0px !important;
 				}
 				.beepboxEditor {
 					width: 100%;
@@ -40100,7 +40100,7 @@ You should be redirected to the song at:<br /><br />
 			#beepboxEditorContainer {
 				max-width: initial;
 				height: 100vh;
-				padding-top: 0px;
+				padding-top: 0px !important;
 			}
 			.beepboxEditor {
 				width: 100%;
@@ -40193,7 +40193,7 @@ You should be redirected to the song at:<br /><br />
 				#beepboxEditorContainer {
 					max-width: initial;
 					height: 100vh;
-					padding-top: 0px;
+					padding-top: 0px !important;
 				}
 				.beepboxEditor {
 					width: 100%;
