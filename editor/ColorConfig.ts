@@ -809,7 +809,7 @@ export class ColorConfig {
 			--oscilloscope-line-L: var(--secondary-text);
 
 			--scrollbar-color: #bf2c5d;
-				}
+			}
 
 				.promptContainerBG::before {
 					box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
@@ -14631,6 +14631,7 @@ export class ColorConfig {
     public static readonly disabledNotePrimary: string = "var(--disabled-note-primary)";
     public static readonly disabledNoteSecondary: string = "var(--disabled-note-secondary)";
 	public static readonly scrollbarColor: string = "var(--scrollbar-color)";
+	public static readonly scrollbarBackground: string = "var(--scrollbar-background)";
 
 	public static c_pitchSecondaryChannelHue: number = 0;
 	public static c_pitchSecondaryChannelHueScale: number = 0;

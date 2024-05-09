@@ -3171,7 +3171,7 @@ var beepbox = (function (exports) {
 			--oscilloscope-line-L: var(--secondary-text);
 
 			--scrollbar-color: #bf2c5d;
-				}
+			}
 
 				.promptContainerBG::before {
 					box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
@@ -16985,6 +16985,7 @@ var beepbox = (function (exports) {
     ColorConfig.disabledNotePrimary = "var(--disabled-note-primary)";
     ColorConfig.disabledNoteSecondary = "var(--disabled-note-secondary)";
     ColorConfig.scrollbarColor = "var(--scrollbar-color)";
+    ColorConfig.scrollbarBackground = "var(--scrollbar-background)";
     ColorConfig.c_pitchSecondaryChannelHue = 0;
     ColorConfig.c_pitchSecondaryChannelHueScale = 0;
     ColorConfig.c_pitchSecondaryChannelSat = 0;
@@ -17329,7 +17330,7 @@ var beepbox = (function (exports) {
 }
 
 html {
-	scrollbar-color: var(--scrollbar-color, var(--ui-widget-background)) var(--editor-background);
+	scrollbar-color: var(--scrollbar-color, var(--ui-widget-background)) var(--scrollbar-background, var(--editor-background));
 }
 
 .obtrusive-scrollbars, .obtrusive-scrollbars * {

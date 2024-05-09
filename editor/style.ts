@@ -151,7 +151,7 @@ document.head.appendChild(HTML.style({ type: "text/css" }, `
 }
 
 html {
-	scrollbar-color: var(--scrollbar-color, var(--ui-widget-background)) var(--editor-background);
+	scrollbar-color: var(--scrollbar-color, var(--ui-widget-background)) var(--scrollbar-background, var(--editor-background));
 }
 
 .obtrusive-scrollbars, .obtrusive-scrollbars * {
