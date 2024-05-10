@@ -154,6 +154,10 @@ html {
 	scrollbar-color: var(--scrollbar-color, var(--ui-widget-background)) var(--scrollbar-background, var(--editor-background));
 }
 
+.tutorialButton {
+	height: auto !important;
+} 
+
 .obtrusive-scrollbars, .obtrusive-scrollbars * {
 	scrollbar-width: thin;
 }
@@ -1789,6 +1793,23 @@ button.mobilePauseButton::before {
 	display: flex;
 }
 .beepboxEditor .channelBox {
+	display: flex;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	padding-top: 1px;
+}
+.beepboxEditor .emptyChannelBox {
+	display: flex;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	padding-top: 1px;
+}
+
+.beepboxEditor .curChannelBox {
 	display: flex;
 	text-align: center;
 	align-items: center;

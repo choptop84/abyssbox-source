@@ -57,6 +57,8 @@ import { AddSamplesPrompt } from "./AddSamplesPrompt";
 import { _loopType } from "../synth/synth";
 import { ShortenerConfigPrompt } from "./ShortenerConfigPrompt";
 
+import { TutorialPrompt } from "./TutorialPrompt";
+
 const { button, div, input, select, span, optgroup, option, canvas } = HTML;
 
 const beepboxEditorContainer: HTMLElement = document.getElementById("beepboxEditorContainer")!;
@@ -790,10 +792,11 @@ export class SongEditor {
         option({ value: "copyUrl" }, "⎘ Copy Song URL"),
         option({ value: "shareUrl" }, "⤳ Share Song URL"),
         option({ value: "shortenUrl" }, "… Shorten Song URL"),
-        option({ value: "configureShortener" }, "🛠 Customize Url Shortener..."),
+        option({ value: "configureShortener" }, "🛠 > Customize Url Shortener"),
         option({ value: "viewPlayer" }, "▶ View in Song Player"),
         option({ value: "copyEmbed" }, "⎘ Copy HTML Embed Code"),
         option({ value: "songRecovery" }, "⚠ > Recover Recent Song"),
+        //option({ value: "openTutorial"}, "✎ > Open Tutorial"),
     );
 
 
@@ -2250,6 +2253,9 @@ export class SongEditor {
                 case "theme":
                     this.prompt = new ThemePrompt(this._doc);
                     break;
+                case "tutorial":
+                    this.prompt = new TutorialPrompt(this._doc);
+                    break;
                 case "custom":
                     this.prompt = new CustomPrompt(this._doc, this._patternEditor, this._trackArea, document.getElementById("beepboxEditorContainer")!);
                     break;    
@@ -2378,6 +2384,11 @@ export class SongEditor {
 
             if (!isMobile) {
                 this._playPauseAreaMobile.style.display = "none";
+
+                if (window.localStorage.getItem("tutorialComplete") != "true") {
+                    //this._openPrompt("tutorial");
+                }
+
         if (this._doc.getFullScreen()) {
             const semitoneHeight: number = this._patternEditorRow.clientHeight / this._doc.getVisiblePitchCount();
             const targetBeatWidth: number = semitoneHeight * 5;
@@ -5947,6 +5958,9 @@ export class SongEditor {
                 break;
             case "songRecovery":
                 this._openPrompt("songRecovery");
+                break;
+            case "openTutorial":
+                this._openPrompt("tutorial");
                 break;
         }
         this._fileMenu.selectedIndex = 0;

@@ -1688,6 +1688,9 @@ export class ColorConfig {
 		   div.channelBox {
 			border-radius: 5px;
 		  }
+		  div.curChannelBox {
+			border-radius: 5px;
+		  }
 
 			`,
 		"Skeuomorphic": `
@@ -1841,7 +1844,7 @@ export class ColorConfig {
 			--disabled-note-secondary:  #6a677a;
 		}
 		 
-		.channelBox {
+		.curChannelBox {
 			--pitch1-primary-channel:  linear-gradient(#ff7777, #ff5959);
 			--pitch2-primary-channel:  linear-gradient(#ffaf71, #ffa159);
 			--pitch3-primary-channel:  linear-gradient(#ffee7c, #ffe959);
@@ -1857,6 +1860,10 @@ export class ColorConfig {
 			--pitch13-primary-channel: linear-gradient(#ff75e3, #f651d4);
 			--pitch14-primary-channel: linear-gradient(#ff71a5, #f6518d);
 		
+			border-radius: 5px;
+			box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2), 0px 0px 1px 1px rgba(0, 0, 0, 0.7), inset 0px -10px 20px 1px rgba(0, 0, 0, 0.1), inset 0px 1px 0px 0px rgba(255, 255, 255, 0.1);
+		}
+		.channelBox {
 			border-radius: 5px;
 			box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2), 0px 0px 1px 1px rgba(0, 0, 0, 0.7), inset 0px -10px 20px 1px rgba(0, 0, 0, 0.1), inset 0px 1px 0px 0px rgba(255, 255, 255, 0.1);
 		}
@@ -3390,6 +3397,9 @@ export class ColorConfig {
 		  div.channelBox {
 			border-radius: 5px;
 		  }
+		  div.curChannelBox {
+			border-radius: 5px;
+		  }
 		  div.muteEditor {
 			border-radius: 0px !important;
 			height: 158px !important;
@@ -3685,6 +3695,9 @@ export class ColorConfig {
 			padding-bottom: 15px;
 		  }
 		  div.channelBox {
+			border-radius: 5px;
+		  }
+		  div.curChannelBox {
 			border-radius: 5px;
 		  }
 		  div.muteEditor {
@@ -5920,6 +5933,23 @@ export class ColorConfig {
 							  );
 							}
 							
+						.beepboxEditor .curChannelBox {
+								clip-path: polygon(
+									0px calc(100% - 2px),
+									2px calc(100% - 2px),
+									2px 100%,
+									calc(100% - 2px) 100%,
+									calc(100% - 2px) calc(100% - 2px),
+									100% calc(100% - 2px),
+									100% 2px,
+									calc(100% - 2px) 2px,
+									calc(100% - 2px) 0px,
+									2px 0px,
+									2px 2px,
+									0px 2px
+								  );
+								}
+
 							button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
 								--ui-widget-background: var(--editor-background) !important;
 								border-image-source: none !important;

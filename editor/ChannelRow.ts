@@ -56,6 +56,15 @@ export class Box {
 		if (this._renderedBackgroundColor != color) {
 			this.container.style.background = color;
 			this._renderedBackgroundColor = color;
+			if (color == "none") {
+				this.container.className = "emptyChannelBox"
+			} else if (color == this._renderedBackgroundColor) {
+				if (!selected) {
+				this.container.className = "channelBox" }
+				else {
+				this.container.className = "curChannelBox"
+				}
+			}
 		}
 	}
 }
