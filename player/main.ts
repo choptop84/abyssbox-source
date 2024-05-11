@@ -988,6 +988,17 @@ import { SongPlayerLayout } from "./Layout";
 	timeline.addEventListener("touchend", onTimelineCursorUp);
 	timeline.addEventListener("touchcancel", onTimelineCursorUp);
 
+	document.addEventListener('visibilitychange', e=>{
+		if (document.visibilityState === 'visible') {
+			if (getLocalStorage("spLayout") != (<any> _form.elements)["spLayout"].value) {
+				(<any> _form.elements)["spLayout"].value = getLocalStorage("spLayout");
+				SongPlayerLayout.setLayout((<any> _form.elements)["spLayout"].value);
+				renderTimeline();
+			}
+	   } else {
+	   }  
+   })
+
 	layoutStuffs.addEventListener("click", onLayoutButton);
 	closePrompt.addEventListener("click", onExitButton);
 	_okayButton.addEventListener("click", onLayoutPicked);

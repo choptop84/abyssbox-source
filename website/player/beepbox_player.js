@@ -1921,6 +1921,9 @@ var beepbox = (function (exports) {
             var _a;
             return (_a = this._styleElement.sheet) === null || _a === void 0 ? void 0 : _a.cssRules[0].cssText;
         }
+        static getFullTheme() {
+            return this._styleElement.textContent;
+        }
         static setTheme(name) {
             let theme = this.themes[name];
             if (theme == undefined)
@@ -2153,6 +2156,8 @@ var beepbox = (function (exports) {
 
 			--oscilloscope-line-R: var(--ui-widget-background);
 			--oscilloscope-line-L: var(--secondary-text);
+
+			--scrollbar-color: #bf2c5d;
 				}
 		* {
 		cursor: url("abyssbox_cursor.png"), auto;
@@ -2492,6 +2497,8 @@ var beepbox = (function (exports) {
 
 			--oscilloscope-line-R: var(--ui-widget-background);
 			--oscilloscope-line-L: var(--secondary-text);
+
+			--scrollbar-color: #bf2c5d;
 				}		
 		/* sets cursor */ 
 		* {
@@ -2809,7 +2816,9 @@ var beepbox = (function (exports) {
 
 			--oscilloscope-line-R: var(--ui-widget-background);
 			--oscilloscope-line-L: var(--secondary-text);
-				}
+
+			--scrollbar-color: #bf2c5d;
+			}
 
 				.promptContainerBG::before {
 					box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
@@ -3688,6 +3697,9 @@ var beepbox = (function (exports) {
 		   div.channelBox {
 			border-radius: 5px;
 		  }
+		  div.curChannelBox {
+			border-radius: 5px;
+		  }
 
 			`,
         "Skeuomorphic": `
@@ -3841,7 +3853,7 @@ var beepbox = (function (exports) {
 			--disabled-note-secondary:  #6a677a;
 		}
 		 
-		.channelBox {
+		.curChannelBox {
 			--pitch1-primary-channel:  linear-gradient(#ff7777, #ff5959);
 			--pitch2-primary-channel:  linear-gradient(#ffaf71, #ffa159);
 			--pitch3-primary-channel:  linear-gradient(#ffee7c, #ffe959);
@@ -3857,6 +3869,10 @@ var beepbox = (function (exports) {
 			--pitch13-primary-channel: linear-gradient(#ff75e3, #f651d4);
 			--pitch14-primary-channel: linear-gradient(#ff71a5, #f6518d);
 		
+			border-radius: 5px;
+			box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2), 0px 0px 1px 1px rgba(0, 0, 0, 0.7), inset 0px -10px 20px 1px rgba(0, 0, 0, 0.1), inset 0px 1px 0px 0px rgba(255, 255, 255, 0.1);
+		}
+		.channelBox {
 			border-radius: 5px;
 			box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2), 0px 0px 1px 1px rgba(0, 0, 0, 0.7), inset 0px -10px 20px 1px rgba(0, 0, 0, 0.1), inset 0px 1px 0px 0px rgba(255, 255, 255, 0.1);
 		}
@@ -4499,7 +4515,7 @@ var beepbox = (function (exports) {
 
 				/* sets background image */
 			.beepboxEditor load {
-				background: #fff0;
+				background: #fff0 !important;
 				}
 
 			body {
@@ -5390,6 +5406,9 @@ var beepbox = (function (exports) {
 		  div.channelBox {
 			border-radius: 5px;
 		  }
+		  div.curChannelBox {
+			border-radius: 5px;
+		  }
 		  div.muteEditor {
 			border-radius: 0px !important;
 			height: 158px !important;
@@ -5685,6 +5704,9 @@ var beepbox = (function (exports) {
 			padding-bottom: 15px;
 		  }
 		  div.channelBox {
+			border-radius: 5px;
+		  }
+		  div.curChannelBox {
 			border-radius: 5px;
 		  }
 		  div.muteEditor {
@@ -7920,6 +7942,23 @@ var beepbox = (function (exports) {
 							  );
 							}
 							
+						.beepboxEditor .curChannelBox {
+								clip-path: polygon(
+									0px calc(100% - 2px),
+									2px calc(100% - 2px),
+									2px 100%,
+									calc(100% - 2px) 100%,
+									calc(100% - 2px) calc(100% - 2px),
+									100% calc(100% - 2px),
+									100% 2px,
+									calc(100% - 2px) 2px,
+									calc(100% - 2px) 0px,
+									2px 0px,
+									2px 2px,
+									0px 2px
+								  );
+								}
+
 							button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
 								--ui-widget-background: var(--editor-background) !important;
 								border-image-source: none !important;
@@ -13247,7 +13286,6 @@ var beepbox = (function (exports) {
         "shitbox 3.0": `
 			
 			 :root {
-				font: 20px/2 monospace;
 				--page-margin: #252525;
 				--editor-background: #252525;
 				--hover-preview: white;
@@ -13405,6 +13443,10 @@ var beepbox = (function (exports) {
 
 				#text-content > section > h1 {
 					color: #C8C8C8;
+					}
+
+				html {
+					font-family: 20px/2 monospace;
 					}
 			`,
         "shitbox4": `
@@ -14831,9 +14873,7 @@ var beepbox = (function (exports) {
 				}
 			`,
         "wackybox": `
-			
 			:root {
-				cursor: url('wackybox_cursor.png'), auto;
 				--page-margin: black;
 				--editor-background: black;
 				--hover-preview: white;
@@ -14952,10 +14992,12 @@ var beepbox = (function (exports) {
 					--mod-label-primary-text:   black;
 					--disabled-note-primary:    #999;
 					--disabled-note-secondary:  #666;
-
-					
-					
 				}
+
+			* {
+				cursor: url('wackybox_cursor.png'), auto;
+			}
+
 
 .beepboxEditor {
 	cursor: url('wackybox_cursor.png'), auto !important;;
@@ -16620,7 +16662,7 @@ var beepbox = (function (exports) {
     ColorConfig.disabledNotePrimary = "var(--disabled-note-primary)";
     ColorConfig.disabledNoteSecondary = "var(--disabled-note-secondary)";
     ColorConfig.scrollbarColor = "var(--scrollbar-color)";
-    ColorConfig.songPlayerKeyColor = "var(--playing-key-color)";
+    ColorConfig.scrollbarBackground = "var(--scrollbar-background)";
     ColorConfig.c_pitchSecondaryChannelHue = 0;
     ColorConfig.c_pitchSecondaryChannelHueScale = 0;
     ColorConfig.c_pitchSecondaryChannelSat = 0;
@@ -30385,6 +30427,15 @@ var beepbox = (function (exports) {
     timeline.addEventListener("touchmove", onTimelineTouchMove);
     timeline.addEventListener("touchend", onTimelineCursorUp);
     timeline.addEventListener("touchcancel", onTimelineCursorUp);
+    document.addEventListener('visibilitychange', e => {
+        if (document.visibilityState === 'visible') {
+            if (getLocalStorage("spLayout") != _form.elements["spLayout"].value) {
+                _form.elements["spLayout"].value = getLocalStorage("spLayout");
+                SongPlayerLayout.setLayout(_form.elements["spLayout"].value);
+                renderTimeline();
+            }
+        }
+    });
     layoutStuffs.addEventListener("click", onLayoutButton);
     closePrompt.addEventListener("click", onExitButton);
     _okayButton.addEventListener("click", onLayoutPicked);
