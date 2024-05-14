@@ -20014,7 +20014,6 @@ li.select2-results__option[role=group] > strong:hover {
         else {
             _loopType = 1;
         }
-        console.log("Loop count: " + _loopType);
     }
     const epsilon = (1.0e-24);
     function clamp(min, max, val) {

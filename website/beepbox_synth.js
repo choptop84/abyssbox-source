@@ -2229,7 +2229,6 @@ var beepbox = (function (exports) {
         else {
             exports._loopType = 1;
         }
-        console.log("Loop count: " + exports._loopType);
     }
     const epsilon = (1.0e-24);
     function clamp(min, max, val) {
