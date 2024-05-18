@@ -43,6 +43,7 @@ export class Preferences {
 	public frostedGlassBackground: boolean;
 	public displayShortcutButtons: boolean;
 	public oldMobileLayout: boolean;
+	public oldModNotes: boolean;
 	public customFont: string;
 	public customBG: string;
 	public customIcons: string;
@@ -102,6 +103,7 @@ export class Preferences {
 		this.frostedGlassBackground = window.localStorage.getItem("frostedGlassBackground") == "true";
 		this.displayShortcutButtons = window.localStorage.getItem("displayShortcutButtons") != "false";
 		this.oldMobileLayout = window.localStorage.getItem("oldMobileLayout") == "true";
+		this.oldModNotes = window.localStorage.getItem("oldModNotes") == "true";
 
 		this.customFont = window.localStorage.getItem("customFontName") || "none";
 		this.customBG = window.localStorage.getItem("backgroundName") || "none";
@@ -155,5 +157,6 @@ export class Preferences {
 		window.localStorage.setItem("frostedGlassBackground", this.frostedGlassBackground ? "true" : "false");
 		window.localStorage.setItem("displayShortcutButtons", this.displayShortcutButtons ? "true" : "false");
 		window.localStorage.setItem("oldMobileLayout", this.oldMobileLayout ? "true" : "false");
+		window.localStorage.setItem("oldModNotes", this.oldModNotes ? "true" : "false");
 	}
 }

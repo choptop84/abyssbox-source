@@ -2479,7 +2479,12 @@ export class PatternEditor {
                     let colorSecondary: string = (disabled ? ColorConfig.disabledNoteSecondary : ColorConfig.getChannelColor(this._doc.song, this._doc.channel).secondaryNote);
                     notePath.setAttribute("fill", colorSecondary);
                     notePath.setAttribute("pointer-events", "none");
-                    notePath.setAttribute("class","note-secondary");
+                    if (this._doc.song.getChannelIsMod(this._doc.channel)) {
+                        notePath.setAttribute("class","mod-note-secondary");
+                    } else {
+                        notePath.setAttribute("class","note-secondary");
+                    }
+                    
                     this._drawNote(notePath, pitch, note.start, note.pins, (this._pitchHeight - this._pitchBorder) / 2 + 1, false, this._octaveOffset);
                     this._svgNoteContainer.appendChild(notePath);
                     notePath = SVG.path();
@@ -2487,8 +2492,12 @@ export class PatternEditor {
                     notePath.setAttribute("pointer-events", "none");
                     this._drawNote(notePath, pitch, note.start, note.pins, (this._pitchHeight - this._pitchBorder) / 2 + 1, true, this._octaveOffset);
                     this._svgNoteContainer.appendChild(notePath);
-                    notePath.setAttribute("class","note-primary");
-
+                    if (this._doc.song.getChannelIsMod(this._doc.channel)) {
+                        notePath.setAttribute("class","mod-note-primary");
+                    } else {
+                        notePath.setAttribute("class","note-primary");
+                    }
+ 
                     if (this._doc.prefs.notesFlashWhenPlayed&&!disabled) {
                         notePath = SVG.path();
                         const noteFlashColor = ColorConfig.getComputed("--note-flash") !== "" ? "var(--note-flash)" : "#ffffff";
@@ -2502,6 +2511,9 @@ export class PatternEditor {
                         notePath.setAttribute('note-end', String(
                             note.end
                             ));
+                        if (this._doc.song.getChannelIsMod(this._doc.channel)) { 
+                            notePath.setAttribute("class","mod-note-flash");
+                        }
                     }
 
                     let indicatorOffset: number = 2;
@@ -2574,41 +2586,121 @@ export class PatternEditor {
 
         const cap: number = this._doc.song.getVolumeCap(this._doc.song.getChannelIsMod(this._doc.channel), this._doc.channel, this._doc.getCurrentInstrument(this._barOffset), pitch);
 
-        let pathString: string = "M " + prettyNumber(this._partWidth * (start + nextPin.time) + endOffset) + " " + prettyNumber(this._pitchToPixelHeight(pitch - offset) + radius * (showSize ? nextPin.size / cap : 1.0)) + " ";
+        let pathString: string = "";//"M " + prettyNumber(this._partWidth * (start + nextPin.time) + endOffset) + " " + prettyNumber(this._pitchToPixelHeight(pitch - offset) + radius * (showSize ? nextPin.size / cap : 1.0)) + " ";
+    if (window.localStorage.getItem("oldModNotes") != "true") {
+        if (this._doc.song.getChannelIsMod(this._doc.channel)) {
 
-        for (let i: number = 1; i < pins.length; i++) {
-            let prevPin: NotePin = nextPin;
-            nextPin = pins[i];
-            let prevSide: number = this._partWidth * (start + prevPin.time) + (i == 1 ? endOffset : 0);
-            let nextSide: number = this._partWidth * (start + nextPin.time) - (i == pins.length - 1 ? endOffset : 0);
-            let prevHeight: number = this._pitchToPixelHeight(pitch + prevPin.interval - offset);
-            let nextHeight: number = this._pitchToPixelHeight(pitch + nextPin.interval - offset);
-            let prevSize: number = showSize ? prevPin.size / cap : 1.0;
-            let nextSize: number = showSize ? nextPin.size / cap : 1.0;
-            pathString += "L " + prettyNumber(prevSide) + " " + prettyNumber(prevHeight - radius * prevSize) + " ";
-            if (prevPin.interval > nextPin.interval) pathString += "L " + prettyNumber(prevSide + 1) + " " + prettyNumber(prevHeight - radius * prevSize) + " ";
-            if (prevPin.interval < nextPin.interval) pathString += "L " + prettyNumber(nextSide - 1) + " " + prettyNumber(nextHeight - radius * nextSize) + " ";
-            pathString += "L " + prettyNumber(nextSide) + " " + prettyNumber(nextHeight - radius * nextSize) + " ";
-        }
-        for (let i: number = pins.length - 2; i >= 0; i--) {
-            let prevPin: NotePin = nextPin;
-            nextPin = pins[i];
-            let prevSide: number = this._partWidth * (start + prevPin.time) - (i == pins.length - 2 ? endOffset : 0);
-            let nextSide: number = this._partWidth * (start + nextPin.time) + (i == 0 ? endOffset : 0);
-            let prevHeight: number = this._pitchToPixelHeight(pitch + prevPin.interval - offset);
-            let nextHeight: number = this._pitchToPixelHeight(pitch + nextPin.interval - offset);
-            let prevSize: number = showSize ? prevPin.size / cap : 1.0;
-            let nextSize: number = showSize ? nextPin.size / cap : 1.0;
-            pathString += "L " + prettyNumber(prevSide) + " " + prettyNumber(prevHeight + radius * prevSize) + " ";
-            if (prevPin.interval < nextPin.interval) pathString += "L " + prettyNumber(prevSide - 1) + " " + prettyNumber(prevHeight + radius * prevSize) + " ";
-            if (prevPin.interval > nextPin.interval) pathString += "L " + prettyNumber(nextSide + 1) + " " + prettyNumber(nextHeight + radius * nextSize) + " ";
-            pathString += "L " + prettyNumber(nextSide) + " " + prettyNumber(nextHeight + radius * nextSize) + " ";
-        }
-        pathString += "z";
+            let pathStringPart1 = "M " + prettyNumber(this._partWidth * (start + nextPin.time) + endOffset) + " ";
+            let pathStringPart2 = prettyNumber(this._pitchToPixelHeight(pitch - offset)) + " ";
 
-        svgElement.setAttribute("d", pathString);
-    }
+            pathString = pathStringPart1 + pathStringPart2;
+            for (let i: number = 1; i < pins.length; i++) { // These are the "top" dots, the ones that appear on the top of the SVG, after this process is complete it moves to the next for loop
+                let prevPin: NotePin = nextPin;
+                nextPin = pins[i];
+                let prevSide: number = this._partWidth * (start + prevPin.time) + (i == 1 ? endOffset : 0);
+                let nextSide: number = this._partWidth * (start + nextPin.time) - (i == pins.length - 1 ? endOffset : 0);
+                let prevHeight: number = this._pitchToPixelHeight(pitch + prevPin.interval - offset);
+                let nextHeight: number = this._pitchToPixelHeight(pitch + nextPin.interval - offset);
+                let prevSize: number = showSize ? prevPin.size / cap : 1.0;
+                let nextSize: number = showSize ? nextPin.size / cap : 1.0;
+                pathString += "L " + prettyNumber(prevSide) + " " + prettyNumber((prevHeight+radius) - (radius*2) * prevSize) + " ";
+                if (prevPin.interval > nextPin.interval) pathString += "L " + prettyNumber(prevSide + 1) + " " + prettyNumber((prevHeight+radius) - (radius*2) * prevSize) + " ";
+                if (prevPin.interval < nextPin.interval) pathString += "L " + prettyNumber(nextSide - 1) + " " + prettyNumber((nextHeight+radius) - (radius*2) * nextSize) + " ";
+                pathString += "L " + prettyNumber(nextSide) + " " + prettyNumber((nextHeight+radius)  - (radius*2) * nextSize) + " ";
+            }
+            for (let i: number = 0; i >= 0; i--) { // These are the "bottom" dots, these are the ones that appear on the bottom of the SVG, instead of going forward like the top one, it goes backwards to match the correct number of dots needed.
+                let prevPin: NotePin = nextPin;
+                nextPin = pins[i];
+                let prevSide: number = this._partWidth * (start + prevPin.time) - (i == pins.length - 2 ? endOffset : 0);
+                let nextSide: number = this._partWidth * (start + nextPin.time) + (i == 0 ? endOffset : 0);
+                let prevHeight: number = this._pitchToPixelHeight(pitch);
+                let nextHeight: number = this._pitchToPixelHeight(pitch);
+                /*
+                let prevSide: number = this._partWidth * (start + prevPin.time) - (i == pins.length - 2 ? endOffset : 0);
+                let nextSide: number = this._partWidth * (start + nextPin.time) + (i == 0 ? endOffset : 0);
+                let prevHeight: number = this._pitchToPixelHeight(pitch + prevPin.interval - offset);
+                let nextHeight: number = this._pitchToPixelHeight(pitch + nextPin.interval - offset);
+                let prevSize: number = showSize ? prevPin.size / cap : 1.0;
+                let nextSize: number = showSize ? nextPin.size / cap : 1.0;*/
+                pathString += "L " + prettyNumber(prevSide) + " " + prettyNumber(prevHeight + radius) + " ";
+                if (prevPin.interval < nextPin.interval) pathString += "L " + prettyNumber(prevSide - 1) + " " + prettyNumber(prevHeight + radius) + " ";
+                if (prevPin.interval > nextPin.interval) pathString += "L " + prettyNumber(nextSide + 1) + " " + prettyNumber(nextHeight + radius) + " ";
+                pathString += "L " + prettyNumber(nextSide) + " " + prettyNumber(nextHeight + radius) + " ";
+                
+            }
+            pathString += "z"; 
+            
+        } else {
+            pathString = "M " + prettyNumber(this._partWidth * (start + nextPin.time) + endOffset) + " " + prettyNumber(this._pitchToPixelHeight(pitch - offset) + radius * (showSize ? nextPin.size / cap : 1.0)) + " ";
+        
+            for (let i: number = 1; i < pins.length; i++) {
+                let prevPin: NotePin = nextPin;
+                nextPin = pins[i];
+                let prevSide: number = this._partWidth * (start + prevPin.time) + (i == 1 ? endOffset : 0);
+                let nextSide: number = this._partWidth * (start + nextPin.time) - (i == pins.length - 1 ? endOffset : 0);
+                let prevHeight: number = this._pitchToPixelHeight(pitch + prevPin.interval - offset);
+                let nextHeight: number = this._pitchToPixelHeight(pitch + nextPin.interval - offset);
+                let prevSize: number = showSize ? prevPin.size / cap : 1.0;
+                let nextSize: number = showSize ? nextPin.size / cap : 1.0;
+                pathString += "L " + prettyNumber(prevSide) + " " + prettyNumber(prevHeight - radius * prevSize) + " ";
+                if (prevPin.interval > nextPin.interval) pathString += "L " + prettyNumber(prevSide + 1) + " " + prettyNumber(prevHeight - radius * prevSize) + " ";
+                if (prevPin.interval < nextPin.interval) pathString += "L " + prettyNumber(nextSide - 1) + " " + prettyNumber(nextHeight - radius * nextSize) + " ";
+                pathString += "L " + prettyNumber(nextSide) + " " + prettyNumber(nextHeight - radius * nextSize) + " ";
+            }
+            for (let i: number = pins.length - 2; i >= 0; i--) {
+                let prevPin: NotePin = nextPin;
+                nextPin = pins[i];
+                let prevSide: number = this._partWidth * (start + prevPin.time) - (i == pins.length - 2 ? endOffset : 0);
+                let nextSide: number = this._partWidth * (start + nextPin.time) + (i == 0 ? endOffset : 0);
+                let prevHeight: number = this._pitchToPixelHeight(pitch + prevPin.interval - offset);
+                let nextHeight: number = this._pitchToPixelHeight(pitch + nextPin.interval - offset);
+                let prevSize: number = showSize ? prevPin.size / cap : 1.0;
+                let nextSize: number = showSize ? nextPin.size / cap : 1.0;
+                pathString += "L " + prettyNumber(prevSide) + " " + prettyNumber(prevHeight + radius * prevSize) + " ";
+                if (prevPin.interval < nextPin.interval) pathString += "L " + prettyNumber(prevSide - 1) + " " + prettyNumber(prevHeight + radius * prevSize) + " ";
+                if (prevPin.interval > nextPin.interval) pathString += "L " + prettyNumber(nextSide + 1) + " " + prettyNumber(nextHeight + radius * nextSize) + " ";
+                pathString += "L " + prettyNumber(nextSide) + " " + prettyNumber(nextHeight + radius * nextSize) + " ";
+            }
+            pathString += "z";
+            }
 
+            svgElement.setAttribute("d", pathString);
+        } else {
+            pathString = "M " + prettyNumber(this._partWidth * (start + nextPin.time) + endOffset) + " " + prettyNumber(this._pitchToPixelHeight(pitch - offset) + radius * (showSize ? nextPin.size / cap : 1.0)) + " ";
+            for (let i: number = 1; i < pins.length; i++) {
+                let prevPin: NotePin = nextPin;
+                nextPin = pins[i];
+                let prevSide: number = this._partWidth * (start + prevPin.time) + (i == 1 ? endOffset : 0);
+                let nextSide: number = this._partWidth * (start + nextPin.time) - (i == pins.length - 1 ? endOffset : 0);
+                let prevHeight: number = this._pitchToPixelHeight(pitch + prevPin.interval - offset);
+                let nextHeight: number = this._pitchToPixelHeight(pitch + nextPin.interval - offset);
+                let prevSize: number = showSize ? prevPin.size / cap : 1.0;
+                let nextSize: number = showSize ? nextPin.size / cap : 1.0;
+                pathString += "L " + prettyNumber(prevSide) + " " + prettyNumber(prevHeight - radius * prevSize) + " ";
+                if (prevPin.interval > nextPin.interval) pathString += "L " + prettyNumber(prevSide + 1) + " " + prettyNumber(prevHeight - radius * prevSize) + " ";
+                if (prevPin.interval < nextPin.interval) pathString += "L " + prettyNumber(nextSide - 1) + " " + prettyNumber(nextHeight - radius * nextSize) + " ";
+                pathString += "L " + prettyNumber(nextSide) + " " + prettyNumber(nextHeight - radius * nextSize) + " ";
+            }
+            for (let i: number = pins.length - 2; i >= 0; i--) {
+                let prevPin: NotePin = nextPin;
+                nextPin = pins[i];
+                let prevSide: number = this._partWidth * (start + prevPin.time) - (i == pins.length - 2 ? endOffset : 0);
+                let nextSide: number = this._partWidth * (start + nextPin.time) + (i == 0 ? endOffset : 0);
+                let prevHeight: number = this._pitchToPixelHeight(pitch + prevPin.interval - offset);
+                let nextHeight: number = this._pitchToPixelHeight(pitch + nextPin.interval - offset);
+                let prevSize: number = showSize ? prevPin.size / cap : 1.0;
+                let nextSize: number = showSize ? nextPin.size / cap : 1.0;
+                pathString += "L " + prettyNumber(prevSide) + " " + prettyNumber(prevHeight + radius * prevSize) + " ";
+                if (prevPin.interval < nextPin.interval) pathString += "L " + prettyNumber(prevSide - 1) + " " + prettyNumber(prevHeight + radius * prevSize) + " ";
+                if (prevPin.interval > nextPin.interval) pathString += "L " + prettyNumber(nextSide + 1) + " " + prettyNumber(nextHeight + radius * nextSize) + " ";
+                pathString += "L " + prettyNumber(nextSide) + " " + prettyNumber(nextHeight + radius * nextSize) + " ";
+            }
+            pathString += "z";
+
+            svgElement.setAttribute("d", pathString);
+            }
+    } 
+    
     private _pitchToPixelHeight(pitch: number): number {
         return this._pitchHeight * (this._pitchCount - (pitch) - 0.5);
     }

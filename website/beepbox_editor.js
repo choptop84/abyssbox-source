@@ -45663,7 +45663,12 @@ You should be redirected to the song at:<br /><br />
                         let colorSecondary = (disabled ? ColorConfig.disabledNoteSecondary : ColorConfig.getChannelColor(this._doc.song, this._doc.channel).secondaryNote);
                         notePath.setAttribute("fill", colorSecondary);
                         notePath.setAttribute("pointer-events", "none");
-                        notePath.setAttribute("class", "note-secondary");
+                        if (this._doc.song.getChannelIsMod(this._doc.channel)) {
+                            notePath.setAttribute("class", "mod-note-secondary");
+                        }
+                        else {
+                            notePath.setAttribute("class", "note-secondary");
+                        }
                         this._drawNote(notePath, pitch, note.start, note.pins, (this._pitchHeight - this._pitchBorder) / 2 + 1, false, this._octaveOffset);
                         this._svgNoteContainer.appendChild(notePath);
                         notePath = SVG.path();
@@ -45671,7 +45676,12 @@ You should be redirected to the song at:<br /><br />
                         notePath.setAttribute("pointer-events", "none");
                         this._drawNote(notePath, pitch, note.start, note.pins, (this._pitchHeight - this._pitchBorder) / 2 + 1, true, this._octaveOffset);
                         this._svgNoteContainer.appendChild(notePath);
-                        notePath.setAttribute("class", "note-primary");
+                        if (this._doc.song.getChannelIsMod(this._doc.channel)) {
+                            notePath.setAttribute("class", "mod-note-primary");
+                        }
+                        else {
+                            notePath.setAttribute("class", "note-primary");
+                        }
                         if (this._doc.prefs.notesFlashWhenPlayed && !disabled) {
                             notePath = SVG.path();
                             const noteFlashColor = ColorConfig.getComputed("--note-flash") !== "" ? "var(--note-flash)" : "#ffffff";
@@ -45683,6 +45693,9 @@ You should be redirected to the song at:<br /><br />
                             notePath.style.opacity = "0";
                             notePath.setAttribute('note-start', String(note.start));
                             notePath.setAttribute('note-end', String(note.end));
+                            if (this._doc.song.getChannelIsMod(this._doc.channel)) {
+                                notePath.setAttribute("class", "mod-note-flash");
+                            }
                         }
                         let indicatorOffset = 2;
                         if (note.continuesLastPattern) {
@@ -45740,41 +45753,119 @@ You should be redirected to the song at:<br /><br />
             const endOffset = 0.5 * Math.min(2, totalWidth - 1);
             let nextPin = pins[0];
             const cap = this._doc.song.getVolumeCap(this._doc.song.getChannelIsMod(this._doc.channel), this._doc.channel, this._doc.getCurrentInstrument(this._barOffset), pitch);
-            let pathString = "M " + prettyNumber(this._partWidth * (start + nextPin.time) + endOffset) + " " + prettyNumber(this._pitchToPixelHeight(pitch - offset) + radius * (showSize ? nextPin.size / cap : 1.0)) + " ";
-            for (let i = 1; i < pins.length; i++) {
-                let prevPin = nextPin;
-                nextPin = pins[i];
-                let prevSide = this._partWidth * (start + prevPin.time) + (i == 1 ? endOffset : 0);
-                let nextSide = this._partWidth * (start + nextPin.time) - (i == pins.length - 1 ? endOffset : 0);
-                let prevHeight = this._pitchToPixelHeight(pitch + prevPin.interval - offset);
-                let nextHeight = this._pitchToPixelHeight(pitch + nextPin.interval - offset);
-                let prevSize = showSize ? prevPin.size / cap : 1.0;
-                let nextSize = showSize ? nextPin.size / cap : 1.0;
-                pathString += "L " + prettyNumber(prevSide) + " " + prettyNumber(prevHeight - radius * prevSize) + " ";
-                if (prevPin.interval > nextPin.interval)
-                    pathString += "L " + prettyNumber(prevSide + 1) + " " + prettyNumber(prevHeight - radius * prevSize) + " ";
-                if (prevPin.interval < nextPin.interval)
-                    pathString += "L " + prettyNumber(nextSide - 1) + " " + prettyNumber(nextHeight - radius * nextSize) + " ";
-                pathString += "L " + prettyNumber(nextSide) + " " + prettyNumber(nextHeight - radius * nextSize) + " ";
+            let pathString = "";
+            if (window.localStorage.getItem("oldModNotes") != "true") {
+                if (this._doc.song.getChannelIsMod(this._doc.channel)) {
+                    let pathStringPart1 = "M " + prettyNumber(this._partWidth * (start + nextPin.time) + endOffset) + " ";
+                    let pathStringPart2 = prettyNumber(this._pitchToPixelHeight(pitch - offset)) + " ";
+                    pathString = pathStringPart1 + pathStringPart2;
+                    for (let i = 1; i < pins.length; i++) {
+                        let prevPin = nextPin;
+                        nextPin = pins[i];
+                        let prevSide = this._partWidth * (start + prevPin.time) + (i == 1 ? endOffset : 0);
+                        let nextSide = this._partWidth * (start + nextPin.time) - (i == pins.length - 1 ? endOffset : 0);
+                        let prevHeight = this._pitchToPixelHeight(pitch + prevPin.interval - offset);
+                        let nextHeight = this._pitchToPixelHeight(pitch + nextPin.interval - offset);
+                        let prevSize = showSize ? prevPin.size / cap : 1.0;
+                        let nextSize = showSize ? nextPin.size / cap : 1.0;
+                        pathString += "L " + prettyNumber(prevSide) + " " + prettyNumber((prevHeight + radius) - (radius * 2) * prevSize) + " ";
+                        if (prevPin.interval > nextPin.interval)
+                            pathString += "L " + prettyNumber(prevSide + 1) + " " + prettyNumber((prevHeight + radius) - (radius * 2) * prevSize) + " ";
+                        if (prevPin.interval < nextPin.interval)
+                            pathString += "L " + prettyNumber(nextSide - 1) + " " + prettyNumber((nextHeight + radius) - (radius * 2) * nextSize) + " ";
+                        pathString += "L " + prettyNumber(nextSide) + " " + prettyNumber((nextHeight + radius) - (radius * 2) * nextSize) + " ";
+                    }
+                    for (let i = 0; i >= 0; i--) {
+                        let prevPin = nextPin;
+                        nextPin = pins[i];
+                        let prevSide = this._partWidth * (start + prevPin.time) - (i == pins.length - 2 ? endOffset : 0);
+                        let nextSide = this._partWidth * (start + nextPin.time) + (i == 0 ? endOffset : 0);
+                        let prevHeight = this._pitchToPixelHeight(pitch);
+                        let nextHeight = this._pitchToPixelHeight(pitch);
+                        pathString += "L " + prettyNumber(prevSide) + " " + prettyNumber(prevHeight + radius) + " ";
+                        if (prevPin.interval < nextPin.interval)
+                            pathString += "L " + prettyNumber(prevSide - 1) + " " + prettyNumber(prevHeight + radius) + " ";
+                        if (prevPin.interval > nextPin.interval)
+                            pathString += "L " + prettyNumber(nextSide + 1) + " " + prettyNumber(nextHeight + radius) + " ";
+                        pathString += "L " + prettyNumber(nextSide) + " " + prettyNumber(nextHeight + radius) + " ";
+                    }
+                    pathString += "z";
+                }
+                else {
+                    pathString = "M " + prettyNumber(this._partWidth * (start + nextPin.time) + endOffset) + " " + prettyNumber(this._pitchToPixelHeight(pitch - offset) + radius * (showSize ? nextPin.size / cap : 1.0)) + " ";
+                    for (let i = 1; i < pins.length; i++) {
+                        let prevPin = nextPin;
+                        nextPin = pins[i];
+                        let prevSide = this._partWidth * (start + prevPin.time) + (i == 1 ? endOffset : 0);
+                        let nextSide = this._partWidth * (start + nextPin.time) - (i == pins.length - 1 ? endOffset : 0);
+                        let prevHeight = this._pitchToPixelHeight(pitch + prevPin.interval - offset);
+                        let nextHeight = this._pitchToPixelHeight(pitch + nextPin.interval - offset);
+                        let prevSize = showSize ? prevPin.size / cap : 1.0;
+                        let nextSize = showSize ? nextPin.size / cap : 1.0;
+                        pathString += "L " + prettyNumber(prevSide) + " " + prettyNumber(prevHeight - radius * prevSize) + " ";
+                        if (prevPin.interval > nextPin.interval)
+                            pathString += "L " + prettyNumber(prevSide + 1) + " " + prettyNumber(prevHeight - radius * prevSize) + " ";
+                        if (prevPin.interval < nextPin.interval)
+                            pathString += "L " + prettyNumber(nextSide - 1) + " " + prettyNumber(nextHeight - radius * nextSize) + " ";
+                        pathString += "L " + prettyNumber(nextSide) + " " + prettyNumber(nextHeight - radius * nextSize) + " ";
+                    }
+                    for (let i = pins.length - 2; i >= 0; i--) {
+                        let prevPin = nextPin;
+                        nextPin = pins[i];
+                        let prevSide = this._partWidth * (start + prevPin.time) - (i == pins.length - 2 ? endOffset : 0);
+                        let nextSide = this._partWidth * (start + nextPin.time) + (i == 0 ? endOffset : 0);
+                        let prevHeight = this._pitchToPixelHeight(pitch + prevPin.interval - offset);
+                        let nextHeight = this._pitchToPixelHeight(pitch + nextPin.interval - offset);
+                        let prevSize = showSize ? prevPin.size / cap : 1.0;
+                        let nextSize = showSize ? nextPin.size / cap : 1.0;
+                        pathString += "L " + prettyNumber(prevSide) + " " + prettyNumber(prevHeight + radius * prevSize) + " ";
+                        if (prevPin.interval < nextPin.interval)
+                            pathString += "L " + prettyNumber(prevSide - 1) + " " + prettyNumber(prevHeight + radius * prevSize) + " ";
+                        if (prevPin.interval > nextPin.interval)
+                            pathString += "L " + prettyNumber(nextSide + 1) + " " + prettyNumber(nextHeight + radius * nextSize) + " ";
+                        pathString += "L " + prettyNumber(nextSide) + " " + prettyNumber(nextHeight + radius * nextSize) + " ";
+                    }
+                    pathString += "z";
+                }
+                svgElement.setAttribute("d", pathString);
             }
-            for (let i = pins.length - 2; i >= 0; i--) {
-                let prevPin = nextPin;
-                nextPin = pins[i];
-                let prevSide = this._partWidth * (start + prevPin.time) - (i == pins.length - 2 ? endOffset : 0);
-                let nextSide = this._partWidth * (start + nextPin.time) + (i == 0 ? endOffset : 0);
-                let prevHeight = this._pitchToPixelHeight(pitch + prevPin.interval - offset);
-                let nextHeight = this._pitchToPixelHeight(pitch + nextPin.interval - offset);
-                let prevSize = showSize ? prevPin.size / cap : 1.0;
-                let nextSize = showSize ? nextPin.size / cap : 1.0;
-                pathString += "L " + prettyNumber(prevSide) + " " + prettyNumber(prevHeight + radius * prevSize) + " ";
-                if (prevPin.interval < nextPin.interval)
-                    pathString += "L " + prettyNumber(prevSide - 1) + " " + prettyNumber(prevHeight + radius * prevSize) + " ";
-                if (prevPin.interval > nextPin.interval)
-                    pathString += "L " + prettyNumber(nextSide + 1) + " " + prettyNumber(nextHeight + radius * nextSize) + " ";
-                pathString += "L " + prettyNumber(nextSide) + " " + prettyNumber(nextHeight + radius * nextSize) + " ";
+            else {
+                pathString = "M " + prettyNumber(this._partWidth * (start + nextPin.time) + endOffset) + " " + prettyNumber(this._pitchToPixelHeight(pitch - offset) + radius * (showSize ? nextPin.size / cap : 1.0)) + " ";
+                for (let i = 1; i < pins.length; i++) {
+                    let prevPin = nextPin;
+                    nextPin = pins[i];
+                    let prevSide = this._partWidth * (start + prevPin.time) + (i == 1 ? endOffset : 0);
+                    let nextSide = this._partWidth * (start + nextPin.time) - (i == pins.length - 1 ? endOffset : 0);
+                    let prevHeight = this._pitchToPixelHeight(pitch + prevPin.interval - offset);
+                    let nextHeight = this._pitchToPixelHeight(pitch + nextPin.interval - offset);
+                    let prevSize = showSize ? prevPin.size / cap : 1.0;
+                    let nextSize = showSize ? nextPin.size / cap : 1.0;
+                    pathString += "L " + prettyNumber(prevSide) + " " + prettyNumber(prevHeight - radius * prevSize) + " ";
+                    if (prevPin.interval > nextPin.interval)
+                        pathString += "L " + prettyNumber(prevSide + 1) + " " + prettyNumber(prevHeight - radius * prevSize) + " ";
+                    if (prevPin.interval < nextPin.interval)
+                        pathString += "L " + prettyNumber(nextSide - 1) + " " + prettyNumber(nextHeight - radius * nextSize) + " ";
+                    pathString += "L " + prettyNumber(nextSide) + " " + prettyNumber(nextHeight - radius * nextSize) + " ";
+                }
+                for (let i = pins.length - 2; i >= 0; i--) {
+                    let prevPin = nextPin;
+                    nextPin = pins[i];
+                    let prevSide = this._partWidth * (start + prevPin.time) - (i == pins.length - 2 ? endOffset : 0);
+                    let nextSide = this._partWidth * (start + nextPin.time) + (i == 0 ? endOffset : 0);
+                    let prevHeight = this._pitchToPixelHeight(pitch + prevPin.interval - offset);
+                    let nextHeight = this._pitchToPixelHeight(pitch + nextPin.interval - offset);
+                    let prevSize = showSize ? prevPin.size / cap : 1.0;
+                    let nextSize = showSize ? nextPin.size / cap : 1.0;
+                    pathString += "L " + prettyNumber(prevSide) + " " + prettyNumber(prevHeight + radius * prevSize) + " ";
+                    if (prevPin.interval < nextPin.interval)
+                        pathString += "L " + prettyNumber(prevSide - 1) + " " + prettyNumber(prevHeight + radius * prevSize) + " ";
+                    if (prevPin.interval > nextPin.interval)
+                        pathString += "L " + prettyNumber(nextSide + 1) + " " + prettyNumber(nextHeight + radius * nextSize) + " ";
+                    pathString += "L " + prettyNumber(nextSide) + " " + prettyNumber(nextHeight + radius * nextSize) + " ";
+                }
+                pathString += "z";
+                svgElement.setAttribute("d", pathString);
             }
-            pathString += "z";
-            svgElement.setAttribute("d", pathString);
         }
         _pitchToPixelHeight(pitch) {
             return this._pitchHeight * (this._pitchCount - (pitch) - 0.5);
@@ -52964,7 +53055,7 @@ button.playButton::before {
             this._volumeBarBox = div({ class: "playback-volume-bar", style: "height: 12px; align-self: center;" }, this._volumeBarContainer);
             this._fileMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "File"), option({ value: "new" }, "+ New Blank Song"), option({ value: "import" }, "↑ > Import Song (" + EditorConfig.ctrlSymbol + "O)"), option({ value: "export" }, "↓ > Export Song (" + EditorConfig.ctrlSymbol + "S)"), option({ value: "copyUrl" }, "⎘ Copy Song URL"), option({ value: "shareUrl" }, "⤳ Share Song URL"), option({ value: "shortenUrl" }, "… Shorten Song URL"), option({ value: "configureShortener" }, "🛠 > Customize Url Shortener"), option({ value: "viewPlayer" }, "▶ View in Song Player"), option({ value: "copyEmbed" }, "⎘ Copy HTML Embed Code"), option({ value: "songRecovery" }, "⚠ > Recover Recent Song"));
             this._editMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Edit"), option({ value: "undo" }, "Undo (Z)"), option({ value: "redo" }, "Redo (Y)"), option({ value: "copy" }, "Copy Pattern (C)"), option({ value: "pasteNotes" }, "Paste Pattern Notes (V)"), option({ value: "pasteNumbers" }, "Paste Pattern Numbers (" + EditorConfig.ctrlSymbol + "⇧V)"), option({ value: "insertBars" }, "Insert Bar (⏎)"), option({ value: "deleteBars" }, "Delete Selected Bars (⌫)"), option({ value: "insertChannel" }, "Insert Channel (" + EditorConfig.ctrlSymbol + "⏎)"), option({ value: "deleteChannel" }, "Delete Selected Channels (" + EditorConfig.ctrlSymbol + "⌫)"), option({ value: "selectChannel" }, "Select Channel (⇧A)"), option({ value: "selectAll" }, "Select All (A)"), option({ value: "duplicatePatterns" }, "Duplicate Reused Patterns (D)"), option({ value: "transposeUp" }, "Move Notes Up (+ or ⇧+)"), option({ value: "transposeDown" }, "Move Notes Down (- or ⇧-)"), option({ value: "moveNotesSideways" }, "> Move All Notes Sideways (W)"), option({ value: "generateEuclideanRhythm" }, "> Generate Euclidean Rhythm (E)"), option({ value: "beatsPerBar" }, "> Change Beats Per Bar (B)"), option({ value: "barCount" }, "> Change Song Length (L)"), option({ value: "channelSettings" }, "> Channel Settings (Q)"), option({ value: "limiterSettings" }, "> Limiter Settings (⇧L)"), option({ value: "addExternal" }, "> Add Custom Samples (⇧Q)"));
-            this._optionsMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Preferences"), optgroup({ label: "Technical" }, option({ value: "autoPlay" }, "Auto Play on Load"), option({ value: "autoFollow" }, "Auto Follow Playhead"), option({ value: "enableNotePreview" }, "Hear Added Notes"), option({ value: "notesOutsideScale" }, "Place Notes Out of Scale"), option({ value: "setDefaultScale" }, "Set Current Scale as Default"), option({ value: "alwaysFineNoteVol" }, "Always Fine Note Volume"), option({ value: "enableChannelMuting" }, "Enable Channel Muting"), option({ value: "instrumentCopyPaste" }, "Enable Copy/Paste Buttons"), option({ value: "instrumentImportExport" }, "Enable Import/Export Buttons"), option({ value: "displayBrowserUrl" }, "Enable Song Data in URL"), option({ value: "closePromptByClickoff" }, "Close prompts on click off"), option({ value: "oldMobileLayout" }, "Use the Old mobile layout (Reload)"), option({ value: "recordingSetup" }, "Note Recording...")), optgroup({ label: "Appearance" }, option({ value: "showFifth" }, 'Highlight "Fifth" Note'), option({ value: "notesFlashWhenPlayed" }, "Notes Flash When Played (DB2)"), option({ value: "showChannels" }, "Show All Channels"), option({ value: "showScrollBar" }, "Show Octave Scroll Bar"), option({ value: "showLetters" }, "Show Piano Keys"), option({ value: "displayVolumeBar" }, "Show Playback Volume"), option({ value: "showOscilloscope" }, "Show Oscilloscope"), option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"), option({ value: "showDescription" }, "Show Description"), option({ value: "frostedGlassBackground" }, "Use Frosted Glass Prompt Backdrops"), option({ value: "displayShortcutButtons" }, "Display Mobile Shortcut Buttons"), option({ value: "layout" }, "> Set Layout"), option({ value: "colorTheme" }, "> Set Theme"), option({ value: "customTheme" }, "> Custom Theme")));
+            this._optionsMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Preferences"), optgroup({ label: "Technical" }, option({ value: "autoPlay" }, "Auto Play on Load"), option({ value: "autoFollow" }, "Auto Follow Playhead"), option({ value: "enableNotePreview" }, "Hear Added Notes"), option({ value: "notesOutsideScale" }, "Place Notes Out of Scale"), option({ value: "setDefaultScale" }, "Set Current Scale as Default"), option({ value: "alwaysFineNoteVol" }, "Always Fine Note Volume"), option({ value: "enableChannelMuting" }, "Enable Channel Muting"), option({ value: "instrumentCopyPaste" }, "Enable Copy/Paste Buttons"), option({ value: "instrumentImportExport" }, "Enable Import/Export Buttons"), option({ value: "displayBrowserUrl" }, "Enable Song Data in URL"), option({ value: "closePromptByClickoff" }, "Close prompts on click off"), option({ value: "oldMobileLayout" }, "Use the Old mobile layout (Reload)"), option({ value: "recordingSetup" }, "Note Recording...")), optgroup({ label: "Appearance" }, option({ value: "showFifth" }, 'Highlight "Fifth" Note'), option({ value: "notesFlashWhenPlayed" }, "Notes Flash When Played (DB2)"), option({ value: "showChannels" }, "Show All Channels"), option({ value: "showScrollBar" }, "Show Octave Scroll Bar"), option({ value: "showLetters" }, "Show Piano Keys"), option({ value: "displayVolumeBar" }, "Show Playback Volume"), option({ value: "showOscilloscope" }, "Show Oscilloscope"), option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"), option({ value: "showDescription" }, "Show Description"), option({ value: "frostedGlassBackground" }, "Use Frosted Glass Prompt Backdrops"), option({ value: "displayShortcutButtons" }, "Display Mobile Shortcut Buttons"), option({ value: "oldModNotes" }, 'Use Old Mod Notes'), option({ value: "layout" }, "> Set Layout"), option({ value: "colorTheme" }, "> Set Theme"), option({ value: "customTheme" }, "> Custom Theme")));
             this._scaleSelect = buildOptions(select(), Config.scales.map(scale => scale.name));
             this._keySelect = buildOptions(select(), Config.keys.map(key => key.name).reverse());
             this._octaveStepper = input({ style: "width: 59.5%;", type: "number", min: Config.octaveMin, max: Config.octaveMax, value: "0" });
@@ -53807,6 +53898,7 @@ button.playButton::before {
                     (prefs.showDescription ? textOnIcon : textOffIcon) + "Show Description",
                     (prefs.frostedGlassBackground ? textOnIcon : textOffIcon) + "Use Frosted Glass Prompt Backdrop",
                     (prefs.displayShortcutButtons ? textOnIcon : textOffIcon) + "Display Mobile Shortcut Buttons",
+                    (prefs.oldModNotes ? textOnIcon : textOffIcon) + "Use Old Mod Notes",
                     "> Set Layout",
                     "> Set Theme",
                     "> Custom Theme",
@@ -56360,6 +56452,9 @@ button.playButton::before {
                     case "notesFlashWhenPlayed":
                         this._doc.prefs.notesFlashWhenPlayed = !this._doc.prefs.notesFlashWhenPlayed;
                         break;
+                    case "oldModNotes":
+                        this._doc.prefs.oldModNotes = !this._doc.prefs.oldModNotes;
+                        break;
                     case "layout":
                         this._openPrompt("layout");
                         break;
@@ -58632,6 +58727,7 @@ button.playButton::before {
             this.frostedGlassBackground = window.localStorage.getItem("frostedGlassBackground") == "true";
             this.displayShortcutButtons = window.localStorage.getItem("displayShortcutButtons") != "false";
             this.oldMobileLayout = window.localStorage.getItem("oldMobileLayout") == "true";
+            this.oldModNotes = window.localStorage.getItem("oldModNotes") == "true";
             this.customFont = window.localStorage.getItem("customFontName") || "none";
             this.customBG = window.localStorage.getItem("backgroundName") || "none";
             this.customIcons = window.localStorage.getItem("customIconsName") || "none";
@@ -58682,6 +58778,7 @@ button.playButton::before {
             window.localStorage.setItem("frostedGlassBackground", this.frostedGlassBackground ? "true" : "false");
             window.localStorage.setItem("displayShortcutButtons", this.displayShortcutButtons ? "true" : "false");
             window.localStorage.setItem("oldMobileLayout", this.oldMobileLayout ? "true" : "false");
+            window.localStorage.setItem("oldModNotes", this.oldModNotes ? "true" : "false");
         }
     }
     Preferences.defaultVisibleOctaves = 3;

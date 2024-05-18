@@ -853,6 +853,7 @@ export class SongEditor {
             option({ value: "showDescription" }, "Show Description"),
             option({ value: "frostedGlassBackground" }, "Use Frosted Glass Prompt Backdrops"),
             option({ value: "displayShortcutButtons" }, "Display Mobile Shortcut Buttons"),
+            option({ value: "oldModNotes" }, 'Use Old Mod Notes'),
             option({ value: "layout" }, "> Set Layout"),
             option({ value: "colorTheme" }, "> Set Theme"),
             option({ value: "customTheme" }, "> Custom Theme"),
@@ -2924,6 +2925,7 @@ export class SongEditor {
             (prefs.showDescription ? textOnIcon : textOffIcon) + "Show Description",
             (prefs.frostedGlassBackground ? textOnIcon : textOffIcon) + "Use Frosted Glass Prompt Backdrop",
             (prefs.displayShortcutButtons ? textOnIcon : textOffIcon) + "Display Mobile Shortcut Buttons",
+            (prefs.oldModNotes ? textOnIcon : textOffIcon) + "Use Old Mod Notes",
             "> Set Layout",
             "> Set Theme",
             "> Custom Theme",
@@ -6082,6 +6084,9 @@ export class SongEditor {
                 break;
             case "notesFlashWhenPlayed":
                     this._doc.prefs.notesFlashWhenPlayed = !this._doc.prefs.notesFlashWhenPlayed;
+                break;
+            case "oldModNotes":
+                this._doc.prefs.oldModNotes = !this._doc.prefs.oldModNotes;
                 break;
             case "layout":
                 this._openPrompt("layout");
