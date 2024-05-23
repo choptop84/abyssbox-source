@@ -36,7 +36,7 @@ self.addEventListener("fetch", function(event) {
 				if (event.request.url.startsWith(self.location.origin) ||
 					event.request.url.startsWith("https://fonts.googleapis.com") ||
 					event.request.url.startsWith("https://fonts.gstatic.com") ||
-					event.request.url.startsWith("https://cdn.jsdelivr.net"))
+					event.request.url.startsWith("https://cdn.jsdelivr.net")) 
 				{
 					cache.put(event.request, response.clone());
 				}

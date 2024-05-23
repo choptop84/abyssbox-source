@@ -4620,7 +4620,13 @@ export class SongEditor {
             this._doc.synth.loopBarStart = -1;
             this._doc.synth.loopBarEnd = -1;
             this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
-                if (event.ctrlKey || event.metaKey) {
+                if (event.shiftKey && !event.ctrlKey) {
+                    const minusWidth = this._doc.selection.boxSelectionWidth;
+                    this._doc.bar = this._doc.bar - minusWidth;
+                    this._doc.selection.boxSelectionX0 -= minusWidth;
+                    this._doc.selection.boxSelectionX1 -= minusWidth;
+                    this._doc.selection.insertBars();
+                } else if ((event.ctrlKey || event.metaKey) && !event.shiftKey) {
                     this._doc.selection.insertChannel();
                 } else {
                     this._doc.selection.insertBars();

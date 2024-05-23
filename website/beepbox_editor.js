@@ -38878,12 +38878,13 @@ li.select2-results__option[role=group] > strong:hover {
             this._formatSelect = select$b({ style: "width: 100%;" }, option$b({ value: "wav" }, "Export to .wav file."), option$b({ value: "mp3" }, "Export to .mp3 file."), option$b({ value: "midi" }, "Export to .mid file."), option$b({ value: "json" }, "Export to .json file."), option$b({ value: "html" }, "Export to .html file."));
             this._removeWhitespace = input$c({ type: "checkbox" });
             this._removeWhitespaceDiv = div$i({ style: "vertical-align: middle; align-items: center; justify-content: space-between;" }, "Remove Whitespace: ", this._removeWhitespace);
+            this._oggWarning = div$i({ style: "vertical-align: middle; align-items: center; justify-content: space-between;" }, "Warning: .ogg files aren't supported on as many devices as mp3 or wav. IOS is an example of this, exporting is still possible, but playback is not.");
             this._cancelButton = button$i({ class: "cancelButton" });
             this._exportButton = button$i({ class: "exportButton", style: "width:45%;" }, "Export");
             this._outputProgressBar = div$i({ style: `width: 0%; background: ${ColorConfig.loopAccent}; height: 100%; position: absolute; z-index: 2;` });
             this._outputProgressLabel = div$i({ style: `position: relative; top: -1px; z-index: 3;` }, "0%");
             this._outputProgressContainer = div$i({ style: `height: 12px; background: ${ColorConfig.uiWidgetBackground}; display: block; position: relative; z-index: 1;` }, this._outputProgressBar, this._outputProgressLabel);
-            this.container = div$i({ class: "prompt noSelection", style: "width: 200px;" }, div$i({ class: "promptTitle" }, h2$h({ class: "exportExt", style: "text-align: inherit;" }, ""), h2$h({ class: "exportTitle" }, "Export Options")), div$i({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-between;" }, "File name:", this._fileName), div$i({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-between;" }, "Length:", this._computedSamplesLabel), div$i({ style: "display: table; width: 100%;" }, div$i({ style: "display: table-row;" }, div$i({ style: "display: table-cell;" }, "Intro:"), div$i({ style: "display: table-cell;" }, "Loop Count:"), div$i({ style: "display: table-cell;" }, "Outro:")), div$i({ style: "display: table-row;" }, div$i({ style: "display: table-cell; vertical-align: middle;" }, this._enableIntro), div$i({ style: "display: table-cell; vertical-align: middle;" }, this._loopDropDown), div$i({ style: "display: table-cell; vertical-align: middle;" }, this._enableOutro))), div$i({ class: "selectContainer", style: "width: 100%;" }, this._formatSelect), this._removeWhitespaceDiv, div$i({ class: "selectContainer", style: "width: 100%;" }, this._formatSelect), div$i({ style: "text-align: left;" }, "Exporting can be slow. Reloading the page or clicking the X will cancel it. Please be patient."), this._outputProgressContainer, div$i({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._exportButton), this._cancelButton);
+            this.container = div$i({ class: "prompt noSelection", style: "width: 200px;" }, div$i({ class: "promptTitle" }, h2$h({ class: "exportExt", style: "text-align: inherit;" }, ""), h2$h({ class: "exportTitle" }, "Export Options")), div$i({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-between;" }, "File name:", this._fileName), div$i({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-between;" }, "Length:", this._computedSamplesLabel), div$i({ style: "display: table; width: 100%;" }, div$i({ style: "display: table-row;" }, div$i({ style: "display: table-cell;" }, "Intro:"), div$i({ style: "display: table-cell;" }, "Loop Count:"), div$i({ style: "display: table-cell;" }, "Outro:")), div$i({ style: "display: table-row;" }, div$i({ style: "display: table-cell; vertical-align: middle;" }, this._enableIntro), div$i({ style: "display: table-cell; vertical-align: middle;" }, this._loopDropDown), div$i({ style: "display: table-cell; vertical-align: middle;" }, this._enableOutro))), this._removeWhitespaceDiv, this._oggWarning, div$i({ class: "selectContainer", style: "width: 100%;" }, this._formatSelect), div$i({ style: "text-align: left;" }, "Exporting can be slow. Reloading the page or clicking the X will cancel it. Please be patient."), this._outputProgressContainer, div$i({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._exportButton), this._cancelButton);
             this._close = () => {
                 if (this.synth != null)
                     this.synth.renderingSong = false;
@@ -38916,6 +38917,10 @@ li.select2-results__option[role=group] > strong:hover {
                     case "mp3":
                         this.outputStarted = true;
                         this._exportTo("mp3");
+                        break;
+                    case "ogg":
+                        this.outputStarted = true;
+                        this._exportTo("ogg");
                         break;
                     case "midi":
                         this.outputStarted = true;
@@ -38962,6 +38967,12 @@ li.select2-results__option[role=group] > strong:hover {
             }
             else {
                 this._removeWhitespaceDiv.style.display = "none";
+            }
+            if (this._formatSelect.value == "ogg") {
+                this._oggWarning.style.display = "block";
+            }
+            else {
+                this._oggWarning.style.display = "none";
             }
             this._fileName.select();
             setTimeout(() => this._fileName.focus());
@@ -39040,6 +39051,9 @@ li.select2-results__option[role=group] > strong:hover {
                 else if (this.thenExportTo == "mp3") {
                     this._exportToMp3Finish();
                 }
+                else if (this.thenExportTo == "ogg") {
+                    this._exportToOgg();
+                }
                 else {
                     throw new Error("Unrecognized file export type chosen!");
                 }
@@ -39056,6 +39070,9 @@ li.select2-results__option[role=group] > strong:hover {
                 this.synth.samplesPerSecond = 48000;
             }
             else if (type == "mp3") {
+                this.synth.samplesPerSecond = 44100;
+            }
+            else if (type == "ogg") {
                 this.synth.samplesPerSecond = 44100;
             }
             else {
@@ -39169,6 +39186,22 @@ li.select2-results__option[role=group] > strong:hover {
                 script.src = "https://cdn.jsdelivr.net/npm/lamejs@1.2.0/lame.min.js";
                 script.onload = whenEncoderIsAvailable;
                 document.head.appendChild(script);
+            }
+        }
+        _exportToOgg() {
+            const whenEncoderIsAvailable = () => {
+                const libopusEncoder = window["opus-encdec"];
+                console.log("Is libopusEcoder? " + libopusEncoder);
+            };
+            if ("opus-encdec" in window) {
+                whenEncoderIsAvailable();
+            }
+            else {
+                var script = document.createElement("script");
+                script.src = "https://cdn.jsdelivr.net/gh/mmig/opus-encdec@e33ca40/dist/libopus-encoder.js";
+                script.onload = whenEncoderIsAvailable;
+                document.head.appendChild(script);
+                console.log("Perhaps the other one failed? " + script);
             }
         }
         _exportToMidi() {
@@ -45757,7 +45790,7 @@ You should be redirected to the song at:<br /><br />
             if (window.localStorage.getItem("oldModNotes") != "true") {
                 if (this._doc.song.getChannelIsMod(this._doc.channel)) {
                     let pathStringPart1 = "M " + prettyNumber(this._partWidth * (start + nextPin.time) + endOffset) + " ";
-                    let pathStringPart2 = prettyNumber(this._pitchToPixelHeight(pitch - offset)) + " ";
+                    let pathStringPart2 = prettyNumber(this._pitchToPixelHeight(pitch + offset)) + " ";
                     pathString = pathStringPart1 + pathStringPart2;
                     for (let i = 1; i < pins.length; i++) {
                         let prevPin = nextPin;
@@ -55220,7 +55253,14 @@ button.playButton::before {
                         this._doc.synth.loopBarStart = -1;
                         this._doc.synth.loopBarEnd = -1;
                         this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
-                        if (event.ctrlKey || event.metaKey) {
+                        if (event.shiftKey && !event.ctrlKey) {
+                            const minusWidth = this._doc.selection.boxSelectionWidth;
+                            this._doc.bar = this._doc.bar - minusWidth;
+                            this._doc.selection.boxSelectionX0 -= minusWidth;
+                            this._doc.selection.boxSelectionX1 -= minusWidth;
+                            this._doc.selection.insertBars();
+                        }
+                        else if ((event.ctrlKey || event.metaKey) && !event.shiftKey) {
                             this._doc.selection.insertChannel();
                         }
                         else {

@@ -2591,7 +2591,7 @@ export class PatternEditor {
         if (this._doc.song.getChannelIsMod(this._doc.channel)) {
 
             let pathStringPart1 = "M " + prettyNumber(this._partWidth * (start + nextPin.time) + endOffset) + " ";
-            let pathStringPart2 = prettyNumber(this._pitchToPixelHeight(pitch - offset)) + " ";
+            let pathStringPart2 = prettyNumber(this._pitchToPixelHeight(pitch+offset)) + " ";
 
             pathString = pathStringPart1 + pathStringPart2;
             for (let i: number = 1; i < pins.length; i++) { // These are the "top" dots, the ones that appear on the top of the SVG, after this process is complete it moves to the next for loop

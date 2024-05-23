@@ -9,6 +9,11 @@ import { FilterCoefficients, FrequencyResponse, DynamicBiquadFilter, warpInfinit
 
 export let _loopType: number = 1;
 
+/** 
+ * When this function is declared, it automatically increases the value of _loopType to one more than it was before up to three.
+ * 
+ * Once the value becomes greater than three, it's value is returned to 1.
+*/
 export function changeLoopType() {
 	if (_loopType < 3) {
 	_loopType += 1;} else {
@@ -24,12 +29,27 @@ declare global {
     }
 }
 
+/**
+ * Equals 1.0e-24, which is roughly 0.000000000000000000000001, or a sextillionth.
+ */
 const epsilon: number = (1.0e-24); // For detecting and avoiding float denormals, which have poor performance.
 
 // For performance debugging:
 //let samplesAccumulated: number = 0;
 //let samplePerformance: number = 0;
 
+/**
+   * Takes a number between a maximum value and a minimum value and 
+   * if that value is greater or lesser than the specified maximum or minimum, it's then 
+   * forced to be the maximum or minimum value respectively.
+   * 
+   * 
+   * @param min The minimum number value allowed.
+   * 
+   * @param max The maximum number value allowed minus 1.
+   * 
+   * @param val The inputted number that can be clamped.
+   */
 export function clamp(min: number, max: number, val: number): number {
     max = max - 1;
     if (val <= max) {
@@ -40,23 +60,54 @@ export function clamp(min: number, max: number, val: number): number {
     }
 }
 
+/**
+ * Checks if a value is within the correct range. If the value is within the range, then it returns the value. 
+ * if not, then an error is thrown stating the value is out of range.
+ * 
+ * @param min A specified minimum value
+ * @param max A specified maximum value
+ * @param val The value to be checked
+ * @returns If the value is in range, then it returns val
+ */
 function validateRange(min: number, max: number, val: number): number {
     if (min <= val && val <= max) return val;
     throw new Error(`Value ${val} not in range [${min}, ${max}]`);
 }
 
+/**
+ * Converts a string to a floating-point number. 
+ * 
+ * If the string is empty, then it instead uses a default value.
+ * 
+ * @param s The string to parse
+ * @param defaultValue The default value if the string is NaN
+ */
 export function parseFloatWithDefault<T>(s: string, defaultValue: T): number | T {
     let result: number | T = parseFloat(s);
     if (Number.isNaN(result)) result = defaultValue;
     return result;
 }
 
+/**
+ * Converts a string to an integer. 
+ * 
+ * If the string is empty, then it instead uses a default value.
+ * 
+ * @param s The string to parse
+ * @param defaultValue The default value if the string is NaN
+ */
 export function parseIntWithDefault<T>(s: string, defaultValue: T): number | T {
     let result: number | T = parseInt(s);
     if (Number.isNaN(result)) result = defaultValue;
     return result;
 }
 
+/**
+ * Encodes a number (assumed to be 32 bits long) into the Base64 buffer.
+ * 
+ * @param buffer An array that's supposed to contain "character codes" (as numbers)
+ * @param x The number to encode.
+ */
 function encode32BitNumber(buffer: number[], x: number): void {
     // 0b11_
     buffer.push(base64IntToCharCode[(x >>> (6 * 5)) & 0x3]);
@@ -74,6 +125,13 @@ function encode32BitNumber(buffer: number[], x: number): void {
 
 // @TODO: This is error-prone, because the caller has to remember to increment
 // charIndex by 6 afterwards.
+/**
+ * Decodes an encoded 32 bit number.
+ * 
+ * @param compressed A string that's supposed to contain the compressed 32 bit value.
+ * @param charIndex The current character that's being read.
+ * @returns x
+ */
 function decode32BitNumber(compressed: string, charIndex: number): number {
     let x: number = 0;
     // 0b11_
@@ -91,6 +149,16 @@ function decode32BitNumber(compressed: string, charIndex: number): number {
     return x;
 }
 
+/**
+ * Encodes the unison settings into a base 64 number.
+ * 
+ * @param buffer An array that's supposed to contain "character codes" (as numbers)
+ * @param v Unison Voices
+ * @param s Unison Spread
+ * @param o Unison Offset
+ * @param e Unison Expression
+ * @param i Unison Sign
+ */
 function encodeUnisonSettings(buffer: number[], v: number, s: number, o: number, e: number, i: number): void {
     buffer.push(base64IntToCharCode[v]);
     
@@ -114,6 +182,11 @@ function encodeUnisonSettings(buffer: number[], v: number, s: number, o: number,
     buffer.push(base64IntToCharCode[cleanI % 63], base64IntToCharCode[Math.floor(cleanI / 63)]);
 }
 
+/**
+ * Converts the older Key Index to the newer version.
+ * 
+ * There isn't any reason to use this outside of backwards compatibility.
+ */
 function convertLegacyKeyToKeyAndOctave(rawKeyIndex: number): [number, number] {
     let key: number = clamp(0, Config.keys.length, rawKeyIndex);
     let octave: number = 0;
@@ -139,6 +212,9 @@ function convertLegacyKeyToKeyAndOctave(rawKeyIndex: number): [number, number] {
     return [key, octave];
 }
 
+/**
+ * Character codes in number form.
+ */
 const enum CharCode {
     SPACE = 32,
     HASH = 35,
@@ -214,7 +290,7 @@ const enum CharCode {
     LEFT_CURLY_BRACE = 123,
     RIGHT_CURLY_BRACE = 125,
 }
-
+/**Tags used as prefixes to group encoded song data in song links by 'name' rather than by position. */
 const enum SongTagCode {
     beatCount           = CharCode.a, // added in BeepBox URL version 2
 	bars                = CharCode.b, // added in BeepBox URL version 2
@@ -282,12 +358,20 @@ const enum SongTagCode {
 //	                    = CharCode.UNDERSCORE,
 
 }
-
+/** A lookup table, using an arbitrary number in the range [0,63] as an index for this array. You'll get the character code for the base64 encoded version of that number. */
 const base64IntToCharCode: ReadonlyArray<number> = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 45, 95];
+/** A lookup table, using an arbitrary number as an index for this array. You'll get the base64 encoded interger from the Character code version of that number. */
 const base64CharCodeToInt: ReadonlyArray<number> = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 62, 62, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0, 0, 0, 0, 0, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 0, 0, 0, 0, 63, 0, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 0, 0, 0, 0, 0]; // 62 could be represented by either "-" or "." for historical reasons. New songs should use "-".
 
+/**
+ * BitFieldReader:
+ * 
+ * A Class that splits a source string into bits. This assumes that the source is base64 encoded, so each character holds about 6 bits.
+ */
 class BitFieldReader {
+    /** The bits to be read as an array. */
     private _bits: number[] = [];
+    /** The current position of the Index in the _bits array. */
     private _readIndex: number = 0;
 
     constructor(source: string, startIndex: number, stopIndex: number) {
@@ -302,6 +386,10 @@ class BitFieldReader {
         }
     }
 
+    /**
+     * Reads a number of bits and returns a number.
+     * @param bitCount The number of bits to read
+     */
     public read(bitCount: number): number {
         let result: number = 0;
         while (bitCount > 0) {
@@ -312,6 +400,12 @@ class BitFieldReader {
         return result;
     }
 
+    /** Reads a number of bits with a minimum value and returns a number.
+     * 
+     * @param minValue The minimum value the result should be.
+     * @param minBits The minimum number bits that should be read.
+     * @returns 
+     */
     public readLongTail(minValue: number, minBits: number): number {
         let result: number = minValue;
         let numBits: number = minBits;
@@ -328,18 +422,30 @@ class BitFieldReader {
         return result;
     }
 
+    /**
+     * Reads the duration of a part in units. A Part is 1/24th of a beat per unit.
+     */
     public readPartDuration(): number {
         return this.readLongTail(1, 3);
     }
 
+    /**
+     * Reads the legacy code version of the duration of a part.
+     */
     public readLegacyPartDuration(): number {
         return this.readLongTail(1, 2);
     }
 
+    /**
+     * The total number of pins. by default there are 2 pins, but every time you pitch bend a note it creates more pins.
+     */
     public readPinCount(): number {
         return this.readLongTail(1, 0);
     }
 
+    /**
+     * Reads a pitches interval value.
+     */
     public readPitchInterval(): number {
         if (this.read(1)) {
             return -this.readLongTail(1, 3);
@@ -1345,9 +1451,10 @@ export class EnvelopeSettings {
     }
 }
 
-// Settings that were available to old versions of BeepBox but are no longer available in the
-// current version that need to be reinterpreted as a group to determine the best way to
-// represent them in the current version.
+/**  
+ * Settings that were available to old versions of BeepBox but are no longer available in the
+ * current version that need to be reinterpreted as a group to determine the best way to
+ * represent them in the current version.*/
 interface LegacySettings {
     filterCutoff?: number;
     filterResonance?: number;
