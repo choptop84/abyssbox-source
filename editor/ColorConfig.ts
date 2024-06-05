@@ -12549,7 +12549,7 @@ export class ColorConfig {
 				--pitch2-background: #abd3f4; 
 				--pitch3-background: #b8d7f2; 
 				--third-note: #cbe0f2;
-				--pitch5-background: e5f0f9; 
+				--pitch5-background: #e5f0f9; 
 				--pitch6-background: #ffffff; 
 				--fifth-note: #e5f0f9; 
 				--pitch8-background: #cbe0f2; 
