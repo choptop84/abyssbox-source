@@ -33,6 +33,7 @@ const longText = `:root {
 	--pitch-background: #444;
 	--tonic: #864;
 	--fifth-note: #468;
+	--third-note: #258822;
 	--white-piano-key: #bbb;
 	--black-piano-key: #444;
 	--white-piano-key-text: #131200;
