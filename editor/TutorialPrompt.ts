@@ -7,7 +7,7 @@ const { button, div, h2, p, } = HTML;
 export class TutorialPrompt implements Prompt {
 
     private readonly _cancelButton: HTMLButtonElement = button({ class: "cancelButton", style:"display:none;" });
-
+//#region Yes/No Buttons 
     private readonly okayButton: HTMLButtonElement = button({ class: "okayButton", style: "width:45%;" }, "Okay"); 
 
     private readonly yesButton1: HTMLButtonElement = button({ class: "yesButton", style: "width:15%;" }, "Yes"); 
@@ -16,9 +16,13 @@ export class TutorialPrompt implements Prompt {
     private readonly yesButton2: HTMLButtonElement = button({ class: "yesButton", style: "width:15%;" }, "Yes"); 
     private readonly noButton2: HTMLButtonElement = button({ class: "noButton", style: "width:15%;" }, "No"); 
 
+
     private readonly yesButton3: HTMLButtonElement = button({ class: "yesButton", style: "" }, "I am Certain"); 
     private readonly noButton3: HTMLButtonElement = button({ class: "noButton", style: "" }, "Wait, I'll do it"); 
 
+//#endregion
+
+//#region Tutorial Starter Buttons 
     private readonly learnBeepBox1: HTMLButtonElement = button({ class: "tutorialButton", style: "margin:0.5em;" }, "This is my first time using Anything related to BeepBox."); 
     private readonly learnJummBox1: HTMLButtonElement = button({ class: "tutorialButton", style: "margin:0.5em;" }, "I have used BeepBox, but have never used any of its mods."); 
     private readonly learnUltraBox1: HTMLButtonElement = button({ class: "tutorialButton", style: "margin:0.5em;" }, "I have used BeepBox, and it's Mods, but I've never used UltraBox (The mod AbyssBox is built off of)."); 
@@ -29,6 +33,17 @@ export class TutorialPrompt implements Prompt {
     private readonly learnUltraBox2: HTMLButtonElement = button({ class: "tutorialButton", style: "margin:0.5em;" }, "Tell me more about UltraBox"); 
     private readonly learnAbyssBox2: HTMLButtonElement = button({ class: "tutorialButton", style: "margin:0.5em;" }, "Tell me more about AbyssBox"); 
 
+//#endregion
+
+//#region Learning BeepBox for the first time
+    private readonly learningBeepBoxButton1: HTMLButtonElement = button({ class: "yesButton", style: "width:25%;" }, "Continue"); 
+
+    private readonly learningBeepBoxPatternEditor: HTMLButtonElement = button({ class: "yesButton", style: "width:15%;" }, "Pattern Editor"); 
+    private readonly learningBeepBoxTrackEditor: HTMLButtonElement = button({ class: "yesButton", style: "width:15%;" }, "Track Editor"); 
+    private readonly learningBeepBoxSettingsEditor: HTMLButtonElement = button({ class: "yesButton", style: "width:15%;" }, "Settings Editor"); 
+//#endregion
+
+//#region Enter the Tutorial Prompts
     public readonly startingContainer: HTMLDivElement = div({id: "tutorialPrompt"},
     div({class:"promptTitle"}, h2({class:"tutorialExt",style:"text-align: inherit;"}, ""), h2({class:"tutorialTitle",style:"margin-bottom: 0.5em;"},"AbyssBox Tutorial")),
     p({style:"margin-bottom: 0.5em; text-align: center; font-size: 15px;"},"Is this your first time using AbyssBox?",),
@@ -76,6 +91,32 @@ export class TutorialPrompt implements Prompt {
         this.learnUltraBox2,
         this.learnAbyssBox2, 
     ),
+    );
+
+//#endregion
+
+    public readonly learningBeepBox1: HTMLDivElement = div({id: "tutorialPrompt"},
+    div({class:"promptTitle"}, h2({class:"tutorialExt",style:"text-align: inherit;"}, ""), h2({class:"tutorialTitle",style:"margin-bottom: 0.5em;"},"AbyssBox Tutorial")),
+    p({style:"margin-bottom: 0.5em; text-align: center; font-size: 15px;"},"BeepBox is an online tool used to create songs, using simple shapes and sounds you can make many unique creations all within the editor. ",
+    ),
+        div({style:"display:flex; flex-direction: row; justify-content: space-evenly;"},
+            this.learningBeepBoxButton1,
+        ),
+    );
+
+    public readonly learningBeepBox2: HTMLDivElement = div({id: "tutorialPrompt"},
+    div({class:"promptTitle"}, h2({class:"tutorialExt",style:"text-align: inherit;"}, ""), h2({class:"tutorialTitle",style:"margin-bottom: 0.5em;"},"AbyssBox Tutorial")),
+    p({style:"margin-bottom: 0.5em; text-align: center; font-size: 15px;"},"In BeepBox there are three major sections you will interact with throughout the entirety of your music making journey, these sections are:",
+    p({style:"margin-bottom: 0.5em; text-align: center; font-size: 15px;"}),
+    "The Pattern Editor, The Track Editor, and the Settings Editor.",
+    p({style:"margin-bottom: 0.5em; text-align: center; font-size: 15px;"}),
+    "Each of these areas are very important, which of these would you like to learn about first?",
+    ),
+        div({style:"display:flex; flex-direction: row; justify-content: space-evenly;"},
+            this.learningBeepBoxPatternEditor,
+            this.learningBeepBoxTrackEditor,
+            this.learningBeepBoxSettingsEditor,
+        ),
     );
 
     public readonly container: HTMLDivElement = div({class: "prompt noSelection", id: "tutorialContainerPrompt", style: "width: 350px;"},

@@ -842,7 +842,9 @@ export class SongEditor {
             option({ value: "recordingSetup" }, "Note Recording..."),
             ),
             optgroup({ label: "Appearance" },
+            option({ value: "showThird" }, 'Highlight "Third" Note (ZefBox)'),
             option({ value: "showFifth" }, 'Highlight "Fifth" Note'),
+            option({ value: "advancedColorScheme"}, "Advanced Color Scheme (ModBox)"),
             option({ value: "notesFlashWhenPlayed" }, "Notes Flash When Played (DB2)"),
             option({ value: "showChannels" }, "Show All Channels"),
             option({ value: "showScrollBar" }, "Show Octave Scroll Bar"),
@@ -2914,7 +2916,9 @@ export class SongEditor {
             (prefs.oldMobileLayout ? textOnIcon : textOffIcon) + "Use the Old mobile layout (Reload)",
             "> Note Recording",
             "Appearance",
+            (prefs.showThird ? textOnIcon : textOffIcon) + 'Highlight "Third" Note (ZefBox)',
             (prefs.showFifth ? textOnIcon : textOffIcon) + 'Highlight "Fifth" Note',
+            (prefs.advancedColorScheme ? textOnIcon : textOffIcon) + 'Advanced Color Scheme (ModBox)',
             (prefs.notesFlashWhenPlayed ? textOnIcon : textOffIcon) + "Notes Flash When Played (DB2)",
             (prefs.showChannels ? textOnIcon : textOffIcon) + "Show All Channels",
             (prefs.showScrollBar ? textOnIcon : textOffIcon) + "Show Octave Scroll Bar",
@@ -6060,6 +6064,12 @@ export class SongEditor {
             case "showFifth":
                 this._doc.prefs.showFifth = !this._doc.prefs.showFifth;
                 break;
+            case "showThird":
+                this._doc.prefs.showThird = !this._doc.prefs.showThird;
+                break;    
+            case "advancedColorScheme":
+                this._doc.prefs.advancedColorScheme = !this._doc.prefs.advancedColorScheme;
+                break;        
             case "notesOutsideScale":
                 this._doc.prefs.notesOutsideScale = !this._doc.prefs.notesOutsideScale;
                 break;

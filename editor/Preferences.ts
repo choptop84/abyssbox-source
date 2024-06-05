@@ -11,6 +11,8 @@ export class Preferences {
 	public autoFollow: boolean;
 	public enableNotePreview: boolean;
 	public showFifth: boolean;
+	public showThird: boolean;
+	public advancedColorScheme: boolean;
 	public notesOutsideScale: boolean;
 	public defaultScale: number;
 	public showLetters: boolean;
@@ -59,6 +61,8 @@ export class Preferences {
 		this.autoFollow = window.localStorage.getItem("autoFollow") != "false";
 		this.enableNotePreview = window.localStorage.getItem("enableNotePreview") != "false";
 		this.showFifth = window.localStorage.getItem("showFifth") == "true";
+		this.showThird = window.localStorage.getItem("showThird") == "true";
+		this.advancedColorScheme = window.localStorage.getItem("advancedColorScheme") == "true";
 		this.notesOutsideScale = window.localStorage.getItem("notesOutsideScale") == "true";
 		this.showLetters = window.localStorage.getItem("showLetters") == "true";
 		this.showChannels = window.localStorage.getItem("showChannels") == "true";
@@ -117,6 +121,8 @@ export class Preferences {
 		window.localStorage.setItem("autoFollow", this.autoFollow ? "true" : "false");
 		window.localStorage.setItem("enableNotePreview", this.enableNotePreview ? "true" : "false");
 		window.localStorage.setItem("showFifth", this.showFifth ? "true" : "false");
+		window.localStorage.setItem("showThird", this.showThird ? "true" : "false");
+		window.localStorage.setItem("advancedColorScheme", this.advancedColorScheme ? "true" : "false");
 		window.localStorage.setItem("notesOutsideScale", this.notesOutsideScale ? "true" : "false");
 		window.localStorage.setItem("defaultScale", Config.scales[this.defaultScale].name);
 		window.localStorage.setItem("showLetters", this.showLetters ? "true" : "false");

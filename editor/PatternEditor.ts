@@ -116,6 +116,8 @@ export class PatternEditor {
     private _renderedBeatWidth: number = -1;
     private _renderedPitchHeight: number = -1;
     private _renderedFifths: boolean = false;
+    private _renderedThirds: boolean = false;
+    private _renderedACS: boolean = false;
     private _renderedDrums: boolean = false;
     private _renderedMod: boolean = false;
     private _renderedRhythm: number = -1;
@@ -2384,9 +2386,40 @@ export class PatternEditor {
             this._updateSelection();
         }
 
-        if (this._renderedFifths != this._doc.prefs.showFifth) {
-            this._renderedFifths = this._doc.prefs.showFifth;
-            this._backgroundPitchRows[7].setAttribute("fill", this._doc.prefs.showFifth ? ColorConfig.fifthNote : ColorConfig.pitchBackground);
+        if (this._doc.prefs.advancedColorScheme == false) {
+            if (this._renderedFifths != this._doc.prefs.showFifth) {
+                this._renderedFifths = this._doc.prefs.showFifth;
+                this._backgroundPitchRows[7].setAttribute("fill", this._doc.prefs.showFifth ? ColorConfig.fifthNote : ColorConfig.pitchBackground);
+            }
+
+            if (this._renderedThirds != this._doc.prefs.showThird) {
+                this._renderedThirds = this._doc.prefs.showThird;
+                this._backgroundPitchRows[4].setAttribute("fill", this._doc.prefs.showThird ? ColorConfig.thirdNote : ColorConfig.pitchBackground);
+            }
+
+            this._renderedACS != this._doc.prefs.advancedColorScheme;
+            this._backgroundPitchRows[1].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch1-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+            this._backgroundPitchRows[2].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch2-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+            this._backgroundPitchRows[3].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch3-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+            this._backgroundPitchRows[5].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch5-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+            this._backgroundPitchRows[6].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch6-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+            this._backgroundPitchRows[8].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch8-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+            this._backgroundPitchRows[9].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch9-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+            this._backgroundPitchRows[10].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch10-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+            this._backgroundPitchRows[11].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch11-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+        } else {
+                this._renderedACS = this._doc.prefs.advancedColorScheme;
+                this._backgroundPitchRows[1].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch1-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+                this._backgroundPitchRows[2].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch2-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+                this._backgroundPitchRows[3].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch3-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+                this._backgroundPitchRows[4].setAttribute("fill", this._doc.prefs.advancedColorScheme ? ColorConfig.thirdNote : ColorConfig.pitchBackground);
+                this._backgroundPitchRows[5].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch5-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+                this._backgroundPitchRows[6].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch6-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+                this._backgroundPitchRows[7].setAttribute("fill", this._doc.prefs.advancedColorScheme ? ColorConfig.fifthNote : ColorConfig.pitchBackground);
+                this._backgroundPitchRows[8].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch8-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+                this._backgroundPitchRows[9].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch9-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+                this._backgroundPitchRows[10].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch10-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+                this._backgroundPitchRows[11].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch11-background, var(--pitch-background))" : ColorConfig.pitchBackground);
         }
 
         for (let j: number = 0; j < Config.pitchesPerOctave; j++) {
