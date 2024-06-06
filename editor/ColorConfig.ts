@@ -1716,7 +1716,7 @@ export class ColorConfig {
 			--pitch-background: #393e4f;
 			--tonic: #725491;
 			--fifth-note: #54547a;
-			--third-note: #46736f;
+			--third-note: #3b4b71;
 			--white-piano-key: #eee;
 			--black-piano-key: #666;
 			--white-piano-key-text: #131200;
@@ -4111,6 +4111,290 @@ export class ColorConfig {
 			padding-bottom: 15px;
 			}
 			`,
+			"Yume Nikki": `
+						:root {		
+			--page-margin: #000000; 		
+			--editor-background: #000000; 		
+			--hover-preview: white; 		
+			--playhead: rgba(255, 255, 255, 0.9); 		
+			--primary-text: white; 		
+			--secondary-text: #ffcedd; 		
+			--inverted-text: black;	 		
+			--text-selection: rgba(119,68,255,0.99); 		
+			--box-selection-fill: #1e0915; 		
+			--loop-accent: #7b2442; 		
+			--link-accent: #f588ff; 		
+			--ui-widget-background: #000000; 		
+			--ui-widget-focus: #1f1f1f; 		
+			--pitch-background: #1e0915; 		
+			--tonic: #7b2442; 		
+			--pitch2-background: #13040c;
+			--fifth-note: #4a0008; 	
+			--pitch9-background: #13040c;
+			--pitch10-background: #13040c;
+			--third-note: #481325;	
+			--white-piano-key: #cca5c7; 		
+			--black-piano-key: #402f2f;
+			--white-piano-key-text: #131200;		
+			--black-piano-key-text: #fff;		 		
+			--use-color-formula: true; 		
+			--track-editor-bg-pitch: #731b50; 		
+			--track-editor-bg-pitch-dim: #260019; 		
+			--track-editor-bg-noise: #731b50; 		
+			--track-editor-bg-noise-dim: #260019; 		
+			--track-editor-bg-mod: #731b50; 		
+			--track-editor-bg-mod-dim: #260019; 		
+			--multiplicative-mod-slider: #9f6082; 		
+			--overwriting-mod-slider: #9e3470; 		
+			--indicator-primary: #b3498f; 		
+			--indicator-secondary: #541d40; 		
+			--select2-opt-group: #4f191e; 		
+			--input-box-outline: #18041a; 		
+			--mute-button-normal: #dd5d94;	 		
+			--mute-button-mod: #ba364c; 		
+			--mod-label-primary: #541625; 		
+			--mod-label-secondary-text: rgb(120, 87, 86); 
+			--mod-label-primary-text: gray; 
+			--mod-title: #bf2c5d;
+			--progress-bar: #bf2c5d;
+			--octave-scrollbar: #4a0008;
+
+			--pitch-secondary-channel-hue: -80; 		
+			--pitch-secondary-channel-hue-scale: 0; 		
+			--pitch-secondary-channel-sat: 43; 		
+			--pitch-secondary-channel-sat-scale: 0.1; 		
+			--pitch-secondary-channel-lum: 40; 		
+			--pitch-secondary-channel-lum-scale: 0.05; 
+		
+			--pitch-primary-channel-hue: -53; 		
+			--pitch-primary-channel-hue-scale: 6.1; 		
+			--pitch-primary-channel-sat: 75; 		
+			--pitch-primary-channel-sat-scale: 0.1; 		
+			--pitch-primary-channel-lum: 67.5; 		
+			--pitch-primary-channel-lum-scale: 0.05; 	
+	
+			--pitch-secondary-note-hue: -34; 		
+			--pitch-secondary-note-hue-scale: 6.1; 		
+			--pitch-secondary-note-sat: 93.9; 		
+			--pitch-secondary-note-sat-scale: 0.1; 		
+			--pitch-secondary-note-lum: 25; 		
+			--pitch-secondary-note-lum-scale: 0.05; 
+		
+			--pitch-primary-note-hue: -53; 		
+			--pitch-primary-note-hue-scale: 6.1; 		
+			--pitch-primary-note-sat: 100; 		
+			--pitch-primary-note-sat-scale: 0.05; 		
+			--pitch-primary-note-lum: 85.6; 		
+			--pitch-primary-note-lum-scale: 0.025; 
+		
+			--noise-secondary-channel-hue: 0; 		
+			--noise-secondary-channel-hue-scale: 2; 		
+			--noise-secondary-channel-sat: 65; 		
+			--noise-secondary-channel-sat-scale: 0; 		
+			--noise-secondary-channel-lum: 42; 		
+			--noise-secondary-channel-lum-scale: 0; 
+		
+			--noise-primary-channel-hue: 0; 		
+			--noise-primary-channel-hue-scale: 1; 		
+			--noise-primary-channel-sat: 100; 		
+			--noise-primary-channel-sat-scale: 1; 		
+			--noise-primary-channel-lum: 63.5; 		
+			--noise-primary-channel-lum-scale: 0; 
+		
+			--noise-secondary-note-hue: 24; 		
+			--noise-secondary-note-hue-scale: 2; 		
+			--noise-secondary-note-sat: 100; 		
+			--noise-secondary-note-sat-scale: 0; 		
+			--noise-secondary-note-lum: 35; 		
+			--noise-secondary-note-lum-scale: 0; 	
+	
+			--noise-primary-note-hue: 24; 		
+			--noise-primary-note-hue-scale: 2; 		
+			--noise-primary-note-sat: 100; 		
+			--noise-primary-note-sat-scale: 1; 		
+			--noise-primary-note-lum: 60; 		
+			--noise-primary-note-lum-scale: 1; 	
+	
+			--mod-secondary-channel-hue: 55; 		
+			--mod-secondary-channel-hue-scale: 1.5; 		
+			--mod-secondary-channel-sat: 100; 		
+			--mod-secondary-channel-sat-scale: 0; 		
+			--mod-secondary-channel-lum: 20; 		
+			--mod-secondary-channel-lum-scale: 0; 
+		
+			--mod-primary-channel-hue: 55; 		
+			--mod-primary-channel-hue-scale: 1.5; 		
+			--mod-primary-channel-sat: 96; 		
+			--mod-primary-channel-sat-scale: 0; 		
+			--mod-primary-channel-lum: 50; 		
+			--mod-primary-channel-lum-scale: 0; 
+		
+			--mod-secondary-note-hue: 55; 		
+			--mod-secondary-note-hue-scale: 1.5; 		
+			--mod-secondary-note-sat: 92; 		
+			--mod-secondary-note-sat-scale: 0; 		
+			--mod-secondary-note-lum: 45; 		
+			--mod-secondary-note-lum-scale: 0; 
+		
+			--mod-primary-note-hue: 55; 		
+			--mod-primary-note-hue-scale: 1.5; 		
+			--mod-primary-note-sat: 96; 		
+			--mod-primary-note-sat-scale: 0; 		
+			--mod-primary-note-lum: 85; 		
+			--mod-primary-note-lum-scale: 0; 	
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #ffffff77;
+
+			--oscilloscope-line-R: #7b2442;
+			--oscilloscope-line-L: var(--secondary-text);
+
+			--scrollbar-color: #ffffff;
+			--icon-color: #000;
+			--arrow-color: #000;
+				}
+		* {
+		--file-page-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-file.png");
+		--edit-pencil-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-edit.png");
+		--preferences-gear-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-preferences.png");
+		--instrument-copy-symbol: url("https://choptop84.github.io/abyssbox-app/icon-copy.png");
+		--instrument-paste-symbol: url("https://choptop84.github.io/abyssbox-app/icon-paste.png");
+		--play-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-play.png");
+		--pause-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-pause.png");
+		--record-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-record.png");
+		--stop-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-stop.png");
+		--prev-bar-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-prev.png");
+		--next-bar-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-next.png");
+		--muted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speakerMuted.png");
+		--unmuted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speaker.png");
+		--volume-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speaker.png");
+		--zoom-in-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomIn.png");
+		--zoom-out-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomOut.png");
+		--export-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-export.png");
+		--export-instrument-symbol: var(--export-symbol);
+		--import-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-import.png");
+		}
+		
+		.beepboxEditor input[type="range"]::-moz-range-track
+		{
+			background: #4a0008 !important;
+			border-radius: 0px;
+		} /* Thanks to LeoV's Skeumorphic theme on this one */
+
+			@font-face {
+		   font-family: "AbyssType";
+		   src:
+ 		   url("abysstype.otf") format("opentype") tech(color-COLRv1),
+			}
+
+			/*#Hotdog {
+				content: url("https://choptop84.github.io/choptop84s-image-repository/abclassic_hotdog.png");
+			} */
+
+			#text-content {
+    				border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/yumeNikkiBorder.png");
+    				border-image-slice: 4 fill; 
+   				border-image-width: 12px; 
+				border-image-repeat: repeat; 
+    				padding: 12px; 
+
+    				image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    				image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    				image-rendering: -o-crisp-edges !important;            /* Opera */
+    				image-rendering: pixelated !important;                 /* Future browsers */
+    				image-rendering: optimizeSpeed !important;             /* IE */
+				}
+			#beepboxEditorContainer {
+    				border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/yumeNikkiBorder.png");
+    				border-image-slice: 4 fill; 
+   				border-image-width: 12px; 
+				border-image-repeat: repeat;
+    				padding: 12px;
+
+    				image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    				image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    				image-rendering: -o-crisp-edges !important;            /* Opera */
+    				image-rendering: pixelated !important;                 /* Future browsers */
+    				image-rendering: optimizeSpeed !important;             /* IE */ 
+				}
+
+				div.prompt.noSelection {
+					border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/yumeNikkiBorder.png");
+    				border-image-slice: 4 fill; 
+   				border-image-width: 12px; 
+				border-image-repeat: repeat;
+    				padding: 12px;
+
+    				image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    				image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    				image-rendering: -o-crisp-edges !important;            /* Opera */
+    				image-rendering: pixelated !important;                 /* Future browsers */
+    				image-rendering: optimizeSpeed !important;             /* IE */ 
+				}
+
+				.beepboxEditor select:focus,
+				.beepboxEditor .selectContainer:focus-within
+				{
+					--ui-widget-background: black !important;
+					
+					border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/yumeNikkiButton.png");
+					border-image-slice: 6 fill; 
+   					border-image-width: 8px; 
+					border-image-repeat: repeat;
+	
+					--file-page-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-soul.png");
+					--edit-pencil-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-soul.png");
+					--preferences-gear-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-soul.png");
+					--ui-widget-focus: #000;
+				}
+
+				.beepboxEditor .menu.edit::before,
+				.beepboxEditor .menu.file::before,
+				.beepboxEditor .menu.preferences::before {
+					background: var(--icon-color) !important;
+				}
+				.beepboxEditor .menu.edit::after,
+				.beepboxEditor .menu.file::after,
+				.beepboxEditor .menu.preferences::after {
+					background: var(--arrow-color) !important;
+				}
+
+				.beepboxEditor .channelBoxLabel {
+					font-size: 14px !important;
+					font-weight: unset !important;
+				}
+				
+			div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+				--ui-widget-background: #000000 !important;
+			}
+				
+				button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+					--ui-widget-background: var(--editor-background) !important;
+
+				}
+
+			@font-face {
+		   font-family: "yumeNumbers";
+		   src:
+ 		   url("https://choptop84.github.io/choptop84s-image-repository/yumeNumbers.otf") format("opentype") tech(color-COLRv1),
+			}
+
+			#text-content > section > h1 > font {
+				display: none;
+				}
+				#text-content > section > h1 {
+				margin: auto;
+				content: url("https://choptop84.github.io/choptop84s-image-repository/AbyssBoxYumeNikkiThemeLogo.png");
+				}
+
+			/*html {
+ 		   	font-family: 'AbyssType';
+			}*/
+
+			div.channelBoxLabel {
+				font-family: 'yumeNumbers' !important;
+			}
+			`,
       "Windows Xp": `
 			:root {		
 			--page-margin: #edead9; 		
@@ -6464,7 +6748,7 @@ export class ColorConfig {
 					--pitch-background: #393e4f;
 					--tonic: #725491;
 					--fifth-note: #54547a;
-					--third-note: #258822;
+					--third-note: #3b4b71;
 					--white-piano-key: #eee;
 					--black-piano-key: #666;
                     --white-piano-key-text: #131200;
@@ -10708,6 +10992,7 @@ export class ColorConfig {
 				--tonic: #c4ffa3;
 				--fifth-note: #96fffb;
 				--third-note: #9698ff;
+				--octave-scrollbar: #00ff00;
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
 				--white-piano-key-text: #131200;
@@ -10834,6 +11119,7 @@ export class ColorConfig {
 				--tonic: #eafffe;
 				--fifth-note: #b7f1ff;
 				--third-note: #9698ff;
+				--octave-scrollbar: #a5eeff;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -10963,6 +11249,7 @@ export class ColorConfig {
 				--tonic: #090b3a;
 				--fifth-note: #3f669b;
 				--third-note: #6f91bf;
+				--octave-scrollbar: #a5eeff;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -11092,6 +11379,7 @@ export class ColorConfig {
 				--tonic: #da4e2a;
 				--fifth-note: #5d9511;
 				--third-note: #2779c2;
+				--octave-scrollbar: #295294;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -11221,6 +11509,7 @@ export class ColorConfig {
 				--tonic: #20330a;
 				--fifth-note: #74bc21;
 				--third-note: #a0d168;
+				--octave-scrollbar: #74bc21;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -11350,6 +11639,7 @@ export class ColorConfig {
 				--tonic: #fffc5b;
 				--fifth-note: #ff5e3a;
 				--third-note: #ffa03a;
+				--octave-scrollbar: #ff5e3a;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -11479,6 +11769,7 @@ export class ColorConfig {
 				--tonic: #45a3e5;
 				--fifth-note: #864cbf;
 				--third-note: #bf4ca8;
+				--octave-scrollbar: #eb670f;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -11608,6 +11899,7 @@ export class ColorConfig {
 				--tonic: #fffafa;
 				--fifth-note: #ff91ce;
 				--third-note: #ff91a3;
+				--octave-scrollbar: #ffb1f4;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -11737,6 +12029,7 @@ export class ColorConfig {
 				--tonic: #1a2844;
 				--fifth-note: #dabbe6;
 				--third-note: #faf4c3;
+				--octave-scrollbar: #5f4c99;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -11875,6 +12168,7 @@ export class ColorConfig {
 				--pitch9-background: #41323b;
 				--pitch10-background: #41323b;
 				--pitch11-background: #41323b;
+				--octave-scrollbar: #ef3027;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -12013,6 +12307,7 @@ export class ColorConfig {
 				--pitch9-background: #222222;
 				--pitch10-background: #222222;
 				--pitch11-background: #222222;
+
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -12280,6 +12575,7 @@ export class ColorConfig {
 				--pitch9-background: #ffffa0; 
 				--pitch10-background: #ffffa0; 
 				--pitch11-background: #ffffa0; 
+				--octave-scrollbar: #ffffff;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -12418,6 +12714,7 @@ export class ColorConfig {
 				--pitch9-background: #754a3f; 
 				--pitch10-background: #754a3f; 
 				--pitch11-background: #754a3f; 
+				--octave-scrollbar: #9e2200;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -12555,7 +12852,8 @@ export class ColorConfig {
 				--pitch8-background: #cbe0f2; 
 				--pitch9-background: #b8d7f2; 
 				--pitch10-background: #abd3f4; 
-				--pitch11-background: #99c8ef; 
+				--pitch11-background: #99c8ef;
+				--octave-scrollbar: #ffffff; 
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -12692,7 +12990,8 @@ export class ColorConfig {
 				--pitch9-background: #f5bb00; 
 				--pitch10-background: #f5bb00; 
 				--pitch11-background: #f5bb00; 
-				
+				--octave-scrollbar: #e59900;
+
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
 				--white-piano-key-text: #131200;
@@ -12828,6 +13127,7 @@ export class ColorConfig {
 				--pitch9-background: #777777; 
 				--pitch10-background: #565656; 
 				--pitch11-background: #282828; 
+				--octave-scrollbar: #ffffff; 
 				
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -12964,6 +13264,7 @@ export class ColorConfig {
 				--pitch9-background: #b2b3ff; 
 				--pitch10-background: #e0b2ff; 
 				--pitch11-background: #ffafe9; 
+				--octave-scrollbar: #43ff00; 
 				
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -13099,7 +13400,8 @@ export class ColorConfig {
 				--pitch8-background: #0001fc; 
 				--pitch9-background: #111111; 
 				--pitch10-background: #111111; 
-				--pitch11-background: #111111; 
+				--pitch11-background: #111111;
+				--octave-scrollbar: #0001fc;  
 				
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -13236,6 +13538,7 @@ export class ColorConfig {
 				--pitch9-background: #0f380f; 
 				--pitch10-background: #0f380f; 
 				--pitch11-background: #0f380f; 
+				--octave-scrollbar: #9bbc0f;  
 				
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -13374,6 +13677,7 @@ export class ColorConfig {
 				--pitch9-background: #1a2182; 
 				--pitch10-background: #1a2182; 
 				--pitch11-background: #1a2182;
+				--octave-scrollbar: #852929;
 
 				--white-piano-key: #bababa;
 				--black-piano-key: #444444;
@@ -16520,7 +16824,7 @@ export class ColorConfig {
 		--pitch-background: #393e4f55;
 		--tonic: #725491;
 		--fifth-note: #54547a;
-		--third-note: #258822;
+		--third-note: #3b4b71;
 		--white-piano-key: #eee;
 		--black-piano-key: #666;
 		--white-piano-key-text: #131200;

@@ -4078,7 +4078,7 @@ var beepbox = (function (exports) {
 			--pitch-background: #393e4f;
 			--tonic: #725491;
 			--fifth-note: #54547a;
-			--third-note: #46736f;
+			--third-note: #3b4b71;
 			--white-piano-key: #eee;
 			--black-piano-key: #666;
 			--white-piano-key-text: #131200;
@@ -6473,6 +6473,290 @@ var beepbox = (function (exports) {
 			padding-bottom: 15px;
 			}
 			`,
+        "Yume Nikki": `
+						:root {		
+			--page-margin: #000000; 		
+			--editor-background: #000000; 		
+			--hover-preview: white; 		
+			--playhead: rgba(255, 255, 255, 0.9); 		
+			--primary-text: white; 		
+			--secondary-text: #ffcedd; 		
+			--inverted-text: black;	 		
+			--text-selection: rgba(119,68,255,0.99); 		
+			--box-selection-fill: #1e0915; 		
+			--loop-accent: #7b2442; 		
+			--link-accent: #f588ff; 		
+			--ui-widget-background: #000000; 		
+			--ui-widget-focus: #1f1f1f; 		
+			--pitch-background: #1e0915; 		
+			--tonic: #7b2442; 		
+			--pitch2-background: #13040c;
+			--fifth-note: #4a0008; 	
+			--pitch9-background: #13040c;
+			--pitch10-background: #13040c;
+			--third-note: #481325;	
+			--white-piano-key: #cca5c7; 		
+			--black-piano-key: #402f2f;
+			--white-piano-key-text: #131200;		
+			--black-piano-key-text: #fff;		 		
+			--use-color-formula: true; 		
+			--track-editor-bg-pitch: #731b50; 		
+			--track-editor-bg-pitch-dim: #260019; 		
+			--track-editor-bg-noise: #731b50; 		
+			--track-editor-bg-noise-dim: #260019; 		
+			--track-editor-bg-mod: #731b50; 		
+			--track-editor-bg-mod-dim: #260019; 		
+			--multiplicative-mod-slider: #9f6082; 		
+			--overwriting-mod-slider: #9e3470; 		
+			--indicator-primary: #b3498f; 		
+			--indicator-secondary: #541d40; 		
+			--select2-opt-group: #4f191e; 		
+			--input-box-outline: #18041a; 		
+			--mute-button-normal: #dd5d94;	 		
+			--mute-button-mod: #ba364c; 		
+			--mod-label-primary: #541625; 		
+			--mod-label-secondary-text: rgb(120, 87, 86); 
+			--mod-label-primary-text: gray; 
+			--mod-title: #bf2c5d;
+			--progress-bar: #bf2c5d;
+			--octave-scrollbar: #4a0008;
+
+			--pitch-secondary-channel-hue: -80; 		
+			--pitch-secondary-channel-hue-scale: 0; 		
+			--pitch-secondary-channel-sat: 43; 		
+			--pitch-secondary-channel-sat-scale: 0.1; 		
+			--pitch-secondary-channel-lum: 40; 		
+			--pitch-secondary-channel-lum-scale: 0.05; 
+		
+			--pitch-primary-channel-hue: -53; 		
+			--pitch-primary-channel-hue-scale: 6.1; 		
+			--pitch-primary-channel-sat: 75; 		
+			--pitch-primary-channel-sat-scale: 0.1; 		
+			--pitch-primary-channel-lum: 67.5; 		
+			--pitch-primary-channel-lum-scale: 0.05; 	
+	
+			--pitch-secondary-note-hue: -34; 		
+			--pitch-secondary-note-hue-scale: 6.1; 		
+			--pitch-secondary-note-sat: 93.9; 		
+			--pitch-secondary-note-sat-scale: 0.1; 		
+			--pitch-secondary-note-lum: 25; 		
+			--pitch-secondary-note-lum-scale: 0.05; 
+		
+			--pitch-primary-note-hue: -53; 		
+			--pitch-primary-note-hue-scale: 6.1; 		
+			--pitch-primary-note-sat: 100; 		
+			--pitch-primary-note-sat-scale: 0.05; 		
+			--pitch-primary-note-lum: 85.6; 		
+			--pitch-primary-note-lum-scale: 0.025; 
+		
+			--noise-secondary-channel-hue: 0; 		
+			--noise-secondary-channel-hue-scale: 2; 		
+			--noise-secondary-channel-sat: 65; 		
+			--noise-secondary-channel-sat-scale: 0; 		
+			--noise-secondary-channel-lum: 42; 		
+			--noise-secondary-channel-lum-scale: 0; 
+		
+			--noise-primary-channel-hue: 0; 		
+			--noise-primary-channel-hue-scale: 1; 		
+			--noise-primary-channel-sat: 100; 		
+			--noise-primary-channel-sat-scale: 1; 		
+			--noise-primary-channel-lum: 63.5; 		
+			--noise-primary-channel-lum-scale: 0; 
+		
+			--noise-secondary-note-hue: 24; 		
+			--noise-secondary-note-hue-scale: 2; 		
+			--noise-secondary-note-sat: 100; 		
+			--noise-secondary-note-sat-scale: 0; 		
+			--noise-secondary-note-lum: 35; 		
+			--noise-secondary-note-lum-scale: 0; 	
+	
+			--noise-primary-note-hue: 24; 		
+			--noise-primary-note-hue-scale: 2; 		
+			--noise-primary-note-sat: 100; 		
+			--noise-primary-note-sat-scale: 1; 		
+			--noise-primary-note-lum: 60; 		
+			--noise-primary-note-lum-scale: 1; 	
+	
+			--mod-secondary-channel-hue: 55; 		
+			--mod-secondary-channel-hue-scale: 1.5; 		
+			--mod-secondary-channel-sat: 100; 		
+			--mod-secondary-channel-sat-scale: 0; 		
+			--mod-secondary-channel-lum: 20; 		
+			--mod-secondary-channel-lum-scale: 0; 
+		
+			--mod-primary-channel-hue: 55; 		
+			--mod-primary-channel-hue-scale: 1.5; 		
+			--mod-primary-channel-sat: 96; 		
+			--mod-primary-channel-sat-scale: 0; 		
+			--mod-primary-channel-lum: 50; 		
+			--mod-primary-channel-lum-scale: 0; 
+		
+			--mod-secondary-note-hue: 55; 		
+			--mod-secondary-note-hue-scale: 1.5; 		
+			--mod-secondary-note-sat: 92; 		
+			--mod-secondary-note-sat-scale: 0; 		
+			--mod-secondary-note-lum: 45; 		
+			--mod-secondary-note-lum-scale: 0; 
+		
+			--mod-primary-note-hue: 55; 		
+			--mod-primary-note-hue-scale: 1.5; 		
+			--mod-primary-note-sat: 96; 		
+			--mod-primary-note-sat-scale: 0; 		
+			--mod-primary-note-lum: 85; 		
+			--mod-primary-note-lum-scale: 0; 	
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #ffffff77;
+
+			--oscilloscope-line-R: #7b2442;
+			--oscilloscope-line-L: var(--secondary-text);
+
+			--scrollbar-color: #ffffff;
+			--icon-color: #000;
+			--arrow-color: #000;
+				}
+		* {
+		--file-page-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-file.png");
+		--edit-pencil-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-edit.png");
+		--preferences-gear-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-preferences.png");
+		--instrument-copy-symbol: url("https://choptop84.github.io/abyssbox-app/icon-copy.png");
+		--instrument-paste-symbol: url("https://choptop84.github.io/abyssbox-app/icon-paste.png");
+		--play-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-play.png");
+		--pause-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-pause.png");
+		--record-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-record.png");
+		--stop-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-stop.png");
+		--prev-bar-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-prev.png");
+		--next-bar-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-next.png");
+		--muted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speakerMuted.png");
+		--unmuted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speaker.png");
+		--volume-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speaker.png");
+		--zoom-in-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomIn.png");
+		--zoom-out-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomOut.png");
+		--export-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-export.png");
+		--export-instrument-symbol: var(--export-symbol);
+		--import-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-import.png");
+		}
+		
+		.beepboxEditor input[type="range"]::-moz-range-track
+		{
+			background: #4a0008 !important;
+			border-radius: 0px;
+		} /* Thanks to LeoV's Skeumorphic theme on this one */
+
+			@font-face {
+		   font-family: "AbyssType";
+		   src:
+ 		   url("abysstype.otf") format("opentype") tech(color-COLRv1),
+			}
+
+			/*#Hotdog {
+				content: url("https://choptop84.github.io/choptop84s-image-repository/abclassic_hotdog.png");
+			} */
+
+			#text-content {
+    				border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/yumeNikkiBorder.png");
+    				border-image-slice: 4 fill; 
+   				border-image-width: 12px; 
+				border-image-repeat: repeat; 
+    				padding: 12px; 
+
+    				image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    				image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    				image-rendering: -o-crisp-edges !important;            /* Opera */
+    				image-rendering: pixelated !important;                 /* Future browsers */
+    				image-rendering: optimizeSpeed !important;             /* IE */
+				}
+			#beepboxEditorContainer {
+    				border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/yumeNikkiBorder.png");
+    				border-image-slice: 4 fill; 
+   				border-image-width: 12px; 
+				border-image-repeat: repeat;
+    				padding: 12px;
+
+    				image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    				image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    				image-rendering: -o-crisp-edges !important;            /* Opera */
+    				image-rendering: pixelated !important;                 /* Future browsers */
+    				image-rendering: optimizeSpeed !important;             /* IE */ 
+				}
+
+				div.prompt.noSelection {
+					border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/yumeNikkiBorder.png");
+    				border-image-slice: 4 fill; 
+   				border-image-width: 12px; 
+				border-image-repeat: repeat;
+    				padding: 12px;
+
+    				image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    				image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    				image-rendering: -o-crisp-edges !important;            /* Opera */
+    				image-rendering: pixelated !important;                 /* Future browsers */
+    				image-rendering: optimizeSpeed !important;             /* IE */ 
+				}
+
+				.beepboxEditor select:focus,
+				.beepboxEditor .selectContainer:focus-within
+				{
+					--ui-widget-background: black !important;
+					
+					border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/yumeNikkiButton.png");
+					border-image-slice: 6 fill; 
+   					border-image-width: 8px; 
+					border-image-repeat: repeat;
+	
+					--file-page-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-soul.png");
+					--edit-pencil-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-soul.png");
+					--preferences-gear-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-soul.png");
+					--ui-widget-focus: #000;
+				}
+
+				.beepboxEditor .menu.edit::before,
+				.beepboxEditor .menu.file::before,
+				.beepboxEditor .menu.preferences::before {
+					background: var(--icon-color) !important;
+				}
+				.beepboxEditor .menu.edit::after,
+				.beepboxEditor .menu.file::after,
+				.beepboxEditor .menu.preferences::after {
+					background: var(--arrow-color) !important;
+				}
+
+				.beepboxEditor .channelBoxLabel {
+					font-size: 14px !important;
+					font-weight: unset !important;
+				}
+				
+			div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+				--ui-widget-background: #000000 !important;
+			}
+				
+				button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+					--ui-widget-background: var(--editor-background) !important;
+
+				}
+
+			@font-face {
+		   font-family: "yumeNumbers";
+		   src:
+ 		   url("https://choptop84.github.io/choptop84s-image-repository/yumeNumbers.otf") format("opentype") tech(color-COLRv1),
+			}
+
+			#text-content > section > h1 > font {
+				display: none;
+				}
+				#text-content > section > h1 {
+				margin: auto;
+				content: url("https://choptop84.github.io/choptop84s-image-repository/AbyssBoxYumeNikkiThemeLogo.png");
+				}
+
+			/*html {
+ 		   	font-family: 'AbyssType';
+			}*/
+
+			div.channelBoxLabel {
+				font-family: 'yumeNumbers' !important;
+			}
+			`,
         "Windows Xp": `
 			:root {		
 			--page-margin: #edead9; 		
@@ -8826,7 +9110,7 @@ var beepbox = (function (exports) {
 					--pitch-background: #393e4f;
 					--tonic: #725491;
 					--fifth-note: #54547a;
-					--third-note: #258822;
+					--third-note: #3b4b71;
 					--white-piano-key: #eee;
 					--black-piano-key: #666;
                     --white-piano-key-text: #131200;
@@ -13069,6 +13353,7 @@ var beepbox = (function (exports) {
 				--tonic: #c4ffa3;
 				--fifth-note: #96fffb;
 				--third-note: #9698ff;
+				--octave-scrollbar: #00ff00;
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
 				--white-piano-key-text: #131200;
@@ -13195,6 +13480,7 @@ var beepbox = (function (exports) {
 				--tonic: #eafffe;
 				--fifth-note: #b7f1ff;
 				--third-note: #9698ff;
+				--octave-scrollbar: #a5eeff;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -13324,6 +13610,7 @@ var beepbox = (function (exports) {
 				--tonic: #090b3a;
 				--fifth-note: #3f669b;
 				--third-note: #6f91bf;
+				--octave-scrollbar: #a5eeff;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -13453,6 +13740,7 @@ var beepbox = (function (exports) {
 				--tonic: #da4e2a;
 				--fifth-note: #5d9511;
 				--third-note: #2779c2;
+				--octave-scrollbar: #295294;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -13582,6 +13870,7 @@ var beepbox = (function (exports) {
 				--tonic: #20330a;
 				--fifth-note: #74bc21;
 				--third-note: #a0d168;
+				--octave-scrollbar: #74bc21;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -13711,6 +14000,7 @@ var beepbox = (function (exports) {
 				--tonic: #fffc5b;
 				--fifth-note: #ff5e3a;
 				--third-note: #ffa03a;
+				--octave-scrollbar: #ff5e3a;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -13840,6 +14130,7 @@ var beepbox = (function (exports) {
 				--tonic: #45a3e5;
 				--fifth-note: #864cbf;
 				--third-note: #bf4ca8;
+				--octave-scrollbar: #eb670f;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -13969,6 +14260,7 @@ var beepbox = (function (exports) {
 				--tonic: #fffafa;
 				--fifth-note: #ff91ce;
 				--third-note: #ff91a3;
+				--octave-scrollbar: #ffb1f4;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -14098,6 +14390,7 @@ var beepbox = (function (exports) {
 				--tonic: #1a2844;
 				--fifth-note: #dabbe6;
 				--third-note: #faf4c3;
+				--octave-scrollbar: #5f4c99;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -14236,6 +14529,7 @@ var beepbox = (function (exports) {
 				--pitch9-background: #41323b;
 				--pitch10-background: #41323b;
 				--pitch11-background: #41323b;
+				--octave-scrollbar: #ef3027;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -14374,6 +14668,7 @@ var beepbox = (function (exports) {
 				--pitch9-background: #222222;
 				--pitch10-background: #222222;
 				--pitch11-background: #222222;
+
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -14641,6 +14936,7 @@ var beepbox = (function (exports) {
 				--pitch9-background: #ffffa0; 
 				--pitch10-background: #ffffa0; 
 				--pitch11-background: #ffffa0; 
+				--octave-scrollbar: #ffffff;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -14779,6 +15075,7 @@ var beepbox = (function (exports) {
 				--pitch9-background: #754a3f; 
 				--pitch10-background: #754a3f; 
 				--pitch11-background: #754a3f; 
+				--octave-scrollbar: #9e2200;
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -14916,7 +15213,8 @@ var beepbox = (function (exports) {
 				--pitch8-background: #cbe0f2; 
 				--pitch9-background: #b8d7f2; 
 				--pitch10-background: #abd3f4; 
-				--pitch11-background: #99c8ef; 
+				--pitch11-background: #99c8ef;
+				--octave-scrollbar: #ffffff; 
 
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -15053,7 +15351,8 @@ var beepbox = (function (exports) {
 				--pitch9-background: #f5bb00; 
 				--pitch10-background: #f5bb00; 
 				--pitch11-background: #f5bb00; 
-				
+				--octave-scrollbar: #e59900;
+
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
 				--white-piano-key-text: #131200;
@@ -15189,6 +15488,7 @@ var beepbox = (function (exports) {
 				--pitch9-background: #777777; 
 				--pitch10-background: #565656; 
 				--pitch11-background: #282828; 
+				--octave-scrollbar: #ffffff; 
 				
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -15325,6 +15625,7 @@ var beepbox = (function (exports) {
 				--pitch9-background: #b2b3ff; 
 				--pitch10-background: #e0b2ff; 
 				--pitch11-background: #ffafe9; 
+				--octave-scrollbar: #43ff00; 
 				
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -15460,7 +15761,8 @@ var beepbox = (function (exports) {
 				--pitch8-background: #0001fc; 
 				--pitch9-background: #111111; 
 				--pitch10-background: #111111; 
-				--pitch11-background: #111111; 
+				--pitch11-background: #111111;
+				--octave-scrollbar: #0001fc;  
 				
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -15597,6 +15899,7 @@ var beepbox = (function (exports) {
 				--pitch9-background: #0f380f; 
 				--pitch10-background: #0f380f; 
 				--pitch11-background: #0f380f; 
+				--octave-scrollbar: #9bbc0f;  
 				
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
@@ -15735,6 +16038,7 @@ var beepbox = (function (exports) {
 				--pitch9-background: #1a2182; 
 				--pitch10-background: #1a2182; 
 				--pitch11-background: #1a2182;
+				--octave-scrollbar: #852929;
 
 				--white-piano-key: #bababa;
 				--black-piano-key: #444444;
@@ -18880,7 +19184,7 @@ var beepbox = (function (exports) {
 		--pitch-background: #393e4f55;
 		--tonic: #725491;
 		--fifth-note: #54547a;
-		--third-note: #258822;
+		--third-note: #3b4b71;
 		--white-piano-key: #eee;
 		--black-piano-key: #666;
 		--white-piano-key-text: #131200;
@@ -45829,7 +46133,7 @@ You should be redirected to the song at:<br /><br />
             this._notchHeight = 4.0;
             this._octaveCount = Config.pitchOctaves;
             this._octaveHeight = (this._editorHeight - this._notchHeight) / this._octaveCount;
-            this._handle = SVG.rect({ fill: ColorConfig.uiWidgetBackground, x: 2, y: 0, width: this._editorWidth - 4 });
+            this._handle = SVG.rect({ fill: "var(--octave-scrollbar, var(--ui-widget-background, #444444))", x: 2, y: 0, width: this._editorWidth - 4 });
             this._handleHighlight = SVG.rect({ fill: "none", stroke: ColorConfig.hoverPreview, "stroke-width": 2, "pointer-events": "none", x: 1, y: 0, width: this._editorWidth - 2 });
             this._upHighlight = SVG.path({ fill: ColorConfig.hoverPreview, "pointer-events": "none" });
             this._downHighlight = SVG.path({ fill: ColorConfig.hoverPreview, "pointer-events": "none" });
@@ -52461,7 +52765,7 @@ button.playButton::before {
     class ThemePrompt {
         constructor(_doc) {
             this._doc = _doc;
-            this._themeSelect = select$5({ style: "width: 100%;", id: "themeSelect" }, optgroup$1({ label: "AbyssBox Themes" }, option$5({ value: "AbyssBox Classic" }, "AbyssBox Classic"), option$5({ value: "AbyssBox Competitive" }, "AbyssBox Competitive"), option$5({ value: "AbyssBox Light" }, "AbyssBox Light"), option$5({ value: "AbyssBox 0.8" }, "AbyssBox 0.8"), option$5({ value: "Half-Life" }, "Half-Life"), option$5({ value: "Half-Life: Source" }, "Half-Life: Source"), option$5({ value: "Doom 1993" }, "Doom 1993"), option$5({ value: "Undertale" }, "Undertale"), option$5({ value: "Scratch" }, "Scratch"), option$5({ value: "Scratch Addons" }, "Scratch Addons"), option$5({ value: "Windows Xp" }, "Windows Xp"), option$5({ value: "Frutiger Aero" }, "Frutiger Aero"), option$5({ value: "Skeuomorphic" }, "Skeuomorphic/Early 2000's (LeoV)"), option$5({ value: "Glyde" }, "Glyde"), option$5({ value: "starry studio" }, "Starry Studio"), option$5({ value: "Terminal 2.0 (AB)" }, "Terminal 2.0 (AB)"), option$5({ value: "Slushie" }, "Slushie"), option$5({ value: "Slushie Pixel" }, "Slushie 2"), option$5({ value: "BeepBox Pixel" }, "BeepBox Pixel"), option$5({ value: "Ghost House" }, "Ghost House"), option$5({ value: "Ghost House 2" }, "Ghost House 2")), optgroup$1({ label: "BeepBox Themes" }, option$5({ value: "dark classic" }, "BeepBox Dark"), option$5({ value: "light classic" }, "BeepBox Light"), option$5({ value: "dark competition" }, "BeepBox Competition Dark")), optgroup$1({ label: "JummBox Themes" }, option$5({ value: "jummbox classic" }, "JummBox Dark"), option$5({ value: "jummbox light" }, "JummBox Light"), option$5({ value: "forest" }, "Forest"), option$5({ value: "forest 2" }, "Forest 2"), option$5({ value: "canyon" }, "Canyon"), option$5({ value: "canyon 2" }, "Canyon 2"), option$5({ value: "midnight" }, "Midnight"), option$5({ value: "beachcombing" }, "Beachcombing"), option$5({ value: "violet verdant" }, "Violet Verdant"), option$5({ value: "sunset" }, "Sunset"), option$5({ value: "autumn" }, "Autumn"), option$5({ value: "fruit" }, "Shadowfruit"), option$5({ value: "toxic" }, "Toxic"), option$5({ value: "roe" }, "Roe"), option$5({ value: "moonlight" }, "Moonlight"), option$5({ value: "portal" }, "Portal"), option$5({ value: "fusion" }, "Fusion"), option$5({ value: "inverse" }, "Inverse"), option$5({ value: "nebula" }, "Nebula"), option$5({ value: "Nebula 2" }, "Nebula 2"), option$5({ value: "roe light" }, "Roe Light"), option$5({ value: "amoled dark" }, "High Contrast Dark"), option$5({ value: "energized" }, "Energized"), option$5({ value: "neapolitan" }, "Neapolitan"), option$5({ value: "mono" }, "Poly"), option$5({ value: "blutonium" }, "Blutonium")), optgroup$1({ label: "ModBox Themes" }, option$5({ value: "modbox classic" }, "Modbox"), option$5({ value: "modbox 2" }, "Modbox 2.0"), option$5({ value: "modbox artic" }, "Artic"), option$5({ value: "modbox cinnamon" }, "Cinnamon Roll [!]"), option$5({ value: "modbox ocean" }, "Ocean"), option$5({ value: "modbox rainbow" }, "Rainbow [!]"), option$5({ value: "modbox float" }, "Float [!]"), option$5({ value: "modbox windows" }, "Windows"), option$5({ value: "modbox grassland" }, "Grassland"), option$5({ value: "modbox dessert" }, "Dessert"), option$5({ value: "modbox kahoot" }, "Kahootiest"), option$5({ value: "modbox bitbeam" }, "Beam to the Bit [!]"), option$5({ value: "modbox egg" }, "Pretty Egg"), option$5({ value: "modbox pony" }, "Poniryoshka"), option$5({ value: "modbox gameboy" }, "Gameboy [!]"), option$5({ value: "modbox woodkid" }, "Woodkid [!]"), option$5({ value: "modbox midnight" }, "Midnight [!]"), option$5({ value: "modbox snedbox" }, "Snedbox"), option$5({ value: "modbox unnamed" }, "unnamed [!]"), option$5({ value: "modbox halloween" }, "Halloween [!]"), option$5({ value: "modbox frozen" }, "FrozenOver❄️ [!]")), optgroup$1({ label: "Mod Default Themes" }, option$5({ value: "sandbox classic" }, "Sandbox"), option$5({ value: "harrybox" }, "Haileybox"), option$5({ value: "brucebox" }, "Brucebox"), option$5({ value: "shitbox 3.0" }, "Shitbox 1.0/3.0"), option$5({ value: "shitbox 2.0" }, "Shitbox 2.0"), option$5({ value: "nerdbox" }, "NerdBox"), option$5({ value: "zefbox" }, "Zefbox"), option$5({ value: "cardboardbox classic" }, "Cardboardbox"), option$5({ value: "blubox classic" }, "Blubox"), option$5({ value: "dogebox classic" }, "Dogebox"), option$5({ value: "wackybox" }, "Wackybox"), option$5({ value: "todbox dark mode" }, "Todbox Dark Mode"), option$5({ value: "mainbox 1.0" }, "Mainbox"), option$5({ value: "microbox" }, "MicroBox"), option$5({ value: "paandorasbox" }, "PaandorasBox"), option$5({ value: "foxbox" }, "FoxBox"), option$5({ value: "midbox" }, "Midbox"), option$5({ value: "gold light" }, "Gold Light"), option$5({ value: "dogebox2" }, "Dogebox2"), option$5({ value: "nepbox" }, "Nepbox"), option$5({ value: "nepbox laffey" }, "Nepbox Laffey"), option$5({ value: "WeebBox" }, "WeebBox"), option$5({ value: "BoxBeep Dark" }, "BoxBeep Dark"), option$5({ value: "BoxBeep light" }, "BoxBeep Light")), optgroup$1({ label: "Miscellaneous Themes" }, option$5({ value: "azur lane" }, "Azur Lane"), option$5({ value: "AWeebyssBox" }, "AWeebyssBox"), option$5({ value: "Deuteranopia" }, "Deuteranopia"), option$5({ value: "Protanopia" }, "Protanopia"), option$5({ value: "Tritanopia" }, "Tritanopia"), option$5({ value: "2012 Video Tutorial" }, "2012 Video Tutorial"), option$5({ value: "I am on fire" }, "I am on fire"), option$5({ value: "custom" }, "Custom")));
+            this._themeSelect = select$5({ style: "width: 100%;", id: "themeSelect" }, optgroup$1({ label: "AbyssBox Themes" }, option$5({ value: "AbyssBox Classic" }, "AbyssBox Classic"), option$5({ value: "AbyssBox Competitive" }, "AbyssBox Competitive"), option$5({ value: "AbyssBox Light" }, "AbyssBox Light"), option$5({ value: "AbyssBox 0.8" }, "AbyssBox 0.8"), option$5({ value: "Half-Life" }, "Half-Life"), option$5({ value: "Half-Life: Source" }, "Half-Life: Source"), option$5({ value: "Doom 1993" }, "Doom 1993"), option$5({ value: "Undertale" }, "Undertale"), option$5({ value: "Yume Nikki" }, "Yume Nikki"), option$5({ value: "Scratch" }, "Scratch"), option$5({ value: "Scratch Addons" }, "Scratch Addons"), option$5({ value: "Windows Xp" }, "Windows Xp"), option$5({ value: "Frutiger Aero" }, "Frutiger Aero"), option$5({ value: "Skeuomorphic" }, "Skeuomorphic/Early 2000's (LeoV)"), option$5({ value: "Glyde" }, "Glyde"), option$5({ value: "starry studio" }, "Starry Studio"), option$5({ value: "Terminal 2.0 (AB)" }, "Terminal 2.0 (AB)"), option$5({ value: "Slushie" }, "Slushie"), option$5({ value: "Slushie Pixel" }, "Slushie 2"), option$5({ value: "BeepBox Pixel" }, "BeepBox Pixel"), option$5({ value: "Ghost House" }, "Ghost House"), option$5({ value: "Ghost House 2" }, "Ghost House 2")), optgroup$1({ label: "BeepBox Themes" }, option$5({ value: "dark classic" }, "BeepBox Dark"), option$5({ value: "light classic" }, "BeepBox Light"), option$5({ value: "dark competition" }, "BeepBox Competition Dark")), optgroup$1({ label: "JummBox Themes" }, option$5({ value: "jummbox classic" }, "JummBox Dark"), option$5({ value: "jummbox light" }, "JummBox Light"), option$5({ value: "forest" }, "Forest"), option$5({ value: "forest 2" }, "Forest 2"), option$5({ value: "canyon" }, "Canyon"), option$5({ value: "canyon 2" }, "Canyon 2"), option$5({ value: "midnight" }, "Midnight"), option$5({ value: "beachcombing" }, "Beachcombing"), option$5({ value: "violet verdant" }, "Violet Verdant"), option$5({ value: "sunset" }, "Sunset"), option$5({ value: "autumn" }, "Autumn"), option$5({ value: "fruit" }, "Shadowfruit"), option$5({ value: "toxic" }, "Toxic"), option$5({ value: "roe" }, "Roe"), option$5({ value: "moonlight" }, "Moonlight"), option$5({ value: "portal" }, "Portal"), option$5({ value: "fusion" }, "Fusion"), option$5({ value: "inverse" }, "Inverse"), option$5({ value: "nebula" }, "Nebula"), option$5({ value: "Nebula 2" }, "Nebula 2"), option$5({ value: "roe light" }, "Roe Light"), option$5({ value: "amoled dark" }, "High Contrast Dark"), option$5({ value: "energized" }, "Energized"), option$5({ value: "neapolitan" }, "Neapolitan"), option$5({ value: "mono" }, "Poly"), option$5({ value: "blutonium" }, "Blutonium")), optgroup$1({ label: "ModBox Themes" }, option$5({ value: "modbox classic" }, "Modbox"), option$5({ value: "modbox 2" }, "Modbox 2.0"), option$5({ value: "modbox artic" }, "Artic"), option$5({ value: "modbox cinnamon" }, "Cinnamon Roll [!]"), option$5({ value: "modbox ocean" }, "Ocean"), option$5({ value: "modbox rainbow" }, "Rainbow [!]"), option$5({ value: "modbox float" }, "Float [!]"), option$5({ value: "modbox windows" }, "Windows"), option$5({ value: "modbox grassland" }, "Grassland"), option$5({ value: "modbox dessert" }, "Dessert"), option$5({ value: "modbox kahoot" }, "Kahootiest"), option$5({ value: "modbox bitbeam" }, "Beam to the Bit [!]"), option$5({ value: "modbox egg" }, "Pretty Egg"), option$5({ value: "modbox pony" }, "Poniryoshka"), option$5({ value: "modbox gameboy" }, "Gameboy [!]"), option$5({ value: "modbox woodkid" }, "Woodkid [!]"), option$5({ value: "modbox midnight" }, "Midnight [!]"), option$5({ value: "modbox snedbox" }, "Snedbox"), option$5({ value: "modbox unnamed" }, "unnamed [!]"), option$5({ value: "modbox halloween" }, "Halloween [!]"), option$5({ value: "modbox frozen" }, "FrozenOver❄️ [!]")), optgroup$1({ label: "Mod Default Themes" }, option$5({ value: "sandbox classic" }, "Sandbox"), option$5({ value: "harrybox" }, "Haileybox"), option$5({ value: "brucebox" }, "Brucebox"), option$5({ value: "shitbox 3.0" }, "Shitbox 1.0/3.0"), option$5({ value: "shitbox 2.0" }, "Shitbox 2.0"), option$5({ value: "nerdbox" }, "NerdBox"), option$5({ value: "zefbox" }, "Zefbox"), option$5({ value: "cardboardbox classic" }, "Cardboardbox"), option$5({ value: "blubox classic" }, "Blubox"), option$5({ value: "dogebox classic" }, "Dogebox"), option$5({ value: "wackybox" }, "Wackybox"), option$5({ value: "todbox dark mode" }, "Todbox Dark Mode"), option$5({ value: "mainbox 1.0" }, "Mainbox"), option$5({ value: "microbox" }, "MicroBox"), option$5({ value: "paandorasbox" }, "PaandorasBox"), option$5({ value: "foxbox" }, "FoxBox"), option$5({ value: "midbox" }, "Midbox"), option$5({ value: "gold light" }, "Gold Light"), option$5({ value: "dogebox2" }, "Dogebox2"), option$5({ value: "nepbox" }, "Nepbox"), option$5({ value: "nepbox laffey" }, "Nepbox Laffey"), option$5({ value: "WeebBox" }, "WeebBox"), option$5({ value: "BoxBeep Dark" }, "BoxBeep Dark"), option$5({ value: "BoxBeep light" }, "BoxBeep Light")), optgroup$1({ label: "Miscellaneous Themes" }, option$5({ value: "azur lane" }, "Azur Lane"), option$5({ value: "AWeebyssBox" }, "AWeebyssBox"), option$5({ value: "Deuteranopia" }, "Deuteranopia"), option$5({ value: "Protanopia" }, "Protanopia"), option$5({ value: "Tritanopia" }, "Tritanopia"), option$5({ value: "2012 Video Tutorial" }, "2012 Video Tutorial"), option$5({ value: "I am on fire" }, "I am on fire"), option$5({ value: "custom" }, "Custom")));
             this._cancelButton = button$8({ class: "cancelButton" });
             this._okayButton = button$8({ class: "okayButton", style: "width:45%;" }, "Okay");
             this.lastTheme = window.localStorage.getItem("colorTheme");

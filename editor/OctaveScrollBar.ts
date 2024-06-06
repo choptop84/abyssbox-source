@@ -14,7 +14,7 @@ export class OctaveScrollBar {
 	private readonly _octaveCount: number = Config.pitchOctaves;
 	private readonly _octaveHeight: number = (this._editorHeight - this._notchHeight) / this._octaveCount;
 	
-	private readonly _handle: SVGRectElement = SVG.rect({fill: ColorConfig.uiWidgetBackground, x: 2, y: 0, width: this._editorWidth - 4});
+	private readonly _handle: SVGRectElement = SVG.rect({fill: "var(--octave-scrollbar, var(--ui-widget-background, #444444))", x: 2, y: 0, width: this._editorWidth - 4});
 	private readonly _handleHighlight: SVGRectElement = SVG.rect({fill: "none", stroke: ColorConfig.hoverPreview, "stroke-width": 2, "pointer-events": "none", x: 1, y: 0, width: this._editorWidth - 2});
 		private readonly _upHighlight: SVGPathElement = SVG.path({fill: ColorConfig.hoverPreview, "pointer-events": "none"});
 		private readonly _downHighlight: SVGPathElement = SVG.path({fill: ColorConfig.hoverPreview, "pointer-events": "none"});

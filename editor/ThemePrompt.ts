@@ -31,6 +31,7 @@ export class ThemePrompt implements Prompt {
 			option({ value: "Half-Life: Source"}, "Half-Life: Source"),
 			option({ value: "Doom 1993"}, "Doom 1993"),
 			option({ value: "Undertale"}, "Undertale"),
+			option({ value: "Yume Nikki"}, "Yume Nikki"),
 			option({ value: "Scratch"}, "Scratch"),
 			option({ value: "Scratch Addons"}, "Scratch Addons"),
 			option({ value: "Windows Xp"}, "Windows Xp"),
