@@ -4394,6 +4394,13 @@ export class ColorConfig {
 			div.channelBoxLabel {
 				font-family: 'yumeNumbers' !important;
 			}
+
+			div.fadeInOut svg path {
+			--ui-widget-background: #4a0008;
+			}
+			div.filterEditor svg path {
+			--ui-widget-background: #4a0008;
+			}
 			`,
       "Windows Xp": `
 			:root {		
