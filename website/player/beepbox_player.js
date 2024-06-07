@@ -32804,7 +32804,6 @@ var beepbox = (function (exports) {
     const setSpLayout = getLocalStorage("spLayout");
     ColorConfig.setTheme(colorTheme === null ? "AbyssBox Classic" : colorTheme);
     SongPlayerLayout.setLayout(setSpLayout === null ? "classic" : setSpLayout);
-    console.log(colorTheme);
     let prevHash = null;
     let id = ((Math.random() * 0xffffffff) >>> 0).toString(16);
     let pauseButtonDisplayed = false;
