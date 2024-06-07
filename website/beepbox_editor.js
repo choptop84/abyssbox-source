@@ -2288,6 +2288,7 @@ var beepbox = (function (exports) {
             }
             this.resetColors();
             this.usesColorFormula = (getComputedStyle(this._styleElement).getPropertyValue("--use-color-formula").trim() == "true");
+            this.usesPianoScheme = (getComputedStyle(this._styleElement).getPropertyValue("--use-piano-scheme").trim() == "true");
             this.c_invertedText = getComputedStyle(this._styleElement).getPropertyValue("--inverted-text");
             this.c_trackEditorBgNoiseDim = getComputedStyle(this._styleElement).getPropertyValue("--track-editor-bg-noise-dim");
             this.c_trackEditorBgNoise = getComputedStyle(this._styleElement).getPropertyValue("--track-editor-bg-noise");
@@ -2376,6 +2377,7 @@ var beepbox = (function (exports) {
     }
     ColorConfig.colorLookup = new Map();
     ColorConfig.usesColorFormula = false;
+    ColorConfig.usesPianoScheme = false;
     ColorConfig.themes = {
         "AbyssBox Classic": `
 			:root {		
@@ -16011,6 +16013,144 @@ var beepbox = (function (exports) {
 						--mod-label-primary-text:   black;
 						--disabled-note-primary:    #999;
 						--disabled-note-secondary:  #666;
+					
+				}
+			`,
+        "modbox piano": `
+			:root {
+				--page-margin: black;
+				--editor-background: black;
+				--hover-preview: white;
+				--playhead: white;
+				--primary-text: white;
+				--secondary-text: #999;
+				--inverted-text: black;
+				--text-selection: rgba(119,68,255,0.99);
+				--box-selection-fill: rgba(255,255,255,0.2);
+				--loop-accent: #ffffff;
+				--link-accent: #98f;
+				--ui-widget-background: #444;
+				--ui-widget-focus: #777;
+				--pitch-background: #444;
+				--use-piano-scheme: true;
+
+				--tonic: #fff;
+				--third-note: #222;
+				--fifth-note: #f7f7f7;
+
+				--white-tonic: #fff;
+				--black-tonic: #222;
+				--white-third-note: #f7f7f7;
+				--black-third-note: #444444;
+				--white-fifth-note: #f7f7f7;
+				--black-fifth-note: #444444;
+				--pitch-white-key: #bfbfbf;
+				--pitch-black-key: #7a7a7a;
+				--octave-scrollbar: #211616;
+				--white-piano-key: #bbb;
+				--black-piano-key: #444;
+				--white-piano-key-text: #131200;
+				--black-piano-key-text: #fff;
+					--use-color-formula: false;
+					--track-editor-bg-pitch: #444;
+					--track-editor-bg-pitch-dim: #333;
+					--track-editor-bg-noise: #444;
+					--track-editor-bg-noise-dim: #333;
+					--track-editor-bg-mod: #234;
+					--track-editor-bg-mod-dim: #123;
+					--multiplicative-mod-slider: #456;
+					--overwriting-mod-slider: #654;
+					--indicator-primary: #74f;
+					--indicator-secondary: #444;
+					--select2-opt-group: #585858;
+					--input-box-outline: #333;
+					--mute-button-normal: #ffa033;
+					--mute-button-mod: #9a6bff;
+					--pitch-channel-limit: 6;
+					--noise-channel-limit: 4;
+				--pitch1-secondary-channel: #0099a1;
+				--pitch1-primary-channel:   #25f3ff;
+				--pitch1-secondary-note:    #0099a1;
+				--pitch1-primary-note:      #25f3ff;
+				--pitch2-secondary-channel: #439143;
+				--pitch2-primary-channel:   #44ff44;
+				--pitch2-secondary-note:    #439143;
+				--pitch2-primary-note:      #44ff44;
+				--pitch3-secondary-channel: #a1a100;
+				--pitch3-primary-channel:   #ffff25;
+				--pitch3-secondary-note:    #a1a100;
+				--pitch3-primary-note:      #ffff25;
+				--pitch4-secondary-channel: #c75000;
+				--pitch4-primary-channel:   #ff9752;
+				--pitch4-secondary-note:    #c75000;
+				--pitch4-primary-note:      #ff9752;
+				--pitch5-secondary-channel: #d020d0;
+				--pitch5-primary-channel:   #FF90FF;
+				--pitch5-secondary-note:    #d020d0;
+				--pitch5-primary-note:      #ff90ff;
+				--pitch6-secondary-channel: #552377;
+				--pitch6-primary-channel:   #9f31ea;
+				--pitch6-secondary-note:    #552377;
+				--pitch6-primary-note:      #9f31ea;
+				--pitch7-secondary-channel: #221b89;
+				--pitch7-primary-channel:   #2b6aff;
+				--pitch7-secondary-note:    #221b89;
+				--pitch7-primary-note:      #2b6aff;
+				--pitch8-secondary-channel: #00995f;
+				--pitch8-primary-channel:   #00ff9f;
+				--pitch8-secondary-note:    #00995f;
+				--pitch8-primary-note:      #00ff9f;
+				--pitch9-secondary-channel: #d6b03e;
+				--pitch9-primary-channel:   #ffbf00;
+				--pitch9-secondary-note:    #d6b03e;
+				--pitch9-primary-note:      #ffbf00;
+				--pitch10-secondary-channel:#b25915;
+				--pitch10-primary-channel:  #d85d00;
+				--pitch10-secondary-note:   #b25915;
+				--pitch10-primary-note:     #d85d00;
+				--noise1-secondary-channel: #991010;
+				--noise1-primary-channel:   #ff1616;
+				--noise1-secondary-note:    #991010;
+				--noise1-primary-note:      #ff1616;
+				--noise2-secondary-channel: #aaaaaa;
+				--noise2-primary-channel:   #ffffff;
+				--noise2-secondary-note:    #aaaaaa;
+				--noise2-primary-note:      #ffffff;
+				--noise3-secondary-channel: #5869BD;
+				--noise3-primary-channel:   #768dfc;
+				--noise3-secondary-note:    #5869BD;
+				--noise3-primary-note:      #768dfc;
+				--noise4-secondary-channel: #7c9b42;
+				--noise4-primary-channel:   #a5ff00;
+				--noise4-secondary-note:    #7c9b42;
+				--noise4-primary-note:      #a5ff00;
+				--noise5-secondary-channel: #7c9b42;
+				--noise5-primary-channel:   #A2BB77;
+				--noise5-secondary-note:    #91AA66;
+				--noise5-primary-note:      #C5E2B2;
+         --mod1-secondary-channel: #0099a1;
+				--mod1-primary-channel:   #25f3ff;
+				--mod1-secondary-note:    #0099a1;
+				--mod1-primary-note:      #25f3ff;
+				--mod2-secondary-channel: #439143;
+				--mod2-primary-channel:   #44ff44;
+				--mod2-secondary-note:    #439143;
+				--mod2-primary-note:      #44ff44;
+				--mod3-secondary-channel: #a1a100;
+				--mod3-primary-channel:   #ffff25;
+				--mod3-secondary-note:    #a1a100;
+				--mod3-primary-note:      #ffff25;
+				--mod4-secondary-channel: #c75000;
+				--mod4-primary-channel:   #ff9752;
+				--mod4-secondary-note:    #c75000;
+				--mod4-primary-note:      #ff9752;
+					--mod-label-primary:        #999;
+					--mod-label-secondary-text: #333;
+					--mod-label-primary-text:   black;
+					--disabled-note-primary:    #999;
+					--disabled-note-secondary:  #666;
+
+					
 					
 				}
 			`,
@@ -46773,6 +46913,7 @@ You should be redirected to the song at:<br /><br />
             this._renderedFifths = false;
             this._renderedThirds = false;
             this._renderedACS = false;
+            this._setKey = 12;
             this._renderedDrums = false;
             this._renderedMod = false;
             this._renderedRhythm = -1;
@@ -48772,34 +48913,149 @@ You should be redirected to the song at:<br /><br />
                     this._backgroundPitchRows[4].setAttribute("fill", this._doc.prefs.showThird ? ColorConfig.thirdNote : ColorConfig.pitchBackground);
                 }
                 if (this._renderedACS == true) {
+                    this._backgroundPitchRows[0].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--tonic, var(--pitch-background))" : ColorConfig.tonic);
                     this._backgroundPitchRows[1].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch1-background, var(--pitch-background))" : ColorConfig.pitchBackground);
                     this._backgroundPitchRows[2].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch2-background, var(--pitch-background))" : ColorConfig.pitchBackground);
                     this._backgroundPitchRows[3].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch3-background, var(--pitch-background))" : ColorConfig.pitchBackground);
-                    this._backgroundPitchRows[4].setAttribute("fill", this._doc.prefs.showThird ? ColorConfig.thirdNote : ColorConfig.pitchBackground);
+                    this._backgroundPitchRows[4].setAttribute("fill", this._doc.prefs.showThird ? "var(--third-note, var(--pitch-background))" : ColorConfig.pitchBackground);
                     this._backgroundPitchRows[5].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch5-background, var(--pitch-background))" : ColorConfig.pitchBackground);
                     this._backgroundPitchRows[6].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch6-background, var(--pitch-background))" : ColorConfig.pitchBackground);
-                    this._backgroundPitchRows[7].setAttribute("fill", this._doc.prefs.showFifth ? ColorConfig.fifthNote : ColorConfig.pitchBackground);
+                    this._backgroundPitchRows[7].setAttribute("fill", this._doc.prefs.showFifth ? "var(--fifth-note, var(--pitch-background))" : ColorConfig.pitchBackground);
                     this._backgroundPitchRows[8].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch8-background, var(--pitch-background))" : ColorConfig.pitchBackground);
                     this._backgroundPitchRows[9].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch9-background, var(--pitch-background))" : ColorConfig.pitchBackground);
                     this._backgroundPitchRows[10].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch10-background, var(--pitch-background))" : ColorConfig.pitchBackground);
                     this._backgroundPitchRows[11].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch11-background, var(--pitch-background))" : ColorConfig.pitchBackground);
                     this._renderedACS = false;
                 }
+                this._setKey = -1;
             }
             else {
-                if (this._renderedACS != this._doc.prefs.advancedColorScheme) {
-                    this._backgroundPitchRows[1].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch1-background, var(--pitch-background))" : ColorConfig.pitchBackground);
-                    this._backgroundPitchRows[2].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch2-background, var(--pitch-background))" : ColorConfig.pitchBackground);
-                    this._backgroundPitchRows[3].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch3-background, var(--pitch-background))" : ColorConfig.pitchBackground);
-                    this._backgroundPitchRows[4].setAttribute("fill", this._doc.prefs.advancedColorScheme ? ColorConfig.thirdNote : ColorConfig.pitchBackground);
-                    this._backgroundPitchRows[5].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch5-background, var(--pitch-background))" : ColorConfig.pitchBackground);
-                    this._backgroundPitchRows[6].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch6-background, var(--pitch-background))" : ColorConfig.pitchBackground);
-                    this._backgroundPitchRows[7].setAttribute("fill", this._doc.prefs.advancedColorScheme ? ColorConfig.fifthNote : ColorConfig.pitchBackground);
-                    this._backgroundPitchRows[8].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch8-background, var(--pitch-background))" : ColorConfig.pitchBackground);
-                    this._backgroundPitchRows[9].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch9-background, var(--pitch-background))" : ColorConfig.pitchBackground);
-                    this._backgroundPitchRows[10].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch10-background, var(--pitch-background))" : ColorConfig.pitchBackground);
-                    this._backgroundPitchRows[11].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch11-background, var(--pitch-background))" : ColorConfig.pitchBackground);
-                    this._renderedACS = true;
+                if (ColorConfig.usesPianoScheme == false) {
+                    if (this._renderedACS != this._doc.prefs.advancedColorScheme) {
+                        this._backgroundPitchRows[0].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--tonic, var(--pitch-background))" : ColorConfig.tonic);
+                        this._backgroundPitchRows[1].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch1-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        this._backgroundPitchRows[2].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch2-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        this._backgroundPitchRows[3].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch3-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        this._backgroundPitchRows[4].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--third-note, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        this._backgroundPitchRows[5].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch5-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        this._backgroundPitchRows[6].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch6-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        this._backgroundPitchRows[7].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--fifth-note, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        this._backgroundPitchRows[8].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch8-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        this._backgroundPitchRows[9].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch9-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        this._backgroundPitchRows[10].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch10-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        this._backgroundPitchRows[11].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch11-background, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        this._renderedACS = true;
+                        this._setKey = -1;
+                    }
+                    if (this._setKey != -1) {
+                        this._renderedACS = false;
+                    }
+                }
+                else {
+                    if (this._setKey != this._doc.song.key) {
+                        this._setKey = this._doc.song.key;
+                        if ((this._setKey == 0) || (this._setKey == 2) || (this._setKey == 4) || (this._setKey == 5) || (this._setKey == 7) || (this._setKey == 9) || (this._setKey == 11)) {
+                            this._backgroundPitchRows[0].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--white-tonic, var(--pitch-white-key, var(--pitch-background)))" : ColorConfig.pitchBackground);
+                        }
+                        else {
+                            this._backgroundPitchRows[0].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--black-tonic, var(--pitch-black-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        }
+                        if ((this._setKey == 1) || (this._setKey == 3) || (this._setKey == 4) || (this._setKey == 6) || (this._setKey == 8) || (this._setKey == 10) || (this._setKey == 11)) {
+                            this._backgroundPitchRows[1].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch-white-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        }
+                        else {
+                            this._backgroundPitchRows[1].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch-black-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        }
+                        if ((this._setKey == 0) || (this._setKey == 2) || (this._setKey == 3) || (this._setKey == 5) || (this._setKey == 7) || (this._setKey == 9) || (this._setKey == 10)) {
+                            this._backgroundPitchRows[2].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch-white-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        }
+                        else {
+                            this._backgroundPitchRows[2].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch-black-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        }
+                        if ((this._setKey == 1) || (this._setKey == 2) || (this._setKey == 4) || (this._setKey == 6) || (this._setKey == 8) || (this._setKey == 9) || (this._setKey == 11)) {
+                            this._backgroundPitchRows[3].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch-white-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        }
+                        else {
+                            this._backgroundPitchRows[3].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch-black-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        }
+                        if ((this._setKey == 0) || (this._setKey == 1) || (this._setKey == 3) || (this._setKey == 5) || (this._setKey == 7) || (this._setKey == 8) || (this._setKey == 10)) {
+                            if (this._doc.prefs.showThird == true) {
+                                this._backgroundPitchRows[4].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--white-third-note, var(--pitch-white-key, var(--pitch-background)))" : ColorConfig.pitchBackground);
+                            }
+                            else {
+                                this._backgroundPitchRows[4].setAttribute("fill", this._doc.prefs.advancedColorScheme ? " var(--pitch-white-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                            }
+                        }
+                        else {
+                            if (this._doc.prefs.showThird == true) {
+                                this._backgroundPitchRows[4].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--black-third-note, var(--pitch-black-key, var(--pitch-background)))" : ColorConfig.pitchBackground);
+                            }
+                            else {
+                                this._backgroundPitchRows[4].setAttribute("fill", this._doc.prefs.advancedColorScheme ? " var(--pitch-black-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                            }
+                        }
+                        if ((this._setKey == 0) || (this._setKey == 2) || (this._setKey == 4) || (this._setKey == 6) || (this._setKey == 7) || (this._setKey == 9) || (this._setKey == 11)) {
+                            this._backgroundPitchRows[5].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch-white-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        }
+                        else {
+                            this._backgroundPitchRows[5].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch-black-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        }
+                        if ((this._setKey == 1) || (this._setKey == 3) || (this._setKey == 5) || (this._setKey == 6) || (this._setKey == 8) || (this._setKey == 10) || (this._setKey == 11)) {
+                            this._backgroundPitchRows[6].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch-white-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        }
+                        else {
+                            this._backgroundPitchRows[6].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch-black-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        }
+                        if ((this._setKey == 0) || (this._setKey == 2) || (this._setKey == 4) || (this._setKey == 5) || (this._setKey == 7) || (this._setKey == 9) || (this._setKey == 10)) {
+                            if (this._doc.prefs.showFifth == true) {
+                                this._backgroundPitchRows[7].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--white-fifth-note, var(--pitch-white-key, var(--pitch-background)))" : ColorConfig.pitchBackground);
+                            }
+                            else {
+                                this._backgroundPitchRows[7].setAttribute("fill", this._doc.prefs.advancedColorScheme ? " var(--pitch-white-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                            }
+                        }
+                        else {
+                            if (this._doc.prefs.showFifth == true) {
+                                this._backgroundPitchRows[7].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--black-fifth-note, var(--pitch-black-key, var(--pitch-background)))" : ColorConfig.pitchBackground);
+                            }
+                            else {
+                                this._backgroundPitchRows[7].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch-black-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                            }
+                        }
+                        if ((this._setKey == 1) || (this._setKey == 3) || (this._setKey == 4) || (this._setKey == 6) || (this._setKey == 8) || (this._setKey == 9) || (this._setKey == 11)) {
+                            this._backgroundPitchRows[8].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch-white-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        }
+                        else {
+                            this._backgroundPitchRows[8].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch-black-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        }
+                        if ((this._setKey == 0) || (this._setKey == 2) || (this._setKey == 3) || (this._setKey == 5) || (this._setKey == 7) || (this._setKey == 8) || (this._setKey == 10)) {
+                            this._backgroundPitchRows[9].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch-white-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        }
+                        else {
+                            this._backgroundPitchRows[9].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch-black-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        }
+                        if ((this._setKey == 1) || (this._setKey == 2) || (this._setKey == 4) || (this._setKey == 6) || (this._setKey == 7) || (this._setKey == 9) || (this._setKey == 11)) {
+                            this._backgroundPitchRows[10].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch-white-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        }
+                        else {
+                            this._backgroundPitchRows[10].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch-black-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        }
+                        if ((this._setKey == 0) || (this._setKey == 1) || (this._setKey == 3) || (this._setKey == 5) || (this._setKey == 6) || (this._setKey == 8) || (this._setKey == 10)) {
+                            this._backgroundPitchRows[11].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch-white-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        }
+                        else {
+                            this._backgroundPitchRows[11].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch-black-key, var(--pitch-background))" : ColorConfig.pitchBackground);
+                        }
+                        if (this._renderedACS == false) {
+                            this._renderedACS = true;
+                        }
+                    }
+                }
+                if (this._renderedThirds != this._doc.prefs.showThird) {
+                    this._setKey = -1;
+                }
+                if (this._renderedFifths != this._doc.prefs.showFifth) {
+                    this._setKey = -1;
                 }
             }
             for (let j = 0; j < Config.pitchesPerOctave; j++) {
@@ -52772,7 +53028,7 @@ button.playButton::before {
     class ThemePrompt {
         constructor(_doc) {
             this._doc = _doc;
-            this._themeSelect = select$5({ style: "width: 100%;", id: "themeSelect" }, optgroup$1({ label: "AbyssBox Themes" }, option$5({ value: "AbyssBox Classic" }, "AbyssBox Classic"), option$5({ value: "AbyssBox Competitive" }, "AbyssBox Competitive"), option$5({ value: "AbyssBox Light" }, "AbyssBox Light"), option$5({ value: "AbyssBox 0.8" }, "AbyssBox 0.8"), option$5({ value: "Half-Life" }, "Half-Life"), option$5({ value: "Half-Life: Source" }, "Half-Life: Source"), option$5({ value: "Doom 1993" }, "Doom 1993"), option$5({ value: "Undertale" }, "Undertale"), option$5({ value: "Yume Nikki" }, "Yume Nikki"), option$5({ value: "Scratch" }, "Scratch"), option$5({ value: "Scratch Addons" }, "Scratch Addons"), option$5({ value: "Windows Xp" }, "Windows Xp"), option$5({ value: "Frutiger Aero" }, "Frutiger Aero"), option$5({ value: "Skeuomorphic" }, "Skeuomorphic/Early 2000's (LeoV)"), option$5({ value: "Glyde" }, "Glyde"), option$5({ value: "starry studio" }, "Starry Studio"), option$5({ value: "Terminal 2.0 (AB)" }, "Terminal 2.0 (AB)"), option$5({ value: "Slushie" }, "Slushie"), option$5({ value: "Slushie Pixel" }, "Slushie 2"), option$5({ value: "BeepBox Pixel" }, "BeepBox Pixel"), option$5({ value: "forest 2" }, "Forest 2"), option$5({ value: "canyon 2" }, "Canyon 2"), option$5({ value: "Nebula 2" }, "Nebula 2"), option$5({ value: "Ghost House" }, "Ghost House"), option$5({ value: "Ghost House 2" }, "Ghost House 2")), optgroup$1({ label: "BeepBox Themes" }, option$5({ value: "dark classic" }, "BeepBox Dark"), option$5({ value: "light classic" }, "BeepBox Light"), option$5({ value: "dark competition" }, "BeepBox Competition Dark")), optgroup$1({ label: "JummBox Themes" }, option$5({ value: "jummbox classic" }, "JummBox Dark"), option$5({ value: "jummbox light" }, "JummBox Light"), option$5({ value: "forest" }, "Forest"), option$5({ value: "canyon" }, "Canyon"), option$5({ value: "midnight" }, "Midnight"), option$5({ value: "beachcombing" }, "Beachcombing"), option$5({ value: "violet verdant" }, "Violet Verdant"), option$5({ value: "sunset" }, "Sunset"), option$5({ value: "autumn" }, "Autumn"), option$5({ value: "fruit" }, "Shadowfruit"), option$5({ value: "toxic" }, "Toxic"), option$5({ value: "roe" }, "Roe"), option$5({ value: "moonlight" }, "Moonlight"), option$5({ value: "portal" }, "Portal"), option$5({ value: "fusion" }, "Fusion"), option$5({ value: "inverse" }, "Inverse"), option$5({ value: "nebula" }, "Nebula"), option$5({ value: "roe light" }, "Roe Light"), option$5({ value: "amoled dark" }, "High Contrast Dark"), option$5({ value: "energized" }, "Energized"), option$5({ value: "neapolitan" }, "Neapolitan"), option$5({ value: "mono" }, "Poly"), option$5({ value: "blutonium" }, "Blutonium")), optgroup$1({ label: "ModBox Themes" }, option$5({ value: "modbox classic" }, "Modbox"), option$5({ value: "modbox 2" }, "Modbox 2.0"), option$5({ value: "modbox artic" }, "Artic"), option$5({ value: "modbox cinnamon" }, "Cinnamon Roll [!]"), option$5({ value: "modbox ocean" }, "Ocean"), option$5({ value: "modbox rainbow" }, "Rainbow [!]"), option$5({ value: "modbox float" }, "Float [!]"), option$5({ value: "modbox windows" }, "Windows"), option$5({ value: "modbox grassland" }, "Grassland"), option$5({ value: "modbox dessert" }, "Dessert"), option$5({ value: "modbox kahoot" }, "Kahootiest"), option$5({ value: "modbox bitbeam" }, "Beam to the Bit [!]"), option$5({ value: "modbox egg" }, "Pretty Egg"), option$5({ value: "modbox pony" }, "Poniryoshka"), option$5({ value: "modbox gameboy" }, "Gameboy [!]"), option$5({ value: "modbox woodkid" }, "Woodkid [!]"), option$5({ value: "modbox midnight" }, "Midnight [!]"), option$5({ value: "modbox snedbox" }, "Snedbox"), option$5({ value: "modbox unnamed" }, "unnamed [!]"), option$5({ value: "modbox halloween" }, "Halloween [!]"), option$5({ value: "modbox frozen" }, "FrozenOver❄️ [!]")), optgroup$1({ label: "Mod Default Themes" }, option$5({ value: "sandbox classic" }, "Sandbox"), option$5({ value: "harrybox" }, "Haileybox"), option$5({ value: "brucebox" }, "Brucebox"), option$5({ value: "shitbox 3.0" }, "Shitbox 1.0/3.0"), option$5({ value: "shitbox 2.0" }, "Shitbox 2.0"), option$5({ value: "nerdbox" }, "NerdBox"), option$5({ value: "zefbox" }, "Zefbox"), option$5({ value: "cardboardbox classic" }, "Cardboardbox"), option$5({ value: "blubox classic" }, "Blubox"), option$5({ value: "dogebox classic" }, "Dogebox"), option$5({ value: "wackybox" }, "Wackybox"), option$5({ value: "todbox dark mode" }, "Todbox Dark Mode"), option$5({ value: "mainbox 1.0" }, "Mainbox"), option$5({ value: "microbox" }, "MicroBox"), option$5({ value: "paandorasbox" }, "PaandorasBox"), option$5({ value: "foxbox" }, "FoxBox"), option$5({ value: "midbox" }, "Midbox"), option$5({ value: "gold light" }, "Gold Light"), option$5({ value: "dogebox2" }, "Dogebox2"), option$5({ value: "nepbox" }, "Nepbox"), option$5({ value: "nepbox laffey" }, "Nepbox Laffey"), option$5({ value: "WeebBox" }, "WeebBox"), option$5({ value: "BoxBeep Dark" }, "BoxBeep Dark"), option$5({ value: "BoxBeep light" }, "BoxBeep Light")), optgroup$1({ label: "Miscellaneous Themes" }, option$5({ value: "azur lane" }, "Azur Lane"), option$5({ value: "AWeebyssBox" }, "AWeebyssBox"), option$5({ value: "Deuteranopia" }, "Deuteranopia"), option$5({ value: "Protanopia" }, "Protanopia"), option$5({ value: "Tritanopia" }, "Tritanopia"), option$5({ value: "2012 Video Tutorial" }, "2012 Video Tutorial"), option$5({ value: "I am on fire" }, "I am on fire"), option$5({ value: "custom" }, "Custom")));
+            this._themeSelect = select$5({ style: "width: 100%;", id: "themeSelect" }, optgroup$1({ label: "AbyssBox Themes" }, option$5({ value: "AbyssBox Classic" }, "AbyssBox Classic"), option$5({ value: "AbyssBox Competitive" }, "AbyssBox Competitive"), option$5({ value: "AbyssBox Light" }, "AbyssBox Light"), option$5({ value: "AbyssBox 0.8" }, "AbyssBox 0.8"), option$5({ value: "Half-Life" }, "Half-Life"), option$5({ value: "Half-Life: Source" }, "Half-Life: Source"), option$5({ value: "Doom 1993" }, "Doom 1993"), option$5({ value: "Undertale" }, "Undertale"), option$5({ value: "Yume Nikki" }, "Yume Nikki"), option$5({ value: "Scratch" }, "Scratch"), option$5({ value: "Scratch Addons" }, "Scratch Addons"), option$5({ value: "Windows Xp" }, "Windows Xp"), option$5({ value: "Frutiger Aero" }, "Frutiger Aero"), option$5({ value: "Skeuomorphic" }, "Skeuomorphic/Early 2000's (LeoV)"), option$5({ value: "Glyde" }, "Glyde"), option$5({ value: "starry studio" }, "Starry Studio"), option$5({ value: "Terminal 2.0 (AB)" }, "Terminal 2.0 (AB)"), option$5({ value: "Slushie" }, "Slushie"), option$5({ value: "Slushie Pixel" }, "Slushie 2"), option$5({ value: "BeepBox Pixel" }, "BeepBox Pixel"), option$5({ value: "forest 2" }, "Forest 2"), option$5({ value: "canyon 2" }, "Canyon 2"), option$5({ value: "Nebula 2" }, "Nebula 2"), option$5({ value: "Ghost House" }, "Ghost House"), option$5({ value: "Ghost House 2" }, "Ghost House 2")), optgroup$1({ label: "BeepBox Themes" }, option$5({ value: "dark classic" }, "BeepBox Dark"), option$5({ value: "light classic" }, "BeepBox Light"), option$5({ value: "dark competition" }, "BeepBox Competition Dark")), optgroup$1({ label: "JummBox Themes" }, option$5({ value: "jummbox classic" }, "JummBox Dark"), option$5({ value: "jummbox light" }, "JummBox Light"), option$5({ value: "forest" }, "Forest"), option$5({ value: "canyon" }, "Canyon"), option$5({ value: "midnight" }, "Midnight"), option$5({ value: "beachcombing" }, "Beachcombing"), option$5({ value: "violet verdant" }, "Violet Verdant"), option$5({ value: "sunset" }, "Sunset"), option$5({ value: "autumn" }, "Autumn"), option$5({ value: "fruit" }, "Shadowfruit"), option$5({ value: "toxic" }, "Toxic"), option$5({ value: "roe" }, "Roe"), option$5({ value: "moonlight" }, "Moonlight"), option$5({ value: "portal" }, "Portal"), option$5({ value: "fusion" }, "Fusion"), option$5({ value: "inverse" }, "Inverse"), option$5({ value: "nebula" }, "Nebula"), option$5({ value: "roe light" }, "Roe Light"), option$5({ value: "amoled dark" }, "High Contrast Dark"), option$5({ value: "energized" }, "Energized"), option$5({ value: "neapolitan" }, "Neapolitan"), option$5({ value: "mono" }, "Poly"), option$5({ value: "blutonium" }, "Blutonium")), optgroup$1({ label: "ModBox Themes" }, option$5({ value: "modbox classic" }, "Modbox"), option$5({ value: "modbox 2" }, "Modbox 2.0"), option$5({ value: "modbox artic" }, "Artic"), option$5({ value: "modbox cinnamon" }, "Cinnamon Roll [!]"), option$5({ value: "modbox ocean" }, "Ocean"), option$5({ value: "modbox rainbow" }, "Rainbow [!]"), option$5({ value: "modbox float" }, "Float [!]"), option$5({ value: "modbox windows" }, "Windows"), option$5({ value: "modbox grassland" }, "Grassland"), option$5({ value: "modbox dessert" }, "Dessert"), option$5({ value: "modbox kahoot" }, "Kahootiest"), option$5({ value: "modbox bitbeam" }, "Beam to the Bit [!]"), option$5({ value: "modbox egg" }, "Pretty Egg"), option$5({ value: "modbox pony" }, "Poniryoshka"), option$5({ value: "modbox gameboy" }, "Gameboy [!]"), option$5({ value: "modbox woodkid" }, "Woodkid [!]"), option$5({ value: "modbox midnight" }, "Midnight [!]"), option$5({ value: "modbox snedbox" }, "Snedbox"), option$5({ value: "modbox unnamed" }, "unnamed [!]"), option$5({ value: "modbox piano" }, "Piano [!]"), option$5({ value: "modbox halloween" }, "Halloween [!]"), option$5({ value: "modbox frozen" }, "FrozenOver❄️ [!]")), optgroup$1({ label: "Mod Default Themes" }, option$5({ value: "sandbox classic" }, "Sandbox"), option$5({ value: "harrybox" }, "Haileybox"), option$5({ value: "brucebox" }, "Brucebox"), option$5({ value: "shitbox 3.0" }, "Shitbox 1.0/3.0"), option$5({ value: "shitbox 2.0" }, "Shitbox 2.0"), option$5({ value: "nerdbox" }, "NerdBox"), option$5({ value: "zefbox" }, "Zefbox"), option$5({ value: "cardboardbox classic" }, "Cardboardbox"), option$5({ value: "blubox classic" }, "Blubox"), option$5({ value: "dogebox classic" }, "Dogebox"), option$5({ value: "wackybox" }, "Wackybox"), option$5({ value: "todbox dark mode" }, "Todbox Dark Mode"), option$5({ value: "mainbox 1.0" }, "Mainbox"), option$5({ value: "microbox" }, "MicroBox"), option$5({ value: "paandorasbox" }, "PaandorasBox"), option$5({ value: "foxbox" }, "FoxBox"), option$5({ value: "midbox" }, "Midbox"), option$5({ value: "gold light" }, "Gold Light"), option$5({ value: "dogebox2" }, "Dogebox2"), option$5({ value: "nepbox" }, "Nepbox"), option$5({ value: "nepbox laffey" }, "Nepbox Laffey"), option$5({ value: "WeebBox" }, "WeebBox"), option$5({ value: "BoxBeep Dark" }, "BoxBeep Dark"), option$5({ value: "BoxBeep light" }, "BoxBeep Light")), optgroup$1({ label: "Miscellaneous Themes" }, option$5({ value: "azur lane" }, "Azur Lane"), option$5({ value: "AWeebyssBox" }, "AWeebyssBox"), option$5({ value: "Deuteranopia" }, "Deuteranopia"), option$5({ value: "Protanopia" }, "Protanopia"), option$5({ value: "Tritanopia" }, "Tritanopia"), option$5({ value: "2012 Video Tutorial" }, "2012 Video Tutorial"), option$5({ value: "I am on fire" }, "I am on fire"), option$5({ value: "custom" }, "Custom")));
             this._cancelButton = button$8({ class: "cancelButton" });
             this._okayButton = button$8({ class: "okayButton", style: "width:45%;" }, "Okay");
             this.lastTheme = window.localStorage.getItem("colorTheme");

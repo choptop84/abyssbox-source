@@ -99,6 +99,7 @@ export class ThemePrompt implements Prompt {
 			option({ value: "modbox midnight" }, "Midnight [!]"),	
 			option({ value: "modbox snedbox" }, "Snedbox"),
 			option({ value: "modbox unnamed" }, "unnamed [!]"),
+			option({ value: "modbox piano" }, "Piano [!]"),
 			option({ value: "modbox halloween" }, "Halloween [!]"),
 			option({ value: "modbox frozen" }, "FrozenOver❄️ [!]"),
 		),
