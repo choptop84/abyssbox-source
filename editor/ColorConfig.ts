@@ -15981,64 +15981,25 @@ export class ColorConfig {
 			`,
 		  "dogebox dark": `
 				:root {
-					--page-margin: #0d0063;
-					--editor-background: #0D0063;
+					--page-margin: #000;
+					--editor-background: #000;
 					--hover-preview: white;
 					--playhead: white;
 					--primary-text: white;
-					--secondary-text: #999;
+					--secondary-text: #000;
 					--inverted-text: black;
-					--text-selection: rgba(119,68,255,0.99);
-					--box-selection-fill: rgba(255,255,255,0.2);
-					--loop-accent: #74f;
-					--link-accent: #98f;
-					--ui-widget-background: #444;
-					--ui-widget-focus: #777;
-					--pitch-background: #322c59;
-					--tonic: #1c1933;
-					--fifth-note: #7b74ad;
-					--third-note: #578844;
-					--white-piano-key: #bbb;
-					--black-piano-key: #444;
-					--pitch1-secondary-channel: #c7ac00;
-					--pitch1-primary-channel:   #fcf403;
-					--pitch1-secondary-note:    #c7c700;
-					--pitch1-primary-note:      #fcf403;
-					--pitch2-secondary-channel: #9400b5;
-					--pitch2-primary-channel:   #ff00ee;
-					--pitch2-secondary-note:    #9400b5;
-					--pitch2-primary-note:      #ff00ee;
-					--pitch3-secondary-channel: #b37466;
-					--pitch3-primary-channel:   #ffc6a1;
-					--pitch3-secondary-note:    #b37466;
-					--pitch3-primary-note:      #ffc6a1;
-					--pitch4-secondary-channel: #00a100;
-					--pitch4-primary-channel:   #50ff50;
-					--pitch4-secondary-note:    #00c700;
-					--pitch4-primary-note:      #a0ffa0;
-					--pitch5-secondary-channel: #d020d0;
-					--pitch5-primary-channel:   #ff90ff;
-					--pitch5-secondary-note:    #e040e0;
-					--pitch5-primary-note:      #ffc0ff;
-					--pitch6-secondary-channel: #7777b0;
-					--pitch6-primary-channel:   #a0a0ff;
-					--pitch6-secondary-note:    #8888d0;
-					--pitch6-primary-note:      #d0d0ff;
-					--noise1-secondary-channel: #95acad;
-					--noise1-primary-channel:   #cee9eb;
-					--noise1-secondary-note:    #95acad;
-					--noise1-primary-note:      #cee9eb;
-					--noise2-secondary-channel: #996633;
-					--noise2-primary-channel:   #ddaa77;
-					--noise2-secondary-note:    #cc9966;
-					--noise2-primary-note:      #f0d0bb;
-					--noise3-secondary-channel: #4a6d8f;
-					--noise3-primary-channel:   #77aadd;
-					--noise3-secondary-note:    #6f9fcf;
-					--noise3-primary-note:      #bbd7ff;
-
-					
-					
+					--text-selection: #000;
+					--box-selection-fill: #000;
+					--loop-accent: #000;
+					--link-accent: #000;
+					--ui-widget-background: #000;
+					--ui-widget-focus: #000;
+					--pitch-background: #000;
+					--tonic: #000;
+					--fifth-note: #000;
+					--third-note: #000;
+					--white-piano-key: #000;
+					--black-piano-key: #000;
 				}
 			`,
 			    "todbox classic": `
