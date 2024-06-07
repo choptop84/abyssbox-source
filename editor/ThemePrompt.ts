@@ -136,6 +136,8 @@ export class ThemePrompt implements Prompt {
 			option({ value: "WeebBox"}, "WeebBox"),
 			option({ value: "BoxBeep Dark" }, "BoxBeep Dark"),
 			option({ value: "BoxBeep light"}, "BoxBeep Light"),
+			option({ value: "birdbox dark" }, "BirdBox Dark"),
+			option({ value: "birdbox light"}, "BirdBox Light"),
 		),
 		optgroup({ label: "Miscellaneous Themes" },
 		option({ value: "azur lane" }, "Azur Lane"),
