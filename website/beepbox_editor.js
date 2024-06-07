@@ -16035,8 +16035,8 @@ var beepbox = (function (exports) {
 				--use-piano-scheme: true;
 
 				--tonic: #fff;
-				--third-note: #222;
-				--fifth-note: #f7f7f7;
+				--third-note: #7a7a7a;
+				--fifth-note: #7a7a7a;
 
 				--white-tonic: #fff;
 				--black-tonic: #222;
