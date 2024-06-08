@@ -22,6 +22,15 @@ var beepbox = (function (exports) {
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
     */
+    var __awaiter$1 = (exports && exports.__awaiter) || function (thisArg, _arguments, P, generator) {
+        function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+        return new (P || (P = Promise))(function (resolve, reject) {
+            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+            function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+            step((generator = generator.apply(thisArg, _arguments || [])).next());
+        });
+    };
     const TypePresets = ["chip", "FM", "noise", "spectrum", "drumset", "harmonics", "pulse width", "picked string", "supersaw", "chip (custom)", "mod", "FM (6-op)"];
     function getSampleLoadingStatusName(status) {
         switch (status) {
@@ -53,46 +62,48 @@ var beepbox = (function (exports) {
     }
     const sampleLoadEvents = new SampleLoadEvents();
     function startLoadingSample(url, chipWaveIndex, presetSettings, rawLoopOptions, customSampleRate) {
-        const sampleLoaderAudioContext = new AudioContext({ sampleRate: customSampleRate });
-        let closedSampleLoaderAudioContext = false;
-        const chipWave = Config.chipWaves[chipWaveIndex];
-        const rawChipWave = Config.rawChipWaves[chipWaveIndex];
-        const rawRawChipWave = Config.rawRawChipWaves[chipWaveIndex];
-        fetch(url).then((response) => {
-            if (!response.ok) {
+        return __awaiter$1(this, void 0, void 0, function* () {
+            const sampleLoaderAudioContext = new AudioContext({ sampleRate: customSampleRate });
+            let closedSampleLoaderAudioContext = false;
+            const chipWave = Config.chipWaves[chipWaveIndex];
+            const rawChipWave = Config.rawChipWaves[chipWaveIndex];
+            const rawRawChipWave = Config.rawRawChipWaves[chipWaveIndex];
+            fetch(url).then((response) => {
+                if (!response.ok) {
+                    sampleLoadingState.statusTable[chipWaveIndex] = 2;
+                    return Promise.reject(new Error("Couldn't load sample"));
+                }
+                return response.arrayBuffer();
+            }).then((arrayBuffer) => {
+                return sampleLoaderAudioContext.decodeAudioData(arrayBuffer);
+            }).then((audioBuffer) => {
+                const samples = centerWave(Array.from(audioBuffer.getChannelData(0)));
+                const integratedSamples = performIntegral(samples);
+                chipWave.samples = integratedSamples;
+                rawChipWave.samples = samples;
+                rawRawChipWave.samples = samples;
+                if (rawLoopOptions["isUsingAdvancedLoopControls"]) {
+                    presetSettings["chipWaveLoopStart"] = rawLoopOptions["chipWaveLoopStart"] != null ? rawLoopOptions["chipWaveLoopStart"] : 0;
+                    presetSettings["chipWaveLoopEnd"] = rawLoopOptions["chipWaveLoopEnd"] != null ? rawLoopOptions["chipWaveLoopEnd"] : samples.length - 1;
+                    presetSettings["chipWaveLoopMode"] = rawLoopOptions["chipWaveLoopMode"] != null ? rawLoopOptions["chipWaveLoopMode"] : 0;
+                    presetSettings["chipWavePlayBackwards"] = rawLoopOptions["chipWavePlayBackwards"];
+                    presetSettings["chipWaveStartOffset"] = rawLoopOptions["chipWaveStartOffset"] != null ? rawLoopOptions["chipWaveStartOffset"] : 0;
+                }
+                sampleLoadingState.samplesLoaded++;
+                sampleLoadingState.statusTable[chipWaveIndex] = 1;
+                sampleLoadEvents.dispatchEvent(new SampleLoadedEvent(sampleLoadingState.totalSamples, sampleLoadingState.samplesLoaded));
+                if (!closedSampleLoaderAudioContext) {
+                    closedSampleLoaderAudioContext = true;
+                    sampleLoaderAudioContext.close();
+                }
+            }).catch((error) => {
                 sampleLoadingState.statusTable[chipWaveIndex] = 2;
-                return Promise.reject(new Error("Couldn't load sample"));
-            }
-            return response.arrayBuffer();
-        }).then((arrayBuffer) => {
-            return sampleLoaderAudioContext.decodeAudioData(arrayBuffer);
-        }).then((audioBuffer) => {
-            const samples = centerWave(Array.from(audioBuffer.getChannelData(0)));
-            const integratedSamples = performIntegral(samples);
-            chipWave.samples = integratedSamples;
-            rawChipWave.samples = samples;
-            rawRawChipWave.samples = samples;
-            if (rawLoopOptions["isUsingAdvancedLoopControls"]) {
-                presetSettings["chipWaveLoopStart"] = rawLoopOptions["chipWaveLoopStart"] != null ? rawLoopOptions["chipWaveLoopStart"] : 0;
-                presetSettings["chipWaveLoopEnd"] = rawLoopOptions["chipWaveLoopEnd"] != null ? rawLoopOptions["chipWaveLoopEnd"] : samples.length - 1;
-                presetSettings["chipWaveLoopMode"] = rawLoopOptions["chipWaveLoopMode"] != null ? rawLoopOptions["chipWaveLoopMode"] : 0;
-                presetSettings["chipWavePlayBackwards"] = rawLoopOptions["chipWavePlayBackwards"];
-                presetSettings["chipWaveStartOffset"] = rawLoopOptions["chipWaveStartOffset"] != null ? rawLoopOptions["chipWaveStartOffset"] : 0;
-            }
-            sampleLoadingState.samplesLoaded++;
-            sampleLoadingState.statusTable[chipWaveIndex] = 1;
-            sampleLoadEvents.dispatchEvent(new SampleLoadedEvent(sampleLoadingState.totalSamples, sampleLoadingState.samplesLoaded));
-            if (!closedSampleLoaderAudioContext) {
-                closedSampleLoaderAudioContext = true;
-                sampleLoaderAudioContext.close();
-            }
-        }).catch((error) => {
-            sampleLoadingState.statusTable[chipWaveIndex] = 2;
-            alert("Failed to load " + url + ":\n" + error);
-            if (!closedSampleLoaderAudioContext) {
-                closedSampleLoaderAudioContext = true;
-                sampleLoaderAudioContext.close();
-            }
+                alert("Failed to load " + url + ":\n" + error);
+                if (!closedSampleLoaderAudioContext) {
+                    closedSampleLoaderAudioContext = true;
+                    sampleLoaderAudioContext.close();
+                }
+            });
         });
     }
     function getLocalStorageItem(key, defaultValue) {
@@ -414,6 +425,7 @@ var beepbox = (function (exports) {
     Config.attackVal = 0;
     Config.releaseVal = 0.25;
     Config.willReloadForCustomSamples = false;
+    Config.jsonFormat = "UltraBox";
     Config.scales = toNameMap([
         { name: "Free", realName: "chromatic", flags: [true, true, true, true, true, true, true, true, true, true, true, true] },
         { name: "Major", realName: "ionian", flags: [true, false, true, false, true, true, false, true, false, true, false, true] },
@@ -1106,7 +1118,7 @@ var beepbox = (function (exports) {
             promptName: "FM Slider 5", promptDesc: ["This setting affects the strength of the fifth FM slider, just like the corresponding slider on your instrument.", "It works in a multiplicative way, so at $HI your slider will sound the same is its default value, and at $LO it will sound like it has been moved all the way to the left.", "For the full range of control with this mod, move your underlying slider all the way to the right.", "[MULTIPLICATIVE] [$LO - $HI] [%]"] },
         { name: "fm slider 6", pianoName: "FM 6", maxRawVol: 15, newNoteVol: 15, forSong: false, convertRealFactor: 0, associatedEffect: 12,
             promptName: "FM Slider 6", promptDesc: ["This setting affects the strength of the sixth FM slider, just like the corresponding slider on your instrument.", "It works in a multiplicative way, so at $HI your slider will sound the same is its default value, and at $LO it will sound like it has been moved all the way to the left.", "For the full range of control with this mod, move your underlying slider all the way to the right.", "[MULTIPLICATIVE] [$LO - $HI] [%]"] },
-        { name: "decimal offset", pianoName: "Decimal Offset", maxRawVol: 99, newNoteVol: 0, forSong: false, convertRealFactor: 0, optionalModify: "invert-0to99", associatedEffect: 12,
+        { name: "decimal offset", pianoName: "Decimal Offset", maxRawVol: 99, newNoteVol: 0, forSong: false, convertRealFactor: 0, invertSliderIndicator: true, associatedEffect: 12,
             promptName: "Decimal Offset", promptDesc: ["This setting controls the decimal offset that is subtracted from the pulse width; use this for creating values like 12.5 or 6.25.", "[$LO - $HI]"] },
         { name: "envelope speed", pianoName: "EnvelopeSpd", maxRawVol: 50, newNoteVol: 12, forSong: false, convertRealFactor: 0, associatedEffect: 12,
             promptName: "Envelope Speed", promptDesc: ["This setting controls how fast all of the envelopes for the instrument play.", "At $LO, your instrument's envelopes will be frozen, and at values near there they will change very slowly. At 12, the envelopes will work as usual, performing at normal speed. This increases up to $HI, where the envelopes will change very quickly. The speeds are given below:",
@@ -1240,7 +1252,7 @@ var beepbox = (function (exports) {
             }
             else if (index == 8) {
                 var drumBuffer = 1;
-                for (var i = 0; i < 32768; i++) {
+                for (var i = 0; i < Config.chipNoiseLength; i++) {
                     wave[i] = (drumBuffer & 1) / 2.0 - 0.5;
                     var newBuffer = drumBuffer >> 1;
                     if (((drumBuffer + newBuffer) & 1) == 1) {
@@ -1267,7 +1279,7 @@ var beepbox = (function (exports) {
             }
             else if (index == 11) {
                 var drumBuffer = 1;
-                for (var i = 0; i < 32768; i++) {
+                for (var i = 0; i < Config.chipNoiseLength; i++) {
                     wave[i] = Math.round((drumBuffer & 1));
                     var newBuffer = drumBuffer >> 1;
                     if (((drumBuffer + newBuffer) & 1) == 1) {
@@ -25906,7 +25918,7 @@ li.select2-results__option[role=group] > strong:hover {
             let noCarriersControlledByNoteSize = true;
             let allCarriersControlledByNoteSize = true;
             let noteSizeControlsSomethingElse = (legacyFilterEnv.type == 0) || (legacyPulseEnv.type == 0);
-            if (this.type == 1) {
+            if (this.type == 1 || this.type == 11) {
                 noteSizeControlsSomethingElse = noteSizeControlsSomethingElse || (legacyFeedbackEnv.type == 0);
                 for (let i = 0; i < legacyOperatorEnvelopes.length; i++) {
                     if (i < carrierCount) {
@@ -25923,7 +25935,7 @@ li.select2-results__option[role=group] > strong:hover {
                 }
             }
             this.envelopeCount = 0;
-            if (this.type == 1) {
+            if (this.type == 1 || this.type == 11) {
                 if (allCarriersControlledByNoteSize && noteSizeControlsSomethingElse) {
                     this.addEnvelope(Config.instrumentAutomationTargets.dictionary["noteVolume"].index, 0, Config.envelopes.dictionary["note size"].index);
                 }
@@ -26068,6 +26080,22 @@ li.select2-results__option[role=group] > strong:hover {
             }
             if (this.type == 2) {
                 instrumentObject["wave"] = Config.chipNoises[this.chipNoise].name;
+                instrumentObject["unison"] = this.unison == Config.unisons.length ? "custom" : Config.unisons[this.unison].name;
+                if (this.unison == Config.unisons.length) {
+                    instrumentObject["unisonVoices"] = this.unisonVoices;
+                    instrumentObject["unisonSpread"] = this.unisonSpread;
+                    instrumentObject["unisonOffset"] = this.unisonOffset;
+                    instrumentObject["unisonExpression"] = this.unisonExpression;
+                    instrumentObject["unisonSign"] = this.unisonSign;
+                }
+                instrumentObject["unison"] = this.unison == Config.unisons.length ? "custom" : Config.unisons[this.unison].name;
+                if (this.unison == Config.unisons.length) {
+                    instrumentObject["unisonVoices"] = this.unisonVoices;
+                    instrumentObject["unisonSpread"] = this.unisonSpread;
+                    instrumentObject["unisonOffset"] = this.unisonOffset;
+                    instrumentObject["unisonExpression"] = this.unisonExpression;
+                    instrumentObject["unisonSign"] = this.unisonSign;
+                }
             }
             else if (this.type == 3) {
                 instrumentObject["spectrum"] = [];
@@ -26108,6 +26136,14 @@ li.select2-results__option[role=group] > strong:hover {
             else if (this.type == 6) {
                 instrumentObject["pulseWidth"] = this.pulseWidth;
                 instrumentObject["decimalOffset"] = this.decimalOffset;
+                instrumentObject["unison"] = this.unison == Config.unisons.length ? "custom" : Config.unisons[this.unison].name;
+                if (this.unison == Config.unisons.length) {
+                    instrumentObject["unisonVoices"] = this.unisonVoices;
+                    instrumentObject["unisonSpread"] = this.unisonSpread;
+                    instrumentObject["unisonOffset"] = this.unisonOffset;
+                    instrumentObject["unisonExpression"] = this.unisonExpression;
+                    instrumentObject["unisonSign"] = this.unisonSign;
+                }
             }
             else if (this.type == 8) {
                 instrumentObject["pulseWidth"] = this.pulseWidth;
@@ -26212,10 +26248,12 @@ li.select2-results__option[role=group] > strong:hover {
             instrumentObject["envelopes"] = envelopes;
             return instrumentObject;
         }
-        fromJsonObject(instrumentObject, isNoiseChannel, isModChannel, useSlowerRhythm, useFastTwoNoteArp, legacyGlobalReverb = 0) {
+        fromJsonObject(instrumentObject, isNoiseChannel, isModChannel, useSlowerRhythm, useFastTwoNoteArp, legacyGlobalReverb = 0, jsonFormat = Config.jsonFormat) {
             if (instrumentObject == undefined)
                 instrumentObject = {};
             let type = Config.instrumentTypeNames.indexOf(instrumentObject["type"]);
+            if ((jsonFormat == "SynthBox") && (instrumentObject["type"] == "FM"))
+                type = Config.instrumentTypeNames.indexOf("FM6op");
             if (type == -1)
                 type = isModChannel ? 10 : (isNoiseChannel ? 2 : 0);
             this.setTypeAndReset(type, isNoiseChannel, isModChannel);
@@ -26224,7 +26262,12 @@ li.select2-results__option[role=group] > strong:hover {
                 this.preset = instrumentObject["preset"] >>> 0;
             }
             if (instrumentObject["volume"] != undefined) {
-                this.volume = clamp(-Config.volumeRange / 2, (Config.volumeRange / 2) + 1, instrumentObject["volume"] | 0);
+                if (jsonFormat == "JummBox" || jsonFormat == "Midbox" || jsonFormat == "SynthBox" || jsonFormat == "UltraBox") {
+                    this.volume = clamp(-Config.volumeRange / 2, (Config.volumeRange / 2) + 1, instrumentObject["volume"] | 0);
+                }
+                else {
+                    this.volume = Math.round(-clamp(0, 8, Math.round(5 - (instrumentObject["volume"] | 0) / 20)) * 25.0 / 7.0);
+                }
             }
             else {
                 this.volume = 0;
@@ -26318,7 +26361,7 @@ li.select2-results__option[role=group] > strong:hover {
             this.unison = Config.unisons.dictionary["none"].index;
             const unisonProperty = instrumentObject["unison"] || instrumentObject["interval"] || instrumentObject["chorus"];
             if (unisonProperty != undefined) {
-                const legacyChorusNames = { "union": "none", "fifths": "fifth", "octaves": "octave" };
+                const legacyChorusNames = { "union": "none", "fifths": "fifth", "octaves": "octave", "error": "voiced" };
                 const unison = Config.unisons.dictionary[legacyChorusNames[unisonProperty]] || Config.unisons.dictionary[unisonProperty];
                 if (unison != undefined)
                     this.unison = unison.index;
@@ -26339,6 +26382,25 @@ li.select2-results__option[role=group] > strong:hover {
             }
             if (instrumentObject["pitchShiftSemitones"] != undefined) {
                 this.pitchShift = clamp(0, Config.pitchShiftRange, Math.round(+instrumentObject["pitchShiftSemitones"]));
+            }
+            if (instrumentObject["octoff"] != undefined) {
+                let potentialPitchShift = instrumentObject["octoff"];
+                this.effects = (this.effects | (1 << 7));
+                if ((potentialPitchShift == "+1 (octave)") || (potentialPitchShift == "+2 (2 octaves)")) {
+                    this.pitchShift = 24;
+                }
+                else if ((potentialPitchShift == "+1/2 (fifth)") || (potentialPitchShift == "+1 1/2 (octave and fifth)")) {
+                    this.pitchShift = 18;
+                }
+                else if ((potentialPitchShift == "-1 (octave)") || (potentialPitchShift == "-2 (2 octaves")) {
+                    this.pitchShift = 0;
+                }
+                else if ((potentialPitchShift == "-1/2 (fifth)") || (potentialPitchShift == "-1 1/2 (octave and fifth)")) {
+                    this.pitchShift = 6;
+                }
+                else {
+                    this.pitchShift = 12;
+                }
             }
             if (instrumentObject["detuneCents"] != undefined) {
                 this.detune = clamp(Config.detuneMin, Config.detuneMax + 1, Math.round(Synth.centsToDetune(+instrumentObject["detuneCents"])));
@@ -26498,6 +26560,7 @@ li.select2-results__option[role=group] > strong:hover {
                                 this.drumsetSpectrumWaves[j].spectrum[i] = Math.max(0, Math.min(Config.spectrumMax, Math.round(Config.spectrumMax * (+drum["spectrum"][i]) / 100)));
                             }
                         }
+                        this.drumsetSpectrumWaves[j].markCustomWaveDirty();
                     }
                 }
             }
@@ -26551,13 +26614,47 @@ li.select2-results__option[role=group] > strong:hover {
                         this.customAlgorithm.fromPreset(this.algorithm6Op);
                     }
                     this.feedbackType6Op = Config.feedbacks6Op.findIndex(feedback6Op => feedback6Op.name == instrumentObject["feedbackType"]);
-                    if (this.feedbackType6Op == -1)
-                        this.feedbackType6Op = 1;
-                    if (this.feedbackType6Op == 0) {
-                        this.customFeedbackType.set(instrumentObject["customFeedback"]["mods"]);
+                    if ((this.feedbackType6Op == -1) && (jsonFormat == "SynthBox")) {
+                        this.feedbackType6Op = Config.algorithms6Op.findIndex(feedbackType6Op => feedbackType6Op.name == "Custom");
+                        let synthboxLegacyFeedbacks = toNameMap([
+                            { name: "2⟲ 3⟲", indices: [[], [2], [3], [], [], []] },
+                            { name: "4⟲ 5⟲", indices: [[], [], [], [4], [5], []] },
+                            { name: "5⟲ 6⟲", indices: [[], [], [], [], [5], [6]] },
+                            { name: "1⟲ 6⟲", indices: [[1], [], [], [], [], [6]] },
+                            { name: "1⟲ 3⟲", indices: [[1], [], [3], [], [], []] },
+                            { name: "1⟲ 4⟲", indices: [[1], [], [], [4], [], []] },
+                            { name: "1⟲ 5⟲", indices: [[1], [], [], [], [5], []] },
+                            { name: "4⟲ 6⟲", indices: [[], [], [], [4], [], [6]] },
+                            { name: "2⟲ 6⟲", indices: [[], [2], [], [], [], [6]] },
+                            { name: "3⟲ 6⟲", indices: [[], [], [3], [], [], [6]] },
+                            { name: "4⟲ 5⟲ 6⟲", indices: [[], [], [], [4], [5], [6]] },
+                            { name: "1⟲ 3⟲ 6⟲", indices: [[1], [], [3], [], [], [6]] },
+                            { name: "2→5", indices: [[], [], [], [], [2], []] },
+                            { name: "2→6", indices: [[], [], [], [], [], [2]] },
+                            { name: "3→5", indices: [[], [], [], [], [3], []] },
+                            { name: "3→6", indices: [[], [], [], [], [], [3]] },
+                            { name: "4→6", indices: [[], [], [], [], [], [4]] },
+                            { name: "5→6", indices: [[], [], [], [], [], [5]] },
+                            { name: "1→3→4", indices: [[], [], [1], [], [3], []] },
+                            { name: "2→5→6", indices: [[], [], [], [], [2], [5]] },
+                            { name: "2→4→6", indices: [[], [], [], [2], [], [4]] },
+                            { name: "4→5→6", indices: [[], [], [], [], [4], [5]] },
+                            { name: "3→4→5→6", indices: [[], [], [], [3], [4], [5]] },
+                            { name: "2→3→4→5→6", indices: [[], [1], [2], [3], [4], [5]] },
+                            { name: "1→2→3→4→5→6", indices: [[], [1], [2], [3], [4], [5]] },
+                        ]);
+                        let synthboxFeedbackType = synthboxLegacyFeedbacks[synthboxLegacyFeedbacks.findIndex(feedback => feedback.name == instrumentObject["feedbackType"])].indices;
+                        this.customFeedbackType.set(synthboxFeedbackType);
                     }
                     else {
-                        this.customFeedbackType.fromPreset(this.feedbackType6Op);
+                        if (this.feedbackType6Op == -1)
+                            this.feedbackType6Op = 1;
+                        if (this.feedbackType6Op == 0) {
+                            this.customFeedbackType.set(instrumentObject["customFeedback"]["mods"]);
+                        }
+                        else {
+                            this.customFeedbackType.fromPreset(this.feedbackType6Op);
+                        }
                     }
                 }
                 if (instrumentObject["feedbackAmplitude"] != undefined) {
@@ -26659,7 +26756,14 @@ li.select2-results__option[role=group] > strong:hover {
                     this.aliases = instrumentObject["aliases"];
                 }
                 else {
-                    this.aliases = false;
+                    if (jsonFormat == "ModBox") {
+                        this.effects = (this.effects | (1 << 3));
+                        this.aliases = true;
+                        this.distortion = 0;
+                    }
+                    else {
+                        this.aliases = false;
+                    }
                 }
                 if (instrumentObject["noteFilterType"] != undefined) {
                     this.noteFilterType = instrumentObject["noteFilterType"];
@@ -26717,7 +26821,7 @@ li.select2-results__option[role=group] > strong:hover {
                     legacySettings.feedbackEnvelope = getEnvelope(instrumentObject["feedbackEnvelope"]);
                     if (Array.isArray(instrumentObject["operators"])) {
                         legacySettings.operatorEnvelopes = [];
-                        for (let j = 0; j < Config.operatorCount; j++) {
+                        for (let j = 0; j < Config.operatorCount + (this.type == 11 ? 2 : 0); j++) {
                             let envelope;
                             if (instrumentObject["operators"][j] != undefined) {
                                 envelope = getEnvelope(instrumentObject["operators"][j]["envelope"]);
@@ -26829,6 +26933,10 @@ li.select2-results__option[role=group] > strong:hover {
                 if (this.noteFilterType)
                     useControlPointCount = 1;
                 if (index >= useControlPointCount)
+                    return false;
+            }
+            if ((automationTarget.name == "operatorFrequency") || (automationTarget.name == "operatorAmplitude")) {
+                if (index >= 4 + (this.type == 11 ? 2 : 0))
                     return false;
             }
             return true;
@@ -26975,7 +27083,7 @@ li.select2-results__option[role=group] > strong:hover {
         }
         initToDefault(andResetChannels = true) {
             this.scale = 0;
-            this.scaleCustom = [true, false, false, false, false, false, false, false, false, false, false, false];
+            this.scaleCustom = [true, false, true, true, false, false, false, true, true, false, true, true];
             this.key = 0;
             this.octave = 0;
             this.loopStart = 0;
@@ -26989,7 +27097,7 @@ li.select2-results__option[role=group] > strong:hover {
             this.layeredInstruments = false;
             this.patternInstruments = false;
             this.title = "Untitled";
-            document.title = EditorConfig.versionDisplayName;
+            document.title = this.title + " - " + EditorConfig.versionDisplayName;
             if (andResetChannels) {
                 this.pitchChannelCount = 3;
                 this.noiseChannelCount = 1;
@@ -27319,6 +27427,9 @@ li.select2-results__option[role=group] > strong:hover {
                     }
                     else if (instrument.type == 2) {
                         buffer.push(119, base64IntToCharCode[instrument.chipNoise]);
+                        buffer.push(104, base64IntToCharCode[instrument.unison]);
+                        if (instrument.unison == Config.unisons.length)
+                            encodeUnisonSettings(buffer, instrument.unisonVoices, instrument.unisonSpread, instrument.unisonOffset, instrument.unisonExpression, instrument.unisonSign);
                     }
                     else if (instrument.type == 3) {
                         buffer.push(83);
@@ -27327,6 +27438,9 @@ li.select2-results__option[role=group] > strong:hover {
                             spectrumBits.write(Config.spectrumControlPointBits, instrument.spectrumWave.spectrum[i]);
                         }
                         spectrumBits.encodeBase64(buffer);
+                        buffer.push(104, base64IntToCharCode[instrument.unison]);
+                        if (instrument.unison == Config.unisons.length)
+                            encodeUnisonSettings(buffer, instrument.unisonVoices, instrument.unisonSpread, instrument.unisonOffset, instrument.unisonExpression, instrument.unisonSign);
                     }
                     else if (instrument.type == 4) {
                         buffer.push(122);
@@ -27350,6 +27464,9 @@ li.select2-results__option[role=group] > strong:hover {
                     else if (instrument.type == 6) {
                         buffer.push(87, base64IntToCharCode[instrument.pulseWidth]);
                         buffer.push(base64IntToCharCode[instrument.decimalOffset >> 6], base64IntToCharCode[instrument.decimalOffset & 0x3f]);
+                        buffer.push(104, base64IntToCharCode[instrument.unison]);
+                        if (instrument.unison == Config.unisons.length)
+                            encodeUnisonSettings(buffer, instrument.unisonVoices, instrument.unisonSpread, instrument.unisonOffset, instrument.unisonExpression, instrument.unisonSign);
                     }
                     else if (instrument.type == 8) {
                         buffer.push(120, base64IntToCharCode[instrument.supersawDynamism], base64IntToCharCode[instrument.supersawSpread], base64IntToCharCode[instrument.supersawShape]);
@@ -27599,7 +27716,7 @@ li.select2-results__option[role=group] > strong:hover {
                 legacyIndex = 0;
             return Config.envelopes[clamp(0, Config.envelopes.length, legacyIndex)];
         }
-        fromBase64String(compressed) {
+        fromBase64String(compressed, jsonFormat = "auto") {
             if (compressed == null || compressed == "") {
                 Song._clearSamples();
                 this.initToDefault(true);
@@ -27611,7 +27728,7 @@ li.select2-results__option[role=group] > strong:hover {
             if (compressed.charCodeAt(charIndex) == 35)
                 charIndex++;
             if (compressed.charCodeAt(charIndex) == 123) {
-                this.fromJsonObject(JSON.parse(charIndex == 0 ? compressed : compressed.substring(charIndex)));
+                this.fromJsonObject(JSON.parse(charIndex == 0 ? compressed : compressed.substring(charIndex)), jsonFormat);
                 return;
             }
             const variantTest = compressed.charCodeAt(charIndex);
@@ -27971,10 +28088,10 @@ li.select2-results__option[role=group] > strong:hover {
                                 let newRhythm = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
                                 this.rhythm = clamp(0, Config.rhythms.length, newRhythm + 2);
                                 if (fromJummBox && beforeThree || fromBeepBox) {
-                                    if (this.rhythm == 2 || this.rhythm == 3) {
+                                    if (this.rhythm == Config.rhythms.dictionary["÷3 (triplets)"].index || this.rhythm == Config.rhythms.dictionary["÷6 (sextuplets)"].index) {
                                         useSlowerArpSpeed = true;
                                     }
-                                    if (this.rhythm >= 2) {
+                                    if (this.rhythm >= Config.rhythms.dictionary["÷6 (sextuplets)"].index) {
                                         useFastTwoNoteArp = true;
                                     }
                                 }
@@ -28042,7 +28159,6 @@ li.select2-results__option[role=group] > strong:hover {
                                 instrument.fastTwoNoteArp = true;
                             }
                             if (beforeSeven && fromBeepBox) {
-                                instrument.effects = 0;
                                 if (instrument.chord != Config.chords.dictionary["simultaneous"].index) {
                                     instrument.effects |= 1 << 11;
                                 }
@@ -28539,6 +28655,12 @@ li.select2-results__option[role=group] > strong:hover {
                             if (beforeThree && fromBeepBox) {
                                 const channelIndex = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
                                 this.channels[channelIndex].instruments[0].unison = clamp(0, Config.unisons.length, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                                const instrument = this.channels[channelIndex].instruments[0];
+                                instrument.unisonVoices = Config.unisons[instrument.unison].voices;
+                                instrument.unisonSpread = Config.unisons[instrument.unison].spread;
+                                instrument.unisonOffset = Config.unisons[instrument.unison].offset;
+                                instrument.unisonExpression = Config.unisons[instrument.unison].expression;
+                                instrument.unisonSign = Config.unisons[instrument.unison].sign;
                             }
                             else if (beforeSix && fromBeepBox) {
                                 for (let channelIndex = 0; channelIndex < this.getChannelCount(); channelIndex++) {
@@ -28550,6 +28672,11 @@ li.select2-results__option[role=group] > strong:hover {
                                             instrument.chord = 3;
                                         }
                                         instrument.unison = unison;
+                                        instrument.unisonVoices = Config.unisons[instrument.unison].voices;
+                                        instrument.unisonSpread = Config.unisons[instrument.unison].spread;
+                                        instrument.unisonOffset = Config.unisons[instrument.unison].offset;
+                                        instrument.unisonExpression = Config.unisons[instrument.unison].expression;
+                                        instrument.unisonSign = Config.unisons[instrument.unison].sign;
                                     }
                                 }
                             }
@@ -28561,6 +28688,12 @@ li.select2-results__option[role=group] > strong:hover {
                                     this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].chord = 3;
                                 }
                                 this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].unison = unison;
+                                const instrument = this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator];
+                                instrument.unisonVoices = Config.unisons[instrument.unison].voices;
+                                instrument.unisonSpread = Config.unisons[instrument.unison].spread;
+                                instrument.unisonOffset = Config.unisons[instrument.unison].offset;
+                                instrument.unisonExpression = Config.unisons[instrument.unison].expression;
+                                instrument.unisonSign = Config.unisons[instrument.unison].sign;
                             }
                             else {
                                 this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].unison = clamp(0, Config.unisons.length + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
@@ -28939,10 +29072,12 @@ li.select2-results__option[role=group] > strong:hover {
                                     this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator].chipWave = clamp(0, Config.chipWaves.length, chipWaveForCompat + 62);
                                 }
                             }
-                            const instrument = this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator];
-                            instrument.supersawDynamism = clamp(0, Config.supersawDynamismMax + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
-                            instrument.supersawSpread = clamp(0, Config.supersawSpreadMax + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
-                            instrument.supersawShape = clamp(0, Config.supersawShapeMax + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                            else {
+                                const instrument = this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator];
+                                instrument.supersawDynamism = clamp(0, Config.supersawDynamismMax + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                                instrument.supersawSpread = clamp(0, Config.supersawSpreadMax + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                                instrument.supersawShape = clamp(0, Config.supersawShapeMax + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                            }
                         }
                         break;
                     case 70:
@@ -29898,10 +30033,11 @@ li.select2-results__option[role=group] > strong:hover {
             }
             return result;
         }
-        fromJsonObject(jsonObject) {
+        fromJsonObject(jsonObject, jsonFormat = "auto") {
             this.initToDefault(true);
             if (!jsonObject)
                 return;
+            const format = jsonFormat == "auto" ? jsonObject["format"] : jsonFormat;
             if (jsonObject["name"] != undefined) {
                 this.title = jsonObject["name"];
             }
@@ -30384,7 +30520,7 @@ li.select2-results__option[role=group] > strong:hover {
                                 break;
                             const instrument = new Instrument(isNoiseChannel, isModChannel);
                             channel.instruments[i] = instrument;
-                            instrument.fromJsonObject(instrumentObjects[i], isNoiseChannel, isModChannel, false, false, legacyGlobalReverb);
+                            instrument.fromJsonObject(instrumentObjects[i], isNoiseChannel, isModChannel, false, false, legacyGlobalReverb, format);
                         }
                     }
                     for (let i = 0; i < this.patternsPerChannel; i++) {
@@ -30446,7 +30582,7 @@ li.select2-results__option[role=group] > strong:hover {
             this.masterGain = 1.0;
         }
     }
-    Song._format = "UltraBox";
+    Song._format = Config.jsonFormat;
     Song._oldestBeepboxVersion = 2;
     Song._latestBeepboxVersion = 9;
     Song._oldestJummBoxVersion = 1;
@@ -30631,7 +30767,9 @@ li.select2-results__option[role=group] > strong:hover {
     class EnvelopeComputer {
         constructor() {
             this.noteSecondsStart = 0.0;
+            this.noteSecondsStartUnscaled = 0.0;
             this.noteSecondsEnd = 0.0;
+            this.noteSecondsEndUnscaled = 0.0;
             this.noteTicksStart = 0.0;
             this.noteTicksEnd = 0.0;
             this.noteSizeStart = Config.noteSizeMax;
@@ -30640,7 +30778,9 @@ li.select2-results__option[role=group] > strong:hover {
             this.nextNoteSize = Config.noteSizeMax;
             this._noteSizeFinal = Config.noteSizeMax;
             this.prevNoteSecondsStart = 0.0;
+            this.prevNoteSecondsStartUnscaled = 0.0;
             this.prevNoteSecondsEnd = 0.0;
+            this.prevNoteSecondsEndUnscaled = 0.0;
             this.prevNoteTicksStart = 0.0;
             this.prevNoteTicksEnd = 0.0;
             this._prevNoteSizeFinal = Config.noteSizeMax;
@@ -30666,21 +30806,26 @@ li.select2-results__option[role=group] > strong:hover {
         }
         reset() {
             this.noteSecondsEnd = 0.0;
+            this.noteSecondsEndUnscaled = 0.0;
             this.noteTicksEnd = 0.0;
             this._noteSizeFinal = Config.noteSizeMax;
             this.prevNoteSecondsEnd = 0.0;
+            this.prevNoteSecondsEndUnscaled = 0.0;
             this.prevNoteTicksEnd = 0.0;
             this._prevNoteSizeFinal = Config.noteSizeMax;
             this._modifiedEnvelopeCount = 0;
         }
         computeEnvelopes(instrument, currentPart, tickTimeStart, tickTimeStartReal, secondsPerTick, tone, timeScale) {
+            const secondsPerTickUnscaled = secondsPerTick;
             secondsPerTick *= timeScale;
             const transition = instrument.getTransition();
             if (tone != null && tone.atNoteStart && !transition.continues && !tone.forceContinueAtStart) {
                 this.prevNoteSecondsEnd = this.noteSecondsEnd;
+                this.prevNoteSecondsEndUnscaled = this.noteSecondsEndUnscaled;
                 this.prevNoteTicksEnd = this.noteTicksEnd;
                 this._prevNoteSizeFinal = this._noteSizeFinal;
                 this.noteSecondsEnd = 0.0;
+                this.noteSecondsEndUnscaled = 0.0;
                 this.noteTicksEnd = 0.0;
             }
             if (tone != null) {
@@ -30694,11 +30839,15 @@ li.select2-results__option[role=group] > strong:hover {
             const tickTimeEnd = tickTimeStart + timeScale;
             const tickTimeEndReal = tickTimeStartReal + 1.0;
             const noteSecondsStart = this.noteSecondsEnd;
+            const noteSecondsStartUnscaled = this.noteSecondsEndUnscaled;
             const noteSecondsEnd = noteSecondsStart + secondsPerTick;
+            const noteSecondsEndUnscaled = noteSecondsStartUnscaled + secondsPerTickUnscaled;
             const noteTicksStart = this.noteTicksEnd;
             const noteTicksEnd = noteTicksStart + 1.0;
             const prevNoteSecondsStart = this.prevNoteSecondsEnd;
+            const prevNoteSecondsStartUnscaled = this.prevNoteSecondsEndUnscaled;
             const prevNoteSecondsEnd = prevNoteSecondsStart + secondsPerTick;
+            const prevNoteSecondsEndUnscaled = prevNoteSecondsStartUnscaled + secondsPerTickUnscaled;
             const prevNoteTicksStart = this.prevNoteTicksEnd;
             const prevNoteTicksEnd = prevNoteTicksStart + 1.0;
             const beatsPerTick = 1.0 / (Config.ticksPerPart * Config.partsPerBeat);
@@ -30811,11 +30960,15 @@ li.select2-results__option[role=group] > strong:hover {
                 }
             }
             this.noteSecondsStart = noteSecondsStart;
+            this.noteSecondsStartUnscaled = noteSecondsStartUnscaled;
             this.noteSecondsEnd = noteSecondsEnd;
+            this.noteSecondsEndUnscaled = noteSecondsEndUnscaled;
             this.noteTicksStart = noteTicksStart;
             this.noteTicksEnd = noteTicksEnd;
             this.prevNoteSecondsStart = prevNoteSecondsStart;
+            this.prevNoteSecondsStartUnscaled = prevNoteSecondsStartUnscaled;
             this.prevNoteSecondsEnd = prevNoteSecondsEnd;
+            this.prevNoteSecondsEndUnscaled = prevNoteSecondsEndUnscaled;
             this.prevNoteTicksStart = prevNoteTicksStart;
             this.prevNoteTicksEnd = prevNoteTicksEnd;
             this.prevNoteSize = prevNoteSize;
@@ -30903,6 +31056,8 @@ li.select2-results__option[role=group] > strong:hover {
             this.liveInputSamplesHeld = 0;
             this.lastInterval = 0;
             this.noiseSample = 0.0;
+            this.noiseSampleA = 0.0;
+            this.noiseSampleB = 0.0;
             this.stringSustainStart = 0;
             this.stringSustainEnd = 0;
             this.phases = [];
@@ -30959,6 +31114,8 @@ li.select2-results__option[role=group] > strong:hover {
         }
         reset() {
             this.noiseSample = 0.0;
+            this.noiseSampleA = 0.0;
+            this.noiseSampleB = 0.0;
             for (let i = 0; i < Config.maxPitchOrOperatorCount; i++) {
                 this.phases[i] = 0.0;
                 this.directions[i] = 1;
@@ -31561,6 +31718,13 @@ li.select2-results__option[role=group] > strong:hover {
                 this.unisonExpression = instrument.unisonExpression;
                 this.unisonSign = instrument.unisonSign;
             }
+            else if (instrument.type == 6) {
+                this.unisonVoices = instrument.unisonVoices;
+                this.unisonSpread = instrument.unisonSpread;
+                this.unisonOffset = instrument.unisonOffset;
+                this.unisonExpression = instrument.unisonExpression;
+                this.unisonSign = instrument.unisonSign;
+            }
             else if (instrument.type == 9) {
                 this.wave = (this.aliases) ? instrument.customChipWave : instrument.customChipWaveIntegral;
                 this.volumeScale = 0.05;
@@ -31572,6 +31736,11 @@ li.select2-results__option[role=group] > strong:hover {
             }
             else if (instrument.type == 2) {
                 this.wave = getDrumWave(instrument.chipNoise, inverseRealFourierTransform, scaleElementsByFactor);
+                this.unisonVoices = instrument.unisonVoices;
+                this.unisonSpread = instrument.unisonSpread;
+                this.unisonOffset = instrument.unisonOffset;
+                this.unisonExpression = instrument.unisonExpression;
+                this.unisonSign = instrument.unisonSign;
             }
             else if (instrument.type == 5) {
                 this.wave = this.harmonicsWave.getCustomWave(instrument.harmonicsWave, instrument.type);
@@ -31591,6 +31760,11 @@ li.select2-results__option[role=group] > strong:hover {
             }
             else if (instrument.type == 3) {
                 this.wave = this.spectrumWave.getCustomWave(instrument.spectrumWave, 8);
+                this.unisonVoices = instrument.unisonVoices;
+                this.unisonSpread = instrument.unisonSpread;
+                this.unisonOffset = instrument.unisonOffset;
+                this.unisonExpression = instrument.unisonExpression;
+                this.unisonSign = instrument.unisonSign;
             }
             else if (instrument.type == 4) {
                 for (let i = 0; i < Config.drumCount; i++) {
@@ -32266,14 +32440,6 @@ li.select2-results__option[role=group] > strong:hover {
         setModValue(volumeStart, volumeEnd, channelIndex, instrumentIndex, setting) {
             let val = volumeStart + Config.modulators[setting].convertRealFactor;
             let nextVal = volumeEnd + Config.modulators[setting].convertRealFactor;
-            if (Config.modulators[setting].optionalModify == "invert-0to50") {
-                val = 50 - val;
-                nextVal = 50 - nextVal;
-            }
-            if (Config.modulators[setting].optionalModify == "invert-0to99") {
-                val = 99 - val;
-                nextVal = 99 - nextVal;
-            }
             if (Config.modulators[setting].forSong) {
                 if (this.modValues[setting] == null || this.modValues[setting] != val || this.nextModValues[setting] != nextVal) {
                     this.modValues[setting] = val;
@@ -32449,6 +32615,7 @@ li.select2-results__option[role=group] > strong:hover {
             if (!this.song)
                 return;
             const samplesPerTick = this.getSamplesPerTick();
+            this.prevBar = this.bar;
             if (this.loopBarEnd != this.bar)
                 this.bar++;
             else {
@@ -32461,6 +32628,8 @@ li.select2-results__option[role=group] > strong:hover {
             this.isAtStartOfTick = true;
             if (this.loopRepeatCount != 0 && this.bar == Math.max(this.song.loopStart + this.song.loopLength, this.loopBarEnd)) {
                 this.bar = this.song.loopStart;
+                if (this.loopBarStart != -1)
+                    this.bar = this.loopBarStart;
                 if (this.loopRepeatCount > 0)
                     this.loopRepeatCount--;
             }
@@ -33787,8 +33956,8 @@ li.select2-results__option[role=group] > strong:hover {
             if ((!transition.isSeamless && !tone.forceContinueAtStart) || tone.prevNote == null) {
                 const fadeInSeconds = instrument.getFadeInSeconds();
                 if (fadeInSeconds > 0.0) {
-                    fadeExpressionStart *= Math.min(1.0, envelopeComputer.noteSecondsStart / fadeInSeconds);
-                    fadeExpressionEnd *= Math.min(1.0, envelopeComputer.noteSecondsEnd / fadeInSeconds);
+                    fadeExpressionStart *= Math.min(1.0, envelopeComputer.noteSecondsStartUnscaled / fadeInSeconds);
+                    fadeExpressionEnd *= Math.min(1.0, envelopeComputer.noteSecondsEndUnscaled / fadeInSeconds);
                 }
             }
             if (instrument.type == 4 && tone.drumsetPitch == null) {
@@ -34046,7 +34215,7 @@ li.select2-results__option[role=group] > strong:hover {
                     settingsExpressionMult *= Math.pow(2.0, 0.7 * (1.0 - useSustainStart / (Config.stringSustainRange - 1)));
                 }
                 const startFreq = Instrument.frequencyFromPitch(startPitch);
-                if (instrument.type == 0 || instrument.type == 9 || instrument.type == 5 || instrument.type == 7) {
+                if (instrument.type == 0 || instrument.type == 9 || instrument.type == 5 || 7 || instrument.type == 3 || instrument.type == 6 || instrument.type == 2) {
                     const unisonVoices = instrument.unisonVoices;
                     const unisonSpread = instrument.unisonSpread;
                     const unisonOffset = instrument.unisonOffset;
@@ -34404,7 +34573,7 @@ li.select2-results__option[role=group] > strong:hover {
             const chipWaveLoopMode = instrumentState.chipWaveLoopMode;
             const chipWavePlayBackwards = instrumentState.chipWavePlayBackwards;
             const unisonSign = tone.specialIntervalExpressionMult * instrumentState.unisonSign;
-            if (instrumentState.unisonVoices == 1 && !instrumentState.chord.customInterval)
+            if (instrumentState.unisonVoices == 1 && instrumentState.unisonSpread == 0 && !instrumentState.chord.customInterval)
                 tone.phases[1] = tone.phases[0];
             let phaseDeltaA = tone.phaseDeltas[0] * waveLength;
             let phaseDeltaB = tone.phaseDeltas[1] * waveLength;
@@ -34710,7 +34879,7 @@ li.select2-results__option[role=group] > strong:hover {
             const volumeScale = instrumentState.volumeScale;
             const waveLength = (aliases && instrumentState.type == 8) ? wave.length : wave.length - 1;
             const unisonSign = tone.specialIntervalExpressionMult * instrumentState.unisonSign;
-            if (instrumentState.unisonVoices == 1 && !instrumentState.chord.customInterval)
+            if (instrumentState.unisonVoices == 1 && instrumentState.unisonSpread == 0 && !instrumentState.chord.customInterval)
                 tone.phases[1] = tone.phases[0];
             let phaseDeltaA = tone.phaseDeltas[0] * waveLength;
             let phaseDeltaB = tone.phaseDeltas[1] * waveLength;
@@ -34791,7 +34960,7 @@ li.select2-results__option[role=group] > strong:hover {
             const wave = instrumentState.wave;
             const waveLength = wave.length - 1;
             const unisonSign = tone.specialIntervalExpressionMult * instrumentState.unisonSign;
-            if (instrumentState.unisonVoices == 1 && !instrumentState.chord.customInterval)
+            if (instrumentState.unisonVoices == 1 && instrumentState.unisonSpread == 0 && !instrumentState.chord.customInterval)
                 tone.phases[1] = tone.phases[0];
             let phaseDeltaA = tone.phaseDeltas[0] * waveLength;
             let phaseDeltaB = tone.phaseDeltas[1] * waveLength;
@@ -35534,13 +35703,19 @@ li.select2-results__option[role=group] > strong:hover {
             }
             effectsFunction(synth, outputDataL, outputDataR, bufferIndex, runLength, instrumentState);
         }
-        static pulseWidthSynth(synth, bufferIndex, roundedSamplesPerTick, tone, instrument) {
+        static pulseWidthSynth(synth, bufferIndex, roundedSamplesPerTick, tone, instrumentState) {
             const data = synth.tempMonoInstrumentSampleBuffer;
-            let phaseDelta = tone.phaseDeltas[0];
-            const phaseDeltaScale = +tone.phaseDeltaScales[0];
+            const unisonSign = tone.specialIntervalExpressionMult * instrumentState.unisonSign;
+            if (instrumentState.unisonVoices == 1 && instrumentState.unisonSpread == 0 && !instrumentState.chord.customInterval)
+                tone.phases[1] = tone.phases[0];
+            let phaseDeltaA = tone.phaseDeltas[0];
+            let phaseDeltaB = tone.phaseDeltas[1];
+            const phaseDeltaScaleA = +tone.phaseDeltaScales[0];
+            const phaseDeltaScaleB = +tone.phaseDeltaScales[1];
             let expression = +tone.expression;
             const expressionDelta = +tone.expressionDelta;
-            let phase = (tone.phases[0] % 1);
+            let phaseA = (tone.phases[0] % 1);
+            let phaseB = (tone.phases[1] % 1);
             let pulseWidth = tone.pulseWidth;
             const pulseWidthDelta = tone.pulseWidthDelta;
             const filters = tone.noteFilters;
@@ -35550,40 +35725,63 @@ li.select2-results__option[role=group] > strong:hover {
             const applyFilters = Synth.applyFilters;
             const stopIndex = bufferIndex + roundedSamplesPerTick;
             for (let sampleIndex = bufferIndex; sampleIndex < stopIndex; sampleIndex++) {
-                const sawPhaseA = phase % 1;
-                const sawPhaseB = (phase + pulseWidth) % 1;
-                let pulseWave = sawPhaseB - sawPhaseA;
-                if (!instrument.aliases) {
-                    if (sawPhaseA < phaseDelta) {
-                        var t = sawPhaseA / phaseDelta;
-                        pulseWave += (t + t - t * t - 1) * 0.5;
+                const sawPhaseA = phaseA % 1;
+                const sawPhaseB = (phaseA + pulseWidth) % 1;
+                const sawPhaseC = phaseB % 1;
+                const sawPhaseD = (phaseB + pulseWidth) % 1;
+                let pulseWaveA = sawPhaseB - sawPhaseA;
+                let pulseWaveB = sawPhaseD - sawPhaseC;
+                if (!instrumentState.aliases) {
+                    if (sawPhaseA < phaseDeltaA) {
+                        var t = sawPhaseA / phaseDeltaA;
+                        pulseWaveA += (t + t - t * t - 1) * 0.5;
                     }
-                    else if (sawPhaseA > 1.0 - phaseDelta) {
-                        var t = (sawPhaseA - 1.0) / phaseDelta;
-                        pulseWave += (t + t + t * t + 1) * 0.5;
+                    else if (sawPhaseA > 1.0 - phaseDeltaA) {
+                        var t = (sawPhaseA - 1.0) / phaseDeltaA;
+                        pulseWaveA += (t + t + t * t + 1) * 0.5;
                     }
-                    if (sawPhaseB < phaseDelta) {
-                        var t = sawPhaseB / phaseDelta;
-                        pulseWave -= (t + t - t * t - 1) * 0.5;
+                    if (sawPhaseB < phaseDeltaA) {
+                        var t = sawPhaseB / phaseDeltaA;
+                        pulseWaveA -= (t + t - t * t - 1) * 0.5;
                     }
-                    else if (sawPhaseB > 1.0 - phaseDelta) {
-                        var t = (sawPhaseB - 1.0) / phaseDelta;
-                        pulseWave -= (t + t + t * t + 1) * 0.5;
+                    else if (sawPhaseB > 1.0 - phaseDeltaA) {
+                        var t = (sawPhaseB - 1.0) / phaseDeltaA;
+                        pulseWaveA -= (t + t + t * t + 1) * 0.5;
+                    }
+                    if (sawPhaseC < phaseDeltaB) {
+                        var t = sawPhaseC / phaseDeltaB;
+                        pulseWaveB += (t + t - t * t - 1) * 0.5;
+                    }
+                    else if (sawPhaseC > 1.0 - phaseDeltaB) {
+                        var t = (sawPhaseC - 1.0) / phaseDeltaB;
+                        pulseWaveB += (t + t + t * t + 1) * 0.5;
+                    }
+                    if (sawPhaseD < phaseDeltaB) {
+                        var t = sawPhaseD / phaseDeltaB;
+                        pulseWaveB -= (t + t - t * t - 1) * 0.5;
+                    }
+                    else if (sawPhaseD > 1.0 - phaseDeltaB) {
+                        var t = (sawPhaseD - 1.0) / phaseDeltaB;
+                        pulseWaveB -= (t + t + t * t + 1) * 0.5;
                     }
                 }
-                const inputSample = pulseWave;
+                const inputSample = pulseWaveA + pulseWaveB * unisonSign;
                 const sample = applyFilters(inputSample, initialFilterInput1, initialFilterInput2, filterCount, filters);
                 initialFilterInput2 = initialFilterInput1;
                 initialFilterInput1 = inputSample;
-                phase += phaseDelta;
-                phaseDelta *= phaseDeltaScale;
+                phaseA += phaseDeltaA;
+                phaseB += phaseDeltaB;
+                phaseDeltaA *= phaseDeltaScaleA;
+                phaseDeltaB *= phaseDeltaScaleB;
                 pulseWidth += pulseWidthDelta;
                 const output = sample * expression;
                 expression += expressionDelta;
                 data[sampleIndex] += output;
             }
-            tone.phases[0] = phase;
-            tone.phaseDeltas[0] = phaseDelta;
+            tone.phases[0] = phaseA;
+            tone.phases[1] = phaseB;
+            tone.phaseDeltas[0] = phaseDeltaA;
+            tone.phaseDeltas[1] = phaseDeltaB;
             tone.expression = expression;
             tone.pulseWidth = pulseWidth;
             synth.sanitizeFilters(filters);
@@ -35679,40 +35877,60 @@ li.select2-results__option[role=group] > strong:hover {
         static noiseSynth(synth, bufferIndex, runLength, tone, instrumentState) {
             const data = synth.tempMonoInstrumentSampleBuffer;
             const wave = instrumentState.wave;
-            let phaseDelta = +tone.phaseDeltas[0];
-            const phaseDeltaScale = +tone.phaseDeltaScales[0];
+            const unisonSign = tone.specialIntervalExpressionMult * instrumentState.unisonSign;
+            if (instrumentState.unisonVoices == 1 && instrumentState.unisonSpread == 0 && !instrumentState.chord.customInterval)
+                tone.phases[1] = tone.phases[0];
+            let phaseDeltaA = tone.phaseDeltas[0];
+            let phaseDeltaB = tone.phaseDeltas[1];
+            const phaseDeltaScaleA = +tone.phaseDeltaScales[0];
+            const phaseDeltaScaleB = +tone.phaseDeltaScales[1];
             let expression = +tone.expression;
             const expressionDelta = +tone.expressionDelta;
-            let phase = (tone.phases[0] % 1) * Config.chipNoiseLength;
+            let phaseA = (tone.phases[0] % 1) * Config.chipNoiseLength;
+            let phaseB = (tone.phases[1] % 1) * Config.chipNoiseLength;
             if (tone.phases[0] == 0.0) {
-                phase = Math.random() * Config.chipNoiseLength;
+                phaseA = Math.random() * Config.chipNoiseLength;
+                if (instrumentState.unisonVoices == 1 && instrumentState.unisonSpread == 0 && !instrumentState.chord.customInterval)
+                    phaseB = phaseA;
+            }
+            if (tone.phases[1] == 0.0 && !(instrumentState.unisonVoices == 1 && instrumentState.unisonSpread == 0 && !instrumentState.chord.customInterval)) {
+                phaseB = Math.random() * Config.chipNoiseLength;
             }
             const phaseMask = Config.chipNoiseLength - 1;
-            let noiseSample = +tone.noiseSample;
+            let noiseSampleA = +tone.noiseSampleA;
+            let noiseSampleB = +tone.noiseSampleB;
             const filters = tone.noteFilters;
             const filterCount = tone.noteFilterCount | 0;
             let initialFilterInput1 = +tone.initialNoteFilterInput1;
             let initialFilterInput2 = +tone.initialNoteFilterInput2;
             const applyFilters = Synth.applyFilters;
-            const pitchRelativefilter = Math.min(1.0, phaseDelta * instrumentState.noisePitchFilterMult);
+            const pitchRelativefilterA = Math.min(1.0, phaseDeltaA * instrumentState.noisePitchFilterMult);
+            const pitchRelativefilterB = Math.min(1.0, phaseDeltaB * instrumentState.noisePitchFilterMult);
             const stopIndex = bufferIndex + runLength;
             for (let sampleIndex = bufferIndex; sampleIndex < stopIndex; sampleIndex++) {
-                const waveSample = wave[phase & phaseMask];
-                noiseSample += (waveSample - noiseSample) * pitchRelativefilter;
-                const inputSample = noiseSample;
+                const waveSampleA = wave[phaseA & phaseMask];
+                const waveSampleB = wave[phaseB & phaseMask];
+                noiseSampleA += (waveSampleA - noiseSampleA) * pitchRelativefilterA;
+                noiseSampleB += (waveSampleB - noiseSampleB) * pitchRelativefilterB;
+                const inputSample = noiseSampleA + noiseSampleB * unisonSign;
                 const sample = applyFilters(inputSample, initialFilterInput1, initialFilterInput2, filterCount, filters);
                 initialFilterInput2 = initialFilterInput1;
                 initialFilterInput1 = inputSample;
-                phase += phaseDelta;
-                phaseDelta *= phaseDeltaScale;
+                phaseA += phaseDeltaA;
+                phaseB += phaseDeltaB;
+                phaseDeltaA *= phaseDeltaScaleA;
+                phaseDeltaB *= phaseDeltaScaleB;
                 const output = sample * expression;
                 expression += expressionDelta;
                 data[sampleIndex] += output;
             }
-            tone.phases[0] = phase / Config.chipNoiseLength;
-            tone.phaseDeltas[0] = phaseDelta;
+            tone.phases[0] = phaseA / Config.chipNoiseLength;
+            tone.phases[1] = phaseB / Config.chipNoiseLength;
+            tone.phaseDeltas[0] = phaseDeltaA;
+            tone.phaseDeltas[1] = phaseDeltaB;
             tone.expression = expression;
-            tone.noiseSample = noiseSample;
+            tone.noiseSampleA = noiseSampleA;
+            tone.noiseSampleB = noiseSampleB;
             synth.sanitizeFilters(filters);
             tone.initialNoteFilterInput1 = initialFilterInput1;
             tone.initialNoteFilterInput2 = initialFilterInput2;
@@ -35721,43 +35939,68 @@ li.select2-results__option[role=group] > strong:hover {
             const data = synth.tempMonoInstrumentSampleBuffer;
             const wave = instrumentState.wave;
             const samplesInPeriod = (1 << 7);
-            let phaseDelta = tone.phaseDeltas[0] * samplesInPeriod;
-            const phaseDeltaScale = +tone.phaseDeltaScales[0];
+            const unisonSign = tone.specialIntervalExpressionMult * instrumentState.unisonSign;
+            if (instrumentState.unisonVoices == 1 && instrumentState.unisonSpread == 0 && !instrumentState.chord.customInterval)
+                tone.phases[1] = tone.phases[0];
+            let phaseDeltaA = tone.phaseDeltas[0] * samplesInPeriod;
+            let phaseDeltaB = tone.phaseDeltas[1] * samplesInPeriod;
+            const phaseDeltaScaleA = +tone.phaseDeltaScales[0];
+            const phaseDeltaScaleB = +tone.phaseDeltaScales[1];
             let expression = +tone.expression;
             const expressionDelta = +tone.expressionDelta;
-            let noiseSample = +tone.noiseSample;
+            let noiseSampleA = +tone.noiseSampleA;
+            let noiseSampleB = +tone.noiseSampleB;
             const filters = tone.noteFilters;
             const filterCount = tone.noteFilterCount | 0;
             let initialFilterInput1 = +tone.initialNoteFilterInput1;
             let initialFilterInput2 = +tone.initialNoteFilterInput2;
             const applyFilters = Synth.applyFilters;
-            let phase = (tone.phases[0] % 1) * Config.spectrumNoiseLength;
-            if (tone.phases[0] == 0.0)
-                phase = Synth.findRandomZeroCrossing(wave, Config.spectrumNoiseLength) + phaseDelta;
+            let phaseA = (tone.phases[0] % 1) * Config.spectrumNoiseLength;
+            let phaseB = (tone.phases[1] % 1) * Config.spectrumNoiseLength;
+            if (tone.phases[0] == 0.0) {
+                phaseA = Synth.findRandomZeroCrossing(wave, Config.spectrumNoiseLength) + phaseDeltaA;
+                if (instrumentState.unisonVoices == 1 && instrumentState.unisonSpread == 0 && !instrumentState.chord.customInterval)
+                    phaseB = phaseA;
+            }
+            if (tone.phases[1] == 0.0 && !(instrumentState.unisonVoices == 1 && instrumentState.unisonSpread == 0 && !instrumentState.chord.customInterval)) {
+                phaseB = Synth.findRandomZeroCrossing(wave, Config.spectrumNoiseLength) + phaseDeltaB;
+            }
             const phaseMask = Config.spectrumNoiseLength - 1;
-            const pitchRelativefilter = Math.min(1.0, phaseDelta);
+            const pitchRelativefilterA = Math.min(1.0, phaseDeltaA);
+            const pitchRelativefilterB = Math.min(1.0, phaseDeltaB);
             const stopIndex = bufferIndex + runLength;
             for (let sampleIndex = bufferIndex; sampleIndex < stopIndex; sampleIndex++) {
-                const phaseInt = phase | 0;
-                const index = phaseInt & phaseMask;
-                let waveSample = wave[index];
-                const phaseRatio = phase - phaseInt;
-                waveSample += (wave[index + 1] - waveSample) * phaseRatio;
-                noiseSample += (waveSample - noiseSample) * pitchRelativefilter;
-                const inputSample = noiseSample;
+                const phaseAInt = phaseA | 0;
+                const phaseBInt = phaseB | 0;
+                const indexA = phaseAInt & phaseMask;
+                const indexB = phaseBInt & phaseMask;
+                let waveSampleA = wave[indexA];
+                let waveSampleB = wave[indexB];
+                const phaseRatioA = phaseA - phaseAInt;
+                const phaseRatioB = phaseB - phaseBInt;
+                waveSampleA += (wave[indexA + 1] - waveSampleA) * phaseRatioA;
+                waveSampleB += (wave[indexB + 1] - waveSampleB) * phaseRatioB;
+                noiseSampleA += (waveSampleA - noiseSampleA) * pitchRelativefilterA;
+                noiseSampleB += (waveSampleB - noiseSampleB) * pitchRelativefilterB;
+                const inputSample = noiseSampleA + noiseSampleB * unisonSign;
                 const sample = applyFilters(inputSample, initialFilterInput1, initialFilterInput2, filterCount, filters);
                 initialFilterInput2 = initialFilterInput1;
                 initialFilterInput1 = inputSample;
-                phase += phaseDelta;
-                phaseDelta *= phaseDeltaScale;
+                phaseA += phaseDeltaA;
+                phaseB += phaseDeltaB;
+                phaseDeltaA *= phaseDeltaScaleA;
+                phaseDeltaB *= phaseDeltaScaleB;
                 const output = sample * expression;
                 expression += expressionDelta;
                 data[sampleIndex] += output;
             }
-            tone.phases[0] = phase / Config.spectrumNoiseLength;
-            tone.phaseDeltas[0] = phaseDelta / samplesInPeriod;
+            tone.phases[0] = phaseA / Config.spectrumNoiseLength;
+            tone.phases[1] = phaseB / Config.spectrumNoiseLength;
+            tone.phaseDeltas[0] = phaseDeltaA / samplesInPeriod;
+            tone.phaseDeltas[1] = phaseDeltaB / samplesInPeriod;
             tone.expression = expression;
-            tone.noiseSample = noiseSample;
+            tone.noiseSampleA = noiseSampleA;
+            tone.noiseSampleB = noiseSampleB;
             synth.sanitizeFilters(filters);
             tone.initialNoteFilterInput1 = initialFilterInput1;
             tone.initialNoteFilterInput2 = initialFilterInput2;
@@ -54313,7 +54556,7 @@ button.playButton::before {
     class ThemePrompt {
         constructor(_doc) {
             this._doc = _doc;
-            this._themeSelect = select$5({ style: "width: 100%;", id: "themeSelect" }, optgroup$1({ label: "AbyssBox Themes" }, option$5({ value: "AbyssBox Classic" }, "AbyssBox Classic"), option$5({ value: "AbyssBox Competitive" }, "AbyssBox Competitive"), option$5({ value: "AbyssBox Light" }, "AbyssBox Light"), option$5({ value: "AbyssBox 0.8" }, "AbyssBox 0.8"), option$5({ value: "Half-Life" }, "Half-Life"), option$5({ value: "Half-Life: Source" }, "Half-Life: Source"), option$5({ value: "Doom 1993" }, "Doom 1993"), option$5({ value: "Undertale" }, "Undertale"), option$5({ value: "Yume Nikki" }, "Yume Nikki [!]"), option$5({ value: "Scratch" }, "Scratch"), option$5({ value: "Scratch Addons" }, "Scratch Addons"), option$5({ value: "Windows Xp" }, "Windows Xp"), option$5({ value: "Frutiger Aero" }, "Frutiger Aero"), option$5({ value: "Skeuomorphic" }, "Skeuomorphic/Early 2000's (LeoV)"), option$5({ value: "Glyde" }, "Glyde"), option$5({ value: "starry studio" }, "Starry Studio"), option$5({ value: "Terminal 2.0 (AB)" }, "Terminal 2.0 (AB)"), option$5({ value: "Slushie" }, "Slushie"), option$5({ value: "Slushie Pixel" }, "Slushie 2"), option$5({ value: "BeepBox Pixel" }, "BeepBox Pixel"), option$5({ value: "forest 2" }, "Forest 2"), option$5({ value: "canyon 2" }, "Canyon 2"), option$5({ value: "Nebula 2" }, "Nebula 2"), option$5({ value: "Ghost House" }, "Ghost House"), option$5({ value: "Ghost House 2" }, "Ghost House 2")), optgroup$1({ label: "BeepBox Themes" }, option$5({ value: "dark classic" }, "BeepBox Dark"), option$5({ value: "light classic" }, "BeepBox Light"), option$5({ value: "dark competition" }, "BeepBox Competition Dark")), optgroup$1({ label: "JummBox Themes" }, option$5({ value: "jummbox classic" }, "JummBox Dark"), option$5({ value: "jummbox light" }, "JummBox Light"), option$5({ value: "forest" }, "Forest"), option$5({ value: "canyon" }, "Canyon"), option$5({ value: "midnight" }, "Midnight"), option$5({ value: "beachcombing" }, "Beachcombing"), option$5({ value: "violet verdant" }, "Violet Verdant"), option$5({ value: "sunset" }, "Sunset"), option$5({ value: "autumn" }, "Autumn"), option$5({ value: "fruit" }, "Shadowfruit"), option$5({ value: "toxic" }, "Toxic"), option$5({ value: "roe" }, "Roe"), option$5({ value: "moonlight" }, "Moonlight"), option$5({ value: "portal" }, "Portal"), option$5({ value: "fusion" }, "Fusion"), option$5({ value: "inverse" }, "Inverse"), option$5({ value: "nebula" }, "Nebula"), option$5({ value: "roe light" }, "Roe Light"), option$5({ value: "amoled dark" }, "High Contrast Dark"), option$5({ value: "energized" }, "Energized"), option$5({ value: "neapolitan" }, "Neapolitan"), option$5({ value: "mono" }, "Poly"), option$5({ value: "blutonium" }, "Blutonium")), optgroup$1({ label: "ModBox Themes" }, option$5({ value: "modbox classic" }, "Modbox"), option$5({ value: "modbox 2" }, "Modbox 2.0"), option$5({ value: "modbox artic" }, "Artic"), option$5({ value: "modbox cinnamon" }, "Cinnamon Roll [!]"), option$5({ value: "modbox ocean" }, "Ocean"), option$5({ value: "modbox rainbow" }, "Rainbow [!]"), option$5({ value: "modbox float" }, "Float [!]"), option$5({ value: "modbox windows" }, "Windows"), option$5({ value: "modbox grassland" }, "Grassland"), option$5({ value: "modbox dessert" }, "Dessert"), option$5({ value: "modbox kahoot" }, "Kahootiest"), option$5({ value: "modbox bitbeam" }, "Beam to the Bit [!]"), option$5({ value: "modbox egg" }, "Pretty Egg"), option$5({ value: "modbox pony" }, "Poniryoshka"), option$5({ value: "modbox gameboy" }, "Gameboy [!]"), option$5({ value: "modbox woodkid" }, "Woodkid [!]"), option$5({ value: "modbox midnight" }, "Midnight [!]"), option$5({ value: "modbox snedbox" }, "Snedbox"), option$5({ value: "modbox unnamed" }, "unnamed [!]"), option$5({ value: "modbox piano" }, "Piano [!]"), option$5({ value: "modbox halloween" }, "Halloween [!]"), option$5({ value: "modbox frozen" }, "FrozenOver❄️ [!]")), optgroup$1({ label: "ShitBox Themes" }, option$5({ value: "shitbox 1.0" }, "Shitbox 1.0"), option$5({ value: "shitbox 2.0" }, "Shitbox 2.0"), option$5({ value: "shitbox 3.0" }, "Shitbox 3.0/shitbox4"), option$5({ value: "shitbox ModBox 2.0" }, "Shitbox ModBox 2.0"), option$5({ value: "shitbox Realm" }, "Shitbox Realm [!]")), optgroup$1({ label: "Nepbox Themes" }, option$5({ value: "nepbox" }, "Nepbox"), option$5({ value: "nepbox laffey" }, "Laffey"), option$5({ value: "nepbox snedbox" }, "Snedbox (Nb) [!]"), option$5({ value: "nepbox piano" }, "Piano (Nb) [!]")), optgroup$1({ label: "Mod Default Themes" }, option$5({ value: "sandbox classic" }, "Sandbox"), option$5({ value: "harrybox" }, "Haileybox"), option$5({ value: "brucebox" }, "Brucebox"), option$5({ value: "nerdbox" }, "NerdBox"), option$5({ value: "zefbox" }, "Zefbox"), option$5({ value: "cardboardbox classic" }, "Cardboardbox"), option$5({ value: "blubox classic" }, "Blubox"), option$5({ value: "dogebox classic" }, "Dogebox"), option$5({ value: "dogebox dark" }, "Dogebox Way too Dark"), option$5({ value: "wackybox" }, "Wackybox"), option$5({ value: "todbox dark mode" }, "Todbox Dark Mode"), option$5({ value: "mainbox 1.0" }, "Mainbox"), option$5({ value: "microbox" }, "MicroBox"), option$5({ value: "paandorasbox" }, "PaandorasBox"), option$5({ value: "foxbox" }, "FoxBox"), option$5({ value: "midbox" }, "Midbox"), option$5({ value: "gold light" }, "Gold Light"), option$5({ value: "dogebox2" }, "Dogebox2"), option$5({ value: "WeebBox" }, "WeebBox"), option$5({ value: "BoxBeep Dark" }, "BoxBeep Dark"), option$5({ value: "BoxBeep light" }, "BoxBeep Light"), option$5({ value: "birdbox dark" }, "BirdBox Dark"), option$5({ value: "birdbox light" }, "BirdBox Light")), optgroup$1({ label: "Miscellaneous Themes" }, option$5({ value: "azur lane" }, "Azur Lane"), option$5({ value: "AWeebyssBox" }, "AWeebyssBox"), option$5({ value: "Deuteranopia" }, "Deuteranopia"), option$5({ value: "Protanopia" }, "Protanopia"), option$5({ value: "Tritanopia" }, "Tritanopia"), option$5({ value: "2012 Video Tutorial" }, "2012 Video Tutorial"), option$5({ value: "I am on fire" }, "I am on fire"), option$5({ value: "custom" }, "Custom")));
+            this._themeSelect = select$5({ style: "width: 100%;", id: "themeSelect" }, optgroup$1({ label: "AbyssBox Themes" }, option$5({ value: "AbyssBox Classic" }, "AbyssBox Classic"), option$5({ value: "AbyssBox Competitive" }, "AbyssBox Competitive"), option$5({ value: "AbyssBox Light" }, "AbyssBox Light"), option$5({ value: "AbyssBox 0.8" }, "AbyssBox 0.8"), option$5({ value: "Half-Life" }, "Half-Life"), option$5({ value: "Half-Life: Source" }, "Half-Life: Source"), option$5({ value: "Doom 1993" }, "Doom 1993"), option$5({ value: "Undertale" }, "Undertale"), option$5({ value: "Yume Nikki" }, "Yume Nikki [!]"), option$5({ value: "Scratch" }, "Scratch"), option$5({ value: "Scratch Addons" }, "Scratch Addons"), option$5({ value: "Windows Xp" }, "Windows Xp"), option$5({ value: "Frutiger Aero" }, "Frutiger Aero"), option$5({ value: "Skeuomorphic" }, "Skeuomorphic/Early 2000's (LeoV)"), option$5({ value: "Glyde" }, "Glyde"), option$5({ value: "starry studio" }, "Starry Studio"), option$5({ value: "Terminal 2.0 (AB)" }, "Terminal 2.0 (AB)"), option$5({ value: "Slushie" }, "Slushie"), option$5({ value: "Slushie Pixel" }, "Slushie 2"), option$5({ value: "BeepBox Pixel" }, "BeepBox Pixel"), option$5({ value: "forest 2" }, "Forest 2"), option$5({ value: "canyon 2" }, "Canyon 2"), option$5({ value: "Nebula 2" }, "Nebula 2"), option$5({ value: "Ghost House" }, "Ghost House"), option$5({ value: "Ghost House 2" }, "Ghost House 2")), optgroup$1({ label: "BeepBox Themes" }, option$5({ value: "dark classic" }, "BeepBox Dark"), option$5({ value: "light classic" }, "BeepBox Light"), option$5({ value: "dark competition" }, "BeepBox Competition Dark")), optgroup$1({ label: "JummBox Themes" }, option$5({ value: "jummbox classic" }, "JummBox Dark"), option$5({ value: "jummbox light" }, "JummBox Light"), option$5({ value: "forest" }, "Forest"), option$5({ value: "canyon" }, "Canyon"), option$5({ value: "midnight" }, "Midnight"), option$5({ value: "beachcombing" }, "Beachcombing"), option$5({ value: "violet verdant" }, "Violet Verdant"), option$5({ value: "sunset" }, "Sunset"), option$5({ value: "autumn" }, "Autumn"), option$5({ value: "fruit" }, "Shadowfruit"), option$5({ value: "toxic" }, "Toxic"), option$5({ value: "roe" }, "Roe"), option$5({ value: "moonlight" }, "Moonlight"), option$5({ value: "portal" }, "Portal"), option$5({ value: "fusion" }, "Fusion"), option$5({ value: "inverse" }, "Inverse"), option$5({ value: "nebula" }, "Nebula"), option$5({ value: "roe light" }, "Roe Light"), option$5({ value: "amoled dark" }, "High Contrast Dark"), option$5({ value: "energized" }, "Energized"), option$5({ value: "neapolitan" }, "Neapolitan"), option$5({ value: "mono" }, "Poly"), option$5({ value: "blutonium" }, "Blutonium")), optgroup$1({ label: "ModBox Themes" }, option$5({ value: "modbox classic" }, "Modbox"), option$5({ value: "modbox 2" }, "Modbox 2.0"), option$5({ value: "modbox artic" }, "Artic"), option$5({ value: "modbox cinnamon" }, "Cinnamon Roll [!]"), option$5({ value: "modbox ocean" }, "Ocean"), option$5({ value: "modbox rainbow" }, "Rainbow [!]"), option$5({ value: "modbox float" }, "Float [!]"), option$5({ value: "modbox windows" }, "Windows"), option$5({ value: "modbox grassland" }, "Grassland"), option$5({ value: "modbox dessert" }, "Dessert"), option$5({ value: "modbox kahoot" }, "Kahootiest"), option$5({ value: "modbox bitbeam" }, "Beam to the Bit [!]"), option$5({ value: "modbox egg" }, "Pretty Egg"), option$5({ value: "modbox pony" }, "Poniryoshka"), option$5({ value: "modbox gameboy" }, "Gameboy [!]"), option$5({ value: "modbox woodkid" }, "Woodkid [!]"), option$5({ value: "modbox midnight" }, "Midnight [!]"), option$5({ value: "modbox snedbox" }, "Snedbox"), option$5({ value: "modbox unnamed" }, "unnamed [!]"), option$5({ value: "modbox piano" }, "Piano [!]"), option$5({ value: "modbox halloween" }, "Halloween [!]"), option$5({ value: "modbox frozen" }, "FrozenOver❄️ [!]")), optgroup$1({ label: "ShitBox Themes" }, option$5({ value: "shitbox 1.0" }, "Shitbox 1.0"), option$5({ value: "shitbox 2.0" }, "Shitbox 2.0"), option$5({ value: "shitbox 3.0" }, "Shitbox 3.0/shitbox4"), option$5({ value: "shitbox ModBox 2.0" }, "Shitbox ModBox 2.0"), option$5({ value: "shitbox Realm" }, "Shitbox Realm [!]")), optgroup$1({ label: "Nepbox Themes" }, option$5({ value: "nepbox" }, "Nepbox"), option$5({ value: "nepbox laffey" }, "Laffey"), option$5({ value: "nepbox snedbox" }, "Snedbox (Nb) [!]"), option$5({ value: "nepbox piano" }, "Piano (Nb) [!]")), optgroup$1({ label: "Mod Default Themes" }, option$5({ value: "sandbox classic" }, "Sandbox"), option$5({ value: "harrybox" }, "Haileybox"), option$5({ value: "brucebox" }, "Brucebox"), option$5({ value: "nerdbox" }, "NerdBox"), option$5({ value: "zefbox" }, "Zefbox"), option$5({ value: "cardboardbox classic" }, "Cardboardbox"), option$5({ value: "blubox classic" }, "Blubox"), option$5({ value: "dogebox classic" }, "Dogebox"), option$5({ value: "dogebox dark" }, "Way too Dark (DB)/TOO DARK(BluB)"), option$5({ value: "wackybox" }, "Wackybox"), option$5({ value: "todbox dark mode" }, "Todbox Dark Mode"), option$5({ value: "mainbox 1.0" }, "Mainbox"), option$5({ value: "microbox" }, "MicroBox"), option$5({ value: "paandorasbox" }, "PaandorasBox"), option$5({ value: "foxbox" }, "FoxBox"), option$5({ value: "midbox" }, "Midbox"), option$5({ value: "gold light" }, "Gold Light"), option$5({ value: "dogebox2" }, "Dogebox2"), option$5({ value: "WeebBox" }, "WeebBox"), option$5({ value: "BoxBeep Dark" }, "BoxBeep Dark"), option$5({ value: "BoxBeep light" }, "BoxBeep Light"), option$5({ value: "birdbox dark" }, "BirdBox Dark"), option$5({ value: "birdbox light" }, "BirdBox Light")), optgroup$1({ label: "Miscellaneous Themes" }, option$5({ value: "azur lane" }, "Azur Lane"), option$5({ value: "AWeebyssBox" }, "AWeebyssBox"), option$5({ value: "Deuteranopia" }, "Deuteranopia"), option$5({ value: "Protanopia" }, "Protanopia"), option$5({ value: "Tritanopia" }, "Tritanopia"), option$5({ value: "2012 Video Tutorial" }, "2012 Video Tutorial"), option$5({ value: "I am on fire" }, "I am on fire"), option$5({ value: "custom" }, "Custom")));
             this._cancelButton = button$8({ class: "cancelButton" });
             this._okayButton = button$8({ class: "okayButton", style: "width:45%;" }, "Okay");
             this.lastTheme = window.localStorage.getItem("colorTheme");
