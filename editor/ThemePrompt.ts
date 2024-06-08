@@ -27,7 +27,7 @@ export class ThemePrompt implements Prompt {
 			option({ value: "AbyssBox Competitive"}, "AbyssBox Competitive"),
 			option({ value: "AbyssBox Light"}, "AbyssBox Light"),
 			option({ value: "AbyssBox 0.8"}, "AbyssBox 0.8"),
-			option({ value: "AbyssBox Paino"}, "AbyssBox Piano [!]"),
+			option({ value: "AbyssBox Piano"}, "AbyssBox Piano [!]"),
 			option({ value: "Half-Life"}, "Half-Life"),
 			option({ value: "Half-Life: Source"}, "Half-Life: Source"),
 			option({ value: "Doom 1993"}, "Doom 1993"),
