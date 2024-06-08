@@ -58161,7 +58161,7 @@ button.playButton::before {
             this._pulseWidthDropdown = button({ style: "margin-left:53px; position: absolute; margin-top: 15px; height:1.5em; width: 10px; padding: 0px; font-size: 8px;", onclick: () => this._toggleDropdownMenu(5) }, "▼");
             this._pwmSliderInputBox = input({ style: "width: 4em; font-size: 80%;", id: "pwmSliderInputBox", type: "number", step: "1", min: "1", max: Config.pulseWidthRange, value: "1" });
             this._pulseWidthRow = div({ class: "selectRow" }, div({}, span({ class: "tip", tabindex: "0", style: "height:1em; font-size: smaller; white-space: nowrap;", onclick: () => this._openPrompt("pulseWidth") }, "Pulse", div, "Width:"), div({ style: `color: ${ColorConfig.secondaryText}; margin-top: -3px;` }, this._pwmSliderInputBox)), this._pulseWidthDropdown, this._pulseWidthSlider.container);
-            this._decimalOffsetSlider = new Slider(input({ style: "margin: 0; transform: scaleX(-1);", type: "range", min: "0", max: "99", value: "0", step: "1" }), this._doc, (oldValue, newValue) => new ChangeDecimalOffset(this._doc, oldValue, newValue), false);
+            this._decimalOffsetSlider = new Slider(input({ style: "margin: 0; transform: scaleX(-1);", type: "range", min: "0", max: "99", value: "0", step: "1" }), this._doc, (oldValue, newValue) => new ChangeDecimalOffset(this._doc, oldValue, 99 - newValue), false);
             this._decimalOffsetRow = div({ class: "selectRow dropFader" }, span({ class: "tip", style: "margin-left:10px;", onclick: () => this._openPrompt("decimalOffset") }, "‣ Offset:"), this._decimalOffsetSlider.container);
             this._pulseWidthDropdownGroup = div({ class: "editor-controls", style: "display: none;" }, this._decimalOffsetRow);
             this._pitchShiftSlider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.pitchShiftRange - 1, value: "0", step: "1" }), this._doc, (oldValue, newValue) => new ChangePitchShift(this._doc, oldValue, newValue), true);
@@ -59147,8 +59147,8 @@ button.playButton::before {
                         this._pulseWidthRow.style.display = "";
                         this._pulseWidthSlider.input.title = prettyNumber(instrument.pulseWidth) + "%";
                         this._pulseWidthSlider.updateValue(instrument.pulseWidth);
-                        this._decimalOffsetSlider.input.title = (Number(prettyNumber(instrument.decimalOffset)) / 100) <= 0 ? "none" : "-" + (Number(prettyNumber(instrument.decimalOffset)) / 100) + "%";
-                        this._decimalOffsetSlider.updateValue(instrument.decimalOffset);
+                        this._decimalOffsetSlider.input.title = instrument.decimalOffset / 100 <= 0 ? "none" : "-" + prettyNumber(instrument.decimalOffset / 100) + "%";
+                        this._decimalOffsetSlider.updateValue(99 - instrument.decimalOffset);
                         this._pulseWidthDropdownGroup.style.display = (this._openPulseWidthDropdown ? "" : "none");
                     }
                     else {
@@ -59363,7 +59363,7 @@ button.playButton::before {
                     else {
                         this._reverbRow.style.display = "none";
                     }
-                    if (instrument.type == 0 || instrument.type == 9 || instrument.type == 5 || instrument.type == 7) {
+                    if (instrument.type == 0 || instrument.type == 9 || instrument.type == 5 || 7 || instrument.type == 3 || instrument.type == 6 || instrument.type == 2) {
                         this._unisonSelectRow.style.display = "";
                         setSelectedValue(this._unisonSelect, instrument.unison);
                         this._unisonVoicesInputBox.value = instrument.unisonVoices + "";
@@ -60210,6 +60210,19 @@ button.playButton::before {
                                             this._doc.selection.setChannelBar(this._doc.channel, Math.floor(this._doc.synth.playhead));
                                         }
                                     }
+                                    else {
+                                        this._doc.synth.loopBarStart = -1;
+                                        this._doc.synth.loopBarEnd = -1;
+                                    }
+                                    if (this._doc.bar != Math.floor(this._doc.synth.playhead) && this._doc.synth.loopBarStart != -1) {
+                                        this._doc.synth.goToBar(this._doc.bar);
+                                        this._doc.synth.snapToBar();
+                                        this._doc.synth.initModFilters(this._doc.song);
+                                        this._doc.synth.computeLatestModValues();
+                                        if (this._doc.prefs.autoFollow) {
+                                            this._doc.selection.setChannelBar(this._doc.channel, Math.floor(this._doc.synth.playhead));
+                                        }
+                                    }
                                     this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
                                 }
                             }
@@ -60238,7 +60251,7 @@ button.playButton::before {
                         this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
                         if (event.shiftKey && !event.ctrlKey) {
                             const minusWidth = this._doc.selection.boxSelectionWidth;
-                            this._doc.bar = this._doc.bar - minusWidth;
+                            this._doc.bar -= minusWidth;
                             this._doc.selection.boxSelectionX0 -= minusWidth;
                             this._doc.selection.boxSelectionX1 -= minusWidth;
                             this._doc.selection.insertBars();
@@ -61011,7 +61024,7 @@ button.playButton::before {
                 const channel = this._doc.song.channels[this._doc.channel];
                 const instrument = channel.instruments[this._doc.getCurrentInstrument()];
                 const instrumentCopy = JSON.parse(String(window.localStorage.getItem("instrumentCopy")));
-                if (instrumentCopy != null && instrumentCopy["isDrum"] == this._doc.song.getChannelIsNoise(this._doc.channel)) {
+                if (instrumentCopy != null && instrumentCopy["isDrum"] == this._doc.song.getChannelIsNoise(this._doc.channel) && instrumentCopy["isMod"] == this._doc.song.getChannelIsMod(this._doc.channel)) {
                     this._doc.record(new ChangePasteInstrument(this._doc, instrument, instrumentCopy));
                 }
                 this.refocusStage();
@@ -61502,6 +61515,9 @@ button.playButton::before {
                     case "showDescription":
                         this._doc.prefs.showDescription = !this._doc.prefs.showDescription;
                         break;
+                    case "showInstrumentScrollbars":
+                        this._doc.prefs.showInstrumentScrollbars = !this._doc.prefs.showInstrumentScrollbars;
+                        break;
                     case "showSampleLoadingStatus":
                         this._doc.prefs.showSampleLoadingStatus = !this._doc.prefs.showSampleLoadingStatus;
                         break;
@@ -61931,6 +61947,9 @@ button.playButton::before {
                     function updateModSlider(editor, slider, setting, channel, instrument) {
                         if (editor._doc.synth.isModActive(setting, channel, instrument)) {
                             let currentVal = (editor._doc.synth.getModValue(setting, channel, instrument, false) - Config.modulators[setting].convertRealFactor) / Config.modulators[setting].maxRawVol;
+                            if (Config.modulators[setting].invertSliderIndicator == true) {
+                                currentVal = 1 - currentVal;
+                            }
                             if (currentVal != editor._modSliderValues[setting]) {
                                 editor._modSliderValues[setting] = currentVal;
                                 slider.container.style.setProperty("--mod-position", (currentVal * 96.0 + 2.0) + "%");
@@ -63737,6 +63756,7 @@ button.playButton::before {
             this.showSampleLoadingStatus = window.localStorage.getItem("showSampleLoadingStatus") != "false";
             this.showDescription = window.localStorage.getItem("showDescription") != "false";
             this.notesFlashWhenPlayed = window.localStorage.getItem("notesFlashWhenPlayed") != "false";
+            this.showInstrumentScrollbars = window.localStorage.getItem("showInstrumentScrollbars") == "true";
             this.keyboardLayout = window.localStorage.getItem("keyboardLayout") || "wickiHayden";
             this.bassOffset = (+window.localStorage.getItem("bassOffset")) || 0;
             this.layout = window.localStorage.getItem("layout") || "small";
@@ -63793,6 +63813,7 @@ button.playButton::before {
             window.localStorage.setItem("showOscilloscope", this.showOscilloscope ? "true" : "false");
             window.localStorage.setItem("showSampleLoadingStatus", this.showSampleLoadingStatus ? "true" : "false");
             window.localStorage.setItem("showDescription", this.showDescription ? "true" : "false");
+            window.localStorage.setItem("showInstrumentScrollbars", this.showInstrumentScrollbars ? "true" : "false");
             window.localStorage.setItem("notesFlashWhenPlayed", this.notesFlashWhenPlayed ? "true" : "false");
             window.localStorage.setItem("keyboardLayout", this.keyboardLayout);
             window.localStorage.setItem("bassOffset", String(this.bassOffset));
