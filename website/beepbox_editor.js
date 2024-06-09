@@ -2434,7 +2434,8 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: gray; 
 			--mod-title: #bf2c5d;
 			--progress-bar: #bf2c5d;
-			
+			--empty-sample-bar: #260b1b;
+
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale: 0; 		
 			--pitch-secondary-channel-sat: 43; 		
@@ -2776,6 +2777,7 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: gray; 
 			--mod-title: #bf2c5d;
 			--progress-bar: #bf2c5d;
+			--empty-sample-bar: #0d0d0d;
 
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale: 0; 		
@@ -3097,6 +3099,7 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: gray; 
 			--mod-title: #cc1338;
 			--progress-bar: #cc1338;
+			--empty-sample-bar: #d9a0b1;
 
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale: 0; 		
@@ -3529,6 +3532,7 @@ var beepbox = (function (exports) {
 
 			--note-flash: #ffffff;
 			--note-flash-secondary: #ffffff77;
+			--empty-sample-bar: #260b1b;
 				}
 			`,
         "AbyssBox Piano": ` 
@@ -3548,7 +3552,7 @@ var beepbox = (function (exports) {
 			--ui-widget-focus: #762b4c;
             --pitch-background: #5e2233;  	
             --use-piano-scheme: true;	
-            --pitch-black-key: #35111b; 				
+            --pitch-black-key: #4d1a28; 				
             --pitch-white-key: #5e2233; 
             --tonic: #eb2859; 	
 			--white-tonic: #873a51; 	
@@ -3583,7 +3587,8 @@ var beepbox = (function (exports) {
 			--mod-label-primary-text: gray; 
 			--mod-title: #bf2c5d;
 			--progress-bar: #bf2c5d;
-			
+			--empty-sample-bar: #38021a;
+
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale: 0; 		
 			--pitch-secondary-channel-sat: 43; 		
@@ -3923,6 +3928,7 @@ var beepbox = (function (exports) {
 			--mod-label-secondary-text: rgb(86, 93, 120);
 			--mod-label-primary-text: gray; 
 			--progress-bar: #84aef0;
+			--empty-sample-bar: #26477a;
 
 			--pitch-secondary-channel-hue: 110; 		
 			--pitch-secondary-channel-hue-scale: 0; 		
@@ -5295,6 +5301,7 @@ var beepbox = (function (exports) {
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
 			--progress-bar: #bf2c5d;
+			--empty-sample-bar: #260b1b;
 
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale: 0; 		
@@ -6888,6 +6895,7 @@ var beepbox = (function (exports) {
 			--mod-title: #bf2c5d;
 			--progress-bar: #bf2c5d;
 			--octave-scrollbar: #4a0008;
+			--empty-sample-bar: #0d0d0d;
 
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale: 0; 		
@@ -48791,6 +48799,7 @@ You should be redirected to the song at:<br /><br />
             this._renderedFifths = false;
             this._renderedThirds = false;
             this._renderedACS = false;
+            this._renderedPiano = false;
             this._setKey = 12;
             this._renderedDrums = false;
             this._renderedMod = false;
@@ -50790,6 +50799,9 @@ You should be redirected to the song at:<br /><br />
                     this._renderedThirds = this._doc.prefs.showThird;
                     this._backgroundPitchRows[4].setAttribute("fill", this._doc.prefs.showThird ? ColorConfig.thirdNote : ColorConfig.pitchBackground);
                 }
+                if (this._renderedPiano == true) {
+                    this._renderedPiano = false;
+                }
                 if (this._renderedACS == true) {
                     this._backgroundPitchRows[0].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--tonic, var(--pitch-background))" : ColorConfig.tonic);
                     this._backgroundPitchRows[1].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch1-background, var(--pitch-background))" : ColorConfig.pitchBackground);
@@ -50823,15 +50835,17 @@ You should be redirected to the song at:<br /><br />
                         this._backgroundPitchRows[10].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch10-background, var(--pitch-background))" : ColorConfig.pitchBackground);
                         this._backgroundPitchRows[11].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch11-background, var(--pitch-background))" : ColorConfig.pitchBackground);
                         this._renderedACS = true;
-                        this._setKey = -1;
                     }
-                    if (this._setKey != -1) {
+                    if (this._renderedPiano == true) {
                         this._renderedACS = false;
+                        this._renderedPiano = false;
+                        this._setKey = -1;
                     }
                 }
                 else {
                     if (this._setKey != this._doc.song.key) {
                         this._setKey = this._doc.song.key;
+                        this._renderedPiano = true;
                         if ((this._setKey == 0) || (this._setKey == 2) || (this._setKey == 4) || (this._setKey == 5) || (this._setKey == 7) || (this._setKey == 9) || (this._setKey == 11)) {
                             this._backgroundPitchRows[0].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--white-tonic, var(--pitch-white-key, var(--pitch-background)))" : ColorConfig.pitchBackground);
                         }
@@ -58688,7 +58702,7 @@ button.playButton::before {
             this._trackArea = div({ class: "track-area" }, this._trackAndMuteContainer, this._barScrollBar.container);
             this._menuArea = div({ class: "menu-area" }, div({ class: "selectContainer menu file" }, this._fileMenu), div({ class: "selectContainer menu edit" }, this._editMenu), div({ class: "selectContainer menu preferences" }, this._optionsMenu));
             this._sampleLoadingBar = div({ style: `width: 0%; height: 100%; background-color: ${ColorConfig.indicatorPrimary};` });
-            this._sampleLoadingBarContainer = div({ style: `width: 80%; height: 4px; overflow: hidden; margin-left: auto; margin-right: auto; margin-top: 0.5em; cursor: pointer; background-color: ${ColorConfig.indicatorSecondary};` }, this._sampleLoadingBar);
+            this._sampleLoadingBarContainer = div({ class: `sampleLoadingContainer`, style: `width: 80%; height: 4px; overflow: hidden; margin-left: auto; margin-right: auto; margin-top: 0.5em; cursor: pointer; background-color: var(--empty-sample-bar, ${ColorConfig.indicatorSecondary});` }, this._sampleLoadingBar);
             this._sampleLoadingStatusContainer = div({ style: "cursor: pointer;" }, div({ style: `margin-top: 0.5em; text-align: center; color: ${ColorConfig.secondaryText};` }, "Sample Loading Status"), div({ class: "selectRow", style: "height: 6px; margin-bottom: 0.5em;" }, this._sampleLoadingBarContainer));
             this._songSettingsArea = div({ class: "song-settings-area" }, div({ class: "editor-controls" }, div({ class: "editor-song-settings" }, div({ style: "margin: 3px 0; position: relative; text-align: center; color: ${ColorConfig.secondaryText};" }, div({ class: "tip", style: "flex-shrink: 0; position:absolute; left: 0; top: 0; width: 12px; height: 12px", onclick: () => this._openPrompt("usedPattern") }, SVG.svg({ style: "flex-shrink: 0; position: absolute; left: 0; top: 0; pointer-events: none;", width: "12px", height: "12px", "margin-right": "0.5em", viewBox: "-6 -6 12 12" }, this._usedPatternIndicator)), div({ class: "tip", style: "flex-shrink: 0; position: absolute; left: 14px; top: 0; width: 12px; height: 12px", onclick: () => this._openPrompt("usedInstrument") }, SVG.svg({ style: "flex-shrink: 0; position: absolute; left: 0; top: 0; pointer-events: none;", width: "12px", height: "12px", "margin-right": "1em", viewBox: "-6 -6 12 12" }, this._usedInstrumentIndicator)), "Song Settings", div({ style: "width: 100%; left: 0; top: -1px; position:absolute; overflow-x:clip;" }, this._jumpToModIndicator))), div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("scale") }, "Scale: "), div({ class: "selectContainer" }, this._scaleSelect)), div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("key") }, "Key: "), div({ class: "selectContainer" }, this._keySelect)), div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("key_octave") }, "Octave: "), this._octaveStepper), div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("tempo") }, "Tempo: "), span({ style: "display: flex;" }, this._tempoSlider.container, this._tempoStepper)), div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("rhythm") }, "Rhythm: "), div({ class: "selectContainer" }, this._rhythmSelect)), this._sampleLoadingStatusContainer));
             this._instrumentSettingsArea = div({ class: "instrument-settings-area" }, this._instrumentSettingsGroup, this._modulatorGroup);
@@ -62192,6 +62206,12 @@ button.playButton::before {
                 ? 0
                 : Math.floor((e.samplesLoaded / e.totalSamples) * 100));
             this._sampleLoadingBar.style.width = `${percent}%`;
+            if (e.totalSamples != 0) {
+                this._sampleLoadingBarContainer.style.backgroundColor = "var(--indicator-secondary)";
+            }
+            else {
+                this._sampleLoadingBarContainer.style.backgroundColor = "var(--empty-sample-bar, var(--indicator-secondary))";
+            }
         }
         _toggleAlgorithmCanvas(e) {
             if (this._customAlgorithmCanvas.mode != "feedback") {

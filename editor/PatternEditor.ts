@@ -118,6 +118,7 @@ export class PatternEditor {
     private _renderedFifths: boolean = false;
     private _renderedThirds: boolean = false;
     private _renderedACS: boolean = false;
+    private _renderedPiano: boolean = false;
 
     private _setKey: number = 12;
 
@@ -2413,6 +2414,10 @@ export class PatternEditor {
                 this._backgroundPitchRows[4].setAttribute("fill", this._doc.prefs.showThird ? ColorConfig.thirdNote : ColorConfig.pitchBackground);
             }
 
+            if (this._renderedPiano == true) {
+                this._renderedPiano = false;
+            }
+
             if (this._renderedACS == true) {
                 this._backgroundPitchRows[0].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--tonic, var(--pitch-background))" : ColorConfig.tonic);
                 this._backgroundPitchRows[1].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch1-background, var(--pitch-background))" : ColorConfig.pitchBackground);
@@ -2445,14 +2450,16 @@ export class PatternEditor {
                     this._backgroundPitchRows[10].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch10-background, var(--pitch-background))" : ColorConfig.pitchBackground);
                     this._backgroundPitchRows[11].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--pitch11-background, var(--pitch-background))" : ColorConfig.pitchBackground);
                     this._renderedACS = true;
-                    this._setKey = -1;
                 }
-                if (this._setKey != -1) {
+                if (this._renderedPiano == true) {
                     this._renderedACS = false;
+                    this._renderedPiano = false;
+                    this._setKey = -1;
                 }
             } else {
                 if (this._setKey != this._doc.song.key) {
                         this._setKey = this._doc.song.key;
+                        this._renderedPiano = true;
                         if ( (this._setKey == 0 ) || (this._setKey == 2 ) || (this._setKey == 4 ) || (this._setKey == 5 ) || (this._setKey == 7 ) || (this._setKey == 9 ) || (this._setKey == 11 )) {
                             this._backgroundPitchRows[0].setAttribute("fill", this._doc.prefs.advancedColorScheme ? "var(--white-tonic, var(--pitch-white-key, var(--pitch-background)))" : ColorConfig.pitchBackground);
                         } else {
@@ -2531,7 +2538,7 @@ export class PatternEditor {
                         }
                     if (this._renderedACS == false) {
                     this._renderedACS = true;
-                    }    
+                    }
                 } 
             }
             if (this._renderedThirds != this._doc.prefs.showThird) { 

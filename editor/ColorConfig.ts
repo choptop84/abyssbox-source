@@ -59,7 +59,8 @@ export class ColorConfig {
 			--mod-label-primary-text: gray; 
 			--mod-title: #bf2c5d;
 			--progress-bar: #bf2c5d;
-			
+			--empty-sample-bar: #260b1b;
+
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale: 0; 		
 			--pitch-secondary-channel-sat: 43; 		
@@ -401,6 +402,7 @@ export class ColorConfig {
 			--mod-label-primary-text: gray; 
 			--mod-title: #bf2c5d;
 			--progress-bar: #bf2c5d;
+			--empty-sample-bar: #0d0d0d;
 
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale: 0; 		
@@ -722,6 +724,7 @@ export class ColorConfig {
 			--mod-label-primary-text: gray; 
 			--mod-title: #cc1338;
 			--progress-bar: #cc1338;
+			--empty-sample-bar: #d9a0b1;
 
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale: 0; 		
@@ -1154,6 +1157,7 @@ export class ColorConfig {
 
 			--note-flash: #ffffff;
 			--note-flash-secondary: #ffffff77;
+			--empty-sample-bar: #260b1b;
 				}
 			`,
 			"AbyssBox Piano": ` 
@@ -1173,7 +1177,7 @@ export class ColorConfig {
 			--ui-widget-focus: #762b4c;
             --pitch-background: #5e2233;  	
             --use-piano-scheme: true;	
-            --pitch-black-key: #35111b; 				
+            --pitch-black-key: #4d1a28; 				
             --pitch-white-key: #5e2233; 
             --tonic: #eb2859; 	
 			--white-tonic: #873a51; 	
@@ -1208,7 +1212,8 @@ export class ColorConfig {
 			--mod-label-primary-text: gray; 
 			--mod-title: #bf2c5d;
 			--progress-bar: #bf2c5d;
-			
+			--empty-sample-bar: #38021a;
+
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale: 0; 		
 			--pitch-secondary-channel-sat: 43; 		
@@ -1548,6 +1553,7 @@ export class ColorConfig {
 			--mod-label-secondary-text: rgb(86, 93, 120);
 			--mod-label-primary-text: gray; 
 			--progress-bar: #84aef0;
+			--empty-sample-bar: #26477a;
 
 			--pitch-secondary-channel-hue: 110; 		
 			--pitch-secondary-channel-hue-scale: 0; 		
@@ -2920,6 +2926,7 @@ export class ColorConfig {
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray; 
 			--progress-bar: #bf2c5d;
+			--empty-sample-bar: #260b1b;
 
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale: 0; 		
@@ -4513,6 +4520,7 @@ export class ColorConfig {
 			--mod-title: #bf2c5d;
 			--progress-bar: #bf2c5d;
 			--octave-scrollbar: #4a0008;
+			--empty-sample-bar: #0d0d0d;
 
 			--pitch-secondary-channel-hue: -80; 		
 			--pitch-secondary-channel-hue-scale: 0; 		

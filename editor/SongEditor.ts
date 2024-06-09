@@ -1379,7 +1379,7 @@ export class SongEditor {
     );
 
     private readonly _sampleLoadingBar: HTMLDivElement = div({ style: `width: 0%; height: 100%; background-color: ${ColorConfig.indicatorPrimary};` });
-    private readonly _sampleLoadingBarContainer: HTMLDivElement = div({ style: `width: 80%; height: 4px; overflow: hidden; margin-left: auto; margin-right: auto; margin-top: 0.5em; cursor: pointer; background-color: ${ColorConfig.indicatorSecondary};` }, this._sampleLoadingBar);
+    private readonly _sampleLoadingBarContainer: HTMLDivElement = div({ class: `sampleLoadingContainer`, style: `width: 80%; height: 4px; overflow: hidden; margin-left: auto; margin-right: auto; margin-top: 0.5em; cursor: pointer; background-color: var(--empty-sample-bar, ${ColorConfig.indicatorSecondary});` }, this._sampleLoadingBar);
     private readonly _sampleLoadingStatusContainer: HTMLDivElement = div({ style: "cursor: pointer;" },
         div({ style: `margin-top: 0.5em; text-align: center; color: ${ColorConfig.secondaryText};` }, "Sample Loading Status"),
         div({ class: "selectRow", style: "height: 6px; margin-bottom: 0.5em;" },
@@ -1924,6 +1924,11 @@ export class SongEditor {
             : Math.floor((e.samplesLoaded / e.totalSamples) * 100)
         );
         this._sampleLoadingBar.style.width = `${percent}%`;
+        if (e.totalSamples != 0) {
+            this._sampleLoadingBarContainer.style.backgroundColor = "var(--indicator-secondary)"; 
+        } else {
+            this._sampleLoadingBarContainer.style.backgroundColor = "var(--empty-sample-bar, var(--indicator-secondary))"; 
+            }
     }
 
     private _toggleAlgorithmCanvas(e:Event):void {
