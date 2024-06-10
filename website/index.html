@@ -387,7 +387,7 @@
                         The original BeepBox source code by John Nesky can be found <a href="https://github.com/johnnesky/beepbox" target="_blank">here</a>.
                     </p>
                     <p>
-                        The patch notes of AbyssBox are available <a href="./patch_notes.html">here</a>.
+                        The patch notes of AbyssBox are available <a href="./patch-notes">here</a>.
                     </p>     
                 </section>
             </main>
@@ -419,7 +419,7 @@
             }
 
             function toEgg() {
-                location.href = 'http://choptop84.github.io/abyssbox-source/website/egg';
+                location.href = './egg';
             }
         </script>
     </div>
@@ -430,10 +430,10 @@
     <script type="text/javascript">
 
         // Randomize display of header
-        // 1-in-23
+        // 1-in-34
         //I should rework this sometime (maybe add the midbox tips thingy?)
-        if (Math.floor(Math.random() * 8) == 0) {
-            switch (Math.floor(Math.random() * 22)) {
+        if (Math.floor(Math.random() * 1) == 0) {
+            switch (Math.floor(Math.random() * 33)) {
                 case 0:
                     document.getElementById("goldboxPlant").innerHTML = "  Free!";
                     break;
@@ -523,7 +523,25 @@
                 case 26:
                     document.getElementById("goldboxPlant").innerHTML = "  😳🔥";
                     break;
-                //dogebox2 plants   
+                case 27:
+                    document.getElementById("goldboxPlant").innerHTML = "  xoBssybA";
+                    break;
+                case 28:
+                    document.getElementById("goldboxPlant").innerHTML = "  Also try Monday Night BeepBoxing!";
+                    break;  
+                case 29:
+                    document.getElementById("goldboxPlant").innerHTML = "  https://tinyurl.com/3hudd29u";
+                    break;   
+                case 30:
+                    document.getElementById("goldboxPlant").innerHTML = "  Click here for a secret!";
+                    break; 
+                case 31:
+                    document.getElementById("goldboxPlant").innerHTML = "  Do NOT click here!!!";
+                    break; 
+                case 32:
+                    document.getElementById("goldboxPlant").innerHTML = "  The Game...";
+                    break; 
+                //dogebox2 plants    
             }
         }
 
@@ -570,6 +588,142 @@
 		if (/^#[1-8]/.test(location.hash)) {
 			document.getElementById("linkTo3_0").href += location.hash;
 		}
+    </script>
+    <script> 
+        document.getElementById("goldboxPlant").addEventListener("click", this._clickies);
+        function _clickies() {
+            if (document.getElementById("goldboxPlant").innerHTML == "  Click here for a secret!") {
+                location.href = './secret';
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  :wackybox:") {
+                var wackybox = new Audio('wackybox.mp3');
+                wackybox.play();
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  xoBssybA") {
+				let xScale = 100;
+				let rising = 0; 
+                let ending = 0;
+				const skewInterval = setInterval(() => {
+					if (xScale > 100) {
+						rising = 0;
+                        ending++;
+					}
+					if (xScale < -100) {
+						rising = 1;
+                        ending++;
+					}
+
+					if (xScale > 0) {
+						document.body.style.filter = `brightness(100%)`;
+					} else if (xScale <= 0) {
+						document.body.style.filter = `brightness(80%)`;
+					}
+
+                    if (ending < 2) {
+                        if (rising == 0) {
+                            xScale -= 0.2;
+                        } else if (rising == 1) {
+                            xScale += 0.2;
+                        }
+                    } else {
+                        xScale = 100;
+                        document.getElementById("goldboxPlant").innerHTML = "  oh wow! I'm dizzy now!"
+                    }
+
+					document.body.style.transform = `scale(${xScale}%, 100%)`;
+				}, 1);
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  plus") {
+                document.getElementById("goldboxPlant").innerHTML = "+"
+            } else if (document.getElementById("goldboxPlant").innerHTML == "+") {
+                document.getElementById("goldboxPlant").innerHTML = "  plus"
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  ≽(◕ ᴗ ◕)≼") {
+                switch (Math.floor(Math.random() * 3)) {
+                    case 0:
+                        document.getElementById("goldboxPlant").innerHTML = "  ≽(ᴗ _ ᴗ)≼"
+                    break;
+                    case 1:
+                        document.getElementById("goldboxPlant").innerHTML = "  ≽(⌐ _ ⌐)≼";
+                    break;
+			        case 2:
+                        document.getElementById("goldboxPlant").innerHTML = "  ≽(ᵕ ‿ ᵕ)≼";
+                    }
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  ≽(ᴗ _ ᴗ)≼") {
+                switch (Math.floor(Math.random() * 3)) {
+                    case 0:
+                        document.getElementById("goldboxPlant").innerHTML = "  ≽(◕ ᴗ ◕)≼"
+                    break;
+                    case 1:
+                        document.getElementById("goldboxPlant").innerHTML = "  ≽(⌐ _ ⌐)≼";
+                    break;
+			        case 2:
+                        document.getElementById("goldboxPlant").innerHTML = "  ≽(ᵕ ‿ ᵕ)≼";
+                    }
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  ≽(⌐ _ ⌐)≼") {
+                switch (Math.floor(Math.random() * 3)) {
+                    case 0:
+                        document.getElementById("goldboxPlant").innerHTML = "  ≽(ᴗ _ ᴗ)≼"
+                    break;
+                    case 1:
+                        document.getElementById("goldboxPlant").innerHTML = "  ≽(◕ ᴗ ◕)≼";
+                    break;
+			        case 2:
+                        document.getElementById("goldboxPlant").innerHTML = "  ≽(ᵕ ‿ ᵕ)≼";
+                    }
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  ≽(ᵕ ‿ ᵕ)≼") {
+                switch (Math.floor(Math.random() * 3)) {
+                    case 0:
+                        document.getElementById("goldboxPlant").innerHTML = "  ≽(ᴗ _ ᴗ)≼"
+                    break;
+                    case 1:
+                        document.getElementById("goldboxPlant").innerHTML = "  ≽(⌐ _ ⌐)≼";
+                    break;
+			        case 2:
+                        document.getElementById("goldboxPlant").innerHTML = "  ≽(◕ ᴗ ◕)≼";
+                    }
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  Amen break 145bpm be like") {
+                var amen = new Audio('amen-break-145.mp3');
+                amen.play();
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  Try Minecraft!") {
+                window.open("https://classic.minecraft.net", "_blank");
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  How do you feel?") {
+                document.getElementById("goldboxPlant").innerHTML = "  I hope you're doing well."
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  I hope you're doing well.") {
+                document.getElementById("goldboxPlant").innerHTML = "  I just want you to remember."
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  I just want you to remember.") {
+                document.getElementById("goldboxPlant").innerHTML = "  If you're feeling down, you'll have me to lean on."
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  If you're feeling down, you'll have me to lean on.") {
+                document.getElementById("goldboxPlant").innerHTML = "  I'll be here for as long as I can be."
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  I'll be here for as long as I can be.") {
+                document.getElementById("goldboxPlant").innerHTML = "  Now, back to memes :)"
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  Now, back to memes :)") {
+                document.getElementById("goldboxPlant").innerHTML = "  :wackybox:"
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  Do NOT click here!!!") {
+                window.open("https://www.youtube.com/watch?v=fC7oUOUEEi4", "_blank");
+                document.getElementById("goldboxPlant").innerHTML = "  What did I tell you!?"
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  What did I tell you!?") {
+                window.open("https://www.youtube.com/watch?v=2qgxAHW1w78", "_blank");
+                document.getElementById("goldboxPlant").innerHTML = "  You fell for it again!?"
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  You fell for it again!?") {
+                window.open("https://www.youtube.com/watch?v=Kob0G2hE8IY", "_blank");
+                document.getElementById("goldboxPlant").innerHTML = "  YOU'RE JOKING RIGHT!?"
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  YOU'RE JOKING RIGHT!?") {
+                window.open("https://shattereddisk.github.io/rickroll/rickroll.mp4", "_blank");
+                document.getElementById("goldboxPlant").innerHTML = "  No way..."
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  Free!") {
+                document.getElementById("goldboxPlant").innerHTML = "  Actually I lied..."
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  Actually I lied...") {
+                document.getElementById("goldboxPlant").innerHTML = "  You're Using a pirated version of AbyssBox..."
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  You're Using a pirated version of AbyssBox...") {
+                document.getElementById("goldboxPlant").innerHTML = "  Get Caught Theif!"
+                window.open("./piracy", "_blank");
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  Once was Ultrabox") {
+                document.getElementById("goldboxPlant").innerHTML = "  But Not Anymore!"
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  nyeh heh heh heh!") {
+                window.open("./wet", "_blank");
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  IS THAT SAN-") {
+                window.open("./wet/SAAAAAAAAA.mp4", "_blank");
+            } else if (document.getElementById("goldboxPlant").innerHTML == "  Megalo incoming!!!") {
+                window.open("https://pastelink.net/iatgfekp", "_blank");
+            }
+        }
     </script>
 </body>
 </html>
