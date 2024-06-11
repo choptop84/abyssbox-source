@@ -51128,7 +51128,7 @@ You should be redirected to the song at:<br /><br />
             if (window.localStorage.getItem("oldModNotes") != "true") {
                 if (this._doc.song.getChannelIsMod(this._doc.channel)) {
                     let pathStringPart1 = "M " + prettyNumber(this._partWidth * (start + nextPin.time) + endOffset) + " ";
-                    let pathStringPart2 = prettyNumber(this._pitchToPixelHeight(pitch + offset)) + " ";
+                    let pathStringPart2 = prettyNumber(this._pitchToPixelHeight(pitch + offset) + radius) + " ";
                     pathString = pathStringPart1 + pathStringPart2;
                     for (let i = 1; i < pins.length; i++) {
                         let prevPin = nextPin;
