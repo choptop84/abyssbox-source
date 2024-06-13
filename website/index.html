@@ -41,7 +41,7 @@
             color: var(--primary-text, white);
         }
         
-        .modTitle::before {
+        #modTitle::before {
             content: "AbyssBox";
             color: var(--mod-title, var(--link-accent, #9c64f7));
         }
@@ -67,6 +67,25 @@
 			max-width: 710px;
             padding-left: 30px;
             padding-right: 30px;
+        }
+
+        .thingy {
+        animation: shake 0.5s;
+        animation-iteration-count: infinite;
+        }
+
+        @keyframes shake {
+        0% { transform: translate(1px, 1px) rotate(0deg); }
+        10% { transform: translate(-1px, -2px) rotate(-1deg); }
+        20% { transform: translate(-3px, 0px) rotate(1deg); }
+        30% { transform: translate(3px, 2px) rotate(0deg); }
+        40% { transform: translate(1px, -1px) rotate(1deg); }
+        50% { transform: translate(-1px, 2px) rotate(-1deg); }
+        60% { transform: translate(-3px, 1px) rotate(0deg); }
+        70% { transform: translate(3px, 1px) rotate(-1deg); }
+        80% { transform: translate(-1px, -1px) rotate(1deg); }
+        90% { transform: translate(1px, 2px) rotate(0deg); }
+        100% { transform: translate(1px, -2px) rotate(-1deg); }
         }
 
         #text-content {
@@ -215,7 +234,7 @@
         <section>
 
             <h1>
-                <div class="modTitle"><span id="goldboxPlant" style="display: inline; color:#62a13b"></span></div>
+                <div id="modTitle"><span id="goldboxPlant" style="display: inline; color:#62a13b"></span></div>
             </h1>
             
             <p id="introduction">
@@ -432,8 +451,10 @@
         // Randomize display of header
         // 1-in-34
         //I should rework this sometime (maybe add the midbox tips thingy?)
+        const theme = localStorage.getItem("colorTheme");
+
         if (Math.floor(Math.random() * 1) == 0) {
-            switch (Math.floor(Math.random() * 33)) {
+            switch (Math.floor(Math.random() * 47)) {
                 case 0:
                     document.getElementById("goldboxPlant").innerHTML = "  Free!";
                     break;
@@ -541,6 +562,53 @@
                 case 32:
                     document.getElementById("goldboxPlant").innerHTML = "  The Game...";
                     break; 
+                case 33:
+                    document.getElementById("goldboxPlant").innerHTML = "  Shakey Shakey!!!";
+                    document.getElementById("modTitle").className = "thingy";
+                    break; 
+                case 34:
+                    document.getElementById("goldboxPlant").innerHTML = "  By The Way, Clicking these sometimes does funny stuff";
+                    break; 
+                case 35:
+                    document.getElementById("goldboxPlant").innerHTML = "  But to the left!!!";
+                    document.getElementById("goldboxPlant").style.paddingLeft = "  5px";
+                    document.getElementById("modTitle").style.display = "flex";
+                    break; 
+                case 36:
+                    document.getElementById("goldboxPlant").innerHTML = "But Stacked!";
+                    document.getElementById("modTitle").style.display = "flex";
+                    document.getElementById("modTitle").style.flexFlow = "column";
+                    break; 
+                case 37:
+                    document.getElementById("goldboxPlant").innerHTML = "  Mwah";
+                    break; 
+                case 38:
+                    document.getElementById("goldboxPlant").innerHTML = "  Bwaah";
+                    break;
+                case 39:
+                    document.getElementById("goldboxPlant").innerHTML = "  Bwaaaaaaah";
+                    break;
+                case 40:
+                    document.getElementById("goldboxPlant").innerHTML = "  Meow";
+                    break;
+                case 41:
+                    document.getElementById("goldboxPlant").innerHTML = "  Adventure";
+                    break;   
+                case 42:
+                    document.getElementById("goldboxPlant").innerHTML = "  Adventure 2";
+                    break;  
+                case 43:
+                    document.getElementById("goldboxPlant").innerHTML = '  <("𓆏")';
+                    break;
+                case 44:
+                    document.getElementById("goldboxPlant").innerHTML = `  "Do people even read these?" No probably not but I don't care!!!`;
+                    break;
+                case 45:
+                    document.getElementById("goldboxPlant").innerHTML = `ing your mom!!!`;
+                    break;
+                case 46:
+                    document.getElementById("goldboxPlant").innerHTML = `  Your theme is/was `+theme+" when you got here!"; 
+                    break;
                 //dogebox2 plants    
             }
         }

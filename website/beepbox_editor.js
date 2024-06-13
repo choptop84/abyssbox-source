@@ -5636,7 +5636,7 @@ var beepbox = (function (exports) {
 				font-family: 'trebuc' !important;
 			}
 
-			.modTitle::before {
+			#modTitle::before {
 				content: "λbyssBox" !important;
 			}
 
@@ -5820,7 +5820,7 @@ var beepbox = (function (exports) {
 				font-family: 'trebuc' !important;
 			}
 
-			.modTitle::before {
+			#modTitle::before {
 				content: "λbyssBox: Source" !important;
 			}
 
@@ -8033,7 +8033,7 @@ var beepbox = (function (exports) {
 								opacity: 70%;
 							}
 			
-						.modTitle::before {
+						#modTitle::before {
 							content: "> AbyssBox Terminal 2.0" !important;
 						}
 			`,
@@ -8743,7 +8743,7 @@ var beepbox = (function (exports) {
 				}
 
 				
-				.modTitle::before {
+				#modTitle::before {
 					content: "AAAA I'M ON FIRE AAA" !important;
 				}
 

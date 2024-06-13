@@ -3261,7 +3261,7 @@ export class ColorConfig {
 				font-family: 'trebuc' !important;
 			}
 
-			.modTitle::before {
+			#modTitle::before {
 				content: "λbyssBox" !important;
 			}
 
@@ -3445,7 +3445,7 @@ export class ColorConfig {
 				font-family: 'trebuc' !important;
 			}
 
-			.modTitle::before {
+			#modTitle::before {
 				content: "λbyssBox: Source" !important;
 			}
 
@@ -5658,7 +5658,7 @@ export class ColorConfig {
 								opacity: 70%;
 							}
 			
-						.modTitle::before {
+						#modTitle::before {
 							content: "> AbyssBox Terminal 2.0" !important;
 						}
 			`,
@@ -6368,7 +6368,7 @@ export class ColorConfig {
 				}
 
 				
-				.modTitle::before {
+				#modTitle::before {
 					content: "AAAA I'M ON FIRE AAA" !important;
 				}
 
