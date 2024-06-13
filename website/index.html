@@ -450,6 +450,30 @@
 
         var time = new Date(); 
 
+        var timeOffset = 0;
+
+        var AMPM = "AM"
+
+        var timeHours = time.getHours();
+        var timeMinutes = time.getMinutes();
+        var timeMinutesExt = "0";
+        if (timeHours > 12) {
+            timeOffset = 12;
+            AMPM = "PM";
+        } else {
+            timeOffset = 0;
+            AMPM = "AM";
+        }
+
+        if (timeMinutes < 10) {
+            timeMinutesExt = "0";
+        } else {
+            timeMinutesExt = "";
+        }
+
+        var timeNum = (timeHours-timeOffset)+":"+timeMinutesExt+timeMinutes+" "+AMPM;
+        
+
         // plants originate from JummBox, but then in GoldBox was renamed from jummboxPlants to goldboxPlants, so here I just renamed them to plants to simplify things
         const theme = localStorage.getItem("colorTheme");
         var plants = [
@@ -534,12 +558,42 @@
         "  Random!",
         "  One of the mods of all time!",
         "  Fortnite?!",
-        "  What time is it? It is "+time.getHours()+":"+time.getMinutes()+" right now",
+        "  What time is it? It is "+timeNum+" right now",
         "  Too many plants!",
         "  Glyde is in WubWub with Dubstep!",
         "  ツンデレ",
         "  Too many themes? No way!",
         "2",
+        "  match 3 centered music sim",
+        "4",
+        "  TheGubbys",
+        "  Nokia Cat is cool!",
+        "  Bulbasaur",
+        "  ✨ Plant Life ✨",
+        "  Monstera",
+        "  Niko OneShot",
+        "  Liliac",
+        "  🍂",
+        "  🌿",
+        "  🌺",
+        "  🍃",
+        "  🍄",
+        "  🍀🌷",
+        "  1️⃣3️⃣1️⃣2️⃣",
+        "  🐟",
+        "  ⚡",
+        "  🔵",
+        "  💫",
+        "  👽",
+        "  🍕",
+        "  🌭",
+        "  🍔",
+        "  🍟",
+        "  hoyse 💥❗",
+        "  🧿",
+        "  not :wackybox:",
+        "  100% beef",
+        "  100% vegan",
         ];
 
         const curPlant = Math.floor(Math.random() * plants.length);
