@@ -94,7 +94,6 @@
         }
 
         .donation input[type="submit"] {
-            -webkit-appearance: none;
             background: none;
             border: none;
             font-family: inherit;
@@ -154,12 +153,34 @@
 <h1>... oops.</h1>
 
 <p>So it seems that, for whatever reason, you hit a 404.</p>  
-<h1><img id="404" src="abyssbox_uh_oh_404.png" /></h1>
+<h1><img id="404" src="abyssbox_uh_oh_404.png" onclick="change404Size()"/></h1>
   
   <audio controls="false" autoplay="true" loop="true">
   <source src="Game_Over.ogg" type="audio/ogg">
   Your browser does not support the audio element.
 </audio> 
-	
+<script>
+    var clickCount = 1;
+    function change404Size(){
+        var image = document.getElementById('404');
+        var splat = new Audio('splat.mp3');
+        var explosion = new Audio('explosion.mp3');
+        image.width = image.width + (20 * (clickCount));
+        image.height = image.height - (10 * clickCount);
+        clickCount++;
+        if (clickCount < 12) { 
+            splat.play();
+        } else if (clickCount == 12) {
+            explosion.play();
+			image.height = Math.random() * (640 - 20) + 20;
+            image.src = ("explosion.gif");
+        } else if (clickCount == 13) {
+            image.src = ("abyssbox_uh_oh_404.png");
+            image.width = 576;
+            image.height = 640;
+            clickCount = 1;
+        }
+    }
+    </script>
 </body>
 </html>
