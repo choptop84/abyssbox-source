@@ -554,6 +554,7 @@
         "  It is 4:19 AM as of me writing this!",
         "  BedBox",
         "  ( σ ‸σ)",
+        "  You will never see this plant in the mod! Isn't that crazy?!",
         "  Make me a melody!",
         "  Random!",
         "  One of the mods of all time!",
@@ -603,6 +604,10 @@
             document.getElementById("modTitle").style.display = "flex";
             document.getElementById("modTitle").style.flexFlow = "column";
             }
+
+        if (document.getElementById("plant").innerHTML == "  You will never see this plant in the mod! Isn't that crazy?!") {
+            document.getElementById("plant").innerHTML = "  Love!";
+        }
 
         if (document.getElementById("plant").innerHTML == "  there are a lot of plants in AbyssBox") {
             document.getElementById("plant").innerHTML = "  there are "+plants.length+" plants in AbyssBox!";
