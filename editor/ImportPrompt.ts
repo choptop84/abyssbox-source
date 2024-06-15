@@ -10,24 +10,46 @@ import { ChangeGroup } from "./Change";
 import { removeDuplicatePatterns, ChangeSong, ChangeReplacePatterns } from "./changes";
 import { AnalogousDrum, analogousDrumMap, MidiChunkType, MidiFileFormat, MidiEventType, MidiControlEventMessage, MidiMetaEventMessage, MidiRegisteredParameterNumberMSB, MidiRegisteredParameterNumberLSB, midiVolumeToVolumeMult, midiExpressionToVolumeMult } from "./Midi";
 import { ArrayBufferReader } from "./ArrayBufferReader";
+import { ExportPrompt } from "./ExportPrompt";
 
 	const {button, p, div, h2, input} = HTML;
 
 export class ImportPrompt implements Prompt {
+		private exportStuff:ExportPrompt = new ExportPrompt(this._doc);
+		private readonly _importButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin: 0.5em; width:50%; color: var(--primary-text); border-bottom: solid; border-bottom-color:var(--link-accent;)" }, "Import");
+		private readonly _exportButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin: 0.5em; width:50%; color: var(--secondary-text);" }, "Export");
 		private readonly _fileInput: HTMLInputElement = input({type: "file", accept: ".json,application/json,.mid,.midi,audio/midi,audio/x-midi"});
 		private readonly _cancelButton: HTMLButtonElement = button({class: "cancelButton"});
 		
-		public readonly container: HTMLDivElement = div({class: "prompt noSelection", style: "width: 300px;"},
-		div({class:"promptTitle"}, h2({class:"importExt",style:"text-align: inherit;"}, ""), h2({class:"importTitle"},"Import")),
+		
+
+		public _importPrompt: HTMLDivElement = div({},
+			div({class:"promptTitle"}, h2({class:"importExt",style:"text-align: inherit;"}, ""), h2({class:"importTitle"},"Import")),
 			p({style: "text-align: left; margin: 0.5em 0;"},
 			"BeepBox songs can be exported and re-imported as .json files. You could also use other means to make .json files for BeepBox as long as they follow the same structure.",
 		),
 			p({style: "text-align: left; margin: 0.5em 0;"},
 			"BeepBox can also (crudely) import .mid files. There are many tools available for creating .mid files. Shorter and simpler songs are more likely to work well.",
 		),
-		this._fileInput,
-		this._cancelButton,
-	);
+			this._fileInput,
+			this._cancelButton,
+		);
+		public _exportPrompt: HTMLDivElement = div({style:"display:none;"},
+			this.exportStuff._exportPrompt,
+		);
+
+		public readonly customContainer: HTMLDivElement = div({ class: "customContainer", id: "customContainer", style: "width: 100%;"},
+			p({ style: "text-align: center; margin: 1em 0; display:flex; flex-direction: row;"},
+				this._importButton,
+				this._exportButton,
+				),	
+				this._importPrompt,
+				this._exportPrompt,
+			);
+
+		public readonly container: HTMLDivElement = div({class: "prompt noSelection", style: "width: 300px;"},
+			this.customContainer,
+		);
 		
 	constructor(private _doc: SongDocument) {
 		this._fileInput.select();
@@ -35,8 +57,38 @@ export class ImportPrompt implements Prompt {
 			
 		this._fileInput.addEventListener("change", this._whenFileSelected);
 		this._cancelButton.addEventListener("click", this._close);
+		this._importButton.addEventListener("click", this._importCategoryButton);
+		this._exportButton.addEventListener("click", this._exportCategoryButton);
 	}
 		
+	private _importCategoryButton = (): void => {
+			this._importPrompt.style.display = "";
+			this._exportPrompt.style.display = "none";
+
+			this._importButton.style.borderBottom = "solid";
+			this._importButton.style.borderBottomColor = "var(--link-accent)";
+			this._importButton.style.color = "var(--primary-text)";
+
+			this._exportButton.style.borderBottom = "none";
+			this._exportButton.style.color = "var(--secondary-text)";
+			this._exportButton.style.borderBottomColor = "var(--secondary-text";
+			this.container.style.width = "300px";
+	}
+
+	private _exportCategoryButton = (): void => {
+		this._importPrompt.style.display = "none";
+			this._exportPrompt.style.display = "";
+
+			this._importButton.style.borderBottom = "none";
+			this._importButton.style.borderBottomColor = "var(--secondary-text)";
+			this._importButton.style.color = "var(--secondary-text)";
+
+			this._exportButton.style.borderBottom = "solid";
+			this._exportButton.style.color = "var(--primary-text)";
+			this._exportButton.style.borderBottomColor = "var(--link-accent)";
+			this.container.style.width = "200px";
+	}
+
 		private _close = (): void => { 
 		this._doc.undo();
 	}

@@ -4074,6 +4074,18 @@ var beepbox = (function (exports) {
 			content: url("https://choptop84.github.io/choptop84s-image-repository/AbyssBoxFrutigerAeroThemeLogo.png");
 			}
 
+		button.mobileEffectsButton.deactivated {
+		box-shadow: none !important;
+		}
+
+		button.mobileInstButton.deactivated {
+		box-shadow: none !important;
+		}
+
+		button.mobileEnvelopesButton.deactivated {
+		box-shadow: none !important;
+		}
+
 		select.trackSelectBox {
 			border-image: none !important;
 		}
@@ -44066,14 +44078,15 @@ li.select2-results__option[role=group] > strong:hover {
             this._enableOutro = input$c({ type: "checkbox" });
             this._formatSelect = select$b({ style: "width: 100%;" }, option$b({ value: "wav" }, "Export to .wav file."), option$b({ value: "mp3" }, "Export to .mp3 file."), option$b({ value: "midi" }, "Export to .mid file."), option$b({ value: "json" }, "Export to .json file."), option$b({ value: "html" }, "Export to .html file."));
             this._removeWhitespace = input$c({ type: "checkbox" });
-            this._removeWhitespaceDiv = div$i({ style: "vertical-align: middle; align-items: center; justify-content: space-between;" }, "Remove Whitespace: ", this._removeWhitespace);
-            this._oggWarning = div$i({ style: "vertical-align: middle; align-items: center; justify-content: space-between;" }, "Warning: .ogg files aren't supported on as many devices as mp3 or wav. IOS is an example of this, exporting is still possible, but playback is not.");
+            this._removeWhitespaceDiv = div$i({ style: "vertical-align: middle; align-items: center; justify-content: space-between; margin-bottom: 14px;" }, "Remove Whitespace: ", this._removeWhitespace);
+            this._oggWarning = div$i({ style: "vertical-align: middle; align-items: center; justify-content: space-between; margin-bottom: 14px;" }, "Warning: .ogg files aren't supported on as many devices as mp3 or wav. IOS is an example of this, exporting is still possible, but playback is not.");
             this._cancelButton = button$i({ class: "cancelButton" });
             this._exportButton = button$i({ class: "exportButton", style: "width:45%;" }, "Export");
             this._outputProgressBar = div$i({ style: `width: 0%; background: ${ColorConfig.loopAccent}; height: 100%; position: absolute; z-index: 2;` });
             this._outputProgressLabel = div$i({ style: `position: relative; top: -1px; z-index: 3;` }, "0%");
-            this._outputProgressContainer = div$i({ style: `height: 12px; background: ${ColorConfig.uiWidgetBackground}; display: block; position: relative; z-index: 1;` }, this._outputProgressBar, this._outputProgressLabel);
-            this.container = div$i({ class: "prompt noSelection", style: "width: 200px;" }, div$i({ class: "promptTitle" }, h2$h({ class: "exportExt", style: "text-align: inherit;" }, ""), h2$h({ class: "exportTitle" }, "Export Options")), div$i({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-between;" }, "File name:", this._fileName), div$i({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-between;" }, "Length:", this._computedSamplesLabel), div$i({ style: "display: table; width: 100%;" }, div$i({ style: "display: table-row;" }, div$i({ style: "display: table-cell;" }, "Intro:"), div$i({ style: "display: table-cell;" }, "Loop Count:"), div$i({ style: "display: table-cell;" }, "Outro:")), div$i({ style: "display: table-row;" }, div$i({ style: "display: table-cell; vertical-align: middle;" }, this._enableIntro), div$i({ style: "display: table-cell; vertical-align: middle;" }, this._loopDropDown), div$i({ style: "display: table-cell; vertical-align: middle;" }, this._enableOutro))), this._removeWhitespaceDiv, this._oggWarning, div$i({ class: "selectContainer", style: "width: 100%;" }, this._formatSelect), div$i({ style: "text-align: left;" }, "Exporting can be slow. Reloading the page or clicking the X will cancel it. Please be patient."), this._outputProgressContainer, div$i({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._exportButton), this._cancelButton);
+            this._outputProgressContainer = div$i({ style: `height: 12px; background: ${ColorConfig.uiWidgetBackground}; display: block; position: relative; z-index: 1; margin-bottom: 14px;` }, this._outputProgressBar, this._outputProgressLabel);
+            this._exportPrompt = div$i({}, div$i({ class: "promptTitle", style: "margin-bottom: 14px;" }, h2$h({ class: "exportExt", style: "text-align: inherit;" }, ""), h2$h({ class: "exportTitle" }, "Export Options")), div$i({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-between; margin-bottom: 14px;" }, "File name:", this._fileName), div$i({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-between; margin-bottom: 14px;" }, "Length:", this._computedSamplesLabel), div$i({ style: "display: table; width: 100%; margin-bottom: 14px;" }, div$i({ style: "display: table-row;" }, div$i({ style: "display: table-cell;" }, "Intro:"), div$i({ style: "display: table-cell;" }, "Loop Count:"), div$i({ style: "display: table-cell;" }, "Outro:")), div$i({ style: "display: table-row; margin-bottom: 14px;" }, div$i({ style: "display: table-cell; vertical-align: middle;" }, this._enableIntro), div$i({ style: "display: table-cell; vertical-align: middle;" }, this._loopDropDown), div$i({ style: "display: table-cell; vertical-align: middle;" }, this._enableOutro))), this._removeWhitespaceDiv, this._oggWarning, div$i({ class: "selectContainer", style: "width: 100%; margin-bottom: 14px;" }, this._formatSelect), div$i({ style: "text-align: left; margin-bottom: 14px;" }, "Exporting can be slow. Reloading the page or clicking the X will cancel it. Please be patient."), this._outputProgressContainer, div$i({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between; margin-bottom: 14px;" }, this._exportButton), this._cancelButton);
+            this.container = div$i({ class: "prompt noSelection", style: "width: 200px;" }, this._exportPrompt);
             this._close = () => {
                 if (this.synth != null)
                     this.synth.renderingSong = false;
@@ -45865,9 +45878,37 @@ You should be redirected to the song at:<br /><br />
     class ImportPrompt {
         constructor(_doc) {
             this._doc = _doc;
+            this.exportStuff = new ExportPrompt(this._doc);
+            this._importButton = button$h({ style: "height: auto; min-height: var(--button-size); margin: 0.5em; width:50%; color: var(--primary-text); border-bottom: solid; border-bottom-color:var(--link-accent;)" }, "Import");
+            this._exportButton = button$h({ style: "height: auto; min-height: var(--button-size); margin: 0.5em; width:50%; color: var(--secondary-text);" }, "Export");
             this._fileInput = input$b({ type: "file", accept: ".json,application/json,.mid,.midi,audio/midi,audio/x-midi" });
             this._cancelButton = button$h({ class: "cancelButton" });
-            this.container = div$h({ class: "prompt noSelection", style: "width: 300px;" }, div$h({ class: "promptTitle" }, h2$g({ class: "importExt", style: "text-align: inherit;" }, ""), h2$g({ class: "importTitle" }, "Import")), p$7({ style: "text-align: left; margin: 0.5em 0;" }, "BeepBox songs can be exported and re-imported as .json files. You could also use other means to make .json files for BeepBox as long as they follow the same structure."), p$7({ style: "text-align: left; margin: 0.5em 0;" }, "BeepBox can also (crudely) import .mid files. There are many tools available for creating .mid files. Shorter and simpler songs are more likely to work well."), this._fileInput, this._cancelButton);
+            this._importPrompt = div$h({}, div$h({ class: "promptTitle" }, h2$g({ class: "importExt", style: "text-align: inherit;" }, ""), h2$g({ class: "importTitle" }, "Import")), p$7({ style: "text-align: left; margin: 0.5em 0;" }, "BeepBox songs can be exported and re-imported as .json files. You could also use other means to make .json files for BeepBox as long as they follow the same structure."), p$7({ style: "text-align: left; margin: 0.5em 0;" }, "BeepBox can also (crudely) import .mid files. There are many tools available for creating .mid files. Shorter and simpler songs are more likely to work well."), this._fileInput, this._cancelButton);
+            this._exportPrompt = div$h({ style: "display:none;" }, this.exportStuff._exportPrompt);
+            this.customContainer = div$h({ class: "customContainer", id: "customContainer", style: "width: 100%;" }, p$7({ style: "text-align: center; margin: 1em 0; display:flex; flex-direction: row;" }, this._importButton, this._exportButton), this._importPrompt, this._exportPrompt);
+            this.container = div$h({ class: "prompt noSelection", style: "width: 300px;" }, this.customContainer);
+            this._importCategoryButton = () => {
+                this._importPrompt.style.display = "";
+                this._exportPrompt.style.display = "none";
+                this._importButton.style.borderBottom = "solid";
+                this._importButton.style.borderBottomColor = "var(--link-accent)";
+                this._importButton.style.color = "var(--primary-text)";
+                this._exportButton.style.borderBottom = "none";
+                this._exportButton.style.color = "var(--secondary-text)";
+                this._exportButton.style.borderBottomColor = "var(--secondary-text";
+                this.container.style.width = "300px";
+            };
+            this._exportCategoryButton = () => {
+                this._importPrompt.style.display = "none";
+                this._exportPrompt.style.display = "";
+                this._importButton.style.borderBottom = "none";
+                this._importButton.style.borderBottomColor = "var(--secondary-text)";
+                this._importButton.style.color = "var(--secondary-text)";
+                this._exportButton.style.borderBottom = "solid";
+                this._exportButton.style.color = "var(--primary-text)";
+                this._exportButton.style.borderBottomColor = "var(--link-accent)";
+                this.container.style.width = "200px";
+            };
             this._close = () => {
                 this._doc.undo();
             };
@@ -45907,6 +45948,8 @@ You should be redirected to the song at:<br /><br />
             setTimeout(() => this._fileInput.focus());
             this._fileInput.addEventListener("change", this._whenFileSelected);
             this._cancelButton.addEventListener("click", this._close);
+            this._importButton.addEventListener("click", this._importCategoryButton);
+            this._exportButton.addEventListener("click", this._exportCategoryButton);
         }
         _parseMidiFile(buffer) {
             const reader = new ArrayBufferReader(new DataView(buffer));
@@ -58431,7 +58474,7 @@ button.playButton::before {
             this._defs = SVG.defs({}, this._gradient);
             this._volumeBarContainer = SVG.svg({ style: `touch-action: none; overflow: visible; margin: auto; max-width: 20vw;`, width: "160px", height: "100%", preserveAspectRatio: "none", viewBox: "0 0 160 12" }, this._defs, this._outVolumeBarBg, this._outVolumeBar, this._outVolumeCap);
             this._volumeBarBox = div({ class: "playback-volume-bar", style: "height: 12px; align-self: center;" }, this._volumeBarContainer);
-            this._fileMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "File"), option({ value: "new" }, "+ New Blank Song"), option({ value: "import" }, "↑ > Import Song (" + EditorConfig.ctrlSymbol + "O)"), option({ value: "export" }, "↓ > Export Song (" + EditorConfig.ctrlSymbol + "S)"), option({ value: "copyUrl" }, "⎘ Copy Song URL"), option({ value: "shareUrl" }, "⤳ Share Song URL"), option({ value: "shortenUrl" }, "… Shorten Song URL"), option({ value: "configureShortener" }, "🛠 > Customize Url Shortener"), option({ value: "viewPlayer" }, "▶ View in Song Player"), option({ value: "copyEmbed" }, "⎘ Copy HTML Embed Code"), option({ value: "songRecovery" }, "⚠ > Recover Recent Song"));
+            this._fileMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "File"), option({ value: "new" }, "+ New Blank Song"), option({ value: "import" }, "↑ > Import/Export Song (" + EditorConfig.ctrlSymbol + "S)"), option({ value: "copyUrl" }, "⎘ Copy Song URL"), option({ value: "shareUrl" }, "⤳ Share Song URL"), option({ value: "shortenUrl" }, "… Shorten Song URL"), option({ value: "configureShortener" }, "🛠 > Customize Url Shortener"), option({ value: "viewPlayer" }, "▶ View in Song Player"), option({ value: "copyEmbed" }, "⎘ Copy HTML Embed Code"), option({ value: "songRecovery" }, "⚠ > Recover Recent Song"));
             this._editMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Edit"), option({ value: "undo" }, "Undo (Z)"), option({ value: "redo" }, "Redo (Y)"), option({ value: "copy" }, "Copy Pattern (C)"), option({ value: "pasteNotes" }, "Paste Pattern Notes (V)"), option({ value: "pasteNumbers" }, "Paste Pattern Numbers (" + EditorConfig.ctrlSymbol + "⇧V)"), option({ value: "insertBars" }, "Insert Bar (⏎)"), option({ value: "deleteBars" }, "Delete Selected Bars (⌫)"), option({ value: "insertChannel" }, "Insert Channel (" + EditorConfig.ctrlSymbol + "⏎)"), option({ value: "deleteChannel" }, "Delete Selected Channels (" + EditorConfig.ctrlSymbol + "⌫)"), option({ value: "selectChannel" }, "Select Channel (⇧A)"), option({ value: "selectAll" }, "Select All (A)"), option({ value: "duplicatePatterns" }, "Duplicate Reused Patterns (D)"), option({ value: "transposeUp" }, "Move Notes Up (+ or ⇧+)"), option({ value: "transposeDown" }, "Move Notes Down (- or ⇧-)"), option({ value: "moveNotesSideways" }, "> Move All Notes Sideways (W)"), option({ value: "generateEuclideanRhythm" }, "> Generate Euclidean Rhythm (E)"), option({ value: "beatsPerBar" }, "> Change Beats Per Bar (B)"), option({ value: "barCount" }, "> Change Song Length (L)"), option({ value: "channelSettings" }, "> Channel Settings (Q)"), option({ value: "limiterSettings" }, "> Limiter Settings (⇧L)"), option({ value: "addExternal" }, "> Add Custom Samples (⇧Q)"));
             this._optionsMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Preferences"), optgroup({ label: "Technical" }, option({ value: "autoPlay" }, "Auto Play on Load"), option({ value: "autoFollow" }, "Auto Follow Playhead"), option({ value: "enableNotePreview" }, "Hear Added Notes"), option({ value: "notesOutsideScale" }, "Place Notes Out of Scale"), option({ value: "setDefaultScale" }, "Set Current Scale as Default"), option({ value: "alwaysFineNoteVol" }, "Always Fine Note Volume"), option({ value: "enableChannelMuting" }, "Enable Channel Muting"), option({ value: "instrumentCopyPaste" }, "Enable Copy/Paste Buttons"), option({ value: "instrumentImportExport" }, "Enable Import/Export Buttons"), option({ value: "displayBrowserUrl" }, "Enable Song Data in URL"), option({ value: "closePromptByClickoff" }, "Close prompts on click off"), option({ value: "oldMobileLayout" }, "Use the Old mobile layout (Reload)"), option({ value: "instrumentSettingsSimplifier" }, "Use Mobile Instrument Settings"), option({ value: "recordingSetup" }, "Note Recording...")), optgroup({ label: "Appearance" }, option({ value: "showThird" }, 'Highlight "Third" Note (SandBox)'), option({ value: "showFifth" }, 'Highlight "Fifth" Note'), option({ value: "advancedColorScheme" }, "Advanced Color Scheme (ModBox)"), option({ value: "notesFlashWhenPlayed" }, "Notes Flash When Played (DB2)"), option({ value: "showChannels" }, "Show All Channels"), option({ value: "showScrollBar" }, "Show Octave Scroll Bar"), option({ value: "showLetters" }, "Show Piano Keys"), option({ value: "displayVolumeBar" }, "Show Playback Volume"), option({ value: "showOscilloscope" }, "Show Oscilloscope"), option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"), option({ value: "showDescription" }, "Show Description"), option({ value: "frostedGlassBackground" }, "Use Frosted Glass Prompt Backdrops"), option({ value: "displayShortcutButtons" }, "Display Mobile Shortcut Buttons"), option({ value: "oldModNotes" }, 'Use Old Mod Notes'), option({ value: "layout" }, "> Set Layout"), option({ value: "colorTheme" }, "> Set Theme"), option({ value: "customTheme" }, "> Custom Theme")));
             this._scaleSelect = buildOptions(select(), Config.scales.map(scale => scale.name));
@@ -58637,10 +58680,15 @@ button.playButton::before {
             this._instrumentSettingsTextRow = div({ id: "instrumentSettingsText", style: `padding: 3px 0; max-width: 15em; text-align: center; color: ${ColorConfig.secondaryText};` }, "Instrument Settings");
             this._instrumentTypeSelectRow = div({ class: "selectRow", id: "typeSelectRow" }, span({ class: "tip", onclick: () => this._openPrompt("instrumentType") }, "Type:"), div(div({ class: "pitchSelect" }, this._pitchedPresetSelect), div({ class: "drumSelect" }, this._drumPresetSelect)));
             this._mobileInstSettingsButton = button({ class: "mobileInstButton", type: "button", style: "width:33%;", onclick: () => this._setSettingToInstrument() }, "Settings");
-            this._mobileEffectsButton = button({ class: "mobileEffectsButton", type: "button", style: "width:30%;", onclick: () => this._setSettingToEffect() }, "Effects");
-            this._mobileEnvelopesButton = button({ class: "mobileEnvelopesButton", type: "button", style: "width:37%;", onclick: () => this._setSettingToEnvelope() }, "Envelope");
+            this._mobileEffectsButton = button({ class: "mobileEffectsButton", type: "button", style: "width:30%; background: #fff0; color: var(--text-color-dim);", onclick: () => this._setSettingToEffect() }, "Effects");
+            this._mobileEnvelopesButton = button({ class: "mobileEnvelopesButton", type: "button", style: "width:37%; background: #fff0; color: var(--text-color-dim);", onclick: () => this._setSettingToEnvelope() }, "Envelope");
             this._instOptionsDiv = div({ class: "instMobileOptions", style: "display:none; padding-bottom: 4px;" }, this._mobileInstSettingsButton, this._mobileEffectsButton, this._mobileEnvelopesButton);
             this._setSettingToInstrument = () => {
+                const colors = ColorConfig.getChannelColor(this._doc.song, this._doc.channel);
+                this._instOptionsDiv.style.setProperty("--text-color-lit", colors.primaryNote);
+                this._instOptionsDiv.style.setProperty("--text-color-dim", colors.secondaryNote);
+                this._instOptionsDiv.style.setProperty("--background-color-lit", colors.primaryChannel);
+                this._instOptionsDiv.style.setProperty("--background-color-dim", colors.secondaryChannel);
                 const instStuffs = document.getElementById('InstrumentDiv');
                 const effectStuffs = document.getElementById('effectsDiv');
                 const envelopeStuffs = document.getElementById('envelopesDiv');
@@ -58648,8 +58696,22 @@ button.playButton::before {
                 instStuffs.style.display = "";
                 effectStuffs.style.display = "none";
                 envelopeStuffs.style.display = "none";
+                this._mobileInstSettingsButton.style.color = "var(--text-color-lit)";
+                this._mobileEffectsButton.style.color = "var(--text-color-dim)";
+                this._mobileEnvelopesButton.style.color = "var(--text-color-dim)";
+                this._mobileInstSettingsButton.style.background = "";
+                this._mobileEffectsButton.style.background = "#fff0";
+                this._mobileEnvelopesButton.style.background = "#fff0";
+                this._mobileInstSettingsButton.classList.remove("deactivated");
+                this._mobileEffectsButton.classList.add("deactivated");
+                this._mobileEnvelopesButton.classList.add("deactivated");
             };
             this._setSettingToEffect = () => {
+                const colors = ColorConfig.getChannelColor(this._doc.song, this._doc.channel);
+                this._instOptionsDiv.style.setProperty("--text-color-lit", colors.primaryNote);
+                this._instOptionsDiv.style.setProperty("--text-color-dim", colors.secondaryNote);
+                this._instOptionsDiv.style.setProperty("--background-color-lit", colors.primaryChannel);
+                this._instOptionsDiv.style.setProperty("--background-color-dim", colors.secondaryChannel);
                 const instStuffs = document.getElementById('InstrumentDiv');
                 const effectStuffs = document.getElementById('effectsDiv');
                 const envelopeStuffs = document.getElementById('envelopesDiv');
@@ -58657,8 +58719,22 @@ button.playButton::before {
                 instStuffs.style.display = "none";
                 effectStuffs.style.display = "";
                 envelopeStuffs.style.display = "none";
+                this._mobileInstSettingsButton.style.color = "var(--text-color-dim)";
+                this._mobileEffectsButton.style.color = "var(--text-color-lit)";
+                this._mobileEnvelopesButton.style.color = "var(--text-color-dim)";
+                this._mobileInstSettingsButton.style.background = "#fff0";
+                this._mobileEffectsButton.style.background = "";
+                this._mobileEnvelopesButton.style.background = "#fff0";
+                this._mobileInstSettingsButton.classList.add("deactivated");
+                this._mobileEffectsButton.classList.remove("deactivated");
+                this._mobileEnvelopesButton.classList.add("deactivated");
             };
             this._setSettingToEnvelope = () => {
+                const colors = ColorConfig.getChannelColor(this._doc.song, this._doc.channel);
+                this._instOptionsDiv.style.setProperty("--text-color-lit", colors.primaryNote);
+                this._instOptionsDiv.style.setProperty("--text-color-dim", colors.secondaryNote);
+                this._instOptionsDiv.style.setProperty("--background-color-lit", colors.primaryChannel);
+                this._instOptionsDiv.style.setProperty("--background-color-dim", colors.secondaryChannel);
                 const instStuffs = document.getElementById('InstrumentDiv');
                 const effectStuffs = document.getElementById('effectsDiv');
                 const envelopeStuffs = document.getElementById('envelopesDiv');
@@ -58666,6 +58742,15 @@ button.playButton::before {
                 instStuffs.style.display = "none";
                 effectStuffs.style.display = "none";
                 envelopeStuffs.style.display = "";
+                this._mobileInstSettingsButton.style.color = "var(--text-color-dim)";
+                this._mobileEffectsButton.style.color = "var(--text-color-dim)";
+                this._mobileEnvelopesButton.style.color = "var(--text-color-lit)";
+                this._mobileInstSettingsButton.style.background = "#fff0";
+                this._mobileEffectsButton.style.background = "#fff0";
+                this._mobileEnvelopesButton.style.background = "";
+                this._mobileInstSettingsButton.classList.add("deactivated");
+                this._mobileEffectsButton.classList.add("deactivated");
+                this._mobileEnvelopesButton.classList.remove("deactivated");
             };
             this._instrumentSettingsGroup = div({ class: "editor-controls" }, this._instrumentSettingsTextRow, this._instOptionsDiv, this._instrumentsButtonRow, this._instrumentTypeSelectRow, this._instrumentVolumeSliderRow, this._customInstrumentSettingsGroup);
             this._usedPatternIndicator = SVG.path({ d: "M -6 -6 H 6 V 6 H -6 V -6 M -2 -3 L -2 -3 L -1 -4 H 1 V 4 H -1 V -1.2 L -1.2 -1 H -2 V -3 z", fill: ColorConfig.indicatorSecondary, "fill-rule": "evenodd" });
@@ -58836,39 +58921,6 @@ button.playButton::before {
                             beepboxEditorContainer$1.style.paddingBottom = "";
                             beepboxEditorContainer$1.style.borderStyle = "";
                         }
-                        if (this._doc.prefs.instrumentSettingsSimplifier == true) {
-                            const effectStuffs = document.getElementById('effectsDiv');
-                            const envelopeStuffs = document.getElementById('envelopesDiv');
-                            const instStuffs = document.getElementById('InstrumentDiv');
-                            this._instOptionsDiv.style.display = "";
-                            if (this._instSettingMode == 1) {
-                                instStuffs.style.display = "";
-                                effectStuffs.style.display = "none";
-                                envelopeStuffs.style.display = "none";
-                                console.log("Instrument Settings");
-                            }
-                            else if (this._instSettingMode == 2) {
-                                instStuffs.style.display = "none";
-                                effectStuffs.style.display = "";
-                                envelopeStuffs.style.display = "none";
-                                console.log("Effects Settings");
-                            }
-                            else if (this._instSettingMode == 3) {
-                                instStuffs.style.display = "none";
-                                effectStuffs.style.display = "none";
-                                envelopeStuffs.style.display = "";
-                                console.log("Envelopes Settings");
-                            }
-                        }
-                        else {
-                            const effectStuffs = document.getElementById('effectsDiv');
-                            const envelopeStuffs = document.getElementById('envelopesDiv');
-                            const instStuffs = document.getElementById('InstrumentDiv');
-                            instStuffs.style.display = "";
-                            effectStuffs.style.display = "";
-                            envelopeStuffs.style.display = "";
-                            this._instOptionsDiv.style.display = "none";
-                        }
                         this._patternEditorPrev.container.style.width = patternEditorWidth + "px";
                         this._patternEditor.container.style.width = patternEditorWidth + "px";
                         this._patternEditorNext.container.style.width = patternEditorWidth + "px";
@@ -58966,39 +59018,6 @@ button.playButton::before {
                             }
                             this._notesDownButton.style.display = "";
                             this._notesUpButton.style.display = "";
-                        }
-                        if (this._doc.prefs.instrumentSettingsSimplifier == true) {
-                            const effectStuffs = document.getElementById('effectsDiv');
-                            const envelopeStuffs = document.getElementById('envelopesDiv');
-                            const instStuffs = document.getElementById('InstrumentDiv');
-                            this._instOptionsDiv.style.display = "";
-                            if (this._instSettingMode == 1) {
-                                instStuffs.style.display = "";
-                                effectStuffs.style.display = "none";
-                                envelopeStuffs.style.display = "none";
-                                console.log("Instrument Settings");
-                            }
-                            else if (this._instSettingMode == 2) {
-                                instStuffs.style.display = "none";
-                                effectStuffs.style.display = "";
-                                envelopeStuffs.style.display = "none";
-                                console.log("Effects Settings");
-                            }
-                            else if (this._instSettingMode == 3) {
-                                instStuffs.style.display = "none";
-                                effectStuffs.style.display = "none";
-                                envelopeStuffs.style.display = "";
-                                console.log("Envelopes Settings");
-                            }
-                        }
-                        else {
-                            const effectStuffs = document.getElementById('effectsDiv');
-                            const envelopeStuffs = document.getElementById('envelopesDiv');
-                            const instStuffs = document.getElementById('InstrumentDiv');
-                            instStuffs.style.display = "";
-                            effectStuffs.style.display = "";
-                            envelopeStuffs.style.display = "";
-                            this._instOptionsDiv.style.display = "none";
                         }
                         this._undoButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
                         this._redoButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";
@@ -59740,6 +59759,27 @@ button.playButton::before {
                         this._noteFilterSimpleCutRow.style.display = "none";
                         this._noteFilterSimplePeakRow.style.display = "none";
                         this._noteFilterTypeRow.style.display = "none";
+                    }
+                    if (this._doc.prefs.instrumentSettingsSimplifier == true) {
+                        if (this._instSettingMode == 1) {
+                            this._setSettingToInstrument();
+                        }
+                        if (this._instSettingMode == 2) {
+                            this._setSettingToEffect();
+                        }
+                        if (this._instSettingMode == 3) {
+                            this._setSettingToEnvelope();
+                        }
+                        this._instOptionsDiv.style.display = "";
+                    }
+                    else {
+                        const effectStuffs = document.getElementById('effectsDiv');
+                        const envelopeStuffs = document.getElementById('envelopesDiv');
+                        const instStuffs = document.getElementById('InstrumentDiv');
+                        instStuffs.style.display = "";
+                        effectStuffs.style.display = "";
+                        envelopeStuffs.style.display = "";
+                        this._instOptionsDiv.style.display = "none";
                     }
                     if (effectsIncludeDistortion(instrument.effects)) {
                         this._distortionRow.style.display = "";
@@ -60915,7 +60955,7 @@ button.playButton::before {
                         if (canPlayNotes)
                             break;
                         if (event.ctrlKey || event.metaKey) {
-                            this._openPrompt("export");
+                            this._openPrompt("import");
                             event.preventDefault();
                         }
                         else {
@@ -60933,10 +60973,6 @@ button.playButton::before {
                     case 79:
                         if (canPlayNotes)
                             break;
-                        if (event.ctrlKey || event.metaKey) {
-                            this._openPrompt("import");
-                            event.preventDefault();
-                        }
                         break;
                     case 86:
                         if (canPlayNotes)

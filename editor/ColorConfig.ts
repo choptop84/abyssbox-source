@@ -1699,6 +1699,18 @@ export class ColorConfig {
 			content: url("https://choptop84.github.io/choptop84s-image-repository/AbyssBoxFrutigerAeroThemeLogo.png");
 			}
 
+		button.mobileEffectsButton.deactivated {
+		box-shadow: none !important;
+		}
+
+		button.mobileInstButton.deactivated {
+		box-shadow: none !important;
+		}
+
+		button.mobileEnvelopesButton.deactivated {
+		box-shadow: none !important;
+		}
+
 		select.trackSelectBox {
 			border-image: none !important;
 		}

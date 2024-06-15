@@ -786,8 +786,7 @@ export class SongEditor {
     private readonly _fileMenu: HTMLSelectElement = select({ style: "width: 100%;" },
         option({ selected: true, disabled: true, hidden: false }, "File"), // todo: "hidden" should be true but looks wrong on mac chrome, adds checkmark next to first visible option even though it's not selected. :(
         option({ value: "new" }, "+ New Blank Song"),
-        option({ value: "import" }, "↑ > Import Song (" + EditorConfig.ctrlSymbol + "O)"),
-        option({ value: "export" }, "↓ > Export Song (" + EditorConfig.ctrlSymbol + "S)"),
+        option({ value: "import" }, "↑ > Import/Export Song (" + EditorConfig.ctrlSymbol + "S)"),
         option({ value: "copyUrl" }, "⎘ Copy Song URL"),
         option({ value: "shareUrl" }, "⤳ Share Song URL"),
         option({ value: "shortenUrl" }, "… Shorten Song URL"),
@@ -1244,8 +1243,8 @@ export class SongEditor {
 
     // comment for ctrl+f: mobile stuffs
     private readonly _mobileInstSettingsButton: HTMLButtonElement = button({class:"mobileInstButton", type:"button", style:"width:33%;", onclick: () => this._setSettingToInstrument()}, "Settings");
-    private readonly _mobileEffectsButton: HTMLButtonElement = button({class:"mobileEffectsButton", type:"button", style:"width:30%;", onclick: () => this._setSettingToEffect()}, "Effects" );
-    private readonly _mobileEnvelopesButton: HTMLButtonElement = button({class:"mobileEnvelopesButton", type:"button", style:"width:37%;", onclick: () => this._setSettingToEnvelope()}, "Envelope");
+    private readonly _mobileEffectsButton: HTMLButtonElement = button({class:"mobileEffectsButton", type:"button", style:"width:30%; background: #fff0; color: var(--text-color-dim);", onclick: () => this._setSettingToEffect()}, "Effects" );
+    private readonly _mobileEnvelopesButton: HTMLButtonElement = button({class:"mobileEnvelopesButton", type:"button", style:"width:37%; background: #fff0; color: var(--text-color-dim);", onclick: () => this._setSettingToEnvelope()}, "Envelope");
     private readonly _instOptionsDiv: HTMLDivElement = div({class:"instMobileOptions",style:"display:none; padding-bottom: 4px;"}, 
         this._mobileInstSettingsButton, 
         this._mobileEffectsButton,
@@ -1253,6 +1252,11 @@ export class SongEditor {
     );
 
     private _setSettingToInstrument = (): void => {
+                const colors: ChannelColors = ColorConfig.getChannelColor(this._doc.song, this._doc.channel);
+        this._instOptionsDiv.style.setProperty("--text-color-lit", colors.primaryNote);
+        this._instOptionsDiv.style.setProperty("--text-color-dim", colors.secondaryNote);
+        this._instOptionsDiv.style.setProperty("--background-color-lit", colors.primaryChannel);
+        this._instOptionsDiv.style.setProperty("--background-color-dim", colors.secondaryChannel);
         const instStuffs = document.getElementById('InstrumentDiv');
         const effectStuffs = document.getElementById('effectsDiv');
         const envelopeStuffs = document.getElementById('envelopesDiv');
@@ -1262,10 +1266,24 @@ export class SongEditor {
         instStuffs!.style.display = "";
         effectStuffs!.style.display = "none";
         envelopeStuffs!.style.display = "none";
+        this._mobileInstSettingsButton.style.color = "var(--text-color-lit)";
+        this._mobileEffectsButton.style.color = "var(--text-color-dim)";
+        this._mobileEnvelopesButton.style.color = "var(--text-color-dim)";
+        this._mobileInstSettingsButton.style.background = "";
+        this._mobileEffectsButton.style.background = "#fff0";
+        this._mobileEnvelopesButton.style.background = "#fff0";
+
+        this._mobileInstSettingsButton.classList.remove("deactivated");
+        this._mobileEffectsButton.classList.add("deactivated");
+        this._mobileEnvelopesButton.classList.add("deactivated");
     } 
 
     private _setSettingToEffect = (): void => {
-
+        const colors: ChannelColors = ColorConfig.getChannelColor(this._doc.song, this._doc.channel);
+        this._instOptionsDiv.style.setProperty("--text-color-lit", colors.primaryNote);
+        this._instOptionsDiv.style.setProperty("--text-color-dim", colors.secondaryNote);
+        this._instOptionsDiv.style.setProperty("--background-color-lit", colors.primaryChannel);
+        this._instOptionsDiv.style.setProperty("--background-color-dim", colors.secondaryChannel);
         const instStuffs = document.getElementById('InstrumentDiv');
         const effectStuffs = document.getElementById('effectsDiv');
         const envelopeStuffs = document.getElementById('envelopesDiv');
@@ -1275,10 +1293,23 @@ export class SongEditor {
         instStuffs!.style.display = "none";
         effectStuffs!.style.display = "";
         envelopeStuffs!.style.display = "none";
+        this._mobileInstSettingsButton.style.color = "var(--text-color-dim)";
+        this._mobileEffectsButton.style.color = "var(--text-color-lit)";
+        this._mobileEnvelopesButton.style.color = "var(--text-color-dim)";
+        this._mobileInstSettingsButton.style.background = "#fff0";
+        this._mobileEffectsButton.style.background = "";
+        this._mobileEnvelopesButton.style.background = "#fff0";
+        this._mobileInstSettingsButton.classList.add("deactivated");
+        this._mobileEffectsButton.classList.remove("deactivated");
+        this._mobileEnvelopesButton.classList.add("deactivated");
     } 
 
     private _setSettingToEnvelope = (): void => {
-
+        const colors: ChannelColors = ColorConfig.getChannelColor(this._doc.song, this._doc.channel);
+        this._instOptionsDiv.style.setProperty("--text-color-lit", colors.primaryNote);
+        this._instOptionsDiv.style.setProperty("--text-color-dim", colors.secondaryNote);
+        this._instOptionsDiv.style.setProperty("--background-color-lit", colors.primaryChannel);
+        this._instOptionsDiv.style.setProperty("--background-color-dim", colors.secondaryChannel);
         const instStuffs = document.getElementById('InstrumentDiv');
         const effectStuffs = document.getElementById('effectsDiv');
         const envelopeStuffs = document.getElementById('envelopesDiv');
@@ -1288,6 +1319,15 @@ export class SongEditor {
         instStuffs!.style.display = "none";
         effectStuffs!.style.display = "none";
         envelopeStuffs!.style.display = "";
+        this._mobileInstSettingsButton.style.color = "var(--text-color-dim)";
+        this._mobileEffectsButton.style.color = "var(--text-color-dim)";
+        this._mobileEnvelopesButton.style.color = "var(--text-color-lit)";
+        this._mobileInstSettingsButton.style.background = "#fff0";
+        this._mobileEffectsButton.style.background = "#fff0";
+        this._mobileEnvelopesButton.style.background = "";
+        this._mobileInstSettingsButton.classList.add("deactivated");
+        this._mobileEffectsButton.classList.add("deactivated");
+        this._mobileEnvelopesButton.classList.remove("deactivated");
     } 
 
     private readonly _instrumentSettingsGroup: HTMLDivElement = div({ class: "editor-controls" },
@@ -2417,38 +2457,6 @@ export class SongEditor {
                 beepboxEditorContainer.style.paddingBottom = "";
                 beepboxEditorContainer.style.borderStyle = "";
             }
-
-            if (this._doc.prefs.instrumentSettingsSimplifier == true) {
-            const effectStuffs = document.getElementById('effectsDiv');
-            const envelopeStuffs = document.getElementById('envelopesDiv');
-            const instStuffs = document.getElementById('InstrumentDiv');
-            this._instOptionsDiv.style.display = "";
-                if (this._instSettingMode == 1) {
-                    instStuffs!.style.display = "";
-                    effectStuffs!.style.display = "none";
-                    envelopeStuffs!.style.display = "none";
-                    console.log("Instrument Settings");
-                } else if (this._instSettingMode == 2) {
-                    instStuffs!.style.display = "none";
-                    effectStuffs!.style.display = "";
-                    envelopeStuffs!.style.display = "none";
-                    console.log("Effects Settings");
-                } else if (this._instSettingMode == 3) {
-                    instStuffs!.style.display = "none";
-                    effectStuffs!.style.display = "none";
-                    envelopeStuffs!.style.display = "";
-                    console.log("Envelopes Settings");
-                }
-            } else {
-                const effectStuffs = document.getElementById('effectsDiv');
-                const envelopeStuffs = document.getElementById('envelopesDiv');
-                const instStuffs = document.getElementById('InstrumentDiv');
-                instStuffs!.style.display = "";
-                effectStuffs!.style.display = "";
-                envelopeStuffs!.style.display = "";
-                this._instOptionsDiv.style.display = "none";
-            }
-
             this._patternEditorPrev.container.style.width = patternEditorWidth + "px";
             this._patternEditor.container.style.width = patternEditorWidth + "px";
             this._patternEditorNext.container.style.width = patternEditorWidth + "px";
@@ -2541,36 +2549,6 @@ export class SongEditor {
             this._notesDownButton.style.display = "";
             this._notesUpButton.style.display = "";
             }
-            if (this._doc.prefs.instrumentSettingsSimplifier == true) {
-                const effectStuffs = document.getElementById('effectsDiv');
-                const envelopeStuffs = document.getElementById('envelopesDiv');
-                const instStuffs = document.getElementById('InstrumentDiv');
-                this._instOptionsDiv.style.display = "";
-                    if (this._instSettingMode == 1) {
-                        instStuffs!.style.display = "";
-                        effectStuffs!.style.display = "none";
-                        envelopeStuffs!.style.display = "none";
-                        console.log("Instrument Settings");
-                    } else if (this._instSettingMode == 2) {
-                        instStuffs!.style.display = "none";
-                        effectStuffs!.style.display = "";
-                        envelopeStuffs!.style.display = "none";
-                        console.log("Effects Settings");
-                    } else if (this._instSettingMode == 3) {
-                        instStuffs!.style.display = "none";
-                        effectStuffs!.style.display = "none";
-                        envelopeStuffs!.style.display = "";
-                        console.log("Envelopes Settings");
-                    }
-                } else {
-                    const effectStuffs = document.getElementById('effectsDiv');
-                    const envelopeStuffs = document.getElementById('envelopesDiv');
-                    const instStuffs = document.getElementById('InstrumentDiv');
-                    instStuffs!.style.display = "";
-                    effectStuffs!.style.display = "";
-                    envelopeStuffs!.style.display = "";
-                    this._instOptionsDiv.style.display = "none";
-                }
             this._undoButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
             this._redoButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";
             this._copyPatternButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
@@ -3444,6 +3422,24 @@ export class SongEditor {
                 this._noteFilterSimpleCutRow.style.display = "none";
                 this._noteFilterSimplePeakRow.style.display = "none";
                 this._noteFilterTypeRow.style.display = "none";
+            }
+
+            if (this._doc.prefs.instrumentSettingsSimplifier == true) {
+                if (this._instSettingMode == 1) {
+                this._setSettingToInstrument(); }
+                if (this._instSettingMode == 2) {
+                this._setSettingToEffect(); }
+                if (this._instSettingMode == 3) {
+                this._setSettingToEnvelope(); }
+                this._instOptionsDiv.style.display = "";
+            } else {
+                const effectStuffs = document.getElementById('effectsDiv');
+                const envelopeStuffs = document.getElementById('envelopesDiv');
+                const instStuffs = document.getElementById('InstrumentDiv');
+                instStuffs!.style.display = "";
+                effectStuffs!.style.display = "";
+                envelopeStuffs!.style.display = "";
+                this._instOptionsDiv.style.display = "none";
             }
 
             if (effectsIncludeDistortion(instrument.effects)) {
@@ -4969,7 +4965,7 @@ export class SongEditor {
             case 83: // s
                 if (canPlayNotes) break;
                 if (event.ctrlKey || event.metaKey) {
-                    this._openPrompt("export");
+                    this._openPrompt("import");
                     event.preventDefault();
                 } else {
                     if (this._doc.prefs.enableChannelMuting) {
@@ -4987,10 +4983,6 @@ export class SongEditor {
                 break;
             case 79: // o
                 if (canPlayNotes) break;
-                if (event.ctrlKey || event.metaKey) {
-                    this._openPrompt("import");
-                    event.preventDefault();
-                }
                 break;
             case 86: // v
                 if (canPlayNotes) break;
