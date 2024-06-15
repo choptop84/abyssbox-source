@@ -838,6 +838,7 @@ export class SongEditor {
             option({ value: "displayBrowserUrl" }, "Enable Song Data in URL"),
             option({ value: "closePromptByClickoff" }, "Close prompts on click off"),
             option({ value: "oldMobileLayout" }, "Use the Old mobile layout (Reload)"),
+            option({ value: "instrumentSettingsSimplifier" }, "Use Mobile Instrument Settings"),
             option({ value: "recordingSetup" }, "Note Recording..."),
             ),
             optgroup({ label: "Appearance" },
@@ -1841,6 +1842,10 @@ export class SongEditor {
             const autoPlayOption: HTMLOptionElement = <HTMLOptionElement>this._optionsMenu.querySelector("[value=autoPlay]");
             autoPlayOption.disabled = true;
             autoPlayOption.setAttribute("hidden", "");
+
+            const instOption: HTMLOptionElement = <HTMLOptionElement>this._optionsMenu.querySelector("[value=instrumentSettingsSimplifier]");
+            instOption.disabled = true;
+            instOption.setAttribute("hidden", "");
         } else {
             const oldMobileLayoutOption: HTMLOptionElement = <HTMLOptionElement>this._optionsMenu.querySelector("[value=oldMobileLayout]");
             oldMobileLayoutOption.disabled = true;
@@ -2413,6 +2418,37 @@ export class SongEditor {
                 beepboxEditorContainer.style.borderStyle = "";
             }
 
+            if (this._doc.prefs.instrumentSettingsSimplifier == true) {
+            const effectStuffs = document.getElementById('effectsDiv');
+            const envelopeStuffs = document.getElementById('envelopesDiv');
+            const instStuffs = document.getElementById('InstrumentDiv');
+            this._instOptionsDiv.style.display = "";
+                if (this._instSettingMode == 1) {
+                    instStuffs!.style.display = "";
+                    effectStuffs!.style.display = "none";
+                    envelopeStuffs!.style.display = "none";
+                    console.log("Instrument Settings");
+                } else if (this._instSettingMode == 2) {
+                    instStuffs!.style.display = "none";
+                    effectStuffs!.style.display = "";
+                    envelopeStuffs!.style.display = "none";
+                    console.log("Effects Settings");
+                } else if (this._instSettingMode == 3) {
+                    instStuffs!.style.display = "none";
+                    effectStuffs!.style.display = "none";
+                    envelopeStuffs!.style.display = "";
+                    console.log("Envelopes Settings");
+                }
+            } else {
+                const effectStuffs = document.getElementById('effectsDiv');
+                const envelopeStuffs = document.getElementById('envelopesDiv');
+                const instStuffs = document.getElementById('InstrumentDiv');
+                instStuffs!.style.display = "";
+                effectStuffs!.style.display = "";
+                envelopeStuffs!.style.display = "";
+                this._instOptionsDiv.style.display = "none";
+            }
+
             this._patternEditorPrev.container.style.width = patternEditorWidth + "px";
             this._patternEditor.container.style.width = patternEditorWidth + "px";
             this._patternEditorNext.container.style.width = patternEditorWidth + "px";
@@ -2467,7 +2503,9 @@ export class SongEditor {
             this._notesUpButton.style.left = prefs.showScrollBar ? "40px" : "40px";
             this._notesDownButton.style.left = prefs.showScrollBar ? "70px" : "70px";
             this._loopBarButton.style.left = prefs.showScrollBar ? "40px" : "40px";  
-            this._fullscreenButton.style.display = "none";          
+            this._fullscreenButton.style.display = "none";       
+            const secondImage = document.getElementById("secondImage");
+            secondImage!.style.minHeight = "100vh";
         } else {
             this._patternEditor.container.style.width = "";
             this._patternEditor.container.style.flexShrink = "";
@@ -2503,6 +2541,36 @@ export class SongEditor {
             this._notesDownButton.style.display = "";
             this._notesUpButton.style.display = "";
             }
+            if (this._doc.prefs.instrumentSettingsSimplifier == true) {
+                const effectStuffs = document.getElementById('effectsDiv');
+                const envelopeStuffs = document.getElementById('envelopesDiv');
+                const instStuffs = document.getElementById('InstrumentDiv');
+                this._instOptionsDiv.style.display = "";
+                    if (this._instSettingMode == 1) {
+                        instStuffs!.style.display = "";
+                        effectStuffs!.style.display = "none";
+                        envelopeStuffs!.style.display = "none";
+                        console.log("Instrument Settings");
+                    } else if (this._instSettingMode == 2) {
+                        instStuffs!.style.display = "none";
+                        effectStuffs!.style.display = "";
+                        envelopeStuffs!.style.display = "none";
+                        console.log("Effects Settings");
+                    } else if (this._instSettingMode == 3) {
+                        instStuffs!.style.display = "none";
+                        effectStuffs!.style.display = "none";
+                        envelopeStuffs!.style.display = "";
+                        console.log("Envelopes Settings");
+                    }
+                } else {
+                    const effectStuffs = document.getElementById('effectsDiv');
+                    const envelopeStuffs = document.getElementById('envelopesDiv');
+                    const instStuffs = document.getElementById('InstrumentDiv');
+                    instStuffs!.style.display = "";
+                    effectStuffs!.style.display = "";
+                    envelopeStuffs!.style.display = "";
+                    this._instOptionsDiv.style.display = "none";
+                }
             this._undoButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
             this._redoButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";
             this._copyPatternButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
@@ -2517,6 +2585,8 @@ export class SongEditor {
             this._fullscreenButton.style.display = "none";
             beepboxEditorContainer.style.paddingBottom = "";
             beepboxEditorContainer.style.borderStyle = "";
+            const secondImage = document.getElementById("secondImage");
+            secondImage!.style.minHeight = "100vh";
 
         }
     } else {
@@ -2919,6 +2989,7 @@ export class SongEditor {
             (prefs.displayBrowserUrl ? textOnIcon : textOffIcon) + "Enable Song Data in URL",
             (prefs.closePromptByClickoff ? textOnIcon : textOffIcon) + "Close Prompts on Click Off",
             (prefs.oldMobileLayout ? textOnIcon : textOffIcon) + "Use the Old mobile layout (Reload)",
+            (prefs.instrumentSettingsSimplifier ? textOnIcon : textOffIcon) + "Use Mobile Instrument Settings",
             "> Note Recording",
             "Appearance",
             (prefs.showThird ? textOnIcon : textOffIcon) + 'Highlight "Third" Note (SandBox)',
@@ -6167,6 +6238,9 @@ export class SongEditor {
             case "oldMobileLayout":
                 this._doc.prefs.oldMobileLayout = !this._doc.prefs.oldMobileLayout;
                 location.reload();
+                break; 
+            case "instrumentSettingsSimplifier":
+                this._doc.prefs.instrumentSettingsSimplifier = !this._doc.prefs.instrumentSettingsSimplifier;
                 break;
         }
         this._optionsMenu.selectedIndex = 0;

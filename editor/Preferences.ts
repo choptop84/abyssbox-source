@@ -5,59 +5,75 @@ import {Scale, Config} from "../synth/SynthConfig";
 export class Preferences {
 	public static readonly defaultVisibleOctaves: number = 3;
 	
-	public customTheme: string | null;
-	public customTheme2: string | null;
+	// Technical
 	public autoPlay: boolean;
 	public autoFollow: boolean;
 	public enableNotePreview: boolean;
-	public showFifth: boolean;
-	public showThird: boolean;
-	public advancedColorScheme: boolean;
 	public notesOutsideScale: boolean;
 	public defaultScale: number;
-	public showLetters: boolean;
-	public showChannels: boolean;
-	public showScrollBar: boolean;
 	public alwaysFineNoteVol: boolean;
-	public displayVolumeBar: boolean;
+	public enableChannelMuting: boolean;
 	public instrumentCopyPaste: boolean;
 	public instrumentImportExport: boolean;
-	public enableChannelMuting: boolean;
-	public colorTheme: string;
-	public layout: string;
 	public displayBrowserUrl: boolean;
-	public volume: number = 75;
-	public visibleOctaves: number = Preferences.defaultVisibleOctaves;
-	public pressControlForShortcuts: boolean;
-	public keyboardLayout: string;
-	public bassOffset: number;
+	public closePromptByClickoff: boolean;
+	public oldMobileLayout: boolean;
+	public instrumentSettingsSimplifier: boolean;
+
+	
+	// Appearance
+	public showThird: boolean;
+	public showFifth: boolean;
+	public advancedColorScheme: boolean;
+	public notesFlashWhenPlayed: boolean;
+	public showChannels: boolean;
+	public showScrollBar: boolean;
+	public showLetters: boolean;
+	public displayVolumeBar: boolean;
+	public showOscilloscope: boolean;
+	public showSampleLoadingStatus: boolean;
+	public showDescription: boolean;
+	public frostedGlassBackground: boolean;
+	public displayShortcutButtons: boolean;
+	public oldModNotes: boolean;
+	public layout: string;
+	public colorTheme: string;
+	
+
+	// Midi stuff
 	public enableMidi: boolean;
 	public showRecordButton: boolean;
 	public snapRecordedNotesToRhythm: boolean;
 	public ignorePerformedNotesNotInScale: boolean;
 	public metronomeCountIn: boolean;
 	public metronomeWhileRecording: boolean;
-	public showOscilloscope: boolean;
-	public showSampleLoadingStatus: boolean;
-	public showDescription: boolean;
-	public closePromptByClickoff: boolean;
-	public notesFlashWhenPlayed: boolean;
-	public frostedGlassBackground: boolean;
-	public displayShortcutButtons: boolean;
-	public showInstrumentScrollbars: boolean;
-	public oldMobileLayout: boolean;
-	public oldModNotes: boolean;
+	
+	
+	//idk
+	public volume: number = 75;
+	public visibleOctaves: number = Preferences.defaultVisibleOctaves;
+	public pressControlForShortcuts: boolean;
+	public keyboardLayout: string;
+	public bassOffset: number;
+
+	//custom theme stuff
+	public customTheme: string | null;
+	public customTheme2: string | null;
 	public customFont: string;
 	public customBG: string;
 	public customIcons: string;
 	public customBorder: string;
 	public customCursor: string;
+	
+	// stuff I'm not using
+	public showInstrumentScrollbars: boolean;
 
 	constructor() {
 		this.reload();
 	}
 	
 	public reload(): void {
+		//booleans
 		this.autoPlay = window.localStorage.getItem("autoPlay") == "true";
 		this.autoFollow = window.localStorage.getItem("autoFollow") != "false";
 		this.enableNotePreview = window.localStorage.getItem("enableNotePreview") != "false";
@@ -86,6 +102,14 @@ export class Preferences {
 		this.showDescription = window.localStorage.getItem("showDescription") != "false";
 		this.notesFlashWhenPlayed = window.localStorage.getItem("notesFlashWhenPlayed") != "false";
 		this.showInstrumentScrollbars = window.localStorage.getItem("showInstrumentScrollbars") == "true";
+		this.closePromptByClickoff = window.localStorage.getItem("closePromptByClickoff") != "false";
+		this.frostedGlassBackground = window.localStorage.getItem("frostedGlassBackground") == "true";
+		this.displayShortcutButtons = window.localStorage.getItem("displayShortcutButtons") != "false";
+		this.instrumentSettingsSimplifier = window.localStorage.getItem("instrumentSettingsSimplifier") == "true";
+		this.oldMobileLayout = window.localStorage.getItem("oldMobileLayout") == "true";
+		this.oldModNotes = window.localStorage.getItem("oldModNotes") == "true";
+
+		// other stuff
 		this.keyboardLayout = window.localStorage.getItem("keyboardLayout") || "wickiHayden";
 		this.bassOffset = (+(<any>window.localStorage.getItem("bassOffset"))) || 0;
 		this.layout = window.localStorage.getItem("layout") || "small";
@@ -105,17 +129,13 @@ export class Preferences {
 			if (window.localStorage.getItem("fullScreen") == "true") this.layout = "long";
 			window.localStorage.removeItem("fullScreen");
 		}
-		this.closePromptByClickoff = window.localStorage.getItem("closePromptByClickoff") != "false";
-		this.frostedGlassBackground = window.localStorage.getItem("frostedGlassBackground") == "true";
-		this.displayShortcutButtons = window.localStorage.getItem("displayShortcutButtons") != "false";
-		this.oldMobileLayout = window.localStorage.getItem("oldMobileLayout") == "true";
-		this.oldModNotes = window.localStorage.getItem("oldModNotes") == "true";
 
 		this.customFont = window.localStorage.getItem("customFontName") || "none";
 		this.customBG = window.localStorage.getItem("backgroundName") || "none";
 		this.customIcons = window.localStorage.getItem("customIconsName") || "none";
 		this.customBorder = window.localStorage.getItem("customBorderName") || "none";
 		this.customCursor = window.localStorage.getItem("customIconsName") || "none";
+		
 	}
 	
 	public save(): void {
@@ -167,5 +187,6 @@ export class Preferences {
 		window.localStorage.setItem("displayShortcutButtons", this.displayShortcutButtons ? "true" : "false");
 		window.localStorage.setItem("oldMobileLayout", this.oldMobileLayout ? "true" : "false");
 		window.localStorage.setItem("oldModNotes", this.oldModNotes ? "true" : "false");
+		window.localStorage.setItem("instrumentSettingsSimplifier", this.instrumentSettingsSimplifier ? "true" : "false");
 	}
 }

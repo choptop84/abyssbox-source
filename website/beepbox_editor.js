@@ -58433,7 +58433,7 @@ button.playButton::before {
             this._volumeBarBox = div({ class: "playback-volume-bar", style: "height: 12px; align-self: center;" }, this._volumeBarContainer);
             this._fileMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "File"), option({ value: "new" }, "+ New Blank Song"), option({ value: "import" }, "↑ > Import Song (" + EditorConfig.ctrlSymbol + "O)"), option({ value: "export" }, "↓ > Export Song (" + EditorConfig.ctrlSymbol + "S)"), option({ value: "copyUrl" }, "⎘ Copy Song URL"), option({ value: "shareUrl" }, "⤳ Share Song URL"), option({ value: "shortenUrl" }, "… Shorten Song URL"), option({ value: "configureShortener" }, "🛠 > Customize Url Shortener"), option({ value: "viewPlayer" }, "▶ View in Song Player"), option({ value: "copyEmbed" }, "⎘ Copy HTML Embed Code"), option({ value: "songRecovery" }, "⚠ > Recover Recent Song"));
             this._editMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Edit"), option({ value: "undo" }, "Undo (Z)"), option({ value: "redo" }, "Redo (Y)"), option({ value: "copy" }, "Copy Pattern (C)"), option({ value: "pasteNotes" }, "Paste Pattern Notes (V)"), option({ value: "pasteNumbers" }, "Paste Pattern Numbers (" + EditorConfig.ctrlSymbol + "⇧V)"), option({ value: "insertBars" }, "Insert Bar (⏎)"), option({ value: "deleteBars" }, "Delete Selected Bars (⌫)"), option({ value: "insertChannel" }, "Insert Channel (" + EditorConfig.ctrlSymbol + "⏎)"), option({ value: "deleteChannel" }, "Delete Selected Channels (" + EditorConfig.ctrlSymbol + "⌫)"), option({ value: "selectChannel" }, "Select Channel (⇧A)"), option({ value: "selectAll" }, "Select All (A)"), option({ value: "duplicatePatterns" }, "Duplicate Reused Patterns (D)"), option({ value: "transposeUp" }, "Move Notes Up (+ or ⇧+)"), option({ value: "transposeDown" }, "Move Notes Down (- or ⇧-)"), option({ value: "moveNotesSideways" }, "> Move All Notes Sideways (W)"), option({ value: "generateEuclideanRhythm" }, "> Generate Euclidean Rhythm (E)"), option({ value: "beatsPerBar" }, "> Change Beats Per Bar (B)"), option({ value: "barCount" }, "> Change Song Length (L)"), option({ value: "channelSettings" }, "> Channel Settings (Q)"), option({ value: "limiterSettings" }, "> Limiter Settings (⇧L)"), option({ value: "addExternal" }, "> Add Custom Samples (⇧Q)"));
-            this._optionsMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Preferences"), optgroup({ label: "Technical" }, option({ value: "autoPlay" }, "Auto Play on Load"), option({ value: "autoFollow" }, "Auto Follow Playhead"), option({ value: "enableNotePreview" }, "Hear Added Notes"), option({ value: "notesOutsideScale" }, "Place Notes Out of Scale"), option({ value: "setDefaultScale" }, "Set Current Scale as Default"), option({ value: "alwaysFineNoteVol" }, "Always Fine Note Volume"), option({ value: "enableChannelMuting" }, "Enable Channel Muting"), option({ value: "instrumentCopyPaste" }, "Enable Copy/Paste Buttons"), option({ value: "instrumentImportExport" }, "Enable Import/Export Buttons"), option({ value: "displayBrowserUrl" }, "Enable Song Data in URL"), option({ value: "closePromptByClickoff" }, "Close prompts on click off"), option({ value: "oldMobileLayout" }, "Use the Old mobile layout (Reload)"), option({ value: "recordingSetup" }, "Note Recording...")), optgroup({ label: "Appearance" }, option({ value: "showThird" }, 'Highlight "Third" Note (SandBox)'), option({ value: "showFifth" }, 'Highlight "Fifth" Note'), option({ value: "advancedColorScheme" }, "Advanced Color Scheme (ModBox)"), option({ value: "notesFlashWhenPlayed" }, "Notes Flash When Played (DB2)"), option({ value: "showChannels" }, "Show All Channels"), option({ value: "showScrollBar" }, "Show Octave Scroll Bar"), option({ value: "showLetters" }, "Show Piano Keys"), option({ value: "displayVolumeBar" }, "Show Playback Volume"), option({ value: "showOscilloscope" }, "Show Oscilloscope"), option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"), option({ value: "showDescription" }, "Show Description"), option({ value: "frostedGlassBackground" }, "Use Frosted Glass Prompt Backdrops"), option({ value: "displayShortcutButtons" }, "Display Mobile Shortcut Buttons"), option({ value: "oldModNotes" }, 'Use Old Mod Notes'), option({ value: "layout" }, "> Set Layout"), option({ value: "colorTheme" }, "> Set Theme"), option({ value: "customTheme" }, "> Custom Theme")));
+            this._optionsMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Preferences"), optgroup({ label: "Technical" }, option({ value: "autoPlay" }, "Auto Play on Load"), option({ value: "autoFollow" }, "Auto Follow Playhead"), option({ value: "enableNotePreview" }, "Hear Added Notes"), option({ value: "notesOutsideScale" }, "Place Notes Out of Scale"), option({ value: "setDefaultScale" }, "Set Current Scale as Default"), option({ value: "alwaysFineNoteVol" }, "Always Fine Note Volume"), option({ value: "enableChannelMuting" }, "Enable Channel Muting"), option({ value: "instrumentCopyPaste" }, "Enable Copy/Paste Buttons"), option({ value: "instrumentImportExport" }, "Enable Import/Export Buttons"), option({ value: "displayBrowserUrl" }, "Enable Song Data in URL"), option({ value: "closePromptByClickoff" }, "Close prompts on click off"), option({ value: "oldMobileLayout" }, "Use the Old mobile layout (Reload)"), option({ value: "instrumentSettingsSimplifier" }, "Use Mobile Instrument Settings"), option({ value: "recordingSetup" }, "Note Recording...")), optgroup({ label: "Appearance" }, option({ value: "showThird" }, 'Highlight "Third" Note (SandBox)'), option({ value: "showFifth" }, 'Highlight "Fifth" Note'), option({ value: "advancedColorScheme" }, "Advanced Color Scheme (ModBox)"), option({ value: "notesFlashWhenPlayed" }, "Notes Flash When Played (DB2)"), option({ value: "showChannels" }, "Show All Channels"), option({ value: "showScrollBar" }, "Show Octave Scroll Bar"), option({ value: "showLetters" }, "Show Piano Keys"), option({ value: "displayVolumeBar" }, "Show Playback Volume"), option({ value: "showOscilloscope" }, "Show Oscilloscope"), option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"), option({ value: "showDescription" }, "Show Description"), option({ value: "frostedGlassBackground" }, "Use Frosted Glass Prompt Backdrops"), option({ value: "displayShortcutButtons" }, "Display Mobile Shortcut Buttons"), option({ value: "oldModNotes" }, 'Use Old Mod Notes'), option({ value: "layout" }, "> Set Layout"), option({ value: "colorTheme" }, "> Set Theme"), option({ value: "customTheme" }, "> Custom Theme")));
             this._scaleSelect = buildOptions(select(), Config.scales.map(scale => scale.name));
             this._keySelect = buildOptions(select(), Config.keys.map(key => key.name).reverse());
             this._octaveStepper = input({ style: "width: 59.5%;", type: "number", min: Config.octaveMin, max: Config.octaveMax, value: "0" });
@@ -58836,6 +58836,39 @@ button.playButton::before {
                             beepboxEditorContainer$1.style.paddingBottom = "";
                             beepboxEditorContainer$1.style.borderStyle = "";
                         }
+                        if (this._doc.prefs.instrumentSettingsSimplifier == true) {
+                            const effectStuffs = document.getElementById('effectsDiv');
+                            const envelopeStuffs = document.getElementById('envelopesDiv');
+                            const instStuffs = document.getElementById('InstrumentDiv');
+                            this._instOptionsDiv.style.display = "";
+                            if (this._instSettingMode == 1) {
+                                instStuffs.style.display = "";
+                                effectStuffs.style.display = "none";
+                                envelopeStuffs.style.display = "none";
+                                console.log("Instrument Settings");
+                            }
+                            else if (this._instSettingMode == 2) {
+                                instStuffs.style.display = "none";
+                                effectStuffs.style.display = "";
+                                envelopeStuffs.style.display = "none";
+                                console.log("Effects Settings");
+                            }
+                            else if (this._instSettingMode == 3) {
+                                instStuffs.style.display = "none";
+                                effectStuffs.style.display = "none";
+                                envelopeStuffs.style.display = "";
+                                console.log("Envelopes Settings");
+                            }
+                        }
+                        else {
+                            const effectStuffs = document.getElementById('effectsDiv');
+                            const envelopeStuffs = document.getElementById('envelopesDiv');
+                            const instStuffs = document.getElementById('InstrumentDiv');
+                            instStuffs.style.display = "";
+                            effectStuffs.style.display = "";
+                            envelopeStuffs.style.display = "";
+                            this._instOptionsDiv.style.display = "none";
+                        }
                         this._patternEditorPrev.container.style.width = patternEditorWidth + "px";
                         this._patternEditor.container.style.width = patternEditorWidth + "px";
                         this._patternEditorNext.container.style.width = patternEditorWidth + "px";
@@ -58893,6 +58926,8 @@ button.playButton::before {
                         this._notesDownButton.style.left = prefs.showScrollBar ? "70px" : "70px";
                         this._loopBarButton.style.left = prefs.showScrollBar ? "40px" : "40px";
                         this._fullscreenButton.style.display = "none";
+                        const secondImage = document.getElementById("secondImage");
+                        secondImage.style.minHeight = "100vh";
                     }
                     else {
                         this._patternEditor.container.style.width = "";
@@ -58932,6 +58967,39 @@ button.playButton::before {
                             this._notesDownButton.style.display = "";
                             this._notesUpButton.style.display = "";
                         }
+                        if (this._doc.prefs.instrumentSettingsSimplifier == true) {
+                            const effectStuffs = document.getElementById('effectsDiv');
+                            const envelopeStuffs = document.getElementById('envelopesDiv');
+                            const instStuffs = document.getElementById('InstrumentDiv');
+                            this._instOptionsDiv.style.display = "";
+                            if (this._instSettingMode == 1) {
+                                instStuffs.style.display = "";
+                                effectStuffs.style.display = "none";
+                                envelopeStuffs.style.display = "none";
+                                console.log("Instrument Settings");
+                            }
+                            else if (this._instSettingMode == 2) {
+                                instStuffs.style.display = "none";
+                                effectStuffs.style.display = "";
+                                envelopeStuffs.style.display = "none";
+                                console.log("Effects Settings");
+                            }
+                            else if (this._instSettingMode == 3) {
+                                instStuffs.style.display = "none";
+                                effectStuffs.style.display = "none";
+                                envelopeStuffs.style.display = "";
+                                console.log("Envelopes Settings");
+                            }
+                        }
+                        else {
+                            const effectStuffs = document.getElementById('effectsDiv');
+                            const envelopeStuffs = document.getElementById('envelopesDiv');
+                            const instStuffs = document.getElementById('InstrumentDiv');
+                            instStuffs.style.display = "";
+                            effectStuffs.style.display = "";
+                            envelopeStuffs.style.display = "";
+                            this._instOptionsDiv.style.display = "none";
+                        }
                         this._undoButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
                         this._redoButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";
                         this._copyPatternButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
@@ -58946,6 +59014,8 @@ button.playButton::before {
                         this._fullscreenButton.style.display = "none";
                         beepboxEditorContainer$1.style.paddingBottom = "";
                         beepboxEditorContainer$1.style.borderStyle = "";
+                        const secondImage = document.getElementById("secondImage");
+                        secondImage.style.minHeight = "100vh";
                     }
                 }
                 else {
@@ -59263,6 +59333,7 @@ button.playButton::before {
                     (prefs.displayBrowserUrl ? textOnIcon : textOffIcon) + "Enable Song Data in URL",
                     (prefs.closePromptByClickoff ? textOnIcon : textOffIcon) + "Close Prompts on Click Off",
                     (prefs.oldMobileLayout ? textOnIcon : textOffIcon) + "Use the Old mobile layout (Reload)",
+                    (prefs.instrumentSettingsSimplifier ? textOnIcon : textOffIcon) + "Use Mobile Instrument Settings",
                     "> Note Recording",
                     "Appearance",
                     (prefs.showThird ? textOnIcon : textOffIcon) + 'Highlight "Third" Note (SandBox)',
@@ -61904,6 +61975,9 @@ button.playButton::before {
                         this._doc.prefs.oldMobileLayout = !this._doc.prefs.oldMobileLayout;
                         location.reload();
                         break;
+                    case "instrumentSettingsSimplifier":
+                        this._doc.prefs.instrumentSettingsSimplifier = !this._doc.prefs.instrumentSettingsSimplifier;
+                        break;
                 }
                 this._optionsMenu.selectedIndex = 0;
                 this._doc.notifier.changed();
@@ -62180,6 +62254,9 @@ button.playButton::before {
                 const autoPlayOption = this._optionsMenu.querySelector("[value=autoPlay]");
                 autoPlayOption.disabled = true;
                 autoPlayOption.setAttribute("hidden", "");
+                const instOption = this._optionsMenu.querySelector("[value=instrumentSettingsSimplifier]");
+                instOption.disabled = true;
+                instOption.setAttribute("hidden", "");
             }
             else {
                 const oldMobileLayoutOption = this._optionsMenu.querySelector("[value=oldMobileLayout]");
@@ -64127,6 +64204,12 @@ button.playButton::before {
             this.showDescription = window.localStorage.getItem("showDescription") != "false";
             this.notesFlashWhenPlayed = window.localStorage.getItem("notesFlashWhenPlayed") != "false";
             this.showInstrumentScrollbars = window.localStorage.getItem("showInstrumentScrollbars") == "true";
+            this.closePromptByClickoff = window.localStorage.getItem("closePromptByClickoff") != "false";
+            this.frostedGlassBackground = window.localStorage.getItem("frostedGlassBackground") == "true";
+            this.displayShortcutButtons = window.localStorage.getItem("displayShortcutButtons") != "false";
+            this.instrumentSettingsSimplifier = window.localStorage.getItem("instrumentSettingsSimplifier") == "true";
+            this.oldMobileLayout = window.localStorage.getItem("oldMobileLayout") == "true";
+            this.oldModNotes = window.localStorage.getItem("oldModNotes") == "true";
             this.keyboardLayout = window.localStorage.getItem("keyboardLayout") || "wickiHayden";
             this.bassOffset = (+window.localStorage.getItem("bassOffset")) || 0;
             this.layout = window.localStorage.getItem("layout") || "small";
@@ -64144,11 +64227,6 @@ button.playButton::before {
                     this.layout = "long";
                 window.localStorage.removeItem("fullScreen");
             }
-            this.closePromptByClickoff = window.localStorage.getItem("closePromptByClickoff") != "false";
-            this.frostedGlassBackground = window.localStorage.getItem("frostedGlassBackground") == "true";
-            this.displayShortcutButtons = window.localStorage.getItem("displayShortcutButtons") != "false";
-            this.oldMobileLayout = window.localStorage.getItem("oldMobileLayout") == "true";
-            this.oldModNotes = window.localStorage.getItem("oldModNotes") == "true";
             this.customFont = window.localStorage.getItem("customFontName") || "none";
             this.customBG = window.localStorage.getItem("backgroundName") || "none";
             this.customIcons = window.localStorage.getItem("customIconsName") || "none";
@@ -64203,6 +64281,7 @@ button.playButton::before {
             window.localStorage.setItem("displayShortcutButtons", this.displayShortcutButtons ? "true" : "false");
             window.localStorage.setItem("oldMobileLayout", this.oldMobileLayout ? "true" : "false");
             window.localStorage.setItem("oldModNotes", this.oldModNotes ? "true" : "false");
+            window.localStorage.setItem("instrumentSettingsSimplifier", this.instrumentSettingsSimplifier ? "true" : "false");
         }
     }
     Preferences.defaultVisibleOctaves = 3;
