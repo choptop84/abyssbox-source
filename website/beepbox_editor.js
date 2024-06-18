@@ -58868,7 +58868,9 @@ button.playButton::before {
                         beepboxEditorContainer$1.style.paddingBottom = "";
                         beepboxEditorContainer$1.style.borderStyle = "";
                         const secondImage = document.getElementById("secondImage");
-                        secondImage.style.minHeight = "100vh";
+                        if (secondImage != null) {
+                            secondImage.style.minHeight = "100vh";
+                        }
                     }
                 }
                 else {

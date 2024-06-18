@@ -2565,7 +2565,8 @@ export class SongEditor {
             beepboxEditorContainer.style.paddingBottom = "";
             beepboxEditorContainer.style.borderStyle = "";
             const secondImage = document.getElementById("secondImage");
-            secondImage!.style.minHeight = "100vh";
+            if (secondImage != null) {
+                secondImage!.style.minHeight = "100vh"; }
 
         }
     } else {
