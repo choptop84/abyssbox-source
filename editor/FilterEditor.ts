@@ -7,7 +7,7 @@ import { SongDocument } from "./SongDocument";
 import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
 import { ColorConfig } from "./ColorConfig";
 import { ChangeSequence, UndoableChange } from "./Change";
-import { ChangeFilterAddPoint, ChangeFilterMovePoint, ChangeFilterSettings, FilterMoveData  } from "./changes";
+import { ChangeFilterAddPoint, ChangeFilterMovePoint, ChangeFilterSettings, FilterMoveData } from "./changes";
 import { prettyNumber } from "./EditorConfig";
 
 export class FilterEditor {
@@ -581,9 +581,9 @@ export class FilterEditor {
         if (newIndex >= this._useFilterSettings.controlPointCount)
             return;
 
-            let tmp: FilterControlPoint = this._useFilterSettings.controlPoints[this._selectedIndex];
-            this._useFilterSettings.controlPoints[this._selectedIndex] = this._useFilterSettings.controlPoints[newIndex];
-            this._useFilterSettings.controlPoints[newIndex] = tmp;
+        let tmp: FilterControlPoint = this._useFilterSettings.controlPoints[this._selectedIndex];
+        this._useFilterSettings.controlPoints[this._selectedIndex] = this._useFilterSettings.controlPoints[newIndex];
+        this._useFilterSettings.controlPoints[newIndex] = tmp;
 
         this.render();
     }
@@ -635,7 +635,7 @@ export class FilterEditor {
         else if (!this._larger)
             this._controlPointPath.style.setProperty("fill", "currentColor");
 
-            if (this._useFilterSettings != filterSettings && !this._writingMods) {
+        if (this._useFilterSettings != filterSettings && !this._writingMods) {
             this._dragChange = null;
             this._mouseDown = false;
         }
@@ -644,7 +644,7 @@ export class FilterEditor {
         // If modulators are active, show synth's current filter point settings instead of real points.
         // Will auto update, but if the user is writing directly to mod values then the writing point will be
         // forcibly maintained at the cursor position.
-        if (displayMods) {
+        if ( displayMods ) {
             this._useFilterSettings = this._getTargetFilterSettings(instrument);
 
             if (this._writingMods)

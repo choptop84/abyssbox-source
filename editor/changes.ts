@@ -1037,35 +1037,45 @@ export class ChangeRandomGeneratedInstrument extends Change {
             instrument.fadeOut = selectCurvedDistribution(0, Config.fadeOutTicks.length - 1, Config.fadeOutNeutral, 2);
             if (type == InstrumentType.chip || type == InstrumentType.harmonics || type == InstrumentType.pickedString || type == InstrumentType.customChipWave || type == InstrumentType.pwm || type == InstrumentType.spectrum) { // TODO: add noise
                 instrument.unison = Config.unisons.dictionary[selectWeightedRandom([
-                    { item: "none", weight: 10 },
-                    { item: "shimmer", weight: 5 },
-                    { item: "hum", weight: 4 },
-                    { item: "honky tonk", weight: 3 },
-                    { item: "dissonant", weight: 1 },
-                    { item: "fifth", weight: 1 },
-                    { item: "octave", weight: 2 },
-                    { item: "bowed", weight: 2 },
-                    { item: "piano", weight: 5 },
-                    { item: "warbled", weight: 3 },
-                    { item: "hecking gosh", weight: 2 },
-                    // { item: "custom", weight: 55 },
+                    { item: "none", weight: 25 },
+                    { item: "shimmer", weight: 10 },
+                    { item: "hum", weight: 8 },
+                    { item: "honky tonk", weight: 6 },
+                    { item: "dissonant", weight: 2 },
+                    { item: "fifth", weight: 4 },
+                    { item: "octave", weight: 5 },
+                    { item: "bowed", weight: 4 },
+                    { item: "piano", weight: 10 },
+                    { item: "warbled", weight: 5 },
+                    { item: "hecking gosh", weight: 3 },
+                    { item: "spinner", weight: 6 },
+                    { item: "detune", weight: 4 },
+                    { item: "rising", weight: 2 },
+                    { item: "vibrate", weight: 3 },
+                    { item: "bass", weight: 2 },
+                    { item: "recurve", weight: 3 },
+                    { item: "inject", weight: 2 },
+                    { item: "FART", weight: 1 },
+                    // { item: "custom", weight: 10 },
                 ])].index;
-                // randomly generated unisons don't work correctly - instead of trying to fix them, just ignore it
+                /* randomly generated unisons don't work correctly - instead of trying to fix them, just ignore it
+                   it's likely that for randomly generated custom unisons, they'd need to be heavily biased/follow
+                   algorithms to sound somewhat useful on most cases, otherwise its useless to include.
 
-                // if (instrument.unison == Config.unisons.length) {
-                //     instrument.unisonVoices = 2;
-                //     instrument.unisonSpread = Math.floor(Math.random() * 12000 - 6000) / 1000;
-                //     instrument.unisonOffset = Math.floor(Math.random() * 12000 - 6000) / 1000;
-                //     instrument.unisonExpression = 1;
-                //     instrument.unisonSign = Math.floor(Math.random() * 2000 - 1000) / 1000;
-                //     // console.log(instrument.unisonVoices, instrument.unisonSpread, instrument.unisonOffset, instrument.unisonExpression, instrument.unisonSign);
-                // } else {
+                if (instrument.unison == Config.unisons.length) {
+                    instrument.unisonVoices = 2;
+                    instrument.unisonSpread = Math.floor(Math.random() * 12000 - 6000) / 1000;
+                    instrument.unisonOffset = Math.floor(Math.random() * 12000 - 6000) / 1000;
+                    instrument.unisonExpression = 1;
+                    instrument.unisonSign = Math.floor(Math.random() * 2000 - 1000) / 1000;
+                    console.log(instrument.unisonVoices, instrument.unisonSpread, instrument.unisonOffset, instrument.unisonExpression, instrument.unisonSign);
+                } else {  */
                     instrument.unisonVoices = Config.unisons[instrument.unison].voices;
                     instrument.unisonSpread = Config.unisons[instrument.unison].spread;
                     instrument.unisonOffset = Config.unisons[instrument.unison].offset;
                     instrument.unisonExpression = Config.unisons[instrument.unison].expression;
                     instrument.unisonSign = Config.unisons[instrument.unison].sign;
-                // } 
+            //  } 
             }
 
             if (Math.random() < 0.1) {
@@ -1200,7 +1210,7 @@ export class ChangeRandomGeneratedInstrument extends Change {
 			switch (type) {
 				case InstrumentType.chip: {
 					instrument.chipWave = (Math.random() * Config.chipWaves.length) | 0;
-												 // advloop addition
+							// advloop addition
                             instrument.isUsingAdvancedLoopControls = false;
                             instrument.chipWaveLoopStart = 0;
                             instrument.chipWaveLoopEnd = Config.rawRawChipWaves[instrument.chipWave].samples.length - 1;
@@ -1262,184 +1272,6 @@ export class ChangeRandomGeneratedInstrument extends Change {
 					])].index);
 				}
 				} break;
-				case InstrumentType.supersaw: {
-					if (type == InstrumentType.supersaw) {
-						instrument.supersawDynamism = selectCurvedDistribution(0, Config.supersawDynamismMax, Config.supersawDynamismMax, 2);
-						instrument.supersawSpread = selectCurvedDistribution(0, Config.supersawSpreadMax, Math.ceil(Config.supersawSpreadMax / 3), 4);
-						instrument.supersawShape = selectCurvedDistribution(0, Config.supersawShapeMax, 0, 4);
-					}
-					
-					instrument.pulseWidth = selectCurvedDistribution(0, Config.pulseWidthRange - 1, Config.pulseWidthRange - 1, 2);
-					
-					if (Math.random() < 0.6) {
-						instrument.addEnvelope(Config.instrumentAutomationTargets.dictionary["pulseWidth"].index, 0, Config.envelopes.dictionary[selectWeightedRandom([
-							{item: "punch"   , weight: 6},
-                        				{ item: "flare -1", weight: 1 },
-							{item: "flare 1" , weight: 2},
-							{item: "flare 2" , weight: 4},
-							{item: "flare 3" , weight: 2},
-                      					{ item: "twang -1", weight: 1 },
-							{item: "twang 1" , weight: 2},
-							{item: "twang 2" , weight: 4},
-							{item: "twang 3" , weight: 4},
-                        				{ item: "swell -1", weight: 4 },
-							{item: "swell 1" , weight: 4},
-							{item: "swell 2" , weight: 2},
-							{item: "swell 3" , weight: 1},
-                        				{ item: "tremolo0", weight: 1 },
-							{item: "tremolo1", weight: 1},
-							{item: "tremolo2", weight: 1},
-							{item: "tremolo3", weight: 1},
-							{item: "tremolo4", weight: 1},
-							{item: "tremolo5", weight: 1},
-							{item: "tremolo6", weight: 1},
-                      					{ item: "decay -1", weight: 1 },
-							{item: "decay 1" , weight: 1},
-							{item: "decay 2" , weight: 2},
-							{item: "decay 3" , weight: 2},
-                     					{ item: "wibble-1", weight: 2 },
-                        				{ item: "wibble 1", weight: 4 },
-                        				{ item: "wibble 2", weight: 4 },
-                        				{ item: "wibble 3", weight: 4 },
-                        				{ item: "linear-2", weight: 1 },
-                        				{ item: "linear-1", weight: 1 },
-                        				{ item: "linear 1", weight: 2 },
-                        				{ item: "linear 2", weight: 3 },
-                       					{ item: "linear 3", weight: 2 },
-                        				{ item: "rise -2", weight: 4 },
-                        				{ item: "rise -1", weight: 4 },
-                        				{ item: "rise 1", weight: 3 },
-                        				{ item: "rise 2", weight: 2 },
-                        				{ item: "rise 3", weight: 1 },
-						])].index);
-					}
-                    if (instrument.envelopeCount < Config.maxEnvelopeCount && Math.random() < 0.3) {
-                        instrument.addEnvelope(Config.instrumentAutomationTargets.dictionary["supersawDynamism"].index, 0, Config.envelopes.dictionary[selectWeightedRandom([
-							{item: "punch"   , weight: 6},
-                        				{ item: "flare -1", weight: 1 },
-							{item: "flare 1" , weight: 2},
-							{item: "flare 2" , weight: 4},
-							{item: "flare 3" , weight: 2},
-                      					{ item: "twang -1", weight: 1 },
-							{item: "twang 1" , weight: 2},
-							{item: "twang 2" , weight: 4},
-							{item: "twang 3" , weight: 4},
-                        				{ item: "swell -1", weight: 4 },
-							{item: "swell 1" , weight: 4},
-							{item: "swell 2" , weight: 2},
-							{item: "swell 3" , weight: 1},
-                        				{ item: "tremolo0", weight: 1 },
-							{item: "tremolo1", weight: 1},
-							{item: "tremolo2", weight: 1},
-							{item: "tremolo3", weight: 1},
-							{item: "tremolo4", weight: 1},
-							{item: "tremolo5", weight: 1},
-							{item: "tremolo6", weight: 1},
-                      					{ item: "decay -1", weight: 1 },
-							{item: "decay 1" , weight: 1},
-							{item: "decay 2" , weight: 2},
-							{item: "decay 3" , weight: 2},
-                     					{ item: "wibble-1", weight: 2 },
-                        				{ item: "wibble 1", weight: 4 },
-                        				{ item: "wibble 2", weight: 4 },
-                        				{ item: "wibble 3", weight: 4 },
-                        				{ item: "linear-2", weight: 1 },
-                        				{ item: "linear-1", weight: 1 },
-                        				{ item: "linear 1", weight: 2 },
-                        				{ item: "linear 2", weight: 3 },
-                       					{ item: "linear 3", weight: 2 },
-                        				{ item: "rise -2", weight: 4 },
-                        				{ item: "rise -1", weight: 4 },
-                        				{ item: "rise 1", weight: 3 },
-                        				{ item: "rise 2", weight: 2 },
-                        				{ item: "rise 3", weight: 1 },
-                        ])].index);
-                    }
-                    if (instrument.envelopeCount < Config.maxEnvelopeCount && Math.random() < 0.3) {
-                        instrument.addEnvelope(Config.instrumentAutomationTargets.dictionary["supersawShape"].index, 0, Config.envelopes.dictionary[selectWeightedRandom([
-							{item: "punch"   , weight: 6},
-                        				{ item: "flare -1", weight: 1 },
-							{item: "flare 1" , weight: 2},
-							{item: "flare 2" , weight: 4},
-							{item: "flare 3" , weight: 2},
-                      					{ item: "twang -1", weight: 1 },
-							{item: "twang 1" , weight: 2},
-							{item: "twang 2" , weight: 4},
-							{item: "twang 3" , weight: 4},
-                        				{ item: "swell -1", weight: 4 },
-							{item: "swell 1" , weight: 4},
-							{item: "swell 2" , weight: 2},
-							{item: "swell 3" , weight: 1},
-                        				{ item: "tremolo0", weight: 1 },
-							{item: "tremolo1", weight: 1},
-							{item: "tremolo2", weight: 1},
-							{item: "tremolo3", weight: 1},
-							{item: "tremolo4", weight: 1},
-							{item: "tremolo5", weight: 1},
-							{item: "tremolo6", weight: 1},
-                      					{ item: "decay -1", weight: 1 },
-							{item: "decay 1" , weight: 1},
-							{item: "decay 2" , weight: 2},
-							{item: "decay 3" , weight: 2},
-                     					{ item: "wibble-1", weight: 2 },
-                        				{ item: "wibble 1", weight: 4 },
-                        				{ item: "wibble 2", weight: 4 },
-                        				{ item: "wibble 3", weight: 4 },
-                        				{ item: "linear-2", weight: 1 },
-                        				{ item: "linear-1", weight: 1 },
-                        				{ item: "linear 1", weight: 2 },
-                        				{ item: "linear 2", weight: 3 },
-                       					{ item: "linear 3", weight: 2 },
-                        				{ item: "rise -2", weight: 4 },
-                        				{ item: "rise -1", weight: 4 },
-                        				{ item: "rise 1", weight: 3 },
-                        				{ item: "rise 2", weight: 2 },
-                        				{ item: "rise 3", weight: 1 },
-                        ])].index);
-                    }
-                    if (instrument.envelopeCount < Config.maxEnvelopeCount && Math.random() < 0.3) {
-                        instrument.addEnvelope(Config.instrumentAutomationTargets.dictionary["supersawSpread"].index, 0, Config.envelopes.dictionary[selectWeightedRandom([
-							{item: "punch"   , weight: 6},
-                        				{ item: "flare -1", weight: 1 },
-							{item: "flare 1" , weight: 2},
-							{item: "flare 2" , weight: 4},
-							{item: "flare 3" , weight: 2},
-                      					{ item: "twang -1", weight: 1 },
-							{item: "twang 1" , weight: 2},
-							{item: "twang 2" , weight: 4},
-							{item: "twang 3" , weight: 4},
-                        	{ item: "swell -1", weight: 4 },
-							{item: "swell 1" , weight: 4},
-							{item: "swell 2" , weight: 2},
-							{item: "swell 3" , weight: 1},
-                        	{ item: "tremolo0", weight: 1 },
-							{item: "tremolo1", weight: 1},
-							{item: "tremolo2", weight: 1},
-							{item: "tremolo3", weight: 1},
-							{item: "tremolo4", weight: 1},
-							{item: "tremolo5", weight: 1},
-							{item: "tremolo6", weight: 1},
-                      		{ item: "decay -1", weight: 1 },
-							{item: "decay 1" , weight: 1},
-							{item: "decay 2" , weight: 2},
-							{item: "decay 3" , weight: 2},
-                     		{ item: "wibble-1", weight: 2 },
-                        	{ item: "wibble 1", weight: 4 },
-                        	{ item: "wibble 2", weight: 4 },
-                        	{ item: "wibble 3", weight: 4 },
-                        	{ item: "linear-2", weight: 1 },
-                        	{ item: "linear-1", weight: 1 },
-                        	{ item: "linear 1", weight: 2 },
-                        	{ item: "linear 2", weight: 3 },
-                       		{ item: "linear 3", weight: 2 },
-                        	{ item: "rise -2", weight: 4 },
-                        	{ item: "rise -1", weight: 4 },
-                        	{ item: "rise 1", weight: 3 },
-                        	{ item: "rise 2", weight: 2 },
-                        	{ item: "rise 3", weight: 1 },
-                        ])].index);
-                    }
-                } break;
 				case InstrumentType.pickedString:
                 case InstrumentType.harmonics: {
                     if (type == InstrumentType.pickedString) {
@@ -1520,7 +1352,7 @@ export class ChangeRandomGeneratedInstrument extends Change {
                             { item: "sawtooth", weight: 3 },
                             { item: "ramp", weight: 3 },
                             { item: "trapezoid", weight: 4 },
-				{ item: "rounded", weight: 1 },
+				            { item: "rounded", weight: 2 },
                         ])].index;
 						if (instrument.operators[i].waveform == 2/*"pulse width"*/) {
 							instrument.operators[i].pulseWidth = selectWeightedRandom([
@@ -1590,7 +1422,7 @@ export class ChangeRandomGeneratedInstrument extends Change {
                             { item: "sawtooth", weight: 3 },
                             { item: "ramp", weight: 3 },
                             { item: "trapezoid", weight: 4 },
-				{ item: "rounded", weight: 1 },
+				            { item: "rounded", weight: 2 },
                         ])].index;
 						if (instrument.operators[i].waveform == 2) {
 							instrument.operators[i].pulseWidth = selectWeightedRandom([
@@ -1702,7 +1534,6 @@ export class ChangeRandomGeneratedInstrument extends Change {
                 default: throw new Error("Unhandled pitched instrument type in random generator.");
             }
         }
-
         doc.notifier.changed();
         this._didSomething();
     }
@@ -2414,23 +2245,7 @@ export class ChangeHarmonics extends Change {
     }
 }
 
-
-
 export class ChangeDrumsetEnvelope extends Change {
-    constructor(doc: SongDocument, drumIndex: number, newValue: number) {
-        super();
-        const instrument: Instrument = doc.song.channels[doc.channel].instruments[doc.getCurrentInstrument()];
-        const oldValue: number = instrument.drumsetEnvelopes[drumIndex];
-        if (oldValue != newValue) {
-            instrument.drumsetEnvelopes[drumIndex] = newValue;
-            instrument.preset = instrument.type;
-            doc.notifier.changed();
-            this._didSomething();
-        }
-    }
-}
-
-export class ChangeSampleSet extends Change {
     constructor(doc: SongDocument, drumIndex: number, newValue: number) {
         super();
         const instrument: Instrument = doc.song.channels[doc.channel].instruments[doc.getCurrentInstrument()];
@@ -2596,6 +2411,7 @@ export class ChangeEQFilterType extends Change {
             instrument.tmpEqFilterEnd = null;
         }
         instrument.clearInvalidEnvelopeTargets();
+        instrument.preset = instrument.type;
         doc.notifier.changed();
         this._didSomething();
     }
@@ -2617,6 +2433,7 @@ export class ChangeNoteFilterType extends Change {
             instrument.tmpNoteFilterEnd = null;
         }
         instrument.clearInvalidEnvelopeTargets();
+        instrument.preset = instrument.type;
         doc.notifier.changed();
         this._didSomething();
     }
@@ -3005,9 +2822,9 @@ export class ChangeOperatorPulseWidth extends Change {
         super();
         const instrument: Instrument = doc.song.channels[doc.channel].instruments[doc.getCurrentInstrument()];
         instrument.operators[operatorIndex].pulseWidth = newValue;
-        instrument.preset = instrument.type;
         doc.notifier.changed();
         if (oldValue != newValue) {
+            instrument.preset = instrument.type;
             this._didSomething();
         }
     }
@@ -3153,10 +2970,10 @@ export class ChangeViewInstrument extends Change {
         super();
         if (doc.viewedInstrument[doc.channel] != index) {
             doc.viewedInstrument[doc.channel] = index;
-            if ( doc.channel >= doc.song.pitchChannelCount + doc.song.noiseChannelCount )
+        if ( doc.channel >= doc.song.pitchChannelCount + doc.song.noiseChannelCount )
             doc.recentPatternInstruments[doc.channel] = [index];
-            doc.notifier.changed();
-            this._didSomething();
+        doc.notifier.changed();
+        this._didSomething();
         }
     }
 }
@@ -3540,7 +3357,7 @@ export class ChangeEnsurePatternExists extends UndoableChange {
         this._newPatternCount = song.patternsPerChannel;
         if (channelIndex < doc.song.pitchChannelCount + doc.song.noiseChannelCount)
         this._newPatternInstruments = doc.recentPatternInstruments[channelIndex].concat();
-        else
+    else
         this._newPatternInstruments = [doc.viewedInstrument[channelIndex]];
 
         let firstEmptyUnusedIndex: number | null = null;
@@ -3994,12 +3811,12 @@ export function setDefaultInstruments(song: Song): void {
 }
 
 export class ChangeSong extends ChangeGroup {
-    constructor(doc: SongDocument, newHash: string) {
+    constructor(doc: SongDocument, newHash: string, jsonFormat: string = "auto") {
         super();
         let pitchChannelCount = doc.song.pitchChannelCount;
         let noiseChannelCount = doc.song.noiseChannelCount;
         let modChannelCount = doc.song.modChannelCount;
-        doc.song.fromBase64String(newHash);
+        doc.song.fromBase64String(newHash, jsonFormat);
         if (pitchChannelCount != doc.song.pitchChannelCount || noiseChannelCount != doc.song.noiseChannelCount || modChannelCount != doc.song.modChannelCount) {
             ColorConfig.resetColors();
         }
@@ -4791,7 +4608,7 @@ export class ChangeSongTitle extends Change {
         if (newValue.length > 30) {
             newValue = newValue.substring(0, 30);
         }
-        
+
         doc.song.title = newValue;
         document.title = newValue + " - " + EditorConfig.versionDisplayName;
         doc.notifier.changed();

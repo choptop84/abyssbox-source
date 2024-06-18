@@ -2513,7 +2513,8 @@ export class SongEditor {
             this._loopBarButton.style.left = prefs.showScrollBar ? "40px" : "40px";  
             this._fullscreenButton.style.display = "none";       
             const secondImage = document.getElementById("secondImage");
-            secondImage!.style.minHeight = "100vh";
+            if (secondImage != null) {
+            secondImage!.style.minHeight = "100vh"; }
         } else {
             this._patternEditor.container.style.width = "";
             this._patternEditor.container.style.flexShrink = "";

@@ -37795,17 +37795,25 @@ li.select2-results__option[role=group] > strong:hover {
                 instrument.fadeOut = selectCurvedDistribution(0, Config.fadeOutTicks.length - 1, Config.fadeOutNeutral, 2);
                 if (type == 0 || type == 5 || type == 7 || type == 9 || type == 6 || type == 3) {
                     instrument.unison = Config.unisons.dictionary[selectWeightedRandom([
-                        { item: "none", weight: 10 },
-                        { item: "shimmer", weight: 5 },
-                        { item: "hum", weight: 4 },
-                        { item: "honky tonk", weight: 3 },
-                        { item: "dissonant", weight: 1 },
-                        { item: "fifth", weight: 1 },
-                        { item: "octave", weight: 2 },
-                        { item: "bowed", weight: 2 },
-                        { item: "piano", weight: 5 },
-                        { item: "warbled", weight: 3 },
-                        { item: "hecking gosh", weight: 2 },
+                        { item: "none", weight: 25 },
+                        { item: "shimmer", weight: 10 },
+                        { item: "hum", weight: 8 },
+                        { item: "honky tonk", weight: 6 },
+                        { item: "dissonant", weight: 2 },
+                        { item: "fifth", weight: 4 },
+                        { item: "octave", weight: 5 },
+                        { item: "bowed", weight: 4 },
+                        { item: "piano", weight: 10 },
+                        { item: "warbled", weight: 5 },
+                        { item: "hecking gosh", weight: 3 },
+                        { item: "spinner", weight: 6 },
+                        { item: "detune", weight: 4 },
+                        { item: "rising", weight: 2 },
+                        { item: "vibrate", weight: 3 },
+                        { item: "bass", weight: 2 },
+                        { item: "recurve", weight: 3 },
+                        { item: "inject", weight: 2 },
+                        { item: "FART", weight: 1 },
                     ])].index;
                     instrument.unisonVoices = Config.unisons[instrument.unison].voices;
                     instrument.unisonSpread = Config.unisons[instrument.unison].spread;
@@ -38010,184 +38018,6 @@ li.select2-results__option[role=group] > strong:hover {
                             }
                         }
                         break;
-                    case 8:
-                        {
-                            if (type == 8) {
-                                instrument.supersawDynamism = selectCurvedDistribution(0, Config.supersawDynamismMax, Config.supersawDynamismMax, 2);
-                                instrument.supersawSpread = selectCurvedDistribution(0, Config.supersawSpreadMax, Math.ceil(Config.supersawSpreadMax / 3), 4);
-                                instrument.supersawShape = selectCurvedDistribution(0, Config.supersawShapeMax, 0, 4);
-                            }
-                            instrument.pulseWidth = selectCurvedDistribution(0, Config.pulseWidthRange - 1, Config.pulseWidthRange - 1, 2);
-                            if (Math.random() < 0.6) {
-                                instrument.addEnvelope(Config.instrumentAutomationTargets.dictionary["pulseWidth"].index, 0, Config.envelopes.dictionary[selectWeightedRandom([
-                                    { item: "punch", weight: 6 },
-                                    { item: "flare -1", weight: 1 },
-                                    { item: "flare 1", weight: 2 },
-                                    { item: "flare 2", weight: 4 },
-                                    { item: "flare 3", weight: 2 },
-                                    { item: "twang -1", weight: 1 },
-                                    { item: "twang 1", weight: 2 },
-                                    { item: "twang 2", weight: 4 },
-                                    { item: "twang 3", weight: 4 },
-                                    { item: "swell -1", weight: 4 },
-                                    { item: "swell 1", weight: 4 },
-                                    { item: "swell 2", weight: 2 },
-                                    { item: "swell 3", weight: 1 },
-                                    { item: "tremolo0", weight: 1 },
-                                    { item: "tremolo1", weight: 1 },
-                                    { item: "tremolo2", weight: 1 },
-                                    { item: "tremolo3", weight: 1 },
-                                    { item: "tremolo4", weight: 1 },
-                                    { item: "tremolo5", weight: 1 },
-                                    { item: "tremolo6", weight: 1 },
-                                    { item: "decay -1", weight: 1 },
-                                    { item: "decay 1", weight: 1 },
-                                    { item: "decay 2", weight: 2 },
-                                    { item: "decay 3", weight: 2 },
-                                    { item: "wibble-1", weight: 2 },
-                                    { item: "wibble 1", weight: 4 },
-                                    { item: "wibble 2", weight: 4 },
-                                    { item: "wibble 3", weight: 4 },
-                                    { item: "linear-2", weight: 1 },
-                                    { item: "linear-1", weight: 1 },
-                                    { item: "linear 1", weight: 2 },
-                                    { item: "linear 2", weight: 3 },
-                                    { item: "linear 3", weight: 2 },
-                                    { item: "rise -2", weight: 4 },
-                                    { item: "rise -1", weight: 4 },
-                                    { item: "rise 1", weight: 3 },
-                                    { item: "rise 2", weight: 2 },
-                                    { item: "rise 3", weight: 1 },
-                                ])].index);
-                            }
-                            if (instrument.envelopeCount < Config.maxEnvelopeCount && Math.random() < 0.3) {
-                                instrument.addEnvelope(Config.instrumentAutomationTargets.dictionary["supersawDynamism"].index, 0, Config.envelopes.dictionary[selectWeightedRandom([
-                                    { item: "punch", weight: 6 },
-                                    { item: "flare -1", weight: 1 },
-                                    { item: "flare 1", weight: 2 },
-                                    { item: "flare 2", weight: 4 },
-                                    { item: "flare 3", weight: 2 },
-                                    { item: "twang -1", weight: 1 },
-                                    { item: "twang 1", weight: 2 },
-                                    { item: "twang 2", weight: 4 },
-                                    { item: "twang 3", weight: 4 },
-                                    { item: "swell -1", weight: 4 },
-                                    { item: "swell 1", weight: 4 },
-                                    { item: "swell 2", weight: 2 },
-                                    { item: "swell 3", weight: 1 },
-                                    { item: "tremolo0", weight: 1 },
-                                    { item: "tremolo1", weight: 1 },
-                                    { item: "tremolo2", weight: 1 },
-                                    { item: "tremolo3", weight: 1 },
-                                    { item: "tremolo4", weight: 1 },
-                                    { item: "tremolo5", weight: 1 },
-                                    { item: "tremolo6", weight: 1 },
-                                    { item: "decay -1", weight: 1 },
-                                    { item: "decay 1", weight: 1 },
-                                    { item: "decay 2", weight: 2 },
-                                    { item: "decay 3", weight: 2 },
-                                    { item: "wibble-1", weight: 2 },
-                                    { item: "wibble 1", weight: 4 },
-                                    { item: "wibble 2", weight: 4 },
-                                    { item: "wibble 3", weight: 4 },
-                                    { item: "linear-2", weight: 1 },
-                                    { item: "linear-1", weight: 1 },
-                                    { item: "linear 1", weight: 2 },
-                                    { item: "linear 2", weight: 3 },
-                                    { item: "linear 3", weight: 2 },
-                                    { item: "rise -2", weight: 4 },
-                                    { item: "rise -1", weight: 4 },
-                                    { item: "rise 1", weight: 3 },
-                                    { item: "rise 2", weight: 2 },
-                                    { item: "rise 3", weight: 1 },
-                                ])].index);
-                            }
-                            if (instrument.envelopeCount < Config.maxEnvelopeCount && Math.random() < 0.3) {
-                                instrument.addEnvelope(Config.instrumentAutomationTargets.dictionary["supersawShape"].index, 0, Config.envelopes.dictionary[selectWeightedRandom([
-                                    { item: "punch", weight: 6 },
-                                    { item: "flare -1", weight: 1 },
-                                    { item: "flare 1", weight: 2 },
-                                    { item: "flare 2", weight: 4 },
-                                    { item: "flare 3", weight: 2 },
-                                    { item: "twang -1", weight: 1 },
-                                    { item: "twang 1", weight: 2 },
-                                    { item: "twang 2", weight: 4 },
-                                    { item: "twang 3", weight: 4 },
-                                    { item: "swell -1", weight: 4 },
-                                    { item: "swell 1", weight: 4 },
-                                    { item: "swell 2", weight: 2 },
-                                    { item: "swell 3", weight: 1 },
-                                    { item: "tremolo0", weight: 1 },
-                                    { item: "tremolo1", weight: 1 },
-                                    { item: "tremolo2", weight: 1 },
-                                    { item: "tremolo3", weight: 1 },
-                                    { item: "tremolo4", weight: 1 },
-                                    { item: "tremolo5", weight: 1 },
-                                    { item: "tremolo6", weight: 1 },
-                                    { item: "decay -1", weight: 1 },
-                                    { item: "decay 1", weight: 1 },
-                                    { item: "decay 2", weight: 2 },
-                                    { item: "decay 3", weight: 2 },
-                                    { item: "wibble-1", weight: 2 },
-                                    { item: "wibble 1", weight: 4 },
-                                    { item: "wibble 2", weight: 4 },
-                                    { item: "wibble 3", weight: 4 },
-                                    { item: "linear-2", weight: 1 },
-                                    { item: "linear-1", weight: 1 },
-                                    { item: "linear 1", weight: 2 },
-                                    { item: "linear 2", weight: 3 },
-                                    { item: "linear 3", weight: 2 },
-                                    { item: "rise -2", weight: 4 },
-                                    { item: "rise -1", weight: 4 },
-                                    { item: "rise 1", weight: 3 },
-                                    { item: "rise 2", weight: 2 },
-                                    { item: "rise 3", weight: 1 },
-                                ])].index);
-                            }
-                            if (instrument.envelopeCount < Config.maxEnvelopeCount && Math.random() < 0.3) {
-                                instrument.addEnvelope(Config.instrumentAutomationTargets.dictionary["supersawSpread"].index, 0, Config.envelopes.dictionary[selectWeightedRandom([
-                                    { item: "punch", weight: 6 },
-                                    { item: "flare -1", weight: 1 },
-                                    { item: "flare 1", weight: 2 },
-                                    { item: "flare 2", weight: 4 },
-                                    { item: "flare 3", weight: 2 },
-                                    { item: "twang -1", weight: 1 },
-                                    { item: "twang 1", weight: 2 },
-                                    { item: "twang 2", weight: 4 },
-                                    { item: "twang 3", weight: 4 },
-                                    { item: "swell -1", weight: 4 },
-                                    { item: "swell 1", weight: 4 },
-                                    { item: "swell 2", weight: 2 },
-                                    { item: "swell 3", weight: 1 },
-                                    { item: "tremolo0", weight: 1 },
-                                    { item: "tremolo1", weight: 1 },
-                                    { item: "tremolo2", weight: 1 },
-                                    { item: "tremolo3", weight: 1 },
-                                    { item: "tremolo4", weight: 1 },
-                                    { item: "tremolo5", weight: 1 },
-                                    { item: "tremolo6", weight: 1 },
-                                    { item: "decay -1", weight: 1 },
-                                    { item: "decay 1", weight: 1 },
-                                    { item: "decay 2", weight: 2 },
-                                    { item: "decay 3", weight: 2 },
-                                    { item: "wibble-1", weight: 2 },
-                                    { item: "wibble 1", weight: 4 },
-                                    { item: "wibble 2", weight: 4 },
-                                    { item: "wibble 3", weight: 4 },
-                                    { item: "linear-2", weight: 1 },
-                                    { item: "linear-1", weight: 1 },
-                                    { item: "linear 1", weight: 2 },
-                                    { item: "linear 2", weight: 3 },
-                                    { item: "linear 3", weight: 2 },
-                                    { item: "rise -2", weight: 4 },
-                                    { item: "rise -1", weight: 4 },
-                                    { item: "rise 1", weight: 3 },
-                                    { item: "rise 2", weight: 2 },
-                                    { item: "rise 3", weight: 1 },
-                                ])].index);
-                            }
-                        }
-                        break;
                     case 7:
                     case 5:
                         {
@@ -38274,7 +38104,7 @@ li.select2-results__option[role=group] > strong:hover {
                                     { item: "sawtooth", weight: 3 },
                                     { item: "ramp", weight: 3 },
                                     { item: "trapezoid", weight: 4 },
-                                    { item: "rounded", weight: 1 },
+                                    { item: "rounded", weight: 2 },
                                 ])].index;
                                 if (instrument.operators[i].waveform == 2) {
                                     instrument.operators[i].pulseWidth = selectWeightedRandom([
@@ -38344,7 +38174,7 @@ li.select2-results__option[role=group] > strong:hover {
                                     { item: "sawtooth", weight: 3 },
                                     { item: "ramp", weight: 3 },
                                     { item: "trapezoid", weight: 4 },
-                                    { item: "rounded", weight: 1 },
+                                    { item: "rounded", weight: 2 },
                                 ])].index;
                                 if (instrument.operators[i].waveform == 2) {
                                     instrument.operators[i].pulseWidth = selectWeightedRandom([
@@ -39221,6 +39051,7 @@ li.select2-results__option[role=group] > strong:hover {
                 instrument.tmpEqFilterEnd = null;
             }
             instrument.clearInvalidEnvelopeTargets();
+            instrument.preset = instrument.type;
             doc.notifier.changed();
             this._didSomething();
         }
@@ -39240,6 +39071,7 @@ li.select2-results__option[role=group] > strong:hover {
                 instrument.tmpNoteFilterEnd = null;
             }
             instrument.clearInvalidEnvelopeTargets();
+            instrument.preset = instrument.type;
             doc.notifier.changed();
             this._didSomething();
         }
@@ -39564,9 +39396,9 @@ li.select2-results__option[role=group] > strong:hover {
             super();
             const instrument = doc.song.channels[doc.channel].instruments[doc.getCurrentInstrument()];
             instrument.operators[operatorIndex].pulseWidth = newValue;
-            instrument.preset = instrument.type;
             doc.notifier.changed();
             if (oldValue != newValue) {
+                instrument.preset = instrument.type;
                 this._didSomething();
             }
         }
@@ -40464,12 +40296,12 @@ li.select2-results__option[role=group] > strong:hover {
         }
     }
     class ChangeSong extends ChangeGroup {
-        constructor(doc, newHash) {
+        constructor(doc, newHash, jsonFormat = "auto") {
             super();
             let pitchChannelCount = doc.song.pitchChannelCount;
             let noiseChannelCount = doc.song.noiseChannelCount;
             let modChannelCount = doc.song.modChannelCount;
-            doc.song.fromBase64String(newHash);
+            doc.song.fromBase64String(newHash, jsonFormat);
             if (pitchChannelCount != doc.song.pitchChannelCount || noiseChannelCount != doc.song.noiseChannelCount || modChannelCount != doc.song.modChannelCount) {
                 ColorConfig.resetColors();
             }
@@ -56258,13 +56090,13 @@ button.playButton::before {
                         this._barNumberContainer.appendChild(this._barNumbers[pos]);
                     }
                     this._renderedBarCount = this._doc.song.barCount;
-                    this._renderedBarCount = this._doc.song.barCount;
                 }
                 else if (this._renderedBarCount > this._doc.song.barCount) {
                     for (var pos = this._renderedBarCount - 1; pos >= this._doc.song.barCount; pos--) {
                         this._barNumberContainer.removeChild(this._barNumbers[pos]);
                     }
                     this._barNumbers.length = this._doc.song.barCount;
+                    this._renderedBarCount = this._doc.song.barCount;
                 }
                 for (var pos = 0; pos < this._barNumbers.length; pos++) {
                     this._barNumbers[pos].setAttribute("x", (pos * this._barWidth + this._barWidth / 2) + "px");
@@ -58979,7 +58811,9 @@ button.playButton::before {
                         this._loopBarButton.style.left = prefs.showScrollBar ? "40px" : "40px";
                         this._fullscreenButton.style.display = "none";
                         const secondImage = document.getElementById("secondImage");
-                        secondImage.style.minHeight = "100vh";
+                        if (secondImage != null) {
+                            secondImage.style.minHeight = "100vh";
+                        }
                     }
                     else {
                         this._patternEditor.container.style.width = "";

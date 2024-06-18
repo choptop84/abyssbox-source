@@ -17,10 +17,10 @@ export class TrackEditor {
 	);
 	private readonly _channelRowContainer: HTMLElement = HTML.div({style: `display: flex; flex-direction: column; padding-top: ${Config.barEditorHeight}px`});
 	private readonly _barNumberContainer: SVGGElement = SVG.g();
-		private readonly _playhead: SVGRectElement = SVG.rect({fill: ColorConfig.playhead, x: 0, y: 0, width: 4, height: 128});
-		private readonly _boxHighlight: SVGRectElement = SVG.rect({fill: "none", stroke: ColorConfig.hoverPreview, "stroke-width": 2, "pointer-events": "none", x: 1, y: 1, width: 30, height: 30});
-		private readonly _upHighlight: SVGPathElement = SVG.path({fill: ColorConfig.invertedText, stroke: ColorConfig.invertedText, "stroke-width": 1, "pointer-events": "none"});
-		private readonly _downHighlight: SVGPathElement = SVG.path({fill: ColorConfig.invertedText, stroke: ColorConfig.invertedText, "stroke-width": 1, "pointer-events": "none"});
+	private readonly _playhead: SVGRectElement = SVG.rect({fill: ColorConfig.playhead, x: 0, y: 0, width: 4, height: 128});
+	private readonly _boxHighlight: SVGRectElement = SVG.rect({fill: "none", stroke: ColorConfig.hoverPreview, "stroke-width": 2, "pointer-events": "none", x: 1, y: 1, width: 30, height: 30});
+	private readonly _upHighlight: SVGPathElement = SVG.path({fill: ColorConfig.invertedText, stroke: ColorConfig.invertedText, "stroke-width": 1, "pointer-events": "none"});
+	private readonly _downHighlight: SVGPathElement = SVG.path({fill: ColorConfig.invertedText, stroke: ColorConfig.invertedText, "stroke-width": 1, "pointer-events": "none"});
 	private readonly _barEditorPath: SVGPathElement = SVG.path({ fill: ColorConfig.uiWidgetBackground, stroke: ColorConfig.uiWidgetBackground, "stroke-width": 1, "pointer-events": "none" });
 	private readonly _selectionRect: SVGRectElement = SVG.rect({ class: "dashed-line dash-move", fill: ColorConfig.boxSelectionFill, stroke: ColorConfig.hoverPreview, "stroke-width": 2, "stroke-dasharray": "5, 3", "fill-opacity": "0.4", "pointer-events": "none", visibility: "hidden", x: 1, y: 1, width: 62, height: 62 });
 	private readonly _svg: SVGSVGElement = SVG.svg({style: `position: absolute; top: 0;`},
@@ -32,8 +32,8 @@ export class TrackEditor {
 		this._downHighlight,
 		this._playhead,
 	);
-		private readonly _select: HTMLSelectElement = HTML.select({class: "trackSelectBox", style: "background: none; border: none; appearance: none; border-radius: initial; box-shadow: none; color: transparent; position: absolute; touch-action: none;"});
-		public readonly container: HTMLElement = HTML.div({class: "noSelection", style: `background-color: ${ColorConfig.editorBackground}; position: relative; overflow: hidden;`},
+	private readonly _select: HTMLSelectElement = HTML.select({class: "trackSelectBox", style: "background: none; border: none; appearance: none; border-radius: initial; box-shadow: none; color: transparent; position: absolute; touch-action: none;"});
+	public readonly container: HTMLElement = HTML.div({class: "noSelection", style: `background-color: ${ColorConfig.editorBackground}; position: relative; overflow: hidden;`},
 		this._channelRowContainer,
 		this._svg,
 		this._select,
@@ -388,13 +388,15 @@ export class TrackEditor {
 			for (let y: number = this._doc.song.getChannelCount(); y < this._channels.length; y++) {
 				this._channelRowContainer.removeChild(this._channels[y].container);
 			}
-				
+			
 			this._channels.length = this._doc.song.getChannelCount();
 			this._mousePressed = false;
 		}
+
 		for (let j: number = 0; j < this._doc.song.getChannelCount(); j++) {
 			this._channels[j].render();
 		}
+			
 		const editorWidth: number = this._barWidth * this._doc.song.barCount;
 		if (this._renderedEditorWidth != editorWidth) {
 			this._renderedEditorWidth = editorWidth;
@@ -431,34 +433,33 @@ export class TrackEditor {
 					this._barNumberContainer.appendChild(this._barNumbers[pos]);
 				}
 				this._renderedBarCount = this._doc.song.barCount;
-				this._renderedBarCount = this._doc.song.barCount;
 			}
 			else if (this._renderedBarCount > this._doc.song.barCount) {
 				for (var pos = this._renderedBarCount - 1; pos >= this._doc.song.barCount; pos--) {
 					this._barNumberContainer.removeChild(this._barNumbers[pos]);
 				}
 				this._barNumbers.length = this._doc.song.barCount;
+				this._renderedBarCount = this._doc.song.barCount;
 			}
 
 			// Update x of bar editor numbers
-				for (var pos = 0; pos < this._barNumbers.length; pos++) {
-					this._barNumbers[pos].setAttribute("x", (pos * this._barWidth + this._barWidth / 2) + "px");
-				}
-
-						this._renderedEditorWidth = editorWidth;
+			for (var pos = 0; pos < this._barNumbers.length; pos++) {
+				this._barNumbers[pos].setAttribute("x", (pos * this._barWidth + this._barWidth / 2) + "px");
+			}
+		
+			this._renderedEditorWidth = editorWidth;
 			this._channelRowContainer.style.width = editorWidth + "px";
 			this.container.style.width = editorWidth + "px";
 			this._svg.setAttribute("width", editorWidth + "");
 			this._mousePressed = false;
 		}
-			
+		
 		const editorHeight: number = this._doc.song.getChannelCount() * ChannelRow.patternHeight;
 		if (this._renderedEditorHeight != editorHeight) {
 			this._renderedEditorHeight = editorHeight;
 			this._svg.setAttribute("height", "" + editorHeight + Config.barEditorHeight);
 			this._playhead.setAttribute("height", "" + editorHeight + Config.barEditorHeight);
 			this.container.style.height = (editorHeight + Config.barEditorHeight) + "px";
-
 		}
 			
 		this._select.style.display = this._touchMode ? "" : "none";
