@@ -14756,8 +14756,8 @@ export class ColorConfig {
 				--pitch4-primary-note: #ffd84e;
 				--pitch5-secondary-channel: #6c0000;
 				--pitch5-primary-channel:   #ff3e3e;
-				--pitct5-secondary-note:    #6c0000;
-				--pitct5-primary-note:      #ff3e3e;
+				--pitch5-secondary-note:    #6c0000;
+				--pitch5-primary-note:      #ff3e3e;
 				--pitch6-secondary-channel:#d25a00;
 				--pitch6-primary-channel:  #fdff00;
 				--pitch6-secondary-note:   #d25a00;
@@ -16534,8 +16534,8 @@ export class ColorConfig {
 				--pitch4-primary-note: #ffd84e;
 				--pitch5-secondary-channel: #6c0000;
 				--pitch5-primary-channel:   #ff3e3e;
-				--pitct5-secondary-note:    #6c0000;
-				--pitct5-primary-note:      #ff3e3e;
+				--pitch5-secondary-note:    #6c0000;
+				--pitch5-primary-note:      #ff3e3e;
 				--pitch6-secondary-channel:#d25a00;
 				--pitch6-primary-channel:  #fdff00;
 				--pitch6-secondary-note:   #d25a00;
