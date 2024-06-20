@@ -1503,7 +1503,7 @@ var beepbox = (function (exports) {
             return (_a = EditorConfig.presetCategories[0].presets.dictionary) === null || _a === void 0 ? void 0 : _a[TypePresets === null || TypePresets === void 0 ? void 0 : TypePresets[instrument]];
         }
     }
-    EditorConfig.version = "1.4";
+    EditorConfig.version = "1.4.5";
     EditorConfig.versionDisplayName = "AbyssBox " + EditorConfig.version;
     EditorConfig.releaseNotesURL = "./patch_notes.html";
     EditorConfig.isOnMac = /^Mac/i.test(navigator.platform) || /Mac OS X/i.test(navigator.userAgent) || /^(iPhone|iPad|iPod)/i.test(navigator.platform) || /(iPhone|iPad|iPod)/i.test(navigator.userAgent);
@@ -1802,6 +1802,7 @@ var beepbox = (function (exports) {
                 { name: "Ghost House", generalMidi: false, settings: { "type": "FM", "eqFilter": [], "eqFilterType": false, "eqSimpleCut": 10, "eqSimplePeak": 0, "envelopeSpeed": 12, "discreteEnvelope": false, "eqSubFilters0": [], "effects": ["transition type", "vibrato", "bitcrusher"], "transition": "normal", "clicklessTransition": false, "vibrato": "heavy", "vibratoDepth": 0.45, "vibratoDelay": 0, "vibratoSpeed": 10, "vibratoType": 0, "bitcrusherOctave": 3.5, "bitcrusherQuantization": 43, "panDelay": 10, "fadeInSeconds": 0, "fadeOutTicks": -3, "algorithm": "1←(2 3←4)", "feedbackType": "1⟲", "feedbackAmplitude": 0, "operators": [{ "frequency": "1×", "amplitude": 15, "waveform": "sine", "pulseWidth": 5 }, { "frequency": "1×", "amplitude": 4, "waveform": "sine", "pulseWidth": 5 }, { "frequency": "1×", "amplitude": 6, "waveform": "sine", "pulseWidth": 5 }, { "frequency": "1×", "amplitude": 7, "waveform": "sine", "pulseWidth": 5 }, { "frequency": "1×", "amplitude": 0, "waveform": "sine", "pulseWidth": 5 }, { "frequency": "1×", "amplitude": 0, "waveform": "sine", "pulseWidth": 5 }], "envelopes": [{ "target": "noteVolume", "envelope": "punch" }] } },
                 { name: "Supersaw Pluck", generalMidi: false, settings: { "type": "supersaw", "eqFilter": [], "eqFilterType": false, "eqSimpleCut": 9, "eqSimplePeak": 0, "envelopeSpeed": 12, "discreteEnvelope": false, "eqSubFilters0": [], "eqSubFilters1": [], "effects": ["chord type", "note filter", "chorus", "echo", "reverb"], "chord": "simultaneous", "fastTwoNoteArp": true, "arpeggioSpeed": 12, "noteFilterType": true, "noteSimpleCut": 7, "noteSimplePeak": 1, "noteFilter": [{ "type": "low-pass", "cutoffHz": 3828.43, "linearGain": 0.5 }], "noteSubFilters1": [{ "type": "low-pass", "cutoffHz": 3828.43, "linearGain": 0.5 }], "panDelay": 10, "chorus": 14, "echoSustain": 29, "echoDelayBeats": 1, "reverb": 0, "fadeInSeconds": 0, "fadeOutTicks": 48, "pulseWidth": 40, "decimalOffset": 0, "dynamism": 67, "spread": 50, "shape": 0, "envelopes": [{ "target": "noteFilterAllFreqs", "envelope": "twang 1" }] } },
                 { name: "Credits Bass", generalMidi: false, settings: { "type": "chip", "eqFilter": [], "eqFilterType": false, "eqSimpleCut": 8, "eqSimplePeak": 0, "envelopeSpeed": 12, "discreteEnvelope": false, "effects": ["transition type", "chord type", "note filter"], "transition": "interrupt", "clicklessTransition": false, "chord": "arpeggio", "fastTwoNoteArp": true, "arpeggioSpeed": 9, "noteFilterType": true, "noteSimpleCut": 8, "noteSimplePeak": 0, "noteFilter": [{ "type": "low-pass", "cutoffHz": 16000, "linearGain": 0.3536 }], "noteSubFilters1": [{ "type": "low-pass", "cutoffHz": 16000, "linearGain": 0.3536 }], "panDelay": 10, "fadeInSeconds": 0, "fadeOutTicks": -1, "wave": "alto sax", "unison": "none", "isUsingAdvancedLoopControls": false, "chipWaveLoopStart": 0, "chipWaveLoopEnd": 2, "chipWaveLoopMode": 0, "chipWavePlayBackwards": false, "chipWaveStartOffset": 0, "envelopes": [{ "target": "noteFilterAllFreqs", "envelope": "decay 1" }] } },
+                { name: "Heavy Knock", generalMidi: false, settings: { "type": "noise", "eqFilter": [], "eqFilterType": false, "eqSimpleCut": 10, "eqSimplePeak": 0, "envelopeSpeed": 12, "discreteEnvelope": false, "eqSubFilters0": [], "effects": ["vibrato", "note filter", "reverb"], "vibrato": "delayed", "vibratoDepth": 0.3, "vibratoDelay": 18.5, "vibratoSpeed": 10, "vibratoType": 0, "noteFilterType": true, "noteSimpleCut": 7, "noteSimplePeak": 1, "noteFilter": [{ "type": "low-pass", "cutoffHz": 3828.43, "linearGain": 0.5 }], "noteSubFilters1": [{ "type": "low-pass", "cutoffHz": 3828.43, "linearGain": 0.5 }], "panDelay": 10, "reverb": 0, "fadeInSeconds": 0, "fadeOutTicks": 48, "wave": "white", "unison": "none", "envelopes": [{ "target": "noteFilterAllFreqs", "envelope": "twang 2" }] } },
             ]) },
     ]);
 
@@ -27468,6 +27469,7 @@ li.select2-results__option[role=group] > strong:hover {
             this.patternInstruments = false;
             this.title = "Untitled";
             document.title = this.title + " - " + EditorConfig.versionDisplayName;
+            this.setSongTheme = "none";
             if (andResetChannels) {
                 this.pitchChannelCount = 3;
                 this.noiseChannelCount = 1;
@@ -27514,6 +27516,12 @@ li.select2-results__option[role=group] > strong:hover {
             buffer.push(base64IntToCharCode[encodedSongTitle.length >> 6], base64IntToCharCode[encodedSongTitle.length & 0x3f]);
             for (let i = 0; i < encodedSongTitle.length; i++) {
                 buffer.push(encodedSongTitle.charCodeAt(i));
+            }
+            buffer.push(89);
+            var encodedSongTheme = encodeURIComponent(this.setSongTheme);
+            buffer.push(base64IntToCharCode[encodedSongTheme.length >> 6], base64IntToCharCode[encodedSongTheme.length & 0x3f]);
+            for (let i = 0; i < encodedSongTheme.length; i++) {
+                buffer.push(encodedSongTheme.charCodeAt(i));
             }
             buffer.push(110, base64IntToCharCode[this.pitchChannelCount], base64IntToCharCode[this.noiseChannelCount], base64IntToCharCode[this.modChannelCount]);
             buffer.push(115, base64IntToCharCode[this.scale]);
@@ -28257,6 +28265,13 @@ li.select2-results__option[role=group] > strong:hover {
                             this.title = decodeURIComponent(compressed.substring(charIndex, charIndex + songNameLength));
                             document.title = this.title + " - " + EditorConfig.versionDisplayName;
                             charIndex += songNameLength;
+                        }
+                        break;
+                    case 89:
+                        {
+                            var songThemeLength = (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << 6) + base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
+                            this.setSongTheme = decodeURIComponent(compressed.substring(charIndex, charIndex + songThemeLength));
+                            charIndex += songThemeLength;
                         }
                         break;
                     case 110:
@@ -30375,6 +30390,7 @@ li.select2-results__option[role=group] > strong:hover {
             }
             const result = {
                 "name": this.title,
+                "theme": this.setSongTheme,
                 "format": Song._format,
                 "version": Song._latestAbyssBoxVersion,
                 "scale": Config.scales[this.scale].name,
@@ -30410,6 +30426,9 @@ li.select2-results__option[role=group] > strong:hover {
             const format = jsonFormat == "auto" ? jsonObject["format"] : jsonFormat;
             if (jsonObject["name"] != undefined) {
                 this.title = jsonObject["name"];
+            }
+            if (jsonObject["theme"] != undefined) {
+                this.setSongTheme = jsonObject["theme"];
             }
             if (jsonObject["customSamples"] != undefined) {
                 const customSamples = jsonObject["customSamples"];
@@ -41016,6 +41035,18 @@ li.select2-results__option[role=group] > strong:hover {
                 this._didSomething();
         }
     }
+    class ChangeSongTheme extends Change {
+        constructor(doc, oldValue, newValue) {
+            super();
+            if (newValue.length > 30) {
+                newValue = newValue.substring(0, 30);
+            }
+            doc.song.setSongTheme = newValue;
+            doc.notifier.changed();
+            if (oldValue != newValue)
+                this._didSomething();
+        }
+    }
     class ChangeChannelName extends Change {
         constructor(doc, oldValue, newValue) {
             super();
@@ -41262,15 +41293,15 @@ li.select2-results__option[role=group] > strong:hover {
         }
     }
 
-    const { button: button$p, div: div$p, span: span$6, h2: h2$o, input: input$h, br: br$4, select: select$d, option: option$d } = HTML;
+    const { button: button$q, div: div$q, span: span$6, h2: h2$p, input: input$h, br: br$4, select: select$e, option: option$e } = HTML;
     class BeatsPerBarPrompt {
         constructor(_doc) {
             this._doc = _doc;
             this._beatsStepper = input$h({ style: "width: 3em; margin-left: 1em;", type: "number", step: "1" });
-            this._conversionStrategySelect = select$d({ style: "width: 100%;" }, option$d({ value: "splice" }, "Splice beats at end of bars."), option$d({ value: "stretch" }, "Stretch notes to fit in bars."), option$d({ value: "overflow" }, "Overflow notes across bars."));
-            this._cancelButton = button$p({ class: "cancelButton" });
-            this._okayButton = button$p({ class: "okayButton", style: "width:45%;" }, "Okay");
-            this.container = div$p({ class: "prompt noSelection", style: "width: 250px;" }, div$p({ class: "promptTitle" }, h2$o({ class: "bpmExt", style: "text-align: inherit;" }, ""), h2$o({ class: "bpmTitle" }, "Beats Per Bar")), div$p({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$p({ style: "text-align: right;" }, "Beats per bar:", br$4(), span$6({ style: "font-size: smaller; color: ${ColorConfig.secondaryText};" }, "(Multiples of 3 or 4 are recommended)")), this._beatsStepper), div$p({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$p({ class: "selectContainer", style: "width: 100%;" }, this._conversionStrategySelect)), div$p({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
+            this._conversionStrategySelect = select$e({ style: "width: 100%;" }, option$e({ value: "splice" }, "Splice beats at end of bars."), option$e({ value: "stretch" }, "Stretch notes to fit in bars."), option$e({ value: "overflow" }, "Overflow notes across bars."));
+            this._cancelButton = button$q({ class: "cancelButton" });
+            this._okayButton = button$q({ class: "okayButton", style: "width:45%;" }, "Okay");
+            this.container = div$q({ class: "prompt noSelection", style: "width: 250px;" }, div$q({ class: "promptTitle" }, h2$p({ class: "bpmExt", style: "text-align: inherit;" }, ""), h2$p({ class: "bpmTitle" }, "Beats Per Bar")), div$q({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$q({ style: "text-align: right;" }, "Beats per bar:", br$4(), span$6({ style: "font-size: smaller; color: ${ColorConfig.secondaryText};" }, "(Multiples of 3 or 4 are recommended)")), this._beatsStepper), div$q({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$q({ class: "selectContainer", style: "width: 100%;" }, this._conversionStrategySelect)), div$q({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
             this._close = () => {
                 this._doc.undo();
             };
@@ -41323,7 +41354,7 @@ li.select2-results__option[role=group] > strong:hover {
         }
     }
 
-    const { button: button$o, div: div$o, label: label$3, br: br$3, h2: h2$n, input: input$g } = HTML;
+    const { button: button$p, div: div$p, label: label$3, br: br$3, h2: h2$o, input: input$g } = HTML;
     class ChannelSettingsPrompt {
         constructor(_doc) {
             this._doc = _doc;
@@ -41333,9 +41364,9 @@ li.select2-results__option[role=group] > strong:hover {
             this._modChannelStepper = input$g({ style: "width: 3em; margin-left: 1em;", type: "number", step: "1" });
             this._layeredInstrumentsBox = input$g({ style: "width: 3em; margin-left: 1em;", type: "checkbox" });
             this._patternInstrumentsBox = input$g({ style: "width: 3em; margin-left: 1em;", type: "checkbox" });
-            this._cancelButton = button$o({ class: "cancelButton" });
-            this._okayButton = button$o({ class: "okayButton", style: "width:45%;" }, "Okay");
-            this.container = div$o({ class: "prompt noSelection", style: "width: 250px; text-align: right;" }, div$o({ class: "promptTitle" }, h2$n({ class: "channelExt", style: "text-align: inherit;" }, ""), h2$n({ class: "channelTitle" }, "Channel Settings")), label$3({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Pitch channels:", this._pitchChannelStepper), label$3({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Drum channels:", this._drumChannelStepper), div$o({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Mod channels:", this._modChannelStepper), label$3({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Available patterns per channel:", this._patternsStepper), label$3({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Simultaneous instruments", br$3(), "per channel:", this._layeredInstrumentsBox), label$3({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Different instruments", br$3(), "per pattern:", this._patternInstrumentsBox), div$o({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
+            this._cancelButton = button$p({ class: "cancelButton" });
+            this._okayButton = button$p({ class: "okayButton", style: "width:45%;" }, "Okay");
+            this.container = div$p({ class: "prompt noSelection", style: "width: 250px; text-align: right;" }, div$p({ class: "promptTitle" }, h2$o({ class: "channelExt", style: "text-align: inherit;" }, ""), h2$o({ class: "channelTitle" }, "Channel Settings")), label$3({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Pitch channels:", this._pitchChannelStepper), label$3({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Drum channels:", this._drumChannelStepper), div$p({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Mod channels:", this._modChannelStepper), label$3({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Available patterns per channel:", this._patternsStepper), label$3({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Simultaneous instruments", br$3(), "per channel:", this._layeredInstrumentsBox), label$3({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Different instruments", br$3(), "per pattern:", this._patternInstrumentsBox), div$p({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
             this._close = () => {
                 this._doc.undo();
             };
@@ -41410,7 +41441,7 @@ li.select2-results__option[role=group] > strong:hover {
         }
     }
 
-    const { button: button$n, div: div$n, h2: h2$m } = HTML;
+    const { button: button$o, div: div$o, h2: h2$n } = HTML;
     class CustomChipPromptCanvas {
         constructor(doc) {
             this._mouseX = 0;
@@ -41603,10 +41634,10 @@ li.select2-results__option[role=group] > strong:hover {
             this._doc = _doc;
             this._songEditor = _songEditor;
             this.customChipCanvas = new CustomChipPromptCanvas(this._doc);
-            this._playButton = button$n({ style: "width: 55%;", type: "button" });
-            this._cancelButton = button$n({ class: "cancelButton" });
-            this._okayButton = button$n({ class: "okayButton", style: "width:45%;" }, "Okay");
-            this.container = div$n({ class: "prompt noSelection", style: "width: 600px;" }, div$n({ class: "promptTitle" }, h2$m({ class: "edit-custom-chipExt", style: "text-align: inherit;" }, ""), h2$m({ class: "edit-custom-chipTitle" }, "Edit Custom Chip Instrument")), div$n({ style: "display: flex; width: 55%; align-self: center; flex-direction: row; align-items: center; justify-content: center;" }, this._playButton), div$n({ style: "display: flex; flex-direction: row; align-items: center; justify-content: center;" }, this.customChipCanvas.container), div$n({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
+            this._playButton = button$o({ style: "width: 55%;", type: "button" });
+            this._cancelButton = button$o({ class: "cancelButton" });
+            this._okayButton = button$o({ class: "okayButton", style: "width:45%;" }, "Okay");
+            this.container = div$o({ class: "prompt noSelection", style: "width: 600px;" }, div$o({ class: "promptTitle" }, h2$n({ class: "edit-custom-chipExt", style: "text-align: inherit;" }, ""), h2$n({ class: "edit-custom-chipTitle" }, "Edit Custom Chip Instrument")), div$o({ style: "display: flex; width: 55%; align-self: center; flex-direction: row; align-items: center; justify-content: center;" }, this._playButton), div$o({ style: "display: flex; flex-direction: row; align-items: center; justify-content: center;" }, this.customChipCanvas.container), div$o({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
             this._togglePlay = () => {
                 this._songEditor.togglePlay();
                 this.updatePlayButton();
@@ -42269,7 +42300,7 @@ li.select2-results__option[role=group] > strong:hover {
         }
     }
 
-    const { button: button$m, div: div$m, h2: h2$l, p: p$8 } = HTML;
+    const { button: button$n, div: div$n, h2: h2$m, p: p$8 } = HTML;
     class CustomFilterPrompt {
         constructor(_doc, _songEditor, _useNoteFilter) {
             this._doc = _doc;
@@ -42278,29 +42309,29 @@ li.select2-results__option[role=group] > strong:hover {
             this.filterData = new FilterSettings;
             this.startingFilterData = new FilterSettings;
             this._subfilterIndex = 0;
-            this._playButton = button$m({ style: "width: 55%;", type: "button" });
+            this._playButton = button$n({ style: "width: 55%;", type: "button" });
             this._filterButtons = [];
-            this._filterButtonContainer = div$m({ class: "instrument-bar", style: "justify-content: center;" });
-            this._cancelButton = button$m({ class: "cancelButton" });
-            this._okayButton = button$m({ class: "okayButton", style: "width:45%;" }, "Okay");
-            this._filterContainer = div$m({ style: "width: 100%; display: flex; flex-direction: row; align-items: center; justify-content: center;" });
-            this._editorTitle = div$m({ class: "promptTitle" }, h2$l({ class: "edit-filterExt", style: "text-align: inherit;" }, ""), h2$l({ class: "edit-filterTitle" }, "Edit Filter"));
-            this._filterCopyButton = button$m({ style: "width:86px; margin-right: 5px;", class: "copyButton" }, [
+            this._filterButtonContainer = div$n({ class: "instrument-bar", style: "justify-content: center;" });
+            this._cancelButton = button$n({ class: "cancelButton" });
+            this._okayButton = button$n({ class: "okayButton", style: "width:45%;" }, "Okay");
+            this._filterContainer = div$n({ style: "width: 100%; display: flex; flex-direction: row; align-items: center; justify-content: center;" });
+            this._editorTitle = div$n({ class: "promptTitle" }, h2$m({ class: "edit-filterExt", style: "text-align: inherit;" }, ""), h2$m({ class: "edit-filterTitle" }, "Edit Filter"));
+            this._filterCopyButton = button$n({ style: "width:86px; margin-right: 5px;", class: "copyButton" }, [
                 "Copy",
                 SVG.svg({ style: "flex-shrink: 0; position: absolute; left: 0; top: 50%; margin-top: -1em; pointer-events: none;", width: "2em", height: "2em", viewBox: "-5 -21 26 26" }, [
                     SVG.path({ d: "M 0 -15 L 1 -15 L 1 0 L 13 0 L 13 1 L 0 1 L 0 -15 z M 2 -1 L 2 -17 L 10 -17 L 14 -13 L 14 -1 z M 3 -2 L 13 -2 L 13 -12 L 9 -12 L 9 -16 L 3 -16 z", fill: "currentColor" }),
                 ]),
             ]);
-            this._filterPasteButton = button$m({ style: "width:86px;", class: "pasteButton" }, [
+            this._filterPasteButton = button$n({ style: "width:86px;", class: "pasteButton" }, [
                 "Paste",
                 SVG.svg({ style: "flex-shrink: 0; position: absolute; left: 0; top: 50%; margin-top: -1em; pointer-events: none;", width: "2em", height: "2em", viewBox: "0 0 26 26" }, [
                     SVG.path({ d: "M 8 18 L 6 18 L 6 5 L 17 5 L 17 7 M 9 8 L 16 8 L 20 12 L 20 22 L 9 22 z", stroke: "currentColor", fill: "none" }),
                     SVG.path({ d: "M 9 3 L 14 3 L 14 6 L 9 6 L 9 3 z M 16 8 L 20 12 L 16 12 L 16 8 z", fill: "currentColor", }),
                 ]),
             ]);
-            this._filterCopyPasteContainer = div$m({ style: "width: 185px;" }, this._filterCopyButton, this._filterPasteButton);
-            this._filterCoordinateText = div$m({ style: "text-align: left; margin-bottom: 0px; font-size: x-small; height: 1.3em; color: " + ColorConfig.secondaryText + ";" }, p$8(""));
-            this.container = div$m({ class: "prompt noSelection", style: "width: 600px;" }, this._editorTitle, div$m({ style: "display: flex; width: 55%; align-self: center; flex-direction: row; align-items: center; justify-content: center;" }, this._playButton), this._filterButtonContainer, this._filterContainer, div$m({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton, this._filterCopyPasteContainer), this._cancelButton);
+            this._filterCopyPasteContainer = div$n({ style: "width: 185px;" }, this._filterCopyButton, this._filterPasteButton);
+            this._filterCoordinateText = div$n({ style: "text-align: left; margin-bottom: 0px; font-size: x-small; height: 1.3em; color: " + ColorConfig.secondaryText + ";" }, p$8(""));
+            this.container = div$n({ class: "prompt noSelection", style: "width: 600px;" }, this._editorTitle, div$n({ style: "display: flex; width: 55%; align-self: center; flex-direction: row; align-items: center; justify-content: center;" }, this._playButton), this._filterButtonContainer, this._filterContainer, div$n({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton, this._filterCopyPasteContainer), this._cancelButton);
             this._setSubfilter = (index, useHistory = true, doSwap = true) => {
                 this._filterButtons[this._subfilterIndex].classList.remove("selected-instrument");
                 if (doSwap)
@@ -42402,12 +42433,12 @@ li.select2-results__option[role=group] > strong:hover {
             this.filterEditor.container.insertBefore(this._filterCoordinateText, this.filterEditor.container.firstChild);
             this.filterEditor.coordText = this._filterCoordinateText;
             this._editorTitle.children[0].innerHTML = (_useNoteFilter) ? "Edit Note Filter" : "Edit EQ Filter";
-            let newButton = button$m({ class: "no-underline", style: "max-width: 5em;" }, "Main");
+            let newButton = button$n({ class: "no-underline", style: "max-width: 5em;" }, "Main");
             this._filterButtonContainer.appendChild(newButton);
             this._filterButtons.push(newButton);
             newButton.addEventListener("click", () => { this._setSubfilter(0); });
             for (let i = 1; i < Config.filterMorphCount; i++) {
-                let newSubButton = button$m({ class: "no-underline", style: "max-width: 2em;" }, "" + i);
+                let newSubButton = button$n({ class: "no-underline", style: "max-width: 2em;" }, "" + i);
                 this._filterButtons.push(newSubButton);
                 this._filterButtonContainer.appendChild(newSubButton);
                 newSubButton.addEventListener("click", () => { this._setSubfilter(i); });
@@ -42440,16 +42471,16 @@ li.select2-results__option[role=group] > strong:hover {
         }
     }
 
-    const { button: button$l, div: div$l, h2: h2$k, input: input$f, label: label$2, br: br$2 } = HTML;
+    const { button: button$m, div: div$m, h2: h2$l, input: input$f, label: label$2, br: br$2 } = HTML;
     class InstrumentExportPrompt {
         constructor(_doc) {
             this._doc = _doc;
-            this._cancelButton = button$l({ class: "cancelButton" });
-            this._exportButton = button$l({ class: "exportButton", style: "width:45%;" }, "Export");
+            this._cancelButton = button$m({ class: "cancelButton" });
+            this._exportButton = button$m({ class: "exportButton", style: "width:45%;" }, "Export");
             this._exportMultipleBox = input$f({ style: "width: 3em; margin-left: 1em;", type: "checkbox" });
             this._channelName = this._doc.song.channels[this._doc.channel].name == "" ? "Beepbox-Instrument" : this._doc.song.channels[this._doc.channel].name;
             this._fileName = input$f({ type: "text", style: "width: 10em;", value: this._channelName, maxlength: 250, "autofocus": "autofocus" });
-            this.container = div$l({ class: "prompt noSelection", style: "width: 200px;" }, div$l({ class: "promptTitle" }, h2$k({ class: "export-instrumentExt", style: "text-align: inherit;" }, ""), h2$k({ class: "export-instrumentTitle" }, "Export Instruments Options")), div$l({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-between;" }, "File name:", this._fileName), label$2({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Export all instruments", br$2(), "in channel:", this._exportMultipleBox), div$l({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._exportButton), this._cancelButton);
+            this.container = div$m({ class: "prompt noSelection", style: "width: 200px;" }, div$m({ class: "promptTitle" }, h2$l({ class: "export-instrumentExt", style: "text-align: inherit;" }, ""), h2$l({ class: "export-instrumentTitle" }, "Export Instruments Options")), div$m({ style: "display: flex; flex-direction: row; align-items: center; justify-content: space-between;" }, "File name:", this._fileName), label$2({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, "Export all instruments", br$2(), "in channel:", this._exportMultipleBox), div$m({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._exportButton), this._cancelButton);
             this._close = () => {
                 this._doc.undo();
             };
@@ -42516,16 +42547,16 @@ li.select2-results__option[role=group] > strong:hover {
         }
     }
 
-    const { button: button$k, div: div$k, h2: h2$j, input: input$e, select: select$c, option: option$c, code: code$1 } = HTML;
+    const { button: button$l, div: div$l, h2: h2$k, input: input$e, select: select$d, option: option$d, code: code$1 } = HTML;
     class InstrumentImportPrompt {
         constructor(_doc) {
             this._doc = _doc;
-            this._cancelButton = button$k({ class: "cancelButton" });
-            this._importStrategySelect = select$c({ style: "width: 100%;" }, option$c({ value: "append" }, "Append instruments to the end of the list."), option$c({ value: "replace" }, "Replace only the selected instrument."), option$c({ value: "all" }, "Replace all instruments in the channel."));
+            this._cancelButton = button$l({ class: "cancelButton" });
+            this._importStrategySelect = select$d({ style: "width: 100%;" }, option$d({ value: "append" }, "Append instruments to the end of the list."), option$d({ value: "replace" }, "Replace only the selected instrument."), option$d({ value: "all" }, "Replace all instruments in the channel."));
             this._fileInput = input$e({ type: "file", accept: ".json,application/json" });
-            this.importStratSelectDiv = div$k({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$k({ class: "selectContainer", style: "width: 100%;" }, this._importStrategySelect));
-            this.warningText = div$k({}, div$k({ style: "text-align: left;" }, "You must enable either ", code$1("Simultaneous instruments per channel"), " or ", code$1("Different instruments per pattern"), " to change the import strategy."));
-            this.container = div$k({ class: "prompt noSelection", style: "width: 300px;" }, div$k({ class: "promptTitle" }, h2$j({ class: "import-instrumentExt", style: "text-align: inherit;" }, ""), h2$j({ class: "import-instrumentTitle" }, "Import Instrument(s)")), this.warningText, this.importStratSelectDiv, this._fileInput, this._cancelButton);
+            this.importStratSelectDiv = div$l({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$l({ class: "selectContainer", style: "width: 100%;" }, this._importStrategySelect));
+            this.warningText = div$l({}, div$l({ style: "text-align: left;" }, "You must enable either ", code$1("Simultaneous instruments per channel"), " or ", code$1("Different instruments per pattern"), " to change the import strategy."));
+            this.container = div$l({ class: "prompt noSelection", style: "width: 300px;" }, div$l({ class: "promptTitle" }, h2$k({ class: "import-instrumentExt", style: "text-align: inherit;" }, ""), h2$k({ class: "import-instrumentTitle" }, "Import Instrument(s)")), this.warningText, this.importStratSelectDiv, this._fileInput, this._cancelButton);
             this._whenFileSelected = () => {
                 const file = this._fileInput.files[0];
                 if (!file)
@@ -42665,6 +42696,2713 @@ li.select2-results__option[role=group] > strong:hover {
             }
             this._fileInput.addEventListener("change", this._whenFileSelected);
             this._cancelButton.addEventListener("click", this._close);
+        }
+    }
+
+    class CustomThemeBases {
+        static setFont(name) {
+            let font = this.baseFonts[name];
+            if (font == undefined)
+                font = this.baseFonts["Roboto"];
+            this._fontStyleElement.textContent = font;
+        }
+        static getFontProperties() {
+            return this._fontStyleElement.textContent;
+        }
+        static setBackground(name) {
+            let background = this.baseBackgrounds[name];
+            if (background == undefined)
+                background = this.baseBackgrounds["none"];
+            this._bgStyleElement.textContent = background;
+        }
+        static getBackgroundProperties() {
+            return this._bgStyleElement.textContent;
+        }
+        static setBorder(name) {
+            let border = this.baseBorders[name];
+            if (border == undefined)
+                border = this.baseBorders["none"];
+            this._borderStyleElement.textContent = border;
+        }
+        static getBorderProperties() {
+            return this._borderStyleElement.textContent;
+        }
+        static setIcons(name) {
+            let icons = this.baseIcons[name];
+            if (icons == undefined)
+                icons = this.baseIcons["none"];
+            this._iconStyleElement.textContent = icons;
+        }
+        static getIconProperties() {
+            return this._iconStyleElement.textContent;
+        }
+        static setCursor(name) {
+            let cursor = this.baseCursor[name];
+            if (cursor == undefined)
+                cursor = this.baseCursor["none"];
+            this._cursorStyleElement.textContent = cursor;
+        }
+        static getCursorProperties() {
+            return this._cursorStyleElement.textContent;
+        }
+    }
+    CustomThemeBases.baseFonts = {
+        "none": `
+        `,
+        "AbyssType": `
+
+        @font-face {
+            font-family: "CustomThemeFont";
+            src:
+             url("abysstype.otf") format("opentype") tech(color-COLRv1),
+            }
+
+            html {
+ 		   	font-family: 'CustomThemeFont';
+			}
+
+			div.channelBoxLabel {
+				font-family: 'CustomThemeFont' !important;
+			}
+
+        `,
+        "AbyssType Small": `
+        @font-face {
+            font-family: "CustomThemeFont";
+            src:
+             url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
+            }
+
+            html {
+ 		   	font-family: 'CustomThemeFont';
+			}
+
+			div.channelBoxLabel {
+				font-family: 'CustomThemeFont' !important;
+			}
+        `,
+        "AbyssType Fusion": `
+
+        @font-face {
+            font-family: "CustomThemeFont";
+            src:
+             url("abysstype.otf") format("opentype") tech(color-COLRv1),
+            }
+
+            @font-face {
+            font-family: "AbyssTypeSmall";
+            src:
+             url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
+            }    
+
+            html {
+ 		   	font-family: 'CustomThemeFont';
+			}
+
+			div.channelBoxLabel {
+				font-family: 'AbyssTypeSmall' !important;
+			}
+
+        `,
+        "Doom 1993": `
+        @font-face {
+            font-family: "CustomThemeFont";
+            src:
+             url("doomfont.otf") format("opentype") tech(color-COLRv1),
+            }
+
+            html {
+ 		   	font-family: 'CustomThemeFont';
+			}
+
+			div.channelBoxLabel {
+				font-family: 'CustomThemeFont' !important;
+			}
+        `,
+        "Tahoma Pixel": `
+        @font-face {
+            font-family: "CustomThemeFont";
+            src:
+             url("tahoma.otf") format("opentype") tech(color-COLRv1),
+            }
+
+            html {
+ 		   	font-family: 'CustomThemeFont';
+			}
+
+			div.channelBoxLabel {
+				font-family: 'CustomThemeFont' !important;
+			}
+        `,
+        "Trebuchet": `
+        @font-face {
+            font-family: "CustomThemeFont";
+            src:
+             url("trebuc.otf") format("opentype") tech(color-COLRv1),
+            }
+
+            html {
+ 		   	font-family: 'CustomThemeFont';
+			}
+
+			div.channelBoxLabel {
+				font-family: 'CustomThemeFont' !important;
+			}
+        `,
+        "Monospace": `
+
+            html {
+ 		   	font-family: monospace;
+			}
+
+			div.channelBoxLabel {
+				font-family: monospace !important;
+			}
+        `,
+        "Frutiger": `
+        @font-face {
+            font-family: "CustomThemeFont";
+            src:
+             url("https://choptop84.github.io/choptop84s-image-repository/FrutigerLight.ttf") format("truetype") tech(color-COLRv1),
+            }
+
+            html {
+ 		   	font-family: 'CustomThemeFont';
+			}
+
+			div.channelBoxLabel {
+				font-family: 'CustomThemeFont' !important;
+			}
+        `,
+        "Workbench": `
+        @font-face {
+            font-family: "CustomThemeFont";
+            src:
+            url("https://choptop84.github.io/abyssbox-app/Workbench.ttf") format("truetype") tech(color-COLRv1),
+            }
+
+            html {
+ 		   	font-family: 'CustomThemeFont';
+			}
+
+			div.channelBoxLabel {
+				font-family: 'CustomThemeFont' !important;
+			}
+        `,
+        "Varela": `
+        @font-face {
+            font-family: "CustomThemeFont";
+            src:
+            url("https://choptop84.github.io/abyssbox-app/Varela.ttf") format("truetype") tech(color-COLRv1),
+            }
+
+            html {
+ 		   	font-family: 'CustomThemeFont';
+			}
+
+			div.channelBoxLabel {
+				font-family: 'CustomThemeFont' !important;
+			}
+        `,
+        "Arial": `
+
+            html {
+ 		   	font-family: Arial;
+			}
+
+			div.channelBoxLabel {
+				font-family: Arail !important;
+			}
+        `,
+        "Comic Sans": `
+
+            html {
+ 		   	font-family: cursive;
+			}
+
+			div.channelBoxLabel {
+				font-family: cursive !important;
+			}
+        `,
+        "Helvetica": `
+
+            html {
+ 		   	font-family: Helvetica;
+			}
+
+			div.channelBoxLabel {
+				font-family: Helvetica !important;
+			}
+        `,
+        "Sans Serif": `
+
+            html {
+ 		   	font-family: sans-serif;
+			}
+
+			div.channelBoxLabel {
+				font-family: sans-serif !important;
+			}
+        `,
+    };
+    CustomThemeBases.baseBorders = {
+        "none": `
+        `,
+        "AbyssBox Classic": `
+			#text-content {
+    				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png");
+    				border-image-slice: 4 fill; 
+   				border-image-width: 8px; 
+				border-image-repeat: stretch; 
+    				padding: 12px; 
+
+    				image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    				image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    				image-rendering: -o-crisp-edges !important;            /* Opera */
+    				image-rendering: pixelated !important;                 /* Future browsers */
+    				image-rendering: optimizeSpeed !important;             /* IE */
+				}
+			#beepboxEditorContainer {
+    				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png");
+    				border-image-slice: 4 fill; 
+   				border-image-width: 8px; 
+				border-image-repeat: stretch;
+    				padding: 12px;
+
+    				image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    				image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    				image-rendering: -o-crisp-edges !important;            /* Opera */
+    				image-rendering: pixelated !important;                 /* Future browsers */
+    				image-rendering: optimizeSpeed !important;             /* IE */ 
+				}
+			.beepboxEditor button,
+			button.mobilePatternButton,
+			button.mobileTrackButton,
+			button.mobileSettingsButton,
+			button.mobilePlayButton,
+			button.mobilePauseButton,
+			button.mobileNextBarButton,
+			button.mobilePrevBarButton,
+			button.playButton,
+			button.pauseButton, 
+			button.recordButton, 
+			button.stopButton,
+			button.nextBarButton, 
+			button.prevBarButton, 
+			button.copyButton, 
+			button.pasteButton, 
+			button.exportInstrumentButton, 
+			button.importInstrumentButton, 
+			.beepboxEditor select, 
+			.beepboxEditor .select2-selection__rendered {
+    				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png") !important;
+    				border-image-slice: 4 fill !important; 
+   				border-image-width: 4px !important; 
+				border-image-repeat: stretch !important;
+    				padding: 4px !important; 
+
+    				image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    				image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    				image-rendering: -o-crisp-edges !important;            /* Opera */
+    				image-rendering: pixelated !important;                 /* Future browsers */
+    				image-rendering: optimizeSpeed !important;             /* IE */
+
+				}
+
+			div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+				--ui-widget-background: #1e0915 !important;
+				border-image-source:none !important;
+			}
+
+				select.trackSelectBox {
+					border-image: none !important;
+				}
+				
+				button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+					--ui-widget-background: var(--editor-background) !important;
+					border-image-source: none !important;
+				}
+        `,
+        "AbyssBox Competitive": `
+			.beepboxEditor button,
+			button.mobilePatternButton,
+			button.mobileTrackButton,
+			button.mobileSettingsButton,
+			button.mobilePlayButton,
+			button.mobilePauseButton,
+			button.cancelButton,
+			button.mobileNextBarButton,
+			button.mobilePrevBarButton,
+			button.insertChannelButton,
+			button.playButton,
+			button.pauseButton, 
+			button.recordButton, 
+			button.stopButton,
+			button.nextBarButton,
+			button.prevBarButton,
+			button.copyButton, 
+			button.pasteButton, 
+			button.exportInstrumentButton, 
+			button.importInstrumentButton,
+			button.okayButton, 
+			button.songLoopButton,
+			.beepboxEditor select, 
+			.beepboxEditor .select2-selection__rendered {
+					border-style: double !important;
+					border-radius: 0px !important;
+					--ui-widget-background: black;
+			}
+
+			button.add-envelope::before,
+			button.notesDownButton::before,
+			button.notesUpButton::before,
+			button.copyPatternButton::before,
+			button.pastePatternButton::before,
+			button.insertChannelButton::before,
+			button.undoButton::before,
+			button.redoButton::before,
+			button.loopBarButton::before,
+			button.duplicateButton::before,
+			button.selectAllButton::before,
+			button.deleteChannelButton::before, 
+			button.insertRowButton::before,
+			button.okayButton::before, 
+			button.songLoopButton::before,
+			.delete-envelope::before {
+				left: -3px !important;
+				top: -3px !important;
+			}
+
+			button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+				--ui-widget-background: var(--editor-background) !important;
+				border-image-source: none !important;
+			}
+
+			div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+				--ui-widget-background: black !important;
+				border-image-source:none !important;
+				border-style: none !important;
+			}
+
+				select.trackSelectBox {
+					border-image: none !important;
+					border-style: none !important;
+				}
+
+        `,
+        "AbyssBox Light": `
+        .promptContainerBG::before {
+            box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
+        }
+
+        /* sets background image */
+        body {
+        background-image: url("https://choptop84.github.io/abyssbox-source/website/stripesbg_light.gif") !important;
+        background-position: center;
+        background-repeat: repeat;
+
+        image-rendering: -moz-crisp-edges !important;         /* Firefox */
+        image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+        image-rendering: -o-crisp-edges !important;            /* Opera */
+        image-rendering: pixelated !important;                 /* Future browsers */
+        image-rendering: optimizeSpeed !important;             /* IE */
+            }		
+    #text-content {
+            border-image-source: url("https://choptop84.github.io/abyssbox-source/website/abyssbox_border_light.png");
+            border-image-slice: 4 fill; 
+           border-image-width: 8px; 
+        border-image-repeat: stretch; 
+            padding: 12px; 
+
+            image-rendering: -moz-crisp-edges !important;         /* Firefox */
+            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+            image-rendering: -o-crisp-edges !important;            /* Opera */
+            image-rendering: pixelated !important;                 /* Future browsers */
+            image-rendering: optimizeSpeed !important;             /* IE */
+        }
+    #beepboxEditorContainer {
+            border-image-source: url("https://choptop84.github.io/abyssbox-source/website/abyssbox_border_light.png");
+            border-image-slice: 4 fill; 
+           border-image-width: 8px; 
+        border-image-repeat: stretch;
+            padding: 12px;
+
+            image-rendering: -moz-crisp-edges !important;         /* Firefox */
+            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+            image-rendering: -o-crisp-edges !important;            /* Opera */
+            image-rendering: pixelated !important;                 /* Future browsers */
+            image-rendering: optimizeSpeed !important;             /* IE */ 
+        }
+        .beepboxEditor button,
+        button.mobilePatternButton,
+        button.mobileTrackButton,
+        button.mobileSettingsButton,
+        button.mobilePlayButton,
+        button.mobilePauseButton,
+        button.mobileNextBarButton,
+        button.mobilePrevBarButton,
+        button.playButton,
+        button.pauseButton, 
+        button.recordButton, 
+        button.stopButton,
+        button.nextBarButton, 
+        button.prevBarButton, 
+        button.copyButton, 
+        button.pasteButton, 
+        button.exportInstrumentButton, 
+        button.importInstrumentButton, 
+        .beepboxEditor select, 
+        .beepboxEditor .select2-selection__rendered {
+                border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border_light.png") !important;
+                border-image-slice: 4 fill !important; 
+               border-image-width: 4px !important; 
+            border-image-repeat: stretch !important;
+                padding: 4px !important; 
+
+                image-rendering: -moz-crisp-edges !important;         /* Firefox */
+                image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+                image-rendering: -o-crisp-edges !important;            /* Opera */
+                image-rendering: pixelated !important;                 /* Future browsers */
+                image-rendering: optimizeSpeed !important;             /* IE */
+            }
+
+        div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+            --ui-widget-background: var(--editor-background) !important;
+            border-image-source:none !important;
+        }
+
+        select.trackSelectBox {
+            border-image: none !important;
+        }
+
+        button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+            --ui-widget-background: var(--editor-background) !important;
+            border-image-source: none !important;
+        }
+
+        `,
+        "Scratch": `
+        div.promptContainerBG {
+			background-color: var(--editor-background) !important;
+			backdrop-filter: unset !important;
+			opacity: 0.5 !important;
+		}
+
+		  #text-content > section > h1 {
+			margin: auto;
+			content: url("https://file.garden/ZMQ0Om5nmTe-x2hq/AbyssBox%20Scratch%20Logo3.png");
+		  }
+		  .beepboxEditor,
+		  #beepboxEditorContainer {
+			background-color: rgb(255, 255, 255) !important;
+			border-radius: 6px;
+			box-shadow: 0px 0px 0px 4px rgba(158, 158, 158, 0.91);
+		  }
+		  .beepboxEditor .loopEditor {
+			--editor-background: #4d97ff40 !important;
+			border-radius: 3px;
+		  }
+		  .beepboxEditor .muteEditor {
+			--editor-background: #4d97ff40 !important;
+			border-radius: 0px;
+			height: 158px;
+		  }
+		  .beepboxEditor .pattern-area {
+			--editor-background: #4d97ff40 !important;
+			border-radius: 3px;
+		  }
+		  .beepboxEditor .trackContainer svg {
+			--editor-background: #3100ff !important;
+		  }
+		  .beepboxEditor .muteEditor > :last-child {
+			--editor-background: #4d97ff40 !important;
+		  }
+		  .beepboxEditor #octaveScrollBarContainer {
+			background-color: #4d97ff40;
+		  }
+		  .beepboxEditor .muteButtonText {
+			transform: translate(0px, 1px) !important;
+			color: #777 !important;
+		  }
+		  .beepboxEditor .instrument-bar {
+			--text-color-lit: #fff !important;
+			--text-color-dim: #4c4c4c !important;
+		  }
+		  .beepboxEditor .instrument-bar .selected-instrument {
+			color: rgb(0, 0, 0) !important;
+			text-shadow: 0px 0px 4px var(--text-color-lit);
+		  }
+		  .beepboxEditor .instrument-bar .deactivated {
+			color: rgba(0, 0, 0, 1) !important;
+			text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2);
+		  }
+		  .beepboxEditor .instrument-bar > :not(.last-button) {
+			border-color: var(--background-color-lit) !important;
+		  }
+		  .beepboxEditor .instrument-bar .selected-instrument {
+			border-color: rgba(255, 255, 255, 1) !important;
+		  }
+		  .beepboxEditor button, button {
+			color: #fff;
+			background: #3c236f;
+		  }
+		  .beepboxEditor .instrument-bar .selected-instrument,
+		  .beepboxEditor .filterEditor svg,
+		  .beepboxEditor .fadeInOut svg,
+		  .beepboxEditor .harmonics svg,
+		  .beepboxEditor .spectrum svg {
+			background: rgb(255, 255, 255) !important;
+			box-shadow:
+			  0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+			  inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+			  inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
+		  }
+		  .beepboxEditor input[type="range"]::-webkit-slider-thumb {
+			background: #000000 !important;
+		  }
+		  .beepboxEditor input[type="range"]::-moz-range-thumb {
+			background: #000000 !important;
+		  }
+		  .beepboxEditor input[type="range"]::-webkit-slider-runnable-track {
+			background: rgb(127, 127, 127) !important;
+		  }
+		  .beepboxEditor input[type="range"]::-moz-range-track {
+			background: rgb(127, 127, 127) !important;
+		  }
+		  .beepboxEditor input[type="range"]::-webkit-slider-runnable-track::focus {
+			background: rgba(255, 255, 255, 0.2) !important;
+			box-shadow:
+			  0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+			  inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
+			  inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
+		  }
+		  .beepboxEditor input[type="range"]::-moz-range-track::focus {
+			background: rgba(255, 255, 255, 0.2) !important;
+			box-shadow:
+			  0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+			  inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
+			  inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
+		  }
+		  .beepboxEditor input[type="text"],
+		  .beepboxEditor input[type="number"] {
+			font-size: inherit !important;
+			font-weight: bold !important;
+			font-family: inherit !important;
+			background: #ff8c1a !important;
+			text-align: center !important;
+			border: 1px solid var(--input-box-outline);
+			color: #fff !important;
+			box-shadow: 0px 0px 0px 1px rgb(134, 134, 134) !important;
+		  }
+		  .beepboxEditor .prompt {
+			--primary-text: #fff;
+			--secondary-text: #fff;
+			--ui-widget-background: #351f5f;
+			color: #fff !important;
+			background: #855cd6 !important;
+		  }
+		  .beepboxEditor .trackContainer {
+			--editor-background: #fff;
+		  }
+		  #text-content {
+			color: #fff;
+			background: #855cd6;
+		  }
+		  body:not(#secondImage) input {
+			--primary-text: #000;
+		  }
+		  body:not(#secondImage) h1 {
+			color: #000;
+		  }
+		  button.copyButton,
+		  button.pasteButton,
+		  button.exportInstrumentButton,
+		  button.importInstrumentButton, 
+		  button.addEnvelope,
+		  div.editor-controls div button,
+		  div.selectRow button,
+		  div.effects-menu button,
+		  div.effects-menu::before,
+		  div.selectContainer select,
+		  div.selectContainer::after,
+		  span#select2-pitchPresetSelect-container {
+			color: white !important;
+		  }
+		  div#text-content {
+			padding-top: 15px;
+		  }
+		  div#beepboxEditorContainer{
+			padding-bottom: 15px;
+		  }
+		  div.channelBox {
+			border-radius: 5px;
+		  }
+		  div.muteEditor {
+			border-radius: 0px !important;
+			height: 158px !important;
+		  }
+		  div.loopEditor {
+			border-radius: 0px !important;
+		  }
+        `,
+        "Scratch Addons": `
+        div.promptContainerBG {
+			background-color: var(--editor-background) !important;
+			backdrop-filter: unset !important;
+			opacity: 0.5 !important;
+		}
+		   #text-content > section > h1 {
+			 margin: auto;
+			 content: url("https://file.garden/ZMQ0Om5nmTe-x2hq/AbyssBox%20Scratch%20Logo3.png");
+		   }
+		   .beepboxEditor,
+		   #beepboxEditorContainer {
+			 background-color: #111111 !important;
+			 border-radius: 6px;
+			 box-shadow: 0px 0px 0px 4px rgba(158, 158, 158, 0.91);
+		   }
+		   .beepboxEditor .loopEditor {
+			 --editor-background: #111111 !important;
+			 border-radius: 3px;
+		   }
+		   .beepboxEditor .muteEditor {
+			 --editor-background: #4d97ff40 !important;
+			 border-radius: 3px;
+		   }
+		   .beepboxEditor .pattern-area {
+			 --editor-background: #292929 !important;
+			 border-radius: 3px;
+		   }
+		   .beepboxEditor .trackContainer svg {
+			 --editor-background: #3100ff !important;
+		   }
+		   .beepboxEditor .muteEditor > :last-child {
+			 --editor-background: #111111 !important;
+		   }
+		   .beepboxEditor #octaveScrollBarContainer {
+			 background-color: #111111;
+		   }
+		   .beepboxEditor .muteButtonText {
+			 transform: translate(0px, 1px) !important;
+			 color: #777 !important;
+		   }
+		   .beepboxEditor .instrument-bar {
+			 --text-color-lit: #111111 !important;
+			 --text-color-dim: #4c4c4c !important;
+		   }
+		   .beepboxEditor .instrument-bar .selected-instrument {
+			 color: rgb(0, 0, 0) !important;
+			 text-shadow: 0px 0px 4px var(--text-color-lit);
+		   }
+		   .beepboxEditor .instrument-bar .deactivated {
+			 color: rgba(0, 0, 0, 1) !important;
+			 text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2);
+		   }
+		   .beepboxEditor .instrument-bar > :not(.last-button) {
+			 border-color: var(--background-color-lit) !important;
+		   }
+		   .beepboxEditor .instrument-bar .selected-instrument {
+			 border-color: #111111 !important;
+		   }
+		   .beepboxEditor button, button {
+			 color: #fff;
+			 background: #3c236f;
+		   }
+		   .beepboxEditor .instrument-bar .selected-instrument,
+		   .beepboxEditor .filterEditor svg,
+		   .beepboxEditor .fadeInOut svg,
+		   .beepboxEditor .harmonics svg,
+		   .beepboxEditor .spectrum svg {
+			 background: rgb(255, 255, 255) !important;
+			 box-shadow:
+			   0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+			   inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+			   inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
+		   }
+		   .beepboxEditor input[type="range"]::-webkit-slider-thumb {
+			 background: #fff !important;
+		   }
+		   .beepboxEditor input[type="range"]::-moz-range-thumb {
+			 background: #000000 !important;
+		   }
+		   .beepboxEditor input[type="range"]::-webkit-slider-runnable-track {
+			 background: rgb(127, 127, 127) !important;
+		   }
+		   .beepboxEditor input[type="range"]::-moz-range-track {
+			 background: rgb(127, 127, 127) !important;
+		   }
+		   .beepboxEditor input[type="range"]::-webkit-slider-runnable-track::focus {
+			 background: rgba(255, 255, 255, 0.2) !important;
+			 box-shadow:
+			   0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+			   inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
+			   inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
+		   }
+		   .beepboxEditor input[type="range"]::-moz-range-track::focus {
+			 background: rgba(255, 255, 255, 0.2) !important;
+			 box-shadow:
+			   0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+			   inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
+			   inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
+		   }
+		   .beepboxEditor input[type="text"],
+		   .beepboxEditor input[type="number"] {
+			 font-size: inherit !important;
+			 font-weight: bold !important;
+			 font-family: inherit !important;
+			 background: #202020 !important;
+			 text-align: center !important;
+			 border: 1px solid var(--input-box-outline);
+			 color: #fff !important;
+			 box-shadow: 0px 0px 0px 1px rgb(134, 134, 134) !important;
+		   }
+		   .beepboxEditor .prompt {
+			 --primary-text: #fff;
+			 --secondary-text: #fff;
+			 --ui-widget-background: #351f5f;
+			 color: #fff !important;
+			 background: #202020 !important;
+		   }
+		   .beepboxEditor .trackContainer {
+			 --editor-background: #000;
+		   }
+		   #text-content {
+			 color: #fff;
+			 background: #202020;
+		   }
+		   body:not(#secondImage) {
+			 background: #202020;
+		   }
+		   body:not(#secondImage) input {
+			 --primary-text: #000;
+		   }
+		   body:not(#secondImage) h1 {
+			 color: #fff;
+		   }
+		  div#text-content {
+			padding-top: 15px;
+		  }
+		  div#beepboxEditorContainer{
+			padding-bottom: 15px;
+		  }
+		  div.channelBox {
+			border-radius: 5px;
+		  }
+		  div.muteEditor {
+			border-radius: 0px !important;
+		  }
+        `,
+        "Undertale": `
+        :root {
+        --arrow-color: #f67c33;
+        --icon-color: #f67c33;
+          }
+          * {
+              --text-enabled-icon:❤️ ;
+              }    
+              div.promptContainerBG {
+                  background-color: var(--editor-background) !important;
+                  backdrop-filter: unset !important;
+                  opacity: 0.5 !important;
+              }
+
+      /* sets background image */
+      body {
+      background-image: url("https://choptop84.github.io/choptop84s-image-repository/battlebg.png") !important;
+      background-position: center;
+      background-size: contain;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      }
+      div.selectContainer.menu.file select,
+      div.selectContainer.menu.edit select,
+      div.selectContainer.menu.preferences select {
+          border-style: solid;
+          border-color: #f67c33;
+          border-radius: 0px;
+      }
+      div.selectContainer.menu.file,
+      div.selectContainer.menu.edit,
+      div.selectContainer.menu.preferences {
+          --ui-widget-background: black;
+          --icon-color: #f67c33;
+          --arrow-color: #f67c33;
+          color: #f67c33;
+      }
+      .beepboxEditor select:focus,
+      .beepboxEditor .selectContainer:focus-within
+      {
+          border-color: #fbff4b !important;
+          --ui-widget-background: black !important;
+          --icon-color: #f00 !important;
+          --arrow-color: #fbff4b !important;
+          color: #fbff4b !important;
+
+          --file-page-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-soul.png");
+          --edit-pencil-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-soul.png");
+          --preferences-gear-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-soul.png");
+      }
+      .beepboxEditor .menu.edit::before,
+      .beepboxEditor .menu.file::before,
+      .beepboxEditor .menu.preferences::before {
+          background: var(--icon-color) !important;
+      }
+      .beepboxEditor .menu.edit::after,
+      .beepboxEditor .menu.file::after,
+      .beepboxEditor .menu.preferences::after {
+          background: var(--arrow-color) !important;
+      }
+
+      #text-content {
+          border-style: solid;
+          border-radius: 0px;
+          padding-left: 20px;
+          padding-right: 20px;
+          padding-top: 15px;
+      }
+  #beepboxEditorContainer {
+      border-style: solid;
+      border-radius: 0px;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: 15px;
+      }
+        `,
+        "Windows Xp": `
+
+			#text-content {
+    				border-image-source: url("https://choptop84.github.io/abyssbox-app/xptextbg.png");
+    				border-image-slice: 11 fill; 
+   				border-image-width: 11px; 
+				border-image-repeat: stretch;
+    				background-color: transparent; 
+    				padding: 14px; 
+				}
+			#beepboxEditorContainer {
+    				border-image-source: url("https://choptop84.github.io/abyssbox-app/xptextbg.png");
+    				border-image-slice: 11 fill; 
+   				border-image-width: 11px; 
+				border-image-repeat: stretch;
+    				background-color: transparent; 
+    				padding: 13px; 
+				}
+
+			#firstImage {
+				background-image: url("https://choptop84.github.io/abyssbox-app/xpsongeditorbg.png") !important;
+				background-repeat: no-repeat !important;
+				background-size: 100% 100% !important;
+			}
+
+			div.menu-area {
+				--ui-widget-background: #edead9; 
+			}
+			select {
+				--ui-widget-background: #edead9; 
+				cursor: url("https://choptop84.github.io/choptop84s-image-repository/xphandcursor.png"), pointer !important;
+			}
+			div.playback-bar-controls {
+				--ui-widget-background: #edead9; 
+			}
+
+			.beepboxEditor input[type="range"]::-moz-range-track
+			{
+				background: rgba(222, 217, 189, 0.2) !important;
+				box-shadow:
+					0px 0px 1px 1px rgba(0, 0, 0, 0.0), 
+					inset 0px 1px 2px 0px rgb(125, 120, 95), 
+					inset 0px -1px 0px 0px rgb(255, 255, 255)
+				;
+				border-radius: 4px;
+			} /* Thanks to LeoV's Skeumorphic theme on this one */
+			
+			.beepboxEditor input[type="range"]::-moz-range-track {
+				height: 3px !important;
+			}
+			
+			.beepboxEditor select:focus {
+					border-image-source: url("https://choptop84.github.io/abyssbox-app/xpbuttonpressedbg.png");
+					border-image-slice: 4 fill; 
+					border-image-width: 4px; 
+					border-image-repeat: repeat;
+					background-color: transparent; 
+					padding: 6px; 
+				}
+
+				button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+					--ui-widget-background: var(--editor-background) !important;
+					border-image-source: none !important;
+				}
+        `,
+        "Frutiger Aero": `
+
+		div.promptContainerBG {
+			background-color: var(--editor-background) !important;
+			backdrop-filter: unset !important;
+			opacity: 0 !important;
+		}
+
+		div.mute-button::before {
+			background: #fff0 !important;
+			background-image: url("https://choptop84.github.io/choptop84s-image-repository/vistaSpeakerIcon.png") !important;
+			background-size: 18px !important;
+			background-position: center !important;
+			background-repeat: no-repeat !important;
+			mask-size: 800px !important;
+			color: #fff0;
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+		}
+
+		div.mute-button.muted::before {
+			background: #fff0 !important;
+			background-image: url("https://choptop84.github.io/choptop84s-image-repository/vistaSpeakerIconMuted.png") !important;
+			background-size: 18px !important;
+			background-position: center !important;
+			background-repeat: no-repeat !important;
+			mask-size: 800px !important;
+			color: #fff0;
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+		}
+
+		select.trackSelectBox {
+			border-image: none !important;
+		}
+
+			canvas#oscilascopeAll {
+				background: #2e538c !important; 
+				border: 2px solid #84aef000 !important;
+			}
+
+			.beepboxEditor .play-pause-area div:last-child {
+				position: relative;
+				width: 144px;
+				height: 32px;
+			  }
+			  .beepboxEditor .play-pause-area div:last-child::before {
+				content: "";
+				display: block;
+				width: calc(144px + 4px);
+				height: calc(32px + 4px);
+				box-shadow: 0px -1px 1px 0px rgba(0, 0, 0, 0.5), inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
+				position: absolute;
+				z-index: 1;
+			  }
+
+			div.prompt.noSelection{
+				background: linear-gradient(#84aef080, #2a3d6a80) !important; 
+				opacity: 77;
+				backdrop-filter: blur(14px);
+			}  
+
+			svg#firstImage {
+				opacity: 50%;
+				--editor-background: #84aef0;
+            }
+
+			#beepboxEditorContainer {
+				background: linear-gradient(#eef3ff80, #395eb380) !important;
+				border-style: solid;
+  				border-color: lightblue;
+				padding-bottom: 5px;
+				--inverted-text: black;
+				backdrop-filter: blur(14px);
+				box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
+			}
+			#text-content {
+				background: linear-gradient(#395eb380, #03112f80);
+				border-style: solid;
+  				border-color: lightblue;
+				  backdrop-filter: blur(14px);
+				  box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
+			}
+
+				.beepboxEditor select
+				{
+					box-shadow: 0px 1px 3px 0px rgb(0, 0, 0), inset 0px -12px 14px 0px rgba(0, 0, 0, 0.3), inset 0px -15px 0px 0px rgba(0, 0, 0, 0.2);
+
+					--ui-widget-background: linear-gradient(#84aef0, #4f6db3) !important;
+					border-image-source:url("https://choptop84.github.io/choptop84s-image-repository/buttonshading.png") !important;
+					border-image-slice: 40 fill !important; 
+   					border-image-width: 4px !important; 
+					border-image-repeat: stretch; 
+				
+
+				}
+
+				div.playback-bar-controls button.playButton, 
+				div.playback-bar-controls button.pauseButton, 
+				div.playback-bar-controls button.recordButton, 
+				div.playback-bar-controls button.stopButton, 
+				div.playback-bar-controls button.prevBarButton, 
+				div.playback-bar-controls button.nextBarButton, 
+				div.selectRow button.copyButton, 
+				div.selectRow button.pasteButton, 
+				div.editor-controls button.exportInstrumentButton, 
+				div.editor-controls button.importInstrumentButton,
+				div.editor-controls div button.add-envelope,
+				div.editor-controls div button.delete-envelope  { 
+					box-shadow: 0px 1px 3px 0px rgb(0, 0, 0), inset 0px -12px 14px 0px rgba(0, 0, 0, 0.3), inset 0px -15px 0px 0px rgba(0, 0, 0, 0.2);
+
+					--ui-widget-background: linear-gradient(#84aef0, #4f6db3) !important;
+					border-image-source:url("https://choptop84.github.io/choptop84s-image-repository/buttonshading.png") !important;
+					border-image-slice: 40 fill !important; 
+   					border-image-width: 4px !important; 
+					border-image-repeat: stretch; 
+				}
+
+				.beepboxEditor select:focus
+				{
+					border-image-source: none;
+					
+					--ui-widget-background: linear-gradient(#2a3d6a, #2a3d6a) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+						inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+						inset 0px 10px 20px 1px rgba(0, 0, 0, 0.4),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+
+				.beepboxEditor .select2-selection__rendered,
+				.beepboxEditor .instrument-bar button,
+				.beepboxEditor .eq-filter-type-bar button .deactivated,
+				.beepboxEditor .note-filter-type-bar button .deactivated
+				{
+					box-shadow: 0px 1px 3px 0px rgb(0, 0, 0), inset 0px -12px 14px 0px rgba(0, 0, 0, 0.3), inset 0px -15px 0px 0px rgba(0, 0, 0, 0.2);
+					--ui-widget-background: linear-gradient(#84aef0, #4f6db3) !important;
+
+					border-image-source:url("https://choptop84.github.io/choptop84s-image-repository/buttonshading.png") !important;
+					border-image-slice: 40 fill !important; 
+   					border-image-width: 4px !important; 
+					border-image-repeat: stretch; 
+				}
+				.beepboxEditor button, button
+				{
+					--ui-widget-background: linear-gradient(#84aef0, #2a3d6a) !important;
+					box-shadow:
+						0px 2px 2px 1px rgba(0, 0, 0, 0.4),
+						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+						inset 0px 1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				.beepboxEditor .select2-container--open .select2-selection__rendered,
+				.beepboxEditor button:focus,
+				button:focus,
+				.beepboxEditor .instrument-bar .selected-instrument,
+				.beepboxEditor .eq-filter-type-bar button:not(.deactivated),
+				.beepboxEditor .note-filter-type-bar button:not(.deactivated)
+				{
+					--ui-widget-background: linear-gradient(#333, #444) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+						inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor .filterEditor svg,
+				.beepboxEditor .fadeInOut svg,
+				.beepboxEditor .harmonics svg,
+				.beepboxEditor .spectrum svg
+				{
+					background: rgba(0, 0, 0, 0.3) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+						inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor input[type="range"]::-webkit-slider-thumb
+				{
+					box-shadow:
+						0px 2px 2px 1px rgba(0, 0, 0, 0.4),
+						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+						inset 0px 1px 0px 0px rgba(255, 255, 255, 1),
+						inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+						inset 0px -8px 3px rgba(0, 0, 0, 0.2)
+					;
+				}
+				 
+				.beepboxEditor input[type="range"]::-webkit-slider-runnable-track
+				{
+					background: rgba(0, 0, 0, 0.2) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+					border-radius: 4px;
+				}
+				 
+				.beepboxEditor input[type="range"]:focus::-webkit-slider-runnable-track
+				{
+					background: rgba(255, 255, 255, 0.2) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor input[type="range"]::-ms-thumb
+				{
+					box-shadow:
+						0px 2px 2px 1px rgba(0, 0, 0, 0.4),
+						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+						inset 0px 1px 0px 0px rgba(255, 255, 255, 1),
+						inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+						inset 0px -8px 3px rgba(0, 0, 0, 0.2)
+					;
+				}
+				 
+				.beepboxEditor input[type="range"]::-ms-track
+				{
+					background: rgba(0, 0, 0, 0.2) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+					border-radius: 4px;
+				}
+				 
+				.beepboxEditor input[type="range"]:focus::-ms-track
+				{
+					background: rgba(255, 255, 255, 0.2) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor input[type="range"]::-moz-range-thumb
+				{
+					height: 16px !important;
+					width: 16px !important;
+					border-radius: 40px !important;
+					box-shadow:
+						0px 2px 2px 1px rgba(0, 0, 0, 0.4),
+						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+						inset 0px 1px 0px 0px rgba(255, 255, 255, 1),
+						inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+						inset 0px -8px 3px rgba(0, 0, 0, 0.2)
+					;
+				}
+				 
+				.beepboxEditor input[type="range"]::-moz-range-track
+				{
+					background: rgba(0, 0, 0, 0.2) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+					border-radius: 4px;
+				}
+				 
+				.beepboxEditor input[type="range"]:focus::-moz-range-track
+				{
+					background: rgba(255, 255, 255, 0.2) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor input[type="text"],
+				.beepboxEditor input[type="number"]
+				{
+					border: none !important;
+					background: rgba(0, 0, 0, 0.2) !important;
+					box-shadow:
+						0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor input[type="checkbox"]
+				{
+					appearance: none;
+					background: rgba(0, 0, 0, 0.3);
+					color: currentColor;
+					border-radius: 1px;
+					width: 1em !important;
+					height: 1em !important;
+					box-shadow:
+						inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor input[type="checkbox"]:checked
+				{
+					display: flex;
+					justify-content: center;
+				}
+				 
+				.beepboxEditor input[type="checkbox"]:checked:after
+				{
+					width: 1em;
+					height: 1em;
+					text-align: center;
+					font-size: 0.8em;
+					content: "✓";
+					color: currentColor;
+					text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.5);
+				}
+
+
+				/* Use this code down here when you have transparent backgrounds!!! */
+
+		   div.beepboxEditor.load {
+			background: none !important;
+		   }
+
+		   div.noSelection {
+			background: none !important;
+		   }
+
+		   .beepboxEditor .loopEditor {
+			background: none !important;
+		   }
+
+		   .beepboxEditor .muteEditor {
+			background: linear-gradient(#c4f0d1, #83c139) !important;
+			border-radius: 5px;
+			box-shadow: 0px 1px 1px 0px rgb(0, 0, 0), inset 0px 3px 14px 0px rgba(0, 0, 0, 0.1), inset 0px -4px 0px 0px rgba(0, 0, 0, 0.1);
+			opacity: 65%;
+		   }
+
+		   div.muteEditor div {
+			background: none !important;
+			--track-editor-bg-pitch: #1b4079;
+			--track-editor-bg-noise: #213779;
+			--track-editor-bg-mod: #46299e;
+			--track-editor-bg-pitch-dim: #0c2b3e; 		
+			--track-editor-bg-noise-dim: #08204f; 			
+			--track-editor-bg-mod-dim: #26145e; 
+		   }
+
+		   div.channelBox {
+			border-radius: 5px;
+		  }
+        `,
+        "Skeuomorphic": `
+        .channelBox {
+			border-radius: 5px;
+			box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2), 0px 0px 1px 1px rgba(0, 0, 0, 0.7), inset 0px -10px 20px 1px rgba(0, 0, 0, 0.1), inset 0px 1px 0px 0px rgba(255, 255, 255, 0.1);
+		}
+		
+		#beepboxEditorContainer, .track-area, .beepboxEditor, #text-content, div.noSelection {
+			background-color: #fff0 !important;
+		} 
+		
+		#pitchEditorBackground {
+			opacity: 0.5 !important;
+			filter: brightness(150%);
+        }
+		
+		#oscilascopeAll {
+			margin-left: auto;
+			margin-right: auto;
+			position: static;
+		}
+		 
+		.beepboxEditor,
+		.beepboxEditor select
+		{
+			text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.5);
+		}
+		 
+		.beepboxEditor .piano-button {
+			text-shadow: none;
+		}
+		 
+		.beepboxEditor .prompt
+		{
+			background: radial-gradient(farthest-corner at 50% 0px, #2a2a2a, #1a1a1a) !important;
+		}
+		 
+		#beepboxEditorContainer {
+			background-color: rgba(0, 0, 0, 0) !important;
+		}
+		 
+		.beepboxEditor .trackAndMuteContainer {
+			text-shadow: none;
+		}
+		 
+		.beepboxEditor .loopEditor
+		{
+			--editor-background: rgba(0, 0, 0, 0.0) !important;
+		}
+		 
+		.beepboxEditor .muteEditor
+		{
+			--editor-background: #1e1e1e !important;
+		}
+		 
+		.beepboxEditor .pattern-area
+		{
+			--editor-background: rgba(0, 0, 0, 1) !important;
+		}
+		 
+		.beepboxEditor .trackContainer svg
+		{
+			--editor-background: #111 !important;
+		}
+		 
+		.beepboxEditor .muteEditor > :last-child {
+			--editor-background: rgba(0, 0, 0, 0) !important;
+		}
+		 
+		.beepboxEditor #octaveScrollBarContainer {
+			background-color: rgba(0, 0, 0, 0.3);
+		}
+		 
+		.beepboxEditor {
+			--track-editor-bg-pitch-dim: #1e1f28;
+		}
+		 
+		.beepboxEditor .muteButtonText {
+			transform: translate(0px, 1px) !important;
+			color: #777 !important;
+		}
+		 
+		.beepboxEditor .instrument-bar {
+			--text-color-lit: #eee;
+			--text-color-dim: #777;
+		}
+		 
+		.beepboxEditor .instrument-bar .selected-instrument {
+			color: rgba(255, 255, 255, 1) !important;
+			text-shadow: 0px 0px 4px var(--text-color-lit);
+		}
+		 
+		.beepboxEditor .instrument-bar .deactivated {
+			color: rgba(0, 0, 0, 1) !important;
+			text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2);
+		}
+		 
+		.beepboxEditor .instrument-bar > :not(.last-button) {
+			border-color: var(--background-color-lit) !important;
+		}
+		 
+		.beepboxEditor .instrument-bar .selected-instrument {
+			border-color: rgba(255, 255, 255, 1) !important;
+		}
+		 
+		.beepboxEditor select
+		{
+			background: #444 !important;
+			box-shadow:
+				0px 2px 2px 1px rgba(0, 0, 0, 0.4),
+				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+				inset 0px -10px 20px 1px rgba(0, 0, 0, 0.4),
+				inset 0px 1px 0px 0px rgba(255, 255, 255, 0.3)
+			;
+		}
+		 
+		.beepboxEditor select:focus
+		{
+			background: #333 !important;
+			box-shadow:
+				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+				inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+				inset 0px 10px 20px 1px rgba(0, 0, 0, 0.4),
+				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+			;
+		}
+		 
+		.beepboxEditor .select2-selection__rendered,
+		.beepboxEditor button,
+		.beepboxEditor .instrument-bar button,
+		.beepboxEditor .eq-filter-type-bar button .deactivated,
+		.beepboxEditor .note-filter-type-bar button .deactivated
+		{
+			background: linear-gradient(#444, #333) !important;
+			box-shadow:
+				0px 2px 2px 1px rgba(0, 0, 0, 0.4),
+				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+				inset 0px 1px 0px 0px rgba(255, 255, 255, 0.3)
+			;
+		}
+		 
+		.beepboxEditor .select2-container--open .select2-selection__rendered,
+		.beepboxEditor button:focus,
+		.beepboxEditor .instrument-bar .selected-instrument,
+		.beepboxEditor .eq-filter-type-bar button:not(.deactivated),
+		.beepboxEditor .note-filter-type-bar button:not(.deactivated)
+		{
+			background: linear-gradient(#333, #444) !important;
+			box-shadow:
+				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+				inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+			;
+		}
+		 
+		.beepboxEditor .filterEditor svg,
+		.beepboxEditor .fadeInOut svg,
+		.beepboxEditor .harmonics svg,
+		.beepboxEditor .spectrum svg
+		{
+			background: rgba(0, 0, 0, 0.3) !important;
+			box-shadow:
+				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+				inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+			;
+		}
+		 
+		.beepboxEditor input[type="range"]::-webkit-slider-thumb
+		{
+			box-shadow:
+				0px 2px 2px 1px rgba(0, 0, 0, 0.4),
+				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+				inset 0px 1px 0px 0px rgba(255, 255, 255, 1),
+				inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+				inset 0px -8px 3px rgba(0, 0, 0, 0.2)
+			;
+		}
+		 
+		.beepboxEditor input[type="range"]::-webkit-slider-runnable-track
+		{
+			background: rgba(0, 0, 0, 0.2) !important;
+			box-shadow:
+				0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+				inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
+				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+			;
+			border-radius: 4px;
+		}
+		 
+		.beepboxEditor input[type="range"]:focus::-webkit-slider-runnable-track
+		{
+			background: rgba(255, 255, 255, 0.2) !important;
+			box-shadow:
+				0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+				inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
+				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+			;
+		}
+		 
+		.beepboxEditor input[type="range"]::-ms-thumb
+		{
+			box-shadow:
+				0px 2px 2px 1px rgba(0, 0, 0, 0.4),
+				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+				inset 0px 1px 0px 0px rgba(255, 255, 255, 1),
+				inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+				inset 0px -8px 3px rgba(0, 0, 0, 0.2)
+			;
+		}
+		 
+		.beepboxEditor input[type="range"]::-ms-track
+		{
+			background: rgba(0, 0, 0, 0.2) !important;
+			box-shadow:
+				0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+				inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
+				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+			;
+			border-radius: 4px;
+		}
+		 
+		.beepboxEditor input[type="range"]:focus::-ms-track
+		{
+			background: rgba(255, 255, 255, 0.2) !important;
+			box-shadow:
+				0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+				inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
+				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+			;
+		}
+		 
+		.beepboxEditor input[type="range"]::-moz-range-thumb
+		{
+			box-shadow:
+				0px 2px 2px 1px rgba(0, 0, 0, 0.4),
+				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+				inset 0px 1px 0px 0px rgba(255, 255, 255, 1),
+				inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+				inset 0px -8px 3px rgba(0, 0, 0, 0.2)
+			;
+		}
+		 
+		.beepboxEditor input[type="range"]::-moz-range-track
+		{
+			background: rgba(0, 0, 0, 0.2) !important;
+			box-shadow:
+				0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+				inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
+				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+			;
+			border-radius: 4px;
+		}
+		 
+		.beepboxEditor input[type="range"]:focus::-moz-range-track
+		{
+			background: rgba(255, 255, 255, 0.2) !important;
+			box-shadow:
+				0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+				inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
+				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+			;
+		}
+		 
+		.beepboxEditor input[type="text"],
+		.beepboxEditor input[type="number"]
+		{
+			border: none !important;
+			background: rgba(0, 0, 0, 0.2) !important;
+			box-shadow:
+				0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+				inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
+				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+			;
+		}
+		 
+		.beepboxEditor input[type="checkbox"]
+		{
+			appearance: none;
+			background: rgba(0, 0, 0, 0.3);
+			color: currentColor;
+			border-radius: 1px;
+			width: 1em !important;
+			height: 1em !important;
+			box-shadow:
+				inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+			;
+		}
+		 
+		.beepboxEditor input[type="checkbox"]:checked
+		{
+			display: flex;
+			justify-content: center;
+		}
+		 
+		.beepboxEditor input[type="checkbox"]:checked:after
+		{
+			width: 1em;
+			height: 1em;
+			text-align: center;
+			font-size: 0.8em;
+			content: "✓";
+			color: currentColor;
+			text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.5);
+		}
+        `,
+        "Glyde": `
+             div#beepboxEditorContainer {
+                 border-style: solid;
+                 border-width: 8px;
+                 border-color: #4f152b;
+                 padding-bottom: 5px;
+             }
+                 
+             #text-content {
+                 border-style: solid;
+                 border-width: 8px;
+                 border-color: #4f152b;
+             }
+ 
+                 div.beepboxEditor.load {
+                     background: none !important;
+                    }
+         
+                    div.noSelection {
+                     background: none !important;
+                    }
+         
+                    .beepboxEditor .loopEditor {
+                     background: none !important;
+                    }
+         
+                    .beepboxEditor .muteEditor {
+                     background: none !important;
+                    }
+         
+                    div.muteEditor div {
+                     background: none !important;
+                    }
+        `,
+        "Slushie 2": `
+        #text-content {
+            border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/slushiepixel_border.png");
+            border-image-slice: 4 fill; 
+           border-image-width: 8px; 
+        border-image-repeat: repeat; 
+            padding-left: 12px; 
+            padding-right: 12px; 
+            padding-bottom: 12px; 
+            image-rendering: -moz-crisp-edges !important;         /* Firefox */
+            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+            image-rendering: -o-crisp-edges !important;            /* Opera */
+            image-rendering: pixelated !important;                 /* Future browsers */
+            image-rendering: optimizeSpeed !important;             /* IE */
+        }
+    #beepboxEditorContainer {
+            border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/slushiepixel_border.png");
+            border-image-slice: 4 fill; 
+           border-image-width: 8px; 
+        border-image-repeat: repeat;
+            padding-left: 12px; 
+            padding-right: 12px; 
+            padding-bottom: 12px; 
+
+            image-rendering: -moz-crisp-edges !important;         /* Firefox */
+            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+            image-rendering: -o-crisp-edges !important;            /* Opera */
+            image-rendering: pixelated !important;                 /* Future browsers */
+            image-rendering: optimizeSpeed !important;             /* IE */ 
+        }
+
+        .beepboxEditor button,
+        button.mobilePatternButton,
+        button.mobileTrackButton,
+        button.mobileSettingsButton,
+        button.mobilePlayButton,
+        button.mobilePauseButton,
+        button.mobileNextBarButton,
+        button.mobilePrevBarButton,
+        button.playButton,
+        button.pauseButton, 
+        button.recordButton, 
+        button.stopButton,
+        button.nextBarButton, 
+        button.prevBarButton, 
+        button.copyButton, 
+        button.pasteButton, 
+        button.exportInstrumentButton, 
+        button.importInstrumentButton, 
+        .beepboxEditor select, 
+        .beepboxEditor .select2-selection__rendered {
+                border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/slushie buttonbg.png") !important;
+                border-image-slice: 4 fill !important; 
+               border-image-width: 4px !important; 
+            border-image-repeat: stretch !important;
+                padding: 4px !important; 
+
+                image-rendering: -moz-crisp-edges !important;         /* Firefox */
+                image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+                image-rendering: -o-crisp-edges !important;            /* Opera */
+                image-rendering: pixelated !important;                 /* Future browsers */
+                image-rendering: optimizeSpeed !important;             /* IE */
+            }
+
+            button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+                --ui-widget-background: var(--editor-background) !important;
+                border-image-source: none !important;
+            }
+
+        `,
+        "BeepBox Pixel": `
+        /* sets background image */
+        #text-content {
+            border-image-source: url("https://choptop84.github.io/abyssbox-source/website/beepbox_pixel_border.png");
+            border-image-slice: 4 fill; 
+           border-image-width: 8px; 
+        border-image-repeat: stretch; 
+            padding: 12px; 
+
+            image-rendering: -moz-crisp-edges !important;         /* Firefox */
+            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+            image-rendering: -o-crisp-edges !important;            /* Opera */
+            image-rendering: pixelated !important;                 /* Future browsers */
+            image-rendering: optimizeSpeed !important;             /* IE */
+        }
+    #beepboxEditorContainer {
+            border-image-source: url("https://choptop84.github.io/abyssbox-source/website/beepbox_pixel_border.png");
+            border-image-slice: 4 fill; 
+           border-image-width: 8px; 
+        border-image-repeat: stretch;
+            padding: 12px;
+
+            image-rendering: -moz-crisp-edges !important;         /* Firefox */
+            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+            image-rendering: -o-crisp-edges !important;            /* Opera */
+            image-rendering: pixelated !important;                 /* Future browsers */
+            image-rendering: optimizeSpeed !important;             /* IE */ 
+        }
+        .beepboxEditor button,
+        button.mobilePatternButton,
+        button.mobileTrackButton,
+        button.mobileSettingsButton,
+        button.mobilePlayButton,
+        button.mobilePauseButton,
+        button.mobileNextBarButton,
+        button.mobilePrevBarButton,
+        button.playButton,
+        button.pauseButton, 
+        button.recordButton, 
+        button.stopButton,
+        button.nextBarButton, 
+        button.prevBarButton, 
+        button.copyButton, 
+        button.pasteButton, 
+        button.exportInstrumentButton, 
+        button.importInstrumentButton, 
+        .beepboxEditor select, 
+        .beepboxEditor .select2-selection__rendered {
+            border-image-source: url("https://choptop84.github.io/abyssbox-source/website/beepbox_pixel_border.png") !important;
+            border-image-slice: 4 fill !important; 
+           border-image-width: 4px !important; 
+        border-image-repeat: stretch !important;
+            padding: 4px !important; 
+
+            image-rendering: -moz-crisp-edges !important;         /* Firefox */
+            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+            image-rendering: -o-crisp-edges !important;            /* Opera */
+            image-rendering: pixelated !important;                 /* Future browsers */
+            image-rendering: optimizeSpeed !important;             /* IE */
+        }
+        `,
+        "Forest 2": `
+        /* sets background image */
+        #text-content {
+            --editor-background: (255, 255, 255, 0);
+                border-image-source: url("https://choptop84.github.io/abyssbox-app/forest2_border.png");
+                border-image-slice: 16 fill; 
+                   border-image-width: 32px; 
+                border-image-repeat: repeat; 
+                padding: 36px; 
+
+                image-rendering: -moz-crisp-edges !important;         /* Firefox */
+                image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+                image-rendering: -o-crisp-edges !important;            /* Opera */
+                image-rendering: pixelated !important;                 /* Future browsers */
+                image-rendering: optimizeSpeed !important;             /* IE */
+            }
+        #beepboxEditorContainer {
+            --editor-background: (255, 255, 255, 0);
+                border-image-source: url("https://choptop84.github.io/abyssbox-app/forest2_border.png");
+                border-image-slice: 16 fill; 
+                   border-image-width: 32px; 
+                border-image-repeat: repeat; 
+                padding-left: 36px; 
+                padding-right: 36px; 
+                padding-top: 5px; 
+                padding-bottom: 5px; 
+
+                image-rendering: -moz-crisp-edges !important;         /* Firefox */
+                image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+                image-rendering: -o-crisp-edges !important;            /* Opera */
+                image-rendering: pixelated !important;                 /* Future browsers */
+                image-rendering: optimizeSpeed !important;             /* IE */ 
+            }
+        .beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered, button {
+                border-image-source: url("https://choptop84.github.io/abyssbox-app/forest2_border2.png") !important;
+                border-image-slice: 4 fill !important; 
+               border-image-width: 4px !important; 
+            border-image-repeat: stretch !important;
+                padding: 4px !important; 
+
+                image-rendering: -moz-crisp-edges !important;         /* Firefox */
+                image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+                image-rendering: -o-crisp-edges !important;            /* Opera */
+                image-rendering: pixelated !important;                 /* Future browsers */
+                image-rendering: optimizeSpeed !important;             /* IE */
+            }
+        select.trackSelectBox {
+            border-image: none !important;
+        }
+        div.prompt.noSelection {
+            background: var(--editor-background); 
+        }
+        /* div.channelBox {
+        border-radius: 5px;
+        } */
+        `,
+        "Canyon 2": `
+        #pattern-area {
+            border-style: solid;
+            border-color: #0a0000;
+            border-bottom: 0;
+            border-right: 0;
+            border-top: 0;
+         }
+    
+         #text-content {
+            border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/canyon2_border.png");
+            border-image-slice: 16 fill; 
+            border-image-width: 32px; 
+            border-image-repeat: repeat; 
+            padding-left: 36px; 
+            padding-right: 36px; 
+            padding-bottom: 6px; 
+        
+            image-rendering: -moz-crisp-edges !important;         /* Firefox */
+            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+            image-rendering: -o-crisp-edges !important;            /* Opera */
+            image-rendering: pixelated !important;                 /* Future browsers */
+            image-rendering: optimizeSpeed !important;             /* IE */
+            background: #fff0;
+         }
+     #beepboxEditorContainer {
+            border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/canyon2_border.png");
+            border-image-slice: 16 fill; 
+            border-image-width: 32px; 
+            border-image-repeat: repeat; 
+            padding-left: 36px; 
+            padding-right: 36px; 
+            padding-bottom: 6px; 
+            
+            image-rendering: -moz-crisp-edges !important;         /* Firefox */
+            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+            image-rendering: -o-crisp-edges !important;            /* Opera */
+            image-rendering: pixelated !important;                 /* Future browsers */
+            image-rendering: optimizeSpeed !important;             /* IE */
+            background: #fff0;
+         }
+    
+         .beepboxEditor button,
+         button.mobilePatternButton,
+         button.mobileTrackButton,
+         button.mobileSettingsButton,
+         button.mobilePlayButton,
+         button.mobilePauseButton,
+         button.mobileNextBarButton,
+         button.mobilePrevBarButton,
+         button.playButton,
+         button.pauseButton, 
+         button.recordButton, 
+         button.stopButton,
+         button.nextBarButton, 
+         button.prevBarButton, 
+         button.copyButton, 
+         button.pasteButton, 
+         button.exportInstrumentButton, 
+         button.importInstrumentButton, 
+         .beepboxEditor select, 
+         .beepboxEditor .select2-selection__rendered {
+                 border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/canyon2_button.png") !important;
+                 border-image-slice: 4 fill !important; 
+                border-image-width: 4px !important; 
+             border-image-repeat: stretch !important;
+                 padding: 4px !important; 
+    
+                 image-rendering: -moz-crisp-edges !important;         /* Firefox */
+                 image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+                 image-rendering: -o-crisp-edges !important;            /* Opera */
+                 image-rendering: pixelated !important;                 /* Future browsers */
+                 image-rendering: optimizeSpeed !important;             /* IE */
+             }
+    
+        button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+                --ui-widget-background: var(--editor-background) !important;
+                border-image-source: none !important;
+            }
+        `,
+        "Nebula 2": `
+        #text-content {
+            --editor-background: rgba(255, 255, 255, 0);
+                border-image-source: url("https://choptop84.github.io/abyssbox-app/nebula2_border.png");
+                border-image-slice: 16 fill; 
+                   border-image-width: 32px; 
+                border-image-repeat: repeat; 
+                padding: 36px; 
+
+                image-rendering: -moz-crisp-edges !important;         /* Firefox */
+                image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+                image-rendering: -o-crisp-edges !important;            /* Opera */
+                image-rendering: pixelated !important;                 /* Future browsers */
+                image-rendering: optimizeSpeed !important;             /* IE */
+            }
+        #beepboxEditorContainer {
+            --editor-background: rgba(255, 255, 255, 0);
+                border-image-source: url("https://choptop84.github.io/abyssbox-app/nebula2_border.png");
+                border-image-slice: 16 fill; 
+                   border-image-width: 32px; 
+                border-image-repeat: repeat; 
+                padding-left: 36px; 
+                padding-right: 36px; 
+                padding-top: 5px; 
+                padding-bottom: 5px; 
+
+                image-rendering: -moz-crisp-edges !important;         /* Firefox */
+                image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+                image-rendering: -o-crisp-edges !important;            /* Opera */
+                image-rendering: pixelated !important;                 /* Future browsers */
+                image-rendering: optimizeSpeed !important;             /* IE */ 
+            }
+        .beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered, button {
+                border-image-source: url("https://choptop84.github.io/abyssbox-app/nebula2_border2.png") !important;
+                border-image-slice: 4 fill !important; 
+               border-image-width: 4px !important; 
+            border-image-repeat: stretch !important;
+                padding: 4px !important; 
+
+                image-rendering: -moz-crisp-edges !important;         /* Firefox */
+                image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+                image-rendering: -o-crisp-edges !important;            /* Opera */
+                image-rendering: pixelated !important;                 /* Future browsers */
+                image-rendering: optimizeSpeed !important;             /* IE */
+            }
+            select.trackSelectBox {
+                border-image: none !important;
+            }
+        `,
+        "Ghost House 2": `
+        #text-content {
+            border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/ghosthousebg2.png");
+            border-image-slice: 16 fill; 
+           border-image-width: 32px; 
+        border-image-repeat: repeat; 
+            padding-left: 32px; 
+            padding-right: 32px; 
+            padding-bottom: 16px; 
+            image-rendering: -moz-crisp-edges !important;         /* Firefox */
+            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+            image-rendering: -o-crisp-edges !important;            /* Opera */
+            image-rendering: pixelated !important;                 /* Future browsers */
+            image-rendering: optimizeSpeed !important;             /* IE */
+        }
+    #beepboxEditorContainer {
+            border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/ghosthousebg2.png");
+            border-image-slice: 16 fill; 
+           border-image-width: 32px; 
+        border-image-repeat: repeat;
+            padding-left: 32px; 
+            padding-right: 32px; 
+            padding-bottom: 16px; 
+
+            image-rendering: -moz-crisp-edges !important;         /* Firefox */
+            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+            image-rendering: -o-crisp-edges !important;            /* Opera */
+            image-rendering: pixelated !important;                 /* Future browsers */
+            image-rendering: optimizeSpeed !important;             /* IE */ 
+        }
+
+        div.prompt.noSelection {
+            background-color: var(--editor-background) !important;
+        }
+        
+        .beepboxEditor button,
+        button.mobilePatternButton,
+        button.mobileTrackButton,
+        button.mobileSettingsButton,
+        button.mobilePlayButton,
+        button.mobilePauseButton,
+        button.mobileNextBarButton,
+        button.mobilePrevBarButton,
+        button.playButton,
+        button.pauseButton, 
+        button.recordButton, 
+        button.stopButton,
+        button.nextBarButton, 
+        button.prevBarButton, 
+        button.copyButton, 
+        button.pasteButton, 
+        button.exportInstrumentButton, 
+        button.importInstrumentButton, 
+        .beepboxEditor select, 
+        .beepboxEditor .select2-selection__rendered {
+                border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/ghosthouse_button.png") !important;
+                border-image-slice: 5 fill !important; 
+               border-image-width: 5px !important;  
+            border-image-repeat: repeat !important;
+                padding: 4px !important; 
+
+                image-rendering: -moz-crisp-edges !important;         /* Firefox */
+                image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+                image-rendering: -o-crisp-edges !important;            /* Opera */
+                image-rendering: pixelated !important;                 /* Future browsers */
+                image-rendering: optimizeSpeed !important;             /* IE */
+            }
+
+            button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
+                --ui-widget-background: var(--editor-background) !important;
+                border-image-source: none !important;
+            }
+        `,
+    };
+    CustomThemeBases.baseBackgrounds = {
+        "none": `
+
+        `,
+        "AbyssBox Classic": `
+        /* sets background image */
+		body {
+			background-image: url("https://choptop84.github.io/abyssbox-source/website/stripesbg.gif") !important;
+			background-position: center;
+			background-repeat: repeat;
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+			}
+        `,
+        "AbyssBox Light": `
+        /* sets background image */
+        body {
+            background-image: url("https://choptop84.github.io/abyssbox-source/website/stripesbg_light.gif") !important;
+            background-position: center;
+            background-repeat: repeat;
+
+            image-rendering: -moz-crisp-edges !important;         /* Firefox */
+            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+            image-rendering: -o-crisp-edges !important;            /* Opera */
+            image-rendering: pixelated !important;                 /* Future browsers */
+            image-rendering: optimizeSpeed !important;             /* IE */
+            }	
+        `,
+        "Half-Life": `
+        /* sets background image */
+            body {
+            background-image: url("https://choptop84.github.io/abyssbox-source/website/lambda.png") !important;
+            background-position: top;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+			}
+        `,
+        "Doom 1993": `
+        /* sets background image */
+		body {
+            background-image: url("doomsky.png") !important;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+			}
+        `,
+        "Undertale": `
+        /* sets background image */
+        body {
+            background-image: url("https://choptop84.github.io/choptop84s-image-repository/battlebg.png") !important;
+            background-position: center;
+            background-size: contain;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            }
+        `,
+        "Windows Xp": `
+        /* sets background image */
+		body {
+            background-image: url("https://choptop84.github.io/abyssbox-app/xphills.png") !important;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+			}
+        `,
+        "Frutiger Aero": `
+        /* sets background image */
+        body {
+            background-image: url("https://choptop84.github.io/choptop84s-image-repository/frutigerbg3.jpg") !important;
+            background-position: top;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+            image-rendering: optimizeQuality !important;             /* IE */ 
+            }
+        `,
+        "Skeuomorphic": `
+        body {
+			background-image: url('https://github.com/choptop84/choptop84s-image-repository/blob/main/skeuobg.png?raw=true') !important;
+			background-repeat: no-repeat !important;
+			background-size: contain;
+		    }
+
+        svg#firstImage {
+                background-image: url('https://github.com/choptop84/choptop84s-image-repository/blob/main/skeuobg2.png?raw=true') !important;
+            }
+        `,
+        "Glyde": `
+        /* sets background image */
+        body {
+        background-image: url("https://choptop84.github.io/choptop84s-image-repository/glydebg.png") !important;
+        background-position: top right;
+        background-repeat: no-repeat !important;
+
+        image-rendering: -moz-crisp-edges !important;         /* Firefox */
+        image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+        image-rendering: -o-crisp-edges !important;            /* Opera */
+        image-rendering: pixelated !important;                 /* Future browsers */
+        image-rendering: optimizeSpeed !important;             /* IE */
+            }
+
+            #firstImage {
+                background-image: url("https://choptop84.github.io/choptop84s-image-repository/slushiepfp.PNG") !important;
+                background-repeat: no-repeat !important;
+                background-size: 100% 100% !important;
+            }
+        `,
+        "starry studio": `
+        body {
+			background-image: url("https://choptop84.github.io/choptop84s-image-repository/stars.gif") !important;
+			background-repeat: repeat !important;
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+			}
+        `,
+        "Slushie 2": `
+        body {
+            background-image: url("https://choptop84.github.io/choptop84s-image-repository/slushbg.gif") !important;
+            background-size: 32px;
+            background-position: center;
+            background-repeat: repeat;
+
+            image-rendering: -moz-crisp-edges !important;         /* Firefox */
+            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+            image-rendering: -o-crisp-edges !important;            /* Opera */
+            image-rendering: pixelated !important;                 /* Future browsers */
+            image-rendering: optimizeSpeed !important;             /* IE */
+            }
+        `,
+        "BeepBox Pixel": `
+        /* sets background image */
+        body {
+            background-image: url("https://choptop84.github.io/abyssbox-source/website/diamondsbg.gif") !important;
+            background-position: center;
+            background-repeat: repeat;
+
+            image-rendering: -moz-crisp-edges !important;         /* Firefox */
+            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+            image-rendering: -o-crisp-edges !important;            /* Opera */
+            image-rendering: pixelated !important;                 /* Future browsers */
+            image-rendering: optimizeSpeed !important;             /* IE */
+            }
+        `,
+        "Forest 2": `
+        /* sets background image */
+        body {
+            background-image: url("https://choptop84.github.io/abyssbox-app/Forest2Trees.png") !important;
+            background-size: cover;
+            background-position: center top; /* Adjusted to align with the top */
+              background-repeat: no-repeat;
+
+            image-rendering: -moz-crisp-edges !important;         /* Firefox */
+            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+            image-rendering: -o-crisp-edges !important;            /* Opera */
+            image-rendering: pixelated !important;                 /* Future browsers */
+            image-rendering: optimizeSpeed !important;             /* IE */ 
+            }
+        `,
+        "Canyon 2": `
+        body {
+            background-image: url("https://choptop84.github.io/choptop84s-image-repository/canyonbg.png") !important;
+            background-size: 200% !important;
+            background-position: center top; /* Adjusted to align with the top */
+            background-repeat: no-repeat !important;
+    
+            image-rendering: -moz-crisp-edges !important;         /* Firefox */
+            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+            image-rendering: -o-crisp-edges !important;            /* Opera */
+            image-rendering: pixelated !important;                 /* Future browsers */
+            image-rendering: optimizeSpeed !important;             /* IE */ 
+            }
+        `,
+        "Nebula 2": `
+        body {
+            background-image: url("https://choptop84.github.io/abyssbox-app/stars.gif") !important;
+            background-size: contain !important;
+            background-position: center top !important;
+            background-repeat: repeat !important;
+
+            image-rendering: -moz-crisp-edges !important;         /* Firefox */
+            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+            image-rendering: -o-crisp-edges !important;            /* Opera */
+            image-rendering: pixelated !important;                 /* Future browsers */
+            image-rendering: optimizeSpeed !important;             /* IE */ 
+            }
+        `,
+        "Ghost House 2": `
+        body {
+            background-image: url("https://choptop84.github.io/choptop84s-image-repository/ghosthousebg.png") !important;
+            background-size: 256px;
+            background-position: center;
+            background-repeat: repeat;
+
+            image-rendering: -moz-crisp-edges !important;         /* Firefox */
+            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+            image-rendering: -o-crisp-edges !important;            /* Opera */
+            image-rendering: pixelated !important;                 /* Future browsers */
+            image-rendering: optimizeSpeed !important;             /* IE */
+            }
+        `,
+        "azur lane": `
+        /* sets background image */
+        body {
+            background-image: url("UltraBoxAzurLaneThemeMemoryTaskBackground.png") !important;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            }
+        `,
+    };
+    CustomThemeBases.baseIcons = {
+        "none": `
+        `,
+        "AbyssBox Classic": `
+        * {
+            --file-page-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-file.png");
+            --edit-pencil-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-edit.png");
+            --preferences-gear-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-preferences.png");
+            --instrument-copy-symbol: url("https://choptop84.github.io/abyssbox-app/icon-copy.png");
+            --instrument-paste-symbol: url("https://choptop84.github.io/abyssbox-app/icon-paste.png");
+            --play-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-play.png");
+            --pause-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-pause.png");
+            --record-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-record.png");
+            --stop-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-stop.png");
+            --prev-bar-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-prev.png");
+            --next-bar-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-next.png");
+            --muted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speakerMuted.png");
+            --unmuted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speaker.png");
+            --volume-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speaker.png");
+            --zoom-in-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomIn.png");
+            --zoom-out-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomOut.png");
+            --export-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-export.png");
+            --export-instrument-symbol: var(--export-symbol);
+            --import-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-import.png");
+            }
+        `,
+        "Scratch": `
+        * {
+            --play-symbol:url("https://choptop84.github.io/choptop84s-image-repository/Greenflag.png");
+            --pause-symbol:url("https://choptop84.github.io/choptop84s-image-repository/stopsign.png");
+            --stop-symbol:url("https://choptop84.github.io/choptop84s-image-repository/stopsign.png");
+            }
+
+            button.playButton::before {
+                background-image: url("https://choptop84.github.io/choptop84s-image-repository/Greenflag.png") !important;
+                background-size: 18px !important;
+                background-position: center !important;
+                background-repeat: no-repeat !important;
+                mask-size: 800px;
+                color: #fff0;
+                /* Hold on, before you start asking: "WHAT THE? WHY IS THE ICON SO LARGE!!!" Let me tell ya that this method removes all the filtering issues on the png and it looks incredibly seemless so shush */
+            }
+    
+            button.pauseButton::before {
+                background-image: url("https://choptop84.github.io/choptop84s-image-repository/stopsign.png") !important;
+                background-size: 18px !important;
+                background-position: center !important;
+                background-repeat: no-repeat !important;
+                mask-size: 800px;
+                color: #fff0;
+            }
+    
+            button.stopButton::before {
+                background-image: url("https://choptop84.github.io/choptop84s-image-repository/stopsign.png") !important;
+                background-size: 18px !important;
+                background-position: center !important;
+                background-repeat: no-repeat !important;
+                mask-size: 800px;
+                color: #fff0;
+            }
+        `,
+        "Frutiger Aero": `
+            * {
+            /*cursor: url("abyssbox_cursor.png"), auto !important;*/
+            --muted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/vistaSpeakerIconMuted.png");
+            --unmuted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/vistaSpeakerIcon.png");
+            }
+        `,
+        "Windows Xp": `
+* {
+cursor: url("https://choptop84.github.io/abyssbox-app/xpcursor.png"), auto !important;
+--play-symbol:url("https://choptop84.github.io/abyssbox-app/xpPlay.png");
+--pause-symbol:url("https://choptop84.github.io/abyssbox-app/xpPause.png");
+--record-symbol:url("https://choptop84.github.io/abyssbox-app/xpRecord.png");
+--stop-symbol:url("https://choptop84.github.io/abyssbox-app/xpStop.png");
+--prev-bar-symbol:url("https://choptop84.github.io/abyssbox-app/xpBackward.png");
+--next-bar-symbol:url("https://choptop84.github.io/abyssbox-app/xpForward.png");
+--file-page-symbol: url("https://choptop84.github.io/abyssbox-app/xpFile.png");
+--edit-pencil-symbol: url("https://choptop84.github.io/abyssbox-app/xpEdit.png");
+--preferences-gear-symbol: url("https://choptop84.github.io/abyssbox-app/xpPreferences.png");
+--muted-symbol: url("https://choptop84.github.io/abyssbox-app/xpSpeakerMute.png");
+--unmuted-symbol: url("https://choptop84.github.io/abyssbox-app/xpSpeaker.png");
+--volume-symbol: url("https://choptop84.github.io/abyssbox-app/xpSpeaker.png");
+--zoom-in-symbol: url("https://choptop84.github.io/abyssbox-app/xpZoomIn.png");
+--zoom-out-symbol: url("https://choptop84.github.io/abyssbox-app/xpZoomOut.png");
+}
+
+div.mute-button::before {
+    background-image: url("https://choptop84.github.io/abyssbox-app/xpSpeaker.png") !important;
+    background-size: 120% !important;
+    background-position-x: center !important;
+    background-position-y: center !important;
+    background-repeat: no-repeat !important;
+
+    image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    image-rendering: -o-crisp-edges !important;            /* Opera */
+    image-rendering: pixelated !important;                 /* Future browsers */
+    image-rendering: optimizeSpeed !important;             /* IE */
+}
+
+div.mute-button.muted::before {
+    background-image: url("https://choptop84.github.io/abyssbox-app/xpSpeakerMute.png") !important;
+    background-size: 120% !important;
+    background-position-x: center !important;
+    background-position-y: center !important;
+    background-repeat: no-repeat !important;
+    
+    image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    image-rendering: -o-crisp-edges !important;            /* Opera */
+    image-rendering: pixelated !important;                 /* Future browsers */
+    image-rendering: optimizeSpeed !important;             /* IE */
+}
+
+button.recordButton::Before {
+    background-image: url("https://choptop84.github.io/abyssbox-app/xpRecord.png") !important;
+    background-size: 64% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+
+    image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    image-rendering: -o-crisp-edges !important;            /* Opera */
+    image-rendering: pixelated !important;                 /* Future browsers */
+    image-rendering: optimizeSpeed !important;             /* IE */
+
+}
+
+button.stopButton::Before {
+    background-image: url("https://choptop84.github.io/abyssbox-app/xpStop.png") !important;
+    background-size: 64% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+
+    image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    image-rendering: -o-crisp-edges !important;            /* Opera */
+    image-rendering: pixelated !important;                 /* Future browsers */
+    image-rendering: optimizeSpeed !important;             /* IE */
+
+}
+
+button.pauseButton::Before {
+    background-image: url("https://choptop84.github.io/abyssbox-app/xpPause.png") !important;
+    background-size: 64% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+
+    image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    image-rendering: -o-crisp-edges !important;            /* Opera */
+    image-rendering: pixelated !important;                 /* Future browsers */
+    image-rendering: optimizeSpeed !important;             /* IE */
+
+}
+
+.beepboxEditor span.volume-speaker {
+    background-image: url("https://choptop84.github.io/abyssbox-app/xpSpeaker.png");
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+
+    image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    image-rendering: -o-crisp-edges !important;            /* Opera */
+    image-rendering: pixelated !important;                 /* Future browsers */
+    image-rendering: optimizeSpeed !important;             /* IE */
+    }
+
+div.selectContainer.menu.file::before {
+
+    background-image: url("https://choptop84.github.io/abyssbox-app/xpFile.png");
+    background-size: 64%;
+    background-position-x: center;
+    background-position-y: center;
+
+    image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    image-rendering: -o-crisp-edges !important;            /* Opera */
+    image-rendering: pixelated !important;                 /* Future browsers */
+    image-rendering: optimizeSpeed !important;             /* IE */
+}
+
+div.selectContainer.menu.edit::before {
+
+    background-image: url("https://choptop84.github.io/abyssbox-app/xpEdit.png");
+    background-size: 64%;
+    background-position-x: center;
+    background-position-y: center;
+
+    image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    image-rendering: -o-crisp-edges !important;            /* Opera */
+    image-rendering: pixelated !important;                 /* Future browsers */
+    image-rendering: optimizeSpeed !important;             /* IE */
+}
+div.selectContainer.menu.preferences::before {
+
+    background-image: url("https://choptop84.github.io/abyssbox-app/xpPreferences.png");
+    background-size: 64%;
+    background-position-x: center;
+    background-position-y: center;
+
+    image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    image-rendering: -o-crisp-edges !important;            /* Opera */
+    image-rendering: pixelated !important;                 /* Future browsers */
+    image-rendering: optimizeSpeed !important;             /* IE */
+}
+button.playButton::before {
+
+    background-image: url("https://choptop84.github.io/abyssbox-app/xpPlay.png") !important;
+    background-size: 64% !important;
+    background-position: center !important;
+
+
+    image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    image-rendering: -o-crisp-edges !important;            /* Opera */
+    image-rendering: pixelated !important;                 /* Future browsers */
+    image-rendering: optimizeSpeed !important;             /* IE */
+}
+
+.beepboxEditor button.prevBarButton::before {
+    background-image: url("https://choptop84.github.io/abyssbox-app/xpBackward.png") !important;
+    background-size: 64% !important;
+    background-position: center !important;
+
+
+    image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    image-rendering: -o-crisp-edges !important;            /* Opera */
+    image-rendering: pixelated !important;                 /* Future browsers */
+    image-rendering: optimizeSpeed !important;             /* IE */
+
+}
+
+.beepboxEditor button.nextBarButton::before {
+    background-image: url("https://choptop84.github.io/abyssbox-app/xpForward.png") !important;
+    background-size: 64% !important;
+    background-position: center !important;
+
+
+    image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    image-rendering: -o-crisp-edges !important;            /* Opera */
+    image-rendering: pixelated !important;                 /* Future browsers */
+    image-rendering: optimizeSpeed !important;             /* IE */
+
+}
+
+.beepboxEditor .zoomInButton::before {
+    background-image: url("https://choptop84.github.io/abyssbox-app/xpZoomIn.png") !important;
+    background-position: center !important;
+
+
+    image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    image-rendering: -o-crisp-edges !important;            /* Opera */
+    image-rendering: pixelated !important;                 /* Future browsers */
+    image-rendering: optimizeSpeed !important;             /* IE */
+
+}
+
+.beepboxEditor .zoomOutButton::before {
+    background-image: url("https://choptop84.github.io/abyssbox-app/xpZoomOut.png") !important;
+    background-position: center !important;
+
+
+    image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    image-rendering: -o-crisp-edges !important;            /* Opera */
+    image-rendering: pixelated !important;                 /* Future browsers */
+    image-rendering: optimizeSpeed !important;             /* IE */
+
+}
+
+.beepboxEditor input[type="range"]::-moz-range-thumb {
+    background-image: url("https://choptop84.github.io/abyssbox-app/scrollbar.png") !important;
+    background-position: center !important;
+    background-size: inherit !important;
+
+    border-radius: 0px !important;
+    width: 13px !important;
+    height: 23px !important;
+    image-rendering: -moz-crisp-edges !important;         /* Firefox */
+    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+    image-rendering: -o-crisp-edges !important;            /* Opera */
+    image-rendering: pixelated !important;                 /* Future browsers */
+    image-rendering: optimizeSpeed !important;             /* IE */
+
+}
+
+        .beepboxEditor input[type="checkbox"]
+        {
+            appearance: none;
+            background: rgba(255, 255, 255, 1);
+            color: currentColor;
+            border-radius: 0px;
+            width: 13px !important;
+            height: 13px !important;
+            background-image:url("https://choptop84.github.io/abyssbox-app/xpCheckmarkBlank.png");
+            background-repeat:no-repeat;
+
+            image-rendering: -moz-crisp-edges !important;         /* Firefox */
+            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+            image-rendering: -o-crisp-edges !important;            /* Opera */
+            image-rendering: pixelated !important;                 /* Future browsers */
+            image-rendering: optimizeSpeed !important;             /* IE */
+            transform: scale(2) !important;
+            }
+
+        .beepboxEditor input[type="checkbox"]:checked
+        {
+            display: flex;
+            justify-content: center;
+            transform: scale(2) !important;
+        }
+         
+        .beepboxEditor input[type="checkbox"]:checked:after
+        {
+            width: 13px;
+            height: 13px;
+            text-align: center;
+            content: "";
+            background-repeat:no-repeat;
+            background-image:url("https://choptop84.github.io/abyssbox-app/xpCheckmark.png");
+            image-rendering: -moz-crisp-edges !important;         /* Firefox */
+            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+            image-rendering: -o-crisp-edges !important;            /* Opera */
+            image-rendering: pixelated !important;                 /* Future browsers */
+            image-rendering: optimizeSpeed !important;             /* IE */
+        }
+        `,
+    };
+    CustomThemeBases.baseCursor = {
+        "none": `
+        `,
+        "My Abyss": `
+        * {
+		cursor: url("abyssbox_cursor.png"), auto;
+        }
+        `,
+        "Retro": `
+        * {
+        cursor: url("https://choptop84.github.io/abyssbox-app/pixel_cursor.png"), auto !important;
+        }
+        `,
+        "Slushie 2": `
+        * {
+        cursor: url("https://choptop84.github.io/choptop84s-image-repository/slush_pixel_cursor.png"), auto !important;
+        }
+        `,
+        "Ghost House 2": `
+        * {
+		cursor: url("https://choptop84.github.io/abyssbox-app/pixel_cursor.png"), auto !important;
+        }
+        `,
+        "Windows Xp": `
+        * {
+		cursor: url("https://choptop84.github.io/abyssbox-app/xpcursor.png"), auto !important;
+        }
+        `,
+        "WackyBox": `
+        * {
+        cursor: url('wackybox_cursor.png'), auto;
+        }
+        `,
+        "Azur Lane": `
+        * {
+		cursor: url("UltraBoxAzurLaneThemeMouse.png"), auto !important;
+		}
+        `,
+    };
+    CustomThemeBases._fontStyleElement = document.head.appendChild(HTML.style({ type: "text/css" }));
+    CustomThemeBases._bgStyleElement = document.head.appendChild(HTML.style({ type: "text/css" }));
+    CustomThemeBases._borderStyleElement = document.head.appendChild(HTML.style({ type: "text/css" }));
+    CustomThemeBases._iconStyleElement = document.head.appendChild(HTML.style({ type: "text/css" }));
+    CustomThemeBases._cursorStyleElement = document.head.appendChild(HTML.style({ type: "text/css" }));
+
+    const { button: button$k, div: div$k, h2: h2$j, option: option$c, select: select$c, optgroup: optgroup$2 } = HTML;
+    class SetThemePrompt {
+        constructor(_doc) {
+            this._doc = _doc;
+            this._themeSelect = select$c({ style: "width: 100%;", id: "themeSelect" }, option$c({ value: "none" }, "None"), optgroup$2({ label: "AbyssBox Themes" }, option$c({ value: "AbyssBox Classic" }, "AbyssBox Classic"), option$c({ value: "AbyssBox Competitive" }, "AbyssBox Competitive"), option$c({ value: "AbyssBox Light" }, "AbyssBox Light"), option$c({ value: "AbyssBox 0.8" }, "AbyssBox 0.8"), option$c({ value: "AbyssBox Piano" }, "AbyssBox Piano [!]"), option$c({ value: "Half-Life" }, "Half-Life"), option$c({ value: "Half-Life: Source" }, "Half-Life: Source"), option$c({ value: "Doom 1993" }, "Doom 1993"), option$c({ value: "Undertale" }, "Undertale"), option$c({ value: "Yume Nikki" }, "Yume Nikki [!]"), option$c({ value: "Scratch" }, "Scratch"), option$c({ value: "Scratch Addons" }, "Scratch Addons"), option$c({ value: "Windows Xp" }, "Windows Xp"), option$c({ value: "Frutiger Aero" }, "Frutiger Aero"), option$c({ value: "Skeuomorphic" }, "Skeuomorphic/Early 2000's (LeoV)"), option$c({ value: "Glyde" }, "Glyde"), option$c({ value: "starry studio" }, "Starry Studio"), option$c({ value: "Terminal 2.0 (AB)" }, "Terminal 2.0 (AB)"), option$c({ value: "Slushie" }, "Slushie"), option$c({ value: "Slushie Pixel" }, "Slushie 2"), option$c({ value: "BeepBox Pixel" }, "BeepBox Pixel"), option$c({ value: "forest 2" }, "Forest 2"), option$c({ value: "canyon 2" }, "Canyon 2"), option$c({ value: "Nebula 2" }, "Nebula 2"), option$c({ value: "Ghost House" }, "Ghost House"), option$c({ value: "Ghost House 2" }, "Ghost House 2")), optgroup$2({ label: "BeepBox Themes" }, option$c({ value: "dark classic" }, "BeepBox Dark"), option$c({ value: "light classic" }, "BeepBox Light"), option$c({ value: "dark competition" }, "BeepBox Competition Dark")), optgroup$2({ label: "JummBox Themes" }, option$c({ value: "jummbox classic" }, "JummBox Dark"), option$c({ value: "jummbox light" }, "JummBox Light"), option$c({ value: "forest" }, "Forest"), option$c({ value: "canyon" }, "Canyon"), option$c({ value: "midnight" }, "Midnight"), option$c({ value: "beachcombing" }, "Beachcombing"), option$c({ value: "violet verdant" }, "Violet Verdant"), option$c({ value: "sunset" }, "Sunset"), option$c({ value: "autumn" }, "Autumn"), option$c({ value: "fruit" }, "Shadowfruit"), option$c({ value: "toxic" }, "Toxic"), option$c({ value: "roe" }, "Roe"), option$c({ value: "moonlight" }, "Moonlight"), option$c({ value: "portal" }, "Portal"), option$c({ value: "fusion" }, "Fusion"), option$c({ value: "inverse" }, "Inverse"), option$c({ value: "nebula" }, "Nebula"), option$c({ value: "roe light" }, "Roe Light"), option$c({ value: "amoled dark" }, "High Contrast Dark"), option$c({ value: "energized" }, "Energized"), option$c({ value: "neapolitan" }, "Neapolitan"), option$c({ value: "mono" }, "Poly"), option$c({ value: "blutonium" }, "Blutonium")), optgroup$2({ label: "ModBox Themes" }, option$c({ value: "modbox classic" }, "Modbox"), option$c({ value: "modbox 2" }, "Modbox 2.0"), option$c({ value: "modbox artic" }, "Artic"), option$c({ value: "modbox cinnamon" }, "Cinnamon Roll [!]"), option$c({ value: "modbox ocean" }, "Ocean"), option$c({ value: "modbox rainbow" }, "Rainbow [!]"), option$c({ value: "modbox float" }, "Float [!]"), option$c({ value: "modbox windows" }, "Windows"), option$c({ value: "modbox grassland" }, "Grassland"), option$c({ value: "modbox dessert" }, "Dessert"), option$c({ value: "modbox kahoot" }, "Kahootiest"), option$c({ value: "modbox bitbeam" }, "Beam to the Bit [!]"), option$c({ value: "modbox egg" }, "Pretty Egg"), option$c({ value: "modbox pony" }, "Poniryoshka"), option$c({ value: "modbox gameboy" }, "Gameboy [!]"), option$c({ value: "modbox woodkid" }, "Woodkid [!]"), option$c({ value: "modbox midnight" }, "Midnight [!]"), option$c({ value: "modbox snedbox" }, "Snedbox"), option$c({ value: "modbox unnamed" }, "unnamed [!]"), option$c({ value: "modbox piano" }, "Piano [!]"), option$c({ value: "modbox halloween" }, "Halloween [!]"), option$c({ value: "modbox frozen" }, "FrozenOver❄️ [!]")), optgroup$2({ label: "ShitBox Themes" }, option$c({ value: "shitbox 1.0" }, "Shitbox 1.0"), option$c({ value: "shitbox 2.0" }, "Shitbox 2.0"), option$c({ value: "shitbox 3.0" }, "Shitbox 3.0/shitbox4"), option$c({ value: "shitbox ModBox 2.0" }, "Shitbox ModBox 2.0"), option$c({ value: "shitbox Realm" }, "Shitbox Realm [!]")), optgroup$2({ label: "Nepbox Themes" }, option$c({ value: "nepbox" }, "Nepbox"), option$c({ value: "nepbox laffey" }, "Laffey"), option$c({ value: "nepbox snedbox" }, "Snedbox (Nb) [!]"), option$c({ value: "nepbox piano" }, "Piano (Nb) [!]")), optgroup$2({ label: "Mod Default Themes" }, option$c({ value: "sandbox classic" }, "Sandbox"), option$c({ value: "harrybox" }, "Haileybox"), option$c({ value: "brucebox" }, "Brucebox"), option$c({ value: "nerdbox" }, "NerdBox"), option$c({ value: "zefbox" }, "Zefbox"), option$c({ value: "cardboardbox classic" }, "Cardboardbox"), option$c({ value: "blubox classic" }, "Blubox"), option$c({ value: "dogebox classic" }, "Dogebox"), option$c({ value: "dogebox dark" }, "Way too Dark (DB)/TOO DARK(BluB)"), option$c({ value: "wackybox" }, "Wackybox"), option$c({ value: "todbox dark mode" }, "Todbox Dark Mode"), option$c({ value: "mainbox 1.0" }, "Mainbox"), option$c({ value: "microbox" }, "MicroBox"), option$c({ value: "paandorasbox" }, "PaandorasBox"), option$c({ value: "foxbox" }, "FoxBox"), option$c({ value: "midbox" }, "Midbox"), option$c({ value: "gold light" }, "Gold Light"), option$c({ value: "dogebox2" }, "Dogebox2"), option$c({ value: "WeebBox" }, "WeebBox"), option$c({ value: "BoxBeep Dark" }, "BoxBeep Dark"), option$c({ value: "BoxBeep light" }, "BoxBeep Light"), option$c({ value: "birdbox dark" }, "BirdBox Dark"), option$c({ value: "birdbox light" }, "BirdBox Light")), optgroup$2({ label: "Miscellaneous Themes" }, option$c({ value: "azur lane" }, "Azur Lane"), option$c({ value: "AWeebyssBox" }, "AWeebyssBox"), option$c({ value: "Deuteranopia" }, "Deuteranopia"), option$c({ value: "Protanopia" }, "Protanopia"), option$c({ value: "Tritanopia" }, "Tritanopia"), option$c({ value: "2012 Video Tutorial" }, "2012 Video Tutorial"), option$c({ value: "I am on fire" }, "I am on fire")));
+            this._cancelButton = button$k({ class: "cancelButton" });
+            this._okayButton = button$k({ class: "okayButton", style: "width:45%;" }, "Okay");
+            this.lastTheme = this._doc.song.setSongTheme;
+            this.container = div$k({ class: "prompt noSelection", id: "themeContainerPrompt", style: "width: 220px;" }, div$k({ class: "promptTitle" }, h2$j({ class: "songThemeExt", style: "text-align: inherit;" }, ""), h2$j({ class: "songThemeTitle", style: "margin-bottom: 0.5em;" }, "Set Theme for Song")), div$k({ style: "text-align: left; margin: 0.5em 0;" }, "Using this, you can set the theme for this song specifically, going to a different song will have it load your regular theme!"), div$k({ style: "display: flex; flex-direction: row; align-items: center; height: 2em; justify-content: flex-end;" }, div$k({ class: "selectContainer", style: "width: 100%;" }, this._themeSelect)), div$k({ style: "display: flex; flex-direction: row-reverse; justify-content: space-between;" }, this._okayButton), this._cancelButton);
+            this._whenKeyPressed = (event) => {
+                if (event.target.tagName != "BUTTON" && event.keyCode == 13) {
+                    this._saveChanges();
+                }
+            };
+            this._saveChanges = () => {
+                this._doc.prompt = null;
+                this._doc.record(new ChangeSongTheme(this._doc, this._doc.song.setSongTheme, this._themeSelect.value), true);
+            };
+            this._previewTheme = () => {
+                if (this._themeSelect.value != "none") {
+                    ColorConfig.setTheme(this._themeSelect.value);
+                    CustomThemeBases.setFont("none");
+                    CustomThemeBases.setBackground("none");
+                    CustomThemeBases.setBorder("none");
+                    CustomThemeBases.setIcons("none");
+                    CustomThemeBases.setCursor("none");
+                    this._doc.notifier.changed();
+                }
+                else {
+                    ColorConfig.setTheme(this._doc.prefs.colorTheme);
+                    if (this._doc.prefs.colorTheme != "custom") {
+                        CustomThemeBases.setFont("none");
+                        CustomThemeBases.setBackground("none");
+                        CustomThemeBases.setBorder("none");
+                        CustomThemeBases.setIcons("none");
+                        CustomThemeBases.setCursor("none");
+                    }
+                    else {
+                        const localFont = window.localStorage.getItem("customFontName") || "none";
+                        const localBG = window.localStorage.getItem("backgroundName") || "none";
+                        const localBorder = window.localStorage.getItem("customBorderName") || "none";
+                        const localIcons = window.localStorage.getItem("customIconsName") || "none";
+                        const localCursor = window.localStorage.getItem("customCursorName") || "none";
+                        CustomThemeBases.setFont(localFont);
+                        CustomThemeBases.setBackground(localBG);
+                        CustomThemeBases.setBackground(localIcons);
+                        CustomThemeBases.setBorder(localBorder);
+                        CustomThemeBases.setCursor(localCursor);
+                    }
+                    this._doc.notifier.changed();
+                }
+            };
+            this._close = () => {
+                this._doc.prompt = null;
+                if (this.lastTheme != null) {
+                    ColorConfig.setTheme(this.lastTheme);
+                    this._doc.record(new ChangeSongTheme(this._doc, this._doc.song.setSongTheme, this.lastTheme), true);
+                }
+                else {
+                    ColorConfig.setTheme(this._doc.prefs.colorTheme);
+                    this._doc.record(new ChangeSongTheme(this._doc, this._doc.song.setSongTheme, "none"), true);
+                }
+            };
+            this.cleanUp = () => {
+                this._okayButton.removeEventListener("click", this._close);
+                this._cancelButton.removeEventListener("click", this._close);
+            };
+            if (this.lastTheme != null) {
+                this._themeSelect.value = this.lastTheme;
+            }
+            this._okayButton.addEventListener("click", this._saveChanges);
+            this._cancelButton.addEventListener("click", this._close);
+            this.container.addEventListener("keydown", this._whenKeyPressed);
+            this._themeSelect.addEventListener("change", this._previewTheme);
         }
     }
 
@@ -52161,2636 +54899,6 @@ You should be redirected to the song at:<br /><br />
         }
     }
 
-    class CustomThemeBases {
-        static setFont(name) {
-            let font = this.baseFonts[name];
-            if (font == undefined)
-                font = this.baseFonts["Roboto"];
-            this._fontStyleElement.textContent = font;
-        }
-        static getFontProperties() {
-            return this._fontStyleElement.textContent;
-        }
-        static setBackground(name) {
-            let background = this.baseBackgrounds[name];
-            if (background == undefined)
-                background = this.baseBackgrounds["none"];
-            this._bgStyleElement.textContent = background;
-        }
-        static getBackgroundProperties() {
-            return this._bgStyleElement.textContent;
-        }
-        static setBorder(name) {
-            let border = this.baseBorders[name];
-            if (border == undefined)
-                border = this.baseBorders["none"];
-            this._borderStyleElement.textContent = border;
-        }
-        static getBorderProperties() {
-            return this._borderStyleElement.textContent;
-        }
-        static setIcons(name) {
-            let icons = this.baseIcons[name];
-            if (icons == undefined)
-                icons = this.baseIcons["none"];
-            this._iconStyleElement.textContent = icons;
-        }
-        static getIconProperties() {
-            return this._iconStyleElement.textContent;
-        }
-        static setCursor(name) {
-            let cursor = this.baseCursor[name];
-            if (cursor == undefined)
-                cursor = this.baseCursor["none"];
-            this._cursorStyleElement.textContent = cursor;
-        }
-        static getCursorProperties() {
-            return this._cursorStyleElement.textContent;
-        }
-    }
-    CustomThemeBases.baseFonts = {
-        "none": `
-        `,
-        "AbyssType": `
-
-        @font-face {
-            font-family: "CustomThemeFont";
-            src:
-             url("abysstype.otf") format("opentype") tech(color-COLRv1),
-            }
-
-            html {
- 		   	font-family: 'CustomThemeFont';
-			}
-
-			div.channelBoxLabel {
-				font-family: 'CustomThemeFont' !important;
-			}
-
-        `,
-        "AbyssType Small": `
-        @font-face {
-            font-family: "CustomThemeFont";
-            src:
-             url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
-            }
-
-            html {
- 		   	font-family: 'CustomThemeFont';
-			}
-
-			div.channelBoxLabel {
-				font-family: 'CustomThemeFont' !important;
-			}
-        `,
-        "AbyssType Fusion": `
-
-        @font-face {
-            font-family: "CustomThemeFont";
-            src:
-             url("abysstype.otf") format("opentype") tech(color-COLRv1),
-            }
-
-            @font-face {
-            font-family: "AbyssTypeSmall";
-            src:
-             url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
-            }    
-
-            html {
- 		   	font-family: 'CustomThemeFont';
-			}
-
-			div.channelBoxLabel {
-				font-family: 'AbyssTypeSmall' !important;
-			}
-
-        `,
-        "Doom 1993": `
-        @font-face {
-            font-family: "CustomThemeFont";
-            src:
-             url("doomfont.otf") format("opentype") tech(color-COLRv1),
-            }
-
-            html {
- 		   	font-family: 'CustomThemeFont';
-			}
-
-			div.channelBoxLabel {
-				font-family: 'CustomThemeFont' !important;
-			}
-        `,
-        "Tahoma Pixel": `
-        @font-face {
-            font-family: "CustomThemeFont";
-            src:
-             url("tahoma.otf") format("opentype") tech(color-COLRv1),
-            }
-
-            html {
- 		   	font-family: 'CustomThemeFont';
-			}
-
-			div.channelBoxLabel {
-				font-family: 'CustomThemeFont' !important;
-			}
-        `,
-        "Trebuchet": `
-        @font-face {
-            font-family: "CustomThemeFont";
-            src:
-             url("trebuc.otf") format("opentype") tech(color-COLRv1),
-            }
-
-            html {
- 		   	font-family: 'CustomThemeFont';
-			}
-
-			div.channelBoxLabel {
-				font-family: 'CustomThemeFont' !important;
-			}
-        `,
-        "Monospace": `
-
-            html {
- 		   	font-family: monospace;
-			}
-
-			div.channelBoxLabel {
-				font-family: monospace !important;
-			}
-        `,
-        "Frutiger": `
-        @font-face {
-            font-family: "CustomThemeFont";
-            src:
-             url("https://choptop84.github.io/choptop84s-image-repository/FrutigerLight.ttf") format("truetype") tech(color-COLRv1),
-            }
-
-            html {
- 		   	font-family: 'CustomThemeFont';
-			}
-
-			div.channelBoxLabel {
-				font-family: 'CustomThemeFont' !important;
-			}
-        `,
-        "Workbench": `
-        @font-face {
-            font-family: "CustomThemeFont";
-            src:
-            url("https://choptop84.github.io/abyssbox-app/Workbench.ttf") format("truetype") tech(color-COLRv1),
-            }
-
-            html {
- 		   	font-family: 'CustomThemeFont';
-			}
-
-			div.channelBoxLabel {
-				font-family: 'CustomThemeFont' !important;
-			}
-        `,
-        "Varela": `
-        @font-face {
-            font-family: "CustomThemeFont";
-            src:
-            url("https://choptop84.github.io/abyssbox-app/Varela.ttf") format("truetype") tech(color-COLRv1),
-            }
-
-            html {
- 		   	font-family: 'CustomThemeFont';
-			}
-
-			div.channelBoxLabel {
-				font-family: 'CustomThemeFont' !important;
-			}
-        `,
-        "Arial": `
-
-            html {
- 		   	font-family: Arial;
-			}
-
-			div.channelBoxLabel {
-				font-family: Arail !important;
-			}
-        `,
-        "Comic Sans": `
-
-            html {
- 		   	font-family: cursive;
-			}
-
-			div.channelBoxLabel {
-				font-family: cursive !important;
-			}
-        `,
-        "Helvetica": `
-
-            html {
- 		   	font-family: Helvetica;
-			}
-
-			div.channelBoxLabel {
-				font-family: Helvetica !important;
-			}
-        `,
-        "Sans Serif": `
-
-            html {
- 		   	font-family: sans-serif;
-			}
-
-			div.channelBoxLabel {
-				font-family: sans-serif !important;
-			}
-        `,
-    };
-    CustomThemeBases.baseBorders = {
-        "none": `
-        `,
-        "AbyssBox Classic": `
-			#text-content {
-    				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png");
-    				border-image-slice: 4 fill; 
-   				border-image-width: 8px; 
-				border-image-repeat: stretch; 
-    				padding: 12px; 
-
-    				image-rendering: -moz-crisp-edges !important;         /* Firefox */
-    				image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-    				image-rendering: -o-crisp-edges !important;            /* Opera */
-    				image-rendering: pixelated !important;                 /* Future browsers */
-    				image-rendering: optimizeSpeed !important;             /* IE */
-				}
-			#beepboxEditorContainer {
-    				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png");
-    				border-image-slice: 4 fill; 
-   				border-image-width: 8px; 
-				border-image-repeat: stretch;
-    				padding: 12px;
-
-    				image-rendering: -moz-crisp-edges !important;         /* Firefox */
-    				image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-    				image-rendering: -o-crisp-edges !important;            /* Opera */
-    				image-rendering: pixelated !important;                 /* Future browsers */
-    				image-rendering: optimizeSpeed !important;             /* IE */ 
-				}
-			.beepboxEditor button,
-			button.mobilePatternButton,
-			button.mobileTrackButton,
-			button.mobileSettingsButton,
-			button.mobilePlayButton,
-			button.mobilePauseButton,
-			button.mobileNextBarButton,
-			button.mobilePrevBarButton,
-			button.playButton,
-			button.pauseButton, 
-			button.recordButton, 
-			button.stopButton,
-			button.nextBarButton, 
-			button.prevBarButton, 
-			button.copyButton, 
-			button.pasteButton, 
-			button.exportInstrumentButton, 
-			button.importInstrumentButton, 
-			.beepboxEditor select, 
-			.beepboxEditor .select2-selection__rendered {
-    				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png") !important;
-    				border-image-slice: 4 fill !important; 
-   				border-image-width: 4px !important; 
-				border-image-repeat: stretch !important;
-    				padding: 4px !important; 
-
-    				image-rendering: -moz-crisp-edges !important;         /* Firefox */
-    				image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-    				image-rendering: -o-crisp-edges !important;            /* Opera */
-    				image-rendering: pixelated !important;                 /* Future browsers */
-    				image-rendering: optimizeSpeed !important;             /* IE */
-
-				}
-
-			div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
-				--ui-widget-background: #1e0915 !important;
-				border-image-source:none !important;
-			}
-
-				select.trackSelectBox {
-					border-image: none !important;
-				}
-				
-				button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
-					--ui-widget-background: var(--editor-background) !important;
-					border-image-source: none !important;
-				}
-        `,
-        "AbyssBox Competitive": `
-			.beepboxEditor button,
-			button.mobilePatternButton,
-			button.mobileTrackButton,
-			button.mobileSettingsButton,
-			button.mobilePlayButton,
-			button.mobilePauseButton,
-			button.cancelButton,
-			button.mobileNextBarButton,
-			button.mobilePrevBarButton,
-			button.insertChannelButton,
-			button.playButton,
-			button.pauseButton, 
-			button.recordButton, 
-			button.stopButton,
-			button.nextBarButton,
-			button.prevBarButton,
-			button.copyButton, 
-			button.pasteButton, 
-			button.exportInstrumentButton, 
-			button.importInstrumentButton,
-			button.okayButton, 
-			button.songLoopButton,
-			.beepboxEditor select, 
-			.beepboxEditor .select2-selection__rendered {
-					border-style: double !important;
-					border-radius: 0px !important;
-					--ui-widget-background: black;
-			}
-
-			button.add-envelope::before,
-			button.notesDownButton::before,
-			button.notesUpButton::before,
-			button.copyPatternButton::before,
-			button.pastePatternButton::before,
-			button.insertChannelButton::before,
-			button.undoButton::before,
-			button.redoButton::before,
-			button.loopBarButton::before,
-			button.duplicateButton::before,
-			button.selectAllButton::before,
-			button.deleteChannelButton::before, 
-			button.insertRowButton::before,
-			button.okayButton::before, 
-			button.songLoopButton::before,
-			.delete-envelope::before {
-				left: -3px !important;
-				top: -3px !important;
-			}
-
-			button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
-				--ui-widget-background: var(--editor-background) !important;
-				border-image-source: none !important;
-			}
-
-			div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
-				--ui-widget-background: black !important;
-				border-image-source:none !important;
-				border-style: none !important;
-			}
-
-				select.trackSelectBox {
-					border-image: none !important;
-					border-style: none !important;
-				}
-
-        `,
-        "AbyssBox Light": `
-        .promptContainerBG::before {
-            box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
-        }
-
-        /* sets background image */
-        body {
-        background-image: url("https://choptop84.github.io/abyssbox-source/website/stripesbg_light.gif") !important;
-        background-position: center;
-        background-repeat: repeat;
-
-        image-rendering: -moz-crisp-edges !important;         /* Firefox */
-        image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-        image-rendering: -o-crisp-edges !important;            /* Opera */
-        image-rendering: pixelated !important;                 /* Future browsers */
-        image-rendering: optimizeSpeed !important;             /* IE */
-            }		
-    #text-content {
-            border-image-source: url("https://choptop84.github.io/abyssbox-source/website/abyssbox_border_light.png");
-            border-image-slice: 4 fill; 
-           border-image-width: 8px; 
-        border-image-repeat: stretch; 
-            padding: 12px; 
-
-            image-rendering: -moz-crisp-edges !important;         /* Firefox */
-            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-            image-rendering: -o-crisp-edges !important;            /* Opera */
-            image-rendering: pixelated !important;                 /* Future browsers */
-            image-rendering: optimizeSpeed !important;             /* IE */
-        }
-    #beepboxEditorContainer {
-            border-image-source: url("https://choptop84.github.io/abyssbox-source/website/abyssbox_border_light.png");
-            border-image-slice: 4 fill; 
-           border-image-width: 8px; 
-        border-image-repeat: stretch;
-            padding: 12px;
-
-            image-rendering: -moz-crisp-edges !important;         /* Firefox */
-            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-            image-rendering: -o-crisp-edges !important;            /* Opera */
-            image-rendering: pixelated !important;                 /* Future browsers */
-            image-rendering: optimizeSpeed !important;             /* IE */ 
-        }
-        .beepboxEditor button,
-        button.mobilePatternButton,
-        button.mobileTrackButton,
-        button.mobileSettingsButton,
-        button.mobilePlayButton,
-        button.mobilePauseButton,
-        button.mobileNextBarButton,
-        button.mobilePrevBarButton,
-        button.playButton,
-        button.pauseButton, 
-        button.recordButton, 
-        button.stopButton,
-        button.nextBarButton, 
-        button.prevBarButton, 
-        button.copyButton, 
-        button.pasteButton, 
-        button.exportInstrumentButton, 
-        button.importInstrumentButton, 
-        .beepboxEditor select, 
-        .beepboxEditor .select2-selection__rendered {
-                border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border_light.png") !important;
-                border-image-slice: 4 fill !important; 
-               border-image-width: 4px !important; 
-            border-image-repeat: stretch !important;
-                padding: 4px !important; 
-
-                image-rendering: -moz-crisp-edges !important;         /* Firefox */
-                image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-                image-rendering: -o-crisp-edges !important;            /* Opera */
-                image-rendering: pixelated !important;                 /* Future browsers */
-                image-rendering: optimizeSpeed !important;             /* IE */
-            }
-
-        div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
-            --ui-widget-background: var(--editor-background) !important;
-            border-image-source:none !important;
-        }
-
-        select.trackSelectBox {
-            border-image: none !important;
-        }
-
-        button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
-            --ui-widget-background: var(--editor-background) !important;
-            border-image-source: none !important;
-        }
-
-        `,
-        "Scratch": `
-        div.promptContainerBG {
-			background-color: var(--editor-background) !important;
-			backdrop-filter: unset !important;
-			opacity: 0.5 !important;
-		}
-
-		  #text-content > section > h1 {
-			margin: auto;
-			content: url("https://file.garden/ZMQ0Om5nmTe-x2hq/AbyssBox%20Scratch%20Logo3.png");
-		  }
-		  .beepboxEditor,
-		  #beepboxEditorContainer {
-			background-color: rgb(255, 255, 255) !important;
-			border-radius: 6px;
-			box-shadow: 0px 0px 0px 4px rgba(158, 158, 158, 0.91);
-		  }
-		  .beepboxEditor .loopEditor {
-			--editor-background: #4d97ff40 !important;
-			border-radius: 3px;
-		  }
-		  .beepboxEditor .muteEditor {
-			--editor-background: #4d97ff40 !important;
-			border-radius: 0px;
-			height: 158px;
-		  }
-		  .beepboxEditor .pattern-area {
-			--editor-background: #4d97ff40 !important;
-			border-radius: 3px;
-		  }
-		  .beepboxEditor .trackContainer svg {
-			--editor-background: #3100ff !important;
-		  }
-		  .beepboxEditor .muteEditor > :last-child {
-			--editor-background: #4d97ff40 !important;
-		  }
-		  .beepboxEditor #octaveScrollBarContainer {
-			background-color: #4d97ff40;
-		  }
-		  .beepboxEditor .muteButtonText {
-			transform: translate(0px, 1px) !important;
-			color: #777 !important;
-		  }
-		  .beepboxEditor .instrument-bar {
-			--text-color-lit: #fff !important;
-			--text-color-dim: #4c4c4c !important;
-		  }
-		  .beepboxEditor .instrument-bar .selected-instrument {
-			color: rgb(0, 0, 0) !important;
-			text-shadow: 0px 0px 4px var(--text-color-lit);
-		  }
-		  .beepboxEditor .instrument-bar .deactivated {
-			color: rgba(0, 0, 0, 1) !important;
-			text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2);
-		  }
-		  .beepboxEditor .instrument-bar > :not(.last-button) {
-			border-color: var(--background-color-lit) !important;
-		  }
-		  .beepboxEditor .instrument-bar .selected-instrument {
-			border-color: rgba(255, 255, 255, 1) !important;
-		  }
-		  .beepboxEditor button, button {
-			color: #fff;
-			background: #3c236f;
-		  }
-		  .beepboxEditor .instrument-bar .selected-instrument,
-		  .beepboxEditor .filterEditor svg,
-		  .beepboxEditor .fadeInOut svg,
-		  .beepboxEditor .harmonics svg,
-		  .beepboxEditor .spectrum svg {
-			background: rgb(255, 255, 255) !important;
-			box-shadow:
-			  0px 0px 1px 1px rgba(0, 0, 0, 0.7),
-			  inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
-			  inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
-		  }
-		  .beepboxEditor input[type="range"]::-webkit-slider-thumb {
-			background: #000000 !important;
-		  }
-		  .beepboxEditor input[type="range"]::-moz-range-thumb {
-			background: #000000 !important;
-		  }
-		  .beepboxEditor input[type="range"]::-webkit-slider-runnable-track {
-			background: rgb(127, 127, 127) !important;
-		  }
-		  .beepboxEditor input[type="range"]::-moz-range-track {
-			background: rgb(127, 127, 127) !important;
-		  }
-		  .beepboxEditor input[type="range"]::-webkit-slider-runnable-track::focus {
-			background: rgba(255, 255, 255, 0.2) !important;
-			box-shadow:
-			  0px 0px 1px 1px rgba(0, 0, 0, 0.2),
-			  inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
-			  inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
-		  }
-		  .beepboxEditor input[type="range"]::-moz-range-track::focus {
-			background: rgba(255, 255, 255, 0.2) !important;
-			box-shadow:
-			  0px 0px 1px 1px rgba(0, 0, 0, 0.2),
-			  inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
-			  inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
-		  }
-		  .beepboxEditor input[type="text"],
-		  .beepboxEditor input[type="number"] {
-			font-size: inherit !important;
-			font-weight: bold !important;
-			font-family: inherit !important;
-			background: #ff8c1a !important;
-			text-align: center !important;
-			border: 1px solid var(--input-box-outline);
-			color: #fff !important;
-			box-shadow: 0px 0px 0px 1px rgb(134, 134, 134) !important;
-		  }
-		  .beepboxEditor .prompt {
-			--primary-text: #fff;
-			--secondary-text: #fff;
-			--ui-widget-background: #351f5f;
-			color: #fff !important;
-			background: #855cd6 !important;
-		  }
-		  .beepboxEditor .trackContainer {
-			--editor-background: #fff;
-		  }
-		  #text-content {
-			color: #fff;
-			background: #855cd6;
-		  }
-		  body:not(#secondImage) input {
-			--primary-text: #000;
-		  }
-		  body:not(#secondImage) h1 {
-			color: #000;
-		  }
-		  button.copyButton,
-		  button.pasteButton,
-		  button.exportInstrumentButton,
-		  button.importInstrumentButton, 
-		  button.addEnvelope,
-		  div.editor-controls div button,
-		  div.selectRow button,
-		  div.effects-menu button,
-		  div.effects-menu::before,
-		  div.selectContainer select,
-		  div.selectContainer::after,
-		  span#select2-pitchPresetSelect-container {
-			color: white !important;
-		  }
-		  div#text-content {
-			padding-top: 15px;
-		  }
-		  div#beepboxEditorContainer{
-			padding-bottom: 15px;
-		  }
-		  div.channelBox {
-			border-radius: 5px;
-		  }
-		  div.muteEditor {
-			border-radius: 0px !important;
-			height: 158px !important;
-		  }
-		  div.loopEditor {
-			border-radius: 0px !important;
-		  }
-        `,
-        "Scratch Addons": `
-        div.promptContainerBG {
-			background-color: var(--editor-background) !important;
-			backdrop-filter: unset !important;
-			opacity: 0.5 !important;
-		}
-		   #text-content > section > h1 {
-			 margin: auto;
-			 content: url("https://file.garden/ZMQ0Om5nmTe-x2hq/AbyssBox%20Scratch%20Logo3.png");
-		   }
-		   .beepboxEditor,
-		   #beepboxEditorContainer {
-			 background-color: #111111 !important;
-			 border-radius: 6px;
-			 box-shadow: 0px 0px 0px 4px rgba(158, 158, 158, 0.91);
-		   }
-		   .beepboxEditor .loopEditor {
-			 --editor-background: #111111 !important;
-			 border-radius: 3px;
-		   }
-		   .beepboxEditor .muteEditor {
-			 --editor-background: #4d97ff40 !important;
-			 border-radius: 3px;
-		   }
-		   .beepboxEditor .pattern-area {
-			 --editor-background: #292929 !important;
-			 border-radius: 3px;
-		   }
-		   .beepboxEditor .trackContainer svg {
-			 --editor-background: #3100ff !important;
-		   }
-		   .beepboxEditor .muteEditor > :last-child {
-			 --editor-background: #111111 !important;
-		   }
-		   .beepboxEditor #octaveScrollBarContainer {
-			 background-color: #111111;
-		   }
-		   .beepboxEditor .muteButtonText {
-			 transform: translate(0px, 1px) !important;
-			 color: #777 !important;
-		   }
-		   .beepboxEditor .instrument-bar {
-			 --text-color-lit: #111111 !important;
-			 --text-color-dim: #4c4c4c !important;
-		   }
-		   .beepboxEditor .instrument-bar .selected-instrument {
-			 color: rgb(0, 0, 0) !important;
-			 text-shadow: 0px 0px 4px var(--text-color-lit);
-		   }
-		   .beepboxEditor .instrument-bar .deactivated {
-			 color: rgba(0, 0, 0, 1) !important;
-			 text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2);
-		   }
-		   .beepboxEditor .instrument-bar > :not(.last-button) {
-			 border-color: var(--background-color-lit) !important;
-		   }
-		   .beepboxEditor .instrument-bar .selected-instrument {
-			 border-color: #111111 !important;
-		   }
-		   .beepboxEditor button, button {
-			 color: #fff;
-			 background: #3c236f;
-		   }
-		   .beepboxEditor .instrument-bar .selected-instrument,
-		   .beepboxEditor .filterEditor svg,
-		   .beepboxEditor .fadeInOut svg,
-		   .beepboxEditor .harmonics svg,
-		   .beepboxEditor .spectrum svg {
-			 background: rgb(255, 255, 255) !important;
-			 box-shadow:
-			   0px 0px 1px 1px rgba(0, 0, 0, 0.7),
-			   inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
-			   inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
-		   }
-		   .beepboxEditor input[type="range"]::-webkit-slider-thumb {
-			 background: #fff !important;
-		   }
-		   .beepboxEditor input[type="range"]::-moz-range-thumb {
-			 background: #000000 !important;
-		   }
-		   .beepboxEditor input[type="range"]::-webkit-slider-runnable-track {
-			 background: rgb(127, 127, 127) !important;
-		   }
-		   .beepboxEditor input[type="range"]::-moz-range-track {
-			 background: rgb(127, 127, 127) !important;
-		   }
-		   .beepboxEditor input[type="range"]::-webkit-slider-runnable-track::focus {
-			 background: rgba(255, 255, 255, 0.2) !important;
-			 box-shadow:
-			   0px 0px 1px 1px rgba(0, 0, 0, 0.2),
-			   inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
-			   inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
-		   }
-		   .beepboxEditor input[type="range"]::-moz-range-track::focus {
-			 background: rgba(255, 255, 255, 0.2) !important;
-			 box-shadow:
-			   0px 0px 1px 1px rgba(0, 0, 0, 0.2),
-			   inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
-			   inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
-		   }
-		   .beepboxEditor input[type="text"],
-		   .beepboxEditor input[type="number"] {
-			 font-size: inherit !important;
-			 font-weight: bold !important;
-			 font-family: inherit !important;
-			 background: #202020 !important;
-			 text-align: center !important;
-			 border: 1px solid var(--input-box-outline);
-			 color: #fff !important;
-			 box-shadow: 0px 0px 0px 1px rgb(134, 134, 134) !important;
-		   }
-		   .beepboxEditor .prompt {
-			 --primary-text: #fff;
-			 --secondary-text: #fff;
-			 --ui-widget-background: #351f5f;
-			 color: #fff !important;
-			 background: #202020 !important;
-		   }
-		   .beepboxEditor .trackContainer {
-			 --editor-background: #000;
-		   }
-		   #text-content {
-			 color: #fff;
-			 background: #202020;
-		   }
-		   body:not(#secondImage) {
-			 background: #202020;
-		   }
-		   body:not(#secondImage) input {
-			 --primary-text: #000;
-		   }
-		   body:not(#secondImage) h1 {
-			 color: #fff;
-		   }
-		  div#text-content {
-			padding-top: 15px;
-		  }
-		  div#beepboxEditorContainer{
-			padding-bottom: 15px;
-		  }
-		  div.channelBox {
-			border-radius: 5px;
-		  }
-		  div.muteEditor {
-			border-radius: 0px !important;
-		  }
-        `,
-        "Undertale": `
-        :root {
-        --arrow-color: #f67c33;
-        --icon-color: #f67c33;
-          }
-          * {
-              --text-enabled-icon:❤️ ;
-              }    
-              div.promptContainerBG {
-                  background-color: var(--editor-background) !important;
-                  backdrop-filter: unset !important;
-                  opacity: 0.5 !important;
-              }
-
-      /* sets background image */
-      body {
-      background-image: url("https://choptop84.github.io/choptop84s-image-repository/battlebg.png") !important;
-      background-position: center;
-      background-size: contain;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-      }
-      div.selectContainer.menu.file select,
-      div.selectContainer.menu.edit select,
-      div.selectContainer.menu.preferences select {
-          border-style: solid;
-          border-color: #f67c33;
-          border-radius: 0px;
-      }
-      div.selectContainer.menu.file,
-      div.selectContainer.menu.edit,
-      div.selectContainer.menu.preferences {
-          --ui-widget-background: black;
-          --icon-color: #f67c33;
-          --arrow-color: #f67c33;
-          color: #f67c33;
-      }
-      .beepboxEditor select:focus,
-      .beepboxEditor .selectContainer:focus-within
-      {
-          border-color: #fbff4b !important;
-          --ui-widget-background: black !important;
-          --icon-color: #f00 !important;
-          --arrow-color: #fbff4b !important;
-          color: #fbff4b !important;
-
-          --file-page-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-soul.png");
-          --edit-pencil-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-soul.png");
-          --preferences-gear-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-soul.png");
-      }
-      .beepboxEditor .menu.edit::before,
-      .beepboxEditor .menu.file::before,
-      .beepboxEditor .menu.preferences::before {
-          background: var(--icon-color) !important;
-      }
-      .beepboxEditor .menu.edit::after,
-      .beepboxEditor .menu.file::after,
-      .beepboxEditor .menu.preferences::after {
-          background: var(--arrow-color) !important;
-      }
-
-      #text-content {
-          border-style: solid;
-          border-radius: 0px;
-          padding-left: 20px;
-          padding-right: 20px;
-          padding-top: 15px;
-      }
-  #beepboxEditorContainer {
-      border-style: solid;
-      border-radius: 0px;
-      padding-left: 20px;
-      padding-right: 20px;
-      padding-bottom: 15px;
-      }
-        `,
-        "Windows Xp": `
-
-			#text-content {
-    				border-image-source: url("https://choptop84.github.io/abyssbox-app/xptextbg.png");
-    				border-image-slice: 11 fill; 
-   				border-image-width: 11px; 
-				border-image-repeat: stretch;
-    				background-color: transparent; 
-    				padding: 14px; 
-				}
-			#beepboxEditorContainer {
-    				border-image-source: url("https://choptop84.github.io/abyssbox-app/xptextbg.png");
-    				border-image-slice: 11 fill; 
-   				border-image-width: 11px; 
-				border-image-repeat: stretch;
-    				background-color: transparent; 
-    				padding: 13px; 
-				}
-
-			#firstImage {
-				background-image: url("https://choptop84.github.io/abyssbox-app/xpsongeditorbg.png") !important;
-				background-repeat: no-repeat !important;
-				background-size: 100% 100% !important;
-			}
-
-			div.menu-area {
-				--ui-widget-background: #edead9; 
-			}
-			select {
-				--ui-widget-background: #edead9; 
-				cursor: url("https://choptop84.github.io/choptop84s-image-repository/xphandcursor.png"), pointer !important;
-			}
-			div.playback-bar-controls {
-				--ui-widget-background: #edead9; 
-			}
-
-			.beepboxEditor input[type="range"]::-moz-range-track
-			{
-				background: rgba(222, 217, 189, 0.2) !important;
-				box-shadow:
-					0px 0px 1px 1px rgba(0, 0, 0, 0.0), 
-					inset 0px 1px 2px 0px rgb(125, 120, 95), 
-					inset 0px -1px 0px 0px rgb(255, 255, 255)
-				;
-				border-radius: 4px;
-			} /* Thanks to LeoV's Skeumorphic theme on this one */
-			
-			.beepboxEditor input[type="range"]::-moz-range-track {
-				height: 3px !important;
-			}
-			
-			.beepboxEditor select:focus {
-					border-image-source: url("https://choptop84.github.io/abyssbox-app/xpbuttonpressedbg.png");
-					border-image-slice: 4 fill; 
-					border-image-width: 4px; 
-					border-image-repeat: repeat;
-					background-color: transparent; 
-					padding: 6px; 
-				}
-
-				button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
-					--ui-widget-background: var(--editor-background) !important;
-					border-image-source: none !important;
-				}
-        `,
-        "Frutiger Aero": `
-
-		div.promptContainerBG {
-			background-color: var(--editor-background) !important;
-			backdrop-filter: unset !important;
-			opacity: 0 !important;
-		}
-
-		div.mute-button::before {
-			background: #fff0 !important;
-			background-image: url("https://choptop84.github.io/choptop84s-image-repository/vistaSpeakerIcon.png") !important;
-			background-size: 18px !important;
-			background-position: center !important;
-			background-repeat: no-repeat !important;
-			mask-size: 800px !important;
-			color: #fff0;
-
-			image-rendering: -moz-crisp-edges !important;         /* Firefox */
-			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-			image-rendering: -o-crisp-edges !important;            /* Opera */
-			image-rendering: pixelated !important;                 /* Future browsers */
-			image-rendering: optimizeSpeed !important;             /* IE */
-		}
-
-		div.mute-button.muted::before {
-			background: #fff0 !important;
-			background-image: url("https://choptop84.github.io/choptop84s-image-repository/vistaSpeakerIconMuted.png") !important;
-			background-size: 18px !important;
-			background-position: center !important;
-			background-repeat: no-repeat !important;
-			mask-size: 800px !important;
-			color: #fff0;
-
-			image-rendering: -moz-crisp-edges !important;         /* Firefox */
-			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-			image-rendering: -o-crisp-edges !important;            /* Opera */
-			image-rendering: pixelated !important;                 /* Future browsers */
-			image-rendering: optimizeSpeed !important;             /* IE */
-		}
-
-		select.trackSelectBox {
-			border-image: none !important;
-		}
-
-			canvas#oscilascopeAll {
-				background: #2e538c !important; 
-				border: 2px solid #84aef000 !important;
-			}
-
-			.beepboxEditor .play-pause-area div:last-child {
-				position: relative;
-				width: 144px;
-				height: 32px;
-			  }
-			  .beepboxEditor .play-pause-area div:last-child::before {
-				content: "";
-				display: block;
-				width: calc(144px + 4px);
-				height: calc(32px + 4px);
-				box-shadow: 0px -1px 1px 0px rgba(0, 0, 0, 0.5), inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
-				position: absolute;
-				z-index: 1;
-			  }
-
-			div.prompt.noSelection{
-				background: linear-gradient(#84aef080, #2a3d6a80) !important; 
-				opacity: 77;
-				backdrop-filter: blur(14px);
-			}  
-
-			svg#firstImage {
-				opacity: 50%;
-				--editor-background: #84aef0;
-            }
-
-			#beepboxEditorContainer {
-				background: linear-gradient(#eef3ff80, #395eb380) !important;
-				border-style: solid;
-  				border-color: lightblue;
-				padding-bottom: 5px;
-				--inverted-text: black;
-				backdrop-filter: blur(14px);
-				box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
-			}
-			#text-content {
-				background: linear-gradient(#395eb380, #03112f80);
-				border-style: solid;
-  				border-color: lightblue;
-				  backdrop-filter: blur(14px);
-				  box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
-			}
-
-				.beepboxEditor select
-				{
-					box-shadow: 0px 1px 3px 0px rgb(0, 0, 0), inset 0px -12px 14px 0px rgba(0, 0, 0, 0.3), inset 0px -15px 0px 0px rgba(0, 0, 0, 0.2);
-
-					--ui-widget-background: linear-gradient(#84aef0, #4f6db3) !important;
-					border-image-source:url("https://choptop84.github.io/choptop84s-image-repository/buttonshading.png") !important;
-					border-image-slice: 40 fill !important; 
-   					border-image-width: 4px !important; 
-					border-image-repeat: stretch; 
-				
-
-				}
-
-				div.playback-bar-controls button.playButton, 
-				div.playback-bar-controls button.pauseButton, 
-				div.playback-bar-controls button.recordButton, 
-				div.playback-bar-controls button.stopButton, 
-				div.playback-bar-controls button.prevBarButton, 
-				div.playback-bar-controls button.nextBarButton, 
-				div.selectRow button.copyButton, 
-				div.selectRow button.pasteButton, 
-				div.editor-controls button.exportInstrumentButton, 
-				div.editor-controls button.importInstrumentButton,
-				div.editor-controls div button.add-envelope,
-				div.editor-controls div button.delete-envelope  { 
-					box-shadow: 0px 1px 3px 0px rgb(0, 0, 0), inset 0px -12px 14px 0px rgba(0, 0, 0, 0.3), inset 0px -15px 0px 0px rgba(0, 0, 0, 0.2);
-
-					--ui-widget-background: linear-gradient(#84aef0, #4f6db3) !important;
-					border-image-source:url("https://choptop84.github.io/choptop84s-image-repository/buttonshading.png") !important;
-					border-image-slice: 40 fill !important; 
-   					border-image-width: 4px !important; 
-					border-image-repeat: stretch; 
-				}
-
-				.beepboxEditor select:focus
-				{
-					border-image-source: none;
-					
-					--ui-widget-background: linear-gradient(#2a3d6a, #2a3d6a) !important;
-					box-shadow:
-						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
-						inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
-						inset 0px 10px 20px 1px rgba(0, 0, 0, 0.4),
-						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-					;
-				}
-
-				.beepboxEditor .select2-selection__rendered,
-				.beepboxEditor .instrument-bar button,
-				.beepboxEditor .eq-filter-type-bar button .deactivated,
-				.beepboxEditor .note-filter-type-bar button .deactivated
-				{
-					box-shadow: 0px 1px 3px 0px rgb(0, 0, 0), inset 0px -12px 14px 0px rgba(0, 0, 0, 0.3), inset 0px -15px 0px 0px rgba(0, 0, 0, 0.2);
-					--ui-widget-background: linear-gradient(#84aef0, #4f6db3) !important;
-
-					border-image-source:url("https://choptop84.github.io/choptop84s-image-repository/buttonshading.png") !important;
-					border-image-slice: 40 fill !important; 
-   					border-image-width: 4px !important; 
-					border-image-repeat: stretch; 
-				}
-				.beepboxEditor button, button
-				{
-					--ui-widget-background: linear-gradient(#84aef0, #2a3d6a) !important;
-					box-shadow:
-						0px 2px 2px 1px rgba(0, 0, 0, 0.4),
-						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
-						inset 0px 1px 0px 0px rgba(255, 255, 255, 0.3)
-					;
-				}
-				.beepboxEditor .select2-container--open .select2-selection__rendered,
-				.beepboxEditor button:focus,
-				button:focus,
-				.beepboxEditor .instrument-bar .selected-instrument,
-				.beepboxEditor .eq-filter-type-bar button:not(.deactivated),
-				.beepboxEditor .note-filter-type-bar button:not(.deactivated)
-				{
-					--ui-widget-background: linear-gradient(#333, #444) !important;
-					box-shadow:
-						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
-						inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
-						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-					;
-				}
-				 
-				.beepboxEditor .filterEditor svg,
-				.beepboxEditor .fadeInOut svg,
-				.beepboxEditor .harmonics svg,
-				.beepboxEditor .spectrum svg
-				{
-					background: rgba(0, 0, 0, 0.3) !important;
-					box-shadow:
-						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
-						inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
-						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-					;
-				}
-				 
-				.beepboxEditor input[type="range"]::-webkit-slider-thumb
-				{
-					box-shadow:
-						0px 2px 2px 1px rgba(0, 0, 0, 0.4),
-						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
-						inset 0px 1px 0px 0px rgba(255, 255, 255, 1),
-						inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
-						inset 0px -8px 3px rgba(0, 0, 0, 0.2)
-					;
-				}
-				 
-				.beepboxEditor input[type="range"]::-webkit-slider-runnable-track
-				{
-					background: rgba(0, 0, 0, 0.2) !important;
-					box-shadow:
-						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
-						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
-						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-					;
-					border-radius: 4px;
-				}
-				 
-				.beepboxEditor input[type="range"]:focus::-webkit-slider-runnable-track
-				{
-					background: rgba(255, 255, 255, 0.2) !important;
-					box-shadow:
-						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
-						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
-						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-					;
-				}
-				 
-				.beepboxEditor input[type="range"]::-ms-thumb
-				{
-					box-shadow:
-						0px 2px 2px 1px rgba(0, 0, 0, 0.4),
-						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
-						inset 0px 1px 0px 0px rgba(255, 255, 255, 1),
-						inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
-						inset 0px -8px 3px rgba(0, 0, 0, 0.2)
-					;
-				}
-				 
-				.beepboxEditor input[type="range"]::-ms-track
-				{
-					background: rgba(0, 0, 0, 0.2) !important;
-					box-shadow:
-						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
-						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
-						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-					;
-					border-radius: 4px;
-				}
-				 
-				.beepboxEditor input[type="range"]:focus::-ms-track
-				{
-					background: rgba(255, 255, 255, 0.2) !important;
-					box-shadow:
-						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
-						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
-						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-					;
-				}
-				 
-				.beepboxEditor input[type="range"]::-moz-range-thumb
-				{
-					height: 16px !important;
-					width: 16px !important;
-					border-radius: 40px !important;
-					box-shadow:
-						0px 2px 2px 1px rgba(0, 0, 0, 0.4),
-						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
-						inset 0px 1px 0px 0px rgba(255, 255, 255, 1),
-						inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
-						inset 0px -8px 3px rgba(0, 0, 0, 0.2)
-					;
-				}
-				 
-				.beepboxEditor input[type="range"]::-moz-range-track
-				{
-					background: rgba(0, 0, 0, 0.2) !important;
-					box-shadow:
-						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
-						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
-						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-					;
-					border-radius: 4px;
-				}
-				 
-				.beepboxEditor input[type="range"]:focus::-moz-range-track
-				{
-					background: rgba(255, 255, 255, 0.2) !important;
-					box-shadow:
-						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
-						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
-						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-					;
-				}
-				 
-				.beepboxEditor input[type="text"],
-				.beepboxEditor input[type="number"]
-				{
-					border: none !important;
-					background: rgba(0, 0, 0, 0.2) !important;
-					box-shadow:
-						0px -1px 1px 0px rgba(0, 0, 0, 0.5),
-						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
-						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-					;
-				}
-				 
-				.beepboxEditor input[type="checkbox"]
-				{
-					appearance: none;
-					background: rgba(0, 0, 0, 0.3);
-					color: currentColor;
-					border-radius: 1px;
-					width: 1em !important;
-					height: 1em !important;
-					box-shadow:
-						inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
-						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-					;
-				}
-				 
-				.beepboxEditor input[type="checkbox"]:checked
-				{
-					display: flex;
-					justify-content: center;
-				}
-				 
-				.beepboxEditor input[type="checkbox"]:checked:after
-				{
-					width: 1em;
-					height: 1em;
-					text-align: center;
-					font-size: 0.8em;
-					content: "✓";
-					color: currentColor;
-					text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.5);
-				}
-
-
-				/* Use this code down here when you have transparent backgrounds!!! */
-
-		   div.beepboxEditor.load {
-			background: none !important;
-		   }
-
-		   div.noSelection {
-			background: none !important;
-		   }
-
-		   .beepboxEditor .loopEditor {
-			background: none !important;
-		   }
-
-		   .beepboxEditor .muteEditor {
-			background: linear-gradient(#c4f0d1, #83c139) !important;
-			border-radius: 5px;
-			box-shadow: 0px 1px 1px 0px rgb(0, 0, 0), inset 0px 3px 14px 0px rgba(0, 0, 0, 0.1), inset 0px -4px 0px 0px rgba(0, 0, 0, 0.1);
-			opacity: 65%;
-		   }
-
-		   div.muteEditor div {
-			background: none !important;
-			--track-editor-bg-pitch: #1b4079;
-			--track-editor-bg-noise: #213779;
-			--track-editor-bg-mod: #46299e;
-			--track-editor-bg-pitch-dim: #0c2b3e; 		
-			--track-editor-bg-noise-dim: #08204f; 			
-			--track-editor-bg-mod-dim: #26145e; 
-		   }
-
-		   div.channelBox {
-			border-radius: 5px;
-		  }
-        `,
-        "Skeuomorphic": `
-        .channelBox {
-			border-radius: 5px;
-			box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2), 0px 0px 1px 1px rgba(0, 0, 0, 0.7), inset 0px -10px 20px 1px rgba(0, 0, 0, 0.1), inset 0px 1px 0px 0px rgba(255, 255, 255, 0.1);
-		}
-		
-		#beepboxEditorContainer, .track-area, .beepboxEditor, #text-content, div.noSelection {
-			background-color: #fff0 !important;
-		} 
-		
-		#pitchEditorBackground {
-			opacity: 0.5 !important;
-			filter: brightness(150%);
-        }
-		
-		#oscilascopeAll {
-			margin-left: auto;
-			margin-right: auto;
-			position: static;
-		}
-		 
-		.beepboxEditor,
-		.beepboxEditor select
-		{
-			text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.5);
-		}
-		 
-		.beepboxEditor .piano-button {
-			text-shadow: none;
-		}
-		 
-		.beepboxEditor .prompt
-		{
-			background: radial-gradient(farthest-corner at 50% 0px, #2a2a2a, #1a1a1a) !important;
-		}
-		 
-		#beepboxEditorContainer {
-			background-color: rgba(0, 0, 0, 0) !important;
-		}
-		 
-		.beepboxEditor .trackAndMuteContainer {
-			text-shadow: none;
-		}
-		 
-		.beepboxEditor .loopEditor
-		{
-			--editor-background: rgba(0, 0, 0, 0.0) !important;
-		}
-		 
-		.beepboxEditor .muteEditor
-		{
-			--editor-background: #1e1e1e !important;
-		}
-		 
-		.beepboxEditor .pattern-area
-		{
-			--editor-background: rgba(0, 0, 0, 1) !important;
-		}
-		 
-		.beepboxEditor .trackContainer svg
-		{
-			--editor-background: #111 !important;
-		}
-		 
-		.beepboxEditor .muteEditor > :last-child {
-			--editor-background: rgba(0, 0, 0, 0) !important;
-		}
-		 
-		.beepboxEditor #octaveScrollBarContainer {
-			background-color: rgba(0, 0, 0, 0.3);
-		}
-		 
-		.beepboxEditor {
-			--track-editor-bg-pitch-dim: #1e1f28;
-		}
-		 
-		.beepboxEditor .muteButtonText {
-			transform: translate(0px, 1px) !important;
-			color: #777 !important;
-		}
-		 
-		.beepboxEditor .instrument-bar {
-			--text-color-lit: #eee;
-			--text-color-dim: #777;
-		}
-		 
-		.beepboxEditor .instrument-bar .selected-instrument {
-			color: rgba(255, 255, 255, 1) !important;
-			text-shadow: 0px 0px 4px var(--text-color-lit);
-		}
-		 
-		.beepboxEditor .instrument-bar .deactivated {
-			color: rgba(0, 0, 0, 1) !important;
-			text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2);
-		}
-		 
-		.beepboxEditor .instrument-bar > :not(.last-button) {
-			border-color: var(--background-color-lit) !important;
-		}
-		 
-		.beepboxEditor .instrument-bar .selected-instrument {
-			border-color: rgba(255, 255, 255, 1) !important;
-		}
-		 
-		.beepboxEditor select
-		{
-			background: #444 !important;
-			box-shadow:
-				0px 2px 2px 1px rgba(0, 0, 0, 0.4),
-				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
-				inset 0px -10px 20px 1px rgba(0, 0, 0, 0.4),
-				inset 0px 1px 0px 0px rgba(255, 255, 255, 0.3)
-			;
-		}
-		 
-		.beepboxEditor select:focus
-		{
-			background: #333 !important;
-			box-shadow:
-				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
-				inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
-				inset 0px 10px 20px 1px rgba(0, 0, 0, 0.4),
-				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-			;
-		}
-		 
-		.beepboxEditor .select2-selection__rendered,
-		.beepboxEditor button,
-		.beepboxEditor .instrument-bar button,
-		.beepboxEditor .eq-filter-type-bar button .deactivated,
-		.beepboxEditor .note-filter-type-bar button .deactivated
-		{
-			background: linear-gradient(#444, #333) !important;
-			box-shadow:
-				0px 2px 2px 1px rgba(0, 0, 0, 0.4),
-				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
-				inset 0px 1px 0px 0px rgba(255, 255, 255, 0.3)
-			;
-		}
-		 
-		.beepboxEditor .select2-container--open .select2-selection__rendered,
-		.beepboxEditor button:focus,
-		.beepboxEditor .instrument-bar .selected-instrument,
-		.beepboxEditor .eq-filter-type-bar button:not(.deactivated),
-		.beepboxEditor .note-filter-type-bar button:not(.deactivated)
-		{
-			background: linear-gradient(#333, #444) !important;
-			box-shadow:
-				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
-				inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
-				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-			;
-		}
-		 
-		.beepboxEditor .filterEditor svg,
-		.beepboxEditor .fadeInOut svg,
-		.beepboxEditor .harmonics svg,
-		.beepboxEditor .spectrum svg
-		{
-			background: rgba(0, 0, 0, 0.3) !important;
-			box-shadow:
-				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
-				inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
-				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-			;
-		}
-		 
-		.beepboxEditor input[type="range"]::-webkit-slider-thumb
-		{
-			box-shadow:
-				0px 2px 2px 1px rgba(0, 0, 0, 0.4),
-				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
-				inset 0px 1px 0px 0px rgba(255, 255, 255, 1),
-				inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
-				inset 0px -8px 3px rgba(0, 0, 0, 0.2)
-			;
-		}
-		 
-		.beepboxEditor input[type="range"]::-webkit-slider-runnable-track
-		{
-			background: rgba(0, 0, 0, 0.2) !important;
-			box-shadow:
-				0px 0px 1px 1px rgba(0, 0, 0, 0.2),
-				inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
-				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-			;
-			border-radius: 4px;
-		}
-		 
-		.beepboxEditor input[type="range"]:focus::-webkit-slider-runnable-track
-		{
-			background: rgba(255, 255, 255, 0.2) !important;
-			box-shadow:
-				0px 0px 1px 1px rgba(0, 0, 0, 0.2),
-				inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
-				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-			;
-		}
-		 
-		.beepboxEditor input[type="range"]::-ms-thumb
-		{
-			box-shadow:
-				0px 2px 2px 1px rgba(0, 0, 0, 0.4),
-				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
-				inset 0px 1px 0px 0px rgba(255, 255, 255, 1),
-				inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
-				inset 0px -8px 3px rgba(0, 0, 0, 0.2)
-			;
-		}
-		 
-		.beepboxEditor input[type="range"]::-ms-track
-		{
-			background: rgba(0, 0, 0, 0.2) !important;
-			box-shadow:
-				0px 0px 1px 1px rgba(0, 0, 0, 0.2),
-				inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
-				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-			;
-			border-radius: 4px;
-		}
-		 
-		.beepboxEditor input[type="range"]:focus::-ms-track
-		{
-			background: rgba(255, 255, 255, 0.2) !important;
-			box-shadow:
-				0px 0px 1px 1px rgba(0, 0, 0, 0.2),
-				inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
-				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-			;
-		}
-		 
-		.beepboxEditor input[type="range"]::-moz-range-thumb
-		{
-			box-shadow:
-				0px 2px 2px 1px rgba(0, 0, 0, 0.4),
-				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
-				inset 0px 1px 0px 0px rgba(255, 255, 255, 1),
-				inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
-				inset 0px -8px 3px rgba(0, 0, 0, 0.2)
-			;
-		}
-		 
-		.beepboxEditor input[type="range"]::-moz-range-track
-		{
-			background: rgba(0, 0, 0, 0.2) !important;
-			box-shadow:
-				0px 0px 1px 1px rgba(0, 0, 0, 0.2),
-				inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
-				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-			;
-			border-radius: 4px;
-		}
-		 
-		.beepboxEditor input[type="range"]:focus::-moz-range-track
-		{
-			background: rgba(255, 255, 255, 0.2) !important;
-			box-shadow:
-				0px 0px 1px 1px rgba(0, 0, 0, 0.2),
-				inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
-				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-			;
-		}
-		 
-		.beepboxEditor input[type="text"],
-		.beepboxEditor input[type="number"]
-		{
-			border: none !important;
-			background: rgba(0, 0, 0, 0.2) !important;
-			box-shadow:
-				0px -1px 1px 0px rgba(0, 0, 0, 0.5),
-				inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
-				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-			;
-		}
-		 
-		.beepboxEditor input[type="checkbox"]
-		{
-			appearance: none;
-			background: rgba(0, 0, 0, 0.3);
-			color: currentColor;
-			border-radius: 1px;
-			width: 1em !important;
-			height: 1em !important;
-			box-shadow:
-				inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
-				inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
-			;
-		}
-		 
-		.beepboxEditor input[type="checkbox"]:checked
-		{
-			display: flex;
-			justify-content: center;
-		}
-		 
-		.beepboxEditor input[type="checkbox"]:checked:after
-		{
-			width: 1em;
-			height: 1em;
-			text-align: center;
-			font-size: 0.8em;
-			content: "✓";
-			color: currentColor;
-			text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.5);
-		}
-        `,
-        "Glyde": `
-             div#beepboxEditorContainer {
-                 border-style: solid;
-                 border-width: 8px;
-                 border-color: #4f152b;
-                 padding-bottom: 5px;
-             }
-                 
-             #text-content {
-                 border-style: solid;
-                 border-width: 8px;
-                 border-color: #4f152b;
-             }
- 
-                 div.beepboxEditor.load {
-                     background: none !important;
-                    }
-         
-                    div.noSelection {
-                     background: none !important;
-                    }
-         
-                    .beepboxEditor .loopEditor {
-                     background: none !important;
-                    }
-         
-                    .beepboxEditor .muteEditor {
-                     background: none !important;
-                    }
-         
-                    div.muteEditor div {
-                     background: none !important;
-                    }
-        `,
-        "Slushie 2": `
-        #text-content {
-            border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/slushiepixel_border.png");
-            border-image-slice: 4 fill; 
-           border-image-width: 8px; 
-        border-image-repeat: repeat; 
-            padding-left: 12px; 
-            padding-right: 12px; 
-            padding-bottom: 12px; 
-            image-rendering: -moz-crisp-edges !important;         /* Firefox */
-            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-            image-rendering: -o-crisp-edges !important;            /* Opera */
-            image-rendering: pixelated !important;                 /* Future browsers */
-            image-rendering: optimizeSpeed !important;             /* IE */
-        }
-    #beepboxEditorContainer {
-            border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/slushiepixel_border.png");
-            border-image-slice: 4 fill; 
-           border-image-width: 8px; 
-        border-image-repeat: repeat;
-            padding-left: 12px; 
-            padding-right: 12px; 
-            padding-bottom: 12px; 
-
-            image-rendering: -moz-crisp-edges !important;         /* Firefox */
-            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-            image-rendering: -o-crisp-edges !important;            /* Opera */
-            image-rendering: pixelated !important;                 /* Future browsers */
-            image-rendering: optimizeSpeed !important;             /* IE */ 
-        }
-
-        .beepboxEditor button,
-        button.mobilePatternButton,
-        button.mobileTrackButton,
-        button.mobileSettingsButton,
-        button.mobilePlayButton,
-        button.mobilePauseButton,
-        button.mobileNextBarButton,
-        button.mobilePrevBarButton,
-        button.playButton,
-        button.pauseButton, 
-        button.recordButton, 
-        button.stopButton,
-        button.nextBarButton, 
-        button.prevBarButton, 
-        button.copyButton, 
-        button.pasteButton, 
-        button.exportInstrumentButton, 
-        button.importInstrumentButton, 
-        .beepboxEditor select, 
-        .beepboxEditor .select2-selection__rendered {
-                border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/slushie buttonbg.png") !important;
-                border-image-slice: 4 fill !important; 
-               border-image-width: 4px !important; 
-            border-image-repeat: stretch !important;
-                padding: 4px !important; 
-
-                image-rendering: -moz-crisp-edges !important;         /* Firefox */
-                image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-                image-rendering: -o-crisp-edges !important;            /* Opera */
-                image-rendering: pixelated !important;                 /* Future browsers */
-                image-rendering: optimizeSpeed !important;             /* IE */
-            }
-
-            button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
-                --ui-widget-background: var(--editor-background) !important;
-                border-image-source: none !important;
-            }
-
-        `,
-        "BeepBox Pixel": `
-        /* sets background image */
-        #text-content {
-            border-image-source: url("https://choptop84.github.io/abyssbox-source/website/beepbox_pixel_border.png");
-            border-image-slice: 4 fill; 
-           border-image-width: 8px; 
-        border-image-repeat: stretch; 
-            padding: 12px; 
-
-            image-rendering: -moz-crisp-edges !important;         /* Firefox */
-            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-            image-rendering: -o-crisp-edges !important;            /* Opera */
-            image-rendering: pixelated !important;                 /* Future browsers */
-            image-rendering: optimizeSpeed !important;             /* IE */
-        }
-    #beepboxEditorContainer {
-            border-image-source: url("https://choptop84.github.io/abyssbox-source/website/beepbox_pixel_border.png");
-            border-image-slice: 4 fill; 
-           border-image-width: 8px; 
-        border-image-repeat: stretch;
-            padding: 12px;
-
-            image-rendering: -moz-crisp-edges !important;         /* Firefox */
-            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-            image-rendering: -o-crisp-edges !important;            /* Opera */
-            image-rendering: pixelated !important;                 /* Future browsers */
-            image-rendering: optimizeSpeed !important;             /* IE */ 
-        }
-        .beepboxEditor button,
-        button.mobilePatternButton,
-        button.mobileTrackButton,
-        button.mobileSettingsButton,
-        button.mobilePlayButton,
-        button.mobilePauseButton,
-        button.mobileNextBarButton,
-        button.mobilePrevBarButton,
-        button.playButton,
-        button.pauseButton, 
-        button.recordButton, 
-        button.stopButton,
-        button.nextBarButton, 
-        button.prevBarButton, 
-        button.copyButton, 
-        button.pasteButton, 
-        button.exportInstrumentButton, 
-        button.importInstrumentButton, 
-        .beepboxEditor select, 
-        .beepboxEditor .select2-selection__rendered {
-            border-image-source: url("https://choptop84.github.io/abyssbox-source/website/beepbox_pixel_border.png") !important;
-            border-image-slice: 4 fill !important; 
-           border-image-width: 4px !important; 
-        border-image-repeat: stretch !important;
-            padding: 4px !important; 
-
-            image-rendering: -moz-crisp-edges !important;         /* Firefox */
-            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-            image-rendering: -o-crisp-edges !important;            /* Opera */
-            image-rendering: pixelated !important;                 /* Future browsers */
-            image-rendering: optimizeSpeed !important;             /* IE */
-        }
-        `,
-        "Forest 2": `
-        /* sets background image */
-        #text-content {
-            --editor-background: (255, 255, 255, 0);
-                border-image-source: url("https://choptop84.github.io/abyssbox-app/forest2_border.png");
-                border-image-slice: 16 fill; 
-                   border-image-width: 32px; 
-                border-image-repeat: repeat; 
-                padding: 36px; 
-
-                image-rendering: -moz-crisp-edges !important;         /* Firefox */
-                image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-                image-rendering: -o-crisp-edges !important;            /* Opera */
-                image-rendering: pixelated !important;                 /* Future browsers */
-                image-rendering: optimizeSpeed !important;             /* IE */
-            }
-        #beepboxEditorContainer {
-            --editor-background: (255, 255, 255, 0);
-                border-image-source: url("https://choptop84.github.io/abyssbox-app/forest2_border.png");
-                border-image-slice: 16 fill; 
-                   border-image-width: 32px; 
-                border-image-repeat: repeat; 
-                padding-left: 36px; 
-                padding-right: 36px; 
-                padding-top: 5px; 
-                padding-bottom: 5px; 
-
-                image-rendering: -moz-crisp-edges !important;         /* Firefox */
-                image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-                image-rendering: -o-crisp-edges !important;            /* Opera */
-                image-rendering: pixelated !important;                 /* Future browsers */
-                image-rendering: optimizeSpeed !important;             /* IE */ 
-            }
-        .beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered, button {
-                border-image-source: url("https://choptop84.github.io/abyssbox-app/forest2_border2.png") !important;
-                border-image-slice: 4 fill !important; 
-               border-image-width: 4px !important; 
-            border-image-repeat: stretch !important;
-                padding: 4px !important; 
-
-                image-rendering: -moz-crisp-edges !important;         /* Firefox */
-                image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-                image-rendering: -o-crisp-edges !important;            /* Opera */
-                image-rendering: pixelated !important;                 /* Future browsers */
-                image-rendering: optimizeSpeed !important;             /* IE */
-            }
-        select.trackSelectBox {
-            border-image: none !important;
-        }
-        div.prompt.noSelection {
-            background: var(--editor-background); 
-        }
-        /* div.channelBox {
-        border-radius: 5px;
-        } */
-        `,
-        "Canyon 2": `
-        #pattern-area {
-            border-style: solid;
-            border-color: #0a0000;
-            border-bottom: 0;
-            border-right: 0;
-            border-top: 0;
-         }
-    
-         #text-content {
-            border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/canyon2_border.png");
-            border-image-slice: 16 fill; 
-            border-image-width: 32px; 
-            border-image-repeat: repeat; 
-            padding-left: 36px; 
-            padding-right: 36px; 
-            padding-bottom: 6px; 
-        
-            image-rendering: -moz-crisp-edges !important;         /* Firefox */
-            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-            image-rendering: -o-crisp-edges !important;            /* Opera */
-            image-rendering: pixelated !important;                 /* Future browsers */
-            image-rendering: optimizeSpeed !important;             /* IE */
-            background: #fff0;
-         }
-     #beepboxEditorContainer {
-            border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/canyon2_border.png");
-            border-image-slice: 16 fill; 
-            border-image-width: 32px; 
-            border-image-repeat: repeat; 
-            padding-left: 36px; 
-            padding-right: 36px; 
-            padding-bottom: 6px; 
-            
-            image-rendering: -moz-crisp-edges !important;         /* Firefox */
-            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-            image-rendering: -o-crisp-edges !important;            /* Opera */
-            image-rendering: pixelated !important;                 /* Future browsers */
-            image-rendering: optimizeSpeed !important;             /* IE */
-            background: #fff0;
-         }
-    
-         .beepboxEditor button,
-         button.mobilePatternButton,
-         button.mobileTrackButton,
-         button.mobileSettingsButton,
-         button.mobilePlayButton,
-         button.mobilePauseButton,
-         button.mobileNextBarButton,
-         button.mobilePrevBarButton,
-         button.playButton,
-         button.pauseButton, 
-         button.recordButton, 
-         button.stopButton,
-         button.nextBarButton, 
-         button.prevBarButton, 
-         button.copyButton, 
-         button.pasteButton, 
-         button.exportInstrumentButton, 
-         button.importInstrumentButton, 
-         .beepboxEditor select, 
-         .beepboxEditor .select2-selection__rendered {
-                 border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/canyon2_button.png") !important;
-                 border-image-slice: 4 fill !important; 
-                border-image-width: 4px !important; 
-             border-image-repeat: stretch !important;
-                 padding: 4px !important; 
-    
-                 image-rendering: -moz-crisp-edges !important;         /* Firefox */
-                 image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-                 image-rendering: -o-crisp-edges !important;            /* Opera */
-                 image-rendering: pixelated !important;                 /* Future browsers */
-                 image-rendering: optimizeSpeed !important;             /* IE */
-             }
-    
-        button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
-                --ui-widget-background: var(--editor-background) !important;
-                border-image-source: none !important;
-            }
-        `,
-        "Nebula 2": `
-        #text-content {
-            --editor-background: rgba(255, 255, 255, 0);
-                border-image-source: url("https://choptop84.github.io/abyssbox-app/nebula2_border.png");
-                border-image-slice: 16 fill; 
-                   border-image-width: 32px; 
-                border-image-repeat: repeat; 
-                padding: 36px; 
-
-                image-rendering: -moz-crisp-edges !important;         /* Firefox */
-                image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-                image-rendering: -o-crisp-edges !important;            /* Opera */
-                image-rendering: pixelated !important;                 /* Future browsers */
-                image-rendering: optimizeSpeed !important;             /* IE */
-            }
-        #beepboxEditorContainer {
-            --editor-background: rgba(255, 255, 255, 0);
-                border-image-source: url("https://choptop84.github.io/abyssbox-app/nebula2_border.png");
-                border-image-slice: 16 fill; 
-                   border-image-width: 32px; 
-                border-image-repeat: repeat; 
-                padding-left: 36px; 
-                padding-right: 36px; 
-                padding-top: 5px; 
-                padding-bottom: 5px; 
-
-                image-rendering: -moz-crisp-edges !important;         /* Firefox */
-                image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-                image-rendering: -o-crisp-edges !important;            /* Opera */
-                image-rendering: pixelated !important;                 /* Future browsers */
-                image-rendering: optimizeSpeed !important;             /* IE */ 
-            }
-        .beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered, button {
-                border-image-source: url("https://choptop84.github.io/abyssbox-app/nebula2_border2.png") !important;
-                border-image-slice: 4 fill !important; 
-               border-image-width: 4px !important; 
-            border-image-repeat: stretch !important;
-                padding: 4px !important; 
-
-                image-rendering: -moz-crisp-edges !important;         /* Firefox */
-                image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-                image-rendering: -o-crisp-edges !important;            /* Opera */
-                image-rendering: pixelated !important;                 /* Future browsers */
-                image-rendering: optimizeSpeed !important;             /* IE */
-            }
-            select.trackSelectBox {
-                border-image: none !important;
-            }
-        `,
-        "Ghost House 2": `
-        #text-content {
-            border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/ghosthousebg2.png");
-            border-image-slice: 16 fill; 
-           border-image-width: 32px; 
-        border-image-repeat: repeat; 
-            padding-left: 32px; 
-            padding-right: 32px; 
-            padding-bottom: 16px; 
-            image-rendering: -moz-crisp-edges !important;         /* Firefox */
-            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-            image-rendering: -o-crisp-edges !important;            /* Opera */
-            image-rendering: pixelated !important;                 /* Future browsers */
-            image-rendering: optimizeSpeed !important;             /* IE */
-        }
-    #beepboxEditorContainer {
-            border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/ghosthousebg2.png");
-            border-image-slice: 16 fill; 
-           border-image-width: 32px; 
-        border-image-repeat: repeat;
-            padding-left: 32px; 
-            padding-right: 32px; 
-            padding-bottom: 16px; 
-
-            image-rendering: -moz-crisp-edges !important;         /* Firefox */
-            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-            image-rendering: -o-crisp-edges !important;            /* Opera */
-            image-rendering: pixelated !important;                 /* Future browsers */
-            image-rendering: optimizeSpeed !important;             /* IE */ 
-        }
-
-        div.prompt.noSelection {
-            background-color: var(--editor-background) !important;
-        }
-        
-        .beepboxEditor button,
-        button.mobilePatternButton,
-        button.mobileTrackButton,
-        button.mobileSettingsButton,
-        button.mobilePlayButton,
-        button.mobilePauseButton,
-        button.mobileNextBarButton,
-        button.mobilePrevBarButton,
-        button.playButton,
-        button.pauseButton, 
-        button.recordButton, 
-        button.stopButton,
-        button.nextBarButton, 
-        button.prevBarButton, 
-        button.copyButton, 
-        button.pasteButton, 
-        button.exportInstrumentButton, 
-        button.importInstrumentButton, 
-        .beepboxEditor select, 
-        .beepboxEditor .select2-selection__rendered {
-                border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/ghosthouse_button.png") !important;
-                border-image-slice: 5 fill !important; 
-               border-image-width: 5px !important;  
-            border-image-repeat: repeat !important;
-                padding: 4px !important; 
-
-                image-rendering: -moz-crisp-edges !important;         /* Firefox */
-                image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-                image-rendering: -o-crisp-edges !important;            /* Opera */
-                image-rendering: pixelated !important;                 /* Future browsers */
-                image-rendering: optimizeSpeed !important;             /* IE */
-            }
-
-            button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
-                --ui-widget-background: var(--editor-background) !important;
-                border-image-source: none !important;
-            }
-        `,
-    };
-    CustomThemeBases.baseBackgrounds = {
-        "none": `
-
-        `,
-        "AbyssBox Classic": `
-        /* sets background image */
-		body {
-			background-image: url("https://choptop84.github.io/abyssbox-source/website/stripesbg.gif") !important;
-			background-position: center;
-			background-repeat: repeat;
-
-			image-rendering: -moz-crisp-edges !important;         /* Firefox */
-			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-			image-rendering: -o-crisp-edges !important;            /* Opera */
-			image-rendering: pixelated !important;                 /* Future browsers */
-			image-rendering: optimizeSpeed !important;             /* IE */
-			}
-        `,
-        "AbyssBox Light": `
-        /* sets background image */
-        body {
-            background-image: url("https://choptop84.github.io/abyssbox-source/website/stripesbg_light.gif") !important;
-            background-position: center;
-            background-repeat: repeat;
-
-            image-rendering: -moz-crisp-edges !important;         /* Firefox */
-            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-            image-rendering: -o-crisp-edges !important;            /* Opera */
-            image-rendering: pixelated !important;                 /* Future browsers */
-            image-rendering: optimizeSpeed !important;             /* IE */
-            }	
-        `,
-        "Half-Life": `
-        /* sets background image */
-            body {
-            background-image: url("https://choptop84.github.io/abyssbox-source/website/lambda.png") !important;
-            background-position: top;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            background-size: cover;
-			}
-        `,
-        "Doom 1993": `
-        /* sets background image */
-		body {
-            background-image: url("doomsky.png") !important;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-			}
-        `,
-        "Undertale": `
-        /* sets background image */
-        body {
-            background-image: url("https://choptop84.github.io/choptop84s-image-repository/battlebg.png") !important;
-            background-position: center;
-            background-size: contain;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            }
-        `,
-        "Windows Xp": `
-        /* sets background image */
-		body {
-            background-image: url("https://choptop84.github.io/abyssbox-app/xphills.png") !important;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-			}
-        `,
-        "Frutiger Aero": `
-        /* sets background image */
-        body {
-            background-image: url("https://choptop84.github.io/choptop84s-image-repository/frutigerbg3.jpg") !important;
-            background-position: top;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            background-size: cover;
-            image-rendering: optimizeQuality !important;             /* IE */ 
-            }
-        `,
-        "Skeuomorphic": `
-        body {
-			background-image: url('https://github.com/choptop84/choptop84s-image-repository/blob/main/skeuobg.png?raw=true') !important;
-			background-repeat: no-repeat !important;
-			background-size: contain;
-		    }
-
-        svg#firstImage {
-                background-image: url('https://github.com/choptop84/choptop84s-image-repository/blob/main/skeuobg2.png?raw=true') !important;
-            }
-        `,
-        "Glyde": `
-        /* sets background image */
-        body {
-        background-image: url("https://choptop84.github.io/choptop84s-image-repository/glydebg.png") !important;
-        background-position: top right;
-        background-repeat: no-repeat !important;
-
-        image-rendering: -moz-crisp-edges !important;         /* Firefox */
-        image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-        image-rendering: -o-crisp-edges !important;            /* Opera */
-        image-rendering: pixelated !important;                 /* Future browsers */
-        image-rendering: optimizeSpeed !important;             /* IE */
-            }
-
-            #firstImage {
-                background-image: url("https://choptop84.github.io/choptop84s-image-repository/slushiepfp.PNG") !important;
-                background-repeat: no-repeat !important;
-                background-size: 100% 100% !important;
-            }
-        `,
-        "starry studio": `
-        body {
-			background-image: url("https://choptop84.github.io/choptop84s-image-repository/stars.gif") !important;
-			background-repeat: repeat !important;
-
-			image-rendering: -moz-crisp-edges !important;         /* Firefox */
-			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-			image-rendering: -o-crisp-edges !important;            /* Opera */
-			image-rendering: pixelated !important;                 /* Future browsers */
-			image-rendering: optimizeSpeed !important;             /* IE */
-			}
-        `,
-        "Slushie 2": `
-        body {
-            background-image: url("https://choptop84.github.io/choptop84s-image-repository/slushbg.gif") !important;
-            background-size: 32px;
-            background-position: center;
-            background-repeat: repeat;
-
-            image-rendering: -moz-crisp-edges !important;         /* Firefox */
-            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-            image-rendering: -o-crisp-edges !important;            /* Opera */
-            image-rendering: pixelated !important;                 /* Future browsers */
-            image-rendering: optimizeSpeed !important;             /* IE */
-            }
-        `,
-        "BeepBox Pixel": `
-        /* sets background image */
-        body {
-            background-image: url("https://choptop84.github.io/abyssbox-source/website/diamondsbg.gif") !important;
-            background-position: center;
-            background-repeat: repeat;
-
-            image-rendering: -moz-crisp-edges !important;         /* Firefox */
-            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-            image-rendering: -o-crisp-edges !important;            /* Opera */
-            image-rendering: pixelated !important;                 /* Future browsers */
-            image-rendering: optimizeSpeed !important;             /* IE */
-            }
-        `,
-        "Forest 2": `
-        /* sets background image */
-        body {
-            background-image: url("https://choptop84.github.io/abyssbox-app/Forest2Trees.png") !important;
-            background-size: cover;
-            background-position: center top; /* Adjusted to align with the top */
-              background-repeat: no-repeat;
-
-            image-rendering: -moz-crisp-edges !important;         /* Firefox */
-            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-            image-rendering: -o-crisp-edges !important;            /* Opera */
-            image-rendering: pixelated !important;                 /* Future browsers */
-            image-rendering: optimizeSpeed !important;             /* IE */ 
-            }
-        `,
-        "Canyon 2": `
-        body {
-            background-image: url("https://choptop84.github.io/choptop84s-image-repository/canyonbg.png") !important;
-            background-size: 200% !important;
-            background-position: center top; /* Adjusted to align with the top */
-            background-repeat: no-repeat !important;
-    
-            image-rendering: -moz-crisp-edges !important;         /* Firefox */
-            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-            image-rendering: -o-crisp-edges !important;            /* Opera */
-            image-rendering: pixelated !important;                 /* Future browsers */
-            image-rendering: optimizeSpeed !important;             /* IE */ 
-            }
-        `,
-        "Nebula 2": `
-        body {
-            background-image: url("https://choptop84.github.io/abyssbox-app/stars.gif") !important;
-            background-size: contain !important;
-            background-position: center top !important;
-            background-repeat: repeat !important;
-
-            image-rendering: -moz-crisp-edges !important;         /* Firefox */
-            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-            image-rendering: -o-crisp-edges !important;            /* Opera */
-            image-rendering: pixelated !important;                 /* Future browsers */
-            image-rendering: optimizeSpeed !important;             /* IE */ 
-            }
-        `,
-        "Ghost House 2": `
-        body {
-            background-image: url("https://choptop84.github.io/choptop84s-image-repository/ghosthousebg.png") !important;
-            background-size: 256px;
-            background-position: center;
-            background-repeat: repeat;
-
-            image-rendering: -moz-crisp-edges !important;         /* Firefox */
-            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-            image-rendering: -o-crisp-edges !important;            /* Opera */
-            image-rendering: pixelated !important;                 /* Future browsers */
-            image-rendering: optimizeSpeed !important;             /* IE */
-            }
-        `,
-        "azur lane": `
-        /* sets background image */
-        body {
-            background-image: url("UltraBoxAzurLaneThemeMemoryTaskBackground.png") !important;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            }
-        `,
-    };
-    CustomThemeBases.baseIcons = {
-        "none": `
-        `,
-        "AbyssBox Classic": `
-        * {
-            --file-page-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-file.png");
-            --edit-pencil-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-edit.png");
-            --preferences-gear-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-preferences.png");
-            --instrument-copy-symbol: url("https://choptop84.github.io/abyssbox-app/icon-copy.png");
-            --instrument-paste-symbol: url("https://choptop84.github.io/abyssbox-app/icon-paste.png");
-            --play-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-play.png");
-            --pause-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-pause.png");
-            --record-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-record.png");
-            --stop-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-stop.png");
-            --prev-bar-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-prev.png");
-            --next-bar-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-next.png");
-            --muted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speakerMuted.png");
-            --unmuted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speaker.png");
-            --volume-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-speaker.png");
-            --zoom-in-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomIn.png");
-            --zoom-out-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-zoomOut.png");
-            --export-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-export.png");
-            --export-instrument-symbol: var(--export-symbol);
-            --import-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-import.png");
-            }
-        `,
-        "Scratch": `
-        * {
-            --play-symbol:url("https://choptop84.github.io/choptop84s-image-repository/Greenflag.png");
-            --pause-symbol:url("https://choptop84.github.io/choptop84s-image-repository/stopsign.png");
-            --stop-symbol:url("https://choptop84.github.io/choptop84s-image-repository/stopsign.png");
-            }
-
-            button.playButton::before {
-                background-image: url("https://choptop84.github.io/choptop84s-image-repository/Greenflag.png") !important;
-                background-size: 18px !important;
-                background-position: center !important;
-                background-repeat: no-repeat !important;
-                mask-size: 800px;
-                color: #fff0;
-                /* Hold on, before you start asking: "WHAT THE? WHY IS THE ICON SO LARGE!!!" Let me tell ya that this method removes all the filtering issues on the png and it looks incredibly seemless so shush */
-            }
-    
-            button.pauseButton::before {
-                background-image: url("https://choptop84.github.io/choptop84s-image-repository/stopsign.png") !important;
-                background-size: 18px !important;
-                background-position: center !important;
-                background-repeat: no-repeat !important;
-                mask-size: 800px;
-                color: #fff0;
-            }
-    
-            button.stopButton::before {
-                background-image: url("https://choptop84.github.io/choptop84s-image-repository/stopsign.png") !important;
-                background-size: 18px !important;
-                background-position: center !important;
-                background-repeat: no-repeat !important;
-                mask-size: 800px;
-                color: #fff0;
-            }
-        `,
-        "Frutiger Aero": `
-            * {
-            /*cursor: url("abyssbox_cursor.png"), auto !important;*/
-            --muted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/vistaSpeakerIconMuted.png");
-            --unmuted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/vistaSpeakerIcon.png");
-            }
-        `,
-        "Windows Xp": `
-* {
-cursor: url("https://choptop84.github.io/abyssbox-app/xpcursor.png"), auto !important;
---play-symbol:url("https://choptop84.github.io/abyssbox-app/xpPlay.png");
---pause-symbol:url("https://choptop84.github.io/abyssbox-app/xpPause.png");
---record-symbol:url("https://choptop84.github.io/abyssbox-app/xpRecord.png");
---stop-symbol:url("https://choptop84.github.io/abyssbox-app/xpStop.png");
---prev-bar-symbol:url("https://choptop84.github.io/abyssbox-app/xpBackward.png");
---next-bar-symbol:url("https://choptop84.github.io/abyssbox-app/xpForward.png");
---file-page-symbol: url("https://choptop84.github.io/abyssbox-app/xpFile.png");
---edit-pencil-symbol: url("https://choptop84.github.io/abyssbox-app/xpEdit.png");
---preferences-gear-symbol: url("https://choptop84.github.io/abyssbox-app/xpPreferences.png");
---muted-symbol: url("https://choptop84.github.io/abyssbox-app/xpSpeakerMute.png");
---unmuted-symbol: url("https://choptop84.github.io/abyssbox-app/xpSpeaker.png");
---volume-symbol: url("https://choptop84.github.io/abyssbox-app/xpSpeaker.png");
---zoom-in-symbol: url("https://choptop84.github.io/abyssbox-app/xpZoomIn.png");
---zoom-out-symbol: url("https://choptop84.github.io/abyssbox-app/xpZoomOut.png");
-}
-
-div.mute-button::before {
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpSpeaker.png") !important;
-    background-size: 120% !important;
-    background-position-x: center !important;
-    background-position-y: center !important;
-    background-repeat: no-repeat !important;
-
-    image-rendering: -moz-crisp-edges !important;         /* Firefox */
-    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-    image-rendering: -o-crisp-edges !important;            /* Opera */
-    image-rendering: pixelated !important;                 /* Future browsers */
-    image-rendering: optimizeSpeed !important;             /* IE */
-}
-
-div.mute-button.muted::before {
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpSpeakerMute.png") !important;
-    background-size: 120% !important;
-    background-position-x: center !important;
-    background-position-y: center !important;
-    background-repeat: no-repeat !important;
-    
-    image-rendering: -moz-crisp-edges !important;         /* Firefox */
-    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-    image-rendering: -o-crisp-edges !important;            /* Opera */
-    image-rendering: pixelated !important;                 /* Future browsers */
-    image-rendering: optimizeSpeed !important;             /* IE */
-}
-
-button.recordButton::Before {
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpRecord.png") !important;
-    background-size: 64% !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-
-    image-rendering: -moz-crisp-edges !important;         /* Firefox */
-    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-    image-rendering: -o-crisp-edges !important;            /* Opera */
-    image-rendering: pixelated !important;                 /* Future browsers */
-    image-rendering: optimizeSpeed !important;             /* IE */
-
-}
-
-button.stopButton::Before {
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpStop.png") !important;
-    background-size: 64% !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-
-    image-rendering: -moz-crisp-edges !important;         /* Firefox */
-    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-    image-rendering: -o-crisp-edges !important;            /* Opera */
-    image-rendering: pixelated !important;                 /* Future browsers */
-    image-rendering: optimizeSpeed !important;             /* IE */
-
-}
-
-button.pauseButton::Before {
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpPause.png") !important;
-    background-size: 64% !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-
-    image-rendering: -moz-crisp-edges !important;         /* Firefox */
-    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-    image-rendering: -o-crisp-edges !important;            /* Opera */
-    image-rendering: pixelated !important;                 /* Future browsers */
-    image-rendering: optimizeSpeed !important;             /* IE */
-
-}
-
-.beepboxEditor span.volume-speaker {
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpSpeaker.png");
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-
-    image-rendering: -moz-crisp-edges !important;         /* Firefox */
-    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-    image-rendering: -o-crisp-edges !important;            /* Opera */
-    image-rendering: pixelated !important;                 /* Future browsers */
-    image-rendering: optimizeSpeed !important;             /* IE */
-    }
-
-div.selectContainer.menu.file::before {
-
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpFile.png");
-    background-size: 64%;
-    background-position-x: center;
-    background-position-y: center;
-
-    image-rendering: -moz-crisp-edges !important;         /* Firefox */
-    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-    image-rendering: -o-crisp-edges !important;            /* Opera */
-    image-rendering: pixelated !important;                 /* Future browsers */
-    image-rendering: optimizeSpeed !important;             /* IE */
-}
-
-div.selectContainer.menu.edit::before {
-
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpEdit.png");
-    background-size: 64%;
-    background-position-x: center;
-    background-position-y: center;
-
-    image-rendering: -moz-crisp-edges !important;         /* Firefox */
-    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-    image-rendering: -o-crisp-edges !important;            /* Opera */
-    image-rendering: pixelated !important;                 /* Future browsers */
-    image-rendering: optimizeSpeed !important;             /* IE */
-}
-div.selectContainer.menu.preferences::before {
-
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpPreferences.png");
-    background-size: 64%;
-    background-position-x: center;
-    background-position-y: center;
-
-    image-rendering: -moz-crisp-edges !important;         /* Firefox */
-    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-    image-rendering: -o-crisp-edges !important;            /* Opera */
-    image-rendering: pixelated !important;                 /* Future browsers */
-    image-rendering: optimizeSpeed !important;             /* IE */
-}
-button.playButton::before {
-
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpPlay.png") !important;
-    background-size: 64% !important;
-    background-position: center !important;
-
-
-    image-rendering: -moz-crisp-edges !important;         /* Firefox */
-    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-    image-rendering: -o-crisp-edges !important;            /* Opera */
-    image-rendering: pixelated !important;                 /* Future browsers */
-    image-rendering: optimizeSpeed !important;             /* IE */
-}
-
-.beepboxEditor button.prevBarButton::before {
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpBackward.png") !important;
-    background-size: 64% !important;
-    background-position: center !important;
-
-
-    image-rendering: -moz-crisp-edges !important;         /* Firefox */
-    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-    image-rendering: -o-crisp-edges !important;            /* Opera */
-    image-rendering: pixelated !important;                 /* Future browsers */
-    image-rendering: optimizeSpeed !important;             /* IE */
-
-}
-
-.beepboxEditor button.nextBarButton::before {
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpForward.png") !important;
-    background-size: 64% !important;
-    background-position: center !important;
-
-
-    image-rendering: -moz-crisp-edges !important;         /* Firefox */
-    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-    image-rendering: -o-crisp-edges !important;            /* Opera */
-    image-rendering: pixelated !important;                 /* Future browsers */
-    image-rendering: optimizeSpeed !important;             /* IE */
-
-}
-
-.beepboxEditor .zoomInButton::before {
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpZoomIn.png") !important;
-    background-position: center !important;
-
-
-    image-rendering: -moz-crisp-edges !important;         /* Firefox */
-    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-    image-rendering: -o-crisp-edges !important;            /* Opera */
-    image-rendering: pixelated !important;                 /* Future browsers */
-    image-rendering: optimizeSpeed !important;             /* IE */
-
-}
-
-.beepboxEditor .zoomOutButton::before {
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpZoomOut.png") !important;
-    background-position: center !important;
-
-
-    image-rendering: -moz-crisp-edges !important;         /* Firefox */
-    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-    image-rendering: -o-crisp-edges !important;            /* Opera */
-    image-rendering: pixelated !important;                 /* Future browsers */
-    image-rendering: optimizeSpeed !important;             /* IE */
-
-}
-
-.beepboxEditor input[type="range"]::-moz-range-thumb {
-    background-image: url("https://choptop84.github.io/abyssbox-app/scrollbar.png") !important;
-    background-position: center !important;
-    background-size: inherit !important;
-
-    border-radius: 0px !important;
-    width: 13px !important;
-    height: 23px !important;
-    image-rendering: -moz-crisp-edges !important;         /* Firefox */
-    image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-    image-rendering: -o-crisp-edges !important;            /* Opera */
-    image-rendering: pixelated !important;                 /* Future browsers */
-    image-rendering: optimizeSpeed !important;             /* IE */
-
-}
-
-        .beepboxEditor input[type="checkbox"]
-        {
-            appearance: none;
-            background: rgba(255, 255, 255, 1);
-            color: currentColor;
-            border-radius: 0px;
-            width: 13px !important;
-            height: 13px !important;
-            background-image:url("https://choptop84.github.io/abyssbox-app/xpCheckmarkBlank.png");
-            background-repeat:no-repeat;
-
-            image-rendering: -moz-crisp-edges !important;         /* Firefox */
-            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-            image-rendering: -o-crisp-edges !important;            /* Opera */
-            image-rendering: pixelated !important;                 /* Future browsers */
-            image-rendering: optimizeSpeed !important;             /* IE */
-            transform: scale(2) !important;
-            }
-
-        .beepboxEditor input[type="checkbox"]:checked
-        {
-            display: flex;
-            justify-content: center;
-            transform: scale(2) !important;
-        }
-         
-        .beepboxEditor input[type="checkbox"]:checked:after
-        {
-            width: 13px;
-            height: 13px;
-            text-align: center;
-            content: "";
-            background-repeat:no-repeat;
-            background-image:url("https://choptop84.github.io/abyssbox-app/xpCheckmark.png");
-            image-rendering: -moz-crisp-edges !important;         /* Firefox */
-            image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
-            image-rendering: -o-crisp-edges !important;            /* Opera */
-            image-rendering: pixelated !important;                 /* Future browsers */
-            image-rendering: optimizeSpeed !important;             /* IE */
-        }
-        `,
-    };
-    CustomThemeBases.baseCursor = {
-        "none": `
-        `,
-        "My Abyss": `
-        * {
-		cursor: url("abyssbox_cursor.png"), auto;
-        }
-        `,
-        "Retro": `
-        * {
-        cursor: url("https://choptop84.github.io/abyssbox-app/pixel_cursor.png"), auto !important;
-        }
-        `,
-        "Slushie 2": `
-        * {
-        cursor: url("https://choptop84.github.io/choptop84s-image-repository/slush_pixel_cursor.png"), auto !important;
-        }
-        `,
-        "Ghost House 2": `
-        * {
-		cursor: url("https://choptop84.github.io/abyssbox-app/pixel_cursor.png"), auto !important;
-        }
-        `,
-        "Windows Xp": `
-        * {
-		cursor: url("https://choptop84.github.io/abyssbox-app/xpcursor.png"), auto !important;
-        }
-        `,
-        "WackyBox": `
-        * {
-        cursor: url('wackybox_cursor.png'), auto;
-        }
-        `,
-        "Azur Lane": `
-        * {
-		cursor: url("UltraBoxAzurLaneThemeMouse.png"), auto !important;
-		}
-        `,
-    };
-    CustomThemeBases._fontStyleElement = document.head.appendChild(HTML.style({ type: "text/css" }));
-    CustomThemeBases._bgStyleElement = document.head.appendChild(HTML.style({ type: "text/css" }));
-    CustomThemeBases._borderStyleElement = document.head.appendChild(HTML.style({ type: "text/css" }));
-    CustomThemeBases._iconStyleElement = document.head.appendChild(HTML.style({ type: "text/css" }));
-    CustomThemeBases._cursorStyleElement = document.head.appendChild(HTML.style({ type: "text/css" }));
-
     const { button: button$8, div: div$8, h2: h2$7, option: option$5, select: select$5, optgroup: optgroup$1 } = HTML;
     class ThemePrompt {
         constructor(_doc) {
@@ -58307,7 +58415,7 @@ button.playButton::before {
             this._volumeBarContainer = SVG.svg({ style: `touch-action: none; overflow: visible; margin: auto; max-width: 20vw;`, width: "160px", height: "100%", preserveAspectRatio: "none", viewBox: "0 0 160 12" }, this._defs, this._outVolumeBarBg, this._outVolumeBar, this._outVolumeCap);
             this._volumeBarBox = div({ class: "playback-volume-bar", style: "height: 12px; align-self: center;" }, this._volumeBarContainer);
             this._fileMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "File"), option({ value: "new" }, "+ New Blank Song"), option({ value: "import" }, "↑ > Import/Export Song (" + EditorConfig.ctrlSymbol + "S)"), option({ value: "copyUrl" }, "⎘ Copy Song URL"), option({ value: "shareUrl" }, "⤳ Share Song URL"), option({ value: "shortenUrl" }, "… Shorten Song URL"), option({ value: "configureShortener" }, "🛠 > Customize Url Shortener"), option({ value: "viewPlayer" }, "▶ View in Song Player"), option({ value: "copyEmbed" }, "⎘ Copy HTML Embed Code"), option({ value: "songRecovery" }, "⚠ > Recover Recent Song"));
-            this._editMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Edit"), option({ value: "undo" }, "Undo (Z)"), option({ value: "redo" }, "Redo (Y)"), option({ value: "copy" }, "Copy Pattern (C)"), option({ value: "pasteNotes" }, "Paste Pattern Notes (V)"), option({ value: "pasteNumbers" }, "Paste Pattern Numbers (" + EditorConfig.ctrlSymbol + "⇧V)"), option({ value: "insertBars" }, "Insert Bar (⏎)"), option({ value: "deleteBars" }, "Delete Selected Bars (⌫)"), option({ value: "insertChannel" }, "Insert Channel (" + EditorConfig.ctrlSymbol + "⏎)"), option({ value: "deleteChannel" }, "Delete Selected Channels (" + EditorConfig.ctrlSymbol + "⌫)"), option({ value: "selectChannel" }, "Select Channel (⇧A)"), option({ value: "selectAll" }, "Select All (A)"), option({ value: "duplicatePatterns" }, "Duplicate Reused Patterns (D)"), option({ value: "transposeUp" }, "Move Notes Up (+ or ⇧+)"), option({ value: "transposeDown" }, "Move Notes Down (- or ⇧-)"), option({ value: "moveNotesSideways" }, "> Move All Notes Sideways (W)"), option({ value: "generateEuclideanRhythm" }, "> Generate Euclidean Rhythm (E)"), option({ value: "beatsPerBar" }, "> Change Beats Per Bar (B)"), option({ value: "barCount" }, "> Change Song Length (L)"), option({ value: "channelSettings" }, "> Channel Settings (Q)"), option({ value: "limiterSettings" }, "> Limiter Settings (⇧L)"), option({ value: "addExternal" }, "> Add Custom Samples (⇧Q)"));
+            this._editMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Edit"), option({ value: "undo" }, "Undo (Z)"), option({ value: "redo" }, "Redo (Y)"), option({ value: "copy" }, "Copy Pattern (C)"), option({ value: "pasteNotes" }, "Paste Pattern Notes (V)"), option({ value: "pasteNumbers" }, "Paste Pattern Numbers (" + EditorConfig.ctrlSymbol + "⇧V)"), option({ value: "insertBars" }, "Insert Bar (⏎)"), option({ value: "deleteBars" }, "Delete Selected Bars (⌫)"), option({ value: "insertChannel" }, "Insert Channel (" + EditorConfig.ctrlSymbol + "⏎)"), option({ value: "deleteChannel" }, "Delete Selected Channels (" + EditorConfig.ctrlSymbol + "⌫)"), option({ value: "selectChannel" }, "Select Channel (⇧A)"), option({ value: "selectAll" }, "Select All (A)"), option({ value: "duplicatePatterns" }, "Duplicate Reused Patterns (D)"), option({ value: "transposeUp" }, "Move Notes Up (+ or ⇧+)"), option({ value: "transposeDown" }, "Move Notes Down (- or ⇧-)"), option({ value: "moveNotesSideways" }, "> Move All Notes Sideways (W)"), option({ value: "generateEuclideanRhythm" }, "> Generate Euclidean Rhythm (E)"), option({ value: "beatsPerBar" }, "> Change Beats Per Bar (B)"), option({ value: "barCount" }, "> Change Song Length (L)"), option({ value: "channelSettings" }, "> Channel Settings (Q)"), option({ value: "limiterSettings" }, "> Limiter Settings (⇧L)"), option({ value: "addExternal" }, "> Add Custom Samples (⇧Q)"), option({ value: "songTheme" }, "> Set Theme For Song"));
             this._optionsMenu = select({ style: "width: 100%;" }, option({ selected: true, disabled: true, hidden: false }, "Preferences"), optgroup({ label: "Technical" }, option({ value: "autoPlay" }, "Auto Play on Load"), option({ value: "autoFollow" }, "Auto Follow Playhead"), option({ value: "enableNotePreview" }, "Hear Added Notes"), option({ value: "notesOutsideScale" }, "Place Notes Out of Scale"), option({ value: "setDefaultScale" }, "Set Current Scale as Default"), option({ value: "alwaysFineNoteVol" }, "Always Fine Note Volume"), option({ value: "enableChannelMuting" }, "Enable Channel Muting"), option({ value: "instrumentCopyPaste" }, "Enable Copy/Paste Buttons"), option({ value: "instrumentImportExport" }, "Enable Import/Export Buttons"), option({ value: "displayBrowserUrl" }, "Enable Song Data in URL"), option({ value: "closePromptByClickoff" }, "Close prompts on click off"), option({ value: "oldMobileLayout" }, "Use the Old mobile layout (Reload)"), option({ value: "instrumentSettingsSimplifier" }, "Use Mobile Instrument Settings"), option({ value: "recordingSetup" }, "Note Recording...")), optgroup({ label: "Appearance" }, option({ value: "showThird" }, 'Highlight "Third" Note (SandBox)'), option({ value: "showFifth" }, 'Highlight "Fifth" Note'), option({ value: "advancedColorScheme" }, "Advanced Color Scheme (ModBox)"), option({ value: "notesFlashWhenPlayed" }, "Notes Flash When Played (DB2)"), option({ value: "showChannels" }, "Show All Channels"), option({ value: "showScrollBar" }, "Show Octave Scroll Bar"), option({ value: "showLetters" }, "Show Piano Keys"), option({ value: "displayVolumeBar" }, "Show Playback Volume"), option({ value: "showOscilloscope" }, "Show Oscilloscope"), option({ value: "showSampleLoadingStatus" }, "Show Sample Loading Status"), option({ value: "showDescription" }, "Show Description"), option({ value: "frostedGlassBackground" }, "Use Frosted Glass Prompt Backdrops"), option({ value: "displayShortcutButtons" }, "Display Mobile Shortcut Buttons"), option({ value: "oldModNotes" }, 'Use Old Mod Notes'), option({ value: "layout" }, "> Set Layout"), option({ value: "colorTheme" }, "> Set Theme"), option({ value: "customTheme" }, "> Custom Theme")));
             this._scaleSelect = buildOptions(select(), Config.scales.map(scale => scale.name));
             this._keySelect = buildOptions(select(), Config.keys.map(key => key.name).reverse());
@@ -58502,7 +58610,8 @@ button.playButton::before {
                 div({ style: "height:54px; display:flex; justify-content:center;" }, [this._customWaveDrawCanvas.canvas]),
                 div({ style: "margin-top:5px; display:flex; justify-content:center;" }, [this._customWavePresetDrop, this._customWaveZoom]),
             ]);
-            this._songTitleInputBox = new InputBox(input({ style: "font-weight:bold; border:none; width: 98%; background-color:${ColorConfig.editorBackground}; color:${ColorConfig.primaryText}; text-align:center", maxlength: "30", type: "text", value: EditorConfig.versionDisplayName }), this._doc, (oldValue, newValue) => new ChangeSongTitle(this._doc, oldValue, newValue));
+            this._songTitleInputBox = new InputBox(input({ style: "font-weight:bold; border:none; width: 98%; background-color:${ColorConfig.editorBackground}; color:${ColorConfig.primaryText}; text-align:center",
+                maxlength: "30", type: "text", value: EditorConfig.versionDisplayName }), this._doc, (oldValue, newValue) => new ChangeSongTitle(this._doc, oldValue, newValue));
             this._feedbackAmplitudeSlider = new Slider(input({ type: "range", min: "0", max: Config.operatorAmplitudeMax, value: "0", step: "1", title: "Feedback Amplitude" }), this._doc, (oldValue, newValue) => new ChangeFeedbackAmplitude(this._doc, oldValue, newValue), false);
             this._feedbackRow2 = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("feedbackVolume") }, "Fdback Vol:"), this._feedbackAmplitudeSlider.container);
             this._addEnvelopeButton = button({ type: "button", class: "add-envelope" });
@@ -61744,6 +61853,9 @@ button.playButton::before {
                     case "addExternal":
                         this._openPrompt("addExternal");
                         break;
+                    case "songTheme":
+                        this._openPrompt("songTheme");
+                        break;
                 }
                 this._editMenu.selectedIndex = 0;
             };
@@ -62478,6 +62590,9 @@ button.playButton::before {
                         break;
                     case "addExternal":
                         this.prompt = new AddSamplesPrompt(this._doc);
+                        break;
+                    case "songTheme":
+                        this.prompt = new SetThemePrompt(this._doc);
                         break;
                     case "generateEuclideanRhythm":
                         this.prompt = new EuclideanRhythmPrompt(this._doc);
@@ -64353,14 +64468,6 @@ button.playButton::before {
                 this._recordedNewSong = false;
             };
             this.notifier.watch(this._validateDocState);
-            ColorConfig.setTheme(this.prefs.colorTheme);
-            if (window.localStorage.getItem("colorTheme") == "custom") {
-                CustomThemeBases.setFont(this.prefs.customFont);
-                CustomThemeBases.setBackground(this.prefs.customBG);
-                CustomThemeBases.setIcons(this.prefs.customIcons);
-                CustomThemeBases.setBorder(this.prefs.customBorder);
-                CustomThemeBases.setCursor(this.prefs.customCursor);
-            }
             Layout.setLayout(this.prefs.layout);
             if (window.sessionStorage.getItem("currentUndoIndex") == null) {
                 window.sessionStorage.setItem("currentUndoIndex", "0");
@@ -64385,6 +64492,19 @@ button.playButton::before {
             this.synth = new Synth(this.song);
             this.synth.volume = this._calcVolume();
             this.synth.anticipatePoorPerformance = isMobile;
+            if (this.song.setSongTheme == "none") {
+                ColorConfig.setTheme(this.prefs.colorTheme);
+                if (window.localStorage.getItem("colorTheme") == "custom") {
+                    CustomThemeBases.setFont(this.prefs.customFont);
+                    CustomThemeBases.setBackground(this.prefs.customBG);
+                    CustomThemeBases.setIcons(this.prefs.customIcons);
+                    CustomThemeBases.setBorder(this.prefs.customBorder);
+                    CustomThemeBases.setCursor(this.prefs.customCursor);
+                }
+            }
+            else {
+                ColorConfig.setTheme(this.song.setSongTheme);
+            }
             let state = this._getHistoryState();
             if (state == null) {
                 state = { canUndo: false, sequenceNumber: 0, bar: 0, channel: 0, instrument: 0, recoveryUid: generateUid(), prompt: null, selection: this.selection.toJSON() };

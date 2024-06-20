@@ -13,6 +13,7 @@ import { Change } from "./Change";
 import { ChangeNotifier } from "./ChangeNotifier";
 import { ChangeSong, setDefaultInstruments, discardInvalidPatternInstruments, ChangeHoldingModRecording} from "./changes";
 
+
 import {CustomThemeBases} from "./CustomThemeBases"
 
 interface HistoryState {
@@ -66,15 +67,6 @@ export class SongDocument {
 		
 	constructor() {
 		this.notifier.watch(this._validateDocState);
-		
-		ColorConfig.setTheme(this.prefs.colorTheme);
-
-		if (window.localStorage.getItem("colorTheme") == "custom") { 
-		CustomThemeBases.setFont(this.prefs.customFont);
-		CustomThemeBases.setBackground(this.prefs.customBG);
-		CustomThemeBases.setIcons(this.prefs.customIcons); 
-		CustomThemeBases.setBorder(this.prefs.customBorder);
-		CustomThemeBases.setCursor(this.prefs.customCursor);}
 
 		Layout.setLayout(this.prefs.layout);
 		
@@ -102,6 +94,20 @@ export class SongDocument {
 		this.synth.volume = this._calcVolume();
 		this.synth.anticipatePoorPerformance = isMobile;
 		
+		if (this.song.setSongTheme == "none") {
+			ColorConfig.setTheme(this.prefs.colorTheme);
+	
+			if (window.localStorage.getItem("colorTheme") == "custom") { 
+				CustomThemeBases.setFont(this.prefs.customFont);
+				CustomThemeBases.setBackground(this.prefs.customBG);
+				CustomThemeBases.setIcons(this.prefs.customIcons); 
+				CustomThemeBases.setBorder(this.prefs.customBorder);
+				CustomThemeBases.setCursor(this.prefs.customCursor);
+				}
+			} else {
+				ColorConfig.setTheme(this.song.setSongTheme);
+			}
+
 		let state: HistoryState | null = this._getHistoryState();
 		if (state == null) {
 			// When the page is first loaded, indicate that undo is NOT possible.

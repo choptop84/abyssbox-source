@@ -1486,7 +1486,7 @@ var beepbox = (function (exports) {
             return (_a = EditorConfig.presetCategories[0].presets.dictionary) === null || _a === void 0 ? void 0 : _a[TypePresets === null || TypePresets === void 0 ? void 0 : TypePresets[instrument]];
         }
     }
-    EditorConfig.version = "1.4";
+    EditorConfig.version = "1.4.5";
     EditorConfig.versionDisplayName = "AbyssBox " + EditorConfig.version;
     EditorConfig.releaseNotesURL = "./patch_notes.html";
     EditorConfig.isOnMac = /^Mac/i.test(navigator.platform) || /Mac OS X/i.test(navigator.userAgent) || /^(iPhone|iPad|iPod)/i.test(navigator.platform) || /(iPhone|iPad|iPod)/i.test(navigator.userAgent);
@@ -1785,6 +1785,7 @@ var beepbox = (function (exports) {
                 { name: "Ghost House", generalMidi: false, settings: { "type": "FM", "eqFilter": [], "eqFilterType": false, "eqSimpleCut": 10, "eqSimplePeak": 0, "envelopeSpeed": 12, "discreteEnvelope": false, "eqSubFilters0": [], "effects": ["transition type", "vibrato", "bitcrusher"], "transition": "normal", "clicklessTransition": false, "vibrato": "heavy", "vibratoDepth": 0.45, "vibratoDelay": 0, "vibratoSpeed": 10, "vibratoType": 0, "bitcrusherOctave": 3.5, "bitcrusherQuantization": 43, "panDelay": 10, "fadeInSeconds": 0, "fadeOutTicks": -3, "algorithm": "1←(2 3←4)", "feedbackType": "1⟲", "feedbackAmplitude": 0, "operators": [{ "frequency": "1×", "amplitude": 15, "waveform": "sine", "pulseWidth": 5 }, { "frequency": "1×", "amplitude": 4, "waveform": "sine", "pulseWidth": 5 }, { "frequency": "1×", "amplitude": 6, "waveform": "sine", "pulseWidth": 5 }, { "frequency": "1×", "amplitude": 7, "waveform": "sine", "pulseWidth": 5 }, { "frequency": "1×", "amplitude": 0, "waveform": "sine", "pulseWidth": 5 }, { "frequency": "1×", "amplitude": 0, "waveform": "sine", "pulseWidth": 5 }], "envelopes": [{ "target": "noteVolume", "envelope": "punch" }] } },
                 { name: "Supersaw Pluck", generalMidi: false, settings: { "type": "supersaw", "eqFilter": [], "eqFilterType": false, "eqSimpleCut": 9, "eqSimplePeak": 0, "envelopeSpeed": 12, "discreteEnvelope": false, "eqSubFilters0": [], "eqSubFilters1": [], "effects": ["chord type", "note filter", "chorus", "echo", "reverb"], "chord": "simultaneous", "fastTwoNoteArp": true, "arpeggioSpeed": 12, "noteFilterType": true, "noteSimpleCut": 7, "noteSimplePeak": 1, "noteFilter": [{ "type": "low-pass", "cutoffHz": 3828.43, "linearGain": 0.5 }], "noteSubFilters1": [{ "type": "low-pass", "cutoffHz": 3828.43, "linearGain": 0.5 }], "panDelay": 10, "chorus": 14, "echoSustain": 29, "echoDelayBeats": 1, "reverb": 0, "fadeInSeconds": 0, "fadeOutTicks": 48, "pulseWidth": 40, "decimalOffset": 0, "dynamism": 67, "spread": 50, "shape": 0, "envelopes": [{ "target": "noteFilterAllFreqs", "envelope": "twang 1" }] } },
                 { name: "Credits Bass", generalMidi: false, settings: { "type": "chip", "eqFilter": [], "eqFilterType": false, "eqSimpleCut": 8, "eqSimplePeak": 0, "envelopeSpeed": 12, "discreteEnvelope": false, "effects": ["transition type", "chord type", "note filter"], "transition": "interrupt", "clicklessTransition": false, "chord": "arpeggio", "fastTwoNoteArp": true, "arpeggioSpeed": 9, "noteFilterType": true, "noteSimpleCut": 8, "noteSimplePeak": 0, "noteFilter": [{ "type": "low-pass", "cutoffHz": 16000, "linearGain": 0.3536 }], "noteSubFilters1": [{ "type": "low-pass", "cutoffHz": 16000, "linearGain": 0.3536 }], "panDelay": 10, "fadeInSeconds": 0, "fadeOutTicks": -1, "wave": "alto sax", "unison": "none", "isUsingAdvancedLoopControls": false, "chipWaveLoopStart": 0, "chipWaveLoopEnd": 2, "chipWaveLoopMode": 0, "chipWavePlayBackwards": false, "chipWaveStartOffset": 0, "envelopes": [{ "target": "noteFilterAllFreqs", "envelope": "decay 1" }] } },
+                { name: "Heavy Knock", generalMidi: false, settings: { "type": "noise", "eqFilter": [], "eqFilterType": false, "eqSimpleCut": 10, "eqSimplePeak": 0, "envelopeSpeed": 12, "discreteEnvelope": false, "eqSubFilters0": [], "effects": ["vibrato", "note filter", "reverb"], "vibrato": "delayed", "vibratoDepth": 0.3, "vibratoDelay": 18.5, "vibratoSpeed": 10, "vibratoType": 0, "noteFilterType": true, "noteSimpleCut": 7, "noteSimplePeak": 1, "noteFilter": [{ "type": "low-pass", "cutoffHz": 3828.43, "linearGain": 0.5 }], "noteSubFilters1": [{ "type": "low-pass", "cutoffHz": 3828.43, "linearGain": 0.5 }], "panDelay": 10, "reverb": 0, "fadeInSeconds": 0, "fadeOutTicks": 48, "wave": "white", "unison": "none", "envelopes": [{ "target": "noteFilterAllFreqs", "envelope": "twang 2" }] } },
             ]) },
     ]);
 
@@ -4725,6 +4726,7 @@ var beepbox = (function (exports) {
             this.patternInstruments = false;
             this.title = "Untitled";
             document.title = this.title + " - " + EditorConfig.versionDisplayName;
+            this.setSongTheme = "none";
             if (andResetChannels) {
                 this.pitchChannelCount = 3;
                 this.noiseChannelCount = 1;
@@ -4771,6 +4773,12 @@ var beepbox = (function (exports) {
             buffer.push(base64IntToCharCode[encodedSongTitle.length >> 6], base64IntToCharCode[encodedSongTitle.length & 0x3f]);
             for (let i = 0; i < encodedSongTitle.length; i++) {
                 buffer.push(encodedSongTitle.charCodeAt(i));
+            }
+            buffer.push(89);
+            var encodedSongTheme = encodeURIComponent(this.setSongTheme);
+            buffer.push(base64IntToCharCode[encodedSongTheme.length >> 6], base64IntToCharCode[encodedSongTheme.length & 0x3f]);
+            for (let i = 0; i < encodedSongTheme.length; i++) {
+                buffer.push(encodedSongTheme.charCodeAt(i));
             }
             buffer.push(110, base64IntToCharCode[this.pitchChannelCount], base64IntToCharCode[this.noiseChannelCount], base64IntToCharCode[this.modChannelCount]);
             buffer.push(115, base64IntToCharCode[this.scale]);
@@ -5514,6 +5522,13 @@ var beepbox = (function (exports) {
                             this.title = decodeURIComponent(compressed.substring(charIndex, charIndex + songNameLength));
                             document.title = this.title + " - " + EditorConfig.versionDisplayName;
                             charIndex += songNameLength;
+                        }
+                        break;
+                    case 89:
+                        {
+                            var songThemeLength = (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << 6) + base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
+                            this.setSongTheme = decodeURIComponent(compressed.substring(charIndex, charIndex + songThemeLength));
+                            charIndex += songThemeLength;
                         }
                         break;
                     case 110:
@@ -7632,6 +7647,7 @@ var beepbox = (function (exports) {
             }
             const result = {
                 "name": this.title,
+                "theme": this.setSongTheme,
                 "format": Song._format,
                 "version": Song._latestAbyssBoxVersion,
                 "scale": Config.scales[this.scale].name,
@@ -7667,6 +7683,9 @@ var beepbox = (function (exports) {
             const format = jsonFormat == "auto" ? jsonObject["format"] : jsonFormat;
             if (jsonObject["name"] != undefined) {
                 this.title = jsonObject["name"];
+            }
+            if (jsonObject["theme"] != undefined) {
+                this.setSongTheme = jsonObject["theme"];
             }
             if (jsonObject["customSamples"] != undefined) {
                 const customSamples = jsonObject["customSamples"];

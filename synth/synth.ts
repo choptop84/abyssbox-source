@@ -342,7 +342,7 @@ const enum SongTagCode {
 	feedbackEnvelope    = CharCode.V, // added in BeepBox URL version 6, DEPRECATED
 	pulseWidth          = CharCode.W, // added in BeepBox URL version 7
 	aliases             = CharCode.X, // added in JummBox URL version 4 for aliases, DEPRECATED, [UB] repurposed for PWM decimal offset (DEPRECATED as well)
-//	                    = CharCode.Y,
+    songTheme           = CharCode.Y, // added in AbyssBox URL version 1
 //	                    = CharCode.Z,
 //	                    = CharCode.NUM_0,
 //	                    = CharCode.NUM_1,
@@ -2952,6 +2952,7 @@ export class Song {
     private static readonly _variant = 0x61; //"a" ~ abyssbox
 
     public title: string;
+    public setSongTheme: string;
     public scale: number;
     public scaleCustom: boolean[] = [];
     public key: number;
@@ -3117,6 +3118,7 @@ export class Song {
 
         this.title = "Untitled";
         document.title = this.title + " - " + EditorConfig.versionDisplayName;
+        this.setSongTheme = "none";
 
         if (andResetChannels) {
             this.pitchChannelCount = 3;
@@ -3175,6 +3177,16 @@ export class Song {
             buffer.push(encodedSongTitle.charCodeAt(i));
         }
 
+        //Length of the song theme string
+        buffer.push(SongTagCode.songTheme);
+        var encodedSongTheme: string = encodeURIComponent(this.setSongTheme);
+        buffer.push(base64IntToCharCode[encodedSongTheme.length >> 6], base64IntToCharCode[encodedSongTheme.length & 0x3f]);
+
+        // Actual encoded string follows
+        for (let i: number = 0; i < encodedSongTheme.length; i++) {
+            buffer.push(encodedSongTheme.charCodeAt(i));
+        }
+        
         buffer.push(SongTagCode.channelCount, base64IntToCharCode[this.pitchChannelCount], base64IntToCharCode[this.noiseChannelCount], base64IntToCharCode[this.modChannelCount]);
         buffer.push(SongTagCode.scale, base64IntToCharCode[this.scale]);
         if (this.scale == Config.scales["dictionary"]["Custom"].index) {
@@ -4006,6 +4018,12 @@ export class Song {
                 document.title = this.title + " - " + EditorConfig.versionDisplayName;
 
                 charIndex += songNameLength;
+            } break;
+            case SongTagCode.songTheme: {
+                // Length of song theme string
+                var songThemeLength = (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << 6) + base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
+                this.setSongTheme = decodeURIComponent(compressed.substring(charIndex, charIndex + songThemeLength));
+                charIndex += songThemeLength;
             } break;
             case SongTagCode.channelCount: {
                 this.pitchChannelCount = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
@@ -6200,6 +6218,7 @@ export class Song {
 
         const result: any = {
             "name": this.title,
+            "theme": this.setSongTheme,
             "format": Song._format,
             "version": Song._latestAbyssBoxVersion,
             "scale": Config.scales[this.scale].name,
@@ -6247,6 +6266,10 @@ export class Song {
         //}
         if (jsonObject["name"] != undefined) {
             this.title = jsonObject["name"];
+        }
+
+        if (jsonObject["theme"] != undefined) {
+            this.setSongTheme = jsonObject["theme"];
         }
 
         if (jsonObject["customSamples"] != undefined) {

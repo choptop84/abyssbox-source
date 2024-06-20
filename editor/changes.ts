@@ -4616,6 +4616,19 @@ export class ChangeSongTitle extends Change {
     }
 }
 
+export class ChangeSongTheme extends Change {
+    constructor(doc: SongDocument, oldValue: string, newValue: string) {
+        super();
+        if (newValue.length > 30) {
+            newValue = newValue.substring(0, 30);
+        }
+
+        doc.song.setSongTheme = newValue;
+        doc.notifier.changed();
+        if (oldValue != newValue) this._didSomething();
+    }
+}
+
 export class ChangeChannelName extends Change {
     constructor(doc: SongDocument, oldValue: string, newValue: string) {
         super();
