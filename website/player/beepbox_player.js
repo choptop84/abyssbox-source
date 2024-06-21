@@ -34859,7 +34859,6 @@ var beepbox = (function (exports) {
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|android|ipad|playbook|silk/i.test(navigator.userAgent);
     const colorTheme = getLocalStorage("colorTheme");
     const setSpLayout = getLocalStorage("spLayout");
-    ColorConfig.setTheme(colorTheme === null ? "AbyssBox Classic" : colorTheme);
     SongPlayerLayout.setLayout(setSpLayout === null ? "classic" : setSpLayout);
     let prevHash = null;
     let id = ((Math.random() * 0xffffffff) >>> 0).toString(16);
@@ -35097,6 +35096,7 @@ var beepbox = (function (exports) {
         editLink.href = "../#" + updatedSongString;
     }
     function hashUpdatedExternally() {
+        var _a, _b;
         let myHash = location.hash;
         if (prevHash == myHash || myHash == "")
             return;
@@ -35115,6 +35115,21 @@ var beepbox = (function (exports) {
                         loadSong(value);
                         if (synth.song) {
                             titleText.textContent = synth.song.title;
+                            if (synth.song != null) {
+                                if (synth.song.setSongTheme != null) {
+                                    if (((_a = synth.song) === null || _a === void 0 ? void 0 : _a.setSongTheme) == "none") {
+                                        ColorConfig.setTheme(colorTheme === null ? "AbyssBox Classic" : colorTheme);
+                                    }
+                                    else {
+                                        ColorConfig.setTheme(synth.song.setSongTheme);
+                                        console.log(synth.song.setSongTheme);
+                                    }
+                                }
+                                else {
+                                    ColorConfig.setTheme(colorTheme === null ? "AbyssBox Classic" : colorTheme);
+                                }
+                            }
+                            console.log((_b = synth.song) === null || _b === void 0 ? void 0 : _b.setSongTheme);
                         }
                         break;
                     case "loop":

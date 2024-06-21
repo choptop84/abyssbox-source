@@ -15,7 +15,6 @@ import { SongPlayerLayout } from "./Layout";
 
 	const colorTheme: string | null = getLocalStorage("colorTheme");
 	const setSpLayout: string | null = getLocalStorage("spLayout");
-	ColorConfig.setTheme(colorTheme === null ? "AbyssBox Classic" : colorTheme);
 	SongPlayerLayout.setLayout(setSpLayout === null ? "classic" : setSpLayout);
 
 	let prevHash: string | null = null;
@@ -396,6 +395,16 @@ import { SongPlayerLayout } from "./Layout";
 						loadSong(value, true);
 						if (synth.song) {
 							titleText.textContent = synth.song.title;
+							if (synth.song != null) {
+								if (synth.song.setSongTheme != null) {
+								if (synth.song?.setSongTheme == "none") {
+									ColorConfig.setTheme(colorTheme === null ? "AbyssBox Classic" : colorTheme); } else {
+									ColorConfig.setTheme(synth.song.setSongTheme);
+									}
+								} else {
+									ColorConfig.setTheme(colorTheme === null ? "AbyssBox Classic" : colorTheme); 
+								}
+							}
 						}
 						break;
 					//case "title":
