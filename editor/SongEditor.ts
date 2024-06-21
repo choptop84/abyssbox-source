@@ -58,6 +58,7 @@ import { _loopType } from "../synth/synth";
 import { ShortenerConfigPrompt } from "./ShortenerConfigPrompt";
 
 import { TutorialPrompt } from "./TutorialPrompt";
+import { UpdatePrompt } from "./UpdatePrompt";
 
 const { button, div, input, select, span, optgroup, option, canvas } = HTML;
 
@@ -2315,6 +2316,9 @@ export class SongEditor {
                 case "tutorial":
                     this.prompt = new TutorialPrompt(this._doc);
                     break;
+                case "newUpdate":
+                    this.prompt = new UpdatePrompt(this._doc);
+                    break;
                 case "custom":
                     this.prompt = new CustomPrompt(this._doc, this._patternEditor, this._trackArea, document.getElementById("beepboxEditorContainer")!);
                     break;    
@@ -2448,6 +2452,16 @@ export class SongEditor {
                 if (window.localStorage.getItem("tutorialComplete") != "true") {
                     //this._openPrompt("tutorial");
                 }
+
+                if (window.localStorage.getItem("curVer") != "1.4.5") {
+                    window.localStorage.setItem("updateSeen", "false");
+                }
+
+                if (window.localStorage.getItem("updateSeen") != "true") {
+                    this._openPrompt("newUpdate");
+                }
+
+                
 
         if (this._doc.getFullScreen()) {
             const semitoneHeight: number = this._patternEditorRow.clientHeight / this._doc.getVisiblePitchCount();
@@ -6066,6 +6080,9 @@ export class SongEditor {
                 break;
             case "openTutorial":
                 this._openPrompt("tutorial");
+                break;
+            case "openUpdate":
+                this._openPrompt("newUpdate");
                 break;
         }
         this._fileMenu.selectedIndex = 0;
