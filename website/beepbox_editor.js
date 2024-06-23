@@ -1265,12 +1265,17 @@ var beepbox = (function (exports) {
             pianoName: "Song Bit crush",
             maxRawVol: Config.bitcrusherQuantizationRange * 2, newNoteVol: Config.bitcrusherQuantizationRange, forSong: true, convertRealFactor: -Config.bitcrusherQuantizationRange, associatedEffect: 12,
             promptName: "Song Bit crush",
-            promptDesc: ["This setting affects the overall bitcrush of your song. It works by overwriting existing bitcrush for instruments, so those with no bitcrush set will be unaffected.", "At $MID, all instruments' bitcrush will be unchanged from default. This increases up to double the set bitcrush value at $HI, or down to no bitcrush at $LO.", "[MULTIPLICATIVE] [$LO - $HI]"] },
+            promptDesc: ["This setting affects the overall bitcrush of your song. It works by multiplying existing bitcrush for instruments, so those with no bitcrush set will be unaffected.", "At $MID, all instruments' bitcrush will be unchanged from default. This increases up to double the set bitcrush value at $HI, or down to no bitcrush at $LO.", "[MULTIPLICATIVE] [$LO - $HI]"] },
         { name: "song freqcrush",
             pianoName: "Song freqcrush",
             maxRawVol: Config.bitcrusherFreqRange * 2, newNoteVol: Config.bitcrusherFreqRange, forSong: true, convertRealFactor: -Config.bitcrusherFreqRange, associatedEffect: 12,
             promptName: "Song Freq crush",
-            promptDesc: ["This setting affects the overall frequency crush of your song. It works by overwriting existing freq crush for instruments, so those with no bitcrush or freq crush set will be unaffected.", "At $MID, all instruments' bitcrush will be unchanged from default. This increases up to double the set bitcrush value at $HI, or down to no bitcrush at $LO.", "[MULTIPLICATIVE] [$LO - $HI]"] },
+            promptDesc: ["This setting affects the overall frequency crush of your song. It works by multiplying existing freq crush for instruments, so those with no bitcrush or freq crush set will be unaffected.", "At $MID, all instruments' bitcrush will be unchanged from default. This increases up to double the set bitcrush value at $HI, or down to no bitcrush at $LO.", "[MULTIPLICATIVE] [$LO - $HI]"] },
+        { name: "song panning",
+            pianoName: "Song Panning",
+            maxRawVol: Config.panMax, newNoteVol: Math.ceil(Config.panMax / 2), forSong: true, convertRealFactor: 0, associatedEffect: 2,
+            promptName: "Song Panning",
+            promptDesc: ["This setting affects the overall panning of your song. It works by overwriting existing pan for instruments, so those with no panning set will be unaffected.", "[OVERWRITING] [$LO - $HI]"] },
     ]);
     function centerWave(wave) {
         let sum = 0.0;
@@ -32066,6 +32071,10 @@ li.select2-results__option[role=group] > strong:hover {
                     usePanStart = synth.getModValue(Config.modulators.dictionary["pan"].index, channelIndex, instrumentIndex, false);
                     usePanEnd = synth.getModValue(Config.modulators.dictionary["pan"].index, channelIndex, instrumentIndex, true);
                 }
+                if (synth.isModActive(Config.modulators.dictionary["song panning"].index, channelIndex, instrumentIndex)) {
+                    usePanStart = synth.getModValue(Config.modulators.dictionary["song panning"].index, undefined, undefined, false);
+                    usePanEnd = synth.getModValue(Config.modulators.dictionary["song panning"].index, undefined, undefined, true);
+                }
                 let panStart = Math.max(-1.0, Math.min(1.0, (usePanStart - Config.panCenter) / Config.panCenter));
                 let panEnd = Math.max(-1.0, Math.min(1.0, (usePanEnd - Config.panCenter) / Config.panCenter));
                 const volumeStartL = Math.cos((1 + panStart) * Math.PI * 0.25) * 1.414;
@@ -60157,6 +60166,7 @@ You should be redirected to the song at:<br /><br />
                                 settingList.push("song detune");
                                 settingList.push("song bitcrush");
                                 settingList.push("song freqcrush");
+                                settingList.push("song panning");
                             }
                             else {
                                 settingList.push("note volume");
@@ -62683,6 +62693,8 @@ You should be redirected to the song at:<br /><br />
                     return this._supersawSpreadSlider;
                 case Config.modulators.dictionary["saw shape"].index:
                     return this._supersawShapeSlider;
+                case Config.modulators.dictionary["song panning"].index:
+                    return this._panSlider;
                 default:
                     return null;
             }

@@ -2243,6 +2243,8 @@ export class SongEditor {
                 return this._supersawSpreadSlider;
             case Config.modulators.dictionary["saw shape"].index:
                 return this._supersawShapeSlider;
+            case Config.modulators.dictionary["song panning"].index:
+                return this._panSlider;
             default:
                 return null;
         }
@@ -3762,6 +3764,7 @@ export class SongEditor {
                         settingList.push("song detune");
                         settingList.push("song bitcrush");
                         settingList.push("song freqcrush");
+                        settingList.push("song panning");
                     }
                     // Populate mod setting options for instrument scope.
                     else {

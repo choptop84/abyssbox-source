@@ -343,7 +343,7 @@ const enum SongTagCode {
 	pulseWidth          = CharCode.W, // added in BeepBox URL version 7
 	aliases             = CharCode.X, // added in JummBox URL version 4 for aliases, DEPRECATED, [UB] repurposed for PWM decimal offset (DEPRECATED as well)
     songTheme           = CharCode.Y, // added in AbyssBox URL version 1
-//	                    = CharCode.Z,
+//                      = CharCode.Z, // added in AbyssBox URL version 1
 //	                    = CharCode.NUM_0,
 //	                    = CharCode.NUM_1,
 //	                    = CharCode.NUM_2,
@@ -7973,6 +7973,11 @@ class InstrumentState {
             if (synth.isModActive(Config.modulators.dictionary["pan"].index, channelIndex, instrumentIndex)) {
                 usePanStart = synth.getModValue(Config.modulators.dictionary["pan"].index, channelIndex, instrumentIndex, false);
                 usePanEnd = synth.getModValue(Config.modulators.dictionary["pan"].index, channelIndex, instrumentIndex, true);
+            }
+
+            if (synth.isModActive(Config.modulators.dictionary["song panning"].index, channelIndex, instrumentIndex)) {
+                usePanStart = synth.getModValue(Config.modulators.dictionary["song panning"].index, undefined, undefined, false);
+                usePanEnd = synth.getModValue(Config.modulators.dictionary["song panning"].index, undefined, undefined, true);
             }
 
             let panStart: number = Math.max(-1.0, Math.min(1.0, (usePanStart - Config.panCenter) / Config.panCenter /** panEnvelopeStart*/));

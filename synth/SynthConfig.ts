@@ -1798,12 +1798,17 @@ export class Config {
             pianoName: "Song Bit crush", 
             maxRawVol: Config.bitcrusherQuantizationRange*2, newNoteVol: Config.bitcrusherQuantizationRange, forSong: true, convertRealFactor: -Config.bitcrusherQuantizationRange, associatedEffect: EffectType.length,
             promptName: "Song Bit crush", 
-            promptDesc: [ "This setting affects the overall bitcrush of your song. It works by overwriting existing bitcrush for instruments, so those with no bitcrush set will be unaffected.", "At $MID, all instruments' bitcrush will be unchanged from default. This increases up to double the set bitcrush value at $HI, or down to no bitcrush at $LO.", "[MULTIPLICATIVE] [$LO - $HI]" ] },
+            promptDesc: [ "This setting affects the overall bitcrush of your song. It works by multiplying existing bitcrush for instruments, so those with no bitcrush set will be unaffected.", "At $MID, all instruments' bitcrush will be unchanged from default. This increases up to double the set bitcrush value at $HI, or down to no bitcrush at $LO.", "[MULTIPLICATIVE] [$LO - $HI]" ] },
         { name: "song freqcrush", 
             pianoName: "Song freqcrush", 
             maxRawVol: Config.bitcrusherFreqRange*2, newNoteVol: Config.bitcrusherFreqRange, forSong: true, convertRealFactor: -Config.bitcrusherFreqRange, associatedEffect: EffectType.length,
             promptName: "Song Freq crush", 
-            promptDesc: [ "This setting affects the overall frequency crush of your song. It works by overwriting existing freq crush for instruments, so those with no bitcrush or freq crush set will be unaffected.", "At $MID, all instruments' bitcrush will be unchanged from default. This increases up to double the set bitcrush value at $HI, or down to no bitcrush at $LO.", "[MULTIPLICATIVE] [$LO - $HI]" ] },
+            promptDesc: [ "This setting affects the overall frequency crush of your song. It works by multiplying existing freq crush for instruments, so those with no bitcrush or freq crush set will be unaffected.", "At $MID, all instruments' bitcrush will be unchanged from default. This increases up to double the set bitcrush value at $HI, or down to no bitcrush at $LO.", "[MULTIPLICATIVE] [$LO - $HI]" ] },
+        { name: "song panning", 
+            pianoName: "Song Panning", 
+            maxRawVol: Config.panMax, newNoteVol: Math.ceil(Config.panMax / 2), forSong: true, convertRealFactor: 0, associatedEffect: EffectType.panning,
+            promptName: "Song Panning", 
+            promptDesc: [ "This setting affects the overall panning of your song. It works by overwriting existing pan for instruments, so those with no panning set will be unaffected.", "[OVERWRITING] [$LO - $HI]" ] },
         ]);
 }
 
