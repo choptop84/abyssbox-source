@@ -32072,8 +32072,14 @@ li.select2-results__option[role=group] > strong:hover {
                     usePanEnd = synth.getModValue(Config.modulators.dictionary["pan"].index, channelIndex, instrumentIndex, true);
                 }
                 if (synth.isModActive(Config.modulators.dictionary["song panning"].index, channelIndex, instrumentIndex)) {
-                    usePanStart = synth.getModValue(Config.modulators.dictionary["song panning"].index, undefined, undefined, false);
-                    usePanEnd = synth.getModValue(Config.modulators.dictionary["song panning"].index, undefined, undefined, true);
+                    if (!synth.isModActive(Config.modulators.dictionary["pan"].index, channelIndex, instrumentIndex)) {
+                        usePanStart = synth.getModValue(Config.modulators.dictionary["song panning"].index, undefined, undefined, false);
+                        usePanEnd = synth.getModValue(Config.modulators.dictionary["song panning"].index, undefined, undefined, true);
+                    }
+                    else {
+                        usePanStart = synth.getModValue(Config.modulators.dictionary["pan"].index, channelIndex, instrumentIndex, false);
+                        usePanEnd = synth.getModValue(Config.modulators.dictionary["pan"].index, channelIndex, instrumentIndex, true);
+                    }
                 }
                 let panStart = Math.max(-1.0, Math.min(1.0, (usePanStart - Config.panCenter) / Config.panCenter));
                 let panEnd = Math.max(-1.0, Math.min(1.0, (usePanEnd - Config.panCenter) / Config.panCenter));
