@@ -26601,6 +26601,12 @@ li.select2-results__option[role=group] > strong:hover {
                     instrumentObject["unisonExpression"] = this.unisonExpression;
                     instrumentObject["unisonSign"] = this.unisonSign;
                 }
+            }
+            else if (this.type == 3) {
+                instrumentObject["spectrum"] = [];
+                for (let i = 0; i < Config.spectrumControlPoints; i++) {
+                    instrumentObject["spectrum"][i] = Math.round(100 * this.spectrumWave.spectrum[i] / Config.spectrumMax);
+                }
                 instrumentObject["unison"] = this.unison == Config.unisons.length ? "custom" : Config.unisons[this.unison].name;
                 if (this.unison == Config.unisons.length) {
                     instrumentObject["unisonVoices"] = this.unisonVoices;
@@ -26608,12 +26614,6 @@ li.select2-results__option[role=group] > strong:hover {
                     instrumentObject["unisonOffset"] = this.unisonOffset;
                     instrumentObject["unisonExpression"] = this.unisonExpression;
                     instrumentObject["unisonSign"] = this.unisonSign;
-                }
-            }
-            else if (this.type == 3) {
-                instrumentObject["spectrum"] = [];
-                for (let i = 0; i < Config.spectrumControlPoints; i++) {
-                    instrumentObject["spectrum"][i] = Math.round(100 * this.spectrumWave.spectrum[i] / Config.spectrumMax);
                 }
             }
             else if (this.type == 4) {
@@ -34754,7 +34754,7 @@ li.select2-results__option[role=group] > strong:hover {
                     settingsExpressionMult *= Math.pow(2.0, 0.7 * (1.0 - useSustainStart / (Config.stringSustainRange - 1)));
                 }
                 const startFreq = Instrument.frequencyFromPitch(startPitch);
-                if (instrument.type == 0 || instrument.type == 9 || instrument.type == 5 || 7 || instrument.type == 3 || instrument.type == 6 || instrument.type == 2) {
+                if (instrument.type == 0 || instrument.type == 9 || instrument.type == 5 || instrument.type == 7 || instrument.type == 3 || instrument.type == 6 || instrument.type == 2) {
                     const unisonVoices = instrument.unisonVoices;
                     const unisonSpread = instrument.unisonSpread;
                     const unisonOffset = instrument.unisonOffset;
@@ -59959,7 +59959,7 @@ You should be redirected to the song at:<br /><br />
                     else {
                         this._reverbRow.style.display = "none";
                     }
-                    if (instrument.type == 0 || instrument.type == 9 || instrument.type == 5 || 7 || instrument.type == 3 || instrument.type == 6 || instrument.type == 2) {
+                    if (instrument.type == 0 || instrument.type == 9 || instrument.type == 5 || instrument.type == 7 || instrument.type == 3 || instrument.type == 6 || instrument.type == 2) {
                         this._unisonSelectRow.style.display = "";
                         setSelectedValue(this._unisonSelect, instrument.unison);
                         this._unisonVoicesInputBox.value = instrument.unisonVoices + "";

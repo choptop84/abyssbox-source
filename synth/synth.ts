@@ -2005,6 +2005,11 @@ export class Instrument {
                 instrumentObject["unisonExpression"] = this.unisonExpression;
                 instrumentObject["unisonSign"] = this.unisonSign;
             }
+        } else if (this.type == InstrumentType.spectrum) {
+            instrumentObject["spectrum"] = [];
+            for (let i: number = 0; i < Config.spectrumControlPoints; i++) {
+                instrumentObject["spectrum"][i] = Math.round(100 * this.spectrumWave.spectrum[i] / Config.spectrumMax);
+            }
             instrumentObject["unison"] = this.unison == Config.unisons.length ? "custom" : Config.unisons[this.unison].name;
             if (this.unison == Config.unisons.length) {
                 instrumentObject["unisonVoices"] = this.unisonVoices;
@@ -2012,11 +2017,6 @@ export class Instrument {
                 instrumentObject["unisonOffset"] = this.unisonOffset;
                 instrumentObject["unisonExpression"] = this.unisonExpression;
                 instrumentObject["unisonSign"] = this.unisonSign;
-            }
-        } else if (this.type == InstrumentType.spectrum) {
-            instrumentObject["spectrum"] = [];
-            for (let i: number = 0; i < Config.spectrumControlPoints; i++) {
-                instrumentObject["spectrum"][i] = Math.round(100 * this.spectrumWave.spectrum[i] / Config.spectrumMax);
             }
         } else if (this.type == InstrumentType.drumset) {
             instrumentObject["drums"] = [];
@@ -11130,7 +11130,7 @@ export class Synth {
             }
 
             const startFreq: number = Instrument.frequencyFromPitch(startPitch);
-            if (instrument.type == InstrumentType.chip || instrument.type == InstrumentType.customChipWave || instrument.type == InstrumentType.harmonics || InstrumentType.pickedString || instrument.type == InstrumentType.spectrum || instrument.type == InstrumentType.pwm || instrument.type == InstrumentType.noise) {
+            if (instrument.type == InstrumentType.chip || instrument.type == InstrumentType.customChipWave || instrument.type == InstrumentType.harmonics || instrument.type == InstrumentType.pickedString || instrument.type == InstrumentType.spectrum || instrument.type == InstrumentType.pwm || instrument.type == InstrumentType.noise) {
                 // These instruments have two waves at different frequencies for the unison feature.
                 //const unison: Unison = Config.unisons[instrument.unison];
                 const unisonVoices: number = instrument.unisonVoices;
