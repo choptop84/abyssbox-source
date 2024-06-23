@@ -2243,8 +2243,6 @@ export class SongEditor {
                 return this._supersawSpreadSlider;
             case Config.modulators.dictionary["saw shape"].index:
                 return this._supersawShapeSlider;
-            case Config.modulators.dictionary["song bitcrush"].index:
-                return this._bitcrusherQuantizationSlider;
             default:
                 return null;
         }
@@ -3763,6 +3761,7 @@ export class SongEditor {
                         settingList.push("next bar");
                         settingList.push("song detune");
                         settingList.push("song bitcrush");
+                        settingList.push("song freqcrush");
                     }
                     // Populate mod setting options for instrument scope.
                     else {
