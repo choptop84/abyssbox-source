@@ -7788,7 +7788,10 @@ class InstrumentState {
                 useDistortionStart = synth.getModValue(Config.modulators.dictionary["distortion"].index, channelIndex, instrumentIndex, false);
                 useDistortionEnd = synth.getModValue(Config.modulators.dictionary["distortion"].index, channelIndex, instrumentIndex, true);
             }
-
+            if (synth.isModActive(Config.modulators.dictionary["song distortion"].index, channelIndex, instrumentIndex)) {
+                useDistortionStart = clamp(0, Config.distortionRange, useDistortionStart * (synth.getModValue(Config.modulators.dictionary["song distortion"].index, undefined, undefined, false) - Config.modulators.dictionary["song distortion"].convertRealFactor) / Config.distortionRange);
+                useDistortionEnd = clamp(0, Config.distortionRange, useDistortionEnd * (synth.getModValue(Config.modulators.dictionary["song distortion"].index, undefined, undefined, true) - Config.modulators.dictionary["song distortion"].convertRealFactor) / Config.distortionRange);
+            }
             const distortionSliderStart = Math.min(1.0, /*envelopeStarts[InstrumentAutomationIndex.distortion] **/ useDistortionStart / (Config.distortionRange - 1));
             const distortionSliderEnd = Math.min(1.0, /*envelopeEnds[  InstrumentAutomationIndex.distortion] **/ useDistortionEnd / (Config.distortionRange - 1));
             const distortionStart: number = Math.pow(1.0 - 0.895 * (Math.pow(20.0, distortionSliderStart) - 1.0) / 19.0, 2.0);
@@ -8029,7 +8032,10 @@ class InstrumentState {
                 useChorusStart = synth.getModValue(Config.modulators.dictionary["chorus"].index, channelIndex, instrumentIndex, false);
                 useChorusEnd = synth.getModValue(Config.modulators.dictionary["chorus"].index, channelIndex, instrumentIndex, true);
             }
-
+            if (synth.isModActive(Config.modulators.dictionary["song chorus"].index, channelIndex, instrumentIndex)) {
+                useChorusStart = clamp(0, Config.chorusRange, useChorusStart * (synth.getModValue(Config.modulators.dictionary["song chorus"].index, undefined, undefined, false) - Config.modulators.dictionary["song chorus"].convertRealFactor) / Config.chorusRange);
+                useChorusEnd = clamp(0, Config.chorusRange, useChorusEnd * (synth.getModValue(Config.modulators.dictionary["song chorus"].index, undefined, undefined, true) - Config.modulators.dictionary["song chorus"].convertRealFactor) / Config.chorusRange);
+            }
             let chorusStart: number = Math.min(1.0, /*chorusEnvelopeStart **/ useChorusStart / (Config.chorusRange - 1));
             let chorusEnd: number = Math.min(1.0, /*chorusEnvelopeEnd   **/ useChorusEnd / (Config.chorusRange - 1));
             chorusStart = chorusStart * 0.6 + (Math.pow(chorusStart, 6.0)) * 0.4;

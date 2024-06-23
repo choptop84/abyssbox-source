@@ -1809,6 +1809,16 @@ export class Config {
             maxRawVol: Config.panMax, newNoteVol: Math.ceil(Config.panMax / 2), forSong: true, convertRealFactor: 0, associatedEffect: EffectType.panning,
             promptName: "Song Panning", 
             promptDesc: [ "This setting affects the overall panning of your song. It works by overwriting existing pan for instruments, so those with no panning set will be unaffected.", "[OVERWRITING] [$LO - $HI]" ] },
+        { name: "song chorus", 
+            pianoName: "Song Chorus", 
+            maxRawVol: Config.chorusRange*2, newNoteVol: Config.chorusRange, forSong: true, convertRealFactor: -Config.chorusRange, associatedEffect: EffectType.length,
+            promptName: "Song Chorus", 
+            promptDesc: [ "This setting affects the overall chorus of your song. It works by multiplying existing chorus for instruments, so those with no chorus set will be unaffected.", "At $MID, all instruments' chorus will be unchanged from default. This increases up to double the set chorus value at $HI, or down to no chorus at $LO.", "[MULTIPLICATIVE] [$LO - $HI]" ] },
+        { name: "song distortion", 
+            pianoName: "Song Distortion", 
+            maxRawVol: Config.distortionRange*2, newNoteVol: Config.distortionRange, forSong: true, convertRealFactor: -Config.distortionRange, associatedEffect: EffectType.length,
+            promptName: "Song Distortion", 
+            promptDesc: [ "This setting affects the overall distortion of your song. It works by multiplying existing distortion for instruments, so those with no distortion set will be unaffected.", "At $MID, all instruments' distortion will be unchanged from default. This increases up to double the set distortion value at $HI, or down to no distortion at $LO.", "[MULTIPLICATIVE] [$LO - $HI]" ] },
         ]);
 }
 

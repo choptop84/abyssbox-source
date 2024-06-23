@@ -1276,6 +1276,16 @@ var beepbox = (function (exports) {
             maxRawVol: Config.panMax, newNoteVol: Math.ceil(Config.panMax / 2), forSong: true, convertRealFactor: 0, associatedEffect: 2,
             promptName: "Song Panning",
             promptDesc: ["This setting affects the overall panning of your song. It works by overwriting existing pan for instruments, so those with no panning set will be unaffected.", "[OVERWRITING] [$LO - $HI]"] },
+        { name: "song chorus",
+            pianoName: "Song Chorus",
+            maxRawVol: Config.chorusRange * 2, newNoteVol: Config.chorusRange, forSong: true, convertRealFactor: -Config.chorusRange, associatedEffect: 12,
+            promptName: "Song Chorus",
+            promptDesc: ["This setting affects the overall chorus of your song. It works by multiplying existing chorus for instruments, so those with no chorus set will be unaffected.", "At $MID, all instruments' chorus will be unchanged from default. This increases up to double the set chorus value at $HI, or down to no chorus at $LO.", "[MULTIPLICATIVE] [$LO - $HI]"] },
+        { name: "song distortion",
+            pianoName: "Song Distortion",
+            maxRawVol: Config.distortionRange * 2, newNoteVol: Config.distortionRange, forSong: true, convertRealFactor: -Config.distortionRange, associatedEffect: 12,
+            promptName: "Song Distortion",
+            promptDesc: ["This setting affects the overall distortion of your song. It works by multiplying existing distortion for instruments, so those with no distortion set will be unaffected.", "At $MID, all instruments' distortion will be unchanged from default. This increases up to double the set distortion value at $HI, or down to no distortion at $LO.", "[MULTIPLICATIVE] [$LO - $HI]"] },
     ]);
     function centerWave(wave) {
         let sum = 0.0;
@@ -31935,6 +31945,10 @@ li.select2-results__option[role=group] > strong:hover {
                     useDistortionStart = synth.getModValue(Config.modulators.dictionary["distortion"].index, channelIndex, instrumentIndex, false);
                     useDistortionEnd = synth.getModValue(Config.modulators.dictionary["distortion"].index, channelIndex, instrumentIndex, true);
                 }
+                if (synth.isModActive(Config.modulators.dictionary["song distortion"].index, channelIndex, instrumentIndex)) {
+                    useDistortionStart = clamp(0, Config.distortionRange, useDistortionStart * (synth.getModValue(Config.modulators.dictionary["song distortion"].index, undefined, undefined, false) - Config.modulators.dictionary["song distortion"].convertRealFactor) / Config.distortionRange);
+                    useDistortionEnd = clamp(0, Config.distortionRange, useDistortionEnd * (synth.getModValue(Config.modulators.dictionary["song distortion"].index, undefined, undefined, true) - Config.modulators.dictionary["song distortion"].convertRealFactor) / Config.distortionRange);
+                }
                 const distortionSliderStart = Math.min(1.0, useDistortionStart / (Config.distortionRange - 1));
                 const distortionSliderEnd = Math.min(1.0, useDistortionEnd / (Config.distortionRange - 1));
                 const distortionStart = Math.pow(1.0 - 0.895 * (Math.pow(20.0, distortionSliderStart) - 1.0) / 19.0, 2.0);
@@ -32115,6 +32129,10 @@ li.select2-results__option[role=group] > strong:hover {
                 if (synth.isModActive(Config.modulators.dictionary["chorus"].index, channelIndex, instrumentIndex)) {
                     useChorusStart = synth.getModValue(Config.modulators.dictionary["chorus"].index, channelIndex, instrumentIndex, false);
                     useChorusEnd = synth.getModValue(Config.modulators.dictionary["chorus"].index, channelIndex, instrumentIndex, true);
+                }
+                if (synth.isModActive(Config.modulators.dictionary["song chorus"].index, channelIndex, instrumentIndex)) {
+                    useChorusStart = clamp(0, Config.chorusRange, useChorusStart * (synth.getModValue(Config.modulators.dictionary["song chorus"].index, undefined, undefined, false) - Config.modulators.dictionary["song chorus"].convertRealFactor) / Config.chorusRange);
+                    useChorusEnd = clamp(0, Config.chorusRange, useChorusEnd * (synth.getModValue(Config.modulators.dictionary["song chorus"].index, undefined, undefined, true) - Config.modulators.dictionary["song chorus"].convertRealFactor) / Config.chorusRange);
                 }
                 let chorusStart = Math.min(1.0, useChorusStart / (Config.chorusRange - 1));
                 let chorusEnd = Math.min(1.0, useChorusEnd / (Config.chorusRange - 1));
@@ -60173,6 +60191,8 @@ You should be redirected to the song at:<br /><br />
                                 settingList.push("song bitcrush");
                                 settingList.push("song freqcrush");
                                 settingList.push("song panning");
+                                settingList.push("song chorus");
+                                settingList.push("song distortion");
                             }
                             else {
                                 settingList.push("note volume");

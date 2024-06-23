@@ -3765,6 +3765,8 @@ export class SongEditor {
                         settingList.push("song bitcrush");
                         settingList.push("song freqcrush");
                         settingList.push("song panning");
+                        settingList.push("song chorus");
+                        settingList.push("song distortion");
                     }
                     // Populate mod setting options for instrument scope.
                     else {
