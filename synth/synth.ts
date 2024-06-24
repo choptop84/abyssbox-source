@@ -1,6 +1,6 @@
 // Copyright (c) 2012-2022 John Nesky and contributing authors, distributed under the MIT license, see accompanying the LICENSE.md file.
 
-import { startLoadingSample, sampleLoadingState, SampleLoadingState, sampleLoadEvents, SampleLoadedEvent, SampleLoadingStatus, loadBuiltInSamples, Dictionary, DictionaryArray, toNameMap, FilterType, SustainType, EnvelopeType, InstrumentType, EffectType, EnvelopeComputeIndex, Transition, Unison, Chord, Vibrato, Envelope, AutomationTarget, Config, getDrumWave, drawNoiseSpectrum, getArpeggioPitchIndex, performIntegralOld, getPulseWidthRatio, effectsIncludeTransition, effectsIncludeChord, effectsIncludePitchShift, effectsIncludeDetune, effectsIncludeVibrato, effectsIncludeNoteFilter, effectsIncludeDistortion, effectsIncludeBitcrusher, effectsIncludePanning, effectsIncludeChorus, effectsIncludeEcho, effectsIncludeReverb, OperatorWave } from "./SynthConfig";
+import { startLoadingSample, sampleLoadingState, SampleLoadingState, sampleLoadEvents, SampleLoadedEvent, SampleLoadingStatus, loadBuiltInSamples, Dictionary, DictionaryArray, toNameMap, FilterType, SustainType, EnvelopeType, InstrumentType, EffectType, EnvelopeComputeIndex, Transition, Unison, Chord, Vibrato, Envelope, AutomationTarget, Config, getDrumWave, drawNoiseSpectrum, getArpeggioPitchIndex, performIntegralOld, getPulseWidthRatio, effectsIncludeTransition, effectsIncludeChord, effectsIncludePitchShift, effectsIncludeDetune, effectsIncludeVibrato, effectsIncludeNoteFilter, effectsIncludeDistortion, effectsIncludeBitcrusher, effectsIncludePanning, effectsIncludeChorus, effectsIncludeEcho, effectsIncludeReverb, effectsIncludeRM, OperatorWave } from "./SynthConfig";
 import { Preset, EditorConfig } from "../editor/EditorConfig";
 import { scaleElementsByFactor, inverseRealFourierTransform } from "./FFT";
 import { Deque } from "./Deque";
@@ -343,7 +343,7 @@ const enum SongTagCode {
 	pulseWidth          = CharCode.W, // added in BeepBox URL version 7
 	aliases             = CharCode.X, // added in JummBox URL version 4 for aliases, DEPRECATED, [UB] repurposed for PWM decimal offset (DEPRECATED as well)
     songTheme           = CharCode.Y, // added in AbyssBox URL version 1
-//                      = CharCode.Z, // added in AbyssBox URL version 1
+    ringModulation      = CharCode.Z, // added in AbyssBox URL version 2
 //	                    = CharCode.NUM_0,
 //	                    = CharCode.NUM_1,
 //	                    = CharCode.NUM_2,
@@ -1538,6 +1538,7 @@ export class Instrument {
 	public stringSustain: number = 10;
 	public stringSustainType: SustainType = SustainType.acoustic;
     public distortion: number = 0;
+    public ringModulation: number = 0;
     public bitcrusherFreq: number = 0;
     public bitcrusherQuantization: number = 0;
     public chorus: number = 0;
@@ -1650,6 +1651,9 @@ export class Instrument {
         this.distortion = Math.floor((Config.distortionRange - 1) * 0.75);
         this.bitcrusherFreq = Math.floor((Config.bitcrusherFreqRange - 1) * 0.5)
         this.bitcrusherQuantization = Math.floor((Config.bitcrusherQuantizationRange - 1) * 0.5);
+
+        this.ringModulation = 0;
+
         this.pan = Config.panCenter;
         this.panDelay = 10;
         this.pitchShift = Config.pitchShiftCenter;
@@ -2946,7 +2950,7 @@ export class Song {
     private static readonly _oldestUltraBoxVersion: number = 1;
     private static readonly _latestUltraBoxVersion: number = 5;
     private static readonly _oldestAbyssBoxVersion: number = 1;
-    private static readonly _latestAbyssBoxVersion: number = 1;
+    private static readonly _latestAbyssBoxVersion: number = 2;
     // One-character variant detection at the start of URL to distinguish variants such as JummBox, Or Goldbox. "j" and "g" respectively
 	//also "u" is ultrabox lol
     private static readonly _variant = 0x61; //"a" ~ abyssbox
@@ -3288,7 +3292,15 @@ export class Song {
                 }
 
                 // The list of enabled effects is represented as a 12-bit bitfield using two six-bit characters.
-                buffer.push(SongTagCode.effects, base64IntToCharCode[instrument.effects >> 6], base64IntToCharCode[instrument.effects & 63]);
+                buffer.push(
+                    SongTagCode.effects,
+                    base64IntToCharCode[(instrument.effects >>> (6 * 5)) & 63],
+                    base64IntToCharCode[(instrument.effects >>> (6 * 4)) & 63],
+                    base64IntToCharCode[(instrument.effects >>> (6 * 3)) & 63],
+                    base64IntToCharCode[(instrument.effects >>> (6 * 2)) & 63],
+                    base64IntToCharCode[(instrument.effects >>> (6 * 1)) & 63],
+                    base64IntToCharCode[(instrument.effects >>> (6 * 0)) & 63]
+                );
                 if (effectsIncludeNoteFilter(instrument.effects)) {
                     buffer.push(base64IntToCharCode[+instrument.noteFilterType]);
                     if (instrument.noteFilterType) {
@@ -3359,6 +3371,9 @@ export class Song {
                     buffer.push(base64IntToCharCode[instrument.distortion]);
                     // Aliasing is tied into distortion for now
                     buffer.push(base64IntToCharCode[+instrument.aliases]);
+                }
+                if (effectsIncludeRM(instrument.effects)) {
+                    buffer.push(base64IntToCharCode[instrument.ringModulation]);
                 }
                 if (effectsIncludeBitcrusher(instrument.effects)) {
                     buffer.push(base64IntToCharCode[instrument.bitcrusherFreq], base64IntToCharCode[instrument.bitcrusherQuantization]);
@@ -4922,8 +4937,19 @@ export class Song {
                     instrument.convertLegacySettings(legacySettings, forceSimpleFilter);
                 } else {
                     // BeepBox currently uses two base64 characters at 6 bits each for a bitfield representing all the enabled effects.
-                    if (EffectType.length > 12) throw new Error();
-                    instrument.effects = (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << 6) | (base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                    if (EffectType.length > 13) throw new Error();
+                        if ((fromAbyssBox && beforeTwo)||fromUltraBox||fromGoldBox||fromJummBox||fromBeepBox) {
+                        instrument.effects = (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << 6) | (base64CharCodeToInt[compressed.charCodeAt(charIndex++)]); 
+                        } else {
+                            instrument.effects = (
+                                (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << (6 * 5))
+                                | (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << (6 * 4))
+                                | (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << (6 * 3))
+                                | (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << (6 * 2))
+                                | (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << (6 * 1))
+                                | (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << (6 * 0))
+                            ) >>> 0;
+                        }
 
                     if (effectsIncludeNoteFilter(instrument.effects)) {
                         let typeCheck: number = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
@@ -5024,6 +5050,9 @@ export class Song {
                         instrument.distortion = clamp(0, Config.distortionRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                         if ((fromJummBox && !beforeFive) || fromGoldBox || fromUltraBox || fromAbyssBox)
                             instrument.aliases = base64CharCodeToInt[compressed.charCodeAt(charIndex++)] ? true : false;
+                    }
+                    if (effectsIncludeRM(instrument.effects)) {
+                        instrument.ringModulation = clamp(0, Config.ringModRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                     }
                     if (effectsIncludeBitcrusher(instrument.effects)) {
                         instrument.bitcrusherFreq = clamp(0, Config.bitcrusherFreqRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
@@ -7584,6 +7613,11 @@ class InstrumentState {
     public chorusCombinedMult: number = 0;
     public chorusCombinedMultDelta: number = 0;
 
+    public ringModMix: number = 0;
+    public ringModMixDelta: number = 0;
+    public ringModPhase: number = 0;
+    public ringModPhaseDelta: number = 0;
+
     public echoDelayLineL: Float32Array | null = null;
     public echoDelayLineR: Float32Array | null = null;
     public echoDelayLineDirty: boolean = false;
@@ -7743,6 +7777,7 @@ class InstrumentState {
         }
 
         this.chorusPhase = 0.0;
+        this.ringModPhase = 0.0;
     }
 
     public compute(synth: Synth, instrument: Instrument, samplesPerTick: number, roundedSamplesPerTick: number, tone: Tone | null, channelIndex: number, instrumentIndex: number): void {
@@ -7778,6 +7813,7 @@ class InstrumentState {
         const usesChorus: boolean = effectsIncludeChorus(this.effects);
         const usesEcho: boolean = effectsIncludeEcho(this.effects);
         const usesReverb: boolean = effectsIncludeReverb(this.effects);
+        const usesRingModulation: boolean = effectsIncludeRM(this.effects);
 
         if (usesDistortion) {
             let useDistortionStart: number = instrument.distortion;
@@ -8041,6 +8077,17 @@ class InstrumentState {
             this.chorusVoiceMultDelta = (chorusEnd - chorusStart) / roundedSamplesPerTick;
             this.chorusCombinedMult = chorusCombinedMultStart;
             this.chorusCombinedMultDelta = (chorusCombinedMultEnd - chorusCombinedMultStart) / roundedSamplesPerTick;
+        }
+
+        if (usesRingModulation) {
+            let useRingModStart: number = instrument.ringModulation;
+            let useRingModEnd: number = instrument.ringModulation;
+
+            let ringModStart: number = Math.min(1.0, useRingModStart / (Config.ringModRange - 1));
+            let ringModEnd: number = Math.min(1.0, useRingModEnd / (Config.ringModRange - 1));
+            this.ringModMix = ringModStart;
+            this.ringModMixDelta = (ringModEnd - ringModStart) /   roundedSamplesPerTick;         
+            this.ringModPhaseDelta = 440 / synth.samplesPerSecond;
         }
 
         let maxEchoMult = 0.0;
@@ -12228,6 +12275,7 @@ export class Synth {
         const usesChorus: boolean = effectsIncludeChorus(instrumentState.effects);
         const usesEcho: boolean = effectsIncludeEcho(instrumentState.effects);
         const usesReverb: boolean = effectsIncludeReverb(instrumentState.effects);
+        const usesRingModulation: boolean = effectsIncludeRM(instrumentState.effects);
         let signature: number = 0; if (usesDistortion) signature = signature | 1;
         signature = signature << 1; if (usesBitcrusher) signature = signature | 1;
         signature = signature << 1; if (usesEqFilter) signature = signature | 1;
@@ -12235,6 +12283,7 @@ export class Synth {
         signature = signature << 1; if (usesChorus) signature = signature | 1;
         signature = signature << 1; if (usesEcho) signature = signature | 1;
         signature = signature << 1; if (usesReverb) signature = signature | 1;
+        signature = signature << 1; if (usesRingModulation) signature = signature | 1;
 
         let effectsFunction: Function = Synth.effectsFunctionCache[signature];
         if (effectsFunction == undefined) {
@@ -12309,6 +12358,16 @@ export class Synth {
 				const bitcrusherScaleScale = +instrumentState.bitcrusherScaleScale;
 				let bitcrusherFoldLevel = +instrumentState.bitcrusherFoldLevel;
 				const bitcrusherFoldLevelScale = +instrumentState.bitcrusherFoldLevelScale;`
+            }
+
+            if (usesRingModulation) {
+                effectsSource += `
+				
+                let ringModMix = +instrumentState.ringModMax;
+                let ringModMixDelta = +instrumentState.ringModMaxDelta;
+                let ringModPhase = +instrumentState.ringModPhase;
+                let ringModPhaseDelta = +instrumentState.ringModPhaseDelta;
+                `
             }
 
             if (usesEqFilter) {
@@ -12494,6 +12553,16 @@ export class Synth {
 					bitcrusherScale *= bitcrusherScaleScale;
 					bitcrusherFoldLevel *= bitcrusherFoldLevelScale;`
             }
+
+            if (usesRingModulation) {
+                effectsSource += ` 
+                
+                const ringModOutput = sample * Math.sin(Math.PI * 2.0 * ringModPhase);
+                sample = sample * (1 - ringModMix) + ringModOutput * ringModMix;
+                ringModMix += ringModMixDelta;
+                ringModPhase += ringModPhaseDelta;
+                ringModPhase = ringModPhase % 1.0;
+                `}
 
             if (usesEqFilter) {
                 effectsSource += `
@@ -12704,6 +12773,15 @@ export class Synth {
 				instrumentState.bitcrusherFoldLevel = bitcrusherFoldLevel;`
 
             }
+
+            if (usesRingModulation) {
+                effectsSource += ` 
+
+                instrumentState.ringModMix = ringModMix;
+                instrumentState.ringModMixDelta = ringModMixDelta;
+                instrumentState.ringModPhase = ringModPhase;
+                instrumentState.ringModPhaseDelta = ringModPhaseDelta;
+                `}
 
             if (usesEqFilter) {
                 effectsSource += `

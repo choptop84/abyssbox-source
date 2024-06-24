@@ -899,6 +899,10 @@ export class ChangeRandomGeneratedInstrument extends Change {
                 instrument.effects |= 1 << EffectType.reverb;
                 instrument.reverb = selectCurvedDistribution(1, Config.reverbRange - 1, 1, 1);
             }
+            if (Math.random() < 0.1) {
+                instrument.effects |= 1 << EffectType.ringModulation;
+                instrument.ringModulation = selectCurvedDistribution(1, Config.ringModRange - 1, Config.ringModRange - 1, 1);
+            }
 
             // Configure this to whatever you'd like.
             if (type == InstrumentType.noise || type == InstrumentType.spectrum) {
@@ -4057,6 +4061,15 @@ export class ChangeReverb extends ChangeInstrumentSlider {
         super(doc);
         this._instrument.reverb = newValue;
         doc.synth.unsetMod(Config.modulators.dictionary["reverb"].index, doc.channel, doc.getCurrentInstrument());
+        doc.notifier.changed();
+        if (oldValue != newValue) this._didSomething();
+    }
+}
+
+export class ChangeRingMod extends ChangeInstrumentSlider {
+    constructor(doc: SongDocument, oldValue: number, newValue: number) {
+        super(doc);
+        this._instrument.ringModulation = newValue;
         doc.notifier.changed();
         if (oldValue != newValue) this._didSomething();
     }

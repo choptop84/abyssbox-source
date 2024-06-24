@@ -104,6 +104,7 @@ export const enum EffectType {
     transition,
     chord,
     // If you add more, you'll also have to extend the bitfield used in Base64 which currently uses two six-bit characters.
+    ringModulation,
     length,
 }
 
@@ -1175,8 +1176,8 @@ export class Config {
 		
 	 //for modbox; voices = riffapp, spread = intervals, offset = offsets, expression = volume, and sign = signs
 	]);
-    public static readonly effectNames: ReadonlyArray<string> = ["reverb", "chorus", "panning", "distortion", "bitcrusher", "note filter", "echo", "pitch shift", "detune", "vibrato", "transition type", "chord type"];
-    public static readonly effectOrder: ReadonlyArray<EffectType> = [EffectType.panning, EffectType.transition, EffectType.chord, EffectType.pitchShift, EffectType.detune, EffectType.vibrato, EffectType.noteFilter, EffectType.distortion, EffectType.bitcrusher, EffectType.chorus, EffectType.echo, EffectType.reverb];
+    public static readonly effectNames: ReadonlyArray<string> = ["reverb", "chorus", "panning", "distortion", "bitcrusher", "note filter", "echo", "pitch shift", "detune", "vibrato", "transition type", "chord type", "ring modulation" ];
+    public static readonly effectOrder: ReadonlyArray<EffectType> = [EffectType.panning, EffectType.transition, EffectType.chord, EffectType.pitchShift, EffectType.detune, EffectType.vibrato, EffectType.noteFilter, EffectType.distortion, EffectType.bitcrusher, EffectType.chorus, EffectType.echo, EffectType.reverb, EffectType.ringModulation];
     public static readonly noteSizeMax: number = 6;
 	public static readonly volumeRange: number = 50;
 	// Beepbox's old volume scale used factor -0.5 and was [0~7] had roughly value 6 = 0.125 power. This new value is chosen to have -21 be the same,
@@ -1186,6 +1187,7 @@ export class Config {
 	public static readonly panMax: number = Config.panCenter * 2;
 	public static readonly panDelaySecondsMax: number = 0.001;
     public static readonly chorusRange: number = 8;
+    public static readonly ringModRange: number = 8;
     public static readonly chorusPeriodSeconds: number = 2.0;
     public static readonly chorusDelayRange: number = 0.0034;
     public static readonly chorusDelayOffsets: ReadonlyArray<ReadonlyArray<number>> = [[1.51, 2.10, 3.35], [1.47, 2.15, 3.25]];
@@ -2204,6 +2206,9 @@ export function effectsIncludeEcho(effects: number): boolean {
 }
 export function effectsIncludeReverb(effects: number): boolean {
     return (effects & (1 << EffectType.reverb)) != 0;
+}
+export function effectsIncludeRM(effects: number): boolean {
+    return (effects & (1 << EffectType.ringModulation)) != 0;
 }
 export function rawChipToIntegrated(raw: DictionaryArray<ChipWave>): DictionaryArray<ChipWave> {
     const newArray: Array<ChipWave> = new Array<ChipWave>(raw.length);
