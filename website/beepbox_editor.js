@@ -1273,9 +1273,9 @@ var beepbox = (function (exports) {
             promptDesc: ["This setting affects the overall frequency crush of your song. It works by multiplying existing freq crush for instruments, so those with no bitcrush or freq crush set will be unaffected.", "At $MID, all instruments' bitcrush will be unchanged from default. This increases up to double the set bitcrush value at $HI, or down to no bitcrush at $LO.", "[MULTIPLICATIVE] [$LO - $HI]"] },
         { name: "song panning",
             pianoName: "Song Panning",
-            maxRawVol: Config.panMax, newNoteVol: Math.ceil(Config.panMax / 2), forSong: true, convertRealFactor: 0, associatedEffect: 2,
+            maxRawVol: Config.panMax * 2, newNoteVol: Config.panMax, forSong: true, convertRealFactor: -Config.panMax, associatedEffect: 2,
             promptName: "Song Panning",
-            promptDesc: ["This setting affects the overall panning of your song. It works by overwriting existing pan for instruments, so those with no panning set will be unaffected.", "[OVERWRITING] [$LO - $HI]"] },
+            promptDesc: ["This setting affects the overall panning of your song. It works by adding to existing pan for instruments, so those with no panning set will be unaffected.", "At $MID, nothing will be added to the songs panning. At $HI, all instruments will have 100+ panning added, which would max out the panning. At $LO, -100+ panning added to it, which would make the panning as low as possible.", "[ADDITIVE] [$LO - $HI]"] },
         { name: "song chorus",
             pianoName: "Song Chorus",
             maxRawVol: Config.chorusRange * 2, newNoteVol: Config.chorusRange, forSong: true, convertRealFactor: -Config.chorusRange, associatedEffect: 12,
@@ -32086,14 +32086,8 @@ li.select2-results__option[role=group] > strong:hover {
                     usePanEnd = synth.getModValue(Config.modulators.dictionary["pan"].index, channelIndex, instrumentIndex, true);
                 }
                 if (synth.isModActive(Config.modulators.dictionary["song panning"].index, channelIndex, instrumentIndex)) {
-                    if (!synth.isModActive(Config.modulators.dictionary["pan"].index, channelIndex, instrumentIndex)) {
-                        usePanStart = synth.getModValue(Config.modulators.dictionary["song panning"].index, undefined, undefined, false);
-                        usePanEnd = synth.getModValue(Config.modulators.dictionary["song panning"].index, undefined, undefined, true);
-                    }
-                    else {
-                        usePanStart = synth.getModValue(Config.modulators.dictionary["pan"].index, channelIndex, instrumentIndex, false);
-                        usePanEnd = synth.getModValue(Config.modulators.dictionary["pan"].index, channelIndex, instrumentIndex, true);
-                    }
+                    usePanStart = clamp(-Config.panMax / 2, Config.panMax, usePanStart + synth.getModValue(Config.modulators.dictionary["song panning"].index, undefined, undefined, false));
+                    usePanEnd = clamp(-Config.panMax / 2, Config.panMax, usePanEnd + synth.getModValue(Config.modulators.dictionary["song panning"].index, undefined, undefined, true));
                 }
                 let panStart = Math.max(-1.0, Math.min(1.0, (usePanStart - Config.panCenter) / Config.panCenter));
                 let panEnd = Math.max(-1.0, Math.min(1.0, (usePanEnd - Config.panCenter) / Config.panCenter));

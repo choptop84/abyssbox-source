@@ -7979,13 +7979,8 @@ class InstrumentState {
             }
 
             if (synth.isModActive(Config.modulators.dictionary["song panning"].index, channelIndex, instrumentIndex)) {
-                if (!synth.isModActive(Config.modulators.dictionary["pan"].index, channelIndex, instrumentIndex)) {
-                usePanStart = synth.getModValue(Config.modulators.dictionary["song panning"].index, undefined, undefined, false);
-                usePanEnd = synth.getModValue(Config.modulators.dictionary["song panning"].index, undefined, undefined, true);
-                } else {
-                usePanStart = synth.getModValue(Config.modulators.dictionary["pan"].index, channelIndex, instrumentIndex, false);
-                usePanEnd = synth.getModValue(Config.modulators.dictionary["pan"].index, channelIndex, instrumentIndex, true);
-                }
+                usePanStart = clamp(-Config.panMax/2, Config.panMax, usePanStart + synth.getModValue(Config.modulators.dictionary["song panning"].index, undefined, undefined, false));
+                usePanEnd = clamp(-Config.panMax/2, Config.panMax, usePanEnd + synth.getModValue(Config.modulators.dictionary["song panning"].index, undefined, undefined, true));
             }
 
             let panStart: number = Math.max(-1.0, Math.min(1.0, (usePanStart - Config.panCenter) / Config.panCenter /** panEnvelopeStart*/));
