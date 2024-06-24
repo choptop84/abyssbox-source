@@ -29,12 +29,14 @@ interface ParsedEntries {
 //   assuming that false is the same as if it wasn't actually set should work
 //   fine.
 // - Use constants or an enum for the key-value pairs.
-
 export class AddSamplesPrompt {
     private readonly _maxSamples: number = 64;
 
     private _doc: SongDocument;
     private readonly _entries: SampleEntry[] = [];
+
+    private _doReload: boolean = false;
+
     private readonly _entryOptionsDisplayStates: Dictionary<boolean> = {};
     private readonly _cancelButton: HTMLButtonElement = button({ class: "cancelButton" });
     private readonly _okayButton: HTMLButtonElement = button({ class: "okayButton", style: "width: 45%;" }, "Okay");
@@ -181,7 +183,9 @@ export class AddSamplesPrompt {
     private _close = (): void => {
         this._doc.prompt = null;
         this._doc.undo();
-        this._saveChanges();
+        if (this._doReload == true) {
+            this._saveChanges();
+        }
     }
 
     private _saveChanges = (): void => {
@@ -209,6 +213,7 @@ export class AddSamplesPrompt {
         this._entryOptionsDisplayStates[entryIndex] = false;
         this._reconfigureAddSampleButton();
         this._render(true);
+        this._doReload = true;
     }
 
     private _whenAddMultipleSamplesClicked = (event: Event): void => {
@@ -255,6 +260,7 @@ export class AddSamplesPrompt {
         }
         this._reconfigureAddSampleButton();
         this._render(false);
+        this._doReload = true;
     }
 
     private _whenOptionsAreToggled = (event: Event): void => {
@@ -277,6 +283,7 @@ export class AddSamplesPrompt {
             sampleNameElement.innerText = sampleName;
             sampleNameElement.title = sampleName;
         }
+        this._doReload = true;
     }
 
     private _whenSampleRateChanges = (event: Event): void => {

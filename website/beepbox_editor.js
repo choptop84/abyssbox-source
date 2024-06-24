@@ -57298,6 +57298,7 @@ You should be redirected to the song at:<br /><br />
         constructor(_doc) {
             this._maxSamples = 64;
             this._entries = [];
+            this._doReload = false;
             this._entryOptionsDisplayStates = {};
             this._cancelButton = button$4({ class: "cancelButton" });
             this._okayButton = button$4({ class: "okayButton", style: "width: 45%;" }, "Okay");
@@ -57331,7 +57332,9 @@ You should be redirected to the song at:<br /><br />
             this._close = () => {
                 this._doc.prompt = null;
                 this._doc.undo();
-                this._saveChanges();
+                if (this._doReload == true) {
+                    this._saveChanges();
+                }
             };
             this._saveChanges = () => {
                 const urlData = this._generateURLData();
@@ -57356,6 +57359,7 @@ You should be redirected to the song at:<br /><br />
                 this._entryOptionsDisplayStates[entryIndex] = false;
                 this._reconfigureAddSampleButton();
                 this._render(true);
+                this._doReload = true;
             };
             this._whenAddMultipleSamplesClicked = (event) => {
                 this._addSamplesArea.style.display = "none";
@@ -57395,6 +57399,7 @@ You should be redirected to the song at:<br /><br />
                 }
                 this._reconfigureAddSampleButton();
                 this._render(false);
+                this._doReload = true;
             };
             this._whenOptionsAreToggled = (event) => {
                 const element = event.target;
@@ -57417,6 +57422,7 @@ You should be redirected to the song at:<br /><br />
                     sampleNameElement.innerText = sampleName;
                     sampleNameElement.title = sampleName;
                 }
+                this._doReload = true;
             };
             this._whenSampleRateChanges = (event) => {
                 const element = event.target;
