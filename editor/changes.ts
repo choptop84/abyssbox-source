@@ -4075,6 +4075,15 @@ export class ChangeRingMod extends ChangeInstrumentSlider {
     }
 }
 
+export class ChangeRingModHz extends ChangeInstrumentSlider {
+    constructor(doc: SongDocument, oldValue: number, newValue: number) {
+        super(doc);
+        this._instrument.ringModulationHz = newValue;
+        doc.notifier.changed();
+        if (oldValue != newValue) this._didSomething();
+    }
+}
+
 export class ChangeSongReverb extends Change {
     constructor(doc: SongDocument, oldValue: number, newValue: number) {
         super();

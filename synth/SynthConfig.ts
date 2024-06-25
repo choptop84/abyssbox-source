@@ -1188,6 +1188,7 @@ export class Config {
 	public static readonly panDelaySecondsMax: number = 0.001;
     public static readonly chorusRange: number = 8;
     public static readonly ringModRange: number = 8;
+    public static readonly ringModHzRange: number = 64;
     public static readonly chorusPeriodSeconds: number = 2.0;
     public static readonly chorusDelayRange: number = 0.0034;
     public static readonly chorusDelayOffsets: ReadonlyArray<ReadonlyArray<number>> = [[1.51, 2.10, 3.35], [1.47, 2.15, 3.25]];
@@ -1821,6 +1822,21 @@ export class Config {
             maxRawVol: Config.distortionRange*2, newNoteVol: Config.distortionRange, forSong: true, convertRealFactor: -Config.distortionRange, associatedEffect: EffectType.length,
             promptName: "Song Distortion", 
             promptDesc: [ "This setting affects the overall distortion of your song. It works by multiplying existing distortion for instruments, so those with no distortion set will be unaffected.", "At $MID, all instruments' distortion will be unchanged from default. This increases up to double the set distortion value at $HI, or down to no distortion at $LO.", "[MULTIPLICATIVE] [$LO - $HI]" ] },
+        { name: "ring modulation", 
+            pianoName: "Ring Modulation", 
+            maxRawVol: Config.ringModRange, newNoteVol: 0, forSong: true, convertRealFactor: 0, associatedEffect: EffectType.length,
+            promptName: "Ring Modulation", 
+            promptDesc: [ "This setting controls the Ring Modulation effect in your instrument.", "[OVERWRITING] [$LO - $HI]" ] },
+        { name: "song ring modulation", 
+            pianoName: "Songwide Ring Modulation", 
+            maxRawVol: Config.ringModRange*2, newNoteVol: Config.ringModRange, forSong: true, convertRealFactor: -Config.ringModRange, associatedEffect: EffectType.length,
+            promptName: "Songwide Ring Modulation", 
+            promptDesc: [ "This setting multiplies the Ring Modulation effect across all instruments.", "[MULTIPLICATIVE] [$LO - $HI]" ] },
+        { name: "ring mod hertz", 
+            pianoName: "Ring Modulation (Hertz)", 
+            maxRawVol: Config.ringModHzRange, newNoteVol: 0, forSong: true, convertRealFactor: 0, associatedEffect: EffectType.length,
+            promptName: "Ring Modulation (Hertz)", 
+            promptDesc: [ "This setting controls the Hertz (Hz) used in the Ring Modulation effect in your instrument.", "[OVERWRITING] [$LO - $HI]" ] },
         ]);
 }
 

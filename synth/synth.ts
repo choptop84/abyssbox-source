@@ -344,7 +344,7 @@ const enum SongTagCode {
 	aliases             = CharCode.X, // added in JummBox URL version 4 for aliases, DEPRECATED, [UB] repurposed for PWM decimal offset (DEPRECATED as well)
     songTheme           = CharCode.Y, // added in AbyssBox URL version 1
     ringModulation      = CharCode.Z, // added in AbyssBox URL version 2
-//	                    = CharCode.NUM_0,
+	ringModulationHz    = CharCode.NUM_0, // added in AbyssBox URL version 2
 //	                    = CharCode.NUM_1,
 //	                    = CharCode.NUM_2,
 //	                    = CharCode.NUM_3,
@@ -1539,6 +1539,7 @@ export class Instrument {
 	public stringSustainType: SustainType = SustainType.acoustic;
     public distortion: number = 0;
     public ringModulation: number = 0;
+    public ringModulationHz: number = 0;
     public bitcrusherFreq: number = 0;
     public bitcrusherQuantization: number = 0;
     public chorus: number = 0;
@@ -1653,6 +1654,7 @@ export class Instrument {
         this.bitcrusherQuantization = Math.floor((Config.bitcrusherQuantizationRange - 1) * 0.5);
 
         this.ringModulation = 0;
+        this.ringModulationHz = 0;
 
         this.pan = Config.panCenter;
         this.panDelay = 10;
@@ -3374,6 +3376,7 @@ export class Song {
                 }
                 if (effectsIncludeRM(instrument.effects)) {
                     buffer.push(base64IntToCharCode[instrument.ringModulation]);
+                    buffer.push(base64IntToCharCode[instrument.ringModulationHz]);
                 }
                 if (effectsIncludeBitcrusher(instrument.effects)) {
                     buffer.push(base64IntToCharCode[instrument.bitcrusherFreq], base64IntToCharCode[instrument.bitcrusherQuantization]);
@@ -5053,6 +5056,7 @@ export class Song {
                     }
                     if (effectsIncludeRM(instrument.effects)) {
                         instrument.ringModulation = clamp(0, Config.ringModRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                        instrument.ringModulationHz = clamp(0, Config.ringModHzRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                     }
                     if (effectsIncludeBitcrusher(instrument.effects)) {
                         instrument.bitcrusherFreq = clamp(0, Config.bitcrusherFreqRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
@@ -7617,6 +7621,7 @@ class InstrumentState {
     public ringModMixDelta: number = 0;
     public ringModPhase: number = 0;
     public ringModPhaseDelta: number = 0;
+    public ringModPhaseDeltaScale: number = 1.0;
 
     public echoDelayLineL: Float32Array | null = null;
     public echoDelayLineR: Float32Array | null = null;
@@ -8083,11 +8088,34 @@ class InstrumentState {
             let useRingModStart: number = instrument.ringModulation;
             let useRingModEnd: number = instrument.ringModulation;
 
+            let useRingModHzStart: number = Math.min(1.0, instrument.ringModulationHz / (Config.ringModHzRange - 1));
+            let useRingModHzEnd: number = Math.min(1.0, instrument.ringModulationHz/ (Config.ringModRange - 1));
+            let ringModMinHz: number = 20;
+            let ringModMaxHz: number = 4400;
+
+            if (synth.isModActive(Config.modulators.dictionary["ring modulation"].index, channelIndex, instrumentIndex)) {
+                useRingModStart = (synth.getModValue(Config.modulators.dictionary["ring modulation"].index, channelIndex, instrumentIndex, false))/Config.ringModHzRange-1;
+                useRingModEnd = (synth.getModValue(Config.modulators.dictionary["ring modulation"].index, channelIndex, instrumentIndex, true))/Config.ringModHzRange-1;
+            }
+            if (synth.isModActive(Config.modulators.dictionary["song ring modulation"].index, channelIndex, instrumentIndex)) {
+                useRingModStart = clamp(0, Config.ringModRange, useRingModStart * (synth.getModValue(Config.modulators.dictionary["song ring modulation"].index, undefined, undefined, false) - Config.modulators.dictionary["song ring modulation"].convertRealFactor) / Config.ringModRange);
+                useRingModEnd = clamp(0, Config.ringModRange, useRingModEnd * (synth.getModValue(Config.modulators.dictionary["song ring modulation"].index, undefined, undefined, true) - Config.modulators.dictionary["song ring modulation"].convertRealFactor) / Config.ringModRange);
+            }
+            if (synth.isModActive(Config.modulators.dictionary["ring mod hertz"].index, channelIndex, instrumentIndex)) {
+                useRingModHzStart = (synth.getModValue(Config.modulators.dictionary["ring mod hertz"].index, channelIndex, instrumentIndex, false))/Config.ringModHzRange-1;
+                useRingModHzEnd = (synth.getModValue(Config.modulators.dictionary["ring mod hertz"].index, channelIndex, instrumentIndex, false))/Config.ringModHzRange-1;
+            }
             let ringModStart: number = Math.min(1.0, useRingModStart / (Config.ringModRange - 1));
             let ringModEnd: number = Math.min(1.0, useRingModEnd / (Config.ringModRange - 1));
+
             this.ringModMix = ringModStart;
-            this.ringModMixDelta = (ringModEnd - ringModStart) /   roundedSamplesPerTick;         
-            this.ringModPhaseDelta = 440 / synth.samplesPerSecond;
+            this.ringModMixDelta = (ringModEnd - ringModStart) / roundedSamplesPerTick;  
+
+            
+            let ringModPhaseDeltaStart = (ringModMinHz * Math.pow(ringModMaxHz / ringModMinHz, useRingModHzStart)) / synth.samplesPerSecond;
+            let ringModPhaseDeltaEnd = (ringModMinHz * Math.pow(ringModMaxHz / ringModMinHz, useRingModHzEnd)) / synth.samplesPerSecond;
+            this.ringModPhaseDelta = ringModPhaseDeltaStart;
+            this.ringModPhaseDeltaScale = Math.pow(ringModPhaseDeltaEnd / ringModPhaseDeltaStart, 1.0 / roundedSamplesPerTick);
         }
 
         let maxEchoMult = 0.0;
@@ -12363,10 +12391,11 @@ export class Synth {
             if (usesRingModulation) {
                 effectsSource += `
 				
-                let ringModMix = +instrumentState.ringModMax;
-                let ringModMixDelta = +instrumentState.ringModMaxDelta;
+                let ringModMix = +instrumentState.ringModMix;
+                let ringModMixDelta = +instrumentState.ringModMixDelta;
                 let ringModPhase = +instrumentState.ringModPhase;
                 let ringModPhaseDelta = +instrumentState.ringModPhaseDelta;
+                let ringModPhaseDeltaScale = +instrumentState.ringModPhaseDeltaScale;
                 `
             }
 
@@ -12562,6 +12591,8 @@ export class Synth {
                 ringModMix += ringModMixDelta;
                 ringModPhase += ringModPhaseDelta;
                 ringModPhase = ringModPhase % 1.0;
+                ringModPhaseDelta *= ringModPhaseDeltaScale;
+
                 `}
 
             if (usesEqFilter) {
@@ -12781,6 +12812,7 @@ export class Synth {
                 instrumentState.ringModMixDelta = ringModMixDelta;
                 instrumentState.ringModPhase = ringModPhase;
                 instrumentState.ringModPhaseDelta = ringModPhaseDelta;
+                instrumentState.ringModPhaseDeltaScale = ringModPhaseDeltaScale;
                 `}
 
             if (usesEqFilter) {

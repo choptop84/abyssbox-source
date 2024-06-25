@@ -702,6 +702,7 @@ var beepbox = (function (exports) {
     Config.panDelaySecondsMax = 0.001;
     Config.chorusRange = 8;
     Config.ringModRange = 8;
+    Config.ringModHzRange = 64;
     Config.chorusPeriodSeconds = 2.0;
     Config.chorusDelayRange = 0.0034;
     Config.chorusDelayOffsets = [[1.51, 2.10, 3.35], [1.47, 2.15, 3.25]];
@@ -1287,6 +1288,21 @@ var beepbox = (function (exports) {
             maxRawVol: Config.distortionRange * 2, newNoteVol: Config.distortionRange, forSong: true, convertRealFactor: -Config.distortionRange, associatedEffect: 13,
             promptName: "Song Distortion",
             promptDesc: ["This setting affects the overall distortion of your song. It works by multiplying existing distortion for instruments, so those with no distortion set will be unaffected.", "At $MID, all instruments' distortion will be unchanged from default. This increases up to double the set distortion value at $HI, or down to no distortion at $LO.", "[MULTIPLICATIVE] [$LO - $HI]"] },
+        { name: "ring modulation",
+            pianoName: "Ring Modulation",
+            maxRawVol: Config.ringModRange, newNoteVol: 0, forSong: true, convertRealFactor: 0, associatedEffect: 13,
+            promptName: "Ring Modulation",
+            promptDesc: ["This setting controls the Ring Modulation effect in your instrument.", "[OVERWRITING] [$LO - $HI]"] },
+        { name: "song ring modulation",
+            pianoName: "Songwide Ring Modulation",
+            maxRawVol: Config.ringModRange * 2, newNoteVol: Config.ringModRange, forSong: true, convertRealFactor: -Config.ringModRange, associatedEffect: 13,
+            promptName: "Songwide Ring Modulation",
+            promptDesc: ["This setting multiplies the Ring Modulation effect across all instruments.", "[MULTIPLICATIVE] [$LO - $HI]"] },
+        { name: "ring mod hertz",
+            pianoName: "Ring Modulation (Hertz)",
+            maxRawVol: Config.ringModHzRange, newNoteVol: 0, forSong: true, convertRealFactor: 0, associatedEffect: 13,
+            promptName: "Ring Modulation (Hertz)",
+            promptDesc: ["This setting controls the Hertz (Hz) used in the Ring Modulation effect in your instrument.", "[OVERWRITING] [$LO - $HI]"] },
     ]);
     function centerWave(wave) {
         let sum = 0.0;
@@ -26206,6 +26222,7 @@ li.select2-results__option[role=group] > strong:hover {
             this.stringSustainType = 1;
             this.distortion = 0;
             this.ringModulation = 0;
+            this.ringModulationHz = 0;
             this.bitcrusherFreq = 0;
             this.bitcrusherQuantization = 0;
             this.chorus = 0;
@@ -26289,6 +26306,7 @@ li.select2-results__option[role=group] > strong:hover {
             this.bitcrusherFreq = Math.floor((Config.bitcrusherFreqRange - 1) * 0.5);
             this.bitcrusherQuantization = Math.floor((Config.bitcrusherQuantizationRange - 1) * 0.5);
             this.ringModulation = 0;
+            this.ringModulationHz = 0;
             this.pan = Config.panCenter;
             this.panDelay = 10;
             this.pitchShift = Config.pitchShiftCenter;
@@ -27837,6 +27855,7 @@ li.select2-results__option[role=group] > strong:hover {
                     }
                     if (effectsIncludeRM(instrument.effects)) {
                         buffer.push(base64IntToCharCode[instrument.ringModulation]);
+                        buffer.push(base64IntToCharCode[instrument.ringModulationHz]);
                     }
                     if (effectsIncludeBitcrusher(instrument.effects)) {
                         buffer.push(base64IntToCharCode[instrument.bitcrusherFreq], base64IntToCharCode[instrument.bitcrusherQuantization]);
@@ -29425,6 +29444,7 @@ li.select2-results__option[role=group] > strong:hover {
                                 }
                                 if (effectsIncludeRM(instrument.effects)) {
                                     instrument.ringModulation = clamp(0, Config.ringModRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                                    instrument.ringModulationHz = clamp(0, Config.ringModHzRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                                 }
                                 if (effectsIncludeBitcrusher(instrument.effects)) {
                                     instrument.bitcrusherFreq = clamp(0, Config.bitcrusherFreqRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
@@ -31800,6 +31820,7 @@ li.select2-results__option[role=group] > strong:hover {
             this.ringModMixDelta = 0;
             this.ringModPhase = 0;
             this.ringModPhaseDelta = 0;
+            this.ringModPhaseDeltaScale = 1.0;
             this.echoDelayLineL = null;
             this.echoDelayLineR = null;
             this.echoDelayLineDirty = false;
@@ -32170,11 +32191,30 @@ li.select2-results__option[role=group] > strong:hover {
             if (usesRingModulation) {
                 let useRingModStart = instrument.ringModulation;
                 let useRingModEnd = instrument.ringModulation;
+                let useRingModHzStart = Math.min(1.0, instrument.ringModulationHz / (Config.ringModHzRange - 1));
+                let useRingModHzEnd = Math.min(1.0, instrument.ringModulationHz / (Config.ringModRange - 1));
+                let ringModMinHz = 20;
+                let ringModMaxHz = 4400;
+                if (synth.isModActive(Config.modulators.dictionary["ring modulation"].index, channelIndex, instrumentIndex)) {
+                    useRingModStart = (synth.getModValue(Config.modulators.dictionary["ring modulation"].index, channelIndex, instrumentIndex, false)) / Config.ringModHzRange - 1;
+                    useRingModEnd = (synth.getModValue(Config.modulators.dictionary["ring modulation"].index, channelIndex, instrumentIndex, true)) / Config.ringModHzRange - 1;
+                }
+                if (synth.isModActive(Config.modulators.dictionary["song ring modulation"].index, channelIndex, instrumentIndex)) {
+                    useRingModStart = clamp(0, Config.ringModRange, useRingModStart * (synth.getModValue(Config.modulators.dictionary["song ring modulation"].index, undefined, undefined, false) - Config.modulators.dictionary["song ring modulation"].convertRealFactor) / Config.ringModRange);
+                    useRingModEnd = clamp(0, Config.ringModRange, useRingModEnd * (synth.getModValue(Config.modulators.dictionary["song ring modulation"].index, undefined, undefined, true) - Config.modulators.dictionary["song ring modulation"].convertRealFactor) / Config.ringModRange);
+                }
+                if (synth.isModActive(Config.modulators.dictionary["ring mod hertz"].index, channelIndex, instrumentIndex)) {
+                    useRingModHzStart = (synth.getModValue(Config.modulators.dictionary["ring mod hertz"].index, channelIndex, instrumentIndex, false)) / Config.ringModHzRange - 1;
+                    useRingModHzEnd = (synth.getModValue(Config.modulators.dictionary["ring mod hertz"].index, channelIndex, instrumentIndex, false)) / Config.ringModHzRange - 1;
+                }
                 let ringModStart = Math.min(1.0, useRingModStart / (Config.ringModRange - 1));
                 let ringModEnd = Math.min(1.0, useRingModEnd / (Config.ringModRange - 1));
                 this.ringModMix = ringModStart;
                 this.ringModMixDelta = (ringModEnd - ringModStart) / roundedSamplesPerTick;
-                this.ringModPhaseDelta = 440 / synth.samplesPerSecond;
+                let ringModPhaseDeltaStart = (ringModMinHz * Math.pow(ringModMaxHz / ringModMinHz, useRingModHzStart)) / synth.samplesPerSecond;
+                let ringModPhaseDeltaEnd = (ringModMinHz * Math.pow(ringModMaxHz / ringModMinHz, useRingModHzEnd)) / synth.samplesPerSecond;
+                this.ringModPhaseDelta = ringModPhaseDeltaStart;
+                this.ringModPhaseDeltaScale = Math.pow(ringModPhaseDeltaEnd / ringModPhaseDeltaStart, 1.0 / roundedSamplesPerTick);
             }
             let maxEchoMult = 0.0;
             let averageEchoDelaySeconds = 0.0;
@@ -35856,10 +35896,11 @@ li.select2-results__option[role=group] > strong:hover {
                 if (usesRingModulation) {
                     effectsSource += `
 				
-                let ringModMix = +instrumentState.ringModMax;
-                let ringModMixDelta = +instrumentState.ringModMaxDelta;
+                let ringModMix = +instrumentState.ringModMix;
+                let ringModMixDelta = +instrumentState.ringModMixDelta;
                 let ringModPhase = +instrumentState.ringModPhase;
                 let ringModPhaseDelta = +instrumentState.ringModPhaseDelta;
+                let ringModPhaseDeltaScale = +instrumentState.ringModPhaseDeltaScale;
                 `;
                 }
                 if (usesEqFilter) {
@@ -36044,6 +36085,8 @@ li.select2-results__option[role=group] > strong:hover {
                 ringModMix += ringModMixDelta;
                 ringModPhase += ringModPhaseDelta;
                 ringModPhase = ringModPhase % 1.0;
+                ringModPhaseDelta *= ringModPhaseDeltaScale;
+
                 `;
                 }
                 if (usesEqFilter) {
@@ -36250,6 +36293,7 @@ li.select2-results__option[role=group] > strong:hover {
                 instrumentState.ringModMixDelta = ringModMixDelta;
                 instrumentState.ringModPhase = ringModPhase;
                 instrumentState.ringModPhaseDelta = ringModPhaseDelta;
+                instrumentState.ringModPhaseDeltaScale = ringModPhaseDeltaScale;
                 `;
                 }
                 if (usesEqFilter) {
@@ -40797,6 +40841,15 @@ li.select2-results__option[role=group] > strong:hover {
         constructor(doc, oldValue, newValue) {
             super(doc);
             this._instrument.ringModulation = newValue;
+            doc.notifier.changed();
+            if (oldValue != newValue)
+                this._didSomething();
+        }
+    }
+    class ChangeRingModHz extends ChangeInstrumentSlider {
+        constructor(doc, oldValue, newValue) {
+            super(doc);
+            this._instrument.ringModulationHz = newValue;
             doc.notifier.changed();
             if (oldValue != newValue)
                 this._didSomething();
@@ -58711,6 +58764,10 @@ You should be redirected to the song at:<br /><br />
             this._chorusRow = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("chorus") }, "Chorus:"), this._chorusSlider.container);
             this._ringModSlider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.ringModRange - 1, value: "0", step: "1" }), this._doc, (oldValue, newValue) => new ChangeRingMod(this._doc, oldValue, newValue), false);
             this._ringModRow = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("ringMod") }, "Ring Mod:"), this._ringModSlider.container);
+            this._ringModHzSlider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.ringModHzRange - 1, value: (Config.ringModHzRange - (Config.ringModHzRange / 2)), step: "1" }), this._doc, (oldValue, newValue) => new ChangeRingModHz(this._doc, oldValue, newValue), true);
+            this._ringModHzNum = div({ style: "font-size: 80%; ", id: "ringModHzNum" });
+            this._ringModHzSliderRow = div({ class: "selectRow", style: "width:100%;" }, div({ style: "display:flex; flex-direction:column; align-items:center;" }, span({ class: "tip", style: "font-size: smaller;", onclick: () => this._openPrompt("RingModHz") }, "Hertz: "), div({ style: `color: ${ColorConfig.secondaryText}; ` }, this._ringModHzNum)), this._ringModHzSlider.container);
+            this._ringModContainerRow = div({ class: "selectRow", style: "display:flex; flex-direction:column; height: 64px;" }, this._ringModRow, this._ringModHzSliderRow);
             this._reverbSlider = new Slider(input({ style: "margin: 0; position: sticky,", type: "range", min: "0", max: Config.reverbRange - 1, value: "0", step: "1" }), this._doc, (oldValue, newValue) => new ChangeReverb(this._doc, oldValue, newValue), false);
             this._reverbRow = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("reverb") }, "Reverb:"), this._reverbSlider.container);
             this._echoSustainSlider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.echoSustainRange - 1, value: "0", step: "1" }), this._doc, (oldValue, newValue) => new ChangeEchoSustain(this._doc, oldValue, newValue), false);
@@ -58902,7 +58959,7 @@ You should be redirected to the song at:<br /><br />
             this._feedbackAmplitudeSlider = new Slider(input({ type: "range", min: "0", max: Config.operatorAmplitudeMax, value: "0", step: "1", title: "Feedback Amplitude" }), this._doc, (oldValue, newValue) => new ChangeFeedbackAmplitude(this._doc, oldValue, newValue), false);
             this._feedbackRow2 = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("feedbackVolume") }, "Fdback Vol:"), this._feedbackAmplitudeSlider.container);
             this._addEnvelopeButton = button({ type: "button", class: "add-envelope" });
-            this._customInstrumentSettingsGroup = div({ class: "editor-controls" }, div({ id: "InstrumentDiv" }, this._panSliderRow, this._panDropdownGroup, this._chipWaveSelectRow, this._chipNoiseSelectRow, this._useChipWaveAdvancedLoopControlsRow, this._chipWaveLoopModeSelectRow, this._chipWaveLoopStartRow, this._chipWaveLoopEndRow, this._chipWaveStartOffsetRow, this._chipWavePlayBackwardsRow, this._customWaveDraw, this._eqFilterTypeRow, this._eqFilterRow, this._eqFilterSimpleCutRow, this._eqFilterSimplePeakRow, this._fadeInOutRow, this._algorithmSelectRow, this._algorithm6OpSelectRow, this._phaseModGroup, this._feedbackRow1, this._feedback6OpRow1, this._feedbackRow2, this._spectrumRow, this._harmonicsRow, this._drumsetGroup, this._supersawDynamismRow, this._supersawSpreadRow, this._supersawShapeRow, this._pulseWidthRow, this._pulseWidthDropdownGroup, this._stringSustainRow, this._unisonSelectRow, this._unisonDropdownGroup), div({ id: "effectsDiv" }, div({ class: "effectsNameDiv", style: `padding: 2px 0; margin-left: 2em; display: flex; align-items: center;` }, span({ style: `flex-grow: 1; text-align: center;` }, span({ class: "tip", onclick: () => this._openPrompt("effects") }, "Effects")), div({ class: "effects-menu" }, this._effectsSelect)), div({ class: "effectsOpDiv" }, this._transitionRow, this._transitionDropdownGroup, this._chordSelectRow, this._chordDropdownGroup, this._pitchShiftRow, this._detuneSliderRow, this._vibratoSelectRow, this._vibratoDropdownGroup, this._noteFilterTypeRow, this._noteFilterRow, this._noteFilterSimpleCutRow, this._noteFilterSimplePeakRow, this._distortionRow, this._aliasingRow, this._bitcrusherQuantizationRow, this._bitcrusherFreqRow, this._chorusRow, this._echoSustainRow, this._echoDelayRow, this._reverbRow, this._ringModRow)), div({ id: "envelopesDiv" }, div({ class: "envelopesNameDiv", style: `padding: 2px 0; margin-left: 2em; display: flex; align-items: center;` }, span({ style: `flex-grow: 1; text-align: center;` }, span({ class: "tip", onclick: () => this._openPrompt("envelopes") }, "Envelopes")), this._envelopeDropdown, this._addEnvelopeButton), div({ class: "envelopesOpDiv" }, this._envelopeDropdownGroup, this._envelopeEditor.container)));
+            this._customInstrumentSettingsGroup = div({ class: "editor-controls" }, div({ id: "InstrumentDiv" }, this._panSliderRow, this._panDropdownGroup, this._chipWaveSelectRow, this._chipNoiseSelectRow, this._useChipWaveAdvancedLoopControlsRow, this._chipWaveLoopModeSelectRow, this._chipWaveLoopStartRow, this._chipWaveLoopEndRow, this._chipWaveStartOffsetRow, this._chipWavePlayBackwardsRow, this._customWaveDraw, this._eqFilterTypeRow, this._eqFilterRow, this._eqFilterSimpleCutRow, this._eqFilterSimplePeakRow, this._fadeInOutRow, this._algorithmSelectRow, this._algorithm6OpSelectRow, this._phaseModGroup, this._feedbackRow1, this._feedback6OpRow1, this._feedbackRow2, this._spectrumRow, this._harmonicsRow, this._drumsetGroup, this._supersawDynamismRow, this._supersawSpreadRow, this._supersawShapeRow, this._pulseWidthRow, this._pulseWidthDropdownGroup, this._stringSustainRow, this._unisonSelectRow, this._unisonDropdownGroup), div({ id: "effectsDiv" }, div({ class: "effectsNameDiv", style: `padding: 2px 0; margin-left: 2em; display: flex; align-items: center;` }, span({ style: `flex-grow: 1; text-align: center;` }, span({ class: "tip", onclick: () => this._openPrompt("effects") }, "Effects")), div({ class: "effects-menu" }, this._effectsSelect)), div({ class: "effectsOpDiv" }, this._transitionRow, this._transitionDropdownGroup, this._chordSelectRow, this._chordDropdownGroup, this._pitchShiftRow, this._detuneSliderRow, this._vibratoSelectRow, this._vibratoDropdownGroup, this._noteFilterTypeRow, this._noteFilterRow, this._noteFilterSimpleCutRow, this._noteFilterSimplePeakRow, this._distortionRow, this._aliasingRow, this._bitcrusherQuantizationRow, this._bitcrusherFreqRow, this._chorusRow, this._echoSustainRow, this._echoDelayRow, this._reverbRow, this._ringModContainerRow)), div({ id: "envelopesDiv" }, div({ class: "envelopesNameDiv", style: `padding: 2px 0; margin-left: 2em; display: flex; align-items: center;` }, span({ style: `flex-grow: 1; text-align: center;` }, span({ class: "tip", onclick: () => this._openPrompt("envelopes") }, "Envelopes")), this._envelopeDropdown, this._addEnvelopeButton), div({ class: "envelopesOpDiv" }, this._envelopeDropdownGroup, this._envelopeEditor.container)));
             this._instrumentCopyGroup = div({ class: "editor-controls" }, div({ class: "selectRow" }, this._instrumentCopyButton, this._instrumentPasteButton));
             this._instrumentExportGroup = div({ class: "editor-controls" }, div({ class: "selectRow" }, this._instrumentExportButton, this._instrumentImportButton));
             this._instrumentSettingsTextRow = div({ id: "instrumentSettingsText", style: `padding: 3px 0; max-width: 15em; text-align: center; color: ${ColorConfig.secondaryText};` }, "Instrument Settings");
@@ -60077,11 +60134,12 @@ You should be redirected to the song at:<br /><br />
                         this._reverbRow.style.display = "none";
                     }
                     if (effectsIncludeRM(instrument.effects)) {
-                        this._ringModRow.style.display = "";
-                        this._ringModSlider.updateValue(instrument.reverb);
+                        this._ringModContainerRow.style.display = "";
+                        this._ringModSlider.updateValue(instrument.ringModulation);
+                        this._ringModHzSlider.updateValue(instrument.ringModulationHz);
                     }
                     else {
-                        this._ringModRow.style.display = "none";
+                        this._ringModContainerRow.style.display = "none";
                     }
                     if (instrument.type == 0 || instrument.type == 9 || instrument.type == 5 || instrument.type == 7 || instrument.type == 3 || instrument.type == 6 || instrument.type == 2) {
                         this._unisonSelectRow.style.display = "";
@@ -60122,6 +60180,7 @@ You should be redirected to the song at:<br /><br />
                     this._panSliderInputBox.value = instrument.pan + "";
                     this._pwmSliderInputBox.value = instrument.pulseWidth + "";
                     this._detuneSliderInputBox.value = (instrument.detune - Config.detuneCenter) + "";
+                    this._ringModHzNum.innerHTML = (Math.floor(20 * Math.pow(4400 / 20, Math.min(1.0, instrument.ringModulationHz / (Config.ringModHzRange - 1))))) + "";
                     this._instrumentVolumeSlider.updateValue(instrument.volume);
                     this._instrumentVolumeSliderInputBox.value = "" + (instrument.volume);
                     this._vibratoDepthSlider.updateValue(Math.round(instrument.vibratoDepth * 25));
@@ -60284,12 +60343,13 @@ You should be redirected to the song at:<br /><br />
                                 settingList.push("song panning");
                                 settingList.push("song chorus");
                                 settingList.push("song distortion");
+                                settingList.push("song ring modulation");
                             }
                             else {
                                 settingList.push("note volume");
                                 settingList.push("mix volume");
                                 let tgtInstrumentTypes = [];
-                                let anyInstrumentAdvancedEQ = false, anyInstrumentSimpleEQ = false, anyInstrumentAdvancedNote = false, anyInstrumentSimpleNote = false, anyInstrumentArps = false, anyInstrumentPitchShifts = false, anyInstrumentDetunes = false, anyInstrumentVibratos = false, anyInstrumentNoteFilters = false, anyInstrumentDistorts = false, anyInstrumentBitcrushes = false, anyInstrumentPans = false, anyInstrumentChorus = false, anyInstrumentEchoes = false, anyInstrumentReverbs = false, anyInstrumentHasEnvelopes = false;
+                                let anyInstrumentAdvancedEQ = false, anyInstrumentSimpleEQ = false, anyInstrumentAdvancedNote = false, anyInstrumentSimpleNote = false, anyInstrumentArps = false, anyInstrumentPitchShifts = false, anyInstrumentDetunes = false, anyInstrumentVibratos = false, anyInstrumentNoteFilters = false, anyInstrumentDistorts = false, anyInstrumentBitcrushes = false, anyInstrumentPans = false, anyInstrumentChorus = false, anyInstrumentEchoes = false, anyInstrumentReverbs = false, anyInstrumentRMs = false, anyInstrumentHasEnvelopes = false;
                                 let allInstrumentNoteFilters = true, allInstrumentDetunes = true, allInstrumentVibratos = true, allInstrumentDistorts = true, allInstrumentBitcrushes = true, allInstrumentPans = true, allInstrumentChorus = true, allInstrumentEchoes = true, allInstrumentReverbs = true;
                                 let instrumentCandidates = [];
                                 if (modInstrument >= channel.instruments.length) {
@@ -60371,6 +60431,12 @@ You should be redirected to the song at:<br /><br />
                                     }
                                     else {
                                         allInstrumentReverbs = false;
+                                    }
+                                    if (effectsIncludeRM(channel.instruments[instrumentIndex].effects)) {
+                                        anyInstrumentRMs = true;
+                                    }
+                                    else {
+                                        anyInstrumentRMs = false;
                                     }
                                     if (channel.instruments[instrumentIndex].envelopes.length > 0) {
                                         anyInstrumentHasEnvelopes = true;
@@ -60488,6 +60554,10 @@ You should be redirected to the song at:<br /><br />
                                 }
                                 if (anyInstrumentHasEnvelopes) {
                                     settingList.push("envelope speed");
+                                }
+                                if (anyInstrumentRMs) {
+                                    settingList.push("ring modulation");
+                                    settingList.push("ring mod hertz");
                                 }
                             }
                             buildOptions(this._modSetBoxes[mod], settingList);
@@ -62755,6 +62825,8 @@ You should be redirected to the song at:<br /><br />
                 case Config.modulators.dictionary["reverb"].index:
                     return this._reverbSlider;
                 case Config.modulators.dictionary["distortion"].index:
+                    return this._distortionSlider;
+                case Config.modulators.dictionary["ring modulation"].index:
                     return this._distortionSlider;
                 case Config.modulators.dictionary["note volume"].index:
                     if (!this._showModSliders[Config.modulators.dictionary["mix volume"].index])
