@@ -32192,7 +32192,7 @@ li.select2-results__option[role=group] > strong:hover {
                 let useRingModStart = instrument.ringModulation;
                 let useRingModEnd = instrument.ringModulation;
                 let useRingModHzStart = Math.min(1.0, instrument.ringModulationHz / (Config.ringModHzRange - 1));
-                let useRingModHzEnd = Math.min(1.0, instrument.ringModulationHz / (Config.ringModRange - 1));
+                let useRingModHzEnd = Math.min(1.0, instrument.ringModulationHz / (Config.ringModHzRange - 1));
                 let ringModMinHz = 20;
                 let ringModMaxHz = 4400;
                 if (synth.isModActive(Config.modulators.dictionary["ring modulation"].index, channelIndex, instrumentIndex)) {

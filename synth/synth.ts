@@ -8089,7 +8089,7 @@ class InstrumentState {
             let useRingModEnd: number = instrument.ringModulation;
 
             let useRingModHzStart: number = Math.min(1.0, instrument.ringModulationHz / (Config.ringModHzRange - 1));
-            let useRingModHzEnd: number = Math.min(1.0, instrument.ringModulationHz/ (Config.ringModRange - 1));
+            let useRingModHzEnd: number = Math.min(1.0, instrument.ringModulationHz/ (Config.ringModHzRange - 1));
             let ringModMinHz: number = 20;
             let ringModMaxHz: number = 4400;
 
