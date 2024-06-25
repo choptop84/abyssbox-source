@@ -1290,7 +1290,7 @@ var beepbox = (function (exports) {
             promptDesc: ["This setting affects the overall distortion of your song. It works by multiplying existing distortion for instruments, so those with no distortion set will be unaffected.", "At $MID, all instruments' distortion will be unchanged from default. This increases up to double the set distortion value at $HI, or down to no distortion at $LO.", "[MULTIPLICATIVE] [$LO - $HI]"] },
         { name: "ring modulation",
             pianoName: "Ring Modulation",
-            maxRawVol: Config.ringModRange, newNoteVol: 0, forSong: true, convertRealFactor: 0, associatedEffect: 13,
+            maxRawVol: Config.ringModRange, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: 13,
             promptName: "Ring Modulation",
             promptDesc: ["This setting controls the Ring Modulation effect in your instrument.", "[OVERWRITING] [$LO - $HI]"] },
         { name: "song ring modulation",
@@ -1300,7 +1300,7 @@ var beepbox = (function (exports) {
             promptDesc: ["This setting multiplies the Ring Modulation effect across all instruments.", "[MULTIPLICATIVE] [$LO - $HI]"] },
         { name: "ring mod hertz",
             pianoName: "Ring Modulation (Hertz)",
-            maxRawVol: Config.ringModHzRange, newNoteVol: 0, forSong: true, convertRealFactor: 0, associatedEffect: 13,
+            maxRawVol: Config.ringModHzRange, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: 13,
             promptName: "Ring Modulation (Hertz)",
             promptDesc: ["This setting controls the Hertz (Hz) used in the Ring Modulation effect in your instrument.", "[OVERWRITING] [$LO - $HI]"] },
     ]);
@@ -32196,8 +32196,8 @@ li.select2-results__option[role=group] > strong:hover {
                 let ringModMinHz = 20;
                 let ringModMaxHz = 4400;
                 if (synth.isModActive(Config.modulators.dictionary["ring modulation"].index, channelIndex, instrumentIndex)) {
-                    useRingModStart = (synth.getModValue(Config.modulators.dictionary["ring modulation"].index, channelIndex, instrumentIndex, false)) / Config.ringModHzRange - 1;
-                    useRingModEnd = (synth.getModValue(Config.modulators.dictionary["ring modulation"].index, channelIndex, instrumentIndex, true)) / Config.ringModHzRange - 1;
+                    useRingModStart = (synth.getModValue(Config.modulators.dictionary["ring modulation"].index, channelIndex, instrumentIndex, false));
+                    useRingModEnd = (synth.getModValue(Config.modulators.dictionary["ring modulation"].index, channelIndex, instrumentIndex, true));
                 }
                 if (synth.isModActive(Config.modulators.dictionary["song ring modulation"].index, channelIndex, instrumentIndex)) {
                     useRingModStart = clamp(0, Config.ringModRange, useRingModStart * (synth.getModValue(Config.modulators.dictionary["song ring modulation"].index, undefined, undefined, false) - Config.modulators.dictionary["song ring modulation"].convertRealFactor) / Config.ringModRange);
@@ -32205,7 +32205,7 @@ li.select2-results__option[role=group] > strong:hover {
                 }
                 if (synth.isModActive(Config.modulators.dictionary["ring mod hertz"].index, channelIndex, instrumentIndex)) {
                     useRingModHzStart = (synth.getModValue(Config.modulators.dictionary["ring mod hertz"].index, channelIndex, instrumentIndex, false)) / Config.ringModHzRange - 1;
-                    useRingModHzEnd = (synth.getModValue(Config.modulators.dictionary["ring mod hertz"].index, channelIndex, instrumentIndex, false)) / Config.ringModHzRange - 1;
+                    useRingModHzEnd = (synth.getModValue(Config.modulators.dictionary["ring mod hertz"].index, channelIndex, instrumentIndex, true)) / Config.ringModHzRange - 1;
                 }
                 let ringModStart = Math.min(1.0, useRingModStart / (Config.ringModRange - 1));
                 let ringModEnd = Math.min(1.0, useRingModEnd / (Config.ringModRange - 1));
@@ -56162,6 +56162,16 @@ You should be redirected to the song at:<br /><br />
                         message = div$7(h2$6("Unison Sign"), p$2("This setting is a volume multiplier applied to the second voice. This setting will only work correctly with two voices."));
                     }
                     break;
+                case "ringMod":
+                    {
+                        message = div$7(h2$6("Ring Modulation"), p$2(`This setting multiplies a sine wave's frequency with an instrument frequency, this is useful for "bell-like" instruments.`));
+                    }
+                    break;
+                case "RingModHz":
+                    {
+                        message = div$7(h2$6("Ring Modulation (Hertz)"), p$2(`This setting changes the Hertz of the 2nd multiplied frequency with the first frequency.`));
+                    }
+                    break;
                 default:
                     if (type.indexOf("modSetInfo") >= 0) {
                         let modNum = +type[type.length - 1];
@@ -60557,7 +60567,6 @@ You should be redirected to the song at:<br /><br />
                                 }
                                 if (anyInstrumentRMs) {
                                     settingList.push("ring modulation");
-                                    settingList.push("ring mod hertz");
                                 }
                             }
                             buildOptions(this._modSetBoxes[mod], settingList);

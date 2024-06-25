@@ -547,6 +547,18 @@ export class TipPrompt implements Prompt {
 					p("This setting is a volume multiplier applied to the second voice. This setting will only work correctly with two voices."),
 				);
 			} break;
+			case "ringMod": {
+				message = div(
+					h2("Ring Modulation"),
+					p(`This setting multiplies a sine wave's frequency with an instrument frequency, this is useful for "bell-like" instruments.`),
+				);
+			} break;
+			case "RingModHz": {
+				message = div(
+					h2("Ring Modulation (Hertz)"),
+					p(`This setting changes the Hertz of the 2nd multiplied frequency with the first frequency.`),
+				);
+			} break;
 
 			default:
 				// Check for modSetinfo#

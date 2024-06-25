@@ -4046,7 +4046,6 @@ export class SongEditor {
                         }
                         if (anyInstrumentRMs) {
                             settingList.push("ring modulation");
-                            settingList.push("ring mod hertz");
                         }
                     }
 

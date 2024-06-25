@@ -8094,8 +8094,8 @@ class InstrumentState {
             let ringModMaxHz: number = 4400;
 
             if (synth.isModActive(Config.modulators.dictionary["ring modulation"].index, channelIndex, instrumentIndex)) {
-                useRingModStart = (synth.getModValue(Config.modulators.dictionary["ring modulation"].index, channelIndex, instrumentIndex, false))/Config.ringModHzRange-1;
-                useRingModEnd = (synth.getModValue(Config.modulators.dictionary["ring modulation"].index, channelIndex, instrumentIndex, true))/Config.ringModHzRange-1;
+                useRingModStart = (synth.getModValue(Config.modulators.dictionary["ring modulation"].index, channelIndex, instrumentIndex, false));
+                useRingModEnd = (synth.getModValue(Config.modulators.dictionary["ring modulation"].index, channelIndex, instrumentIndex, true));
             }
             if (synth.isModActive(Config.modulators.dictionary["song ring modulation"].index, channelIndex, instrumentIndex)) {
                 useRingModStart = clamp(0, Config.ringModRange, useRingModStart * (synth.getModValue(Config.modulators.dictionary["song ring modulation"].index, undefined, undefined, false) - Config.modulators.dictionary["song ring modulation"].convertRealFactor) / Config.ringModRange);
@@ -8103,7 +8103,7 @@ class InstrumentState {
             }
             if (synth.isModActive(Config.modulators.dictionary["ring mod hertz"].index, channelIndex, instrumentIndex)) {
                 useRingModHzStart = (synth.getModValue(Config.modulators.dictionary["ring mod hertz"].index, channelIndex, instrumentIndex, false))/Config.ringModHzRange-1;
-                useRingModHzEnd = (synth.getModValue(Config.modulators.dictionary["ring mod hertz"].index, channelIndex, instrumentIndex, false))/Config.ringModHzRange-1;
+                useRingModHzEnd = (synth.getModValue(Config.modulators.dictionary["ring mod hertz"].index, channelIndex, instrumentIndex, true))/Config.ringModHzRange-1;
             }
             let ringModStart: number = Math.min(1.0, useRingModStart / (Config.ringModRange - 1));
             let ringModEnd: number = Math.min(1.0, useRingModEnd / (Config.ringModRange - 1));

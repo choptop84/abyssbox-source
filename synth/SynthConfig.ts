@@ -1824,7 +1824,7 @@ export class Config {
             promptDesc: [ "This setting affects the overall distortion of your song. It works by multiplying existing distortion for instruments, so those with no distortion set will be unaffected.", "At $MID, all instruments' distortion will be unchanged from default. This increases up to double the set distortion value at $HI, or down to no distortion at $LO.", "[MULTIPLICATIVE] [$LO - $HI]" ] },
         { name: "ring modulation", 
             pianoName: "Ring Modulation", 
-            maxRawVol: Config.ringModRange, newNoteVol: 0, forSong: true, convertRealFactor: 0, associatedEffect: EffectType.length,
+            maxRawVol: Config.ringModRange, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: EffectType.length,
             promptName: "Ring Modulation", 
             promptDesc: [ "This setting controls the Ring Modulation effect in your instrument.", "[OVERWRITING] [$LO - $HI]" ] },
         { name: "song ring modulation", 
@@ -1834,7 +1834,7 @@ export class Config {
             promptDesc: [ "This setting multiplies the Ring Modulation effect across all instruments.", "[MULTIPLICATIVE] [$LO - $HI]" ] },
         { name: "ring mod hertz", 
             pianoName: "Ring Modulation (Hertz)", 
-            maxRawVol: Config.ringModHzRange, newNoteVol: 0, forSong: true, convertRealFactor: 0, associatedEffect: EffectType.length,
+            maxRawVol: Config.ringModHzRange, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: EffectType.length,
             promptName: "Ring Modulation (Hertz)", 
             promptDesc: [ "This setting controls the Hertz (Hz) used in the Ring Modulation effect in your instrument.", "[OVERWRITING] [$LO - $HI]" ] },
         ]);
