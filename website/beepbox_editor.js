@@ -32204,8 +32204,8 @@ li.select2-results__option[role=group] > strong:hover {
                     useRingModEnd = clamp(0, Config.ringModRange, useRingModEnd * (synth.getModValue(Config.modulators.dictionary["song ring modulation"].index, undefined, undefined, true) - Config.modulators.dictionary["song ring modulation"].convertRealFactor) / Config.ringModRange);
                 }
                 if (synth.isModActive(Config.modulators.dictionary["ring mod hertz"].index, channelIndex, instrumentIndex)) {
-                    useRingModHzStart = (synth.getModValue(Config.modulators.dictionary["ring mod hertz"].index, channelIndex, instrumentIndex, false)) / Config.ringModHzRange - 1;
-                    useRingModHzEnd = (synth.getModValue(Config.modulators.dictionary["ring mod hertz"].index, channelIndex, instrumentIndex, true)) / Config.ringModHzRange - 1;
+                    useRingModHzStart = Math.min(1.0, Math.max(0.0, (synth.getModValue(Config.modulators.dictionary["ring mod hertz"].index, channelIndex, instrumentIndex, false)) / (Config.ringModHzRange - 1)));
+                    useRingModHzEnd = Math.min(1.0, Math.max(0.0, (synth.getModValue(Config.modulators.dictionary["ring mod hertz"].index, channelIndex, instrumentIndex, false)) / (Config.ringModHzRange - 1)));
                 }
                 let ringModStart = Math.min(1.0, useRingModStart / (Config.ringModRange - 1));
                 let ringModEnd = Math.min(1.0, useRingModEnd / (Config.ringModRange - 1));
@@ -60567,6 +60567,7 @@ You should be redirected to the song at:<br /><br />
                                 }
                                 if (anyInstrumentRMs) {
                                     settingList.push("ring modulation");
+                                    settingList.push("ring mod hertz");
                                 }
                             }
                             buildOptions(this._modSetBoxes[mod], settingList);
@@ -62836,7 +62837,9 @@ You should be redirected to the song at:<br /><br />
                 case Config.modulators.dictionary["distortion"].index:
                     return this._distortionSlider;
                 case Config.modulators.dictionary["ring modulation"].index:
-                    return this._distortionSlider;
+                    return this._ringModSlider;
+                case Config.modulators.dictionary["ring mod hertz"].index:
+                    return this._ringModHzSlider;
                 case Config.modulators.dictionary["note volume"].index:
                     if (!this._showModSliders[Config.modulators.dictionary["mix volume"].index])
                         return this._instrumentVolumeSlider;

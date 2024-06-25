@@ -2205,7 +2205,9 @@ export class SongEditor {
             case Config.modulators.dictionary["distortion"].index:
                 return this._distortionSlider;
              case Config.modulators.dictionary["ring modulation"].index:
-                return this._distortionSlider;
+                return this._ringModSlider;
+            case Config.modulators.dictionary["ring mod hertz"].index:
+                return this._ringModHzSlider;
             case Config.modulators.dictionary["note volume"].index:
                 // So, this should technically not affect this slider, but it will look better as legacy songs used this mod as 'volume'.
                 // In the case that mix volume is used as well, they'd fight for the display, so just don't use this.
@@ -4046,6 +4048,7 @@ export class SongEditor {
                         }
                         if (anyInstrumentRMs) {
                             settingList.push("ring modulation");
+                            settingList.push("ring mod hertz");
                         }
                     }
 
