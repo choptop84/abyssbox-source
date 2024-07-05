@@ -60656,19 +60656,6 @@ You should be redirected to the song at:<br /><br />
                                             this._doc.selection.setChannelBar(this._doc.channel, Math.floor(this._doc.synth.playhead));
                                         }
                                     }
-                                    else {
-                                        this._doc.synth.loopBarStart = -1;
-                                        this._doc.synth.loopBarEnd = -1;
-                                    }
-                                    if (this._doc.bar != Math.floor(this._doc.synth.playhead) && this._doc.synth.loopBarStart != -1) {
-                                        this._doc.synth.goToBar(this._doc.bar);
-                                        this._doc.synth.snapToBar();
-                                        this._doc.synth.initModFilters(this._doc.song);
-                                        this._doc.synth.computeLatestModValues();
-                                        if (this._doc.prefs.autoFollow) {
-                                            this._doc.selection.setChannelBar(this._doc.channel, Math.floor(this._doc.synth.playhead));
-                                        }
-                                    }
                                     this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
                                 }
                             }
