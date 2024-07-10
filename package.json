@@ -1,14 +1,13 @@
 {
 	"name": "AbyssBox",
-	"version": "1.1.0",
+	"version": "1.4.5",
 	"description": "BeepBox is an online tool for sketching and sharing instrumental music.",
 	"author": "John Nesky",
 	"license": "MIT",
 	"homepage": "https://www.beepbox.co",
 	"type": "module",
 	"scripts": {
-		"build": "npm run build-synth && npm run build-player && npm run build-editor",
-		"build-synth": "bash ./compile_beepbox_synth.sh",
+		"build": "npm run build-player && npm run build-editor",
 		"build-player": "bash ./compile_beepbox_player.sh",
 		"build-editor": "bash ./compile_beepbox_editor.sh",
 		"build-app": "bash ./compile_beepbox_app.sh"

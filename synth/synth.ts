@@ -343,7 +343,7 @@ const enum SongTagCode {
 	pulseWidth          = CharCode.W, // added in BeepBox URL version 7
 	aliases             = CharCode.X, // added in JummBox URL version 4 for aliases, DEPRECATED, [UB] repurposed for PWM decimal offset (DEPRECATED as well)
     songTheme           = CharCode.Y, // added in AbyssBox URL version 1
-//	                    = CharCode.Z,
+//                      = CharCode.Z, // added in AbyssBox URL version 1
 //	                    = CharCode.NUM_0,
 //	                    = CharCode.NUM_1,
 //	                    = CharCode.NUM_2,
@@ -2005,6 +2005,11 @@ export class Instrument {
                 instrumentObject["unisonExpression"] = this.unisonExpression;
                 instrumentObject["unisonSign"] = this.unisonSign;
             }
+        } else if (this.type == InstrumentType.spectrum) {
+            instrumentObject["spectrum"] = [];
+            for (let i: number = 0; i < Config.spectrumControlPoints; i++) {
+                instrumentObject["spectrum"][i] = Math.round(100 * this.spectrumWave.spectrum[i] / Config.spectrumMax);
+            }
             instrumentObject["unison"] = this.unison == Config.unisons.length ? "custom" : Config.unisons[this.unison].name;
             if (this.unison == Config.unisons.length) {
                 instrumentObject["unisonVoices"] = this.unisonVoices;
@@ -2012,11 +2017,6 @@ export class Instrument {
                 instrumentObject["unisonOffset"] = this.unisonOffset;
                 instrumentObject["unisonExpression"] = this.unisonExpression;
                 instrumentObject["unisonSign"] = this.unisonSign;
-            }
-        } else if (this.type == InstrumentType.spectrum) {
-            instrumentObject["spectrum"] = [];
-            for (let i: number = 0; i < Config.spectrumControlPoints; i++) {
-                instrumentObject["spectrum"][i] = Math.round(100 * this.spectrumWave.spectrum[i] / Config.spectrumMax);
             }
         } else if (this.type == InstrumentType.drumset) {
             instrumentObject["drums"] = [];
@@ -7788,7 +7788,10 @@ class InstrumentState {
                 useDistortionStart = synth.getModValue(Config.modulators.dictionary["distortion"].index, channelIndex, instrumentIndex, false);
                 useDistortionEnd = synth.getModValue(Config.modulators.dictionary["distortion"].index, channelIndex, instrumentIndex, true);
             }
-
+            if (synth.isModActive(Config.modulators.dictionary["song distortion"].index, channelIndex, instrumentIndex)) {
+                useDistortionStart = clamp(0, Config.distortionRange, useDistortionStart * (synth.getModValue(Config.modulators.dictionary["song distortion"].index, undefined, undefined, false) - Config.modulators.dictionary["song distortion"].convertRealFactor) / Config.distortionRange);
+                useDistortionEnd = clamp(0, Config.distortionRange, useDistortionEnd * (synth.getModValue(Config.modulators.dictionary["song distortion"].index, undefined, undefined, true) - Config.modulators.dictionary["song distortion"].convertRealFactor) / Config.distortionRange);
+            }
             const distortionSliderStart = Math.min(1.0, /*envelopeStarts[InstrumentAutomationIndex.distortion] **/ useDistortionStart / (Config.distortionRange - 1));
             const distortionSliderEnd = Math.min(1.0, /*envelopeEnds[  InstrumentAutomationIndex.distortion] **/ useDistortionEnd / (Config.distortionRange - 1));
             const distortionStart: number = Math.pow(1.0 - 0.895 * (Math.pow(20.0, distortionSliderStart) - 1.0) / 19.0, 2.0);
@@ -7818,6 +7821,17 @@ class InstrumentState {
             if (synth.isModActive(Config.modulators.dictionary["bit crush"].index, channelIndex, instrumentIndex)) {
                 quantizationSettingStart = synth.getModValue(Config.modulators.dictionary["bit crush"].index, channelIndex, instrumentIndex, false);
                 quantizationSettingEnd = synth.getModValue(Config.modulators.dictionary["bit crush"].index, channelIndex, instrumentIndex, true);
+            }
+
+            // Check for mod reverb, song scalar
+            if (synth.isModActive(Config.modulators.dictionary["song bitcrush"].index, channelIndex, instrumentIndex)) {
+                quantizationSettingStart = clamp(0, Config.bitcrusherQuantizationRange, quantizationSettingStart * (synth.getModValue(Config.modulators.dictionary["song bitcrush"].index, undefined, undefined, false) - Config.modulators.dictionary["song bitcrush"].convertRealFactor) / Config.bitcrusherQuantizationRange);
+                quantizationSettingEnd = clamp(0, Config.bitcrusherQuantizationRange, quantizationSettingEnd * (synth.getModValue(Config.modulators.dictionary["song bitcrush"].index, undefined, undefined, true) - Config.modulators.dictionary["song bitcrush"].convertRealFactor) / Config.bitcrusherQuantizationRange);
+            }
+            
+            if (synth.isModActive(Config.modulators.dictionary["song freqcrush"].index, channelIndex, instrumentIndex)) {
+                freqSettingStart = clamp(0, Config.bitcrusherFreqRange, freqSettingStart * (synth.getModValue(Config.modulators.dictionary["song freqcrush"].index, undefined, undefined, false) - Config.modulators.dictionary["song freqcrush"].convertRealFactor) / Config.bitcrusherFreqRange);
+                freqSettingEnd = clamp(0, Config.bitcrusherFreqRange, freqSettingEnd * (synth.getModValue(Config.modulators.dictionary["song freqcrush"].index, undefined, undefined, true) - Config.modulators.dictionary["song freqcrush"].convertRealFactor) / Config.bitcrusherFreqRange);
             }
 
             const basePitch: number = Config.keys[synth.song!.key].basePitch + (Config.pitchesPerOctave * synth.song!.octave); // TODO: What if there's a key change mid-song?
@@ -7964,6 +7978,11 @@ class InstrumentState {
                 usePanEnd = synth.getModValue(Config.modulators.dictionary["pan"].index, channelIndex, instrumentIndex, true);
             }
 
+            if (synth.isModActive(Config.modulators.dictionary["song panning"].index, channelIndex, instrumentIndex)) {
+                usePanStart = clamp(-Config.panMax/2, Config.panMax, usePanStart + synth.getModValue(Config.modulators.dictionary["song panning"].index, undefined, undefined, false));
+                usePanEnd = clamp(-Config.panMax/2, Config.panMax, usePanEnd + synth.getModValue(Config.modulators.dictionary["song panning"].index, undefined, undefined, true));
+            }
+
             let panStart: number = Math.max(-1.0, Math.min(1.0, (usePanStart - Config.panCenter) / Config.panCenter /** panEnvelopeStart*/));
             let panEnd: number = Math.max(-1.0, Math.min(1.0, (usePanEnd - Config.panCenter) / Config.panCenter /** panEnvelopeEnd  */));
 
@@ -8008,7 +8027,10 @@ class InstrumentState {
                 useChorusStart = synth.getModValue(Config.modulators.dictionary["chorus"].index, channelIndex, instrumentIndex, false);
                 useChorusEnd = synth.getModValue(Config.modulators.dictionary["chorus"].index, channelIndex, instrumentIndex, true);
             }
-
+            if (synth.isModActive(Config.modulators.dictionary["song chorus"].index, channelIndex, instrumentIndex)) {
+                useChorusStart = clamp(0, Config.chorusRange, useChorusStart * (synth.getModValue(Config.modulators.dictionary["song chorus"].index, undefined, undefined, false) - Config.modulators.dictionary["song chorus"].convertRealFactor) / Config.chorusRange);
+                useChorusEnd = clamp(0, Config.chorusRange, useChorusEnd * (synth.getModValue(Config.modulators.dictionary["song chorus"].index, undefined, undefined, true) - Config.modulators.dictionary["song chorus"].convertRealFactor) / Config.chorusRange);
+            }
             let chorusStart: number = Math.min(1.0, /*chorusEnvelopeStart **/ useChorusStart / (Config.chorusRange - 1));
             let chorusEnd: number = Math.min(1.0, /*chorusEnvelopeEnd   **/ useChorusEnd / (Config.chorusRange - 1));
             chorusStart = chorusStart * 0.6 + (Math.pow(chorusStart, 6.0)) * 0.4;
@@ -11119,7 +11141,7 @@ export class Synth {
             }
 
             const startFreq: number = Instrument.frequencyFromPitch(startPitch);
-            if (instrument.type == InstrumentType.chip || instrument.type == InstrumentType.customChipWave || instrument.type == InstrumentType.harmonics || InstrumentType.pickedString || instrument.type == InstrumentType.spectrum || instrument.type == InstrumentType.pwm || instrument.type == InstrumentType.noise) {
+            if (instrument.type == InstrumentType.chip || instrument.type == InstrumentType.customChipWave || instrument.type == InstrumentType.harmonics || instrument.type == InstrumentType.pickedString || instrument.type == InstrumentType.spectrum || instrument.type == InstrumentType.pwm || instrument.type == InstrumentType.noise) {
                 // These instruments have two waves at different frequencies for the unison feature.
                 //const unison: Unison = Config.unisons[instrument.unison];
                 const unisonVoices: number = instrument.unisonVoices;
