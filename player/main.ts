@@ -195,13 +195,13 @@ import { SongPlayerLayout } from "./Layout";
 				closePrompt,
 		);
 
-	let titleText: HTMLHeadingElement = h1({ style: "flex-grow: 1; margin: 0 1px; margin-left: 10px; overflow: hidden;" }, "");
+	let titleText: HTMLHeadingElement = h1({class:"songTitle", style: "flex-grow: 1; margin: 0 1px; margin-left: 10px; overflow: hidden;" }, "");
 		let layoutStuffs: HTMLButtonElement = button({class:"songPlayerLayoutsButton", style: "margin: 0 4px; height: 42px; width: 90px;"}, "Layouts");
 		let editLink: HTMLAnchorElement = a({target: "_top", style: "margin: 0 4px;"}, "✎ Edit");
 		let copyLink: HTMLAnchorElement = a({href: "javascript:void(0)", style: "margin: 0 4px;"}, "⎘ Copy URL");
 		let shareLink: HTMLAnchorElement = a({href: "javascript:void(0)", style: "margin: 0 4px;"}, "⤳ Share");
-		let fullscreenLink: HTMLAnchorElement = a({target: "_top", style: "margin: 0 4px;"}, "⇱ Fullscreen");
-		let shortenSongLink: HTMLAnchorElement = a({ href:"javascript:void(0)", target: "_top", style: "margin: 0 4px;"}, "… Shorten URL");
+		let fullscreenLink: HTMLAnchorElement = a({target: "_top", class:"fullscreenLink", style: "margin: 0 4px;"}, "⇱ Fullscreen");
+		let shortenSongLink: HTMLAnchorElement = a({ href:"javascript:void(0)", target: "_top", class:"shortUrlLink", style: "margin: 0 4px;"}, "… Shorten URL");
 		//let hideUrlButton: HTMLAnchorElement = a({ href:"javascript:void(0)", target: "_top", style: "margin: 0 4px;"}, "Hide URL");
 
 	
@@ -261,7 +261,7 @@ import { SongPlayerLayout } from "./Layout";
 	const timelineBarProgress: HTMLDivElement = div({ class:`timeline-bar-progress`, style: `pointer-events: none; overflow: hidden; width: 5%; height: 100%; z-index: 5;`});
 	const timelineBar: HTMLDivElement = div({ style:  `overflow: hidden; margin: auto; width: 90%; height: 50%; background: var(--ui-widget-background);`},timelineBarProgress);
 	const timelineBarContainer: HTMLDivElement = div({ style: `pointer-events: none; overflow: hidden; margin: auto; width: 160px; height: 10px; `}, timelineBar);
-	const volumeBarContainerDiv: HTMLDivElement = div({style:"display:flex; flex-direction:column;"}, volumeBarContainer, timelineBarContainer);
+	const volumeBarContainerDiv: HTMLDivElement = div({class:`volBarContainer`, style:"display:flex; flex-direction:column;"}, volumeBarContainer, timelineBarContainer);
 	const promptContainer: HTMLDivElement = div({class:"promptContainer",style:"display:none; backdrop-filter: saturate(1.5) blur(4px); width: 100%; height: 100%; position: fixed; z-index: 999; display: flex; justify-content: center; align-items: center;"});
 	promptContainer.style.display = "none";
 	const songPlayerContainer: HTMLDivElement = div({class:"songPlayerContainer"});

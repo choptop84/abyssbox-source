@@ -46,6 +46,7 @@ import { RecordingSetupPrompt } from "./RecordingSetupPrompt";
 import { SpectrumEditor } from "./SpectrumEditor";
 import { ThemePrompt } from "./ThemePrompt";
 import { CustomPrompt } from "./CustomPrompt";
+import { PresetPrompt, /*setPresets*/ } from "./PresetPrompt";
 import { TipPrompt } from "./TipPrompt";
 import { ChangeTempo, ChangeKeyOctave, ChangeChorus, ChangeEchoDelay, ChangeEchoSustain, ChangeReverb, ChangeVolume, ChangePan, ChangePatternSelection, ChangePatternsPerChannel, ChangePatternNumbers, ChangeSupersawDynamism, ChangeSupersawSpread, ChangeSupersawShape, ChangePulseWidth, ChangeFeedbackAmplitude, ChangeOperatorAmplitude, ChangeOperatorFrequency, ChangeDrumsetEnvelope, ChangePasteInstrument, ChangePreset, pickRandomPresetValue, ChangeRandomGeneratedInstrument, ChangeEQFilterType, ChangeNoteFilterType, ChangeEQFilterSimpleCut, ChangeEQFilterSimplePeak, ChangeNoteFilterSimpleCut, ChangeNoteFilterSimplePeak, ChangeScale, ChangeDetectKey, ChangeKey, ChangeRhythm, ChangeFeedbackType, ChangeAlgorithm, ChangeChipWave, ChangeNoiseWave, ChangeTransition, ChangeToggleEffects, ChangeVibrato, ChangeUnison, ChangeChord, ChangeSong, ChangePitchShift, ChangeDetune, ChangeDistortion, ChangeStringSustain, ChangeBitcrusherFreq, ChangeBitcrusherQuantization, ChangeAddEnvelope, ChangeEnvelopeSpeed, ChangeDiscreteEnvelope, ChangeAddChannelInstrument, ChangeRemoveChannelInstrument, ChangeCustomWave, ChangeOperatorWaveform, ChangeOperatorPulseWidth, ChangeSongTitle, ChangeVibratoDepth, ChangeVibratoSpeed, ChangeVibratoDelay, ChangeVibratoType, ChangePanDelay, ChangeArpeggioSpeed, ChangeFastTwoNoteArp, ChangeClicklessTransition, ChangeAliasing, ChangeSetPatternInstruments, ChangeHoldingModRecording, ChangeChipWavePlayBackwards, ChangeChipWaveStartOffset, ChangeChipWaveLoopEnd, ChangeChipWaveLoopStart, ChangeChipWaveLoopMode, ChangeChipWaveUseAdvancedLoopControls, ChangeDecimalOffset, ChangeUnisonVoices, ChangeUnisonSpread, ChangeUnisonOffset, ChangeUnisonExpression, ChangeUnisonSign, Change6OpFeedbackType, Change6OpAlgorithm, ChangeCustomAlgorythmorFeedback, ChangeRingMod, ChangeRingModHz } from "./changes";
 
@@ -817,13 +818,14 @@ export class SongEditor {
         option({ value: "transposeUp" }, "Move Notes Up (+ or ⇧+)"),
         option({ value: "transposeDown" }, "Move Notes Down (- or ⇧-)"),
         option({ value: "moveNotesSideways" }, "> Move All Notes Sideways (W)"),
-	option({ value: "generateEuclideanRhythm" }, "> Generate Euclidean Rhythm (E)"),
+	    option({ value: "generateEuclideanRhythm" }, "> Generate Euclidean Rhythm (E)"),
         option({ value: "beatsPerBar" }, "> Change Beats Per Bar (B)"),
         option({ value: "barCount" }, "> Change Song Length (L)"),
         option({ value: "channelSettings" }, "> Channel Settings (Q)"),
         option({ value: "limiterSettings" }, "> Limiter Settings (⇧L)"),
-	option({ value: "addExternal" }, "> Add Custom Samples (⇧Q)"),
-    option({ value: "songTheme" }, "> Set Theme For Song"),
+	    option({ value: "addExternal" }, "> Add Custom Samples (⇧Q)"),
+        option({ value: "songTheme" }, "> Set Theme For Song"),
+        option({ value: "presetsPrompt" }, "> Select Presets"),
     );
     private readonly _optionsMenu: HTMLSelectElement = select({ style: "width: 100%;" }, // ctrl+f for: preferences stuff
         option({ selected: true, disabled: true, hidden: false }, "Preferences"), // todo: "hidden" should be true but looks wrong on mac chrome, adds checkmark next to first visible option even though it's not selected. :(
@@ -2380,6 +2382,9 @@ export class SongEditor {
                     break;
                 case "configureShortener":
                     this.prompt = new ShortenerConfigPrompt(this._doc);
+                    break;
+                case "presetsPrompt":
+                    this.prompt = new PresetPrompt(this._doc);
                     break;
                 default:
                     this.prompt = new TipPrompt(this._doc, promptName);
@@ -4724,8 +4729,8 @@ export class SongEditor {
                                 || (rightSel > this._doc.synth.loopBarEnd || this._doc.synth.loopBarEnd == -1)
                             ) {
                                 this._doc.synth.loopBarStart = leftSel;
-                                this._doc.synth.loopBarEnd = rightSel;
-
+                                this._doc.synth.loopBarEnd = rightSel;    
+    
                                 if (!this._doc.synth.playing) {
                                     this._doc.synth.snapToBar();
                                     this._doc.performance.play();
@@ -4735,8 +4740,10 @@ export class SongEditor {
                                 this._doc.synth.loopBarStart = -1;
                                 this._doc.synth.loopBarEnd = -1;
                             }
+    
                             // Pressed while viewing a different bar than the current synth playhead.
                             if (this._doc.bar != Math.floor(this._doc.synth.playhead) && this._doc.synth.loopBarStart != -1) {
+    
                                 this._doc.synth.goToBar(this._doc.bar);
                                 this._doc.synth.snapToBar();
                                 this._doc.synth.initModFilters(this._doc.song);
@@ -4744,24 +4751,10 @@ export class SongEditor {
                                 if (this._doc.prefs.autoFollow) {
                                     this._doc.selection.setChannelBar(this._doc.channel, Math.floor(this._doc.synth.playhead));
                                 }
+    
                             }
-                                else {
-                                    this._doc.synth.loopBarStart = -1;
-                                    this._doc.synth.loopBarEnd = -1;
-                                }
-        
-                                // Pressed while viewing a different bar than the current synth playhead.
-                                if (this._doc.bar != Math.floor(this._doc.synth.playhead) && this._doc.synth.loopBarStart != -1) {
-        
-                                    this._doc.synth.goToBar(this._doc.bar);
-                                    this._doc.synth.snapToBar();
-                                    this._doc.synth.initModFilters(this._doc.song);
-                                    this._doc.synth.computeLatestModValues();
-                                    if (this._doc.prefs.autoFollow) {
-                                        this._doc.selection.setChannelBar(this._doc.channel, Math.floor(this._doc.synth.playhead));
-                                    }
-                            }
-                        this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
+    
+                            this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
                     }
                     } else { 
                         this._openPrompt("beatsPerBar");
@@ -6204,6 +6197,9 @@ export class SongEditor {
                 break;
             case "songTheme":
                 this._openPrompt("songTheme");
+                break;
+            case "presetsPrompt":
+                this._openPrompt("presetsPrompt");
                 break;
         }
         this._editMenu.selectedIndex = 0;

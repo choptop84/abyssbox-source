@@ -35131,13 +35131,13 @@ var beepbox = (function (exports) {
 					</svg>
 				`), div("Middle")));
     const layoutContainer = div({ class: "prompt noSelection", style: "width: 300px; margin: auto;text-align: center;background: var(--editor-background);border-radius: 15px;border: 4px solid var(--ui-widget-background);color: var(--primary-text);padding: 20px;display: flex;flex-direction: column;position: relative;box-shadow: 5px 5px 20px 10px rgba(0,0,0,0.5);" }, div({ class: "promptTitle" }, h2({ class: "layoutExt", style: "text-align: inherit;" }, ""), h2({ class: "layoutTitle" }, "Layout")), _form, div({ style: "margin-top: 1em;" }, _okayButton), closePrompt);
-    let titleText = h1({ style: "flex-grow: 1; margin: 0 1px; margin-left: 10px; overflow: hidden;" }, "");
+    let titleText = h1({ class: "songTitle", style: "flex-grow: 1; margin: 0 1px; margin-left: 10px; overflow: hidden;" }, "");
     let layoutStuffs = button({ class: "songPlayerLayoutsButton", style: "margin: 0 4px; height: 42px; width: 90px;" }, "Layouts");
     let editLink = a({ target: "_top", style: "margin: 0 4px;" }, "✎ Edit");
     let copyLink = a({ href: "javascript:void(0)", style: "margin: 0 4px;" }, "⎘ Copy URL");
     let shareLink = a({ href: "javascript:void(0)", style: "margin: 0 4px;" }, "⤳ Share");
-    let fullscreenLink = a({ target: "_top", style: "margin: 0 4px;" }, "⇱ Fullscreen");
-    let shortenSongLink = a({ href: "javascript:void(0)", target: "_top", style: "margin: 0 4px;" }, "… Shorten URL");
+    let fullscreenLink = a({ target: "_top", class: "fullscreenLink", style: "margin: 0 4px;" }, "⇱ Fullscreen");
+    let shortenSongLink = a({ href: "javascript:void(0)", target: "_top", class: "shortUrlLink", style: "margin: 0 4px;" }, "… Shorten URL");
     let draggingPlayhead = false;
     const playButton = button({ style: "width: 100%; height: 100%; max-height: 50px;" });
     const playButtonContainer = div({ class: "playButtonContainer", style: "flex-shrink: 0; display: flex; padding: 2px; width: 80px; height: 100%; box-sizing: border-box; align-items: center;" }, playButton);
@@ -35170,7 +35170,7 @@ var beepbox = (function (exports) {
     const timelineBarProgress = div({ class: `timeline-bar-progress`, style: `pointer-events: none; overflow: hidden; width: 5%; height: 100%; z-index: 5;` });
     const timelineBar = div({ style: `overflow: hidden; margin: auto; width: 90%; height: 50%; background: var(--ui-widget-background);` }, timelineBarProgress);
     const timelineBarContainer = div({ style: `pointer-events: none; overflow: hidden; margin: auto; width: 160px; height: 10px; ` }, timelineBar);
-    const volumeBarContainerDiv = div({ style: "display:flex; flex-direction:column;" }, volumeBarContainer, timelineBarContainer);
+    const volumeBarContainerDiv = div({ class: `volBarContainer`, style: "display:flex; flex-direction:column;" }, volumeBarContainer, timelineBarContainer);
     const promptContainer = div({ class: "promptContainer", style: "display:none; backdrop-filter: saturate(1.5) blur(4px); width: 100%; height: 100%; position: fixed; z-index: 999; display: flex; justify-content: center; align-items: center;" });
     promptContainer.style.display = "none";
     const songPlayerContainer = div({ class: "songPlayerContainer" });
