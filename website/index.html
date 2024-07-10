@@ -216,9 +216,11 @@
 
     <script> 
 
-        if (location.pathname.startsWith("https://choptop84.github.io/abyssbox-source/website/")) {
-            location.pathname = "https://choptop84.github.io/abyssbox-testing/" + location.pathname.slice("https://choptop84.github.io/abyssbox-source/website/".length)
-        } 
+        if (location.pathname.startsWith("abyssbox-source/website/")) {
+            location.pathname = "/abyssbox-testing/" + location.pathname.slice("/abyssbox-source/website/".length)
+        } else if (location.pathname.startsWith("/abyssbox-source/website/index.html")) {
+            console.log("Welcome to AbyssBox Source (The HTML File)");
+        }
 
     </script>
 
