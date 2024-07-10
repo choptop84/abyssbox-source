@@ -2245,6 +2245,8 @@ export class SongEditor {
                 return this._supersawSpreadSlider;
             case Config.modulators.dictionary["saw shape"].index:
                 return this._supersawShapeSlider;
+            case Config.modulators.dictionary["song panning"].index:
+                return this._panSlider;
             default:
                 return null;
         }
@@ -3527,7 +3529,7 @@ export class SongEditor {
                 this._reverbRow.style.display = "none";
             }
 
-            if (instrument.type == InstrumentType.chip || instrument.type == InstrumentType.customChipWave || instrument.type == InstrumentType.harmonics || InstrumentType.pickedString || instrument.type == InstrumentType.spectrum || instrument.type == InstrumentType.pwm || instrument.type == InstrumentType.noise) {
+            if (instrument.type == InstrumentType.chip || instrument.type == InstrumentType.customChipWave || instrument.type == InstrumentType.harmonics || instrument.type == InstrumentType.pickedString || instrument.type == InstrumentType.spectrum || instrument.type == InstrumentType.pwm || instrument.type == InstrumentType.noise) {
                 this._unisonSelectRow.style.display = "";
                 setSelectedValue(this._unisonSelect, instrument.unison);
                 this._unisonVoicesInputBox.value = instrument.unisonVoices + "";
@@ -3765,6 +3767,11 @@ export class SongEditor {
                         settingList.push("song reverb");
                         settingList.push("next bar");
                         settingList.push("song detune");
+                        settingList.push("song bitcrush");
+                        settingList.push("song freqcrush");
+                        settingList.push("song panning");
+                        settingList.push("song chorus");
+                        settingList.push("song distortion");
                     }
                     // Populate mod setting options for instrument scope.
                     else {
