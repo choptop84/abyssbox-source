@@ -9,7 +9,7 @@ import {NotePin, Note, Pattern, Instrument, Channel, Song, Synth} from "../synth
 import {SongDocument} from "./SongDocument";
 import {ExportPrompt} from "./ExportPrompt";
 import {ChangePreset} from "./changes";
-
+import {setPresets,totalPresets} from "./PresetPrompt"
 
 
 //namespace beepbox {
@@ -59,6 +59,14 @@ $("#pitchPresetSelect").on('select2:open', function () {
 		$.each(options, (index, v) => {
 			$(v)[0].setAttribute("style", "color: " + ColorConfig.getChannelColor(doc.song, doc.channel).primaryNote + ";");
 		})
+
+		for (var i = 0; i < totalPresets.length; i++) {
+			if (setPresets.includes(totalPresets[i]) && totalPresets.includes(totalPresets[i])) {
+				$(".select2-results__option[aria-label='"+totalPresets[i]+" ▾']").css("display", "unset");
+			} else {
+				$(".select2-results__option[aria-label='"+totalPresets[i]+" ▾']").css("display", "none");
+			}
+		}
 
 		$('.select2-dropdown--below').css('opacity', 1);
 	}, 0);
