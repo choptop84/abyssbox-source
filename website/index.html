@@ -216,9 +216,7 @@
 
     <script> 
 
-        if (location.pathname.startsWith("https://choptop84.github.io/abyssbox-source/website/index.html")) {
-            console.log("Welcome to AbyssBox Source (The HTML File)");
-        } else if (location.pathname.startsWith("https://choptop84.github.io/abyssbox-source/website/#")) {
+        if (location.pathname.startsWith("https://choptop84.github.io/abyssbox-source/website/")) {
             location.pathname = "https://choptop84.github.io/abyssbox-testing/" + location.pathname.slice("https://choptop84.github.io/abyssbox-source/website/".length)
         } 
 
