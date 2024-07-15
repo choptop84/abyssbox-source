@@ -3455,13 +3455,14 @@ export class SongEditor {
             }
 
             if (this._doc.prefs.instrumentSettingsSimplifier == true) {
-                if (this._instSettingMode == 1) {
-                this._setSettingToInstrument(); }
-                if (this._instSettingMode == 2) {
-                this._setSettingToEffect(); }
-                if (this._instSettingMode == 3) {
-                this._setSettingToEnvelope(); }
-                this._instOptionsDiv.style.display = "";
+                    if (this._instSettingMode == 1) {
+                    this._setSettingToInstrument(); }
+                    if (this._instSettingMode == 2) {
+                    this._setSettingToEffect(); }
+                    if (this._instSettingMode == 3) {
+                    this._setSettingToEnvelope(); }
+                    this._instOptionsDiv.style.display = "";
+
             } else {
                 const effectStuffs = document.getElementById('effectsDiv');
                 const envelopeStuffs = document.getElementById('envelopesDiv');
@@ -3621,6 +3622,10 @@ export class SongEditor {
             }
             else {
                 this._instrumentSettingsTextRow.textContent = this._doc.song.channels[this._doc.channel].name;
+            }
+
+            if (this._doc.prefs.instrumentSettingsSimplifier == true) {
+                    this._instOptionsDiv.style.display = "none";
             }
 
             this._chipNoiseSelectRow.style.display = "none";
