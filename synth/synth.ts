@@ -19,7 +19,6 @@ export function changeLoopType() {
 	_loopType += 1;} else {
 	_loopType = 1;
 	}
-	//console.log("Loop count: "+_loopType);
 }
 
 declare global {
