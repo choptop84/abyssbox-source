@@ -105,6 +105,7 @@ export const enum EffectType {
     chord,
     // If you add more, you'll also have to extend the bitfield used in Base64 which currently uses two six-bit characters.
     ringModulation,
+    phaser,
     length,
 }
 
@@ -126,6 +127,10 @@ export const enum EnvelopeComputeIndex {
     supersawDynamism,
 	supersawSpread,
 	supersawShape,
+    phaserFreq,
+    phaserMix,
+    phaserFeedback,
+    phaserStages,
     length,
 }
 
@@ -895,31 +900,38 @@ export class Config {
 		//shitbox
 	]);
 	public static readonly blackKeyNameParents: ReadonlyArray<number> = [-1, 1, -1, 1, -1, 1, -1, -1, 1, -1, 1, -1];
-	public static readonly tempoMin: number = 1;
-	public static readonly tempoMax: number = 500;
-	public static readonly octaveMin: number = -2;
-	public static readonly octaveMax: number = 2;
-    public static readonly echoDelayRange: number = 24;
-    public static readonly echoDelayStepTicks: number = 4;
-    public static readonly echoSustainRange: number = 8;
-    public static readonly echoShelfHz: number = 4000.0; // The cutoff freq of the shelf filter that is used to decay echoes.
-    public static readonly echoShelfGain: number = Math.pow(2.0, -0.5);
-    public static readonly reverbShelfHz: number = 8000.0; // The cutoff freq of the shelf filter that is used to decay reverb.
-    public static readonly reverbShelfGain: number = Math.pow(2.0, -1.5);
-	public static readonly reverbRange: number = 32;
-    public static readonly reverbDelayBufferSize: number = 16384; // TODO: Compute a buffer size based on sample rate.
-    public static readonly reverbDelayBufferMask: number = Config.reverbDelayBufferSize - 1; // TODO: Compute a buffer size based on sample rate.
-    public static readonly beatsPerBarMin: number = 1;
-	public static readonly beatsPerBarMax: number = 64;
-	public static readonly barCountMin: number = 1;
-	public static readonly barCountMax: number = 1024;
-    public static readonly instrumentCountMin: number = 1;
-    public static readonly layeredInstrumentCountMax: number = 10;
+	public static readonly tempoMin:                    number = 1;
+	public static readonly tempoMax:                    number = 500;
+	public static readonly octaveMin:                   number = -2;
+	public static readonly octaveMax:                   number = 2;
+    public static readonly echoDelayRange:              number = 24;
+    public static readonly echoDelayStepTicks:          number = 4;
+    public static readonly echoSustainRange:            number = 8;
+    public static readonly echoShelfHz:                 number = 4000.0; // The cutoff freq of the shelf filter that is used to decay echoes.
+    public static readonly echoShelfGain:               number = Math.pow(2.0, -0.5);
+    public static readonly reverbShelfHz:               number = 8000.0; // The cutoff freq of the shelf filter that is used to decay reverb.
+    public static readonly reverbShelfGain:             number = Math.pow(2.0, -1.5);
+	public static readonly reverbRange:                 number = 32;
+    public static readonly reverbDelayBufferSize:       number = 16384; // TODO: Compute a buffer size based on sample rate.
+    public static readonly reverbDelayBufferMask:       number = Config.reverbDelayBufferSize - 1; // TODO: Compute a buffer size based on sample rate.
+    public static readonly phaserMixRange:              number = 32; 
+    public static readonly phaserFeedbackRange:         number = 32; 
+    public static readonly phaserFreqRange:             number = 32; 
+    public static readonly phaserMinFreq:               number = 8.0; 
+    public static readonly phaserMaxFreq:               number = 20000.0; 
+    public static readonly phaserMinStages:             number = 0; 
+    public static readonly phaserMaxStages:             number = 32; 
+    public static readonly beatsPerBarMin:              number = 1;
+	public static readonly beatsPerBarMax:              number = 64;
+	public static readonly barCountMin:                 number = 1;
+	public static readonly barCountMax:                 number = 1024;
+    public static readonly instrumentCountMin:          number = 1;
+    public static readonly layeredInstrumentCountMax:   number = 10;
 	//this still hasn't been properly tested...
-    public static readonly patternInstrumentCountMax: number = 10;
-	public static readonly partsPerBeat: number = 24;
-	public static readonly ticksPerPart: number = 2;
-	public static readonly ticksPerArpeggio: number = 3;
+    public static readonly patternInstrumentCountMax:   number = 10;
+	public static readonly partsPerBeat:                number = 24;
+	public static readonly ticksPerPart:                number = 2;
+	public static readonly ticksPerArpeggio:            number = 3;
 	public static readonly arpeggioPatterns: ReadonlyArray<ReadonlyArray<number>> = [[0], [0, 1], [0, 1, 2, 1], [0, 1, 2, 3], [0, 1, 2, 3, 4], [0, 1, 2, 3, 4, 5], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6, 7] ];
 	public static readonly rhythms: DictionaryArray<Rhythm> = toNameMap([
 		{ name: "÷1 (whole notes)", stepsPerBeat: 1, /*ticksPerArpeggio: 6, arpeggioPatterns: [[0], [0, 0, 1, 1], [0, 1, 2, 1]],*/ roundUpThresholds: [3] },
@@ -1176,8 +1188,8 @@ export class Config {
 		
 	 //for modbox; voices = riffapp, spread = intervals, offset = offsets, expression = volume, and sign = signs
 	]);
-    public static readonly effectNames: ReadonlyArray<string> = ["reverb", "chorus", "panning", "distortion", "bitcrusher", "note filter", "echo", "pitch shift", "detune", "vibrato", "transition type", "chord type", "ring modulation" ];
-    public static readonly effectOrder: ReadonlyArray<EffectType> = [EffectType.panning, EffectType.transition, EffectType.chord, EffectType.pitchShift, EffectType.detune, EffectType.vibrato, EffectType.noteFilter, EffectType.distortion, EffectType.bitcrusher, EffectType.chorus, EffectType.echo, EffectType.reverb, EffectType.ringModulation];
+    public static readonly effectNames: ReadonlyArray<string> = ["reverb", "chorus", "panning", "distortion", "bitcrusher", "note filter", "echo", "pitch shift", "detune", "vibrato", "transition type", "chord type", "ring modulation", "phaser"];
+    public static readonly effectOrder: ReadonlyArray<EffectType> = [EffectType.panning, EffectType.transition, EffectType.chord, EffectType.pitchShift, EffectType.detune, EffectType.vibrato, EffectType.noteFilter, EffectType.distortion, EffectType.bitcrusher, EffectType.chorus, EffectType.echo, EffectType.reverb, EffectType.ringModulation, EffectType.phaser];
     public static readonly noteSizeMax: number = 6;
 	public static readonly volumeRange: number = 50;
 	// Beepbox's old volume scale used factor -0.5 and was [0~7] had roughly value 6 = 0.125 power. This new value is chosen to have -21 be the same,
@@ -1525,6 +1537,10 @@ export class Config {
         { name: "supersawDynamism",       computeIndex:       EnvelopeComputeIndex.supersawDynamism,       displayName: "dynamism",         /*perNote:  true,*/ interleave: false, isFilter: false, /*range: Config.supersawDynamismMax + 1, */    maxCount: 1,    effect: null,                    compatibleInstruments: [InstrumentType.supersaw]},
 		{ name: "supersawSpread",         computeIndex:       EnvelopeComputeIndex.supersawSpread,         displayName: "spread",           /*perNote:  true,*/ interleave: false, isFilter: false, /*range: Config.supersawSpreadMax + 1,   */    maxCount: 1,    effect: null,                    compatibleInstruments: [InstrumentType.supersaw]},
 		{ name: "supersawShape",          computeIndex:       EnvelopeComputeIndex.supersawShape,          displayName: "saw↔pulse",        /*perNote:  true,*/ interleave: false, isFilter: false, /*range: Config.supersawShapeMax + 1,    */    maxCount: 1,    effect: null,                    compatibleInstruments: [InstrumentType.supersaw]},    
+        //{ name: "phaserFreq",                 computeIndex: EnvelopeComputeIndex.phaserFreq,                 displayName: "phaser freq",            interleave: false, isFilter: false, maxCount: 1,                       effect: EffectType.phaser,     compatibleInstruments: null },
+        //{ name: "phaserMix",                 computeIndex: EnvelopeComputeIndex.phaserMix,                 displayName: "phaser",            interleave: false, isFilter: false, maxCount: 1,                       effect: EffectType.phaser,     compatibleInstruments: null },
+        //{ name: "phaserFeedback",                 computeIndex: EnvelopeComputeIndex.phaserFeedback,                 displayName: "phaser feedback",            interleave: false, isFilter: false, maxCount: 1,                       effect: EffectType.phaser,     compatibleInstruments: null },
+        //{ name: "phaserStages",                 computeIndex: EnvelopeComputeIndex.phaserStages,                 displayName: "phaser stages",            interleave: false, isFilter: false, maxCount: 1,                       effect: EffectType.phaser,     compatibleInstruments: null },
         // Controlling filter gain is less obvious and intuitive than controlling filter freq, so to avoid confusion I've disabled it for now...
         //{name: "noteFilterGain",         computeIndex:       EnvelopeComputeIndex.noteFilterGain0,        displayName: "n. filter # vol",  /*perNote:  true,*/ interleave: false, isFilter:  true, range: Config.filterGainRange,             maxCount: Config.filterMaxPoints, effect: EffectType.noteFilter, compatibleInstruments: null},
         /*
@@ -1837,6 +1853,26 @@ export class Config {
             maxRawVol: Config.ringModHzRange, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: EffectType.length,
             promptName: "Ring Modulation (Hertz)", 
             promptDesc: [ "This setting controls the Hertz (Hz) used in the Ring Modulation effect in your instrument.", "[OVERWRITING] [$LO - $HI]" ] },
+        /*{ name: "phaser", 
+            pianoName: "Phaser", 
+            maxRawVol: Config.phaserMixRange, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: EffectType.phaser,
+            promptName: "Instrument Phaser", 
+            promptDesc: [ "This setting controls the Phaser Mix of your insturment, just like the Phaser slider.", "At $LO, your instrument will have no phaser. At $HI, it will be at maximum.", "[OVERWRITING] [$LO - $HI]"] },
+        { name: "phaser frequency", 
+            pianoName: "Phaser Frequency", 
+            maxRawVol: Config.phaserMixRange, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: EffectType.phaser,
+            promptName: "Phaser Frequency", 
+            promptDesc: [ "This setting controls the phaser frequency of your insturment, just like the phaser freq slider.", "At $LO, your instrument will have no phaser freq. At $HI, it will be at maximum.", "[OVERWRITING] [$LO - $HI]"] }, 
+        { name: "phaser feedback", 
+            pianoName: "Phaser Feedback", 
+            maxRawVol: Config.phaserMixRange, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: EffectType.phaser,
+            promptName: "Phaser Feedback", 
+            promptDesc: [ "This setting controls the phaser feedback of your insturment, just like the phaser feedback slider.", "At $LO, your instrument will have no phaser feedback. At $HI, it will be at maximum.", "[OVERWRITING] [$LO - $HI]"] },     
+        { name: "phaser stages", 
+            pianoName: "Phaser Stages", 
+            maxRawVol: Config.phaserMixRange, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: EffectType.phaser,
+            promptName: "Phaser Stages", 
+            promptDesc: [ "This setting controls the number of phaser stages in your insturment, just like the phaser stages slider.", "At $LO, your instrument will have no phaser stages. At $HI, it will be at maximum.", "[OVERWRITING] [$LO - $HI]"] }, */                       
         ]);
 }
 
@@ -2225,6 +2261,9 @@ export function effectsIncludeReverb(effects: number): boolean {
 }
 export function effectsIncludeRM(effects: number): boolean {
     return (effects & (1 << EffectType.ringModulation)) != 0;
+}
+export function effectsIncludePhaser(effects: number): boolean {
+    return (effects & (1 << EffectType.phaser)) != 0;
 }
 export function rawChipToIntegrated(raw: DictionaryArray<ChipWave>): DictionaryArray<ChipWave> {
     const newArray: Array<ChipWave> = new Array<ChipWave>(raw.length);
