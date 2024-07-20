@@ -876,7 +876,8 @@ export class SongEditor {
     private readonly _chorusSlider: Slider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.chorusRange - 1, value: "0", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeChorus(this._doc, oldValue, newValue), false);
     private readonly _chorusRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("chorus") }, "Chorus:"), this._chorusSlider.container);
     
-    private readonly _ringModWaveSelect: HTMLSelectElement = buildOptions(select(), Config.chipWaves.filter(x => !(x.isSampled || x.isCustomSampled)).map(wave => wave.name));
+    //private readonly _ringModPulsewidthSlider: Slider = new Slider(input({ style: "margin-left: 10px; width: 85%;", type: "range", min: "0", max: Config.pwmOperatorWaves.length - 1, value: "0", step: "1", title: "Pulse Width" }), this._doc, (oldValue: number, newValue: number) => new ChangeOperatorPulseWidth(this._doc, operatorIndex, oldValue, newValue), true);
+    private readonly _ringModWaveSelect: HTMLSelectElement = buildOptions(select(), Config.operatorWaves.map(wave => wave.name));
 
     private readonly _ringModSlider: Slider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.ringModRange - 1, value: "0", step: "1" }), this._doc, 
     (oldValue: number, newValue: number) => new ChangeRingMod(this._doc, oldValue, newValue), false);
@@ -889,7 +890,7 @@ export class SongEditor {
         div({ style: `color: ${ColorConfig.secondaryText}; ` }, this._ringModHzNum),
     ), this._ringModHzSlider.container);
 
-    private readonly _ringModWaveSelectRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("chipWave") }, "Wave: "), div({ class: "selectContainer" }, this._ringModWaveSelect));
+    private readonly _ringModWaveSelectRow: HTMLDivElement = div({ class: "selectRow", style:"width: 100%;" }, span({ class: "tip", onclick: () => this._openPrompt("chipWave") }, "Wave: "), div({ class: "selectContainer" }, this._ringModWaveSelect));
     private readonly _ringModContainerRow: HTMLDivElement = div({ class: "selectRow", style: "display:flex; flex-direction:column; height: 96px;" }, 
         this._ringModRow, 
         this._ringModHzSliderRow,

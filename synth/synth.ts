@@ -3386,23 +3386,8 @@ export class Song {
                 if (effectsIncludeRM(instrument.effects)) {
                     buffer.push(base64IntToCharCode[instrument.ringModulation]);
                     buffer.push(base64IntToCharCode[instrument.ringModulationHz]);
+                    buffer.push(base64IntToCharCode[instrument.rmWaveformIndex]);	
 
-                    if (instrument.rmWaveformIndex > 186) {
-                        buffer.push(119, base64IntToCharCode[instrument.rmWaveformIndex - 186]);	
-                        buffer.push(base64IntToCharCode[3]);	
-                    }
-                    else if (instrument.rmWaveformIndex > 124) {
-                        buffer.push(119, base64IntToCharCode[instrument.rmWaveformIndex - 124]);	
-                        buffer.push(base64IntToCharCode[2]);	
-                    }
-                    else if (instrument.rmWaveformIndex > 62) {
-                        buffer.push(119, base64IntToCharCode[instrument.rmWaveformIndex - 62]);	
-                        buffer.push(base64IntToCharCode[1]);	
-                    }
-                    else {
-                        buffer.push(119, base64IntToCharCode[instrument.rmWaveformIndex]);	
-                        buffer.push(base64IntToCharCode[0]);	
-                    }
                 }
                 if (effectsIncludePhaser(instrument.effects)) {
                     buffer.push(base64IntToCharCode[instrument.phaserFreq]);
@@ -5089,18 +5074,8 @@ export class Song {
                         instrument.ringModulation = clamp(0, Config.ringModRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                         instrument.ringModulationHz = clamp(0, Config.ringModHzRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
 
-                        const rmChipWaveReal = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
-					    const rmChipWaveCounter = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
-				
-					    if (rmChipWaveCounter == 3) {
-					    	instrument.rmWaveformIndex = clamp(0, Config.chipWaves.length, rmChipWaveReal + 186);											   					   	 						  								
-					    } else if (rmChipWaveCounter == 2) {
-					    	instrument.rmWaveformIndex = clamp(0, Config.chipWaves.length, rmChipWaveReal + 124);											   					   	 						  								
-					    } else if (rmChipWaveCounter == 1) {
-					    	instrument.rmWaveformIndex = clamp(0, Config.chipWaves.length, rmChipWaveReal + 62);											   					   	 						  								
-					    } else {
-					    	instrument.rmWaveformIndex = clamp(0, Config.chipWaves.length, rmChipWaveReal);											   					   	 						  								
-					    }
+					    	instrument.rmWaveformIndex = clamp(0, Config.operatorWaves.length, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);											   					   	 						  								
+					    
                     }
                     if (effectsIncludePhaser(instrument.effects)) {
                         instrument.phaserFreq = clamp(0, Config.phaserFreqRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
@@ -12518,7 +12493,7 @@ export class Synth {
                 let ringModPhaseDeltaScale = +instrumentState.ringModPhaseDeltaScale;
                 let rmWaveformIndex = +instrumentState.rmWaveformIndex;
 
-                let waveform = Config.rawChipWaves[rmWaveformIndex].samples; // index presumably comes from a dropdown
+                let waveform = Config.operatorWaves[rmWaveformIndex].samples; // index presumably comes from a dropdown
                 const waveformLength = waveform.length - 1;
                 `
             }
