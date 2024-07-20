@@ -1540,6 +1540,7 @@ export class Instrument {
     public distortion: number = 0;
     public ringModulation: number = 0;
     public ringModulationHz: number = 0;
+    public rmWaveformIndex: number = 2;
     public bitcrusherFreq: number = 0;
     public bitcrusherQuantization: number = 0;
     public chorus: number = 0;
@@ -3385,6 +3386,23 @@ export class Song {
                 if (effectsIncludeRM(instrument.effects)) {
                     buffer.push(base64IntToCharCode[instrument.ringModulation]);
                     buffer.push(base64IntToCharCode[instrument.ringModulationHz]);
+
+                    if (instrument.rmWaveformIndex > 186) {
+                        buffer.push(119, base64IntToCharCode[instrument.rmWaveformIndex - 186]);	
+                        buffer.push(base64IntToCharCode[3]);	
+                    }
+                    else if (instrument.rmWaveformIndex > 124) {
+                        buffer.push(119, base64IntToCharCode[instrument.rmWaveformIndex - 124]);	
+                        buffer.push(base64IntToCharCode[2]);	
+                    }
+                    else if (instrument.rmWaveformIndex > 62) {
+                        buffer.push(119, base64IntToCharCode[instrument.rmWaveformIndex - 62]);	
+                        buffer.push(base64IntToCharCode[1]);	
+                    }
+                    else {
+                        buffer.push(119, base64IntToCharCode[instrument.rmWaveformIndex]);	
+                        buffer.push(base64IntToCharCode[0]);	
+                    }
                 }
                 if (effectsIncludePhaser(instrument.effects)) {
                     buffer.push(base64IntToCharCode[instrument.phaserFreq]);
@@ -5070,6 +5088,19 @@ export class Song {
                     if (effectsIncludeRM(instrument.effects)) {
                         instrument.ringModulation = clamp(0, Config.ringModRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                         instrument.ringModulationHz = clamp(0, Config.ringModHzRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+
+                        const rmChipWaveReal = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
+					    const rmChipWaveCounter = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
+				
+					    if (rmChipWaveCounter == 3) {
+					    	instrument.rmWaveformIndex = clamp(0, Config.chipWaves.length, rmChipWaveReal + 186);											   					   	 						  								
+					    } else if (rmChipWaveCounter == 2) {
+					    	instrument.rmWaveformIndex = clamp(0, Config.chipWaves.length, rmChipWaveReal + 124);											   					   	 						  								
+					    } else if (rmChipWaveCounter == 1) {
+					    	instrument.rmWaveformIndex = clamp(0, Config.chipWaves.length, rmChipWaveReal + 62);											   					   	 						  								
+					    } else {
+					    	instrument.rmWaveformIndex = clamp(0, Config.chipWaves.length, rmChipWaveReal);											   					   	 						  								
+					    }
                     }
                     if (effectsIncludePhaser(instrument.effects)) {
                         instrument.phaserFreq = clamp(0, Config.phaserFreqRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
@@ -7640,6 +7671,7 @@ class InstrumentState {
     public ringModPhase: number = 0;
     public ringModPhaseDelta: number = 0;
     public ringModPhaseDeltaScale: number = 1.0;
+    public rmWaveformIndex: number = 2.0;
 
     public echoDelayLineL: Float32Array | null = null;
     public echoDelayLineR: Float32Array | null = null;
@@ -8163,6 +8195,7 @@ class InstrumentState {
             let ringModPhaseDeltaEnd = (ringModMinHz * Math.pow(ringModMaxHz / ringModMinHz, useRingModHzEnd)) / synth.samplesPerSecond;
             this.ringModPhaseDelta = ringModPhaseDeltaStart;
             this.ringModPhaseDeltaScale = Math.pow(ringModPhaseDeltaEnd / ringModPhaseDeltaStart, 1.0 / roundedSamplesPerTick);
+            this.rmWaveformIndex = instrument.rmWaveformIndex;
         }
 
         let maxEchoMult = 0.0;
@@ -12464,7 +12497,7 @@ export class Synth {
 
             if (usesBitcrusher) {
                 effectsSource += `
-				
+
 				let bitcrusherPrevInput = +instrumentState.bitcrusherPrevInput;
 				let bitcrusherCurrentOutput = +instrumentState.bitcrusherCurrentOutput;
 				let bitcrusherPhase = +instrumentState.bitcrusherPhase;
@@ -12478,12 +12511,15 @@ export class Synth {
 
             if (usesRingModulation) {
                 effectsSource += `
-				
                 let ringModMix = +instrumentState.ringModMix;
                 let ringModMixDelta = +instrumentState.ringModMixDelta;
                 let ringModPhase = +instrumentState.ringModPhase;
                 let ringModPhaseDelta = +instrumentState.ringModPhaseDelta;
                 let ringModPhaseDeltaScale = +instrumentState.ringModPhaseDeltaScale;
+                let rmWaveformIndex = +instrumentState.rmWaveformIndex;
+
+                let waveform = Config.rawChipWaves[rmWaveformIndex].samples; // index presumably comes from a dropdown
+                const waveformLength = waveform.length - 1;
                 `
             }
 
@@ -12688,8 +12724,8 @@ export class Synth {
 
             if (usesRingModulation) {
                 effectsSource += ` 
-                
-                const ringModOutput = sample * Math.sin(Math.PI * 2.0 * ringModPhase);
+
+                const ringModOutput = sample * waveform[(ringModPhase*waveformLength)|0];
                 sample = sample * (1 - ringModMix) + ringModOutput * ringModMix;
                 ringModMix += ringModMixDelta;
                 ringModPhase += ringModPhaseDelta;
@@ -12935,6 +12971,7 @@ export class Synth {
                 instrumentState.ringModPhase = ringModPhase;
                 instrumentState.ringModPhaseDelta = ringModPhaseDelta;
                 instrumentState.ringModPhaseDeltaScale = ringModPhaseDeltaScale;
+                instrumentState.rmWaveformIndex = rmWaveformIndex;
                 `}
 
             if (usesPhaser) {

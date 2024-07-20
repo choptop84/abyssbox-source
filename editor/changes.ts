@@ -4124,6 +4124,18 @@ export class ChangeRingModHz extends ChangeInstrumentSlider {
     }
 }
 
+export class ChangeRMChipWave extends Change {
+    constructor(doc: SongDocument, newValue: number) {
+        super();
+        const instrument: Instrument = doc.song.channels[doc.channel].instruments[doc.getCurrentInstrument()];
+        if (instrument.rmWaveformIndex != newValue) {
+            instrument.rmWaveformIndex = newValue;
+            doc.notifier.changed();
+            this._didSomething();
+        }
+    }
+}
+
 export class ChangeSongReverb extends Change {
     constructor(doc: SongDocument, oldValue: number, newValue: number) {
         super();
