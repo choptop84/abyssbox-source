@@ -3857,6 +3857,7 @@ export class SongEditor {
                             anyInstrumentEchoes:       boolean = false,
                             anyInstrumentReverbs:      boolean = false,
                             anyInstrumentRMs:          boolean = false,
+                            anyInstrumentPhasers:          boolean = false,
                             anyInstrumentHasEnvelopes:   boolean = false;
                         let allInstrumentPitchShifts:  boolean = true,
                             allInstrumentNoteFilters:  boolean = true,
@@ -3954,6 +3955,12 @@ export class SongEditor {
                             }
                             else {
                                 anyInstrumentRMs = false;
+                            }
+                            if (effectsIncludePhaser(channel.instruments[instrumentIndex].effects)) {
+                                anyInstrumentPhasers = true;
+                            }
+                            else {
+                                anyInstrumentPhasers = false;
                             }
                             if (channel.instruments[instrumentIndex].envelopes.length > 0) {
                                 anyInstrumentHasEnvelopes = true;
@@ -4082,6 +4089,9 @@ export class SongEditor {
                         if (anyInstrumentRMs) {
                             settingList.push("ring modulation");
                             settingList.push("ring mod hertz");
+                        }
+                        if (anyInstrumentPhasers) {
+                            settingList.push("phaser");
                         }
                     }
 

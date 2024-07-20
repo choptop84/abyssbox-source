@@ -1537,10 +1537,10 @@ export class Config {
         { name: "supersawDynamism",       computeIndex:       EnvelopeComputeIndex.supersawDynamism,       displayName: "dynamism",         /*perNote:  true,*/ interleave: false, isFilter: false, /*range: Config.supersawDynamismMax + 1, */    maxCount: 1,    effect: null,                    compatibleInstruments: [InstrumentType.supersaw]},
 		{ name: "supersawSpread",         computeIndex:       EnvelopeComputeIndex.supersawSpread,         displayName: "spread",           /*perNote:  true,*/ interleave: false, isFilter: false, /*range: Config.supersawSpreadMax + 1,   */    maxCount: 1,    effect: null,                    compatibleInstruments: [InstrumentType.supersaw]},
 		{ name: "supersawShape",          computeIndex:       EnvelopeComputeIndex.supersawShape,          displayName: "saw↔pulse",        /*perNote:  true,*/ interleave: false, isFilter: false, /*range: Config.supersawShapeMax + 1,    */    maxCount: 1,    effect: null,                    compatibleInstruments: [InstrumentType.supersaw]},    
-        //{ name: "phaserFreq",                 computeIndex: EnvelopeComputeIndex.phaserFreq,                 displayName: "phaser freq",            interleave: false, isFilter: false, maxCount: 1,                       effect: EffectType.phaser,     compatibleInstruments: null },
-        //{ name: "phaserMix",                 computeIndex: EnvelopeComputeIndex.phaserMix,                 displayName: "phaser",            interleave: false, isFilter: false, maxCount: 1,                       effect: EffectType.phaser,     compatibleInstruments: null },
-        //{ name: "phaserFeedback",                 computeIndex: EnvelopeComputeIndex.phaserFeedback,                 displayName: "phaser feedback",            interleave: false, isFilter: false, maxCount: 1,                       effect: EffectType.phaser,     compatibleInstruments: null },
-        //{ name: "phaserStages",                 computeIndex: EnvelopeComputeIndex.phaserStages,                 displayName: "phaser stages",            interleave: false, isFilter: false, maxCount: 1,                       effect: EffectType.phaser,     compatibleInstruments: null },
+        { name: "phaserFreq",                 computeIndex: EnvelopeComputeIndex.phaserFreq,                 displayName: "phaser freq",            interleave: false, isFilter: false, maxCount: 1,                       effect: EffectType.phaser,     compatibleInstruments: null },
+        { name: "phaserMix",                 computeIndex: EnvelopeComputeIndex.phaserMix,                 displayName: "phaser",            interleave: false, isFilter: false, maxCount: 1,                       effect: EffectType.phaser,     compatibleInstruments: null },
+        { name: "phaserFeedback",                 computeIndex: EnvelopeComputeIndex.phaserFeedback,                 displayName: "phaser feedback",            interleave: false, isFilter: false, maxCount: 1,                       effect: EffectType.phaser,     compatibleInstruments: null },
+        { name: "phaserStages",                 computeIndex: EnvelopeComputeIndex.phaserStages,                 displayName: "phaser stages",            interleave: false, isFilter: false, maxCount: 1,                       effect: EffectType.phaser,     compatibleInstruments: null },
         // Controlling filter gain is less obvious and intuitive than controlling filter freq, so to avoid confusion I've disabled it for now...
         //{name: "noteFilterGain",         computeIndex:       EnvelopeComputeIndex.noteFilterGain0,        displayName: "n. filter # vol",  /*perNote:  true,*/ interleave: false, isFilter:  true, range: Config.filterGainRange,             maxCount: Config.filterMaxPoints, effect: EffectType.noteFilter, compatibleInstruments: null},
         /*
@@ -1853,7 +1853,7 @@ export class Config {
             maxRawVol: Config.ringModHzRange, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: EffectType.length,
             promptName: "Ring Modulation (Hertz)", 
             promptDesc: [ "This setting controls the Hertz (Hz) used in the Ring Modulation effect in your instrument.", "[OVERWRITING] [$LO - $HI]" ] },
-        /*{ name: "phaser", 
+        { name: "phaser", 
             pianoName: "Phaser", 
             maxRawVol: Config.phaserMixRange, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: EffectType.phaser,
             promptName: "Instrument Phaser", 
@@ -1872,7 +1872,7 @@ export class Config {
             pianoName: "Phaser Stages", 
             maxRawVol: Config.phaserMixRange, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: EffectType.phaser,
             promptName: "Phaser Stages", 
-            promptDesc: [ "This setting controls the number of phaser stages in your insturment, just like the phaser stages slider.", "At $LO, your instrument will have no phaser stages. At $HI, it will be at maximum.", "[OVERWRITING] [$LO - $HI]"] }, */                       
+            promptDesc: [ "This setting controls the number of phaser stages in your insturment, just like the phaser stages slider.", "At $LO, your instrument will have no phaser stages. At $HI, it will be at maximum.", "[OVERWRITING] [$LO - $HI]"] },                       
         ]);
 }
 

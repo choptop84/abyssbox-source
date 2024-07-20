@@ -343,11 +343,11 @@ const enum SongTagCode {
 	pulseWidth          = CharCode.W, // added in BeepBox URL version 7
 	aliases             = CharCode.X, // added in JummBox URL version 4 for aliases, DEPRECATED, [UB] repurposed for PWM decimal offset (DEPRECATED as well)
     songTheme           = CharCode.Y, // added in AbyssBox URL version 1
-    ringModulation      = CharCode.Z, // added in AbyssBox URL version 2
-	ringModulationHz    = CharCode.NUM_0, // added in AbyssBox URL version 2
-    phaserFreq	        = CharCode.NUM_1, // added in AbyssBox URL version 2
-    phaserFeedback      = CharCode.NUM_2, // added in AbyssBox URL version 2
-    phaserStages        = CharCode.NUM_3, // added in AbyssBox URL version 2
+//                      = CharCode.Z, 
+//	                    = CharCode.NUM_0, 
+//                      = CharCode.NUM_1,
+//                      = CharCode.NUM_2, 
+//                      = CharCode.NUM_3, 
 //          	        = CharCode.NUM_4, 
 //	                    = CharCode.NUM_5,
 //	                    = CharCode.NUM_6,
@@ -7804,7 +7804,7 @@ class InstrumentState {
         this.nextVibratoTime = 0;
         this.arpTime = 0;
         this.envelopeTime = 0;
-
+        this.envelopeComputer.reset();
         if (this.chorusDelayLineDirty) {
             for (let i: number = 0; i < this.chorusDelayLineL!.length; i++) this.chorusDelayLineL![i] = 0.0;
             for (let i: number = 0; i < this.chorusDelayLineR!.length; i++) this.chorusDelayLineR![i] = 0.0;
@@ -8232,10 +8232,15 @@ class InstrumentState {
             this.phaserFeedbackMult = phaserFeedbackMultStart;
             this.phaserFeedbackMultDelta = (phaserFeedbackMultEnd - phaserFeedbackMultStart) / roundedSamplesPerTick;
             const phaserMixSlider: number = instrument.phaserMix / (Config.phaserMixRange - 1);
-            const phaserMixStart: number = phaserMixSlider;
-            const phaserMixEnd: number = phaserMixSlider;
+            let phaserMixStart: number = phaserMixSlider;
+            let phaserMixEnd: number = phaserMixSlider;
             this.phaserMix = phaserMixStart;
             this.phaserMixDelta = (phaserMixEnd - phaserMixStart) / roundedSamplesPerTick;
+
+            if (synth.isModActive(Config.modulators.dictionary["phaser"].index, channelIndex, instrumentIndex)) {
+                phaserMixStart = (synth.getModValue(Config.modulators.dictionary["phaser"].index, channelIndex, instrumentIndex, false));
+                phaserMixEnd = (synth.getModValue(Config.modulators.dictionary["phaser"].index, channelIndex, instrumentIndex, true));
+            }
 
             // @TODO: Use filtering.ts
             const phaserBreakFreqSlider: number = instrument.phaserFreq / (Config.phaserFreqRange - 1);
@@ -10900,7 +10905,6 @@ export class Synth {
             intervalStart += Synth.detuneToCents(modDetuneStart) * envelopeStart * Config.pitchesPerOctave / (12.0 * 100.0);
             intervalEnd += Synth.detuneToCents(modDetuneEnd) * envelopeEnd * Config.pitchesPerOctave / (12.0 * 100.0);
         }
-
         if (effectsIncludeVibrato(instrument.effects)) {
             let delayTicks: number;
             let vibratoAmplitudeStart: number;
