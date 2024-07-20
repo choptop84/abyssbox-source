@@ -59,6 +59,15 @@
 	<body>
 		<div id="overlay" class="overlay">
 		</div>
+
+		<script> 
+
+			if (location.pathname.startsWith("/abyssbox-source/website/")) {
+				location.pathname = "/abyssbox-testing/" + location.pathname.slice("/abyssbox-source/website/".length);
+			} 
+	
+		</script>
+
 			<script type="text/javascript">
 				function browserHasRequiredFeatures() {
 					"use strict";

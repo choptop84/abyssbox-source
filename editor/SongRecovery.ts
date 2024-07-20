@@ -43,7 +43,7 @@ function compareSongs(a: RecoveredSong, b: RecoveredSong): number {
 
 export function errorAlert(error: any): void {
 	console.warn(error);
-	window.alert("Whoops, the song data appears to have been corrupted! Please try to recover the last working version of the song from the \"Recover Recent Song...\" option in BeepBox's \"File\" menu.");
+	window.alert(`uh oh..! seems like your song corrupted! If you use the "Recover Recent Song..." option in AbyssBox's "File" menu, there's a chance you might get it back. If that doesn't work then searching in your History might help.`);
 }
 
 function compareVersions(a: RecoveredVersion, b: RecoveredVersion): number {

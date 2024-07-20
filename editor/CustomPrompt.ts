@@ -168,8 +168,8 @@ let doReload = false;
 export class CustomPrompt implements Prompt {
 	private _currentThemeProperty: string = "--page-margin";
 
-	private readonly _fileInput: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose editor background image"});
-	private readonly _fileInput2: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg", text: "choose website background image" });
+	private readonly _fileInput: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg,.gif", text: "choose editor background image"});
+	private readonly _fileInput2: HTMLInputElement = input({ type: "file", accept: ".png,.jpg,.jpeg,.gif", text: "choose website background image" });
 	private readonly _advancedSettings: HTMLSelectElement = select({ style: "width: 100%; margin-top: 1.5em; margin-bottom: 1.5em;" },
 	option({ value: "basic" }, "Templates"),
 	option({ value: "editor" }, "Editor"),

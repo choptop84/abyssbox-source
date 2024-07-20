@@ -860,6 +860,7 @@ export class SongEditor {
             option({ value: "frostedGlassBackground" }, "Use Frosted Glass Prompt Backdrops"),
             option({ value: "displayShortcutButtons" }, "Display Mobile Shortcut Buttons"),
             option({ value: "oldModNotes" }, 'Use Old Mod Notes'),
+            option({ value: "selectionCounter" }, 'Selection Counter'),
             option({ value: "layout" }, "> Set Layout"),
             option({ value: "colorTheme" }, "> Set Theme"),
             option({ value: "customTheme" }, "> Custom Theme"),
@@ -1065,7 +1066,7 @@ export class SongEditor {
     ));
     
     
-    private readonly _unisonDropdownGroup: HTMLElement = div({ class: "editor-controls", style: "display: none;" }, this._unisonVoicesRow, this._unisonSpreadRow, this._unisonOffsetRow, this._unisonExpressionRow, this._unisonSignRow);
+    private readonly _unisonDropdownGroup: HTMLElement = div({ class: "editor-controls", style: "display: none; gap: 3px; margin-bottom: 0.5em;" }, this._unisonVoicesRow, this._unisonSpreadRow, this._unisonOffsetRow, this._unisonExpressionRow, this._unisonSignRow);
    
     private readonly _chordSelect: HTMLSelectElement = buildOptions(select(), Config.chords.map(chord => chord.name));
     private readonly _chordDropdown: HTMLButtonElement = button({ style: "margin-left:0em; height:1.5em; width: 10px; padding: 0px; font-size: 8px;", onclick: () => this._toggleDropdownMenu(DropdownID.Chord) }, "▼");
@@ -1211,7 +1212,7 @@ export class SongEditor {
         // this._decimalOffsetRow,
         this._pulseWidthDropdownGroup,
         this._stringSustainRow,
-        this._unisonSelectRow,
+        div({style:"margin-top:1em;margin-bottom:0.5em;"}, this._unisonSelectRow,),
         this._unisonDropdownGroup,
         ),
         div({ id:"effectsDiv"},
@@ -1281,6 +1282,9 @@ export class SongEditor {
             div({ class: "drumSelect" }, this._drumPresetSelect)
         ),
     );
+
+    private selectedPatternCounter: HTMLDivElement = div({style:"margin:5px;"},this._doc.selection.boxSelectionWidth*this._doc.selection.boxSelectionHeight);
+    private selectedPatternDiv: HTMLDivElement = div({style:"background: var(--ui-widget-background); border-radius: 5px; height: 32px; position: absolute; font-size: 20px; text-align: center; align-content: center;pointer-events: none;"}, this.selectedPatternCounter);
 
     // comment for ctrl+f: mobile stuffs
     private readonly _mobileInstSettingsButton: HTMLButtonElement = button({class:"mobileInstButton", type:"button", style:"width:33%;", onclick: () => this._setSettingToInstrument()}, "Settings");
@@ -1431,6 +1435,7 @@ export class SongEditor {
         this._notesDownButton,
         this._loopBarButton,
         this._fullscreenButton,
+        this.selectedPatternDiv,
     );
     private readonly _trackContainer: HTMLDivElement = div({ class: "trackContainer" },
         this._trackEditor.container,
@@ -1987,6 +1992,8 @@ export class SongEditor {
         this._doc.synth.loopBarStart = -1;
         this._doc.synth.loopBarEnd = -1;
         this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
+        this._loopBarButton.style.display = "none";
+        this._trackAndMuteContainer.style.marginBottom = "0.3em";
         } else if (_loopType == 2) {
             this._doc.synth.loopRepeatCount = -1;
             this._loopEditor.container.style.display = "none";
@@ -1994,10 +2001,14 @@ export class SongEditor {
             this._doc.synth.loopBarStart = -1;
             this._doc.synth.loopBarEnd = -1;
             this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
+            this._loopBarButton.style.display = "none";
+            this._trackAndMuteContainer.style.marginBottom = "0.3em";
         } else if (_loopType == 1) {
             this._doc.synth.loopRepeatCount = -1;
             this._loopEditor.container.style.display = "";
             SongEditor._styleElement.textContent = SongEditor._setLoopIcon[1];	
+            this._loopBarButton.style.display = this._doc.prefs.displayShortcutButtons ? "" : "none";
+            this._trackAndMuteContainer.style.marginBottom = "";
         }
 
     }
@@ -2517,6 +2528,16 @@ export class SongEditor {
             const beatWidth: number = Math.max(minBeatWidth, Math.min(maxBeatWidth, targetBeatWidth));
             const patternEditorWidth: number = beatWidth * this._doc.song.beatsPerBar;
 
+            if (this._doc.selection.boxSelectionWidth*this._doc.selection.boxSelectionHeight > 1) {
+                this.selectedPatternCounter.innerHTML = String(this._doc.selection.boxSelectionWidth*this._doc.selection.boxSelectionHeight);
+                this.selectedPatternDiv.style.display = this._doc.prefs.selectionCounter ? "" : "none";
+                this.selectedPatternDiv.style.left = prefs.showLetters ? "40px" : "10px";
+                this.selectedPatternDiv.style.top = prefs.displayShortcutButtons ? "200px" : "10px";
+                this.selectedPatternDiv.style.right = "";
+            } else {
+                this.selectedPatternDiv.style.display = "none";
+            }
+
             if (this._doc.prefs.showDescription == false) {
                 beepboxEditorContainer.style.paddingBottom = "0";
                 beepboxEditorContainer.style.borderStyle = "none";
@@ -2539,45 +2560,33 @@ export class SongEditor {
             this._zoomInButton.style.right = prefs.showScrollBar ? "24px" : "4px";
             this._zoomOutButton.style.right = prefs.showScrollBar ? "24px" : "4px";
 
-            if (this._doc.prefs.displayShortcutButtons == false) {
-                this._undoButton.style.display = "none";
-                this._redoButton.style.display = "none";
-                this._copyPatternButton.style.display = "none";
-                this._pastePatternButton.style.display = "none";            
-                this._insertChannelButton.style.display = "none";
-                this._deleteChannelButton.style.display = "none";
-                this._selectAllButton.style.display = "none";
-                this._duplicateButton.style.display = "none";
-                this._loopBarButton.style.display = "none"; 
-                this._notesDownButton.style.display = "none";
-                this._notesUpButton.style.display = "none"; 
-            } else {
-            this._undoButton.style.display = "";
-            this._redoButton.style.display = "";
-            this._copyPatternButton.style.display = "";
-            this._pastePatternButton.style.display ="";            
-            this._insertChannelButton.style.display = "";
-            this._deleteChannelButton.style.display ="";
-            this._selectAllButton.style.display = "";
-            this._duplicateButton.style.display = "";
-            if (_loopType != 1) {
-            this._loopBarButton.style.display = "none"; } else if (_loopType == 1) {
-            this._loopBarButton.style.display = ""; }
-            this._notesDownButton.style.display = "";
-            this._notesUpButton.style.display = "";
-            }
+                this._undoButton.style.display = prefs.displayShortcutButtons ? "" : "none";
+                this._redoButton.style.display = prefs.displayShortcutButtons ? "" : "none";
+                this._copyPatternButton.style.display = prefs.displayShortcutButtons ? "" : "none";
+                this._pastePatternButton.style.display = prefs.displayShortcutButtons ? "" : "none";            
+                this._insertChannelButton.style.display = prefs.displayShortcutButtons ? "" : "none";
+                this._deleteChannelButton.style.display = prefs.displayShortcutButtons ? "" : "none";
+                this._selectAllButton.style.display = prefs.displayShortcutButtons ? "" : "none";
+                this._duplicateButton.style.display = prefs.displayShortcutButtons ? "" : "none";
+                if (_loopType != 1) {
+                    this._loopBarButton.style.display = prefs.displayShortcutButtons ? "none" : "none"; 
+                } else if (_loopType == 1) {
+                    this._loopBarButton.style.display = prefs.displayShortcutButtons ? "" : "none"; 
+                }
+                this._notesDownButton.style.display = prefs.displayShortcutButtons ? "" : "none";
+                this._notesUpButton.style.display = prefs.displayShortcutButtons ? "" : "none"; 
 
-            this._undoButton.style.left = prefs.showScrollBar ? "40px" : "40px";
-            this._redoButton.style.left = prefs.showScrollBar ? "70px" : "70px";
-            this._copyPatternButton.style.left = prefs.showScrollBar ? "40px" : "40px";
-            this._pastePatternButton.style.left = prefs.showScrollBar ? "70px" : "70px";
-            this._insertChannelButton.style.left = prefs.showScrollBar ? "40px" : "40px";
-            this._deleteChannelButton.style.left = prefs.showScrollBar ? "70px" : "70px";
-            this._selectAllButton.style.left = prefs.showScrollBar ? "40px" : "40px";
-            this._duplicateButton.style.left = prefs.showScrollBar ? "70px" : "70px";   
-            this._notesUpButton.style.left = prefs.showScrollBar ? "40px" : "40px";
-            this._notesDownButton.style.left = prefs.showScrollBar ? "70px" : "70px";
-            this._loopBarButton.style.left = prefs.showScrollBar ? "40px" : "40px";  
+            this._undoButton.style.left = prefs.showLetters ? "40px" : "10px";
+            this._redoButton.style.left = prefs.showLetters ? "70px" : "40px";
+            this._copyPatternButton.style.left = prefs.showLetters ? "40px" : "10px";
+            this._pastePatternButton.style.left = prefs.showLetters ? "70px" : "40px";
+            this._insertChannelButton.style.left = prefs.showLetters ? "40px" : "10px";
+            this._deleteChannelButton.style.left = prefs.showLetters ? "70px" : "40px";
+            this._selectAllButton.style.left = prefs.showLetters ? "40px" : "10px";
+            this._duplicateButton.style.left = prefs.showLetters ? "70px" : "40px";   
+            this._notesUpButton.style.left = prefs.showLetters ? "40px" : "10px";
+            this._notesDownButton.style.left = prefs.showLetters ? "70px" : "40px";
+            this._loopBarButton.style.left = prefs.showLetters ? "40px" : "10px";  
             this._fullscreenButton.style.display = "none";       
             const secondImage = document.getElementById("secondImage");
             if (secondImage != null) {
@@ -2590,44 +2599,43 @@ export class SongEditor {
             this._zoomInButton.style.display = "none";
             this._zoomOutButton.style.display = "none";
 
-            if (this._doc.prefs.displayShortcutButtons == false) {
-                this._undoButton.style.display = "none";
-                this._redoButton.style.display = "none";
-                this._copyPatternButton.style.display = "none";
-                this._pastePatternButton.style.display = "none";            
-                this._insertChannelButton.style.display = "none";
-                this._deleteChannelButton.style.display = "none";
-                this._selectAllButton.style.display = "none";
-                this._duplicateButton.style.display = "none";
-                this._loopBarButton.style.display = "none";
-                this._notesDownButton.style.display = "none";
-                this._notesUpButton.style.display = "none"; 
+            if (this._doc.selection.boxSelectionWidth*this._doc.selection.boxSelectionHeight > 1) {
+                this.selectedPatternCounter.innerHTML = String(this._doc.selection.boxSelectionWidth*this._doc.selection.boxSelectionHeight);
+                this.selectedPatternDiv.style.display = this._doc.prefs.selectionCounter ? "" : "none";
+                this.selectedPatternDiv.style.right = "104.5%";
+                this.selectedPatternDiv.style.left = "";
+                this.selectedPatternDiv.style.top = prefs.displayShortcutButtons ? "200px" : "10px";
             } else {
-            this._undoButton.style.display = "";
-            this._redoButton.style.display = "";
-            this._copyPatternButton.style.display = "";
-            this._pastePatternButton.style.display ="";            
-            this._insertChannelButton.style.display = "";
-            this._deleteChannelButton.style.display ="";
-            this._selectAllButton.style.display = "";
-            this._duplicateButton.style.display = "";
-            if (_loopType != 1) {
-                this._loopBarButton.style.display = "none"; } else if (_loopType == 1) {
-                this._loopBarButton.style.display = ""; }
-            this._notesDownButton.style.display = "";
-            this._notesUpButton.style.display = "";
+                this.selectedPatternDiv.style.display = "none";
             }
-            this._undoButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
-            this._redoButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";
-            this._copyPatternButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
-            this._pastePatternButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";
-            this._insertChannelButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
-            this._deleteChannelButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";
-            this._selectAllButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
-            this._duplicateButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";   
-            this._notesUpButton.style.left = prefs.showScrollBar ? "-80px" : "-80px";
-            this._notesDownButton.style.left = prefs.showScrollBar ? "-50px" : "-50px"; 
-            this._loopBarButton.style.left = prefs.showScrollBar ? "-50px" : "-50px";
+
+            this._undoButton.style.display = prefs.displayShortcutButtons ? "" : "none";
+            this._redoButton.style.display = prefs.displayShortcutButtons ? "" : "none";
+            this._copyPatternButton.style.display = prefs.displayShortcutButtons ? "" : "none";
+            this._pastePatternButton.style.display = prefs.displayShortcutButtons ? "" : "none";            
+            this._insertChannelButton.style.display = prefs.displayShortcutButtons ? "" : "none";
+            this._deleteChannelButton.style.display = prefs.displayShortcutButtons ? "" : "none";
+            this._selectAllButton.style.display = prefs.displayShortcutButtons ? "" : "none";
+            this._duplicateButton.style.display = prefs.displayShortcutButtons ? "" : "none";
+            if (_loopType != 1) {
+                this._loopBarButton.style.display = prefs.displayShortcutButtons ? "none" : "none"; 
+            } else if (_loopType == 1) {
+                this._loopBarButton.style.display = prefs.displayShortcutButtons ? "" : "none"; 
+            }
+            this._notesDownButton.style.display = prefs.displayShortcutButtons ? "" : "none";
+            this._notesUpButton.style.display = prefs.displayShortcutButtons ? "" : "none"; 
+
+            this._undoButton.style.left = "-80px";
+            this._redoButton.style.left = "-50px";
+            this._copyPatternButton.style.left = "-80px";
+            this._pastePatternButton.style.left = "-50px";
+            this._insertChannelButton.style.left = "-80px";
+            this._deleteChannelButton.style.left = "-50px";
+            this._selectAllButton.style.left = "-80px";
+            this._duplicateButton.style.left = "-50px";   
+            this._notesUpButton.style.left = "-80px";
+            this._notesDownButton.style.left = "-50px"; 
+            this._loopBarButton.style.left = "-50px";
             this._fullscreenButton.style.display = "none";
             beepboxEditorContainer.style.paddingBottom = "";
             beepboxEditorContainer.style.borderStyle = "";
@@ -2645,7 +2653,7 @@ export class SongEditor {
         // I have been working on this all day for 2 days and I've now been working on this from around 9:00 AM to 2:47 PM just trying to fix the shit I was trying to do yesterday. 
         // Please don't mind the mess, I stopped caring about it being nice and tidy when I got to adding the landscape view.
 
-
+        this.selectedPatternDiv.style.display = "none";
 
         if (this._doc.prefs.oldMobileLayout != true) {
 
@@ -3053,6 +3061,7 @@ export class SongEditor {
             (prefs.frostedGlassBackground ? textOnIcon : textOffIcon) + "Use Frosted Glass Prompt Backdrop",
             (prefs.displayShortcutButtons ? textOnIcon : textOffIcon) + "Display Mobile Shortcut Buttons",
             (prefs.oldModNotes ? textOnIcon : textOffIcon) + "Use Old Mod Notes",
+            (prefs.selectionCounter ? textOnIcon : textOffIcon) + "Selection Counter",
             "> Set Layout",
             "> Set Theme",
             "> Custom Theme",
@@ -3494,13 +3503,14 @@ export class SongEditor {
             }
 
             if (this._doc.prefs.instrumentSettingsSimplifier == true) {
-                if (this._instSettingMode == 1) {
-                this._setSettingToInstrument(); }
-                if (this._instSettingMode == 2) {
-                this._setSettingToEffect(); }
-                if (this._instSettingMode == 3) {
-                this._setSettingToEnvelope(); }
-                this._instOptionsDiv.style.display = "";
+                    if (this._instSettingMode == 1) {
+                    this._setSettingToInstrument(); }
+                    if (this._instSettingMode == 2) {
+                    this._setSettingToEffect(); }
+                    if (this._instSettingMode == 3) {
+                    this._setSettingToEnvelope(); }
+                    this._instOptionsDiv.style.display = "";
+
             } else {
                 const effectStuffs = document.getElementById('effectsDiv');
                 const envelopeStuffs = document.getElementById('envelopesDiv');
@@ -3686,6 +3696,10 @@ export class SongEditor {
             }
             else {
                 this._instrumentSettingsTextRow.textContent = this._doc.song.channels[this._doc.channel].name;
+            }
+
+            if (this._doc.prefs.instrumentSettingsSimplifier == true) {
+                    this._instOptionsDiv.style.display = "none";
             }
 
             this._chipNoiseSelectRow.style.display = "none";
@@ -6311,6 +6325,9 @@ export class SongEditor {
             case "oldModNotes":
                 this._doc.prefs.oldModNotes = !this._doc.prefs.oldModNotes;
                 break;
+            case "selectionCounter":
+                this._doc.prefs.selectionCounter = !this._doc.prefs.selectionCounter;
+                break;    
             case "layout":
                 this._openPrompt("layout");
                 break;
