@@ -48,7 +48,7 @@ import { ThemePrompt } from "./ThemePrompt";
 import { CustomPrompt } from "./CustomPrompt";
 import { PresetPrompt, /*setPresets*/ } from "./PresetPrompt";
 import { TipPrompt } from "./TipPrompt";
-import { ChangeTempo, ChangeKeyOctave, ChangeChorus, ChangeEchoDelay, ChangeEchoSustain, ChangeReverb, ChangeVolume, ChangePan, ChangePatternSelection, ChangePatternsPerChannel, ChangePatternNumbers, ChangeSupersawDynamism, ChangeSupersawSpread, ChangeSupersawShape, ChangePulseWidth, ChangeFeedbackAmplitude, ChangeOperatorAmplitude, ChangeOperatorFrequency, ChangeDrumsetEnvelope, ChangePasteInstrument, ChangePreset, pickRandomPresetValue, ChangeRandomGeneratedInstrument, ChangeEQFilterType, ChangeNoteFilterType, ChangeEQFilterSimpleCut, ChangeEQFilterSimplePeak, ChangeNoteFilterSimpleCut, ChangeNoteFilterSimplePeak, ChangeScale, ChangeDetectKey, ChangeKey, ChangeRhythm, ChangeFeedbackType, ChangeAlgorithm, ChangeChipWave, ChangeRMChipWave, ChangeNoiseWave, ChangeTransition, ChangeToggleEffects, ChangeVibrato, ChangeUnison, ChangeChord, ChangeSong, ChangePitchShift, ChangeDetune, ChangeDistortion, ChangeStringSustain, ChangeBitcrusherFreq, ChangeBitcrusherQuantization, ChangeAddEnvelope, ChangeEnvelopeSpeed, ChangeDiscreteEnvelope, ChangeAddChannelInstrument, ChangeRemoveChannelInstrument, ChangeCustomWave, ChangeOperatorWaveform, ChangeOperatorPulseWidth, ChangeSongTitle, ChangeVibratoDepth, ChangeVibratoSpeed, ChangeVibratoDelay, ChangeVibratoType, ChangePanDelay, ChangeArpeggioSpeed, ChangeFastTwoNoteArp, ChangeClicklessTransition, ChangeAliasing, ChangeSetPatternInstruments, ChangeHoldingModRecording, ChangeChipWavePlayBackwards, ChangeChipWaveStartOffset, ChangeChipWaveLoopEnd, ChangeChipWaveLoopStart, ChangeChipWaveLoopMode, ChangeChipWaveUseAdvancedLoopControls, ChangeDecimalOffset, ChangeUnisonVoices, ChangeUnisonSpread, ChangeUnisonOffset, ChangeUnisonExpression, ChangeUnisonSign, Change6OpFeedbackType, Change6OpAlgorithm, ChangeCustomAlgorythmorFeedback, ChangeRingMod, ChangeRingModHz, ChangePhaserMix, ChangePhaserFreq, ChangePhaserFeedback, ChangePhaserStages } from "./changes";
+import { ChangeTempo, ChangeKeyOctave, ChangeChorus, ChangeEchoDelay, ChangeEchoSustain, ChangeReverb, ChangeVolume, ChangePan, ChangePatternSelection, ChangePatternsPerChannel, ChangePatternNumbers, ChangeSupersawDynamism, ChangeSupersawSpread, ChangeSupersawShape, ChangePulseWidth, ChangeFeedbackAmplitude, ChangeOperatorAmplitude, ChangeOperatorFrequency, ChangeDrumsetEnvelope, ChangePasteInstrument, ChangePreset, pickRandomPresetValue, ChangeRandomGeneratedInstrument, ChangeEQFilterType, ChangeNoteFilterType, ChangeEQFilterSimpleCut, ChangeEQFilterSimplePeak, ChangeNoteFilterSimpleCut, ChangeNoteFilterSimplePeak, ChangeScale, ChangeDetectKey, ChangeKey, ChangeRhythm, ChangeFeedbackType, ChangeAlgorithm, ChangeChipWave, ChangeRMChipWave, ChangeNoiseWave, ChangeTransition, ChangeToggleEffects, ChangeVibrato, ChangeUnison, ChangeChord, ChangeSong, ChangePitchShift, ChangeDetune, ChangeDistortion, ChangeStringSustain, ChangeBitcrusherFreq, ChangeBitcrusherQuantization, ChangeAddEnvelope, ChangeEnvelopeSpeed, ChangeDiscreteEnvelope, ChangeAddChannelInstrument, ChangeRemoveChannelInstrument, ChangeCustomWave, ChangeOperatorWaveform, ChangeOperatorPulseWidth, ChangeSongTitle, ChangeVibratoDepth, ChangeVibratoSpeed, ChangeVibratoDelay, ChangeVibratoType, ChangePanDelay, ChangeArpeggioSpeed, ChangeFastTwoNoteArp, ChangeClicklessTransition, ChangeAliasing, ChangeSetPatternInstruments, ChangeHoldingModRecording, ChangeChipWavePlayBackwards, ChangeChipWaveStartOffset, ChangeChipWaveLoopEnd, ChangeChipWaveLoopStart, ChangeChipWaveLoopMode, ChangeChipWaveUseAdvancedLoopControls, ChangeDecimalOffset, ChangeUnisonVoices, ChangeUnisonSpread, ChangeUnisonOffset, ChangeUnisonExpression, ChangeUnisonSign, Change6OpFeedbackType, Change6OpAlgorithm, ChangeCustomAlgorythmorFeedback, ChangeRingMod, ChangeRingModHz, ChangeRingModPulseWidth, ChangePhaserMix, ChangePhaserFreq, ChangePhaserFeedback, ChangePhaserStages } from "./changes";
 
 import { TrackEditor } from "./TrackEditor";
 import {oscilascopeCanvas} from "../global/Oscilascope";
@@ -878,7 +878,7 @@ export class SongEditor {
     private readonly _chorusRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("chorus") }, "Chorus:"), this._chorusSlider.container);
     
     //private readonly _ringModPulsewidthSlider: Slider = new Slider(input({ style: "margin-left: 10px; width: 85%;", type: "range", min: "0", max: Config.pwmOperatorWaves.length - 1, value: "0", step: "1", title: "Pulse Width" }), this._doc, (oldValue: number, newValue: number) => new ChangeOperatorPulseWidth(this._doc, operatorIndex, oldValue, newValue), true);
-    private readonly _ringModWaveSelect: HTMLSelectElement = buildOptions(select(), Config.operatorWaves.map(wave => wave.name));
+    private readonly _ringModWaveSelect: HTMLSelectElement = buildOptions(select({}), Config.operatorWaves.map(wave => wave.name));
 
     private readonly _ringModSlider: Slider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.ringModRange - 1, value: "0", step: "1" }), this._doc, 
     (oldValue: number, newValue: number) => new ChangeRingMod(this._doc, oldValue, newValue), false);
@@ -891,7 +891,10 @@ export class SongEditor {
         div({ style: `color: ${ColorConfig.secondaryText}; ` }, this._ringModHzNum),
     ), this._ringModHzSlider.container);
 
-    private readonly _ringModWaveSelectRow: HTMLDivElement = div({ class: "selectRow", style:"width: 100%;" }, span({ class: "tip", onclick: () => this._openPrompt("chipWave") }, "Wave: "), div({ class: "selectContainer" }, this._ringModWaveSelect));
+    private readonly _ringModPulsewidthSlider: Slider = new Slider(input({ style: "margin-left: 10px; width: 85%;", type: "range", min: "0", max: Config.pwmOperatorWaves.length - 1, value: "0", step: "1", title: "Pulse Width" }), this._doc, (oldValue: number, newValue: number) => new ChangeRingModPulseWidth(this._doc, oldValue, newValue), true);
+
+    private readonly _ringModWaveText: HTMLSpanElement = span({ class: "tip", onclick: () => this._openPrompt("chipWave") }, "Wave: ")
+    private readonly _ringModWaveSelectRow: HTMLDivElement = div({ class: "selectRow", style:"width: 100%;" }, this._ringModWaveText, this._ringModPulsewidthSlider.container, div({ class: "selectContainer", style:"width:40%;" },  this._ringModWaveSelect));
     private readonly _ringModContainerRow: HTMLDivElement = div({ class: "selectRow", style: "display:flex; flex-direction:column; height: 96px;" }, 
         this._ringModRow, 
         this._ringModHzSliderRow,
@@ -2297,6 +2300,12 @@ export class SongEditor {
                 return this._supersawShapeSlider;
             case Config.modulators.dictionary["song panning"].index:
                 return this._panSlider;
+            case Config.modulators.dictionary["phaser"].index:
+                return this._phaserMixSlider;
+            case Config.modulators.dictionary["phaser frequency"].index:
+                return this._phaserFreqSlider;
+            case Config.modulators.dictionary["phaser feedback"].index:
+                return this._phaserFeedbackSlider;    
             default:
                 return null;
         }
@@ -2499,7 +2508,6 @@ export class SongEditor {
         this._instrumentExportGroup.style.display = this._doc.prefs.instrumentImportExport ? "" : "none";
         if (document.getElementById('text-content'))
             document.getElementById('text-content')!.style.display = this._doc.prefs.showDescription ? "" : "none";
-        
 
         // comment for ctrl+f mobile stuffs
 
@@ -3583,6 +3591,7 @@ export class SongEditor {
                 this._ringModSlider.updateValue(instrument.ringModulation);
                 this._ringModHzSlider.updateValue(instrument.ringModulationHz);
                 setSelectedValue(this._ringModWaveSelect, instrument.rmWaveformIndex);
+                this._ringModPulsewidthSlider.updateValue(instrument.rmPulseWidth);
             } else {
                 this._ringModContainerRow.style.display = "none";
             }
@@ -4113,6 +4122,8 @@ export class SongEditor {
                         }
                         if (anyInstrumentPhasers) {
                             settingList.push("phaser");
+                            settingList.push("phaser frequency");
+                            settingList.push("phaser feedback");
                         }
                     }
 
@@ -4322,6 +4333,14 @@ export class SongEditor {
 
          // Writeback to mods if control key is held while moving a slider.
          this.handleModRecording();
+
+         if (this._ringModWaveSelect.selectedIndex == 2) {
+            this._ringModPulsewidthSlider.container.style.display = "";
+            this._ringModWaveText.style.display = "none";
+        } else {
+            this._ringModPulsewidthSlider.container.style.display = "none";
+            this._ringModWaveText.style.display = "";
+        }
 
         }
 
@@ -5971,8 +5990,9 @@ export class SongEditor {
     }
 
     private _whenSetRMChipWave = (): void => {
-        this._doc.record(new ChangeRMChipWave(this._doc, this._ringModWaveSelect.selectedIndex));
+        this._doc.record(new ChangeRMChipWave(this._doc, this._ringModWaveSelect.selectedIndex));    
     }
+
 
 				 // advloop addition
             private _whenSetUseChipWaveAdvancedLoopControls = (): void => {

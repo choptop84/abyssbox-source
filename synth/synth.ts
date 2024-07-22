@@ -1539,7 +1539,8 @@ export class Instrument {
     public distortion: number = 0;
     public ringModulation: number = 0;
     public ringModulationHz: number = 0;
-    public rmWaveformIndex: number = 2;
+    public rmWaveformIndex: number = 0;
+    public rmPulseWidth: number = 0;
     public bitcrusherFreq: number = 0;
     public bitcrusherQuantization: number = 0;
     public chorus: number = 0;
@@ -1659,6 +1660,8 @@ export class Instrument {
 
         this.ringModulation = 0;
         this.ringModulationHz = 0;
+        this.rmPulseWidth = 0;
+        this.rmWaveformIndex = 0;
 
         this.phaserFreq	= 0;
         this.phaserFeedback = 0;
@@ -3386,6 +3389,7 @@ export class Song {
                     buffer.push(base64IntToCharCode[instrument.ringModulation]);
                     buffer.push(base64IntToCharCode[instrument.ringModulationHz]);
                     buffer.push(base64IntToCharCode[instrument.rmWaveformIndex]);	
+                    buffer.push(base64IntToCharCode[instrument.rmPulseWidth]);	
 
                 }
                 if (effectsIncludePhaser(instrument.effects)) {
@@ -5072,14 +5076,14 @@ export class Song {
                     if (effectsIncludeRM(instrument.effects)) {
                         instrument.ringModulation = clamp(0, Config.ringModRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                         instrument.ringModulationHz = clamp(0, Config.ringModHzRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
-
-					    	instrument.rmWaveformIndex = clamp(0, Config.operatorWaves.length, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);											   					   	 						  								
+					    instrument.rmWaveformIndex = clamp(0, Config.operatorWaves.length, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);	
+                        instrument.rmPulseWidth = clamp(0, Config.pulseWidthRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);										   					   	 						  								
 					    
                     }
                     if (effectsIncludePhaser(instrument.effects)) {
                         instrument.phaserFreq = clamp(0, Config.phaserFreqRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                         instrument.phaserFeedback = clamp(0, Config.phaserFeedbackRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
-                        instrument.phaserStages = clamp(0, Config.phaserMaxStages, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                        instrument.phaserStages = clamp(0, Config.phaserMaxStages + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                     }
                     if (effectsIncludeBitcrusher(instrument.effects)) {
                         instrument.bitcrusherFreq = clamp(0, Config.bitcrusherFreqRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
@@ -7645,7 +7649,8 @@ class InstrumentState {
     public ringModPhase: number = 0;
     public ringModPhaseDelta: number = 0;
     public ringModPhaseDeltaScale: number = 1.0;
-    public rmWaveformIndex: number = 2.0;
+    public rmWaveformIndex: number = 0.0;
+    public rmPulseWidth: number = 0.0;
 
     public echoDelayLineL: Float32Array | null = null;
     public echoDelayLineR: Float32Array | null = null;
@@ -8170,6 +8175,7 @@ class InstrumentState {
             this.ringModPhaseDelta = ringModPhaseDeltaStart;
             this.ringModPhaseDeltaScale = Math.pow(ringModPhaseDeltaEnd / ringModPhaseDeltaStart, 1.0 / roundedSamplesPerTick);
             this.rmWaveformIndex = instrument.rmWaveformIndex;
+            this.rmPulseWidth = instrument.rmPulseWidth;
         }
 
         let maxEchoMult = 0.0;
@@ -8234,29 +8240,46 @@ class InstrumentState {
             const phaserFeedbackMultSlider: number = instrument.phaserFeedback / Config.phaserFeedbackRange;
             const phaserFeedbackMultEnvelopeStart: number = envelopeStarts[EnvelopeComputeIndex.phaserFeedback];
             const phaserFeedbackMultEnvelopeEnd: number = envelopeEnds[EnvelopeComputeIndex.phaserFeedback];
-            const phaserFeedbackMultStart: number = Math.max(phaserMinFeedback, Math.min(phaserMaxFeedback, phaserFeedbackMultSlider * phaserFeedbackMultEnvelopeStart));
-            const phaserFeedbackMultEnd: number = Math.max(phaserMinFeedback, Math.min(phaserMaxFeedback, phaserFeedbackMultSlider * phaserFeedbackMultEnvelopeEnd));
+            let phaserFeedbackMultRawStart: number = phaserFeedbackMultSlider * phaserFeedbackMultEnvelopeStart;
+            let phaserFeedbackMultRawEnd: number = phaserFeedbackMultSlider * phaserFeedbackMultEnvelopeEnd;
+            if (synth.isModActive(Config.modulators.dictionary["phaser feedback"].index, channelIndex, instrumentIndex)) {
+                phaserFeedbackMultRawStart = synth.getModValue(Config.modulators.dictionary["phaser feedback"].index, channelIndex, instrumentIndex, false) / (Config.phaserFeedbackRange);
+                phaserFeedbackMultRawEnd = synth.getModValue(Config.modulators.dictionary["phaser feedback"].index, channelIndex, instrumentIndex, true) / (Config.phaserFeedbackRange);
+            }
+            const phaserFeedbackMultStart: number = Math.max(phaserMinFeedback, Math.min(phaserMaxFeedback, phaserFeedbackMultRawStart));
+            const phaserFeedbackMultEnd: number = Math.max(phaserMinFeedback, Math.min(phaserMaxFeedback, phaserFeedbackMultRawEnd));
             this.phaserFeedbackMult = phaserFeedbackMultStart;
             this.phaserFeedbackMultDelta = (phaserFeedbackMultEnd - phaserFeedbackMultStart) / roundedSamplesPerTick;
             const phaserMixSlider: number = instrument.phaserMix / (Config.phaserMixRange - 1);
-            let phaserMixStart: number = phaserMixSlider;
-            let phaserMixEnd: number = phaserMixSlider;
+
+            const phaserMixEnvelopeStart: number = envelopeStarts[EnvelopeComputeIndex.phaserMix];
+            const phaserMixEnvelopeEnd: number = envelopeEnds[EnvelopeComputeIndex.phaserMix];
+            let phaserMixStart: number = phaserMixSlider * phaserMixEnvelopeStart;
+            let phaserMixEnd: number = phaserMixSlider * phaserMixEnvelopeEnd;
+
+            if (synth.isModActive(Config.modulators.dictionary["phaser"].index, channelIndex, instrumentIndex)) {
+                phaserMixStart = Math.max(0, Math.min(Config.phaserMixRange - 1, synth.getModValue(Config.modulators.dictionary["phaser"].index, channelIndex, instrumentIndex, false))) / (Config.phaserMixRange - 1)
+                phaserMixEnd = Math.max(0, Math.min(Config.phaserMixRange - 1, synth.getModValue(Config.modulators.dictionary["phaser"].index, channelIndex, instrumentIndex, true))) / (Config.phaserMixRange - 1);
+            }
             this.phaserMix = phaserMixStart;
             this.phaserMixDelta = (phaserMixEnd - phaserMixStart) / roundedSamplesPerTick;
 
-            if (synth.isModActive(Config.modulators.dictionary["phaser"].index, channelIndex, instrumentIndex)) {
-                phaserMixStart = (synth.getModValue(Config.modulators.dictionary["phaser"].index, channelIndex, instrumentIndex, false));
-                phaserMixEnd = (synth.getModValue(Config.modulators.dictionary["phaser"].index, channelIndex, instrumentIndex, true));
-            }
-
             // @TODO: Use filtering.ts
             const phaserBreakFreqSlider: number = instrument.phaserFreq / (Config.phaserFreqRange - 1);
-            const phaserBreakFreqEnvelopeStart: number = envelopeStarts[EnvelopeComputeIndex.phaserFreq];
-            const phaserBreakFreqEnvelopeEnd: number = envelopeEnds[EnvelopeComputeIndex.phaserFreq];
-            const phaserBreakFreqStart: number = Math.max(Config.phaserMinFreq, Math.min(Config.phaserMaxFreq, Config.phaserMinFreq * Math.pow(Config.phaserMaxFreq / Config.phaserMinFreq, phaserBreakFreqSlider) * phaserBreakFreqEnvelopeStart));
+            let phaserBreakFreqEnvelopeStart: number = envelopeStarts[EnvelopeComputeIndex.phaserFreq];
+            let phaserBreakFreqEnvelopeEnd: number = envelopeEnds[EnvelopeComputeIndex.phaserFreq];
+            let phaserBreakFreqRawStart: number = phaserBreakFreqSlider * phaserBreakFreqEnvelopeStart;
+            let phaserBreakFreqRawEnd: number = phaserBreakFreqSlider * phaserBreakFreqEnvelopeEnd;
+            if (synth.isModActive(Config.modulators.dictionary["phaser frequency"].index, channelIndex, instrumentIndex)) {
+                phaserBreakFreqRawStart = synth.getModValue(Config.modulators.dictionary["phaser frequency"].index, channelIndex, instrumentIndex, false) / (Config.phaserFreqRange);
+                phaserBreakFreqRawEnd = synth.getModValue(Config.modulators.dictionary["phaser frequency"].index, channelIndex, instrumentIndex, true) / (Config.phaserFreqRange);
+            }
+            const phaserBreakFreqRemappedStart: number = Config.phaserMinFreq * Math.pow(Config.phaserMaxFreq / Config.phaserMinFreq, phaserBreakFreqRawStart);
+            const phaserBreakFreqRemappedEnd: number = Config.phaserMinFreq * Math.pow(Config.phaserMaxFreq / Config.phaserMinFreq, phaserBreakFreqRawEnd);
+            const phaserBreakFreqStart: number = Math.max(Config.phaserMinFreq, Math.min(Config.phaserMaxFreq, phaserBreakFreqRemappedStart)); 
             const phaserBreakFreqStartT: number = Math.tan(Math.PI * phaserBreakFreqStart / samplesPerSecond);
             const phaserBreakCoefStart: number = (phaserBreakFreqStartT - 1) / (phaserBreakFreqStartT + 1);
-            const phaserBreakFreqEnd: number = Math.max(Config.phaserMinFreq, Math.min(Config.phaserMaxFreq, Config.phaserMinFreq * Math.pow(Config.phaserMaxFreq / Config.phaserMinFreq, phaserBreakFreqSlider) * phaserBreakFreqEnvelopeEnd));
+            const phaserBreakFreqEnd: number = Math.max(Config.phaserMinFreq, Math.min(Config.phaserMaxFreq, phaserBreakFreqRemappedEnd));
             const phaserBreakFreqEndT: number = Math.tan(Math.PI * phaserBreakFreqEnd / samplesPerSecond);
             const phaserBreakCoefEnd: number = (phaserBreakFreqEndT - 1) / (phaserBreakFreqEndT + 1);
 
@@ -9636,7 +9659,7 @@ export class Synth {
                             }
 
                             instrumentState.computed = false;
-                            //instrumentState.envelopeComputer.clearEnvelopes();
+                            instrumentState.envelopeComputer.clearEnvelopes();
                         }
                     }
 
@@ -10701,7 +10724,6 @@ export class Synth {
 
         if ((tone.atNoteStart && !transition.isSeamless && !tone.forceContinueAtStart) || tone.freshlyAllocated) {
             tone.reset();
-            instrumentState.envelopeTime = 0;
 						 // advloop addition
                          if (instrument.type == InstrumentType.chip && instrument.isUsingAdvancedLoopControls) {
                 const chipWaveLength = Config.rawRawChipWaves[instrument.chipWave].samples.length - 1;
@@ -12491,8 +12513,12 @@ export class Synth {
                 let ringModPhaseDelta = +instrumentState.ringModPhaseDelta;
                 let ringModPhaseDeltaScale = +instrumentState.ringModPhaseDeltaScale;
                 let rmWaveformIndex = +instrumentState.rmWaveformIndex;
+                let rmPulseWidth = +instrumentState.rmPulseWidth;
 
                 let waveform = Config.operatorWaves[rmWaveformIndex].samples; // index presumably comes from a dropdown
+                if (rmWaveformIndex == 2) {
+                    waveform = Synth.getOperatorWave(rmWaveformIndex, rmPulseWidth).samples; 
+                }
                 const waveformLength = waveform.length - 1;
                 `
             }
@@ -12701,6 +12727,7 @@ export class Synth {
 
                 const ringModOutput = sample * waveform[(ringModPhase*waveformLength)|0];
                 sample = sample * (1 - ringModMix) + ringModOutput * ringModMix;
+
                 ringModMix += ringModMixDelta;
                 ringModPhase += ringModPhaseDelta;
                 ringModPhase = ringModPhase % 1.0;
@@ -12946,6 +12973,7 @@ export class Synth {
                 instrumentState.ringModPhaseDelta = ringModPhaseDelta;
                 instrumentState.ringModPhaseDeltaScale = ringModPhaseDeltaScale;
                 instrumentState.rmWaveformIndex = rmWaveformIndex;
+                instrumentState.rmPulseWidth = rmPulseWidth;
                 `}
 
             if (usesPhaser) {
