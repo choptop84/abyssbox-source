@@ -559,6 +559,30 @@ export class TipPrompt implements Prompt {
 					p(`This setting changes the Hertz of the 2nd multiplied frequency with the first frequency.`),
 				);
 			} break;
+			case "phaserMix": {
+				message = div(
+					h2("Phaser Mix"),
+					p(``),
+				);
+			} break;
+			case "phaserFreq": {
+				message = div(
+					h2("Phaser Frequency"),
+					p(``),
+				);
+			} break;
+			case "phaserFeedback": {
+				message = div(
+					h2("Phaser Feedback"),
+					p(``),
+				);
+			} break;
+			case "phaserStages": {
+				message = div(
+					h2("Phaser Stages"),
+					p(`This slider changes how many all-passes there are in the phaser.`),
+				);
+			} break;
 
 			default:
 				// Check for modSetinfo#
