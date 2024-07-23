@@ -7696,6 +7696,7 @@ class InstrumentState {
     public phaserBreakCoef: number = 0.0;
     public phaserBreakCoefDelta: number = 0.0;
     public phaserStages: number = 0;
+    public phaserStagesDelta: number = 0;
 
     public readonly envelopeComputer: EnvelopeComputer = new EnvelopeComputer();
 
@@ -8285,7 +8286,14 @@ class InstrumentState {
 
             this.phaserBreakCoef = phaserBreakCoefStart;
             this.phaserBreakCoefDelta = (phaserBreakCoefEnd - phaserBreakCoefStart) / roundedSamplesPerTick;
+            const phaserStagesEnvelopeStart: number = envelopeStarts[EnvelopeComputeIndex.phaserStages];
+            const phaserStagesEnvelopeEnd: number = envelopeEnds[EnvelopeComputeIndex.phaserStages];
+            const phaserStagesSlider: number = instrument.phaserStages;
+
+            let phaserStagesStart = phaserStagesSlider * phaserStagesEnvelopeStart;
+            let phaserStagesEnd = phaserStagesSlider * phaserStagesEnvelopeEnd;
             this.phaserStages = instrument.phaserStages;
+            this.phaserStagesDelta = (phaserStagesEnd - phaserStagesStart) / roundedSamplesPerTick;
         }
             
 
@@ -12528,7 +12536,8 @@ export class Synth {
                 
                 const phaserSamples = instrumentState.phaserSamples;
                 const phaserPrevInputs = instrumentState.phaserPrevInputs;
-                const phaserStages = instrumentState.phaserStages;
+                let phaserStages = instrumentState.phaserStages;
+                const phaserStagesDelta = instrumentState.phaserStagesDelta;
                 const phaserFeedbackMultDelta = +instrumentState.phaserFeedbackMultDelta;
                 let phaserFeedbackMult = +instrumentState.phaserFeedbackMult;
                 const phaserMixDelta = +instrumentState.phaserMixDelta;
@@ -12738,7 +12747,7 @@ export class Synth {
             if (usesPhaser) {
                 effectsSource += `
                         const phaserFeedback = phaserSamples[phaserStages - 1] * phaserFeedbackMult;
-                        for (let stage = 0; stage < phaserStages; stage++) {
+                        for (let stage = 0; stage < Math.floor(phaserStages); stage++) {
                             const phaserInput = stage === 0 ? sample + phaserFeedback : phaserSamples[stage - 1];
                             const phaserPrevInput = phaserPrevInputs[stage];
                             const phaserSample = phaserSamples[stage];
@@ -12751,6 +12760,7 @@ export class Synth {
                         phaserFeedbackMult += phaserFeedbackMultDelta;
                         phaserBreakCoef += phaserBreakCoefDelta;
                         phaserMix += phaserMixDelta;
+                        phaserStages += phaserStagesDelta;
                     `
             }
 
