@@ -2306,6 +2306,8 @@ export class SongEditor {
                 return this._phaserFreqSlider;
             case Config.modulators.dictionary["phaser feedback"].index:
                 return this._phaserFeedbackSlider;    
+            case Config.modulators.dictionary["phaser stages"].index:
+                return this._phaserStagesSlider;      
             default:
                 return null;
         }
@@ -4124,6 +4126,7 @@ export class SongEditor {
                             settingList.push("phaser");
                             settingList.push("phaser frequency");
                             settingList.push("phaser feedback");
+                            //settingList.push("phaser stages");
                         }
                     }
 

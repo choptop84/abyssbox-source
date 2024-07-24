@@ -8289,10 +8289,11 @@ class InstrumentState {
             const phaserStagesEnvelopeStart: number = envelopeStarts[EnvelopeComputeIndex.phaserStages];
             const phaserStagesEnvelopeEnd: number = envelopeEnds[EnvelopeComputeIndex.phaserStages];
             const phaserStagesSlider: number = instrument.phaserStages;
+            
+            let phaserStagesStart = Math.max(Config.phaserMinStages, Math.min(Config.phaserMaxStages, phaserStagesSlider * phaserStagesEnvelopeStart));
+            let phaserStagesEnd = Math.max(Config.phaserMinStages, Math.min(Config.phaserMaxStages, phaserStagesSlider * phaserStagesEnvelopeEnd));
 
-            let phaserStagesStart = phaserStagesSlider * phaserStagesEnvelopeStart;
-            let phaserStagesEnd = phaserStagesSlider * phaserStagesEnvelopeEnd;
-            this.phaserStages = instrument.phaserStages;
+            this.phaserStages = phaserStagesStart;
             this.phaserStagesDelta = (phaserStagesEnd - phaserStagesStart) / roundedSamplesPerTick;
         }
             
@@ -12537,6 +12538,7 @@ export class Synth {
                 const phaserSamples = instrumentState.phaserSamples;
                 const phaserPrevInputs = instrumentState.phaserPrevInputs;
                 let phaserStages = instrumentState.phaserStages;
+                let phaserStagesInt = Math.floor(phaserStages);
                 const phaserStagesDelta = instrumentState.phaserStagesDelta;
                 const phaserFeedbackMultDelta = +instrumentState.phaserFeedbackMultDelta;
                 let phaserFeedbackMult = +instrumentState.phaserFeedbackMult;
@@ -12746,8 +12748,8 @@ export class Synth {
 
             if (usesPhaser) {
                 effectsSource += `
-                        const phaserFeedback = phaserSamples[phaserStages - 1] * phaserFeedbackMult;
-                        for (let stage = 0; stage < Math.floor(phaserStages); stage++) {
+                        const phaserFeedback = phaserSamples[Math.max(0,phaserStagesInt - 1)] * phaserFeedbackMult;
+                        for (let stage = 0; stage < phaserStagesInt; stage++) {
                             const phaserInput = stage === 0 ? sample + phaserFeedback : phaserSamples[stage - 1];
                             const phaserPrevInput = phaserPrevInputs[stage];
                             const phaserSample = phaserSamples[stage];
@@ -12755,12 +12757,13 @@ export class Synth {
                             phaserPrevInputs[stage] = phaserInput;
                             phaserSamples[stage] = phaserNextOutput;
                         }
-                        const phaserOutput = phaserSamples[phaserStages - 1];
+                        const phaserOutput = phaserSamples[Math.max(0,phaserStagesInt - 1)];
                         sample = sample + phaserOutput * phaserMix;
                         phaserFeedbackMult += phaserFeedbackMultDelta;
                         phaserBreakCoef += phaserBreakCoefDelta;
                         phaserMix += phaserMixDelta;
                         phaserStages += phaserStagesDelta;
+                        /*phaserStagesInt = Math.floor(phaserStages);*/
                     `
             }
 
