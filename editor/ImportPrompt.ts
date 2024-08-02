@@ -12,7 +12,7 @@ import { AnalogousDrum, analogousDrumMap, MidiChunkType, MidiFileFormat, MidiEve
 import { ArrayBufferReader } from "./ArrayBufferReader";
 import { ExportPrompt } from "./ExportPrompt";
 
-	const {button, p, div, h2, input} = HTML;
+	const {button, p, div, h2, input, select, option} = HTML;
 
 export class ImportPrompt implements Prompt {
 		private exportStuff:ExportPrompt = new ExportPrompt(this._doc);
@@ -20,7 +20,22 @@ export class ImportPrompt implements Prompt {
 		private readonly _exportButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin: 0.5em; width:50%; color: var(--secondary-text);" }, "Export");
 		private readonly _fileInput: HTMLInputElement = input({type: "file", accept: ".json,application/json,.mid,.midi,audio/midi,audio/x-midi"});
 		private readonly _cancelButton: HTMLButtonElement = button({class: "cancelButton"});
-		
+		private readonly _modeImportSelect: HTMLSelectElement = select({style: "width: 100%;"},
+			option({value: "auto"}, "Auto-detect mode (for json)"),
+			option({value: "BeepBox"}, "BeepBox"),
+			// TODO: Add Detune (Song Detune), Filter (EQ/Envelopes), and Effect (Vibrato) support
+			option({value: "ModBox"}, "ModBox"),
+			// TODO: Fix tempo modulation
+			option({value: "JummBox"}, "JummBox"),
+			option({value: "SynthBox"}, "SynthBox"),
+			// The ThurmBox mode is currently unused...
+			// option({value: "ThurmBox"}, "ThurmBox"),
+			option({value: "GoldBox"}, "GoldBox"),
+			option({value: "PaandorasBox"}, "PaandorasBox"),
+			// Currently this option is unnecessary (UB is handled the same as JB) but we're keeping it in case there's any future conflicts
+			// There's also the situation where someone will see the "GoldBox" or "PaandorasBox" options and think they have to use one of those two
+			option({value: "UltraBox"}, "UltraBox"),
+		);
 		
 
 		public _importPrompt: HTMLDivElement = div({},
@@ -31,6 +46,8 @@ export class ImportPrompt implements Prompt {
 			p({style: "text-align: left; margin: 0.5em 0;"},
 			"BeepBox can also (crudely) import .mid files. There are many tools available for creating .mid files. Shorter and simpler songs are more likely to work well.",
 		),
+		// div({class: "selectContainer", style: "width: 100%;"}, "Import Mode (for json): ", this._modeImportSelect),
+			this._modeImportSelect,
 			this._fileInput,
 			this._cancelButton,
 		);
@@ -108,7 +125,7 @@ export class ImportPrompt implements Prompt {
 			reader.addEventListener("load", (event: Event): void => {
 				this._doc.prompt = null;
 				this._doc.goBackToStart();
-				this._doc.record(new ChangeSong(this._doc, <string>reader.result), true, true);
+				this._doc.record(new ChangeSong(this._doc, <string>reader.result, this._modeImportSelect.value), true, true);
 			});
 			reader.readAsText(file);
 		} else if (extension == "midi" || extension == "mid") {

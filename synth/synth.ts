@@ -2185,9 +2185,11 @@ export class Instrument {
     public fromJsonObject(instrumentObject: any, isNoiseChannel: boolean, isModChannel: boolean, useSlowerRhythm: boolean, useFastTwoNoteArp: boolean, legacyGlobalReverb: number = 0, jsonFormat: string = Config.jsonFormat): void {
         if (instrumentObject == undefined) instrumentObject = {};
 
+        const format: string = jsonFormat.toLowerCase();
+
         let type: InstrumentType = Config.instrumentTypeNames.indexOf(instrumentObject["type"]);
                 // SynthBox support
-                if ((jsonFormat == "SynthBox") && (instrumentObject["type"] == "FM")) type = Config.instrumentTypeNames.indexOf("FM6op");
+                if ((format == "synthbox") && (instrumentObject["type"] == "FM")) type = Config.instrumentTypeNames.indexOf("FM6op");
         if (<any>type == -1) type = isModChannel ? InstrumentType.mod : (isNoiseChannel ? InstrumentType.noise : InstrumentType.chip);
         this.setTypeAndReset(type, isNoiseChannel, isModChannel);
 
@@ -2198,7 +2200,7 @@ export class Instrument {
         }
 
         if (instrumentObject["volume"] != undefined) {
-            if (jsonFormat == "JummBox" || jsonFormat == "Midbox" || jsonFormat == "SynthBox" || jsonFormat == "UltraBox") {
+            if (format == "jummbox" || format == "midbox" || format == "synthbox" || format == "goldbox" || format == "paandorasbox" || format == "ultrabox") {
             this.volume = clamp(-Config.volumeRange / 2, (Config.volumeRange / 2) + 1, instrumentObject["volume"] | 0);
             } else {
                 this.volume = Math.round(-clamp(0, 8, Math.round(5 - (instrumentObject["volume"] | 0) / 20)) * 25.0 / 7.0);
@@ -2382,12 +2384,16 @@ export class Instrument {
         if (instrumentObject["pan"] != undefined) {
             this.pan = clamp(0, Config.panMax + 1, Math.round(Config.panCenter + (instrumentObject["pan"] | 0) * Config.panCenter / 100));
 
-            // Old songs may have a panning effect without explicitly enabling it.
-            if (this.pan != Config.panCenter) {
-                this.effects = (this.effects | (1 << EffectType.panning));
-            }
+        } else if (instrumentObject["ipan"] != undefined) {
+            // support for modbox fixed
+            this.pan = clamp(0, Config.panMax + 1, Config.panCenter + (instrumentObject["ipan"] * 100));
         } else {
             this.pan = Config.panCenter;
+        }
+
+        // Old songs may have a panning effect without explicitly enabling it.
+        if (this.pan != Config.panCenter) {
+            this.effects = (this.effects | (1 << EffectType.panning));
         }
 
         if (instrumentObject["panDelay"] != undefined) {
@@ -2564,12 +2570,11 @@ export class Instrument {
                 }
                 this.feedbackType6Op = Config.feedbacks6Op.findIndex(feedback6Op => feedback6Op.name == instrumentObject["feedbackType"]);
                                                 // SynthBox feedback support
-                if ((this.feedbackType6Op == -1) && (jsonFormat == "SynthBox")) {
-                    this.feedbackType6Op = Config.algorithms6Op.findIndex(feedbackType6Op => feedbackType6Op.name == "Custom");
-                    
+                if (this.feedbackType6Op == -1) {    
                     // These are all of the SynthBox feedback presets that aren't present in Gold/UltraBox
                     let synthboxLegacyFeedbacks: DictionaryArray<any> = toNameMap([
                         { name: "2⟲ 3⟲", indices: [[], [2], [3], [], [], []] },
+                        { name: "3⟲ 4⟲", indices: [[], [], [3], [4], [], []] },
                         { name: "4⟲ 5⟲", indices: [[], [], [], [4], [5], []] },
                         { name: "5⟲ 6⟲", indices: [[], [], [], [], [5], [6]] },
                         { name: "1⟲ 6⟲", indices: [[1], [], [], [], [], [6]] },
@@ -2596,17 +2601,22 @@ export class Instrument {
                         { name: "1→2→3→4→5→6", indices: [[], [1], [2], [3], [4], [5]] },
                     ]);
 
-                    let synthboxFeedbackType = synthboxLegacyFeedbacks[synthboxLegacyFeedbacks.findIndex(feedback => feedback.name == instrumentObject["feedbackType"])].indices;
-                    
-                    this.customFeedbackType.set(synthboxFeedbackType);
-                } else {
-                    if (this.feedbackType6Op == -1) this.feedbackType6Op = 1;
-                    if (this.feedbackType6Op == 0) {
-                        this.customFeedbackType.set(instrumentObject["customFeedback"]["mods"]);
+                    let synthboxFeedbackType = synthboxLegacyFeedbacks[synthboxLegacyFeedbacks.findIndex(feedback => feedback.name == instrumentObject["feedbackType"])]!.indices;
+
+                    if (synthboxFeedbackType != undefined) {
+                        this.feedbackType6Op = 0;
+                        this.customFeedbackType.set(synthboxFeedbackType);
                     } else {
-                        this.customFeedbackType.fromPreset(this.feedbackType6Op)
+                        // if the feedback type STILL can't be resolved, default to the first non-custom option
+                        this.feedbackType6Op = 1;
                     }
                 }
+            } 
+
+            if ((this.feedbackType6Op == 0) && (instrumentObject["customFeedback"] != undefined)) {
+                this.customFeedbackType.set(instrumentObject["customFeedback"]["mods"]);
+            } else {
+                this.customFeedbackType.fromPreset(this.feedbackType6Op);
             }
             if (instrumentObject["feedbackAmplitude"] != undefined) {
                 this.feedbackAmplitude = clamp(0, Config.operatorAmplitudeMax + 1, instrumentObject["feedbackAmplitude"] | 0);
@@ -2628,6 +2638,11 @@ export class Instrument {
                     operator.amplitude = 0;
                 }
                 if (operatorObject["waveform"] != undefined) {
+                    // If the json is from GB, we override the last two waves to be sine to account for a bug
+                    if (format == "goldbox" && j > 3) {
+                        operator.waveform = 0;
+                        continue;
+                     }
                     operator.waveform = Config.operatorWaves.findIndex(wave => wave.name == operatorObject["waveform"]);
                     if (operator.waveform == -1) {
                         // GoldBox compatibility
@@ -2716,7 +2731,7 @@ export class Instrument {
             }
             else {
             // modbox had no anti-aliasing, so enable it for everything if that mode is selected
-            if (jsonFormat == "ModBox") {
+            if (format == "modbox") {
                 this.effects = (this.effects | (1 << EffectType.distortion));
                 this.aliases = true;
                 this.distortion = 0;
@@ -6318,12 +6333,23 @@ export class Song {
 
         //const version: number = jsonObject["version"] | 0;
         //if (version > Song._latestVersion) return; // Go ahead and try to parse something from the future I guess? JSON is pretty easy-going!
-        const format: string = jsonFormat == "auto" ? jsonObject["format"] : jsonFormat;
+        // Code for auto-detect mode; if statements that are lower down have 'higher priority'
+        if (jsonFormat == "auto") {
+            if (jsonObject["format"] == "BeepBox") {
+                // Assume that if there is a "riff" song setting then it must be modbox
+                if (jsonObject["riff"] != undefined) {
+                    jsonFormat = "modbox";
+                }
 
-        // Code for auto-detect mode: if statements that are lower down have 'higher priority'
-        //if (format == "auto") {
+                // Assume that if there are limiter song settings then it must be jummbox
+                // Despite being added in JB 2.1, json export for the limiter settings wasn't added until 2.3
+                if (jsonObject["masterGain"] != undefined) {
+                    jsonFormat = "jummbox";
+                }
+            }
+        }
 
-        //}
+        const format: string = (jsonFormat == "auto" ? jsonObject["format"] : jsonFormat).toLowerCase();
         if (jsonObject["name"] != undefined) {
             this.title = jsonObject["name"];
         }
@@ -6608,10 +6634,8 @@ export class Song {
                                 // to the corresponding new name.
                                 instrumentObject["wave"] = names[oldNames.findIndex(x => x === waveName)];
                             } else if (veryOldNames.includes(waveName)) {
-                                if (waveName === "trumpet" || waveName === "flute") {
-                                    // @TODO: This isn't exactly correct, but for now, if we see one of these two,
-                                    // leave them with the JummBox chip waves. The actual solution here will probably
-                                    // involve disambiguation via user input.
+                                if ((waveName === "trumpet" || waveName === "flute") && (format != "paandorasbox")) {
+                                    // If we see chip waves named trumpet or flute, and if the format isn't PaandorasBox, we leave them as-is
                                 } else {
                                     // There's no other chip waves with ambiguous names like that, so it should
                                     // be okay to assume we'll need to load the legacy samples now.
