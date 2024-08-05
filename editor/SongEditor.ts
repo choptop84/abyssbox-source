@@ -4126,7 +4126,7 @@ export class SongEditor {
                             settingList.push("phaser");
                             settingList.push("phaser frequency");
                             settingList.push("phaser feedback");
-                            //settingList.push("phaser stages");
+                            settingList.push("phaser stages");
                         }
                     }
 
