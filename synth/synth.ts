@@ -1666,6 +1666,7 @@ export class Instrument {
         this.phaserFreq	= 0;
         this.phaserFeedback = 0;
         this.phaserStages = 2;
+        this.phaserMix = Config.phaserMixRange - 1;
 
         this.pan = Config.panCenter;
         this.panDelay = 10;
@@ -3411,6 +3412,7 @@ export class Song {
                     buffer.push(base64IntToCharCode[instrument.phaserFreq]);
                     buffer.push(base64IntToCharCode[instrument.phaserFeedback]);
                     buffer.push(base64IntToCharCode[instrument.phaserStages]);
+                    buffer.push(base64IntToCharCode[instrument.phaserMix]);
                 }
                 if (effectsIncludeBitcrusher(instrument.effects)) {
                     buffer.push(base64IntToCharCode[instrument.bitcrusherFreq], base64IntToCharCode[instrument.bitcrusherQuantization]);
@@ -5098,7 +5100,8 @@ export class Song {
                     if (effectsIncludePhaser(instrument.effects)) {
                         instrument.phaserFreq = clamp(0, Config.phaserFreqRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                         instrument.phaserFeedback = clamp(0, Config.phaserFeedbackRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
-                        instrument.phaserStages = clamp(0, Config.phaserMaxStages + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                        instrument.phaserStages = clamp(0, Config.phaserMaxStages + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]); 
+                        instrument.phaserMix = clamp(0, Config.phaserMixRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                     }
                     if (effectsIncludeBitcrusher(instrument.effects)) {
                         instrument.bitcrusherFreq = clamp(0, Config.bitcrusherFreqRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
