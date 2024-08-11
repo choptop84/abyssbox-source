@@ -15666,6 +15666,10 @@ export class ColorConfig {
 				   line-height: 1.25;
 			   }
 
+				.trackContainer .noSelection {
+				background: black !important;
+				}
+
 			   #text-content {
 				   font-size: 32px;
 				   line-height: 40px;
@@ -15968,6 +15972,10 @@ export class ColorConfig {
 					line-height: 40px;
 				}
 
+				.trackContainer .noSelection {
+				background: black !important;
+				}
+
 				#text-content > section > h1 {
 					color: #C8C8C8;
 					}
@@ -16155,6 +16163,10 @@ export class ColorConfig {
 				   color: #C8C8C8;
 				   }
 
+				.trackContainer .noSelection {
+				background: black !important;
+				}
+				   
 			   html {
 				   font-family: monospace !important;
 				   }
@@ -16304,6 +16316,10 @@ export class ColorConfig {
 			   .beepboxEditor input[type="range"]::-moz-range-thumb {
 				   width: 8px !important;
 				 }
+
+				.trackContainer .noSelection {
+				background: black !important;
+				}
 
 			   button.playButton {
 				   width: 80px;
