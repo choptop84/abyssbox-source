@@ -75,7 +75,7 @@ export class SongDocument {
 			window.sessionStorage.setItem("oldestUndoIndex", "0");
 			window.sessionStorage.setItem("newestUndoIndex", "0");
 		}
-			
+		
 		let songString: string = window.location.hash;
 		if (songString == "") {
 			songString = this._getHash();
@@ -94,6 +94,16 @@ export class SongDocument {
 		this.synth.volume = this._calcVolume();
 		this.synth.anticipatePoorPerformance = isMobile;
 		
+		document.addEventListener('visibilitychange', e=>{
+			if (document.visibilityState === 'visible') {
+				if (this.song.setSongTheme == "none") {
+					if (window.localStorage.getItem("colorTheme") != null) {
+						ColorConfig.setTheme(String(window.localStorage.getItem("colorTheme")));
+					}
+				}
+		   	} 
+	   })
+
 		if (this.song.setSongTheme == "none") {
 			ColorConfig.setTheme(this.prefs.colorTheme);
 	
@@ -141,7 +151,7 @@ export class SongDocument {
 		this._validateDocState();
 		this.performance = new SongPerformance(this);
 	}
-		
+	
 	public toggleDisplayBrowserUrl() {
 		const state: HistoryState | null = this._getHistoryState();
 		if (state == null) throw new Error("History state is null.");
