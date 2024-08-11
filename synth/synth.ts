@@ -1995,6 +1995,19 @@ export class Instrument {
             instrumentObject["bitcrusherOctave"] = (Config.bitcrusherFreqRange - 1 - this.bitcrusherFreq) * Config.bitcrusherOctaveStep;
             instrumentObject["bitcrusherQuantization"] = Math.round(100 * this.bitcrusherQuantization / (Config.bitcrusherQuantizationRange - 1));
         }
+        // ctrl + f to ring mod here
+        if (effectsIncludeRM(this.effects)) {
+            instrumentObject["ringMod"] =  Math.round(100 *this.ringModulation/(Config.ringModRange - 1));
+            instrumentObject["ringModHz"] =  Math.round(100 *this.ringModulationHz/(Config.ringModHzRange - 1));
+            instrumentObject["rmWaveformIndex"] = this.rmWaveformIndex;
+            instrumentObject["rmPulseWidth"] =  Math.round(100 *this.rmPulseWidth/(Config.pulseWidthRange - 1));
+        }
+        if (effectsIncludePhaser(this.effects)) {
+            instrumentObject["phaserMix"] =  Math.round(100 *this.phaserMix/(Config.phaserMixRange - 1));
+            instrumentObject["phaserFreq"] =  Math.round(100 *this.phaserFreq/(Config.phaserFreqRange - 1));
+            instrumentObject["phaserFeedback"] =  Math.round(100 *this.phaserFeedback/(Config.phaserFeedbackRange - 1));
+            instrumentObject["phaserStages"] =  Math.round(100 *this.phaserStages/(Config.phaserMaxStages - 1));
+        }
         if (effectsIncludePanning(this.effects)) {
             instrumentObject["pan"] = Math.round(100 * (this.pan - Config.panCenter) / Config.panCenter);
             instrumentObject["panDelay"] = this.panDelay;
@@ -2428,6 +2441,32 @@ export class Instrument {
         }
         if (instrumentObject["bitcrusherQuantization"] != undefined) {
             this.bitcrusherQuantization = clamp(0, Config.bitcrusherQuantizationRange, Math.round((Config.bitcrusherQuantizationRange - 1) * (instrumentObject["bitcrusherQuantization"] | 0) / 100));
+        }
+
+        if (instrumentObject["ringMod"] != undefined) {
+            this.ringModulation = clamp(0, Config.ringModRange, Math.round((Config.ringModRange - 1) * (instrumentObject["ringMod"] | 0) / 100));
+        }
+        if (instrumentObject["ringModHz"] != undefined) {
+            this.ringModulationHz = clamp(0, Config.ringModHzRange, Math.round((Config.ringModHzRange - 1) * (instrumentObject["ringModHz"] | 0) / 100));
+        }
+        if (instrumentObject["rmWaveformIndex"] != undefined) {
+            this.rmWaveformIndex = clamp(0, Config.operatorWaves.length, instrumentObject["rmWaveformIndex"]);
+        }
+        if (instrumentObject["rmPulseWidth"] != undefined) {
+            this.rmPulseWidth = clamp(0, Config.pulseWidthRange, Math.round((Config.pulseWidthRange - 1) * (instrumentObject["rmPulseWidth"] | 0) / 100));
+        }
+
+        if (instrumentObject["phaserMix"] != undefined) {
+            this.phaserMix = clamp(0, Config.phaserMixRange, Math.round((Config.phaserMixRange - 1) * (instrumentObject["phaserMix"] | 0) / 100));
+        }
+        if (instrumentObject["phaserFreq"] != undefined) {
+            this.phaserFreq = clamp(0, Config.phaserFreqRange, Math.round((Config.phaserFreqRange - 1) * (instrumentObject["phaserFreq"] | 0) / 100));
+        }
+        if (instrumentObject["phaserFeedback"] != undefined) {
+            this.phaserFeedback = clamp(0, Config.phaserFeedbackRange, Math.round((Config.phaserFeedbackRange - 1) * (instrumentObject["phaserFeedback"] | 0) / 100));
+        }
+        if (instrumentObject["phaserStages"] != undefined) {
+            this.phaserStages = clamp(0, Config.phaserMaxStages, Math.round((Config.phaserMaxStages - 1) * (instrumentObject["phaserStages"] | 0) / 100));
         }
 
         if (instrumentObject["echoSustain"] != undefined) {
