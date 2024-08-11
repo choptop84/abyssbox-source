@@ -5022,7 +5022,7 @@ export class SongEditor {
                 }
                 break;
             case 78: // n
-                if (canPlayNotes) break;
+                if (canPlayNotes) break;  
                 // Find lowest-index unused pattern for current channel
                 // Ctrl+n - lowest-index completely empty pattern
                 // Shift+n - note filter settings
@@ -5092,7 +5092,22 @@ export class SongEditor {
                 this._doc.record(group);
 
                 event.preventDefault();
-                break;
+                break; 
+            case 80: // p
+            if (canPlayNotes) break;
+            if (event.ctrlKey || event.metaKey) {
+                this._toggleRecord();
+                this._doc.synth.loopBarStart = -1;
+                this._doc.synth.loopBarEnd = -1;
+                this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
+                event.preventDefault();
+                this.refocusStage();
+            } else if (canPlayNotes) break;
+            if (needControlForShortcuts == (event.ctrlKey || event.metaKey) && event.shiftKey) {
+                location.href = "player/#song=" + this._doc.song.toBase64String();
+                event.preventDefault();
+            }
+            break;             
             case 81: // q
                 if (canPlayNotes) break;
                 if (needControlForShortcuts == (event.ctrlKey || event.metaKey)) {
@@ -5130,6 +5145,7 @@ export class SongEditor {
             case 79: // o
                 if (canPlayNotes) break;
                 break;
+  
             case 86: // v
                 if (canPlayNotes) break;
                 if ((event.ctrlKey || event.metaKey) && event.shiftKey && !needControlForShortcuts) {

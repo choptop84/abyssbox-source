@@ -944,6 +944,13 @@ import { SongPlayerLayout } from "./Layout";
 				renderPlayhead();
 				event.preventDefault();
 				break;
+				case 80: // p
+			if (event.shiftKey) {
+				hashUpdatedExternally();
+				location.href ="../#" + synth.song!.toBase64String();
+				event.preventDefault();
+			}
+			break;	
 		}
 	}
 	
