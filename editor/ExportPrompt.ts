@@ -488,38 +488,73 @@ export class ExportPrompt implements Prompt {
             if (scriptsLoaded < scriptsToLoad) return;
             const OggOpusEncoder: any = (<any>window)["OggOpusEncoder"];
             const OpusEncoderLib: any = (<any>window)["OpusEncoderLib"];
+            // @TODO: Very non-ideal.
+            OggOpusEncoder.prototype.getOpusControl = function (control: number): number | null {
+                let result: number | null = null;
+                const location: number = this._malloc(4);
+                const outputLocation: number = this._malloc(4);
+                this.HEAP32[location >> 2] = outputLocation;
+                const returnCode: number = this._opus_encoder_ctl(this.encoder, control, location);
+                if (returnCode === 0) {
+                    result = this.HEAP32[outputLocation >> 2];
+                }
+                this._free(outputLocation);
+                this._free(location);
+                return result;
+            };
+            OggOpusEncoder.prototype.getLookahead = function (): number {
+                return this.getOpusControl(4027) ?? 0;
+            };
+            OggOpusEncoder.prototype.generateIdPage2 = function (lookahead: number): any {
+                const segmentDataView: DataView = new DataView(this.segmentData.buffer);
+                segmentDataView.setUint32(0, 1937076303, true); // Magic Signature 'Opus'
+                segmentDataView.setUint32(4, 1684104520, true); // Magic Signature 'Head'
+                segmentDataView.setUint8(8, 1); // Version
+                segmentDataView.setUint8(9, this.config.numberOfChannels); // Channel count
+                segmentDataView.setUint16(10, lookahead, true); // pre-skip (0ms)
+                segmentDataView.setUint32(12, this.config.originalSampleRateOverride || this.config.originalSampleRate, true); // original sample rate
+                segmentDataView.setUint16(16, 0, true); // output gain
+                segmentDataView.setUint8(18, 0); // channel map 0 = mono or stereo
+                this.segmentTableIndex = 1;
+                this.segmentDataIndex = this.segmentTable[0] = 19;
+                this.headerType = 2;
+                return this.generatePage();
+            };
             const channelCount: number = 2;
-            const sampleBlockSize: number = 2048;
+            const frameSizeInMilliseconds: number = 20 / 1000;
+            const frameSizeInSeconds: number = frameSizeInMilliseconds / 1000;
+            const sampleBlockSize: number = Math.floor(this.synth.samplesPerSecond * frameSizeInSeconds);
             const oggEncoder: any = new OggOpusEncoder({
                 numberOfChannels: channelCount,
                 originalSampleRate: this.synth.samplesPerSecond,
                 encoderSampleRate: this.synth.samplesPerSecond,
                 bufferLength: sampleBlockSize,
                 encoderApplication: 2049,
-                encoderComplexity: 9,
+                encoderComplexity: 10,
                 resampleQuality: 3, // [0, 10], but we're not using this.
             }, OpusEncoderLib);
             const parts: Uint8Array[] = [];
             const left: Float32Array = this.recordedSamplesL;
             const right: Float32Array = this.recordedSamplesR;
-            parts.push(oggEncoder.generateIdPage().page);
+            parts.push(oggEncoder.generateIdPage2(oggEncoder.getLookahead()).page);
             parts.push(oggEncoder.generateCommentPage().page);
-            // @TODO: Figure out why the start is being trimmed away. Here's an
-            // inefficient attempt at an workaround in the meantime.
-            for (let i: number = 0; i < 2; i++) {
-                const leftChunk: Float32Array = new Float32Array(sampleBlockSize);
-                const rightChunk: Float32Array = new Float32Array(sampleBlockSize);
+            let sampleIndex: number = 0;
+            for (; sampleIndex < left.length; sampleIndex += sampleBlockSize) {
+                const leftChunk: Float32Array = left.subarray(sampleIndex, sampleIndex + sampleBlockSize);
+                const rightChunk: Float32Array = right.subarray(sampleIndex, sampleIndex + sampleBlockSize);
                 const frame: Float32Array[] = channelCount === 2 ? ([leftChunk, rightChunk]) : ([leftChunk]);
                 oggEncoder.encode(frame).forEach((page: any) => parts.push(page.page));
             }
-            for (let i: number = 0; i < left.length; i += sampleBlockSize) {
-                const leftChunk: Float32Array = left.subarray(i, i + sampleBlockSize);
-                const rightChunk: Float32Array = right.subarray(i, i + sampleBlockSize);
+            // @TODO: This padding matches FFmpeg... but is it correct?
+            {
+                const paddingSize: number = sampleIndex - left.length;
+                const leftChunk: Float32Array = new Float32Array(paddingSize);
+                const rightChunk: Float32Array = new Float32Array(paddingSize);
                 const frame: Float32Array[] = channelCount === 2 ? ([leftChunk, rightChunk]) : ([leftChunk]);
                 oggEncoder.encode(frame).forEach((page: any) => parts.push(page.page));
             }
-            // const oggbuf: any = oggEncoder.flush();
-            // if (oggbuf) parts.push(oggbuf.page);
+            // const remaining: any = oggEncoder.flush();
+            // if (remaining) parts.push(remaining.page);
             oggEncoder.encodeFinalFrame().forEach((page: any) => parts.push(page.page));
             oggEncoder.destroy();
             const blob: Blob = new Blob(parts, { type: "audio/ogg" });

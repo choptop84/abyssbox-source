@@ -687,6 +687,18 @@ export class Selection {
         this._doc.notifier.changed();
     }
 
+    public invertMuteChannels(): void {
+            for (let channelIndex: number = 0; channelIndex < this._doc.song.pitchChannelCount + this._doc.song.noiseChannelCount; channelIndex++) {
+                    if (this._doc.song.channels[channelIndex].muted == true) {
+                        this._doc.song.channels[channelIndex].muted = false;
+                    }
+                    else {
+                        this._doc.song.channels[channelIndex].muted = true;
+                    }
+            }
+        this._doc.notifier.changed();
+    }
+
     public soloChannels(invert: boolean): void {
         let alreadySoloed: boolean = true;
 

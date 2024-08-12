@@ -5014,10 +5014,17 @@ export class SongEditor {
                 break;
             case 77: // m
                 if (canPlayNotes) break;
-                if (needControlForShortcuts == (event.ctrlKey || event.metaKey)) {
+                if (event.altKey) {
                     if (this._doc.prefs.enableChannelMuting) {
-                        this._doc.selection.muteChannels(event.shiftKey);
+                        this._doc.selection.invertMuteChannels();
                         event.preventDefault();
+                    }
+                } else {
+                    if ((needControlForShortcuts == (event.ctrlKey || event.metaKey))) {
+                        if (this._doc.prefs.enableChannelMuting) {
+                            this._doc.selection.muteChannels(event.shiftKey);
+                            event.preventDefault();
+                        }
                     }
                 }
                 break;
