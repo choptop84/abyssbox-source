@@ -47,6 +47,7 @@ export class ExportPrompt implements Prompt {
     private sampleFrames: number;
     private totalChunks: number;
     private currentChunk: number;
+    private samplesPerChunk: number;
     private outputStarted: boolean = false;
     private readonly _fileName: HTMLInputElement = input({ type: "text", style: "width: 10em;", value: "BeepBox-Song", maxlength: 250, "autofocus": "autofocus" });
     private readonly _computedSamplesLabel: HTMLDivElement = div({ style: "width: 10em;" }, new Text("0:00"));
@@ -282,11 +283,9 @@ export class ExportPrompt implements Prompt {
             return;
         }
 
-        // Update progress bar UI once per 5 sec of exported data
-        const samplesPerChunk: number = this.synth.samplesPerSecond * 5; //e.g. 44100 * 5
-        const currentFrame: number = this.currentChunk * samplesPerChunk;
+        const currentFrame: number = this.currentChunk * this.samplesPerChunk;
 
-        const samplesInChunk: number = Math.min(samplesPerChunk, this.sampleFrames - currentFrame);
+        const samplesInChunk: number = Math.min(this.samplesPerChunk, this.sampleFrames - currentFrame);
         const tempSamplesL = new Float32Array(samplesInChunk);
         const tempSamplesR = new Float32Array(samplesInChunk);
 
@@ -315,7 +314,7 @@ export class ExportPrompt implements Prompt {
                 this._exportToMp3Finish();
             }
             else if (this.thenExportTo == "ogg") {
-                this._exportToOgg();
+                this._exportToOggFinish();
             }
             else {
                 throw new Error("Unrecognized file export type chosen!");
@@ -341,7 +340,7 @@ export class ExportPrompt implements Prompt {
             this.synth.samplesPerSecond = 44100; // Use consumer CD standard sample rate for .mp3 export.
         }
         else if (type == "ogg") {
-            this.synth.samplesPerSecond = 44100; // Wikipedia says ogg typically uses 44.1 kHz.
+            this.synth.samplesPerSecond = 48000; // Wikipedia says ogg typically uses 44.1 kHz.
         } 
         else {
             throw new Error("Unrecognized file export type chosen!");
@@ -364,7 +363,9 @@ export class ExportPrompt implements Prompt {
 
         this.sampleFrames = this.synth.getTotalSamples(this._enableIntro.checked, this._enableOutro.checked, this.synth.loopRepeatCount);
         // Compute how many UI updates will need to run to determine how many 
-        this.totalChunks = Math.ceil(this.sampleFrames / (this.synth.samplesPerSecond * 5));
+        // Update progress bar UI once per 5 sec of exported data
+        this.samplesPerChunk = this.synth.samplesPerSecond * 5;
+        this.totalChunks = Math.ceil(this.sampleFrames / this.samplesPerChunk);
         this.recordedSamplesL = new Float32Array(this.sampleFrames);
         this.recordedSamplesR = new Float32Array(this.sampleFrames);
 
@@ -475,22 +476,67 @@ export class ExportPrompt implements Prompt {
         }
     }
 
-    private _exportToOgg(): void {
+    private _exportToOggFinish(): void {
+        const scripts: string[] = [
+            "https://cdn.jsdelivr.net/gh/mmig/opus-encdec@e33ca40b92ddff8c168c7f5aca34b626c9acc08a/dist/libopus-encoder.js",
+            "https://cdn.jsdelivr.net/gh/mmig/opus-encdec@e33ca40b92ddff8c168c7f5aca34b626c9acc08a/src/oggOpusEncoder.js"
+        ];
+        let scriptsLoaded: number = 0;
+        const scriptsToLoad: number = scripts.length;
         const whenEncoderIsAvailable = (): void => {
-        const libopusEncoder: any = (<any>window)["opus-encdec"]; // go credit mmig you bitch
-        console.log("Is libopusEcoder? "+libopusEncoder);
-
-            
-
+            scriptsLoaded++;
+            if (scriptsLoaded < scriptsToLoad) return;
+            const OggOpusEncoder: any = (<any>window)["OggOpusEncoder"];
+            const OpusEncoderLib: any = (<any>window)["OpusEncoderLib"];
+            const channelCount: number = 2;
+            const sampleBlockSize: number = 2048;
+            const oggEncoder: any = new OggOpusEncoder({
+                numberOfChannels: channelCount,
+                originalSampleRate: this.synth.samplesPerSecond,
+                encoderSampleRate: this.synth.samplesPerSecond,
+                bufferLength: sampleBlockSize,
+                encoderApplication: 2049,
+                encoderComplexity: 9,
+                resampleQuality: 3, // [0, 10], but we're not using this.
+            }, OpusEncoderLib);
+            const parts: Uint8Array[] = [];
+            const left: Float32Array = this.recordedSamplesL;
+            const right: Float32Array = this.recordedSamplesR;
+            parts.push(oggEncoder.generateIdPage().page);
+            parts.push(oggEncoder.generateCommentPage().page);
+            // @TODO: Figure out why the start is being trimmed away. Here's an
+            // inefficient attempt at an workaround in the meantime.
+            for (let i: number = 0; i < 2; i++) {
+                const leftChunk: Float32Array = new Float32Array(sampleBlockSize);
+                const rightChunk: Float32Array = new Float32Array(sampleBlockSize);
+                const frame: Float32Array[] = channelCount === 2 ? ([leftChunk, rightChunk]) : ([leftChunk]);
+                oggEncoder.encode(frame).forEach((page: any) => parts.push(page.page));
+            }
+            for (let i: number = 0; i < left.length; i += sampleBlockSize) {
+                const leftChunk: Float32Array = left.subarray(i, i + sampleBlockSize);
+                const rightChunk: Float32Array = right.subarray(i, i + sampleBlockSize);
+                const frame: Float32Array[] = channelCount === 2 ? ([leftChunk, rightChunk]) : ([leftChunk]);
+                oggEncoder.encode(frame).forEach((page: any) => parts.push(page.page));
+            }
+            // const oggbuf: any = oggEncoder.flush();
+            // if (oggbuf) parts.push(oggbuf.page);
+            oggEncoder.encodeFinalFrame().forEach((page: any) => parts.push(page.page));
+            oggEncoder.destroy();
+            const blob: Blob = new Blob(parts, { type: "audio/ogg" });
+            save(blob, this._fileName.value.trim() + ".ogg");
+            this._close();
         }
-        if ("opus-encdec" in window) {
+        if (("OggOpusEncoder" in window) && ("OpusEncoderLib" in window)) {
+            scriptsLoaded = 2;
             whenEncoderIsAvailable();
         } else {
-            var script = document.createElement("script");
-            script.src = "https://cdn.jsdelivr.net/gh/mmig/opus-encdec@e33ca40/dist/libopus-encoder.js";
-            script.onload = whenEncoderIsAvailable;
-            document.head.appendChild(script);
-            console.log("Perhaps the other one failed? "+script);
+            scriptsLoaded = 0;
+            for (const src of scripts) {
+                const script = document.createElement("script");
+                script.src = src;
+                script.onload = whenEncoderIsAvailable;
+                document.head.appendChild(script);
+            }
         }
     }
 
