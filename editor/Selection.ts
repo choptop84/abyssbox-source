@@ -688,6 +688,7 @@ export class Selection {
     }
 
     public invertMuteChannels(): void {
+        if (this.boxSelectionHeight == 1) {
             for (let channelIndex: number = 0; channelIndex < this._doc.song.pitchChannelCount + this._doc.song.noiseChannelCount; channelIndex++) {
                     if (this._doc.song.channels[channelIndex].muted == true) {
                         this._doc.song.channels[channelIndex].muted = false;
@@ -696,6 +697,16 @@ export class Selection {
                         this._doc.song.channels[channelIndex].muted = true;
                     }
             }
+        } else {
+            for (let channelIndex: number = 0; channelIndex < this.boxSelectionHeight; channelIndex++) {
+                if (this._doc.song.channels[channelIndex+this.boxSelectionChannel].muted == true) {
+                    this._doc.song.channels[channelIndex+this.boxSelectionChannel].muted = false;
+                }
+                else {
+                    this._doc.song.channels[channelIndex+this.boxSelectionChannel].muted = true;
+                }
+            }
+        }
         this._doc.notifier.changed();
     }
 
