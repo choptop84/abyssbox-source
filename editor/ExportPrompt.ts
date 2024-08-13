@@ -57,7 +57,7 @@ export class ExportPrompt implements Prompt {
     private readonly _formatSelect: HTMLSelectElement = select({ style: "width: 100%;" },
         option({ value: "wav" }, "Export to .wav file."),
         option({ value: "mp3" }, "Export to .mp3 file."),
-	    option({ value: "ogg" }, "Export to .ogg file."),
+	    //option({ value: "ogg" }, "Export to .ogg file."),
         option({ value: "midi" }, "Export to .mid file."),
         option({ value: "json" }, "Export to .json file."),
         option({ value: "html" }, "Export to .html file."),
