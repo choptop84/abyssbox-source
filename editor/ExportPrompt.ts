@@ -57,7 +57,7 @@ export class ExportPrompt implements Prompt {
     private readonly _formatSelect: HTMLSelectElement = select({ style: "width: 100%;" },
         option({ value: "wav" }, "Export to .wav file."),
         option({ value: "mp3" }, "Export to .mp3 file."),
-	    //option({ value: "ogg" }, "Export to .ogg file."),
+	    option({ value: "ogg" }, "Export to .ogg file."),
         option({ value: "midi" }, "Export to .mid file."),
         option({ value: "json" }, "Export to .json file."),
         option({ value: "html" }, "Export to .html file."),
@@ -66,7 +66,7 @@ export class ExportPrompt implements Prompt {
     private readonly _removeWhitespaceDiv: HTMLDivElement = div({ style: "vertical-align: middle; align-items: center; justify-content: space-between; margin-bottom: 14px;" },
     "Remove Whitespace: ", this._removeWhitespace);
     private readonly _oggWarning: HTMLDivElement = div({ style: "vertical-align: middle; align-items: center; justify-content: space-between; margin-bottom: 14px;" },
-    "Warning: .ogg files aren't supported on as many devices as mp3 or wav. IOS is an example of this, exporting is still possible, but playback is not.");
+    "Warning: .ogg files aren't supported on as many devices as mp3 or wav. So Playback might not be possible on specific devices.");
     private readonly _cancelButton: HTMLButtonElement = button({ class: "cancelButton" });
     private readonly _exportButton: HTMLButtonElement = button({ class: "exportButton", style: "width:45%;" }, "Export");
     private readonly _outputProgressBar: HTMLDivElement = div({ style: `width: 0%; background: ${ColorConfig.loopAccent}; height: 100%; position: absolute; z-index: 2;` });
@@ -491,19 +491,25 @@ export class ExportPrompt implements Prompt {
             // @TODO: Very non-ideal.
             OggOpusEncoder.prototype.getOpusControl = function (control: number): number | null {
                 let result: number | null = null;
-                const location: number = this._malloc(4);
-                const outputLocation: number = this._malloc(4);
+                // Hack to defeat Terser's mangling. Alternatively, the
+                // compilation scripts could be changed.
+                const doNotMangle: string = Math.random() > 2 ? "" : "";
+                const location: number = this["_" + doNotMangle + "malloc"](4);
+                const outputLocation: number = this["_" + doNotMangle + "malloc"](4);
                 this.HEAP32[location >> 2] = outputLocation;
-                const returnCode: number = this._opus_encoder_ctl(this.encoder, control, location);
+                const returnCode: number = this["_" + doNotMangle + "opus_encoder_ctl"](this.encoder, control, location);
                 if (returnCode === 0) {
                     result = this.HEAP32[outputLocation >> 2];
                 }
-                this._free(outputLocation);
-                this._free(location);
+                this["_" + doNotMangle + "free"](outputLocation);
+                this["_" + doNotMangle + "free"](location);
                 return result;
             };
             OggOpusEncoder.prototype.getLookahead = function (): number {
                 return this.getOpusControl(4027) ?? 0;
+            };
+            OggOpusEncoder.prototype.setBitrate = function (value: number): void {
+                this.setOpusControl(4002, value);
             };
             OggOpusEncoder.prototype.generateIdPage2 = function (lookahead: number): any {
                 const segmentDataView: DataView = new DataView(this.segmentData.buffer);
@@ -521,7 +527,7 @@ export class ExportPrompt implements Prompt {
                 return this.generatePage();
             };
             const channelCount: number = 2;
-            const frameSizeInMilliseconds: number = 20 / 1000;
+            const frameSizeInMilliseconds: number = 20;
             const frameSizeInSeconds: number = frameSizeInMilliseconds / 1000;
             const sampleBlockSize: number = Math.floor(this.synth.samplesPerSecond * frameSizeInSeconds);
             const oggEncoder: any = new OggOpusEncoder({
@@ -536,6 +542,7 @@ export class ExportPrompt implements Prompt {
             const parts: Uint8Array[] = [];
             const left: Float32Array = this.recordedSamplesL;
             const right: Float32Array = this.recordedSamplesR;
+            oggEncoder.setBitrate(256_000); // bits per second
             parts.push(oggEncoder.generateIdPage2(oggEncoder.getLookahead()).page);
             parts.push(oggEncoder.generateCommentPage().page);
             let sampleIndex: number = 0;
@@ -562,7 +569,7 @@ export class ExportPrompt implements Prompt {
             this._close();
         }
         if (("OggOpusEncoder" in window) && ("OpusEncoderLib" in window)) {
-            scriptsLoaded = 2;
+            scriptsLoaded = scripts.length;
             whenEncoderIsAvailable();
         } else {
             scriptsLoaded = 0;
