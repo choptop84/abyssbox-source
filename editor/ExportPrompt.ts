@@ -10,7 +10,7 @@ import { HTML } from "imperative-html/dist/esm/elements-strict";
 import { ArrayBufferWriter } from "./ArrayBufferWriter";
 import { MidiChunkType, MidiFileFormat, MidiControlEventMessage, MidiEventType, MidiMetaEventMessage, MidiRegisteredParameterNumberMSB, MidiRegisteredParameterNumberLSB, volumeMultToMidiVolume, volumeMultToMidiExpression, defaultMidiPitchBend, defaultMidiExpression } from "./Midi";
 
-const { button, div, h2, input, select, option, p } = HTML;
+const { button, div, h2, input, select, option} = HTML;
 
 function lerp(low: number, high: number, t: number): number {
     return low + t * (high - low);
@@ -49,8 +49,6 @@ export class ExportPrompt implements Prompt {
     private currentChunk: number;
     private samplesPerChunk: number;
     private outputStarted: boolean = false;
-    private readonly _opusButton: HTMLButtonElement = button({ style: "border-image-source: none !important; height: auto; min-height: var(--button-size); margin: 0.5em; flex: 1; border-bottom: solid; border-bottom-color: var(--link-accent);" }, "Opus");
-    private readonly _vorbisButton: HTMLButtonElement = button({ style: "border-image-source: none !important; height: auto; min-height: var(--button-size); margin: 0.5em; flex: 1; color: red;" }, "Vorbis");
     private readonly _fileName: HTMLInputElement = input({ type: "text", style: "width: 10em;", value: "BeepBox-Song", maxlength: 250, "autofocus": "autofocus" });
     private readonly _computedSamplesLabel: HTMLDivElement = div({ style: "width: 10em;" }, new Text("0:00"));
     private readonly _enableIntro: HTMLInputElement = input({ type: "checkbox" });
@@ -59,7 +57,8 @@ export class ExportPrompt implements Prompt {
     private readonly _formatSelect: HTMLSelectElement = select({ style: "width: 100%;" },
         option({ value: "wav" }, "Export to .wav file."),
         option({ value: "mp3" }, "Export to .mp3 file."),
-	    option({ value: "ogg" }, "Export to  .ogg file."),
+	    option({ value: "ogg" }, "Export to .ogg file."),
+        option({ value: "opus" }, "Export to .opus file."),
         option({ value: "midi" }, "Export to .mid file."),
         option({ value: "json" }, "Export to .json file."),
         option({ value: "html" }, "Export to .html file."),
@@ -69,8 +68,8 @@ export class ExportPrompt implements Prompt {
     "Remove Whitespace: ", this._removeWhitespace);
     private readonly _oggWarning: HTMLDivElement = div({ style: "vertical-align: middle; align-items: center; justify-content: space-between; margin-bottom: 14px;" },
     "Warning: .ogg files aren't supported on as many devices as mp3 or wav. So Playback might not be possible on specific devices.");
-    private readonly _oggWarning2: HTMLDivElement = div({ style: "vertical-align: middle; align-items: center; justify-content: space-between; margin-bottom: 14px;" },
-    "For Clarification, ogg opus is different from ogg vorbis, older programs use vorbis while newer programs sometimes uses opus.");
+    private readonly _opusWarning: HTMLDivElement = div({ style: "vertical-align: middle; align-items: center; justify-content: space-between; margin-bottom: 14px;" },
+    "Warning: .opus files aren't supported on as many devices as mp3 or wav. So Playback might not be possible on specific devices.");
     private readonly _cancelButton: HTMLButtonElement = button({ class: "cancelButton" });
     private readonly _exportButton: HTMLButtonElement = button({ class: "exportButton", style: "width:45%;" }, "Export");
     private readonly _outputProgressBar: HTMLDivElement = div({ style: `width: 0%; background: ${ColorConfig.loopAccent}; height: 100%; position: absolute; z-index: 2;` });
@@ -79,13 +78,6 @@ export class ExportPrompt implements Prompt {
         this._outputProgressBar,
         this._outputProgressLabel,
     );
-
-    public readonly opusPickerDiv: HTMLDivElement = div({style: "width: 100%;"},
-		p({ style: "text-align: center; margin: 1em 0; display:flex; flex-direction: row;"},
-			this._opusButton,
-            this._vorbisButton
-			),	
-		);
 
     private static readonly midiChipInstruments: number[] = [
         0x4A, // rounded -> recorder
@@ -122,7 +114,6 @@ export class ExportPrompt implements Prompt {
         ),
         this._removeWhitespaceDiv,
         this._oggWarning,
-        this.opusPickerDiv,
         div({ class: "selectContainer", style: "width: 100%; margin-bottom: 14px;" }, this._formatSelect),
         div({ style: "text-align: left; margin-bottom: 14px;" }, "Exporting can be slow. Reloading the page or clicking the X will cancel it. Please be patient."),
         this._outputProgressContainer,
@@ -170,7 +161,17 @@ export class ExportPrompt implements Prompt {
             this._removeWhitespaceDiv.style.display = "none";
         }
 
-        
+        if (this._formatSelect.value == "ogg") {
+            this._oggWarning.style.display = "block";
+        } else {
+            this._oggWarning.style.display = "none";
+        }
+
+        if (this._formatSelect.value == "opus") {
+            this._oggWarning.style.display = "block";
+        } else {
+            this._oggWarning.style.display = "none";
+        }
 
         this._fileName.select();
         setTimeout(() => this._fileName.focus());
@@ -186,12 +187,14 @@ export class ExportPrompt implements Prompt {
         this._formatSelect.addEventListener("change", () => { 
             if (this._formatSelect.value == "ogg") {
                 this._oggWarning.style.display = "block";
-                this._oggWarning2.style.display = "block";
-                this.opusPickerDiv.style.display = "block";
             } else {
                 this._oggWarning.style.display = "none";
-                this._oggWarning2.style.display = "none";
-                this.opusPickerDiv.style.display = "none";
+            }
+
+            if (this._formatSelect.value == "opus") {
+                this._opusWarning.style.display = "block";
+            } else {
+                this._opusWarning.style.display = "none";
             }
         });
         this.container.addEventListener("keydown", this._whenKeyPressed);
@@ -278,6 +281,10 @@ export class ExportPrompt implements Prompt {
             case "ogg":
                 this.outputStarted = true;
                 this._exportTo("ogg");
+                break;   
+            case "opus":
+                this.outputStarted = true;
+                this._exportTo("opus");
                 break;    
             case "midi":
                 this.outputStarted = true;
@@ -336,6 +343,9 @@ export class ExportPrompt implements Prompt {
             else if (this.thenExportTo == "ogg") {
                 this._exportToOggFinish();
             }
+            else if (this.thenExportTo == "opus") {
+                this._exportToOpusFinish();
+            }
             else {
                 throw new Error("Unrecognized file export type chosen!");
             }
@@ -360,6 +370,9 @@ export class ExportPrompt implements Prompt {
             this.synth.samplesPerSecond = 44100; // Use consumer CD standard sample rate for .mp3 export.
         }
         else if (type == "ogg") {
+            this.synth.samplesPerSecond = 48000; // Wikipedia says ogg typically uses 44.1 kHz.
+        } 
+        else if (type == "opus") {
             this.synth.samplesPerSecond = 48000; // Wikipedia says ogg typically uses 44.1 kHz.
         } 
         else {
@@ -498,6 +511,54 @@ export class ExportPrompt implements Prompt {
 
     private _exportToOggFinish(): void {
         const scripts: string[] = [
+            "https://unpkg.com/wasm-media-encoders/dist/umd/WasmMediaEncoder.min.js",
+        ];
+        let scriptsLoaded: number = 0;
+        const scriptsToLoad: number = scripts.length;
+        const whenEncoderIsAvailable = (): void => {
+            scriptsLoaded++;
+            if (scriptsLoaded < scriptsToLoad) return;
+            const WasmMediaEncoder: any = (<any>window)["WasmMediaEncoder"];
+            const channelCount: number = 2;
+            const quality: number = 10;
+            const sampleBlockSize: number = 4096;
+            WasmMediaEncoder.createOggEncoder().then((oggEncoder: any) => {
+                oggEncoder.configure({
+                    channels: channelCount,
+                    sampleRate: this.synth.samplesPerSecond,
+                    vbrQuality: quality,
+                });
+                const left: Float32Array = this.recordedSamplesL;
+                const right: Float32Array = this.recordedSamplesR;
+                const parts: Uint8Array[] = [];
+                let sampleIndex: number = 0;
+                for (; sampleIndex < left.length; sampleIndex += sampleBlockSize) {
+                    const leftChunk: Float32Array = left.subarray(sampleIndex, sampleIndex + sampleBlockSize);
+                    const rightChunk: Float32Array = right.subarray(sampleIndex, sampleIndex + sampleBlockSize);
+                    const frame: Float32Array[] = channelCount === 2 ? ([leftChunk, rightChunk]) : ([leftChunk]);
+                    parts.push(oggEncoder.encode(frame).slice());
+                }
+                parts.push(oggEncoder.finalize().slice());
+                const blob: Blob = new Blob(parts, { type: "audio/ogg" });
+                save(blob, this._fileName.value.trim() + ".ogg");
+                this._close();
+            });
+        }
+        if ("WasmMediaEncoder" in window) {
+            scriptsLoaded = scripts.length;
+            whenEncoderIsAvailable();
+        } else {
+            scriptsLoaded = 0;
+            for (const src of scripts) {
+                const script = document.createElement("script");
+                script.src = src;
+                script.onload = whenEncoderIsAvailable;
+                document.head.appendChild(script);
+            }
+        }
+    }
+    private _exportToOpusFinish(): void {
+        const scripts: string[] = [
             "https://cdn.jsdelivr.net/gh/mmig/opus-encdec@e33ca40b92ddff8c168c7f5aca34b626c9acc08a/dist/libopus-encoder.js",
             "https://cdn.jsdelivr.net/gh/mmig/opus-encdec@e33ca40b92ddff8c168c7f5aca34b626c9acc08a/src/oggOpusEncoder.js"
         ];
@@ -584,8 +645,8 @@ export class ExportPrompt implements Prompt {
             // if (remaining) parts.push(remaining.page);
             oggEncoder.encodeFinalFrame().forEach((page: any) => parts.push(page.page));
             oggEncoder.destroy();
-            const blob: Blob = new Blob(parts, { type: "audio/ogg" });
-            save(blob, this._fileName.value.trim() + ".ogg");
+            const blob: Blob = new Blob(parts, { type: "audio/opus" });
+            save(blob, this._fileName.value.trim() + ".opus");
             this._close();
         }
         if (("OggOpusEncoder" in window) && ("OpusEncoderLib" in window)) {
