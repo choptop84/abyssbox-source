@@ -175,9 +175,9 @@ export class CustomPrompt implements Prompt {
 	option({ value: "editor" }, "Editor"),
 	option({ value: "css" }, "Import/Export"),
 	);
-	private readonly _basicCatagoryButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin: 0.5em; width: 34%; border-bottom: solid; border-bottom-color: var(--link-accent)" }, "Templates");
-	private readonly _editorCatagoryButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin: 0.5em; width:34%; color: var(--secondary-text);" }, "Editor");
-	private readonly _cssCatagoryButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin: 0.5em; width:34%; color: var(--secondary-text);" }, "Import/Export");
+	private readonly _basicCatagoryButton: HTMLButtonElement = button({ style: "border-image-source: none !important; height: auto; min-height: var(--button-size); margin: 0.5em; width: 34%; border-bottom: solid; border-bottom-color: var(--link-accent);" }, "Templates");
+	private readonly _editorCatagoryButton: HTMLButtonElement = button({ style: "border-image-source: none !important; height: auto; min-height: var(--button-size); margin: 0.5em; width:34%; color: var(--secondary-text);" }, "Editor");
+	private readonly _cssCatagoryButton: HTMLButtonElement = button({ style: "border-image-source: none !important; height: auto; min-height: var(--button-size); margin: 0.5em; width:34%; color: var(--secondary-text);" }, "Import/Export");
 	//private readonly _useColorFomula: HTMLInputElement = input({ type:""});
 
 	public readonly _fullThemeSelect: HTMLSelectElement = select({ style: "width: 100%;", id:"themeSelect" },

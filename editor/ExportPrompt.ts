@@ -10,7 +10,7 @@ import { HTML } from "imperative-html/dist/esm/elements-strict";
 import { ArrayBufferWriter } from "./ArrayBufferWriter";
 import { MidiChunkType, MidiFileFormat, MidiControlEventMessage, MidiEventType, MidiMetaEventMessage, MidiRegisteredParameterNumberMSB, MidiRegisteredParameterNumberLSB, volumeMultToMidiVolume, volumeMultToMidiExpression, defaultMidiPitchBend, defaultMidiExpression } from "./Midi";
 
-const { button, div, h2, input, select, option } = HTML;
+const { button, div, h2, input, select, option, p } = HTML;
 
 function lerp(low: number, high: number, t: number): number {
     return low + t * (high - low);
@@ -49,6 +49,8 @@ export class ExportPrompt implements Prompt {
     private currentChunk: number;
     private samplesPerChunk: number;
     private outputStarted: boolean = false;
+    private readonly _opusButton: HTMLButtonElement = button({ style: "border-image-source: none !important; height: auto; min-height: var(--button-size); margin: 0.5em; flex: 1; border-bottom: solid; border-bottom-color: var(--link-accent);" }, "Opus");
+    private readonly _vorbisButton: HTMLButtonElement = button({ style: "border-image-source: none !important; height: auto; min-height: var(--button-size); margin: 0.5em; flex: 1; color: red;" }, "Vorbis");
     private readonly _fileName: HTMLInputElement = input({ type: "text", style: "width: 10em;", value: "BeepBox-Song", maxlength: 250, "autofocus": "autofocus" });
     private readonly _computedSamplesLabel: HTMLDivElement = div({ style: "width: 10em;" }, new Text("0:00"));
     private readonly _enableIntro: HTMLInputElement = input({ type: "checkbox" });
@@ -57,7 +59,7 @@ export class ExportPrompt implements Prompt {
     private readonly _formatSelect: HTMLSelectElement = select({ style: "width: 100%;" },
         option({ value: "wav" }, "Export to .wav file."),
         option({ value: "mp3" }, "Export to .mp3 file."),
-	    //option({ value: "ogg" }, "Export to .ogg file."),
+	    option({ value: "ogg" }, "Export to  .ogg file."),
         option({ value: "midi" }, "Export to .mid file."),
         option({ value: "json" }, "Export to .json file."),
         option({ value: "html" }, "Export to .html file."),
@@ -67,6 +69,8 @@ export class ExportPrompt implements Prompt {
     "Remove Whitespace: ", this._removeWhitespace);
     private readonly _oggWarning: HTMLDivElement = div({ style: "vertical-align: middle; align-items: center; justify-content: space-between; margin-bottom: 14px;" },
     "Warning: .ogg files aren't supported on as many devices as mp3 or wav. So Playback might not be possible on specific devices.");
+    private readonly _oggWarning2: HTMLDivElement = div({ style: "vertical-align: middle; align-items: center; justify-content: space-between; margin-bottom: 14px;" },
+    "For Clarification, ogg opus is different from ogg vorbis, older programs use vorbis while newer programs sometimes uses opus.");
     private readonly _cancelButton: HTMLButtonElement = button({ class: "cancelButton" });
     private readonly _exportButton: HTMLButtonElement = button({ class: "exportButton", style: "width:45%;" }, "Export");
     private readonly _outputProgressBar: HTMLDivElement = div({ style: `width: 0%; background: ${ColorConfig.loopAccent}; height: 100%; position: absolute; z-index: 2;` });
@@ -75,6 +79,14 @@ export class ExportPrompt implements Prompt {
         this._outputProgressBar,
         this._outputProgressLabel,
     );
+
+    public readonly opusPickerDiv: HTMLDivElement = div({style: "width: 100%;"},
+		p({ style: "text-align: center; margin: 1em 0; display:flex; flex-direction: row;"},
+			this._opusButton,
+            this._vorbisButton
+			),	
+		);
+
     private static readonly midiChipInstruments: number[] = [
         0x4A, // rounded -> recorder
         0x47, // triangle -> clarinet
@@ -110,6 +122,7 @@ export class ExportPrompt implements Prompt {
         ),
         this._removeWhitespaceDiv,
         this._oggWarning,
+        this.opusPickerDiv,
         div({ class: "selectContainer", style: "width: 100%; margin-bottom: 14px;" }, this._formatSelect),
         div({ style: "text-align: left; margin-bottom: 14px;" }, "Exporting can be slow. Reloading the page or clicking the X will cancel it. Please be patient."),
         this._outputProgressContainer,
@@ -157,11 +170,7 @@ export class ExportPrompt implements Prompt {
             this._removeWhitespaceDiv.style.display = "none";
         }
 
-        if (this._formatSelect.value == "ogg") {
-            this._oggWarning.style.display = "block";
-        } else {
-            this._oggWarning.style.display = "none";
-        }
+        
 
         this._fileName.select();
         setTimeout(() => this._fileName.focus());
@@ -174,6 +183,17 @@ export class ExportPrompt implements Prompt {
         this._enableIntro.addEventListener("click", () => { (this._computedSamplesLabel.firstChild as Text).textContent = this.samplesToTime(this._doc.synth.getTotalSamples(this._enableIntro.checked, this._enableOutro.checked, +this._loopDropDown.value - 1)); });
         this._loopDropDown.addEventListener("change", () => { (this._computedSamplesLabel.firstChild as Text).textContent = this.samplesToTime(this._doc.synth.getTotalSamples(this._enableIntro.checked, this._enableOutro.checked, +this._loopDropDown.value - 1)); });
         this._formatSelect.addEventListener("change", () => { if (this._formatSelect.value == "json") { this._removeWhitespaceDiv.style.display = "block"; } else {  this._removeWhitespaceDiv.style.display = "none"; } });
+        this._formatSelect.addEventListener("change", () => { 
+            if (this._formatSelect.value == "ogg") {
+                this._oggWarning.style.display = "block";
+                this._oggWarning2.style.display = "block";
+                this.opusPickerDiv.style.display = "block";
+            } else {
+                this._oggWarning.style.display = "none";
+                this._oggWarning2.style.display = "none";
+                this.opusPickerDiv.style.display = "none";
+            }
+        });
         this.container.addEventListener("keydown", this._whenKeyPressed);
 
         this._fileName.value = _doc.song.title;

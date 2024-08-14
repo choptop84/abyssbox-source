@@ -16,8 +16,8 @@ import { ExportPrompt } from "./ExportPrompt";
 
 export class ImportPrompt implements Prompt {
 		private exportStuff:ExportPrompt = new ExportPrompt(this._doc);
-		private readonly _importButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin: 0.5em; width:50%; color: var(--primary-text); border-bottom: solid; border-bottom-color:var(--link-accent;)" }, "Import");
-		private readonly _exportButton: HTMLButtonElement = button({ style: "height: auto; min-height: var(--button-size); margin: 0.5em; width:50%; color: var(--secondary-text);" }, "Export");
+		private readonly _importButton: HTMLButtonElement = button({ style: "border-image-source: none !important; height: auto; min-height: var(--button-size); margin: 0.5em; width:50%; color: var(--primary-text); border-bottom: solid; border-bottom-color: var(--link-accent);" }, "Import");
+		private readonly _exportButton: HTMLButtonElement = button({ style: "border-image-source: none !important; height: auto; min-height: var(--button-size); margin: 0.5em; width:50%; color: var(--secondary-text);" }, "Export");
 		private readonly _fileInput: HTMLInputElement = input({type: "file", accept: ".json,application/json,.mid,.midi,audio/midi,audio/x-midi"});
 		private readonly _cancelButton: HTMLButtonElement = button({class: "cancelButton"});
 		private readonly _modeImportSelect: HTMLSelectElement = select({style: "width: 100%;"},
