@@ -1287,7 +1287,7 @@ export class SongEditor {
     );
 
     private selectedPatternCounter: HTMLDivElement = div({style:"margin:5px; pointer-events: none;"},this._doc.selection.boxSelectionWidth*this._doc.selection.boxSelectionHeight);
-    private selectedPatternDiv: HTMLDivElement = div({style:"background: var(--ui-widget-background); border-radius: 5px; height: 32px; position: absolute; font-size: 20px; text-align: center; align-content: center;", title:"The total number of patterns you have selected in the track editor."}, this.selectedPatternCounter);
+    private selectedPatternDiv: HTMLDivElement = div({style:"background: var(--ui-widget-background); font-weight: bold; border-radius: 5px; height: 32px; position: absolute; font-size: 20px; text-align: center; align-content: center;", title:"The total number of patterns you have selected in the track editor."}, this.selectedPatternCounter);
 
     // comment for ctrl+f: mobile stuffs
     private readonly _mobileInstSettingsButton: HTMLButtonElement = button({class:"mobileInstButton", type:"button", style:"width:33%;", onclick: () => this._setSettingToInstrument()}, "Settings");
