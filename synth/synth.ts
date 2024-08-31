@@ -12794,16 +12794,16 @@ export class Synth {
 				const flangerDuration = +beepbox.Config.flangerPeriodSeconds;
 				const flangerAngle = Math.PI * 2.0 / (flangerDuration * synth.samplesPerSecond);
 				const flangerRange = synth.samplesPerSecond * beepbox.Config.flangerDelayRange;
-				const flangerOffset0 = synth.flangerDelayBufferSize - beepbox.Config.flangerDelayOffsets[0][0];
-				const flangerOffset1 = synth.flangerDelayBufferSize - beepbox.Config.flangerDelayOffsets[0][1];
+				const flangerOffsetL = synth.flangerDelayBufferSize - beepbox.Config.flangerDelayOffsets[0][0];
+				const flangerOffsetR = synth.flangerDelayBufferSize - beepbox.Config.flangerDelayOffsets[0][1];
 				let flangerPhase = instrumentState.flangerPhase % (Math.PI * 2.0);
-				let flangerTap0Index = flangerDelayPos + flangerOffset0 - Math.sin(flangerPhase + beepbox.Config.flangerPhaseOffsets[0][0]);
-				let flangerTap1Index = flangerDelayPos + flangerOffset1 - Math.sin(flangerPhase + beepbox.Config.flangerPhaseOffsets[0][1]);
+				let flangerTapLIndex = flangerDelayPos + flangerOffsetL - Math.sin(flangerPhase + beepbox.Config.flangerPhaseOffsets[0][0]);
+				let flangerTapRIndex = flangerDelayPos + flangerOffsetR - Math.sin(flangerPhase + beepbox.Config.flangerPhaseOffsets[0][1]);
 				flangerPhase += flangerAngle * runLength;
-				const flangerTap0End = flangerDelayPos + flangerOffset0 - Math.sin(flangerPhase + beepbox.Config.flangerPhaseOffsets[0][0]) + runLength;
-				const flangerTap1End = flangerDelayPos + flangerOffset1 - Math.sin(flangerPhase + beepbox.Config.flangerPhaseOffsets[0][1]) + runLength;
-				const flangerTap0Delta = (flangerTap0End - flangerTap0Index) / runLength;
-				const flangerTap1Delta = (flangerTap1End - flangerTap1Index) / runLength;
+				const flangerTapLEnd = flangerDelayPos + flangerOffsetL - Math.sin(flangerPhase + beepbox.Config.flangerPhaseOffsets[0][0]) + runLength;
+				const flangerTapREnd = flangerDelayPos + flangerOffsetR - Math.sin(flangerPhase + beepbox.Config.flangerPhaseOffsets[0][1]) + runLength;
+				const flangerTapLDelta = (flangerTapLEnd - flangerTapLIndex) / runLength;
+				const flangerTapRDelta = (flangerTapREnd - flangerTapRIndex) / runLength;
                 `
             }
 
@@ -13034,21 +13034,21 @@ export class Synth {
             if (usesFlanger) {
                 effectsSource += `
 					
-					const flangerTap0Ratio = flangerTap0Index % 1;
-					const flangerTap1Ratio = flangerTap1Index % 1;
-					const flangerTap0A = flangerDelayLineL[(flangerTap0Index) & flangerMask];
-					const flangerTap0B = flangerDelayLineL[(flangerTap0Index + 1) & flangerMask];
-					const flangerTap1A = flangerDelayLineL[(flangerTap1Index) & flangerMask];
-					const flangerTap1B = flangerDelayLineL[(flangerTap1Index + 1) & flangerMask];
-					const flangerTap0 = flangerTap0A + (flangerTap0B - flangerTap0A) * flangerTap0Ratio;
-					const flangerTap1 = flangerTap1A + (flangerTap1B - flangerTap1A) * flangerTap1Ratio;
+					const flangerTapLRatio = flangerTapLIndex % 1;
+					const flangerTapRRatio = flangerTapRIndex % 1;
+					const flangerTapLA = flangerDelayLineL[(flangerTapLIndex) & flangerMask];
+					const flangerTapLB = flangerDelayLineL[(flangerTapLIndex + 1) & flangerMask];
+					const flangerTapRA = flangerDelayLineL[(flangerTapRIndex) & flangerMask];
+					const flangerTapRB = flangerDelayLineL[(flangerTapRIndex + 1) & flangerMask];
+					const flangerTapL = flangerTapLA + (flangerTapLB - flangerTapLA) * flangerTapLRatio;
+					const flangerTapR = flangerTapRA + (flangerTapRB - flangerTapRA) * flangerTapRRatio;
 					flangerDelayLineL[flangerDelayPos] = sampleL * delayInputMult;
 					flangerDelayLineR[flangerDelayPos] = sampleR * delayInputMult;
-					sampleL = flangerCombinedMult * (sampleL + flangerVoiceMult * (flangerTap1 - flangerTap0));
-					sampleR = flangerCombinedMult * (sampleR + flangerVoiceMult * (flangerTap1 - flangerTap0));
+					sampleL = flangerCombinedMult * (sampleL + flangerVoiceMult * flangerTapL);
+					sampleR = flangerCombinedMult * (sampleR + flangerVoiceMult * flangerTapR);
 					flangerDelayPos = (flangerDelayPos + 1) & flangerMask;
-					flangerTap0Index += flangerTap0Delta;
-					flangerTap1Index += flangerTap1Delta;
+					flangerTapLIndex += flangerTapLDelta;
+					flangerTapRIndex += flangerTapRDelta;
 					flangerVoiceMult += flangerVoiceMultDelta;
 					flangerCombinedMult += flangerCombinedMultDelta;`
             }
