@@ -4095,6 +4095,14 @@ export class ChangeChorus extends ChangeInstrumentSlider {
         if (oldValue != newValue) this._didSomething();
     }
 }
+export class ChangeFlanger extends ChangeInstrumentSlider {
+    constructor(doc: SongDocument, oldValue: number, newValue: number) {
+        super(doc);
+        this._instrument.flanger = newValue;
+        doc.notifier.changed();
+        if (oldValue != newValue) this._didSomething();
+    }
+}
 
 export class ChangeReverb extends ChangeInstrumentSlider {
     constructor(doc: SongDocument, oldValue: number, newValue: number) {
