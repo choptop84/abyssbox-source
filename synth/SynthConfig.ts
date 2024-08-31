@@ -1203,6 +1203,7 @@ export class Config {
     public static readonly ringModRange: number = 8;
     public static readonly ringModHzRange: number = 64;
     public static readonly flangerRange: number = 8;
+    public static readonly flangerPeriodSeconds: number = 2.0;
     public static readonly flangerDelayRange: number = 0.002;
     public static readonly flangerDelayOffsets: ReadonlyArray<ReadonlyArray<number>> = [[1.51, 2.10, 3.35], [1.47, 2.15, 3.25]];
     public static readonly flangerPhaseOffsets: ReadonlyArray<ReadonlyArray<number>> = [[0.0, 2.1, 4.2], [3.2, 5.3, 1.0]];
