@@ -12789,11 +12789,11 @@ export class Synth {
 				const flangerOffsetL = synth.flangerDelayBufferSize - beepbox.Config.flangerDelayOffsets[0][0];
 				const flangerOffsetR = synth.flangerDelayBufferSize - beepbox.Config.flangerDelayOffsets[0][1];
 				let flangerPhase = instrumentState.flangerPhase % (Math.PI * 2.0);
-				let flangerTapLIndex = flangerDelayPos + flangerOffsetL - Math.sin(flangerPhase + beepbox.Config.flangerPhaseOffsets[0][0]);
-				let flangerTapRIndex = flangerDelayPos + flangerOffsetR - Math.sin(flangerPhase + beepbox.Config.flangerPhaseOffsets[0][1]);
+				let flangerTapLIndex = flangerDelayPos + flangerOffsetL - Math.sin(flangerPhase + beepbox.Config.flangerPhaseOffsets);
+				let flangerTapRIndex = flangerDelayPos + flangerOffsetR - Math.sin(flangerPhase + beepbox.Config.flangerPhaseOffsets);
 				flangerPhase += flangerAngle * runLength;
-				const flangerTapLEnd = flangerDelayPos + flangerOffsetL - Math.sin(flangerPhase + beepbox.Config.flangerPhaseOffsets[0][0]) + runLength;
-				const flangerTapREnd = flangerDelayPos + flangerOffsetR - Math.sin(flangerPhase + beepbox.Config.flangerPhaseOffsets[0][1]) + runLength;
+				const flangerTapLEnd = flangerDelayPos + flangerOffsetL - Math.sin(flangerPhase + beepbox.Config.flangerPhaseOffsets) + runLength;
+				const flangerTapREnd = flangerDelayPos + flangerOffsetR - Math.sin(flangerPhase + beepbox.Config.flangerPhaseOffsets) + runLength;
 				const flangerTapLDelta = (flangerTapLEnd - flangerTapLIndex) / runLength;
 				const flangerTapRDelta = (flangerTapREnd - flangerTapRIndex) / runLength;
                 `
