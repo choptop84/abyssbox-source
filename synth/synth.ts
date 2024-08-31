@@ -7752,8 +7752,6 @@ class InstrumentState {
     public flangerDelayPos: number = 0;
     public flangerVoiceMult: number = 0;
     public flangerVoiceMultDelta: number = 0;
-    public flangerCombinedMult: number = 0;
-    public flangerCombinedMultDelta: number = 0;
 
     public ringModMix: number = 0;
     public ringModMixDelta: number = 0;
@@ -8273,12 +8271,8 @@ class InstrumentState {
 
             let flangerStart: number = Math.min(1.0, useFlangerStart / (Config.flangerRange - 1));
             let flangerEnd: number = Math.min(1.0, useFlangerEnd / (Config.flangerRange - 1));
-            const flangerCombinedMultStart = 1.0 / Math.sqrt(3.0 * flangerStart * flangerStart + 1.0);
-            const flangerCombinedMultEnd = 1.0 / Math.sqrt(3.0 * flangerEnd * flangerEnd + 1.0);
             this.flangerVoiceMult = flangerStart;
             this.flangerVoiceMultDelta = (flangerEnd - flangerStart) / roundedSamplesPerTick;
-            this.flangerCombinedMult = flangerCombinedMultStart;
-            this.flangerCombinedMultDelta = (flangerCombinedMultEnd - flangerCombinedMultStart) / roundedSamplesPerTick;
         }
         if (usesRingModulation) {
             let useRingModStart: number = instrument.ringModulation;
@@ -12788,8 +12782,6 @@ export class Synth {
 				
 				let flangerVoiceMult = +instrumentState.flangerVoiceMult;
 				const flangerVoiceMultDelta = +instrumentState.flangerVoiceMultDelta;
-				let flangerCombinedMult = +instrumentState.flangerCombinedMult;
-				const flangerCombinedMultDelta = +instrumentState.flangerCombinedMultDelta;
 				
 				const flangerDuration = +beepbox.Config.flangerPeriodSeconds;
 				const flangerAngle = Math.PI * 2.0 / (flangerDuration * synth.samplesPerSecond);
@@ -13044,13 +13036,12 @@ export class Synth {
 					const flangerTapR = flangerTapRA + (flangerTapRB - flangerTapRA) * flangerTapRRatio;
 					flangerDelayLineL[flangerDelayPos] = sampleL * delayInputMult;
 					flangerDelayLineR[flangerDelayPos] = sampleR * delayInputMult;
-					sampleL = flangerCombinedMult * (sampleL + flangerVoiceMult * flangerTapL);
-					sampleR = flangerCombinedMult * (sampleR + flangerVoiceMult * flangerTapR);
+					sampleL = sampleL + flangerVoiceMult * flangerTapL;
+					sampleR = sampleR + flangerVoiceMult * flangerTapR;
 					flangerDelayPos = (flangerDelayPos + 1) & flangerMask;
 					flangerTapLIndex += flangerTapLDelta;
 					flangerTapRIndex += flangerTapRDelta;
-					flangerVoiceMult += flangerVoiceMultDelta;
-					flangerCombinedMult += flangerCombinedMultDelta;`
+					flangerVoiceMult += flangerVoiceMultDelta;`
             }
 
             if (usesEcho) {
@@ -13252,8 +13243,7 @@ export class Synth {
 				instrumentState.flangerPhase = flangerPhase;
 				instrumentState.flangerDelayPos = flangerDelayPos;
 				instrumentState.flangerVoiceMult = flangerVoiceMult;
-				instrumentState.flangerCombinedMult = flangerCombinedMult;
-                console.log("flangerPhase = "+flangerPhase+"; flangerDelayPos = "+flangerDelayPos+"; flangerVoiceMult = "+flangerVoiceMult+"; flangerCombinedMult = "+flangerCombinedMult+";")
+                console.log("flangerPhase = "+flangerPhase+"; flangerDelayPos = "+flangerDelayPos+"; flangerVoiceMult = "+flangerVoiceMult+";")
                 `
             }
 

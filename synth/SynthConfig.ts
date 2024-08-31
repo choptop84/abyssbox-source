@@ -1206,7 +1206,7 @@ export class Config {
     public static readonly flangerPeriodSeconds: number = 2.0;
     public static readonly flangerDelayRange: number = 0.0022;
     public static readonly flangerDelayOffsets: ReadonlyArray<ReadonlyArray<number>> = [[0.1, 0.0, 0.0], [0.0, 0.0, 0.0]];
-    public static readonly flangerPhaseOffsets: ReadonlyArray<ReadonlyArray<number>> = [[0.0, 2.1, 4.2], [3.2, 5.3, 1.0]];
+    public static readonly flangerPhaseOffsets: number = 0.0;
     public static readonly flangerMaxDelay: number = Config.flangerDelayRange * (1.0 + Config.flangerDelayOffsets[0].concat(Config.flangerDelayOffsets[1]).reduce((x, y) => Math.max(x, y)));
     public static readonly chorusPeriodSeconds: number = 2.0;
     public static readonly chorusDelayRange: number = 0.0034;
