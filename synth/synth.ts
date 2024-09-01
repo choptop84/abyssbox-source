@@ -5079,9 +5079,7 @@ export class Song {
                 } else {
                     // BeepBox currently uses two base64 characters at 6 bits each for a bitfield representing all the enabled effects.
                     if (EffectType.length > 15) throw new Error();
-                        if ((fromAbyssBox && beforeTwo)||(fromUltraBox && beforeSix)||fromGoldBox||fromJummBox||fromBeepBox) {
-                        instrument.effects = (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << 6) | (base64CharCodeToInt[compressed.charCodeAt(charIndex++)]); 
-                        } else {
+                        if ((fromAbyssBox && !beforeTwo||fromAbyssBox && !beforeThree)||(fromUltraBox && !beforeSix))  {
                                 instrument.effects = (
                                     (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << (6 * 5))
                                     | (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << (6 * 4))
@@ -5090,6 +5088,8 @@ export class Song {
                                     | (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << (6 * 1))
                                     | (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << (6 * 0))
                                 ) >>> 0;
+                        } else {
+                            instrument.effects = (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << 6) | (base64CharCodeToInt[compressed.charCodeAt(charIndex++)]); 
                         }
 
                     if (effectsIncludeNoteFilter(instrument.effects)) {
@@ -5148,6 +5148,9 @@ export class Song {
                     }
                     if (effectsIncludeTransition(instrument.effects)) {
                         instrument.transition = clamp(0, Config.transitions.length, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                        if ((fromUltraBox && !beforeSix)||(fromAbyssBox && !beforeThree)) {
+                            if (Config.transitions[instrument.transition].slides == true) instrument.slideTicks = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
+                        }
                     }
                     if (effectsIncludeChord(instrument.effects)) {
                         instrument.chord = clamp(0, Config.chords.length, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
