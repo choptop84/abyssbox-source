@@ -583,6 +583,30 @@ export class TipPrompt implements Prompt {
 					p(`This slider changes how many all-passes there are in the phaser.`),
 				);
 			} break;
+			case "slideSpeedSlider": {
+				message = div(
+					h2("Slide Speed"),
+					p("This slider controls how fast/slow the slide transition is. In other audio software, this setting is sometimes referred to as \"Portamento\"."),
+				);
+			} break;
+			case "strumSpeedSlider": {
+				message = div(
+					h2("Strum Speed"),
+					p("This setting affects how fast your chord will strum."),
+				);
+			} break;
+			case "upperNoteLimit": {
+				message = div(
+					h2("Upper Note Limit"),
+					p("Defines the upper limit in which notes will play, useful for advanced instruments."),
+				);
+			} break;
+			case "lowerNoteLimit": {
+				message = div(
+					h2("Lower Note Limit"),
+					p("Defines the lower limit in which notes will play, useful for advanced instruments."),
+				);
+			} break;
 
 			default:
 				// Check for modSetinfo#

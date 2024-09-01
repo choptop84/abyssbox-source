@@ -34,7 +34,8 @@ export class EditorConfig {
     public static readonly ctrlName: string = EditorConfig.isOnMac ? "command" : "control";
 
     public static customSamples: string[] | null;
-	//is this how you do it????
+	
+    public static showSongDetailsAlert: boolean = true;
 	
     public static readonly presetCategories: DictionaryArray<PresetCategory> = toNameMap([
         {

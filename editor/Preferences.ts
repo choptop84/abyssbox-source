@@ -19,6 +19,7 @@ export class Preferences {
 	public closePromptByClickoff: boolean;
 	public oldMobileLayout: boolean;
 	public instrumentSettingsSimplifier: boolean;
+	public promptSongDetails: boolean;
 
 	
 	// Appearance
@@ -110,6 +111,7 @@ export class Preferences {
 		this.oldMobileLayout = window.localStorage.getItem("oldMobileLayout") == "true";
 		this.oldModNotes = window.localStorage.getItem("oldModNotes") == "true";
 		this.selectionCounter = window.localStorage.getItem("selectionCounter") != "false";
+		this.promptSongDetails = window.localStorage.getItem("promptSongDetails") != "false";
 
 		// other stuff
 		this.keyboardLayout = window.localStorage.getItem("keyboardLayout") || "wickiHayden";
@@ -171,6 +173,7 @@ export class Preferences {
 		window.localStorage.setItem("showInstrumentScrollbars", this.showInstrumentScrollbars ? "true" : "false");
 		window.localStorage.setItem("notesFlashWhenPlayed", this.notesFlashWhenPlayed ? "true" : "false");
 		window.localStorage.setItem("selectionCounter", this.selectionCounter ? "true": "false");
+		window.localStorage.setItem("promptSongDetails", this.promptSongDetails ? "true" : "false");
 		window.localStorage.setItem("keyboardLayout", this.keyboardLayout);
 		window.localStorage.setItem("bassOffset", String(this.bassOffset));
 		window.localStorage.setItem("layout", this.layout);
