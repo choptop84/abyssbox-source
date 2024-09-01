@@ -586,10 +586,10 @@ content: "";
 	top: 0;
 	pointer-events: none;
 	background: var(--primary-text);
-	mask-image: var(--internal-add-symbol);
+	mask-image: var(--add-symbol);
 	mask-repeat: no-repeat;
 	mask-position: center;
-	-webkit-mask-image: var(--internal-add-symbol);
+	-webkit-mask-image: var(--add-symbol);
 	-webkit-mask-repeat: no-repeat;
 	-webkit-mask-position: center;
 }
