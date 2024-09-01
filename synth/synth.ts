@@ -59,6 +59,10 @@ export function clamp(min: number, max: number, val: number): number {
     }
 }
 
+export function mod(a: number, b: number): number {
+    return (a % b + b) % b;
+}
+
 /**
  * Checks if a value is within the correct range. If the value is within the range, then it returns the value. 
  * if not, then an error is thrown stating the value is out of range.
@@ -12783,17 +12787,22 @@ export class Synth {
 				let flangerVoiceMult = +instrumentState.flangerVoiceMult;
 				const flangerVoiceMultDelta = +instrumentState.flangerVoiceMultDelta;
 				
+                //const flangPi = Math.PI * 2;
 				const flangerDuration = +beepbox.Config.flangerPeriodSeconds;
-				const flangerAngle = Math.PI * 2.0 / (flangerDuration * synth.samplesPerSecond);
+				const flangerAngle = 1 / (flangerDuration * synth.samplesPerSecond);
 				const flangerRange = synth.samplesPerSecond * beepbox.Config.flangerDelayRange;
 				const flangerOffsetL = synth.flangerDelayBufferSize - beepbox.Config.flangerDelayOffsets[0][0];
 				const flangerOffsetR = synth.flangerDelayBufferSize - beepbox.Config.flangerDelayOffsets[0][1];
-				let flangerPhase = instrumentState.flangerPhase % (Math.PI * 2.0);
-				let flangerTapLIndex = flangerDelayPos + flangerOffsetL - Math.sin(flangerPhase + beepbox.Config.flangerPhaseOffsets);
-				let flangerTapRIndex = flangerDelayPos + flangerOffsetR - Math.sin(flangerPhase + beepbox.Config.flangerPhaseOffsets);
+				let flangerPhase = instrumentState.flangerPhase % 1;
+                const flangerOffsetPhase = flangerPhase + beepbox.Config.flangerPhaseOffsets;
+
+                const flangerTriangeWave = Math.abs((((flangerOffsetPhase - 0.25) % 1 + 1) % 1) - 0.5)* 4 - 1;
+				let flangerTapLIndex = flangerDelayPos + flangerOffsetL - flangerTriangeWave;
+				let flangerTapRIndex = flangerDelayPos + flangerOffsetR - flangerTriangeWave;
 				flangerPhase += flangerAngle * runLength;
-				const flangerTapLEnd = flangerDelayPos + flangerOffsetL - Math.sin(flangerPhase + beepbox.Config.flangerPhaseOffsets) + runLength;
-				const flangerTapREnd = flangerDelayPos + flangerOffsetR - Math.sin(flangerPhase + beepbox.Config.flangerPhaseOffsets) + runLength;
+                const flangerTriangeEndWave = Math.abs(((((flangerPhase + beepbox.Config.flangerPhaseOffsets) - 0.25) % 1 + 1) % 1) - 0.5)* 4 - 1;
+				const flangerTapLEnd = flangerDelayPos + flangerOffsetL - flangerTriangeEndWave + runLength;
+				const flangerTapREnd = flangerDelayPos + flangerOffsetR - flangerTriangeEndWave + runLength;
 				const flangerTapLDelta = (flangerTapLEnd - flangerTapLIndex) / runLength;
 				const flangerTapRDelta = (flangerTapREnd - flangerTapRIndex) / runLength;
                 `
@@ -13243,7 +13252,6 @@ export class Synth {
 				instrumentState.flangerPhase = flangerPhase;
 				instrumentState.flangerDelayPos = flangerDelayPos;
 				instrumentState.flangerVoiceMult = flangerVoiceMult;
-                console.log("flangerPhase = "+flangerPhase+"; flangerDelayPos = "+flangerDelayPos+"; flangerVoiceMult = "+flangerVoiceMult+";")
                 `
             }
 
@@ -14119,4 +14127,4 @@ export class Synth {
 }
 
 // When compiling synth.ts as a standalone module named "beepbox", expose these classes as members to JavaScript:
-export { Dictionary, DictionaryArray, FilterType, EnvelopeType, InstrumentType, Transition, Chord, Envelope, Config };
+export { Dictionary, DictionaryArray, FilterType, EnvelopeType, InstrumentType, Transition, Chord, Envelope, Config};
