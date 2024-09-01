@@ -19675,7 +19675,7 @@ export class ColorConfig {
     public static readonly fifthNote: string = "var(--fifth-note)";
 	public static readonly thirdNote: string = "var(--third-note)";
 
-	public static readonly noteRangeAOE: string = "var(--note-range-AOE, var(--editor-background))";
+	public static readonly dimmedArea: string = "var(--dimmed-area, var(--editor-background))";
 
 	public static readonly pitch1Background: string = "var(--pitch1-background)";
 	public static readonly pitch2Background: string = "var(--pitch2-background)";

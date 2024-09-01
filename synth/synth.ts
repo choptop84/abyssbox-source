@@ -4485,8 +4485,8 @@ export class Song {
                     if (instrument.type == InstrumentType.noise) {
                         instrument.chipWave = clamp(0, Config.chipWaves.length, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                     } else {
-                        if (fromUltraBox) {
-                            if (beforeSix) {
+                        if (fromUltraBox || fromAbyssBox) {
+                            if ((fromUltraBox && beforeSix)||(fromAbyssBox && beforeThree)) {
                                 const chipWaveReal = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
                                 const chipWaveCounter = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
 
