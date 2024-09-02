@@ -3286,16 +3286,6 @@ export class Song {
             buffer.push(encodedSongTitle.charCodeAt(i));
         }
 
-        //Length of the song theme string
-        buffer.push(SongTagCode.songTheme);
-        var encodedSongTheme: string = encodeURIComponent(this.setSongTheme);
-        buffer.push(base64IntToCharCode[encodedSongTheme.length >> 6], base64IntToCharCode[encodedSongTheme.length & 0x3f]);
-
-        // Actual encoded string follows
-        for (let i: number = 0; i < encodedSongTheme.length; i++) {
-            buffer.push(encodedSongTheme.charCodeAt(i));
-        }
-        
         // Length of the song author string
         var encodedAuthorTitle: string = encodeURIComponent(this.author);
         buffer.push(base64IntToCharCode[encodedAuthorTitle.length >> 6], base64IntToCharCode[encodedAuthorTitle.length & 0x3f]);
@@ -3313,7 +3303,16 @@ export class Song {
         }
 
         buffer.push(base64IntToCharCode[this.showSongDetails?1:0]);
+        //Length of the song theme string
+        buffer.push(SongTagCode.songTheme);
+        var encodedSongTheme: string = encodeURIComponent(this.setSongTheme);
+        buffer.push(base64IntToCharCode[encodedSongTheme.length >> 6], base64IntToCharCode[encodedSongTheme.length & 0x3f]);
 
+        // Actual encoded string follows
+        for (let i: number = 0; i < encodedSongTheme.length; i++) {
+            buffer.push(encodedSongTheme.charCodeAt(i));
+        }
+        
         buffer.push(SongTagCode.channelCount, base64IntToCharCode[this.pitchChannelCount], base64IntToCharCode[this.noiseChannelCount], base64IntToCharCode[this.modChannelCount]);
         buffer.push(SongTagCode.scale, base64IntToCharCode[this.scale]);
         if (this.scale == Config.scales["dictionary"]["Custom"].index) {
