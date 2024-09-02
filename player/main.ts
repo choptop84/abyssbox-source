@@ -720,6 +720,7 @@ import { SongPlayerLayout } from "./Layout";
 						else {
 							songPlayerContainer.style.gridTemplateRows = "78vh 0vh 7.4vh";
 						}
+						timelineContainer.style.left = "0px";
 					 } else {
 						timelineContainer.style.transform = '';
 						pianoContainer.style.display = "none";
@@ -739,6 +740,7 @@ import { SongPlayerLayout } from "./Layout";
 						else {
 							songPlayerContainer.style.gridTemplateRows = "92.6vh 0vh 7.4vh";
 						}
+						timelineContainer.style.left = "0px";
 					 } else {
 						timelineContainer.style.transform = '';
 						songPlayerContainer.style.gridTemplateRows = "";
