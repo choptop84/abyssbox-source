@@ -76,9 +76,12 @@ export class ImportPrompt implements Prompt {
 		this._cancelButton.addEventListener("click", this._close);
 		this._importButton.addEventListener("click", this._importCategoryButton);
 		this._exportButton.addEventListener("click", this._exportCategoryButton);
+		if (this._doc.prompt == "export") {
+			this._exportCategoryButton();
+		}
 	}
 		
-	private _importCategoryButton = (): void => {
+	public _importCategoryButton = (): void => {
 			this._importPrompt.style.display = "";
 			this._exportPrompt.style.display = "none";
 
@@ -92,7 +95,7 @@ export class ImportPrompt implements Prompt {
 			this.container.style.width = "300px";
 	}
 
-	private _exportCategoryButton = (): void => {
+	public _exportCategoryButton = (): void => {
 		this._importPrompt.style.display = "none";
 			this._exportPrompt.style.display = "";
 

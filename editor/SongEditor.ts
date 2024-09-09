@@ -14,7 +14,6 @@ import { InstrumentImportPrompt } from "./InstrumentImportPrompt";
 import { EditorConfig, isMobile, prettyNumber, Preset, PresetCategory} from "./EditorConfig";
 import { SetThemePrompt } from "./SongThemePrompt"
 import { EuclideanRhythmPrompt } from "./EuclidgenRhythmPrompt";
-import { ExportPrompt } from "./ExportPrompt";
 import "./Layout"; // Imported here for the sake of ensuring this code is transpiled early.
 import { Instrument, Channel, Synth } from "../synth/synth";
 import { HTML, SVG } from "imperative-html/dist/esm/elements-strict";
@@ -2340,7 +2339,7 @@ export class SongEditor {
         if (promptName) {
             switch (promptName) {
                 case "export":
-                    this.prompt = new ExportPrompt(this._doc);
+                    this.prompt = new ImportPrompt(this._doc);
                     break;
                 case "import":
                     this.prompt = new ImportPrompt(this._doc);
@@ -5133,7 +5132,7 @@ export class SongEditor {
             case 83: // s
                 if (canPlayNotes) break;
                 if (event.ctrlKey || event.metaKey) {
-                    this._openPrompt("import");
+                    this._openPrompt("export");
                     event.preventDefault();
                 } else {
                     if (this._doc.prefs.enableChannelMuting) {
@@ -5151,6 +5150,10 @@ export class SongEditor {
                 break;
             case 79: // o
                 if (canPlayNotes) break;
+                if (event.ctrlKey || event.metaKey) {
+                    this._openPrompt("import");
+                    event.preventDefault();
+                }
                 break;
   
             case 86: // v
