@@ -223,7 +223,6 @@ export class LoopEditor {
 				new ChangeChannelBar(this._doc, this._doc.channel, Math.floor(this._doc.synth.playhead), true);
 			}
 			this._doc.setProspectiveChange(this._change);
-		} else if (this._cursor.mode == this._bothMode) {
 			this._updateCursorStatus();
 			this._updatePreview();
 		}
