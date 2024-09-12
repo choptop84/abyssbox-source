@@ -223,6 +223,7 @@ export class LoopEditor {
 				new ChangeChannelBar(this._doc, this._doc.channel, Math.floor(this._doc.synth.playhead), true);
 			}
 			this._doc.setProspectiveChange(this._change);
+			} else {
 			this._updateCursorStatus();
 			this._updatePreview();
 		}
@@ -261,7 +262,7 @@ export class LoopEditor {
 				highlightStop = (this._doc.song.loopStart) * this._barWidth + radius * 2;
 			} else if (this._cursor.mode == this._endMode) {
 				highlightStart = (this._doc.song.loopStart + this._doc.song.loopLength) * this._barWidth - radius * 2;
-			} else {
+			} else if (this._cursor.mode == this._bothMode) {
 				const endPoints: Endpoints = this._findEndPoints(this._cursor.startBar);
 				highlightStart = (endPoints.start) * this._barWidth;
 				highlightStop = (endPoints.start + endPoints.length) * this._barWidth;
