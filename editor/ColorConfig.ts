@@ -5595,6 +5595,290 @@ export class ColorConfig {
 
 
 			`,
+			"corporate dark": `
+			:root {
+			--page-margin: #1f1f1f;
+			--editor-background: #1f1f1f;
+			--hover-preview: white;
+			--playhead: white;
+			--primary-text: #e8e8e8;
+			--secondary-text: #8c8c8c;
+			--inverted-text: #1D1C1D;
+			--text-selection: #C249DD;
+			--box-selection-fill: rgba(0,0,0,0.2);
+			--loop-accent: #C249DD;
+			--link-accent: #0E9DD3;
+			--ui-widget-background: #303134;
+			--ui-widget-focus: #5B5957;
+			--pitch-background: #3e3f42;
+			--tonic: #303134;
+			--fifth-note: #98809D;
+			--third-note: #62738b;
+			--white-piano-key: white;
+			--black-piano-key: #1D1C1D;
+			--white-piano-key-text: #1D1C1D;
+			--black-piano-key-text: white;
+			--use-color-formula: false;
+			--track-editor-bg-pitch: #303134;
+			--track-editor-bg-pitch-dim: #1d1e20;
+			--track-editor-bg-noise: #303134;
+			--track-editor-bg-noise-dim: #1d1e20;
+			--track-editor-bg-mod: #46524a;
+			--track-editor-bg-mod-dim: #2c352f;
+			--multiplicative-mod-slider: #456;
+			--overwriting-mod-slider: #654;
+			--indicator-primary: #C249DD;
+			--indicator-secondary: #602670;
+			--select2-opt-group: #474747;
+			--input-box-outline: #F4EDE4;
+			--mute-button-normal: #DE8969;
+			--mute-button-mod: #C05B8C;
+			--pitch-channel-limit: 4;
+			--noise-channel-limit: 3;
+			--pitch1-secondary-channel: #17616B;
+			--pitch1-primary-channel:   #36C5F0;
+			--pitch1-secondary-note:    #17616B;
+			--pitch1-primary-note:      #36C5F0;
+			--pitch2-secondary-channel: #185F34;
+			--pitch2-primary-channel:   #2EB67D;
+			--pitch2-secondary-note:    #185F34;
+			--pitch2-primary-note:      #2EB67D;
+			--pitch3-secondary-channel: #755617;
+			--pitch3-primary-channel:   #ECB22E;
+			--pitch3-secondary-note:    #755617;
+			--pitch3-primary-note:      #ECB22E;
+			--pitch4-secondary-channel: #821237;
+			--pitch4-primary-channel:   #E01E5A;
+			--pitch4-secondary-note:    #821237;
+			--pitch4-primary-note:      #E01E5A;
+			--pitch5-secondary-channel: #D020D0;
+			--pitch5-primary-channel:   #FF90FF;
+			--pitch5-secondary-note:    #E040E0;
+			--pitch5-primary-note:      #FFC0FF;
+			--pitch6-secondary-channel: #7777B0;
+			--pitch6-primary-channel:   #A0A0FF;
+			--pitch6-secondary-note:    #8888D0;
+			--pitch6-primary-note:      #D0D0FF;
+			--pitch7-secondary-channel: #8AA100;
+			--pitch7-primary-channel:   #DEFF25;
+			--pitch7-secondary-note:    #AAC700;
+			--pitch7-primary-note:      #E6FF92;
+			--pitch8-secondary-channel: #DF0019;
+			--pitch8-primary-channel:   #FF98A4;
+			--pitch8-secondary-note:    #FF4E63;
+			--pitch8-primary-note:      #FFB2BB;
+			--pitch9-secondary-channel: #00A170;
+			--pitch9-primary-channel:   #50FFC9;
+			--pitch9-secondary-note:    #00C78A;
+			--pitch9-primary-note:      #83FFD9;
+			--pitch10-secondary-channel:#A11FFF;
+			--pitch10-primary-channel:  #CE8BFF;
+			--pitch10-secondary-note:   #B757FF;
+			--pitch10-primary-note:     #DFACFF;
+			--noise1-secondary-channel: #424242;
+			--noise1-primary-channel:   #AAAAAA;
+			--noise1-secondary-note:    #424242;
+			--noise1-primary-note:      #AAAAAA;
+			--noise2-secondary-channel: #5E3A2D;
+			--noise2-primary-channel:   #DE8969;
+			--noise2-secondary-note:    #5E3A2D;
+			--noise2-primary-note:      #DE8969;
+			--noise3-secondary-channel: #32595B;
+			--noise3-primary-channel:   #78D7DD;
+			--noise3-secondary-note:    #32595B;
+			--noise3-primary-note:      #78D7DD;
+			--noise4-secondary-channel: #7A4F9A;
+			--noise4-primary-channel:   #AF82D2;
+			--noise4-secondary-note:    #9E71C1;
+			--noise4-primary-note:      #D4C1EA;
+			--noise5-secondary-channel: #607837;
+			--noise5-primary-channel:   #A2BB77;
+			--noise5-secondary-note:    #91AA66;
+			--noise5-primary-note:      #C5E2B2;
+			--mod1-secondary-channel:   #339955;
+			--mod1-primary-channel:     #77fc55;
+			--mod1-secondary-note:      #77ff8a;
+			--mod1-primary-note:        #cdffee;
+			--mod2-secondary-channel:   #993355;
+			--mod2-primary-channel:     #f04960;
+			--mod2-secondary-note:      #f057a0;
+			--mod2-primary-note:        #ffb8de;
+			--mod3-secondary-channel:   #553399;
+			--mod3-primary-channel:     #8855fc;
+			--mod3-secondary-note:      #aa64ff;
+			--mod3-primary-note:	    #f8ddff;
+			--mod4-secondary-channel:   #a86436;
+			--mod4-primary-channel:     #c8a825;
+			--mod4-secondary-note:      #e8ba46;
+			--mod4-primary-note:        #fff6d3;
+			--mod-label-primary:        #999;
+			--mod-label-secondary-text: #333;
+			--mod-label-primary-text:   black;
+			--disabled-note-primary:    #999;
+			--disabled-note-secondary:  #666;
+			--mod-title: #1D1C1D;
+			}
+
+			.channelBox {
+			border-radius: 25px;
+			}
+
+			button:hover {
+			border-radius: 4px;
+			background-color: #1d1e20 !important;
+			}
+
+			select:hover {
+			border-radius: 4px !important;
+			background-color: #1d1e20 !important;
+			}
+
+			#select2-pitchPresetSelect-container:hover {
+			border-radius: 4px !important;
+			background-color: #1d1e20 !important;
+			}`,
+			"corporate light": `
+			:root {
+			--page-margin: white;
+			--editor-background: white;
+			--hover-preview: white;
+			--playhead: white;
+			--primary-text: #1D1C1D;
+			--secondary-text: #A5A19B;
+			--inverted-text: #1D1C1D;
+			--text-selection: #C249DD;
+			--box-selection-fill: rgba(0,0,0,0.2);
+			--loop-accent: #C249DD;
+			--link-accent: #0E9DD3;
+			--ui-widget-background: #F4EDE4;
+			--ui-widget-focus: white;
+			--pitch-background: #E8DED1;
+			--tonic: #E6B8A8;
+			--fifth-note: #DB99EA;
+			--third-note: #99c3ff;
+			--white-piano-key: white;
+			--black-piano-key: #1D1C1D;
+			--white-piano-key-text: #1D1C1D;
+			--black-piano-key-text: white;
+			--use-color-formula: false;
+			--track-editor-bg-pitch: #E8DED1;
+			--track-editor-bg-pitch-dim: #ecc6ba;
+			--track-editor-bg-noise: #E8DED1;
+			--track-editor-bg-noise-dim: #ecc6ba;
+			--track-editor-bg-mod: #87BB9B;
+			--track-editor-bg-mod-dim: #6baa83;
+			--multiplicative-mod-slider: #456;
+			--overwriting-mod-slider: #654;
+			--indicator-primary: #C249DD;
+			--indicator-secondary: #602670;
+			--select2-opt-group: #474747;
+			--input-box-outline: #F4EDE4;
+			--mute-button-normal: #DE8969;
+			--mute-button-mod: #C05B8C;
+			--pitch-channel-limit: 4;
+			--noise-channel-limit: 3;
+			--pitch1-secondary-channel: #17616B;
+			--pitch1-primary-channel:   #36C5F0;
+			--pitch1-secondary-note:    #17616B;
+			--pitch1-primary-note:      #36C5F0;
+			--pitch2-secondary-channel: #185F34;
+			--pitch2-primary-channel:   #2EB67D;
+			--pitch2-secondary-note:    #185F34;
+			--pitch2-primary-note:      #2EB67D;
+			--pitch3-secondary-channel: #755617;
+			--pitch3-primary-channel:   #ECB22E;
+			--pitch3-secondary-note:    #755617;
+			--pitch3-primary-note:      #ECB22E;
+			--pitch4-secondary-channel: #821237;
+			--pitch4-primary-channel:   #E01E5A;
+			--pitch4-secondary-note:    #821237;
+			--pitch4-primary-note:      #E01E5A;
+			--pitch5-secondary-channel: #D020D0;
+			--pitch5-primary-channel:   #FF90FF;
+			--pitch5-secondary-note:    #E040E0;
+			--pitch5-primary-note:      #FFC0FF;
+			--pitch6-secondary-channel: #7777B0;
+			--pitch6-primary-channel:   #A0A0FF;
+			--pitch6-secondary-note:    #8888D0;
+			--pitch6-primary-note:      #D0D0FF;
+			--pitch7-secondary-channel: #8AA100;
+			--pitch7-primary-channel:   #DEFF25;
+			--pitch7-secondary-note:    #AAC700;
+			--pitch7-primary-note:      #E6FF92;
+			--pitch8-secondary-channel: #DF0019;
+			--pitch8-primary-channel:   #FF98A4;
+			--pitch8-secondary-note:    #FF4E63;
+			--pitch8-primary-note:      #FFB2BB;
+			--pitch9-secondary-channel: #00A170;
+			--pitch9-primary-channel:   #50FFC9;
+			--pitch9-secondary-note:    #00C78A;
+			--pitch9-primary-note:      #83FFD9;
+			--pitch10-secondary-channel:#A11FFF;
+			--pitch10-primary-channel:  #CE8BFF;
+			--pitch10-secondary-note:   #B757FF;
+			--pitch10-primary-note:     #DFACFF;
+			--noise1-secondary-channel: #424242;
+			--noise1-primary-channel:   #AAAAAA;
+			--noise1-secondary-note:    #424242;
+			--noise1-primary-note:      #AAAAAA;
+			--noise2-secondary-channel: #5E3A2D;
+			--noise2-primary-channel:   #DE8969;
+			--noise2-secondary-note:    #5E3A2D;
+			--noise2-primary-note:      #DE8969;
+			--noise3-secondary-channel: #32595B;
+			--noise3-primary-channel:   #78D7DD;
+			--noise3-secondary-note:    #32595B;
+			--noise3-primary-note:      #78D7DD;
+			--noise4-secondary-channel: #7A4F9A;
+			--noise4-primary-channel:   #AF82D2;
+			--noise4-secondary-note:    #9E71C1;
+			--noise4-primary-note:      #D4C1EA;
+			--noise5-secondary-channel: #607837;
+			--noise5-primary-channel:   #A2BB77;
+			--noise5-secondary-note:    #91AA66;
+			--noise5-primary-note:      #C5E2B2;
+			--mod1-secondary-channel:   #339955;
+			--mod1-primary-channel:     #77fc55;
+			--mod1-secondary-note:      #77ff8a;
+			--mod1-primary-note:        #cdffee;
+			--mod2-secondary-channel:   #993355;
+			--mod2-primary-channel:     #f04960;
+			--mod2-secondary-note:      #f057a0;
+			--mod2-primary-note:        #ffb8de;
+			--mod3-secondary-channel:   #553399;
+			--mod3-primary-channel:     #8855fc;
+			--mod3-secondary-note:      #aa64ff;
+			--mod3-primary-note:	    #f8ddff;
+			--mod4-secondary-channel:   #a86436;
+			--mod4-primary-channel:     #c8a825;
+			--mod4-secondary-note:      #e8ba46;
+			--mod4-primary-note:        #fff6d3;
+			--mod-label-primary:        #999;
+			--mod-label-secondary-text: #333;
+			--mod-label-primary-text:   black;
+			--disabled-note-primary:    #999;
+			--disabled-note-secondary:  #666;
+			--mod-title: #1D1C1D;
+			}
+
+			.channelBox {
+			border-radius: 25px;
+			}
+
+			button:hover {
+			border-radius: 4px;
+			background-color: #dbd2c5 !important;
+			}
+
+			select:hover {
+			border-radius: 4px !important;
+			background-color: #dbd2c5 !important;
+			}
+
+			#select2-pitchPresetSelect-container:hover {
+			border-radius: 4px !important;
+			background-color: #dbd2c5 !important;
+			}`,
 			"Terminal 2.0 (AB)": `
 			:root { 
 			--page-margin: black; 
@@ -6219,7 +6503,7 @@ export class ColorConfig {
 				--pitch-background: #444;
 				--tonic: #864;
 				--fifth-note: #468;
-				--third-note: #578844;
+				--third-note: #486;
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
 				--white-piano-key-text: #131200;
@@ -6358,7 +6642,7 @@ export class ColorConfig {
 				--pitch-background: #444;
 				--tonic: #864;
 				--fifth-note: #468;
-				--third-note: #578844;
+				--third-note: #486;
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
 				--white-piano-key-text: #131200;
@@ -6493,7 +6777,7 @@ export class ColorConfig {
 				--pitch-background: #444;
 				--tonic: #864;
 				--fifth-note: #468;
-				--third-note: #578844;
+				--third-note: #486;
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
 				--white-piano-key-text: #131200;
@@ -6861,7 +7145,7 @@ export class ColorConfig {
 				--pitch-background: #444;
 				--tonic: #864;
 				--fifth-note: #468;
-				--third-note: #578844;
+				--third-note: #486;
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
 				--white-piano-key-text: #131200;
@@ -6983,7 +7267,7 @@ export class ColorConfig {
 					--pitch-background: #353333;
 					--tonic: #884a44;
 					--fifth-note: #415498;
-					--third-note: #578844;
+					--third-note: #486;
 					--white-piano-key: #bbb;
 					--black-piano-key: #444;
                     --white-piano-key-text: #131200;
@@ -7365,7 +7649,7 @@ export class ColorConfig {
 					--pitch-background: #203829;
 					--tonic: #2b8d20;
 					--fifth-note: #385840;
-					--third-note: #578844;
+					--third-note: #486;
 					--white-piano-key: #bda;
 					--black-piano-key: #573;
                     --white-piano-key-text: #131200;
@@ -7485,7 +7769,7 @@ export class ColorConfig {
 					--pitch-background: #30583c; 
 					--tonic: #4dac5b; 
 					--fifth-note: #458343; 
-					--third-note: #578844;
+					--third-note: #486;
 					--white-piano-key: #bee9bf; 
 					--black-piano-key: #395e3c;
 					--white-piano-key-text: #024a0c;		
@@ -8289,7 +8573,7 @@ export class ColorConfig {
 					--pitch-background: #8daf96;
 					--tonic: #a16fb1;
 					--fifth-note: #d08c8c;
-					--third-note: #578844;
+					--third-note: #486;
 					--white-piano-key: #fbffee;
 					--black-piano-key: #c9d8e5;
 					--white-piano-key-text: #101160;
@@ -9658,7 +9942,7 @@ export class ColorConfig {
 			--pitch-background: hsl(61deg 100% 70% / 25%);
 			--tonic: #66a3ff40;
 			--fifth-note: #ff666640;
-			--third-note: #57884440;
+			--third-note: #48640;
 			--white-piano-key: #cdcdcd;
 			--black-piano-key: #232323;
 			--white-piano-key-text: #131200;
@@ -11437,7 +11721,7 @@ export class ColorConfig {
 				--pitch-background: #444;
 				--tonic: #864;
 				--fifth-note: #468;
-				--third-note: #578844;
+				--third-note: #486;
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
 				--white-piano-key-text: #131200;
@@ -15123,7 +15407,7 @@ export class ColorConfig {
 				--pitch-background: #444;
 				--tonic: #864;
 				--fifth-note: #468;
-				--third-note: #578844;
+				--third-note: #486;
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
 				--white-piano-key-text: #131200;
@@ -15249,7 +15533,7 @@ export class ColorConfig {
 				--pitch-background: #444;
 				--tonic: #864;
 				--fifth-note: #468;
-				--third-note: #578844;
+				--third-note: #486;
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
 				--white-piano-key-text: #131200;
@@ -15376,7 +15660,7 @@ export class ColorConfig {
 				--pitch-background: #444;
 				--tonic: #864;
 				--fifth-note: #468;
-				--third-note: #578844;
+				--third-note: #486;
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
 				--white-piano-key-text: #131200;
@@ -15521,7 +15805,7 @@ export class ColorConfig {
 			   --pitch-background: #444;
 			   --tonic: #864;
 			   --fifth-note: #468;
-			   --third-note: #578844;
+			   --third-note: #486;
 			   --white-piano-key: #bbb;
 			   --black-piano-key: #444;
 			   --white-piano-key-text: #131200;
@@ -15831,7 +16115,7 @@ export class ColorConfig {
 				--pitch-background: #444;
 				--tonic: #864;
 				--fifth-note: #468;
-				--third-note: #578844;
+				--third-note: #486;
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
 				--white-piano-key-text: #131200;
@@ -16383,7 +16667,7 @@ export class ColorConfig {
 			   --pitch-background: #444;
 			   --tonic: #864;
 			   --fifth-note: #468;
-			   --third-note: #578844;
+			   --third-note: #486;
 			   --white-piano-key: #bbb;
 			   --black-piano-key: #444;
 			   --white-piano-key-text: #131200;
@@ -16549,7 +16833,7 @@ export class ColorConfig {
 				--pitch-background: #444;
 				--tonic: #864;
 				--fifth-note: #468;
-				--third-note: #578844;
+				--third-note: #486;
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
 				--white-piano-key-text: #131200;
@@ -17178,7 +17462,7 @@ export class ColorConfig {
 					--pitch-background: #444;
 					--tonic: #864;
 					--fifth-note: #468;
-					--third-note: #578844;
+					--third-note: #486;
 					--white-piano-key: #bbb;
 					--black-piano-key: #444;
 						--white-piano-key-text: #131200;
@@ -17560,7 +17844,7 @@ export class ColorConfig {
 				--pitch-background: #444;
 				--tonic: #864;
 				--fifth-note: #468;
-				--third-note: #578844;
+				--third-note: #486;
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
 				--white-piano-key-text: #131200;
@@ -17685,7 +17969,7 @@ export class ColorConfig {
 				--pitch-background: #444;
 				--tonic: #864;
 				--fifth-note: #468;
-				--third-note: #578844;
+				--third-note: #486;
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
 				--white-piano-key-text: #131200;
@@ -17810,7 +18094,7 @@ export class ColorConfig {
 				--pitch-background: #444;
 				--tonic: #864;
 				--fifth-note: #468;
-				--third-note: #578844;
+				--third-note: #486;
 				--white-piano-key: #bbb;
 				--black-piano-key: #444;
 				--white-piano-key-text: #131200;
@@ -18626,7 +18910,7 @@ export class ColorConfig {
 			--pitch-background: #20468b73;
 			--tonic: #c9c9c9;
 			--fifth-note: #731d1d;
-			--third-note: #578844;
+			--third-note: #486;
 			--white-piano-key: #eee;
 			--black-piano-key: #000;
 			--white-piano-key-text: #131200;
@@ -19438,7 +19722,7 @@ export class ColorConfig {
     --pitch-background: #3e3e3e;
     --tonic: #861057;
     --fifth-note: #7e7e7e;
-	--third-note: #578844;
+	--third-note: #486;
     --use-color-formula: false;
 			--pitch-channel-limit: 10;
     --track-editor-bg-pitch: #666161;
@@ -19558,7 +19842,7 @@ export class ColorConfig {
 				--pitch-background: #393e4f99;
 				--tonic: #725491;
 				--fifth-note: #54547a;
-				--third-note: #578844;
+				--third-note: #486;
 				--white-piano-key: #eee;
 				--black-piano-key: #666;
 				--use-color-formula: true;

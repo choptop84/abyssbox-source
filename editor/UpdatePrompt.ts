@@ -10,13 +10,13 @@ export class UpdatePrompt implements Prompt {
 
 
     public readonly startingContainer: HTMLDivElement = div({id: "tutorialPrompt"},
-    div({class:"promptTitle"}, h2({class:"tutorialExt",style:"text-align: inherit;"}, ""), h2({class:"tutorialTitle",style:"margin-bottom: 0.5em;"},"Here comes AbyssBox 1.4.5!")),
-    p({style:"margin-bottom: 0.5em; text-align: center; font-size: 15px;"},"AbyssBox 1.4.5 is here! And here are a couple of the changes!",),
-    p({style:"margin-bottom: 0.5em; text-align: left; font-size: 15px;"},"- Added a preference that ports Mobile AbyssBox's instrument Settings."),
-    p({style:"margin-bottom: 0.5em; text-align: left; font-size: 15px;"},"- Combined the Import and Export prompts into one."),
-    p({style:"margin-bottom: 0.5em; text-align: left; font-size: 15px;"},"- Added a feature that allows you to set a theme per song."),
-    p({style:"margin-bottom: 0.5em; text-align: center; font-size: 15px;"},"And more!"),
-    p({style:"margin-bottom: 0.5em; text-align: center; font-size: 15px;"},"For the full feature list, I suggest", 
+    div({class:"promptTitle"}, h2({class:"tutorialExt",style:"text-align: inherit;"}, ""), h2({class:"tutorialTitle",style:"margin-bottom: 0.5em;"},"AbyssBox 1.5 is OUT NOW!")),
+    p({style:"margin-bottom: 0.5em; text-align: center; font-size: 15px;"},"AbyssBox 1.5 is here! Here's a few of the many changes in this update!",),
+    p({style:"margin-bottom: 0.5em; text-align: left; font-size: 15px;"},"- Two new effects! Phaser and Ring Modulation!"),
+    p({style:"margin-bottom: 0.5em; text-align: left; font-size: 15px;"},"- New songwide modulation options!"),
+    p({style:"margin-bottom: 0.5em; text-align: left; font-size: 15px;"},"- You can export as .ogg and .opus!"),
+    p({style:"margin-bottom: 0.5em; text-align: center; font-size: 15px;"},"And much more!"),
+    p({style:"margin-bottom: 0.5em; text-align: center; font-size: 15px;"},"For the full update list, I suggest", 
         a({ href: "./patch-notes", target: "_blank", }, " Checking out the Patch Notes!"),),
     );
 

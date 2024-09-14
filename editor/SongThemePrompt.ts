@@ -37,6 +37,8 @@ export class SetThemePrompt implements Prompt {
 			option({ value: "Windows Xp"}, "Windows Xp"),
 			option({ value: "Frutiger Aero"}, "Frutiger Aero"),
 			option({ value: "Skeuomorphic"}, "Skeuomorphic/Early 2000's (LeoV)"),
+			option({ value: "corporate dark"}, "Corporate Dark"),
+			option({ value: "corporate light"}, "Corporate Light"),
 			option({ value: "Glyde"}, "Glyde"),
 			option({ value: "starry studio"}, "Starry Studio"),
 			option({ value: "Terminal 2.0 (AB)"}, "Terminal 2.0 (AB)"),
