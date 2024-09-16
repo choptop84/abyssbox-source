@@ -9,7 +9,7 @@ export class CustomThemeBases {
         @font-face {
             font-family: "CustomThemeFont";
             src:
-             url("abysstype.otf") format("opentype") tech(color-COLRv1),
+             url("./image_assets/abysstype.otf") format("opentype") tech(color-COLRv1),
             }
 
             html {
@@ -25,7 +25,7 @@ export class CustomThemeBases {
         @font-face {
             font-family: "CustomThemeFont";
             src:
-             url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
+             url("./image_assets/abysstype_small.otf") format("opentype") tech(color-COLRv1),
             }
 
             html {
@@ -41,13 +41,13 @@ export class CustomThemeBases {
         @font-face {
             font-family: "CustomThemeFont";
             src:
-             url("abysstype.otf") format("opentype") tech(color-COLRv1),
+             url("./image_assets/abysstype.otf") format("opentype") tech(color-COLRv1),
             }
 
             @font-face {
             font-family: "AbyssTypeSmall";
             src:
-             url("abysstype_small.otf") format("opentype") tech(color-COLRv1),
+             url("./image_assets/abysstype_small.otf") format("opentype") tech(color-COLRv1),
             }    
 
             html {
@@ -63,7 +63,7 @@ export class CustomThemeBases {
         @font-face {
             font-family: "CustomThemeFont";
             src:
-             url("doomfont.otf") format("opentype") tech(color-COLRv1),
+             url("./image_assets/doomfont.otf") format("opentype") tech(color-COLRv1),
             }
 
             html {
@@ -78,7 +78,7 @@ export class CustomThemeBases {
         @font-face {
             font-family: "CustomThemeFont";
             src:
-             url("tahoma.otf") format("opentype") tech(color-COLRv1),
+             url("./image_assets/tahoma.otf") format("opentype") tech(color-COLRv1),
             }
 
             html {
@@ -93,7 +93,7 @@ export class CustomThemeBases {
         @font-face {
             font-family: "CustomThemeFont";
             src:
-             url("trebuc.otf") format("opentype") tech(color-COLRv1),
+             url("./image_assets/trebuc.otf") format("opentype") tech(color-COLRv1),
             }
 
             html {
@@ -133,7 +133,7 @@ export class CustomThemeBases {
         @font-face {
             font-family: "CustomThemeFont";
             src:
-            url("https://choptop84.github.io/abyssbox-app/Workbench.ttf") format("truetype") tech(color-COLRv1),
+            url("./image_assets/Workbench.ttf") format("truetype") tech(color-COLRv1),
             }
 
             html {
@@ -148,7 +148,7 @@ export class CustomThemeBases {
         @font-face {
             font-family: "CustomThemeFont";
             src:
-            url("https://choptop84.github.io/abyssbox-app/Varela.ttf") format("truetype") tech(color-COLRv1),
+            url("./image_assets/Varela.ttf") format("truetype") tech(color-COLRv1),
             }
 
             html {
@@ -205,7 +205,7 @@ export class CustomThemeBases {
         `,
         "AbyssBox Classic": `
 			#text-content {
-    				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png");
+    				border-image-source: url("./image_assets/abyssbox_border.png");
     				border-image-slice: 4 fill; 
    				border-image-width: 8px; 
 				border-image-repeat: stretch; 
@@ -218,7 +218,7 @@ export class CustomThemeBases {
     				image-rendering: optimizeSpeed !important;             /* IE */
 				}
 			#beepboxEditorContainer {
-    				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png");
+    				border-image-source: url("./image_assets/abyssbox_border.png");
     				border-image-slice: 4 fill; 
    				border-image-width: 8px; 
 				border-image-repeat: stretch;
@@ -250,7 +250,7 @@ export class CustomThemeBases {
 			button.importInstrumentButton, 
 			.beepboxEditor select, 
 			.beepboxEditor .select2-selection__rendered {
-    				border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border.png") !important;
+    				border-image-source: url("./image_assets/abyssbox_border.png") !important;
     				border-image-slice: 4 fill !important; 
    				border-image-width: 4px !important; 
 				border-image-repeat: stretch !important;
@@ -352,7 +352,7 @@ export class CustomThemeBases {
 
         /* sets background image */
         body {
-        background-image: url("https://choptop84.github.io/abyssbox-source/website/stripesbg_light.gif") !important;
+        background-image: url("./image_assets//stripesbg_light.gif") !important;
         background-position: center;
         background-repeat: repeat;
 
@@ -363,7 +363,7 @@ export class CustomThemeBases {
         image-rendering: optimizeSpeed !important;             /* IE */
             }		
     #text-content {
-            border-image-source: url("https://choptop84.github.io/abyssbox-source/website/abyssbox_border_light.png");
+            border-image-source: url("./image_assets//abyssbox_border_light.png");
             border-image-slice: 4 fill; 
            border-image-width: 8px; 
         border-image-repeat: stretch; 
@@ -376,7 +376,7 @@ export class CustomThemeBases {
             image-rendering: optimizeSpeed !important;             /* IE */
         }
     #beepboxEditorContainer {
-            border-image-source: url("https://choptop84.github.io/abyssbox-source/website/abyssbox_border_light.png");
+            border-image-source: url("./image_assets//abyssbox_border_light.png");
             border-image-slice: 4 fill; 
            border-image-width: 8px; 
         border-image-repeat: stretch;
@@ -408,7 +408,7 @@ export class CustomThemeBases {
         button.importInstrumentButton, 
         .beepboxEditor select, 
         .beepboxEditor .select2-selection__rendered {
-                border-image-source: url("https://choptop84.github.io/abyssbox-app/abyssbox_border_light.png") !important;
+                border-image-source: url("./image_assets/abyssbox_border_light.png") !important;
                 border-image-slice: 4 fill !important; 
                border-image-width: 4px !important; 
             border-image-repeat: stretch !important;
@@ -826,7 +826,7 @@ export class CustomThemeBases {
         "Windows Xp": `
 
 			#text-content {
-    				border-image-source: url("https://choptop84.github.io/abyssbox-app/xptextbg.png");
+    				border-image-source: url("./image_assets/xptextbg.png");
     				border-image-slice: 11 fill; 
    				border-image-width: 11px; 
 				border-image-repeat: stretch;
@@ -834,7 +834,7 @@ export class CustomThemeBases {
     				padding: 14px; 
 				}
 			#beepboxEditorContainer {
-    				border-image-source: url("https://choptop84.github.io/abyssbox-app/xptextbg.png");
+    				border-image-source: url("./image_assets/xptextbg.png");
     				border-image-slice: 11 fill; 
    				border-image-width: 11px; 
 				border-image-repeat: stretch;
@@ -843,7 +843,7 @@ export class CustomThemeBases {
 				}
 
 			#firstImage {
-				background-image: url("https://choptop84.github.io/abyssbox-app/xpsongeditorbg.png") !important;
+				background-image: url("./image_assets/xpsongeditorbg.png") !important;
 				background-repeat: no-repeat !important;
 				background-size: 100% 100% !important;
 			}
@@ -875,7 +875,7 @@ export class CustomThemeBases {
 			}
 			
 			.beepboxEditor select:focus {
-					border-image-source: url("https://choptop84.github.io/abyssbox-app/xpbuttonpressedbg.png");
+					border-image-source: url("./image_assets/xpbuttonpressedbg.png");
 					border-image-slice: 4 fill; 
 					border-image-width: 4px; 
 					border-image-repeat: repeat;
@@ -1668,7 +1668,7 @@ export class CustomThemeBases {
         "BeepBox Pixel": `
         /* sets background image */
         #text-content {
-            border-image-source: url("https://choptop84.github.io/abyssbox-source/website/beepbox_pixel_border.png");
+            border-image-source: url("./image_assets//beepbox_pixel_border.png");
             border-image-slice: 4 fill; 
            border-image-width: 8px; 
         border-image-repeat: stretch; 
@@ -1681,7 +1681,7 @@ export class CustomThemeBases {
             image-rendering: optimizeSpeed !important;             /* IE */
         }
     #beepboxEditorContainer {
-            border-image-source: url("https://choptop84.github.io/abyssbox-source/website/beepbox_pixel_border.png");
+            border-image-source: url("./image_assets//beepbox_pixel_border.png");
             border-image-slice: 4 fill; 
            border-image-width: 8px; 
         border-image-repeat: stretch;
@@ -1713,7 +1713,7 @@ export class CustomThemeBases {
         button.importInstrumentButton, 
         .beepboxEditor select, 
         .beepboxEditor .select2-selection__rendered {
-            border-image-source: url("https://choptop84.github.io/abyssbox-source/website/beepbox_pixel_border.png") !important;
+            border-image-source: url("./image_assets//beepbox_pixel_border.png") !important;
             border-image-slice: 4 fill !important; 
            border-image-width: 4px !important; 
         border-image-repeat: stretch !important;
@@ -1730,7 +1730,7 @@ export class CustomThemeBases {
         /* sets background image */
         #text-content {
             --editor-background: (255, 255, 255, 0);
-                border-image-source: url("https://choptop84.github.io/abyssbox-app/forest2_border.png");
+                border-image-source: url("./image_assets/forest2_border.png");
                 border-image-slice: 16 fill; 
                    border-image-width: 32px; 
                 border-image-repeat: repeat; 
@@ -1744,7 +1744,7 @@ export class CustomThemeBases {
             }
         #beepboxEditorContainer {
             --editor-background: (255, 255, 255, 0);
-                border-image-source: url("https://choptop84.github.io/abyssbox-app/forest2_border.png");
+                border-image-source: url("./image_assets/forest2_border.png");
                 border-image-slice: 16 fill; 
                    border-image-width: 32px; 
                 border-image-repeat: repeat; 
@@ -1760,7 +1760,7 @@ export class CustomThemeBases {
                 image-rendering: optimizeSpeed !important;             /* IE */ 
             }
         .beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered, button {
-                border-image-source: url("https://choptop84.github.io/abyssbox-app/forest2_border2.png") !important;
+                border-image-source: url("./image_assets/forest2_border2.png") !important;
                 border-image-slice: 4 fill !important; 
                border-image-width: 4px !important; 
             border-image-repeat: stretch !important;
@@ -1865,7 +1865,7 @@ export class CustomThemeBases {
         "Nebula 2": `
         #text-content {
             --editor-background: rgba(255, 255, 255, 0);
-                border-image-source: url("https://choptop84.github.io/abyssbox-app/nebula2_border.png");
+                border-image-source: url("./image_assets/nebula2_border.png");
                 border-image-slice: 16 fill; 
                    border-image-width: 32px; 
                 border-image-repeat: repeat; 
@@ -1879,7 +1879,7 @@ export class CustomThemeBases {
             }
         #beepboxEditorContainer {
             --editor-background: rgba(255, 255, 255, 0);
-                border-image-source: url("https://choptop84.github.io/abyssbox-app/nebula2_border.png");
+                border-image-source: url("./image_assets/nebula2_border.png");
                 border-image-slice: 16 fill; 
                    border-image-width: 32px; 
                 border-image-repeat: repeat; 
@@ -1895,7 +1895,7 @@ export class CustomThemeBases {
                 image-rendering: optimizeSpeed !important;             /* IE */ 
             }
         .beepboxEditor button, .beepboxEditor select, .beepboxEditor .select2-selection__rendered, button {
-                border-image-source: url("https://choptop84.github.io/abyssbox-app/nebula2_border2.png") !important;
+                border-image-source: url("./image_assets/nebula2_border2.png") !important;
                 border-image-slice: 4 fill !important; 
                border-image-width: 4px !important; 
             border-image-repeat: stretch !important;
@@ -1993,7 +1993,7 @@ export class CustomThemeBases {
         "AbyssBox Classic": `
         /* sets background image */
 		body {
-			background-image: url("https://choptop84.github.io/abyssbox-source/website/stripesbg.gif") !important;
+			background-image: url("./image_assets//stripesbg.gif") !important;
 			background-position: center;
 			background-repeat: repeat;
 
@@ -2007,7 +2007,7 @@ export class CustomThemeBases {
         "AbyssBox Light": `
         /* sets background image */
         body {
-            background-image: url("https://choptop84.github.io/abyssbox-source/website/stripesbg_light.gif") !important;
+            background-image: url("./image_assets//stripesbg_light.gif") !important;
             background-position: center;
             background-repeat: repeat;
 
@@ -2021,7 +2021,7 @@ export class CustomThemeBases {
         "Half-Life": `
         /* sets background image */
             body {
-            background-image: url("https://choptop84.github.io/abyssbox-source/website/lambda.png") !important;
+            background-image: url("./image_assets//lambda.png") !important;
             background-position: top;
             background-attachment: fixed;
             background-repeat: no-repeat;
@@ -2050,7 +2050,7 @@ export class CustomThemeBases {
         "Windows Xp": `
         /* sets background image */
 		body {
-            background-image: url("https://choptop84.github.io/abyssbox-app/xphills.png") !important;
+            background-image: url("./image_assets/xphills.png") !important;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -2127,7 +2127,7 @@ export class CustomThemeBases {
         "BeepBox Pixel": `
         /* sets background image */
         body {
-            background-image: url("https://choptop84.github.io/abyssbox-source/website/diamondsbg.gif") !important;
+            background-image: url("./image_assets//diamondsbg.gif") !important;
             background-position: center;
             background-repeat: repeat;
 
@@ -2141,7 +2141,7 @@ export class CustomThemeBases {
         "Forest 2": `
         /* sets background image */
         body {
-            background-image: url("https://choptop84.github.io/abyssbox-app/Forest2Trees.png") !important;
+            background-image: url("./image_assets/Forest2Trees.png") !important;
             background-size: cover;
             background-position: center top; /* Adjusted to align with the top */
               background-repeat: no-repeat;
@@ -2169,7 +2169,7 @@ export class CustomThemeBases {
         `,
         "Nebula 2": `
         body {
-            background-image: url("https://choptop84.github.io/abyssbox-app/stars.gif") !important;
+            background-image: url("./image_assets/stars.gif") !important;
             background-size: contain !important;
             background-position: center top !important;
             background-repeat: repeat !important;
@@ -2214,8 +2214,8 @@ export class CustomThemeBases {
             --file-page-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-file.png");
             --edit-pencil-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-edit.png");
             --preferences-gear-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-preferences.png");
-            --instrument-copy-symbol: url("https://choptop84.github.io/abyssbox-app/icon-copy.png");
-            --instrument-paste-symbol: url("https://choptop84.github.io/abyssbox-app/icon-paste.png");
+            --instrument-copy-symbol: url("./image_assets/icon-copy.png");
+            --instrument-paste-symbol: url("./image_assets/icon-paste.png");
             --play-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-play.png");
             --pause-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-pause.png");
             --record-symbol: url("https://choptop84.github.io/choptop84s-image-repository/icon-record.png");
@@ -2276,25 +2276,25 @@ export class CustomThemeBases {
         `,
         "Windows Xp": `
 * {
-cursor: url("https://choptop84.github.io/abyssbox-app/xpcursor.png"), auto !important;
---play-symbol:url("https://choptop84.github.io/abyssbox-app/xpPlay.png");
---pause-symbol:url("https://choptop84.github.io/abyssbox-app/xpPause.png");
---record-symbol:url("https://choptop84.github.io/abyssbox-app/xpRecord.png");
---stop-symbol:url("https://choptop84.github.io/abyssbox-app/xpStop.png");
---prev-bar-symbol:url("https://choptop84.github.io/abyssbox-app/xpBackward.png");
---next-bar-symbol:url("https://choptop84.github.io/abyssbox-app/xpForward.png");
---file-page-symbol: url("https://choptop84.github.io/abyssbox-app/xpFile.png");
---edit-pencil-symbol: url("https://choptop84.github.io/abyssbox-app/xpEdit.png");
---preferences-gear-symbol: url("https://choptop84.github.io/abyssbox-app/xpPreferences.png");
---muted-symbol: url("https://choptop84.github.io/abyssbox-app/xpSpeakerMute.png");
---unmuted-symbol: url("https://choptop84.github.io/abyssbox-app/xpSpeaker.png");
---volume-symbol: url("https://choptop84.github.io/abyssbox-app/xpSpeaker.png");
---zoom-in-symbol: url("https://choptop84.github.io/abyssbox-app/xpZoomIn.png");
---zoom-out-symbol: url("https://choptop84.github.io/abyssbox-app/xpZoomOut.png");
+cursor: url("./image_assets/xpcursor.png"), auto !important;
+--play-symbol:url("./image_assets/xpPlay.png");
+--pause-symbol:url("./image_assets/xpPause.png");
+--record-symbol:url("./image_assets/xpRecord.png");
+--stop-symbol:url("./image_assets/xpStop.png");
+--prev-bar-symbol:url("./image_assets/xpBackward.png");
+--next-bar-symbol:url("./image_assets/xpForward.png");
+--file-page-symbol: url("./image_assets/xpFile.png");
+--edit-pencil-symbol: url("./image_assets/xpEdit.png");
+--preferences-gear-symbol: url("./image_assets/xpPreferences.png");
+--muted-symbol: url("./image_assets/xpSpeakerMute.png");
+--unmuted-symbol: url("./image_assets/xpSpeaker.png");
+--volume-symbol: url("./image_assets/xpSpeaker.png");
+--zoom-in-symbol: url("./image_assets/xpZoomIn.png");
+--zoom-out-symbol: url("./image_assets/xpZoomOut.png");
 }
 
 div.mute-button::before {
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpSpeaker.png") !important;
+    background-image: url("./image_assets/xpSpeaker.png") !important;
     background-size: 120% !important;
     background-position-x: center !important;
     background-position-y: center !important;
@@ -2308,7 +2308,7 @@ div.mute-button::before {
 }
 
 div.mute-button.muted::before {
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpSpeakerMute.png") !important;
+    background-image: url("./image_assets/xpSpeakerMute.png") !important;
     background-size: 120% !important;
     background-position-x: center !important;
     background-position-y: center !important;
@@ -2322,7 +2322,7 @@ div.mute-button.muted::before {
 }
 
 button.recordButton::Before {
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpRecord.png") !important;
+    background-image: url("./image_assets/xpRecord.png") !important;
     background-size: 64% !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
@@ -2336,7 +2336,7 @@ button.recordButton::Before {
 }
 
 button.stopButton::Before {
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpStop.png") !important;
+    background-image: url("./image_assets/xpStop.png") !important;
     background-size: 64% !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
@@ -2350,7 +2350,7 @@ button.stopButton::Before {
 }
 
 button.pauseButton::Before {
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpPause.png") !important;
+    background-image: url("./image_assets/xpPause.png") !important;
     background-size: 64% !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
@@ -2364,7 +2364,7 @@ button.pauseButton::Before {
 }
 
 .beepboxEditor span.volume-speaker {
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpSpeaker.png");
+    background-image: url("./image_assets/xpSpeaker.png");
     background-position: center !important;
     background-repeat: no-repeat !important;
 
@@ -2377,7 +2377,7 @@ button.pauseButton::Before {
 
 div.selectContainer.menu.file::before {
 
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpFile.png");
+    background-image: url("./image_assets/xpFile.png");
     background-size: 64%;
     background-position-x: center;
     background-position-y: center;
@@ -2391,7 +2391,7 @@ div.selectContainer.menu.file::before {
 
 div.selectContainer.menu.edit::before {
 
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpEdit.png");
+    background-image: url("./image_assets/xpEdit.png");
     background-size: 64%;
     background-position-x: center;
     background-position-y: center;
@@ -2404,7 +2404,7 @@ div.selectContainer.menu.edit::before {
 }
 div.selectContainer.menu.preferences::before {
 
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpPreferences.png");
+    background-image: url("./image_assets/xpPreferences.png");
     background-size: 64%;
     background-position-x: center;
     background-position-y: center;
@@ -2417,7 +2417,7 @@ div.selectContainer.menu.preferences::before {
 }
 button.playButton::before {
 
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpPlay.png") !important;
+    background-image: url("./image_assets/xpPlay.png") !important;
     background-size: 64% !important;
     background-position: center !important;
 
@@ -2430,7 +2430,7 @@ button.playButton::before {
 }
 
 .beepboxEditor button.prevBarButton::before {
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpBackward.png") !important;
+    background-image: url("./image_assets/xpBackward.png") !important;
     background-size: 64% !important;
     background-position: center !important;
 
@@ -2444,7 +2444,7 @@ button.playButton::before {
 }
 
 .beepboxEditor button.nextBarButton::before {
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpForward.png") !important;
+    background-image: url("./image_assets/xpForward.png") !important;
     background-size: 64% !important;
     background-position: center !important;
 
@@ -2458,7 +2458,7 @@ button.playButton::before {
 }
 
 .beepboxEditor .zoomInButton::before {
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpZoomIn.png") !important;
+    background-image: url("./image_assets/xpZoomIn.png") !important;
     background-position: center !important;
 
 
@@ -2471,7 +2471,7 @@ button.playButton::before {
 }
 
 .beepboxEditor .zoomOutButton::before {
-    background-image: url("https://choptop84.github.io/abyssbox-app/xpZoomOut.png") !important;
+    background-image: url("./image_assets/xpZoomOut.png") !important;
     background-position: center !important;
 
 
@@ -2484,7 +2484,7 @@ button.playButton::before {
 }
 
 .beepboxEditor input[type="range"]::-moz-range-thumb {
-    background-image: url("https://choptop84.github.io/abyssbox-app/scrollbar.png") !important;
+    background-image: url("./image_assets/scrollbar.png") !important;
     background-position: center !important;
     background-size: inherit !important;
 
@@ -2507,7 +2507,7 @@ button.playButton::before {
             border-radius: 0px;
             width: 13px !important;
             height: 13px !important;
-            background-image:url("https://choptop84.github.io/abyssbox-app/xpCheckmarkBlank.png");
+            background-image:url("./image_assets/xpCheckmarkBlank.png");
             background-repeat:no-repeat;
 
             image-rendering: -moz-crisp-edges !important;         /* Firefox */
@@ -2532,7 +2532,7 @@ button.playButton::before {
             text-align: center;
             content: "";
             background-repeat:no-repeat;
-            background-image:url("https://choptop84.github.io/abyssbox-app/xpCheckmark.png");
+            background-image:url("./image_assets/xpCheckmark.png");
             image-rendering: -moz-crisp-edges !important;         /* Firefox */
             image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
             image-rendering: -o-crisp-edges !important;            /* Opera */
@@ -2552,7 +2552,7 @@ button.playButton::before {
         `,
         "Retro": `
         * {
-        cursor: url("https://choptop84.github.io/abyssbox-app/pixel_cursor.png"), auto !important;
+        cursor: url("./image_assets/pixel_cursor.png"), auto !important;
         }
         `,
         "Slushie 2": `
@@ -2562,12 +2562,12 @@ button.playButton::before {
         `,
         "Ghost House 2": `
         * {
-		cursor: url("https://choptop84.github.io/abyssbox-app/pixel_cursor.png"), auto !important;
+		cursor: url("./image_assets/pixel_cursor.png"), auto !important;
         }
         `,
         "Windows Xp": `
         * {
-		cursor: url("https://choptop84.github.io/abyssbox-app/xpcursor.png"), auto !important;
+		cursor: url("./image_assets/xpcursor.png"), auto !important;
         }
         `,
         "WackyBox": `

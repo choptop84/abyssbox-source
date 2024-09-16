@@ -163,8 +163,8 @@
     var clickCount = 1;
     function change404Size(){
         var image = document.getElementById('404');
-        var splat = new Audio('splat.mp3');
-        var explosion = new Audio('explosion.mp3');
+        var splat = new Audio('./image_assets/splat.mp3');
+        var explosion = new Audio('./image_assets/explosion.mp3');
         image.width = image.width + (20 * (clickCount));
         image.height = image.height - (10 * clickCount);
         clickCount++;
@@ -173,9 +173,9 @@
         } else if (clickCount == 12) {
             explosion.play();
 			image.height = Math.random() * (640 - 20) + 20;
-            image.src = ("explosion.gif");
+            image.src = ("./image_assets/explosion.gif");
         } else if (clickCount == 13) {
-            image.src = ("abyssbox_uh_oh_404.png");
+            image.src = ("./image_assets/abyssbox_uh_oh_404.png");
             image.width = 576;
             image.height = 640;
             clickCount = 1;

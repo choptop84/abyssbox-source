@@ -293,7 +293,7 @@
                     <p>
                         You can add or remove notes by clicking on the gray rows at the top.
                         AbyssBox automatically plays the notes out loud for you. Try it!
-			    <img id="Hotdog" src="hotdog.png" width="500" height="333" onclick="changeHotdogSize()"/>
+			    <img id="Hotdog" src="image_assets/hotdog.png" width="500" height="333" onclick="changeHotdogSize()"/>
 				<script>
 				function changeHotdogSize(){
 
@@ -301,7 +301,7 @@
 					image.width = Math.random() * (750 - 20) + 20;
 					image.height = Math.random() * (499 - 20) + 20;
 
-                    var explosion = new Audio('explosion.mp3');
+                    var explosion = new Audio('image_assets/explosion.mp3');
 
                     function getRandomInt(max) {
                     return Math.floor(Math.random() * max);
@@ -312,19 +312,19 @@
 
                     if (shouldExplode != 1) {
                         if (hotdogSkin >= 3) {
-                        image.src = ("hotdog.png"); } 
+                        image.src = ("image_assets/hotdog.png"); } 
                         else if (hotdogSkin == 2) {
-                        image.src = ("banana.png"); }
+                        image.src = ("image_assets/banana.png"); }
                         else if (hotdogSkin == 1) {
-                        image.src = ("pizza.png"); }
+                        image.src = ("image_assets/pizza.png"); }
                         else if (hotdogSkin == 0) {
-                        image.src = ("donut.png"); }
+                        image.src = ("image_assets/donut.png"); }
                     }
 
                     if (shouldExplode == 1) {
                         console.log("Hello! I exploded!");
                         explosion.play();
-                        image.src = ("explosion.gif");
+                        image.src = ("image_assets/explosion.gif");
                         
                     }
                 }

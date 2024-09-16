@@ -98,13 +98,14 @@ export class SongDocument {
 			if (document.visibilityState === 'visible') {
 				if (this.song.setSongTheme == "none") {
 					if (window.localStorage.getItem("colorTheme") != null) {
-						ColorConfig.setTheme(String(window.localStorage.getItem("colorTheme")));
-						if (window.localStorage.getItem("colorTheme") == "custom") { 
-							CustomThemeBases.setFont(String(window.localStorage.getItem("customFontName")));
-							CustomThemeBases.setBackground(String(window.localStorage.getItem("customBackground")));
-							CustomThemeBases.setIcons(String(window.localStorage.getItem("customIconsName"))); 
-							CustomThemeBases.setBorder(String(window.localStorage.getItem("customBorderName")));
-							CustomThemeBases.setCursor(String(window.localStorage.getItem("customCursorName")));
+						if (window.localStorage.getItem("colorTheme") != ColorConfig.currentSetTheme) {
+							ColorConfig.setTheme(String(window.localStorage.getItem("colorTheme")));
+							if (window.localStorage.getItem("colorTheme") == "custom") { 
+								CustomThemeBases.setFont(String(window.localStorage.getItem("customFontName")));
+								CustomThemeBases.setBackground(String(window.localStorage.getItem("customBackground")));
+								CustomThemeBases.setIcons(String(window.localStorage.getItem("customIconsName"))); 
+								CustomThemeBases.setBorder(String(window.localStorage.getItem("customBorderName")));
+								CustomThemeBases.setCursor(String(window.localStorage.getItem("customCursorName")));
 							} else {
 								CustomThemeBases.setFont("none");
 								CustomThemeBases.setBackground("none");
@@ -112,6 +113,7 @@ export class SongDocument {
 								CustomThemeBases.setBorder("none");
 								CustomThemeBases.setCursor("none");
 							}
+						}
 					}
 				}
 		   	} 
