@@ -1840,19 +1840,6 @@ export class ColorConfig {
 				  box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
 			}
 
-				.beepboxEditor select
-				{
-					box-shadow: 0px 1px 3px 0px rgb(0, 0, 0), inset 0px -12px 14px 0px rgba(0, 0, 0, 0.3), inset 0px -15px 0px 0px rgba(0, 0, 0, 0.2);
-
-					--ui-widget-background: linear-gradient(#84aef0, #4f6db3) !important;
-					border-image-source:url("https://choptop84.github.io/choptop84s-image-repository/buttonshading.png") !important;
-					border-image-slice: 40 fill !important; 
-   					border-image-width: 4px !important; 
-					border-image-repeat: stretch; 
-				
-
-				}
-
 				div.playback-bar-controls button.playButton, 
 				div.playback-bar-controls button.pauseButton, 
 				div.playback-bar-controls button.recordButton, 
@@ -1864,20 +1851,19 @@ export class ColorConfig {
 				div.editor-controls button.exportInstrumentButton, 
 				div.editor-controls button.importInstrumentButton,
 				div.editor-controls div button.add-envelope,
-				div.editor-controls div button.delete-envelope  { 
-					box-shadow: 0px 1px 3px 0px rgb(0, 0, 0), inset 0px -12px 14px 0px rgba(0, 0, 0, 0.3), inset 0px -15px 0px 0px rgba(0, 0, 0, 0.2);
-
-					--ui-widget-background: linear-gradient(#84aef0, #4f6db3) !important;
-					border-image-source:url("https://choptop84.github.io/choptop84s-image-repository/buttonshading.png") !important;
-					border-image-slice: 40 fill !important; 
-   					border-image-width: 4px !important; 
-					border-image-repeat: stretch; 
+				div.editor-controls div button.delete-envelope, 
+				.beepboxEditor .select2-selection__rendered,
+				.beepboxEditor .instrument-bar button,
+				.beepboxEditor .eq-filter-type-bar button .deactivated,
+				.beepboxEditor .note-filter-type-bar button .deactivated,
+				.beepboxEditor select  { 
+					box-shadow: 0px 1px 3px 0px rgb(0, 0, 0), inset 0px -12px 14px 0px rgba(0, 0, 0, 0.3), inset 0px -7px 4px 0px rgba(79, 99, 204, 0.71), inset 0px -15px 0px 0px rgba(0, 0, 0, 0.2), inset 0px 1px 2px 1px #ffffff54;
+					--ui-widget-background: linear-gradient(#b6cfffcc, #628ef2cc) !important;
 				}
 
 				.beepboxEditor select:focus
 				{
 					border-image-source: none;
-					
 					--ui-widget-background: linear-gradient(#2a3d6a, #2a3d6a) !important;
 					box-shadow:
 						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
@@ -1887,19 +1873,6 @@ export class ColorConfig {
 					;
 				}
 
-				.beepboxEditor .select2-selection__rendered,
-				.beepboxEditor .instrument-bar button,
-				.beepboxEditor .eq-filter-type-bar button .deactivated,
-				.beepboxEditor .note-filter-type-bar button .deactivated
-				{
-					box-shadow: 0px 1px 3px 0px rgb(0, 0, 0), inset 0px -12px 14px 0px rgba(0, 0, 0, 0.3), inset 0px -15px 0px 0px rgba(0, 0, 0, 0.2);
-					--ui-widget-background: linear-gradient(#84aef0, #4f6db3) !important;
-
-					border-image-source:url("https://choptop84.github.io/choptop84s-image-repository/buttonshading.png") !important;
-					border-image-slice: 40 fill !important; 
-   					border-image-width: 4px !important; 
-					border-image-repeat: stretch; 
-				}
 				.beepboxEditor button, button
 				{
 					--ui-widget-background: linear-gradient(#84aef0, #2a3d6a) !important;
