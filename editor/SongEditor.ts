@@ -1214,7 +1214,7 @@ export class SongEditor {
         // this._decimalOffsetRow,
         this._pulseWidthDropdownGroup,
         this._stringSustainRow,
-        div({style:"margin-top:1em;margin-bottom:0.5em;"}, this._unisonSelectRow,),
+        div({style:""}, this._unisonSelectRow,),
         this._unisonDropdownGroup,
         ),
         div({ id:"effectsDiv"},
