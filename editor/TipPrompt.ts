@@ -562,25 +562,26 @@ export class TipPrompt implements Prompt {
 			case "phaserMix": {
 				message = div(
 					h2("Phaser Mix"),
-					p(``),
+					p(`This setting adds holes (aka notches) or peaks in the frequency spectrum to the waveform its given. The placement of these peaks and notches in the waveform can be changed by using envelopes and/or modulators.`),
 				);
 			} break;
 			case "phaserFreq": {
 				message = div(
 					h2("Phaser Frequency"),
-					p(``),
+					p(`This setting controls the frequency of the the peaks and notches of the phaser.`),
 				);
 			} break;
 			case "phaserFeedback": {
 				message = div(
 					h2("Phaser Feedback"),
-					p(``),
+					p(`This setting effects how pronounced the Feedback of the Phaser is, this is done by adding the Feedback of the Phaser back into itself.`),
 				);
 			} break;
 			case "phaserStages": {
 				message = div(
 					h2("Phaser Stages"),
-					p(`This slider changes how many all-passes there are in the phaser.`),
+					p(`This slider changes how many all-passes there are in the phaser. An all-pass is created by splitting an audio signal into paths, every path after the first one that is created is called an all-pass.`),
+					p(`The minimum value of this slider is 1, the reason being that 1 all-pass is the exact same as having no phaser at all, if there were 0 all-passes then the audio would cease to exist.`),
 				);
 			} break;
 			case "slideSpeedSlider": {

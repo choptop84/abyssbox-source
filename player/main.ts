@@ -212,18 +212,18 @@ import { SongPlayerLayout } from "./Layout";
 		playButton,
 	);
 		const loopIcon: SVGPathElement = path({d: "M 4 2 L 4 0 L 7 3 L 4 6 L 4 4 Q 2 4 2 6 Q 2 8 4 8 L 4 10 Q 0 10 0 6 Q 0 2 4 2 M 8 10 L 8 12 L 5 9 L 8 6 L 8 8 Q 10 8 10 6 Q 10 4 8 4 L 8 2 Q 12 2 12 6 Q 12 10 8 10 z"});
-		const loopButton: HTMLButtonElement = button({title: "loop", style: "background: none; flex: 0 0 12px; margin: 0 3px; width: 12px; height: 12px; display: flex;"}, svg({width: 12, height: 12, viewBox: "0 0 12 12"},
+		const loopButton: HTMLButtonElement = button({title: "loop", class:"spIcon loopIcon", style: "background: none; flex: 0 0 12px; margin: 0 3px; width: 12px; height: 12px; display: flex;"}, svg({width: 12, height: 12, viewBox: "0 0 12 12"},
 		loopIcon,
 	));
 	
 
-		const volumeIcon: SVGSVGElement = svg({style: "flex: 0 0 12px; margin: 0 1px; width: 12px; height: 12px;", viewBox: "0 0 12 12"},
+		const volumeIcon: SVGSVGElement = svg({class:"spIcon volumeIcon", style: "flex: 0 0 12px; margin: 0 1px; width: 12px; height: 12px;", viewBox: "0 0 12 12"},
 			path({fill: ColorConfig.uiWidgetBackground, d: "M 1 9 L 1 3 L 4 3 L 7 0 L 7 12 L 4 9 L 1 9 M 9 3 Q 12 6 9 9 L 8 8 Q 10.5 6 8 4 L 9 3 z"}),
 	);
 		
 	const volumeSlider: HTMLInputElement = input({ title: "volume", type: "range", value: 75, min: 0, max: 75, step: 1, style: "width: 12vw; max-width: 100px; margin: 0 1px;" });
 	
-		const zoomIcon: SVGSVGElement = svg({width: 12, height: 12, viewBox: "0 0 12 12"},
+		const zoomIcon: SVGSVGElement = svg({class:"spIcon zoomIcon", width: 12, height: 12, viewBox: "0 0 12 12"},
 			circle({cx: "5", cy: "5", r: "4.5", "stroke-width": "1", stroke: "currentColor", fill: "none"}),
 			path({stroke: "currentColor", "stroke-width": "2", d: "M 8 8 L 11 11 M 5 2 L 5 8 M 2 5 L 8 5", fill: "none"}),
 	);
@@ -720,6 +720,7 @@ import { SongPlayerLayout } from "./Layout";
 						else {
 							songPlayerContainer.style.gridTemplateRows = "78vh 0vh 7.4vh";
 						}
+						timelineContainer.style.left = "0px";
 					 } else {
 						timelineContainer.style.transform = '';
 						pianoContainer.style.display = "none";
@@ -739,6 +740,7 @@ import { SongPlayerLayout } from "./Layout";
 						else {
 							songPlayerContainer.style.gridTemplateRows = "92.6vh 0vh 7.4vh";
 						}
+						timelineContainer.style.left = "0px";
 					 } else {
 						timelineContainer.style.transform = '';
 						songPlayerContainer.style.gridTemplateRows = "";

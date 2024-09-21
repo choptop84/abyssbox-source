@@ -3232,7 +3232,7 @@ export class Song {
         if (andResetChannels) {
             this.pitchChannelCount = 3;
             this.noiseChannelCount = 1;
-            this.modChannelCount = 0;
+            this.modChannelCount = 1;
             for (let channelIndex: number = 0; channelIndex < this.getChannelCount(); channelIndex++) {
                 const isNoiseChannel: boolean = channelIndex >= this.pitchChannelCount && channelIndex < this.pitchChannelCount + this.noiseChannelCount;
                 const isModChannel: boolean = channelIndex >= this.pitchChannelCount + this.noiseChannelCount;
