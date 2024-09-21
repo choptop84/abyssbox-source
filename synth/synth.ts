@@ -2003,7 +2003,7 @@ export class Instrument {
             instrumentObject["ringModHz"] =  Math.round(100 *this.ringModulationHz/(Config.ringModHzRange - 1));
             instrumentObject["rmWaveformIndex"] = this.rmWaveformIndex;
             instrumentObject["rmPulseWidth"] =  Math.round(100 *this.rmPulseWidth/(Config.pulseWidthRange - 1));
-            instrumentObject["rmHzOffset"] =  Math.round(100 *this.rmHzOffset/(Config.rmHzOffsetMax - 1));
+            instrumentObject["rmHzOffset"] =  Math.round(100 *this.rmHzOffset/(Config.rmHzOffsetMax));
         }
         if (effectsIncludePhaser(this.effects)) {
             instrumentObject["phaserMix"] =  Math.round(100 *this.phaserMix/(Config.phaserMixRange - 1));
@@ -2459,7 +2459,7 @@ export class Instrument {
             this.rmPulseWidth = clamp(0, Config.pulseWidthRange, Math.round((Config.pulseWidthRange - 1) * (instrumentObject["rmPulseWidth"] | 0) / 100));
         }
         if (instrumentObject["rmHzOffset"] != undefined) {
-            this.rmPulseWidth = clamp(0, Config.rmHzOffsetMin, Math.round((Config.rmHzOffsetMax - 1) * (instrumentObject["rmHzOffset"] | 0) / 100));
+            this.rmHzOffset = clamp(0, Config.rmHzOffsetMax, Math.round((Config.rmHzOffsetMax - 1) * (instrumentObject["rmHzOffset"] | 0) / 100));
         }
 
 
