@@ -2345,6 +2345,16 @@ export class ChangeDetune extends ChangeInstrumentSlider {
     }
 }
 
+export class ChangeRmHzOffset extends ChangeInstrumentSlider {
+    constructor(doc: SongDocument, oldValue: number, newValue: number) {
+        super(doc);
+        this._instrument.rmHzOffset = newValue + Config.rmHzOffsetCenter;
+        doc.notifier.changed();
+        //doc.synth.unsetMod(Config.modulators.dictionary["rmHzOffset"].index, doc.channel, doc.getCurrentInstrument());
+        if (oldValue != newValue) this._didSomething();
+    }
+}
+
 export class ChangeDistortion extends ChangeInstrumentSlider {
     constructor(doc: SongDocument, oldValue: number, newValue: number) {
         super(doc);
