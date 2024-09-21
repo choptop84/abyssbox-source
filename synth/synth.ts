@@ -1552,6 +1552,7 @@ export class Instrument {
     public ringModulationHz: number = 0;
     public rmWaveformIndex: number = 0;
     public rmPulseWidth: number = 0;
+    public rmHzOffset: number = 200;
     public bitcrusherFreq: number = 0;
     public bitcrusherQuantization: number = 0;
     public chorus: number = 0;
@@ -1675,6 +1676,7 @@ export class Instrument {
         this.ringModulationHz = 0;
         this.rmPulseWidth = 0;
         this.rmWaveformIndex = 0;
+        this.rmHzOffset = 200;
 
         this.phaserFreq	= 0;
         this.phaserFeedback = 0;
@@ -2009,6 +2011,7 @@ export class Instrument {
             instrumentObject["ringModHz"] =  Math.round(100 *this.ringModulationHz/(Config.ringModHzRange - 1));
             instrumentObject["rmWaveformIndex"] = this.rmWaveformIndex;
             instrumentObject["rmPulseWidth"] =  Math.round(100 *this.rmPulseWidth/(Config.pulseWidthRange - 1));
+            instrumentObject["rmHzOffset"] =  Math.round(100 *this.rmHzOffset/(Config.rmHzOffsetMax));
         }
         if (effectsIncludePhaser(this.effects)) {
             instrumentObject["phaserMix"] =  Math.round(100 *this.phaserMix/(Config.phaserMixRange - 1));
@@ -2472,6 +2475,10 @@ export class Instrument {
         if (instrumentObject["rmPulseWidth"] != undefined) {
             this.rmPulseWidth = clamp(0, Config.pulseWidthRange, Math.round((Config.pulseWidthRange - 1) * (instrumentObject["rmPulseWidth"] | 0) / 100));
         }
+        if (instrumentObject["rmHzOffset"] != undefined) {
+            this.rmHzOffset = clamp(0, Config.rmHzOffsetMax, Math.round((Config.rmHzOffsetMax - 1) * (instrumentObject["rmHzOffset"] | 0) / 100));
+        }
+
 
         if (instrumentObject["phaserMix"] != undefined) {
             this.phaserMix = clamp(0, Config.phaserMixRange, Math.round((Config.phaserMixRange - 1) * (instrumentObject["phaserMix"] | 0) / 100));
@@ -3502,7 +3509,7 @@ export class Song {
                     buffer.push(base64IntToCharCode[instrument.ringModulationHz]);
                     buffer.push(base64IntToCharCode[instrument.rmWaveformIndex]);	
                     buffer.push(base64IntToCharCode[instrument.rmPulseWidth]);	
-
+                    buffer.push(base64IntToCharCode[(instrument.rmHzOffset - Config.rmHzOffsetMin) >> 6], base64IntToCharCode[(instrument.rmHzOffset - Config.rmHzOffsetMin) & 0x3F]);
                 }
                 if (effectsIncludePhaser(instrument.effects)) {
                     buffer.push(base64IntToCharCode[instrument.phaserFreq]);
@@ -5200,8 +5207,10 @@ export class Song {
                         instrument.ringModulation = clamp(0, Config.ringModRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                         instrument.ringModulationHz = clamp(0, Config.ringModHzRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
 					    instrument.rmWaveformIndex = clamp(0, Config.operatorWaves.length, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);	
-                        instrument.rmPulseWidth = clamp(0, Config.pulseWidthRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);										   					   	 						  								
-					    
+                        instrument.rmPulseWidth = clamp(0, Config.pulseWidthRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                        if (fromAbyssBox && !beforeThree) {										   					   	 						  								
+					        instrument.rmHzOffset = clamp(Config.rmHzOffsetMin, Config.rmHzOffsetMax + 1, (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << 6) + base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);;	
+                        }
                     }
                     if (effectsIncludePhaser(instrument.effects)) {
                         instrument.phaserFreq = clamp(0, Config.phaserFreqRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
@@ -7813,6 +7822,7 @@ class InstrumentState {
     public ringModPhaseDeltaScale: number = 1.0;
     public rmWaveformIndex: number = 0.0;
     public rmPulseWidth: number = 0.0;
+    public rmHzOffset: number = 0.0;
 
     public echoDelayLineL: Float32Array | null = null;
     public echoDelayLineR: Float32Array | null = null;
@@ -8332,13 +8342,15 @@ class InstrumentState {
             this.ringModMix = ringModStart;
             this.ringModMixDelta = (ringModEnd - ringModStart) / roundedSamplesPerTick;  
 
-            
-            let ringModPhaseDeltaStart = (ringModMinHz * Math.pow(ringModMaxHz / ringModMinHz, useRingModHzStart)) / synth.samplesPerSecond;
-            let ringModPhaseDeltaEnd = (ringModMinHz * Math.pow(ringModMaxHz / ringModMinHz, useRingModHzEnd)) / synth.samplesPerSecond;
+            this.rmHzOffset = instrument.rmHzOffset;
+
+            let ringModPhaseDeltaStart = (clamp(1, ringModMaxHz+Config.rmHzOffsetCenter, (ringModMinHz * Math.pow(ringModMaxHz / ringModMinHz, useRingModHzStart))+(this.rmHzOffset-Config.rmHzOffsetCenter))) / synth.samplesPerSecond;
+            let ringModPhaseDeltaEnd = (clamp(1, ringModMaxHz+Config.rmHzOffsetCenter, (ringModMinHz * Math.pow(ringModMaxHz / ringModMinHz, useRingModHzEnd))+(this.rmHzOffset-Config.rmHzOffsetCenter))) / synth.samplesPerSecond;
             this.ringModPhaseDelta = ringModPhaseDeltaStart;
             this.ringModPhaseDeltaScale = Math.pow(ringModPhaseDeltaEnd / ringModPhaseDeltaStart, 1.0 / roundedSamplesPerTick);
             this.rmWaveformIndex = instrument.rmWaveformIndex;
             this.rmPulseWidth = instrument.rmPulseWidth;
+            
         }
 
         let maxEchoMult = 0.0;

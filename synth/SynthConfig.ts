@@ -87,7 +87,6 @@ export const enum DropdownID {
     PulseWidth = 5,
     Unison = 6,
     Envelope = 7,
-
 }
 
 export const enum EffectType {
@@ -1201,6 +1200,9 @@ export class Config {
     public static readonly chorusRange: number = 8;
     public static readonly ringModRange: number = 8;
     public static readonly ringModHzRange: number = 64;
+    public static readonly rmHzOffsetCenter: number = 200;
+    public static readonly rmHzOffsetMax: number = 400;
+    public static readonly rmHzOffsetMin: number = 0;
     public static readonly chorusPeriodSeconds: number = 2.0;
     public static readonly chorusDelayRange: number = 0.0034;
     public static readonly chorusDelayOffsets: ReadonlyArray<ReadonlyArray<number>> = [[1.51, 2.10, 3.35], [1.47, 2.15, 3.25]];

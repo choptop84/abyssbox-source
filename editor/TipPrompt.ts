@@ -550,13 +550,14 @@ export class TipPrompt implements Prompt {
 			case "ringMod": {
 				message = div(
 					h2("Ring Modulation"),
-					p(`This setting multiplies a sine wave's frequency with an instrument frequency, this is useful for "bell-like" instruments.`),
+					p(`This setting multiplies a selected wave's frequency with an instrument frequency, this is useful for "bell-like" instruments.`),
 				);
 			} break;
 			case "RingModHz": {
 				message = div(
 					h2("Ring Modulation (Hertz)"),
-					p(`This setting changes the Hertz of the 2nd multiplied frequency with the first frequency.`),
+					p(`This setting changes the Hertz of the multiplied frequency.`),
+					p(`The offset allows you to increment the Hertz by 1.`),
 				);
 			} break;
 			case "phaserMix": {
