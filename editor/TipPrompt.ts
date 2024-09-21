@@ -585,6 +585,12 @@ export class TipPrompt implements Prompt {
 					p(`The minimum value of this slider is 1, the reason being that 1 all-pass is the exact same as having no phaser at all, if there were 0 all-passes then the audio would cease to exist.`),
 				);
 			} break;
+			case "unisonBuzzes": {
+				message = div(
+					h2("Unison Buzzing"),
+					p("This setting controls whether or not there's a buzzing noise when there's only 1 unison voice, and the spread is set to something other than 0."),
+				);
+			} break;
 			case "slideSpeedSlider": {
 				message = div(
 					h2("Slide Speed"),
