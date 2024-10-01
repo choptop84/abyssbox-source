@@ -2519,7 +2519,7 @@ export class SongEditor {
                     //this._openPrompt("tutorial");
                 }
 
-                if (window.localStorage.getItem("curVer") != "1.5") {
+                if (window.localStorage.getItem("curVer") != "1.5.1") {
                     window.localStorage.setItem("updateSeen", "false");
                 }
 
