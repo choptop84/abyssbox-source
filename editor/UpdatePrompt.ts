@@ -32,7 +32,7 @@ export class UpdatePrompt implements Prompt {
 
     private _close = (): void => {
         window.localStorage.setItem("updateSeen", "true");
-        window.localStorage.setItem("curVer", "1.5");
+        window.localStorage.setItem("curVer", "1.5.1");
         this._doc.prompt = null;
         this._doc.undo();
     }
