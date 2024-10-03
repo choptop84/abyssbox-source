@@ -12,7 +12,6 @@ export class UpdatePrompt implements Prompt {
     public readonly startingContainer: HTMLDivElement = div({id: "tutorialPrompt"},
     div({class:"promptTitle"}, h2({class:"tutorialExt",style:"text-align: inherit;"}, ""), h2({class:"tutorialTitle",style:"margin-bottom: 0.5em;"},"AbyssBox 1.5.1 is OUT NOW!")),
     p({style:"margin-bottom: 0.5em; text-align: center; font-size: 15px;"},"AbyssBox 1.5.1 is here! A rather small but meaningful update this time around!",),
-    p({style:"margin-bottom: 0.5em; text-align: left; font-size: 15px;"},"- Added an offset for Ring Modulation's Hz value, allowing for more specific hertz."),
     p({style:"margin-bottom: 0.5em; text-align: left; font-size: 15px;"},"- Updated the Frutiger Aero theme to be a little less laggy."),
     p({style:"margin-bottom: 0.5em; text-align: left; font-size: 15px;"},"- Added tips to the new effects, as they were missing before."),
     //p({style:"margin-bottom: 0.5em; text-align: center; font-size: 15px;"},"And much more!"),
