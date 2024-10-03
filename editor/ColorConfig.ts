@@ -3277,7 +3277,7 @@ export class ColorConfig {
 		}
 		.instructions-column > section:first-of-type > p:first-of-type:after {
 		display: block;
-		content: url("wide-gordon.png");
+		content: url("./image_assets/wide-gordon.png");
 		width: inherit;
 		height: contain;
 		text-align: center;
@@ -3445,7 +3445,7 @@ export class ColorConfig {
 		}
 		.instructions-column > section:first-of-type > p:first-of-type:after {
 		display: block;
-		content: url("wide-gordon.png");
+		content: url("./image_assets/wide-gordon.png");
 		width: inherit;
 		height: contain;
 		text-align: center;
@@ -4258,12 +4258,12 @@ export class ColorConfig {
 		}
 		#text-content > section > h1 {
 		margin: auto;
-		content: url("AbyssBox_DOOM.png");
+		content: url("./image_assets/AbyssBox_DOOM.png");
 		}
 				
 				/* sets background image */
 		body {
-		background-image: url("doomsky.png") !important;
+		background-image: url("./image_assets/doomsky.png") !important;
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
@@ -19009,18 +19009,18 @@ export class ColorConfig {
 		}
 		.instructions-column > section:first-of-type > p:first-of-type:after {
 		display: block;
-		content: url("UltraboxAzurLaneThemeStarterSquad.png");
+		content: url("./image_assets/UltraboxAzurLaneThemeStarterSquad.png");
 		width: 100%;
 		text-align: center;
 		margin-top: 25px;
 		}
 		/* sets cursor */
 		* {
-		cursor: url("UltraBoxAzurLaneThemeMouse.png"), auto !important;
+		cursor: url("./image_assets/UltraBoxAzurLaneThemeMouse.png"), auto !important;
 		}
 		/* sets background image */
 		body {
-		background-image: url("UltraBoxAzurLaneThemeMemoryTaskBackground.png") !important;
+		background-image: url("./image_assets/UltraBoxAzurLaneThemeMemoryTaskBackground.png") !important;
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
@@ -19034,7 +19034,7 @@ export class ColorConfig {
 		}
 		#text-content > section > h1 {
 		margin: auto;
-		content: url("UltraBoxALThemeLogo.png");
+		content: url("./image_assets/UltraBoxALThemeLogo.png");
 		}
 	}`,
 "WeebBox": `
