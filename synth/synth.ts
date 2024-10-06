@@ -3013,7 +3013,7 @@ export class Song {
     public key: number;
     public octave: number;
     public tempo: number;
-    public loopType: number;
+    public loopType: number = 1;
     public reverb: number;
     public beatsPerBar: number;
     public barCount: number;
@@ -6386,6 +6386,7 @@ export class Song {
             "customScale": this.scaleCustom,
             "key": Config.keys[this.key].name,
             "keyOctave": this.octave,
+            "loopType": this.loopType,
             "introBars": this.loopStart,
             "loopBars": this.loopLength,
             "beatsPerBar": this.beatsPerBar,
