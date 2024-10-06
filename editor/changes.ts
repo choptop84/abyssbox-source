@@ -4812,7 +4812,23 @@ export class ChangeShowSongDetails extends Change {
     }
 }
 
-
+/** 
+ * When this class is declared, it automatically increases the value of loopType to one more than it was before up to three.
+ * 
+ * Once the value becomes greater than three, it's value is returned to 1.
+*/
+export class ChangeLoopType extends Change {
+    constructor(doc: SongDocument, oldValue: number, newValue: number) {
+        super();
+        if (newValue < 3) {
+            newValue++;} else {
+            newValue = 1;
+        }
+        doc.song.loopType = newValue;
+        doc.notifier.changed();
+        if (oldValue != newValue) this._didSomething();
+    }
+}
 
 export class ChangeChannelName extends Change {
     constructor(doc: SongDocument, oldValue: string, newValue: string) {

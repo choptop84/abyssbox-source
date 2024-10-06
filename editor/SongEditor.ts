@@ -54,7 +54,6 @@ import {oscilascopeCanvas} from "../global/Oscilascope";
 import { VisualLoopControlsPrompt } from "./VisualLoopControlsPrompt";
 import { SampleLoadingStatusPrompt } from "./SampleLoadingStatusPrompt";
 import { AddSamplesPrompt } from "./AddSamplesPrompt";
-import { _loopType } from "../synth/synth";
 import { ShortenerConfigPrompt } from "./ShortenerConfigPrompt";
 
 import { TutorialPrompt } from "./TutorialPrompt";
@@ -2027,7 +2026,7 @@ export class SongEditor {
 
     private _loopTypeEvent = (): void => {
     // This stuff makes it so then the loop shit only works when the value is NOT 3
-    if (_loopType == 3) {
+    if (this._doc.song.loopType == 3) {
         this._doc.synth.loopRepeatCount = 0;
         this._loopEditor.container.style.display = "none"; // setting the display to none instead of the opacity to 0 makes it so then you can't edit the values when in this mode
         SongEditor._styleElement.textContent = SongEditor._setLoopIcon[3];
@@ -2036,7 +2035,7 @@ export class SongEditor {
         this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
         this._loopBarButton.style.display = "none";
         this._trackAndMuteContainer.style.marginBottom = "0.3em";
-        } else if (_loopType == 2) {
+        } else if (this._doc.song.loopType == 2) {
             this._doc.synth.loopRepeatCount = -1;
             this._loopEditor.container.style.display = "none";
             SongEditor._styleElement.textContent = SongEditor._setLoopIcon[2];	
@@ -2045,7 +2044,7 @@ export class SongEditor {
             this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
             this._loopBarButton.style.display = "none";
             this._trackAndMuteContainer.style.marginBottom = "0.3em";
-        } else if (_loopType == 1) {
+        } else if (this._doc.song.loopType == 1) {
             this._doc.synth.loopRepeatCount = -1;
             this._loopEditor.container.style.display = "";
             SongEditor._styleElement.textContent = SongEditor._setLoopIcon[1];	
@@ -2620,9 +2619,9 @@ export class SongEditor {
                 this._deleteChannelButton.style.display = prefs.displayShortcutButtons ? "" : "none";
                 this._selectAllButton.style.display = prefs.displayShortcutButtons ? "" : "none";
                 this._duplicateButton.style.display = prefs.displayShortcutButtons ? "" : "none";
-                if (_loopType != 1) {
+                if (this._doc.song.loopType != 1) {
                     this._loopBarButton.style.display = prefs.displayShortcutButtons ? "none" : "none"; 
-                } else if (_loopType == 1) {
+                } else if (this._doc.song.loopType == 1) {
                     this._loopBarButton.style.display = prefs.displayShortcutButtons ? "" : "none"; 
                 }
                 this._notesDownButton.style.display = prefs.displayShortcutButtons ? "" : "none";
@@ -2669,9 +2668,9 @@ export class SongEditor {
             this._deleteChannelButton.style.display = prefs.displayShortcutButtons ? "" : "none";
             this._selectAllButton.style.display = prefs.displayShortcutButtons ? "" : "none";
             this._duplicateButton.style.display = prefs.displayShortcutButtons ? "" : "none";
-            if (_loopType != 1) {
+            if (this._doc.song.loopType != 1) {
                 this._loopBarButton.style.display = prefs.displayShortcutButtons ? "none" : "none"; 
-            } else if (_loopType == 1) {
+            } else if (this._doc.song.loopType == 1) {
                 this._loopBarButton.style.display = prefs.displayShortcutButtons ? "" : "none"; 
             }
             this._notesDownButton.style.display = prefs.displayShortcutButtons ? "" : "none";
@@ -4899,7 +4898,7 @@ export class SongEditor {
 
                 if (needControlForShortcuts == (event.ctrlKey || event.metaKey)) {
                     if (event.shiftKey) {
-                        if (_loopType == 1) {
+                        if (this._doc.song.loopType == 1) {
                             const leftSel = Math.min(this._doc.selection.boxSelectionX0, this._doc.selection.boxSelectionX1);
                             const rightSel = Math.max(this._doc.selection.boxSelectionX0, this._doc.selection.boxSelectionX1);
                             if ((leftSel < this._doc.synth.loopBarStart || this._doc.synth.loopBarStart == -1)
@@ -5013,7 +5012,7 @@ export class SongEditor {
                 break;
                 case 70: // f (+shift: Set playerhead to loop start)
                 if (canPlayNotes) break;
-                if (_loopType == 1) {
+                if (this._doc.song.loopType == 1) {
                     if (event.shiftKey) {
                         
                         this._doc.synth.loopBarStart = -1;
@@ -6459,7 +6458,7 @@ export class SongEditor {
             case "enableChannelMuting":
                 this._doc.prefs.enableChannelMuting = !this._doc.prefs.enableChannelMuting;
                 for (const channel of this._doc.song.channels) channel.muted = false;
-                _loopType == 1;
+                this._doc.song.loopType == 1;
                 this._doc.synth.loopRepeatCount = -1;
                 this._loopEditor.container.style.display = "";
                 break;

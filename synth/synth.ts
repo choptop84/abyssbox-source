@@ -7,19 +7,6 @@ import { Deque } from "./Deque";
 import { events } from "../global/Events";
 import { FilterCoefficients, FrequencyResponse, DynamicBiquadFilter, warpInfinityToNyquist } from "./filtering";
 
-export let _loopType: number = 1;
-
-/** 
- * When this function is declared, it automatically increases the value of _loopType to one more than it was before up to three.
- * 
- * Once the value becomes greater than three, it's value is returned to 1.
-*/
-export function changeLoopType() {
-	if (_loopType < 3) {
-	_loopType += 1;} else {
-	_loopType = 1;
-	}
-}
 
 declare global {
     interface Window {
@@ -332,7 +319,7 @@ const enum SongTagCode {
 //	                    = CharCode.K,
 	pan                 = CharCode.L, // added between 8 and 9, DEPRECATED
 	customChipWave      = CharCode.M, // added in JummBox URL version 1(?) for customChipWave
-	songDetails           = CharCode.N, // added in JummBox URL version 1(?) for songTitle
+	songDetails         = CharCode.N, // added in JummBox URL version 1(?) for songTitle
 	limiterSettings     = CharCode.O, // added in JummBox URL version 3(?) for limiterSettings
 	operatorAmplitudes  = CharCode.P, // added in BeepBox URL version 6
 	operatorFrequencies = CharCode.Q, // added in BeepBox URL version 6
@@ -344,7 +331,7 @@ const enum SongTagCode {
 	pulseWidth          = CharCode.W, // added in BeepBox URL version 7
 	aliases             = CharCode.X, // added in JummBox URL version 4 for aliases, DEPRECATED, [UB] repurposed for PWM decimal offset (DEPRECATED as well)
     songTheme           = CharCode.Y, // added in AbyssBox URL version 1
-//                      = CharCode.Z, 
+    loopType            = CharCode.Z, // added in AbyssBox URL version 3
 //	                    = CharCode.NUM_0, 
 //                      = CharCode.NUM_1,
 //                      = CharCode.NUM_2, 
@@ -1216,7 +1203,7 @@ export class FilterSettings {
         this.controlPointCount = this.controlPoints.length;
     }
 
-    // Returns true if all filter control points match in number and type (but not freq/gain)
+    /**  Returns true if all filter control points match in number and type (but not freq/gain) */
     public static filtersCanMorph(filterA: FilterSettings, filterB: FilterSettings): boolean {
         if (filterA.controlPointCount != filterB.controlPointCount)
             return false;
@@ -1227,12 +1214,12 @@ export class FilterSettings {
         return true;
     }
 
-    // Interpolate two FilterSettings, where pos=0 is filterA and pos=1 is filterB
+    /** Interpolate two FilterSettings, where pos=0 is filterA and pos=1 is filterB */
     public static lerpFilters(filterA: FilterSettings, filterB: FilterSettings, pos: number): FilterSettings {
 
         let lerpedFilter: FilterSettings = new FilterSettings();
 
-        // One setting or another is null, return the other.
+        /** One setting or another is null, return the other. */
         if (filterA == null) {
             return filterA;
         }
@@ -1242,7 +1229,7 @@ export class FilterSettings {
 
         pos = Math.max(0, Math.min(1, pos));
 
-        // Filter control points match in number and type
+        /** Filter control points match in number and type*/
         if (this.filtersCanMorph(filterA, filterB)) {
             for (let i: number = 0; i < filterA.controlPointCount; i++) {
                 lerpedFilter.controlPoints[i] = new FilterControlPoint();
@@ -3026,6 +3013,7 @@ export class Song {
     public key: number;
     public octave: number;
     public tempo: number;
+    public loopType: number;
     public reverb: number;
     public beatsPerBar: number;
     public barCount: number;
@@ -3176,6 +3164,7 @@ export class Song {
         this.loopStart = 0;
         this.loopLength = 4;
         this.tempo = 120;
+        this.loopType = 1;
         this.reverb = 0;
         this.beatsPerBar = 8;
         this.barCount = 16;
@@ -3290,6 +3279,7 @@ export class Song {
         buffer.push(SongTagCode.barCount, base64IntToCharCode[(this.barCount - 1) >> 6], base64IntToCharCode[(this.barCount - 1) & 0x3f]);
         buffer.push(SongTagCode.patternCount, base64IntToCharCode[(this.patternsPerChannel - 1) >> 6], base64IntToCharCode[(this.patternsPerChannel - 1) & 0x3f]);
         buffer.push(SongTagCode.rhythm, base64IntToCharCode[this.rhythm]);
+        buffer.push(SongTagCode.loopType, base64IntToCharCode[this.loopType]);
 
         // Push limiter settings, but only if they aren't the default!
         buffer.push(SongTagCode.limiterSettings);
@@ -4207,6 +4197,9 @@ export class Song {
                     this.tempo = (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << 6) | (base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                 }
                 this.tempo = clamp(Config.tempoMin, Config.tempoMax + 1, this.tempo);
+            } break;
+            case SongTagCode.loopType: {
+                this.loopType = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
             } break;
             case SongTagCode.reverb: {
                 if (beforeNine && fromBeepBox) {
@@ -6832,6 +6825,10 @@ export class Song {
 
         if (jsonObject["beatsPerMinute"] != undefined) {
             this.tempo = clamp(Config.tempoMin, Config.tempoMax + 1, jsonObject["beatsPerMinute"] | 0);
+        }
+
+        if (jsonObject["loopType"] != undefined) {
+            this.loopType = jsonObject["loopType"] | 0;
         }
 
         if (jsonObject["keyOctave"] != undefined) {
@@ -9518,19 +9515,32 @@ export class Synth {
     // Idk if this is doing what I think its doing
     private getNextBar(): number {
         let nextBar: number = this.bar + 1;
-        if (_loopType != 2) { 
+        if (this.song?.loopType != null) {
+            if (this.song.loopType != 2) { 
+                if (this.isRecording) {
+                    if (nextBar >= this.song!.barCount) {
+                        nextBar = this.song!.barCount - 1;
+                    }
+                } else if ((this.bar == this.loopBarEnd && !this.renderingSong) /*) || (_loopType == 2 && (this.bar == this.song!.barCount-1))*/ ) {
+                        nextBar = this.loopBarStart; 
+                    }
+                    else if (this.loopRepeatCount != 0 && nextBar == Math.max(this.loopBarEnd+1, this.song!.loopStart + this.song!.loopLength)) {
+                        nextBar = this.song!.loopStart;
+                    }
+            } else if (this.song.loopType == 2 && (this.bar == this.song!.barCount-1)) {
+                nextBar = 0; 
+            }
+        } else {
             if (this.isRecording) {
                 if (nextBar >= this.song!.barCount) {
                     nextBar = this.song!.barCount - 1;
                 }
-            } else if ((this.bar == this.loopBarEnd && !this.renderingSong) /*) || (_loopType == 2 && (this.bar == this.song!.barCount-1))*/ ) {
-                    nextBar = this.loopBarStart; 
-                }
-                else if (this.loopRepeatCount != 0 && nextBar == Math.max(this.loopBarEnd+1, this.song!.loopStart + this.song!.loopLength)) {
-                    nextBar = this.song!.loopStart;
-                }
-        } else if (_loopType == 2 && (this.bar == this.song!.barCount-1)) {
-            nextBar = 0; 
+            } else if (this.bar == this.loopBarEnd && !this.renderingSong) {
+                nextBar = this.loopBarStart;
+            }
+            else if (this.loopRepeatCount != 0 && nextBar == Math.max(this.loopBarEnd+1, this.song!.loopStart + this.song!.loopLength)) {
+                nextBar = this.song!.loopStart;
+            }
         }
         return nextBar;
     }

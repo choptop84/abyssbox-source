@@ -5,10 +5,9 @@ import { HTML } from "imperative-html/dist/esm/elements-strict";
 import { ColorConfig } from "./ColorConfig";
 import { ChannelRow } from "./ChannelRow";
 import { InputBox } from "./HTMLWrapper";
-import { ChangeChannelOrder, ChangeChannelName, ChangeRemoveChannel } from "./changes";
+import { ChangeChannelOrder, ChangeChannelName, ChangeRemoveChannel, ChangeLoopType } from "./changes";
 import { Config } from "../synth/SynthConfig";
 import { SongEditor } from "./SongEditor";
-import { _loopType, changeLoopType } from "../synth/synth";
 
 //namespace beepbox {
 export class MuteEditor {
@@ -73,7 +72,7 @@ export class MuteEditor {
 	}
 
 	private _changeLoopType = (): void => {
-		changeLoopType();
+		new ChangeLoopType(this._doc, this._doc.song.loopType, this._doc.song.loopType);
 	}
 
 	private _channelNameInputHide = (): void => {
