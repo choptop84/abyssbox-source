@@ -2529,6 +2529,7 @@ export class SongEditor {
                 this._doc.synth.determineInvalidModulators(channel.instruments[j]);
             }
         }
+        this._loopTypeEvent();
         this._barScrollBar.render();
         this._trackEditor.render();
         this._muteEditor.render();

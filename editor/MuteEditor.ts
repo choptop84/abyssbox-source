@@ -72,7 +72,7 @@ export class MuteEditor {
 	}
 
 	private _changeLoopType = (): void => {
-		new ChangeLoopType(this._doc, this._doc.song.loopType, this._doc.song.loopType);
+		this._doc.record(new ChangeLoopType(this._doc, this._doc.song.loopType, this._doc.song.loopType));
 	}
 
 	private _channelNameInputHide = (): void => {

@@ -2094,6 +2094,15 @@ export class Instrument {
             if (Config.enableAcousticSustain) {
 				instrumentObject["stringSustainType"] = Config.sustainTypeNames[this.stringSustainType];
 			}
+        } else if (this.type == InstrumentType.harmonics) {
+            instrumentObject["unison"] = this.unison == Config.unisons.length ? "custom" : Config.unisons[this.unison].name;
+            if (this.unison == Config.unisons.length) {
+                instrumentObject["unisonVoices"] = this.unisonVoices;
+                instrumentObject["unisonSpread"] = this.unisonSpread;
+                instrumentObject["unisonOffset"] = this.unisonOffset;
+                instrumentObject["unisonExpression"] = this.unisonExpression;
+                instrumentObject["unisonSign"] = this.unisonSign;
+            }   
         } else if (this.type == InstrumentType.fm || this.type == InstrumentType.fm6op) {
             const operatorArray: Object[] = [];
             for (const operator of this.operators) {
