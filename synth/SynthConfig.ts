@@ -131,6 +131,8 @@ export const enum EnvelopeComputeIndex {
     phaserMix,
     phaserFeedback,
     phaserStages,
+    ringModulation,
+    ringModulationHz,
     length,
 }
 
@@ -1539,6 +1541,8 @@ export class Config {
         { name: "supersawDynamism",       computeIndex:       EnvelopeComputeIndex.supersawDynamism,       displayName: "dynamism",         /*perNote:  true,*/ interleave: false, isFilter: false, /*range: Config.supersawDynamismMax + 1, */    maxCount: 1,    effect: null,                    compatibleInstruments: [InstrumentType.supersaw]},
 		{ name: "supersawSpread",         computeIndex:       EnvelopeComputeIndex.supersawSpread,         displayName: "spread",           /*perNote:  true,*/ interleave: false, isFilter: false, /*range: Config.supersawSpreadMax + 1,   */    maxCount: 1,    effect: null,                    compatibleInstruments: [InstrumentType.supersaw]},
 		{ name: "supersawShape",          computeIndex:       EnvelopeComputeIndex.supersawShape,          displayName: "saw↔pulse",        /*perNote:  true,*/ interleave: false, isFilter: false, /*range: Config.supersawShapeMax + 1,    */    maxCount: 1,    effect: null,                    compatibleInstruments: [InstrumentType.supersaw]},    
+        { name: "ringModulation",                 computeIndex: EnvelopeComputeIndex.ringModulation,                 displayName: "ring mod",            interleave: false, isFilter: false, maxCount: 1,                       effect: EffectType.ringModulation,     compatibleInstruments: null },
+        { name: "ringModulationHz",                 computeIndex: EnvelopeComputeIndex.ringModulationHz,                 displayName: "ring mod hz",            interleave: false, isFilter: false, maxCount: 1,                       effect: EffectType.ringModulation,     compatibleInstruments: null },
         { name: "phaserFreq",                 computeIndex: EnvelopeComputeIndex.phaserFreq,                 displayName: "phaser freq",            interleave: false, isFilter: false, maxCount: 1,                       effect: EffectType.phaser,     compatibleInstruments: null },
         { name: "phaserMix",                 computeIndex: EnvelopeComputeIndex.phaserMix,                 displayName: "phaser",            interleave: false, isFilter: false, maxCount: 1,                       effect: EffectType.phaser,     compatibleInstruments: null },
         { name: "phaserFeedback",                 computeIndex: EnvelopeComputeIndex.phaserFeedback,                 displayName: "phaser feedback",            interleave: false, isFilter: false, maxCount: 1,                       effect: EffectType.phaser,     compatibleInstruments: null },

@@ -8285,9 +8285,14 @@ class InstrumentState {
         if (usesRingModulation) {
             let useRingModStart: number = instrument.ringModulation;
             let useRingModEnd: number = instrument.ringModulation;
+            
+            let useRingModEnvelopeStart: number = envelopeStarts[EnvelopeComputeIndex.ringModulation];
+            let useRingModEnvelopeEnd: number = envelopeEnds[EnvelopeComputeIndex.ringModulation];
 
             let useRingModHzStart: number = Math.min(1.0, instrument.ringModulationHz / (Config.ringModHzRange - 1));
             let useRingModHzEnd: number = Math.min(1.0, instrument.ringModulationHz/ (Config.ringModHzRange - 1));
+            let useRingModHzEnvelopeStart: number = envelopeStarts[EnvelopeComputeIndex.ringModulationHz];
+            let useRingModHzEnvelopeEnd: number = envelopeEnds[EnvelopeComputeIndex.ringModulationHz];
             let ringModMinHz: number = 20;
             let ringModMaxHz: number = 4400;
 
@@ -8303,16 +8308,16 @@ class InstrumentState {
                 useRingModHzStart = Math.min(1.0, Math.max(0.0, (synth.getModValue(Config.modulators.dictionary["ring mod hertz"].index, channelIndex, instrumentIndex, false)) / (Config.ringModHzRange - 1)));
                 useRingModHzEnd = Math.min(1.0, Math.max(0.0, (synth.getModValue(Config.modulators.dictionary["ring mod hertz"].index, channelIndex, instrumentIndex, false)) / (Config.ringModHzRange - 1)));
             }
-            let ringModStart: number = Math.min(1.0, useRingModStart / (Config.ringModRange - 1));
-            let ringModEnd: number = Math.min(1.0, useRingModEnd / (Config.ringModRange - 1));
+            let ringModStart: number = Math.min(1.0, (useRingModStart * useRingModEnvelopeStart) / (Config.ringModRange - 1));
+            let ringModEnd: number = Math.min(1.0, (useRingModEnd * useRingModEnvelopeEnd) / (Config.ringModRange - 1));
 
             this.ringModMix = ringModStart;
             this.ringModMixDelta = (ringModEnd - ringModStart) / roundedSamplesPerTick;  
 
             this.rmHzOffset = instrument.rmHzOffset;
 
-            let ringModPhaseDeltaStart = (clamp(1, ringModMaxHz+Config.rmHzOffsetCenter, (ringModMinHz * Math.pow(ringModMaxHz / ringModMinHz, useRingModHzStart))+(this.rmHzOffset-Config.rmHzOffsetCenter))) / synth.samplesPerSecond;
-            let ringModPhaseDeltaEnd = (clamp(1, ringModMaxHz+Config.rmHzOffsetCenter, (ringModMinHz * Math.pow(ringModMaxHz / ringModMinHz, useRingModHzEnd))+(this.rmHzOffset-Config.rmHzOffsetCenter))) / synth.samplesPerSecond;
+            let ringModPhaseDeltaStart = (clamp(1, ringModMaxHz+Config.rmHzOffsetCenter, ((ringModMinHz * Math.pow(ringModMaxHz / ringModMinHz, useRingModHzStart))*useRingModHzEnvelopeStart)+(this.rmHzOffset-Config.rmHzOffsetCenter))) / synth.samplesPerSecond;
+            let ringModPhaseDeltaEnd = (clamp(1, ringModMaxHz+Config.rmHzOffsetCenter, ((ringModMinHz * Math.pow(ringModMaxHz / ringModMinHz, useRingModHzEnd))*useRingModHzEnvelopeEnd)+(this.rmHzOffset-Config.rmHzOffsetCenter))) / synth.samplesPerSecond;
             this.ringModPhaseDelta = ringModPhaseDeltaStart;
             this.ringModPhaseDeltaScale = Math.pow(ringModPhaseDeltaEnd / ringModPhaseDeltaStart, 1.0 / roundedSamplesPerTick);
             this.rmWaveformIndex = instrument.rmWaveformIndex;
