@@ -106,7 +106,7 @@ export class Preferences {
 		this.showInstrumentScrollbars = window.localStorage.getItem("showInstrumentScrollbars") == "true";
 		this.closePromptByClickoff = window.localStorage.getItem("closePromptByClickoff") != "false";
 		this.frostedGlassBackground = window.localStorage.getItem("frostedGlassBackground") == "true";
-		this.displayShortcutButtons = window.localStorage.getItem("displayShortcutButtons") != "false";
+		this.displayShortcutButtons = window.localStorage.getItem("displayShortcutButtons") == "true";
 		this.instrumentSettingsSimplifier = window.localStorage.getItem("instrumentSettingsSimplifier") == "true";
 		this.oldMobileLayout = window.localStorage.getItem("oldMobileLayout") == "true";
 		this.oldModNotes = window.localStorage.getItem("oldModNotes") == "true";

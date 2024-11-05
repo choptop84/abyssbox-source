@@ -2448,9 +2448,6 @@ export class SongEditor {
 		case "generateEuclideanRhythm":
                         this.prompt = new EuclideanRhythmPrompt(this._doc);
                         break;
-		case "custom":
-                        //this.prompt = new CustomPrompt(this._doc, this._patternEditor, this._trackArea, document.getElementById("beepboxEditorContainer")!);
-                        break;
                 case "visualLoopControls":
                     this.prompt = new VisualLoopControlsPrompt(this._doc, this);
                     break;

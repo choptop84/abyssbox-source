@@ -192,11 +192,7 @@ export class ColorConfig {
 	--dont-loop-symbol: url("./image_assets/icon-loop-once.png");
 		}
 		
-			@font-face {
-		   font-family: "AbyssType";
-		   src:
- 		   url("./image_assets/abysstype.otf") format("opentype") tech(color-COLRv1),
-			}
+			
 
 			/* sets background image */
 			body {
@@ -296,13 +292,9 @@ export class ColorConfig {
  		   url("./image_assets/abysstype_small.otf") format("opentype") tech(color-COLRv1),
 			}
 
-			html {
- 		   	font-family: 'AbyssType';
-			}
+			
 
-			div.channelBoxLabel {
-				font-family: 'AbyssType_small' !important;
-			}
+			
 
 			.beepboxEditor input[type="range"]::-webkit-slider-thumb
 			{
@@ -551,17 +543,9 @@ export class ColorConfig {
 	--dont-loop-symbol: url("./image_assets/icon-loop-once.png");
 		}
 		
-			@font-face {
-		   font-family: "AbyssType";
-		   src:
- 		   url("./image_assets/abysstype.otf") format("opentype") tech(color-COLRv1),
-			}
+			
 
-			@font-face {
-		   font-family: "AbyssType";
-		   src:
- 		   url("./image_assets/abysstype.otf") format("opentype") tech(color-COLRv1),
-			}
+			
 
 			@font-face {
 		   font-family: "AbyssType_small";
@@ -637,9 +621,7 @@ export class ColorConfig {
 			html {
  		   font-family: 'AbyssType';
 			}
-			div.channelBoxLabel {
-				font-family: 'AbyssType_small' !important;
-			}
+			
 
 			.beepboxEditor input[type="range"]::-webkit-slider-thumb
 			{
@@ -974,17 +956,9 @@ export class ColorConfig {
 	--dont-loop-symbol: url("./image_assets/icon-loop-once.png");
 		}
 		
-			@font-face {
-		   font-family: "AbyssType";
-		   src:
- 		   url("./image_assets/abysstype.otf") format("opentype") tech(color-COLRv1),
-			}
+			
 
-			@font-face {
-		   font-family: "AbyssType";
-		   src:
- 		   url("./image_assets/abysstype.otf") format("opentype") tech(color-COLRv1),
-			}
+			
 
 			@font-face {
 		   font-family: "AbyssType_small";
@@ -1000,9 +974,7 @@ export class ColorConfig {
 			html {
  		   font-family: 'AbyssType';
 			}
-			div.channelBoxLabel {
-				font-family: 'AbyssType_small' !important;
-			}
+			
 
 			.beepboxEditor input[type="range"]::-webkit-slider-thumb
 			{
@@ -1390,11 +1362,7 @@ export class ColorConfig {
 	--dont-loop-symbol: url("./image_assets/icon-loop-once.png");
 		}
 		
-			@font-face {
-		   font-family: "AbyssType";
-		   src:
- 		   url("./image_assets/abysstype.otf") format("opentype") tech(color-COLRv1),
-			}
+			
 
 			/* sets background image */
 			body {
@@ -1494,13 +1462,9 @@ export class ColorConfig {
  		   url("./image_assets/abysstype_small.otf") format("opentype") tech(color-COLRv1),
 			}
 
-			html {
- 		   	font-family: 'AbyssType';
-			}
+			
 
-			div.channelBoxLabel {
-				font-family: 'AbyssType_small' !important;
-			}
+			
 
 			.beepboxEditor input[type="range"]::-webkit-slider-thumb
 			{
@@ -3064,11 +3028,7 @@ export class ColorConfig {
 		cursor: url("abyssbox_cursor.png"), auto !important;
 		}
 
-			@font-face {
-		   font-family: "AbyssType";
-		   src:
- 		   url("./image_assets/abysstype.otf") format("opentype") tech(color-COLRv1),
-			}
+			
 
 			button.envelopeDropdown, div.selectRow button:not(.copyButton,.pasteButton,.exportInstrumentButton,.importInstrumentButton) {
 				--ui-widget-background: var(--editor-background) !important;
@@ -3133,13 +3093,9 @@ export class ColorConfig {
  		   url("./image_assets/abysstype_small.otf") format("opentype") tech(color-COLRv1),
 			}
 
-			html {
- 		   	font-family: 'AbyssType';
-			}
+			
 
-			div.channelBoxLabel {
-				font-family: 'AbyssType_small' !important;
-			}
+			
 
 		   
 
@@ -4709,11 +4665,7 @@ export class ColorConfig {
 			border-radius: 0px;
 		} /* Thanks to LeoV's Skeumorphic theme on this one */
 
-			@font-face {
-		   font-family: "AbyssType";
-		   src:
- 		   url("./image_assets/abysstype.otf") format("opentype") tech(color-COLRv1),
-			}
+			
 
 			/*#Hotdog {
 				content: url("https://choptop84.github.io/choptop84s-image-repository/abclassic_hotdog.png");
@@ -4820,9 +4772,7 @@ export class ColorConfig {
 				content: url("https://choptop84.github.io/choptop84s-image-repository/AbyssBoxYumeNikkiThemeLogo.png");
 				}
 
-			/*html {
- 		   	font-family: 'AbyssType';
-			}*/
+			/**/
 
 			div.channelBoxLabel {
 				font-family: 'yumeNumbers' !important;
@@ -11682,9 +11632,7 @@ export class ColorConfig {
 			html {
 			font-family: 'AbyssType';
 			}
-			div.channelBoxLabel {
-				font-family: 'AbyssType_small' !important;
-			}
+			
 	`,
 	"ultrabox dark": `
 		:root {
