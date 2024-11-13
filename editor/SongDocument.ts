@@ -93,31 +93,6 @@ export class SongDocument {
 		this.synth = new Synth(this.song);
 		this.synth.volume = this._calcVolume();
 		this.synth.anticipatePoorPerformance = isMobile;
-		
-		document.addEventListener('visibilitychange', e=>{
-			if (document.visibilityState === 'visible') {
-				if (this.song.setSongTheme == "none") {
-					if (window.localStorage.getItem("colorTheme") != null) {
-						if (window.localStorage.getItem("colorTheme") != ColorConfig.currentSetTheme) {
-							ColorConfig.setTheme(String(window.localStorage.getItem("colorTheme")));
-							if (window.localStorage.getItem("colorTheme") == "custom") { 
-								CustomThemeBases.setFont(String(window.localStorage.getItem("customFontName")));
-								CustomThemeBases.setBackground(String(window.localStorage.getItem("customBackground")));
-								CustomThemeBases.setIcons(String(window.localStorage.getItem("customIconsName"))); 
-								CustomThemeBases.setBorder(String(window.localStorage.getItem("customBorderName")));
-								CustomThemeBases.setCursor(String(window.localStorage.getItem("customCursorName")));
-							} else {
-								CustomThemeBases.setFont("none");
-								CustomThemeBases.setBackground("none");
-								CustomThemeBases.setIcons("none"); 
-								CustomThemeBases.setBorder("none");
-								CustomThemeBases.setCursor("none");
-							}
-						}
-					}
-				}
-		   	} 
-	   })
 
 		if (this.song.setSongTheme == "none") {
 			ColorConfig.setTheme(this.prefs.colorTheme);

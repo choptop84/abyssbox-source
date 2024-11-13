@@ -4885,6 +4885,8 @@ export class SongEditor {
 
                 if (needControlForShortcuts == (event.ctrlKey || event.metaKey)) {
                     if (event.shiftKey) {
+                        this._openPrompt("beatsPerBar");
+                    } else { 
                         if (this._doc.song.loopType == 1) {
                             const leftSel = Math.min(this._doc.selection.boxSelectionX0, this._doc.selection.boxSelectionX1);
                             const rightSel = Math.max(this._doc.selection.boxSelectionX0, this._doc.selection.boxSelectionX1);
@@ -4903,7 +4905,6 @@ export class SongEditor {
                                 this._doc.synth.loopBarStart = -1;
                                 this._doc.synth.loopBarEnd = -1;
                             }
-    
                             // Pressed while viewing a different bar than the current synth playhead.
                             if (this._doc.bar != Math.floor(this._doc.synth.playhead) && this._doc.synth.loopBarStart != -1) {
     
@@ -4916,11 +4917,8 @@ export class SongEditor {
                                 }
     
                             }
-    
                             this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
-                    }
-                    } else { 
-                        this._openPrompt("beatsPerBar");
+                        }
                     }
                 }
                 event.preventDefault();
