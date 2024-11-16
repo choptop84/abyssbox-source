@@ -102,7 +102,6 @@ export const enum EffectType {
     vibrato,
     transition,
     chord,
-    // If you add more, you'll also have to extend the bitfield used in Base64 which currently uses two six-bit characters.
     ringModulation,
     phaser,
     noteRange,
@@ -1471,7 +1470,7 @@ export class Config {
     public static readonly harmonicsControlPointBits: number = 3;
     public static readonly harmonicsMax: number = (1 << Config.harmonicsControlPointBits) - 1;
     public static readonly harmonicsWavelength: number = 1 << 11; // 2048
-    public static readonly pulseWidthRange: number = 50;
+    public static readonly pulseWidthRange: number = 100;
     public static readonly pulseWidthStepPower: number = 0.5;
     public static readonly supersawVoiceCount: number = 7;
 	public static readonly supersawDynamismMax: number = 6;
@@ -1947,7 +1946,7 @@ export function getPulseWidthRatio(pulseWidth: number): number {
     // BeepBox formula for reference
     //return Math.pow(0.5, (Config.pulseWidthRange - 1 - pulseWidth) * Config.pulseWidthStepPower) * 0.5;
 
-    return pulseWidth / (Config.pulseWidthRange * 2);
+    return pulseWidth / (Config.pulseWidthRange);
 }
 
 
