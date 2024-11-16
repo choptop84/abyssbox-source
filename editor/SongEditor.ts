@@ -3928,6 +3928,7 @@ export class SongEditor {
                         settingList.push("song chorus");
                         settingList.push("song distortion");
                         settingList.push("song ring modulation");
+                        settingList.push("song pitch shift");
                     }
                     // Populate mod setting options for instrument scope.
                     else {

@@ -11080,7 +11080,7 @@ export class Synth {
             }
         }
 
-        if (effectsIncludePitchShift(instrument.effects)) {
+        if (effectsIncludePitchShift(instrument.effects)||this.isModActive(Config.modulators.dictionary["song pitch shift"].index, channelIndex, tone.instrumentIndex)) {
             let pitchShift: number = Config.justIntonationSemitones[instrument.pitchShift] / intervalScale;
             let pitchShiftScalarStart: number = 1.0;
             let pitchShiftScalarEnd: number = 1.0;
@@ -11088,6 +11088,11 @@ export class Synth {
                 pitchShift = Config.justIntonationSemitones[Config.justIntonationSemitones.length - 1];
                 pitchShiftScalarStart = (this.getModValue(Config.modulators.dictionary["pitch shift"].index, channelIndex, tone.instrumentIndex, false)) / (Config.pitchShiftCenter);
                 pitchShiftScalarEnd = (this.getModValue(Config.modulators.dictionary["pitch shift"].index, channelIndex, tone.instrumentIndex, true)) / (Config.pitchShiftCenter);
+            }
+            if (this.isModActive(Config.modulators.dictionary["song pitch shift"].index, channelIndex, tone.instrumentIndex)) {
+                pitchShift = Config.justIntonationSemitones[Config.justIntonationSemitones.length - 1];
+                pitchShiftScalarStart = clamp((-Config.pitchShiftRange*2)+1, Config.pitchShiftRange-1, (pitchShiftScalarStart + this.getModValue(Config.modulators.dictionary["song pitch shift"].index, undefined, undefined, true))-1) / (Config.pitchShiftCenter);
+                pitchShiftScalarEnd = clamp((-Config.pitchShiftRange*2)+1, Config.pitchShiftRange-1, (pitchShiftScalarEnd + this.getModValue(Config.modulators.dictionary["song pitch shift"].index, undefined, undefined, true))-1) / (Config.pitchShiftCenter);
             }
             const envelopeStart: number = envelopeStarts[EnvelopeComputeIndex.pitchShift];
             const envelopeEnd: number = envelopeEnds[EnvelopeComputeIndex.pitchShift];
