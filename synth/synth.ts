@@ -3624,13 +3624,13 @@ export class Song {
                     buffer.push(SongTagCode.unison, base64IntToCharCode[instrument.unison]);
                     if (instrument.unison == Config.unisons.length) encodeUnisonSettings(buffer, instrument.unisonVoices, instrument.unisonSpread, instrument.unisonOffset, instrument.unisonExpression, instrument.unisonSign, instrument.unisonBuzzes);
                 } else if (instrument.type == InstrumentType.pwm) {
-                    buffer.push(base64IntToCharCode[instrument.pulseWidth >> 6], base64IntToCharCode[instrument.pulseWidth & 0x3f]);
+                    buffer.push(base64IntToCharCode[SongTagCode.pulseWidth >> 6], base64IntToCharCode[SongTagCode.pulseWidth & 0x3f]);
                     buffer.push(base64IntToCharCode[instrument.decimalOffset >> 6], base64IntToCharCode[instrument.decimalOffset & 0x3f]); 
                     buffer.push(SongTagCode.unison, base64IntToCharCode[instrument.unison]);
                     if (instrument.unison == Config.unisons.length) encodeUnisonSettings(buffer, instrument.unisonVoices, instrument.unisonSpread, instrument.unisonOffset, instrument.unisonExpression, instrument.unisonSign, instrument.unisonBuzzes);
                 } else if (instrument.type == InstrumentType.supersaw) {
 					buffer.push(SongTagCode.supersaw, base64IntToCharCode[instrument.supersawDynamism], base64IntToCharCode[instrument.supersawSpread], base64IntToCharCode[instrument.supersawShape]);
-					buffer.push(base64IntToCharCode[instrument.pulseWidth >> 6], base64IntToCharCode[instrument.pulseWidth & 0x3f]);
+					buffer.push(base64IntToCharCode[SongTagCode.pulseWidth >> 6], base64IntToCharCode[SongTagCode.pulseWidth & 0x3f]);
                     buffer.push(base64IntToCharCode[instrument.decimalOffset >> 6], base64IntToCharCode[instrument.decimalOffset & 0x3f]);
 				} else if (instrument.type == InstrumentType.pickedString) {
                     if (Config.stringSustainRange > 0x20 || SustainType.length > 2) {
@@ -4703,10 +4703,10 @@ export class Song {
             case SongTagCode.pulseWidth: {
                 const instrument: Instrument = this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator];
                 if ((fromAbyssBox && !beforeThree)) {
-                    instrument.pulseWidth = (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << 6) | (base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                    instrument.pulseWidth = clamp(0, 101, (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << 6) | (base64CharCodeToInt[compressed.charCodeAt(charIndex++)]));
                 } else {
                     if (!fromBeepBox) {
-                        instrument.pulseWidth = clamp(0, Config.pulseWidthRange + (+(fromJummBox)) + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                        instrument.pulseWidth = clamp(0, Config.pulseWidthRange/2 + (+(fromJummBox)) + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                     } else {
                         // BeepBox formula
                         instrument.pulseWidth = Math.round(Math.pow(0.5, (7 - instrument.pulseWidth) * Config.pulseWidthStepPower) * Config.pulseWidthRange);
