@@ -8592,6 +8592,9 @@ class InstrumentState {
             this.chipWaveLoopMode = instrument.chipWaveLoopMode;
             this.chipWavePlayBackwards = instrument.chipWavePlayBackwards;
             this.chipWaveStartOffset = instrument.chipWaveStartOffset;
+        } else if (instrument.type == InstrumentType.customChipWave) {
+            this.wave = (this.aliases) ? instrument.customChipWave! : instrument.customChipWaveIntegral!;
+            this.volumeScale = 0.05;
         } else if (instrument.type == InstrumentType.noise) {
             this.wave = getDrumWave(instrument.chipNoise, inverseRealFourierTransform, scaleElementsByFactor);
         } else if (instrument.type == InstrumentType.harmonics) {
