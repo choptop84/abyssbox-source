@@ -44,6 +44,9 @@
         
         #modTitle::before {
             content: "AbyssBox";
+        }
+
+        .modTitle::before {
             color: var(--mod-title, var(--link-accent, #9c64f7));
         }
 
@@ -87,6 +90,43 @@
         80% { transform: translate(-1px, -1px) rotate(1deg); }
         90% { transform: translate(1px, 2px) rotate(0deg); }
         100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        .rainbow {
+        color: none;
+        animation: rainbow 2s;
+        animation-iteration-count: infinite;
+        }
+
+        @keyframes rainbow {
+        0% { color: #da1d1d; }
+        14% { color: #eb7a38; }
+        28% { color: #f1c811; }
+        42% { color: #11cc39; }
+        57% { color: #2ed9e6; }
+        71% { color: #842ee6; }
+        85% { color: #e02ee6; }
+        100% { color: #da1d1d; }
+        }
+
+        .splashText {
+        animation: splashText 0.5s cubic-bezier(.65,.05,.36,1);
+        animation-iteration-count: infinite;
+        text-shadow: 3px 3px #3f3f00;
+        color: #ffff00 !important;
+        position: absolute;
+        font-family: 'Minecraft';
+        }
+
+        @font-face {
+            font-family: 'Minecraft';
+            src: url(https://choptop84.github.io/choptop84s-image-repository/Minecraft.otf);
+        }
+
+        @keyframes splashText {
+        0% { transform: scale(1) rotate(-10deg) translateX(-35px) translateY(5px); }
+        50% { transform: scale(1.05) rotate(-10deg) translateX(-34px) translateY(6px) }
+        100% { transform: scale(1) rotate(-10deg) translateX(-35px) translateY(5px); }
         }
 
         #text-content {
@@ -245,7 +285,7 @@
         <section>
 
             <h1>
-                <div id="modTitle"><span id="plant" style="display: inline; color:var(--plant, #62a13b)"></span></div>
+                <div class="modTitle" id="modTitle"><span id="plant" style="display: inline; color:var(--plant, #62a13b)"></span></div>
             </h1>
             
             <p id="introduction">
@@ -518,6 +558,7 @@
         "  xoBssybA",
         "  Also try Monday Night BeepBoxing!",
         "  https://tinyurl.com/3hudd29u",
+        "  https://tinyurl.com/iploggersong",
         "  Click here for a secret!",
         "  Do NOT click here!!!",
         "  The Game...",
@@ -543,7 +584,6 @@
         ", also has developed BoxBeep!",
         "  named after My Abyss!",
         "  check out My Abyss!",
-        "  Over 60 themes more than what UltraBox has!",
         "  Is not full of water!",
         "  Also try NepBox!",
         "  Also try MidBox!",
@@ -606,6 +646,9 @@
         "  not :wackybox:",
         "  100% beef",
         "  100% vegan",
+        "  rainbow!",
+        "  half-life 3 when?",
+        "  skipped the 3rd entry",
         ];
 
         const curPlant = Math.floor(Math.random() * plants.length);
@@ -633,6 +676,16 @@
         if (document.getElementById("plant").innerHTML == "  Shakey Shakey!!!") {
             document.getElementById("modTitle").className = "thingy";
             }    
+
+        if (document.getElementById("plant").innerHTML == "  rainbow!") {
+            document.getElementById("modTitle").className = "rainbow";
+            document.getElementById("plant").className = "rainbow";
+        }    
+
+        if (document.getElementById("plant").innerHTML == "  Try Minecraft!") {
+            document.getElementById("modTitle").style.paddingBottom = "10px";
+            document.getElementById("plant").className = "splashText";
+        }
 
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|android|ipad|playbook|silk/i.test(navigator.userAgent)) {
             document.getElementById("introduction").innerHTML = "UltraBox is an online tool for sketching and sharing chiptune melodies. Make sure that your volume is turned up, then press the play button!";
