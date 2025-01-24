@@ -5787,8 +5787,10 @@ export class Song {
                         let envTypeIndex: number = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
                         if ((beforeTwo && fromGoldBox) || (fromBeepBox)) envTypeIndex = pregoldToEnvelope[envTypeIndex];
                         let perEnvelopeSpeed: number = 1;
-                        perEnvelopeSpeed = Config.envelopes[envTypeIndex].speed;
-                        envTypeIndex = oldToNewEnvelope[envTypeIndex];
+                        if ((!fromAbyssBox)||(fromAbyssBox&&beforeThree)) {
+                            perEnvelopeSpeed = Config.envelopes[envTypeIndex].speed;
+                            envTypeIndex = oldToNewEnvelope[envTypeIndex];
+                        }
                         let isTremolo2 = false;
                         if (((!fromAbyssBox) || (fromAbyssBox && beforeThree)) && envTypeIndex == 9) {
                             isTremolo2 = true;
