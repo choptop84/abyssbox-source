@@ -28,6 +28,7 @@
 		"@types/select2": "^4.0.53",
 		"alwan": "^2.0.2",
 		"imperative-html": "^0.1.0",
+		"js-xxhash": "^4.0.0",
 		"opus-encdec": "^0.1.1",
 		"select2": "^4.0.13"
 	}
