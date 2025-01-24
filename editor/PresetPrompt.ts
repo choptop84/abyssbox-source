@@ -40,7 +40,8 @@ export var totalPresets = new Array(
 	"Midbox Noise Presets",
 	"UltraBox Presets",
 	"AbyssBox 0.8 to 1.2 Presets", 
-	"AbyssBox 1.3+ Presets");
+	"AbyssBox 1.3+ Presets",
+	"AbyssBox Spooky Presets");
 
 if (storedPresets != null && storedPresets != undefined) {
     setPresets = JSON.parse(storedPresets);
@@ -64,7 +65,8 @@ if (storedPresets != null && storedPresets != undefined) {
 	"Novelty Presets",
 	"UltraBox Presets",
 	"AbyssBox 0.8 to 1.2 Presets", 
-	"AbyssBox 1.3+ Presets"
+	"AbyssBox 1.3+ Presets",
+	"AbyssBox Spooky Presets"
 	);
 }
 
@@ -105,6 +107,7 @@ export class PresetPrompt implements Prompt {
             option({ value: "UltraBox Presets" }, (setPresets.includes("UltraBox Presets") ? textOnIcon : textOffIcon) + "UltraBox Presets"),
 			option({ value: "AbyssBox 0.8 to 1.2 Presets" }, (setPresets.includes("AbyssBox 0.8 to 1.2 Presets") ? textOnIcon : textOffIcon) + "AbyssBox 0.8 to 1.2 Presets"),
 			option({ value: "AbyssBox 1.3+ Presets" }, (setPresets.includes("AbyssBox 1.3+ Presets") ? textOnIcon : textOffIcon) + "AbyssBox 1.3+ Presets"),
+			option({ value: "AbyssBox Spooky Presets" }, (setPresets.includes("AbyssBox Spooky Presets") ? textOnIcon : textOffIcon) + "AbyssBox Spooky Presets"),
     );
 
 	public readonly container: HTMLDivElement = div({ class: "prompt noSelection",  id: "presetContainerPrompt", style: "width: 400px;" },

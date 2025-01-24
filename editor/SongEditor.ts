@@ -3717,6 +3717,7 @@ export class SongEditor {
             this._envelopeDropdownGroup.style.display = "none";
 
             this.envelopeEditor.render();
+            this.envelopeEditor.rerenderExtraSettings();
 
             for (let chordIndex: number = 0; chordIndex < Config.chords.length; chordIndex++) {
                 let hidden: boolean = (!Config.instrumentTypeHasSpecialInterval[instrument.type] && Config.chords[chordIndex].customInterval);
@@ -5025,6 +5026,16 @@ export class SongEditor {
                     const instrument: Instrument = this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()];
                     if (!instrument.eqFilterType && this._doc.channel < this._doc.song.pitchChannelCount + this._doc.song.noiseChannelCount)
                         this._openPrompt("customEQFilterSettings");
+                } else if (event.altKey) {
+                    //open / close all envelope dropdowns
+                    const instrument: Instrument = this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()];
+                    const isAllOpen: boolean = this.envelopeEditor.openExtraSettingsDropdowns.every((x) => { return x == true })
+                    for (let i = 0; i < instrument.envelopeCount; i++) {
+                        if (isAllOpen) this.envelopeEditor.openExtraSettingsDropdowns[i] = false;
+                        else this.envelopeEditor.openExtraSettingsDropdowns[i] = true;
+                    }
+                    this.envelopeEditor.rerenderExtraSettings();
+                    event.preventDefault();
                 } else if (needControlForShortcuts == (event.ctrlKey || event.metaKey)) {
                     this._openPrompt("generateEuclideanRhythm");
                     event.preventDefault();
@@ -5393,6 +5404,7 @@ export class SongEditor {
                     this._doc.selection.selectionUpdated();
                 } else {
                     this._doc.selection.setChannelBar((this._doc.channel - 1 + this._doc.song.getChannelCount()) % this._doc.song.getChannelCount(), this._doc.bar);
+                    this.envelopeEditor.rerenderExtraSettings();
                     this._doc.selection.resetBoxSelection();
                 }
                 event.preventDefault();
@@ -5406,6 +5418,7 @@ export class SongEditor {
                     this._doc.selection.selectionUpdated();
                 } else {
                     this._doc.selection.setChannelBar((this._doc.channel + 1) % this._doc.song.getChannelCount(), this._doc.bar);
+                    this.envelopeEditor.rerenderExtraSettings();
                     this._doc.selection.resetBoxSelection();
                 }
                 event.preventDefault();
