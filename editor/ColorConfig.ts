@@ -2218,7 +2218,7 @@ export class ColorConfig {
 			--disabled-note-secondary:  #6a677a;
 		}
 		 
-		.curChannelBox {
+		.channelBox {
 			--pitch1-primary-channel:  linear-gradient(#ff7777, #ff5959);
 			--pitch2-primary-channel:  linear-gradient(#ffaf71, #ffa159);
 			--pitch3-primary-channel:  linear-gradient(#ffee7c, #ffe959);
