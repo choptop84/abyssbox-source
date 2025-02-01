@@ -154,8 +154,13 @@ export const enum BaseWaveTypes {
     square,
     triangle,
     sawtooth,
+    trapezoid,
+    steppedSaw,
+    steppedTri,
+    // ramp,
     length,
 }
+
 
 export const enum RandomEnvelopeTypes {
     time,
@@ -899,6 +904,7 @@ export class Config {
         { name: "Harmonic Major", realName: "harmonic major", flags: [true, false, true, false, true, true, false, true, true, false, false, true] }, // Harmonic Major
         { name: "Harmonic Minor", realName: "harmonic minor", flags: [true, false, true, true, false, true, false, true, true, false, false, true] }, // Harmonic Minor
         { name: "Melodic Minor", realName: "melodic minor", flags: [true, false, true, true, false, true, false, true, false, true, false, true] }, // Melodic Minor
+        { name: "Blues Major", realName: "blues major", flags: [true, false, true, true, true,false, false, true, false, true, false, false] }, // Blues Major
         { name: "Blues", realName: "blues", flags: [true, false, false, true, false, true, true, true, false, false, true, false] }, // Blues
         { name: "Altered", realName: "altered", flags: [true, true, false, true, true, false, true, false, true, false, true, false] }, // Altered
         { name: "Major Pentatonic", realName: "major pentatonic", flags: [true, false, true, false, true, false, false, true, false, true, false, false] }, // Major Pentatonic
@@ -1634,7 +1640,7 @@ export class Config {
 
     public static readonly perEnvelopeBoundMin: number = 0;
     public static readonly perEnvelopeBoundMax: number = 2;
-    public static readonly randomEnvelopeSeedMax: number = 64; //if you increase this you'll need to update the url to support it
+    public static readonly randomEnvelopeSeedMax: number = 63; //if you increase this you'll need to update the url to support it
     public static readonly randomEnvelopeStepsMax: number = 24;
 
     // Picked strings have an all-pass filter with a corner frequency based on the tone fundamental frequency, in order to add a slight inharmonicity. (Which is important for distortion.)

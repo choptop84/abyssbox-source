@@ -3883,6 +3883,9 @@ export class Song {
                         buffer.push(base64IntToCharCode[instrument.envelopes[envelopeIndex].waveform]);
                     } else if (Config.newEnvelopes[instrument.envelopes[envelopeIndex].envelope].name == "lfo") {
                         buffer.push(base64IntToCharCode[instrument.envelopes[envelopeIndex].waveform]);
+                        if (instrument.envelopes[envelopeIndex].waveform == BaseWaveTypes.steppedSaw || instrument.envelopes[envelopeIndex].waveform == BaseWaveTypes.steppedTri) {
+                            buffer.push(base64IntToCharCode[instrument.envelopes[envelopeIndex].steps]);
+                        }
                     }
                     //inverse
                     buffer.push(base64IntToCharCode[(+instrument.envelopes[envelopeIndex].inverse)] ? base64IntToCharCode[(+instrument.envelopes[envelopeIndex].inverse)] : base64IntToCharCode[0]);
@@ -5798,6 +5801,9 @@ export class Song {
                         if ((fromAbyssBox && !beforeThree)||fromSlarmoosBox) {
                             if (Config.newEnvelopes[envelope].name == "lfo") { 
                                 waveform = clamp(0, BaseWaveTypes.length, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                                if (waveform == BaseWaveTypes.steppedSaw || waveform == BaseWaveTypes.steppedTri) {
+                                    steps = clamp(1, Config.randomEnvelopeStepsMax + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                                }
                             } else if (Config.newEnvelopes[envelope].name == "random") {
                                 steps = clamp(1, Config.randomEnvelopeStepsMax + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                                 seed = clamp(1, Config.randomEnvelopeSeedMax + 1, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
@@ -8024,6 +8030,27 @@ class EnvelopeComputer {
                         } else {
                             return (beats * envelopeSpeed) % 1 * boundAdjust + perEnvelopeLowerBound;
                         }
+                    case BaseWaveTypes.trapezoid:
+                        let trap: number = 0;
+                        if (inverse) {
+                            trap = (perEnvelopeUpperBound / 2) - (boundAdjust * 2 / Math.PI) * Math.asin(Math.sin((Math.PI / 2) + beats * Math.PI * 2.0 * envelopeSpeed)) + (perEnvelopeLowerBound / 2);
+                        } else {
+                            trap = (perEnvelopeUpperBound / 2) + (boundAdjust * 2 / Math.PI) * Math.asin(Math.sin((Math.PI / 2) + beats * Math.PI * 2.0 * envelopeSpeed)) + (perEnvelopeLowerBound / 2);
+                        }
+                        return Math.max(perEnvelopeLowerBound, Math.min(perEnvelopeUpperBound, trap));    
+                    case BaseWaveTypes.steppedSaw:
+                        if (steps <= 1) return 1;
+                        let saw: number = (beats * envelopeSpeed) % 1;
+                        if (inverse) {
+                            return perEnvelopeUpperBound - Math.floor(saw * steps) * boundAdjust / (steps - 1);
+                        } else {
+                            return Math.floor(saw * steps) * boundAdjust / (steps - 1) + perEnvelopeLowerBound;
+                        }
+                        
+                    case BaseWaveTypes.steppedTri:
+                        if (steps <= 1) return 1;
+                        let tri: number = 0.5 + (inverse ? -1 : 1) * (1 / Math.PI) * Math.asin(Math.sin((Math.PI / 2) + beats * Math.PI * 2.0 * envelopeSpeed));
+                        return Math.round(tri * (steps - 1)) * boundAdjust / (steps - 1) + perEnvelopeLowerBound;    
                     default: throw new Error("Unrecognized operator envelope waveform type: " + waveform);
                 }   
             case EnvelopeType.tremolo2: 
