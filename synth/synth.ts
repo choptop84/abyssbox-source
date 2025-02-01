@@ -5728,7 +5728,7 @@ export class Song {
                 const oldToNewEnvelope: number[] = [
                     0, // none
                     1, // note size
-                    2, // punch
+                    4, // punch
                     5, 5, 5, 5, // flare
                     6, 6, 6, 6, // twang
                     7, 7, 7, 7, // swell
