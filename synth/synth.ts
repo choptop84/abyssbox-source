@@ -11217,18 +11217,20 @@ export class Synth {
             let prevNote: Note | null = null;
             let nextNote: Note | null = null;
 
+            // Bit Obvious, but this if statement is getting what notes are supposed to be played and what the previous note is.
             if (playSong && pattern != null && !channel.muted && (!this.isRecording || this.liveInputChannel != channelIndex)) {
                 for (let i: number = 0; i < pattern.notes.length; i++) {
-                    if (pattern.notes[i].end <= currentPart) {
+                    if (pattern.notes[i].end <= currentPart) { // All notes that this applies to is a previous note
                         prevNote = pattern.notes[i];
-                    } else if (pattern.notes[i].start <= currentPart && pattern.notes[i].end > currentPart) {
+                    } else if (pattern.notes[i].start <= currentPart && pattern.notes[i].end > currentPart) { // This is the current note
                         note = pattern.notes[i];
-                    } else if (pattern.notes[i].start > currentPart) {
+                    } else if (pattern.notes[i].start > currentPart) { // All notes this applies to is a next note
                         nextNote = pattern.notes[i];
                         break;
                     }
                 }
 
+                // If the previous or next note isn't right before or after the current note, then it'll set itself as null.
                 if (note != null) {
                     if (prevNote != null && prevNote.end != note.start) prevNote = null;
                     if (nextNote != null && nextNote.start != note.end) nextNote = null;

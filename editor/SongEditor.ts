@@ -840,7 +840,7 @@ export class SongEditor {
             option({ value: "displayBrowserUrl" }, "Enable Song Data in URL"),
             option({ value: "closePromptByClickoff" }, "Close prompts on click off"),
             option({ value: "oldMobileLayout" }, "Use the Old mobile layout (Reload)"),
-            option({ value: "instrumentSettingsSimplifier" }, "Use Mobile Instrument Settings"),
+            option({ value: "instrumentSettingsSimplifier" }, "Use Instrument Setting Tabs"),
             option({ value: "promptSongDetails" }, "Prompt Song Details on Load"),
             option({ value: "recordingSetup" }, "Note Recording..."),
             ),
@@ -1209,18 +1209,17 @@ export class SongEditor {
     );
     */
     private readonly _addEnvelopeButton: HTMLButtonElement = button({ type: "button", class: "add-envelope" });
-    private readonly _customInstrumentSettingsGroup: HTMLDivElement = div({ class: "editor-controls" },
-    div({ id:"InstrumentDiv"},
+    private readonly _instrumentDiv: HTMLDivElement = div({ id:"InstrumentDiv"},
         this._panSliderRow,
         this._panDropdownGroup,
         this._chipWaveSelectRow,
         this._chipNoiseSelectRow,
-	this._useChipWaveAdvancedLoopControlsRow,
-	this._chipWaveLoopModeSelectRow,
-	this._chipWaveLoopStartRow,
-	this._chipWaveLoopEndRow,
-	this._chipWaveStartOffsetRow,
-	this._chipWavePlayBackwardsRow,
+	    this._useChipWaveAdvancedLoopControlsRow,
+	    this._chipWaveLoopModeSelectRow,
+	    this._chipWaveLoopStartRow,
+	    this._chipWaveLoopEndRow,
+	    this._chipWaveStartOffsetRow,
+	    this._chipWavePlayBackwardsRow,
         this._customWaveDraw,
         this._eqFilterTypeRow,
         this._eqFilterRow,
@@ -1236,17 +1235,17 @@ export class SongEditor {
         this._spectrumRow,
         this._harmonicsRow,
         this._drumsetGroup,
-	this._supersawDynamismRow,
-	this._supersawSpreadRow,
-	this._supersawShapeRow,
+	    this._supersawDynamismRow,
+	    this._supersawSpreadRow,
+	    this._supersawShapeRow,
         this._pulseWidthRow,
         // this._decimalOffsetRow,
         this._pulseWidthDropdownGroup,
         this._stringSustainRow,
         div({style:""}, this._unisonSelectRow,),
         this._unisonDropdownGroup,
-        ),
-        div({ id:"effectsDiv"},
+        );
+    private readonly _effectDiv: HTMLDivElement = div({ id:"effectsDiv"},
         div({ class:"effectsNameDiv", style: `padding: 2px 0; margin-left: 2em; display: flex; align-items: center;` },
             span({ style: `flex-grow: 1; text-align: center;` }, span({ class: "tip", onclick: () => this._openPrompt("effects") }, "Effects")),
             div({ class: "effects-menu" }, this._effectsSelect),
@@ -1281,8 +1280,8 @@ export class SongEditor {
             this._lowerNoteLimitRow,
             this._invertWaveRow,
         ),
-    ),
-    div({ id:"envelopesDiv"},
+    );
+    private readonly _envelopeDiv: HTMLDivElement = div({ id:"envelopesDiv"},
         div({ class:"envelopesNameDiv", style: `padding: 2px 0; margin-left: 2em; display: flex; align-items: center;` },
             span({ style: `flex-grow: 1; text-align: center;` }, span({ class: "tip", onclick: () => this._openPrompt("envelopes") }, "Envelopes")),
             this._envelopeDropdown,
@@ -1292,7 +1291,11 @@ export class SongEditor {
         this._envelopeDropdownGroup,
         this.envelopeEditor.container,
         ),
-    ),
+    );
+    private readonly _customInstrumentSettingsGroup: HTMLDivElement = div({ class: "editor-controls" },
+        this._instrumentDiv,
+        this._effectDiv,
+        this._envelopeDiv,
     );
     private readonly _instrumentCopyGroup: HTMLDivElement = div({ class: "editor-controls" },
         div({ class: "selectRow" },
@@ -1321,92 +1324,18 @@ export class SongEditor {
     private selectedPatternDiv: HTMLDivElement = div({style:"background: var(--ui-widget-background); font-weight: bold; border-radius: 5px; height: 32px; position: absolute; font-size: 20px; text-align: center; align-content: center;", title:"The total number of patterns you have selected in the track editor."}, this.selectedPatternCounter);
 
     // comment for ctrl+f: mobile stuffs
-    private readonly _mobileInstSettingsButton: HTMLButtonElement = button({class:"mobileInstButton", type:"button", style:"width:33%;", onclick: () => this._setSettingToInstrument()}, "Settings");
-    private readonly _mobileEffectsButton: HTMLButtonElement = button({class:"mobileEffectsButton", type:"button", style:"width:30%; background: #fff0; color: var(--text-color-dim);", onclick: () => this._setSettingToEffect()}, "Effects" );
-    private readonly _mobileEnvelopesButton: HTMLButtonElement = button({class:"mobileEnvelopesButton", type:"button", style:"width:37%; background: #fff0; color: var(--text-color-dim);", onclick: () => this._setSettingToEnvelope()}, "Envelope");
+    private readonly _mobileInstSettingsButton: HTMLButtonElement = button({class:"mobileInstButton", type:"button", style:"width:33%;", onclick: () => this._changeSetting(1)}, "Settings");
+    private readonly _mobileEffectsButton: HTMLButtonElement = button({class:"mobileEffectsButton", type:"button", style:"width:30%; background: #fff0; color: var(--text-color-dim);", onclick: () => this._changeSetting(2)}, "Effects" );
+    private readonly _mobileEnvelopesButton: HTMLButtonElement = button({class:"mobileEnvelopesButton", type:"button", style:"width:37%; background: #fff0; color: var(--text-color-dim);", onclick: () => this._changeSetting(3)}, "Envelope");
     private readonly _instOptionsDiv: HTMLDivElement = div({class:"instMobileOptions",style:"display:none; padding-bottom: 4px;"}, 
         this._mobileInstSettingsButton, 
         this._mobileEffectsButton,
         this._mobileEnvelopesButton
     );
 
-    private _setSettingToInstrument = (): void => {
-                const colors: ChannelColors = ColorConfig.getChannelColor(this._doc.song, this._doc.channel);
-        this._instOptionsDiv.style.setProperty("--text-color-lit", colors.primaryNote);
-        this._instOptionsDiv.style.setProperty("--text-color-dim", colors.secondaryNote);
-        this._instOptionsDiv.style.setProperty("--background-color-lit", colors.primaryChannel);
-        this._instOptionsDiv.style.setProperty("--background-color-dim", colors.secondaryChannel);
-        const instStuffs = document.getElementById('InstrumentDiv');
-        const effectStuffs = document.getElementById('effectsDiv');
-        const envelopeStuffs = document.getElementById('envelopesDiv');
-
-        this._instSettingMode = 1;
-
-        instStuffs!.style.display = "";
-        effectStuffs!.style.display = "none";
-        envelopeStuffs!.style.display = "none";
-        this._mobileInstSettingsButton.style.color = "var(--text-color-lit)";
-        this._mobileEffectsButton.style.color = "var(--text-color-dim)";
-        this._mobileEnvelopesButton.style.color = "var(--text-color-dim)";
-        this._mobileInstSettingsButton.style.background = "";
-        this._mobileEffectsButton.style.background = "#fff0";
-        this._mobileEnvelopesButton.style.background = "#fff0";
-
-        this._mobileInstSettingsButton.classList.remove("deactivated");
-        this._mobileEffectsButton.classList.add("deactivated");
-        this._mobileEnvelopesButton.classList.add("deactivated");
-    } 
-
-    private _setSettingToEffect = (): void => {
-        const colors: ChannelColors = ColorConfig.getChannelColor(this._doc.song, this._doc.channel);
-        this._instOptionsDiv.style.setProperty("--text-color-lit", colors.primaryNote);
-        this._instOptionsDiv.style.setProperty("--text-color-dim", colors.secondaryNote);
-        this._instOptionsDiv.style.setProperty("--background-color-lit", colors.primaryChannel);
-        this._instOptionsDiv.style.setProperty("--background-color-dim", colors.secondaryChannel);
-        const instStuffs = document.getElementById('InstrumentDiv');
-        const effectStuffs = document.getElementById('effectsDiv');
-        const envelopeStuffs = document.getElementById('envelopesDiv');
-
-        this._instSettingMode = 2;
-
-        instStuffs!.style.display = "none";
-        effectStuffs!.style.display = "";
-        envelopeStuffs!.style.display = "none";
-        this._mobileInstSettingsButton.style.color = "var(--text-color-dim)";
-        this._mobileEffectsButton.style.color = "var(--text-color-lit)";
-        this._mobileEnvelopesButton.style.color = "var(--text-color-dim)";
-        this._mobileInstSettingsButton.style.background = "#fff0";
-        this._mobileEffectsButton.style.background = "";
-        this._mobileEnvelopesButton.style.background = "#fff0";
-        this._mobileInstSettingsButton.classList.add("deactivated");
-        this._mobileEffectsButton.classList.remove("deactivated");
-        this._mobileEnvelopesButton.classList.add("deactivated");
-    } 
-
-    private _setSettingToEnvelope = (): void => {
-        const colors: ChannelColors = ColorConfig.getChannelColor(this._doc.song, this._doc.channel);
-        this._instOptionsDiv.style.setProperty("--text-color-lit", colors.primaryNote);
-        this._instOptionsDiv.style.setProperty("--text-color-dim", colors.secondaryNote);
-        this._instOptionsDiv.style.setProperty("--background-color-lit", colors.primaryChannel);
-        this._instOptionsDiv.style.setProperty("--background-color-dim", colors.secondaryChannel);
-        const instStuffs = document.getElementById('InstrumentDiv');
-        const effectStuffs = document.getElementById('effectsDiv');
-        const envelopeStuffs = document.getElementById('envelopesDiv');
-
-        this._instSettingMode = 3;
-
-        instStuffs!.style.display = "none";
-        effectStuffs!.style.display = "none";
-        envelopeStuffs!.style.display = "";
-        this._mobileInstSettingsButton.style.color = "var(--text-color-dim)";
-        this._mobileEffectsButton.style.color = "var(--text-color-dim)";
-        this._mobileEnvelopesButton.style.color = "var(--text-color-lit)";
-        this._mobileInstSettingsButton.style.background = "#fff0";
-        this._mobileEffectsButton.style.background = "#fff0";
-        this._mobileEnvelopesButton.style.background = "";
-        this._mobileInstSettingsButton.classList.add("deactivated");
-        this._mobileEffectsButton.classList.add("deactivated");
-        this._mobileEnvelopesButton.classList.remove("deactivated");
+    private _changeSetting = (setSetting:number): void => {
+        this._instSettingMode = setSetting;
+        this.whenUpdated();
     } 
 
     private readonly _instrumentSettingsGroup: HTMLDivElement = div({ class: "editor-controls" },
@@ -2724,28 +2653,10 @@ export class SongEditor {
 
             this._promptContainer.style.left = "50vw";
 
-            const effectStuffs = document.getElementById('effectsDiv');
-            const envelopeStuffs = document.getElementById('envelopesDiv');
-            const instStuffs = document.getElementById('InstrumentDiv');
+            this._instSettingMode == 1 ? this._instrumentDiv.style.display = "" : this._instrumentDiv.style.display = "none";
+            this._instSettingMode == 2 ? this._effectDiv.style.display = "" : this._effectDiv.style.display = "none";
+            this._instSettingMode == 3 ? this._envelopeDiv.style.display = "" : this._envelopeDiv.style.display = "none";
 
-            if (this._instSettingMode == 1) {
-                instStuffs!.style.display = "";
-                effectStuffs!.style.display = "none";
-                envelopeStuffs!.style.display = "none";
-                console.log("Instrument Settings");
-            } else if (this._instSettingMode == 2) {
-                instStuffs!.style.display = "none";
-                effectStuffs!.style.display = "";
-                envelopeStuffs!.style.display = "none";
-                console.log("Effects Settings");
-            } else if (this._instSettingMode == 3) {
-                instStuffs!.style.display = "none";
-                effectStuffs!.style.display = "none";
-                envelopeStuffs!.style.display = "";
-                console.log("Envelopes Settings");
-
-            }
-                console.log("Current Setting: "+this._instSettingMode);
             beepboxEditorContainer.style.borderImageSource = "";
 
             this._settingsArea.style.display = "none";
@@ -3109,7 +3020,7 @@ export class SongEditor {
             (prefs.displayBrowserUrl ? textOnIcon : textOffIcon) + "Enable Song Data in URL",
             (prefs.closePromptByClickoff ? textOnIcon : textOffIcon) + "Close Prompts on Click Off",
             (prefs.oldMobileLayout ? textOnIcon : textOffIcon) + "Use the Old mobile layout (Reload)",
-            (prefs.instrumentSettingsSimplifier ? textOnIcon : textOffIcon) + "Use Mobile Instrument Settings",
+            (prefs.instrumentSettingsSimplifier ? textOnIcon : textOffIcon) + "Use Instrument Setting Tabs",
             (prefs.promptSongDetails ? textOnIcon : textOffIcon) + "Prompt Song Details on Load",
             "> Note Recording",
             "Appearance",
@@ -3576,22 +3487,33 @@ export class SongEditor {
                 this._noteFilterTypeRow.style.display = "none";
             }
 
-            if (this._doc.prefs.instrumentSettingsSimplifier == true) {
-                    if (this._instSettingMode == 1) {
-                    this._setSettingToInstrument(); }
-                    if (this._instSettingMode == 2) {
-                    this._setSettingToEffect(); }
-                    if (this._instSettingMode == 3) {
-                    this._setSettingToEnvelope(); }
-                    this._instOptionsDiv.style.display = "";
+            if (this._doc.prefs.instrumentSettingsSimplifier) {
+                const colors: ChannelColors = ColorConfig.getChannelColor(this._doc.song, this._doc.channel);
+                this._instOptionsDiv.style.setProperty("--text-color-lit", colors.primaryNote);
+                this._instOptionsDiv.style.setProperty("--text-color-dim", colors.secondaryNote);
+                this._instOptionsDiv.style.setProperty("--background-color-lit", colors.primaryChannel);
+                this._instOptionsDiv.style.setProperty("--background-color-dim", colors.secondaryChannel);
 
+                this._instrumentDiv.style.display = (this._instSettingMode == 1) ?  "" : "none";
+                this._effectDiv.style.display = (this._instSettingMode == 2) ? "" : "none";
+                this._envelopeDiv.style.display = (this._instSettingMode == 3) ? "" : "none";
+                this._mobileInstSettingsButton.style.color = (this._instSettingMode == 1) ? "var(--text-color-lit)" : "var(--text-color-dim)";
+                this._mobileEffectsButton.style.color = (this._instSettingMode == 2) ? "var(--text-color-lit)" : "var(--text-color-dim)";
+                this._mobileEnvelopesButton.style.color = (this._instSettingMode == 3) ? "var(--text-color-lit)" : "var(--text-color-dim)";
+                this._mobileInstSettingsButton.style.background = (this._instSettingMode == 1) ? "": "#fff0";
+                this._mobileEffectsButton.style.background = (this._instSettingMode == 2) ? "": "#fff0";
+                this._mobileEnvelopesButton.style.background = (this._instSettingMode == 3) ? "": "#fff0";
+
+                this._instSettingMode == 1 ? this._mobileInstSettingsButton.classList.remove("deactivated") : this._mobileInstSettingsButton.classList.add("deactivated");
+                this._instSettingMode == 2 ? this._mobileEffectsButton.classList.remove("deactivated") : this._mobileEffectsButton.classList.add("deactivated");
+                this._instSettingMode == 3 ? this._mobileEnvelopesButton.classList.remove("deactivated") : this._mobileEnvelopesButton.classList.add("deactivated");
+
+                this._loopBarButton.style.display = prefs.displayShortcutButtons ? "" : "none"; 
+                this._instOptionsDiv.style.display = "";
             } else {
-                const effectStuffs = document.getElementById('effectsDiv');
-                const envelopeStuffs = document.getElementById('envelopesDiv');
-                const instStuffs = document.getElementById('InstrumentDiv');
-                instStuffs!.style.display = "";
-                effectStuffs!.style.display = "";
-                envelopeStuffs!.style.display = "";
+                this._instrumentDiv.style.display = "";
+                this._effectDiv.style.display = "";
+                this._envelopeDiv.style.display = "";
                 this._instOptionsDiv.style.display = "none";
             }
 
@@ -5720,79 +5642,61 @@ export class SongEditor {
 
     private _displaySettingsEditor = (): void => {
         this._menuMode = 3;
-        const effectStuffs = document.getElementById('effectsDiv');
-        const envelopeStuffs = document.getElementById('envelopesDiv');
-        const instStuffs = document.getElementById('InstrumentDiv');
         if (this._menuMode == 3) { 
             this._patternArea.style.display = "none";
             this._trackArea.style.display = "none";
             this._settingsArea.style.display = "";
             this.whenUpdated();
-                if (this._instSettingMode == 1) {
-                    instStuffs!.style.display = "";
-                    effectStuffs!.style.display = "none";
-                    envelopeStuffs!.style.display = "none";
-                    console.log("Instrument Settings");
-                } else if (this._instSettingMode == 2) {
-                    instStuffs!.style.display = "none";
-                    effectStuffs!.style.display = "";
-                    envelopeStuffs!.style.display = "none";
-                    console.log("Effects Settings");
-                } else if (this._instSettingMode == 3) {
-                    instStuffs!.style.display = "none";
-                    effectStuffs!.style.display = "none";
-                    envelopeStuffs!.style.display = "";
-                    console.log("Envelopes Settings");
-
-                }
+            this._instrumentDiv.style.display = (this._instSettingMode == 1) ?  "" : "none";
+            this._effectDiv.style.display = (this._instSettingMode == 2) ? "" : "none";
+            this._envelopeDiv.style.display = (this._instSettingMode == 3) ? "" : "none";
             if (window.innerWidth < window.innerHeight) {//portrait (w)
+                this._mobilePatternButton.style.height = "80%";
+                this._mobileTrackButton.style.height = "80%";
+                this._mobileSettingsButton.style.height = "100%";
 
-            this._mobilePatternButton.style.height = "80%";
-            this._mobileTrackButton.style.height = "80%";
-            this._mobileSettingsButton.style.height = "100%";
+                this._mobilePatternButton.style.width = "33vw";
+                this._mobileTrackButton.style.width = "34vw";
+                this._mobileSettingsButton.style.width = "33vw";
 
-            this._mobilePatternButton.style.width = "33vw";
-            this._mobileTrackButton.style.width = "34vw";
-            this._mobileSettingsButton.style.width = "33vw";
+                this._mobilePatternButton.style.top = "";
 
-            this._mobilePatternButton.style.top = "";
+                this._mobilePatternButton.style.left = "0";
+                this._mobileSettingsButton.style.right = "0";
+                this._mobilePatternButton.style.bottom = "0";
+                this._mobileTrackButton.style.top = "";
+                this._mobileTrackButton.style.right = "33vw";
+                this._mobileTrackButton.style.bottom = "0";
+                this._mobileSettingsButton.style.bottom = "0";
 
-            this._mobilePatternButton.style.left = "0";
-            this._mobileSettingsButton.style.right = "0";
-            this._mobilePatternButton.style.bottom = "0";
-            this._mobileTrackButton.style.top = "";
-            this._mobileTrackButton.style.right = "33vw";
-            this._mobileTrackButton.style.bottom = "0";
-            this._mobileSettingsButton.style.bottom = "0";
+                this._patternArea.style.width = "98vw";
 
-            this._patternArea.style.width = "98vw";
+                this._mobileMenu.style.height = "15vh";
+                this._mobileMenu.style.width = "100vw";
+                this._playPauseAreaMobile.style.display = "none";
+            } else if (window.innerWidth > window.innerHeight) {//landscape (h)
+                this._mobilePatternButton.style.width = "80%";
+                this._mobileTrackButton.style.width = "80%";
+                this._mobileSettingsButton.style.width = "100%";
 
-            this._mobileMenu.style.height = "15vh";
-            this._mobileMenu.style.width = "100vw";
-            this._playPauseAreaMobile.style.display = "none";
-        } else if (window.innerWidth > window.innerHeight) {//landscape (h)
-            this._mobilePatternButton.style.width = "80%";
-            this._mobileTrackButton.style.width = "80%";
-            this._mobileSettingsButton.style.width = "100%";
+                this._mobilePatternButton.style.height = "33vh";
+                this._mobileTrackButton.style.height = "34vh";
+                this._mobileSettingsButton.style.height = "33vh";
 
-            this._mobilePatternButton.style.height = "33vh";
-            this._mobileTrackButton.style.height = "34vh";
-            this._mobileSettingsButton.style.height = "33vh";
+                this._mobilePatternButton.style.top = "0";
+                this._mobileTrackButton.style.top = "33vh";
+                this._mobileSettingsButton.style.bottom = "0";
+                this._mobileTrackButton.style.left = "";
 
-            this._mobilePatternButton.style.top = "0";
-            this._mobileTrackButton.style.top = "33vh";
-            this._mobileSettingsButton.style.bottom = "0";
-            this._mobileTrackButton.style.left = "";
+                this._mobilePatternButton.style.left = "";
 
-            this._mobilePatternButton.style.left = "";
+                this._mobileMenu.style.width = "15vw";
+                this._mobileMenu.style.height = "100vh";
 
-            this._mobileMenu.style.width = "15vw";
-            this._mobileMenu.style.height = "100vh";
-
-            this._mobileMenu.style.right = "0";
-            this._playPauseAreaMobile.style.display = "none";
+                this._mobileMenu.style.right = "0";
+                this._playPauseAreaMobile.style.display = "none";
+            }
         }
-           }
     }
 
 
