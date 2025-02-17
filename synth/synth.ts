@@ -4237,9 +4237,11 @@ export class Song {
                     sampleLoadingState.urlTable = {};
                     sampleLoadingState.totalSamples = 0;
                     sampleLoadingState.samplesLoaded = 0;
+                    sampleLoadingState.samplesFailed = 0;
                     sampleLoadEvents.dispatchEvent(new SampleLoadedEvent(
                         sampleLoadingState.totalSamples,
-                        sampleLoadingState.samplesLoaded
+                        sampleLoadingState.samplesLoaded,
+                        sampleLoadingState.samplesFailed
                     ));
                     for (const url of compressed_array) {
                         if (url.toLowerCase() === "legacysamples") {
@@ -6694,9 +6696,11 @@ export class Song {
         sampleLoadingState.urlTable = {};
         sampleLoadingState.totalSamples = 0;
         sampleLoadingState.samplesLoaded = 0;
+        sampleLoadingState.samplesFailed = 0;
         sampleLoadEvents.dispatchEvent(new SampleLoadedEvent(
             sampleLoadingState.totalSamples,
-            sampleLoadingState.samplesLoaded
+            sampleLoadingState.samplesLoaded,
+            sampleLoadingState.samplesFailed
         ));
     }
 

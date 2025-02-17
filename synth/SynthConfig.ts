@@ -331,6 +331,7 @@ export class SampleLoadingState {
     public urlTable: Dictionary<string>;
     public totalSamples: number;
     public samplesLoaded: number;
+    public samplesFailed: number;
 
     constructor() {
 	this.statusTable = {};
@@ -345,11 +346,13 @@ export const sampleLoadingState: SampleLoadingState = new SampleLoadingState();
 export class SampleLoadedEvent extends Event {
     public readonly totalSamples: number;
     public readonly samplesLoaded: number;
+    public readonly samplesFailed: number;
 
-    constructor(totalSamples: number, samplesLoaded: number) {
+    constructor(totalSamples: number, samplesLoaded: number, samplesFailed: number) {
 	super("sampleloaded");
 	this.totalSamples = totalSamples;
 	this.samplesLoaded = samplesLoaded;
+    this.samplesFailed = samplesFailed;
     }
 }
 
@@ -412,7 +415,8 @@ export async function startLoadingSample(url: string, chipWaveIndex: number, pre
 	sampleLoadingState.statusTable[chipWaveIndex] = SampleLoadingStatus.loaded;
 	sampleLoadEvents.dispatchEvent(new SampleLoadedEvent(
 	    sampleLoadingState.totalSamples,
-	    sampleLoadingState.samplesLoaded
+	    sampleLoadingState.samplesLoaded,
+	    sampleLoadingState.samplesFailed
 	));
 	if (!closedSampleLoaderAudioContext) {
 	    closedSampleLoaderAudioContext = true;
@@ -421,7 +425,13 @@ export async function startLoadingSample(url: string, chipWaveIndex: number, pre
     }).catch((error) => {
 	//console.error(error);
 	sampleLoadingState.statusTable[chipWaveIndex] = SampleLoadingStatus.error;
-	alert("Failed to load " + url + ":\n" + error);
+	sampleLoadingState.samplesFailed++;
+    console.error("Failed to load " + url + ":\n" + error);
+    sampleLoadEvents.dispatchEvent(new SampleLoadedEvent(
+	    sampleLoadingState.totalSamples,
+	    sampleLoadingState.samplesLoaded,
+	    sampleLoadingState.samplesFailed
+	));
 	if (!closedSampleLoaderAudioContext) {
 	    closedSampleLoaderAudioContext = true;
 	    sampleLoaderAudioContext.close();
@@ -739,7 +749,8 @@ export function loadBuiltInSamples(set: number): void {
 		sampleLoadingState.samplesLoaded++;
 		sampleLoadEvents.dispatchEvent(new SampleLoadedEvent(
 		    sampleLoadingState.totalSamples,
-		    sampleLoadingState.samplesLoaded
+		    sampleLoadingState.samplesLoaded,
+            sampleLoadingState.samplesFailed
 		));
 		chipWaveIndexOffset++;
 	    }
@@ -795,7 +806,8 @@ export function loadBuiltInSamples(set: number): void {
 		sampleLoadingState.samplesLoaded++;
 		sampleLoadEvents.dispatchEvent(new SampleLoadedEvent(
 		    sampleLoadingState.totalSamples,
-		    sampleLoadingState.samplesLoaded
+		    sampleLoadingState.samplesLoaded,
+            sampleLoadingState.samplesFailed
 		));
 		chipWaveIndexOffset++;
 	    }
@@ -864,7 +876,8 @@ export function loadBuiltInSamples(set: number): void {
 		sampleLoadingState.samplesLoaded++;
 		sampleLoadEvents.dispatchEvent(new SampleLoadedEvent(
 		    sampleLoadingState.totalSamples,
-		    sampleLoadingState.samplesLoaded
+		    sampleLoadingState.samplesLoaded,
+	    sampleLoadingState.samplesFailed
 		));
 		chipWaveIndexOffset++;
 	    }

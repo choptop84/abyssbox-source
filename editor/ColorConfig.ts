@@ -19932,6 +19932,7 @@ export class ColorConfig {
     public static readonly textSelection: string = "var(--text-selection)";
     public static readonly boxSelectionFill: string = "var(--box-selection-fill)";
     public static readonly loopAccent: string = "var(--loop-accent)";
+    public static readonly sampleFailed: string = "var(--sample-failed, #f00)";
     public static readonly linkAccent: string = "var(--link-accent)";
     public static readonly uiWidgetBackground: string = "var(--ui-widget-background)";
     public static readonly uiWidgetFocus: string = "var(--ui-widget-focus)";
