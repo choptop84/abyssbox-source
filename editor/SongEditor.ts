@@ -1996,18 +1996,20 @@ export class SongEditor {
     private _updateSampleLoadingBar(_e: Event): void {
         // @TODO: Avoid this cast and type EventTarget/Event properly.
         const e: SampleLoadedEvent = <SampleLoadedEvent>_e;
+        let sampleNum: boolean = false;
         const percent: number = (
             e.totalSamples === 0
             ? 0
             : Math.floor((e.samplesLoaded / e.totalSamples) * 100)
         );
+        if (percent > 0) sampleNum = true;
         const failedPercent: number = (
             e.totalSamples === 0
             ? 0
             : Math.floor((e.samplesFailed / e.totalSamples) * 100)
         );
         this._sampleLoadingBar.style.width = `${percent}%`;
-        this._sampleFailedBar.style.width = `${failedPercent+1}%`;
+        this._sampleFailedBar.style.width = `${failedPercent+Number(sampleNum)}%`;
         if (e.totalSamples != 0) {
             this._sampleLoadingBarContainer.style.backgroundColor = "var(--indicator-secondary)"; 
         } else {
