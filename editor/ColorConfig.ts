@@ -4788,9 +4788,9 @@ export class ColorConfig {
       "Windows Xp": `
 			:root {		
 			--page-margin: #edead9; 		
-			--editor-background: #edead9; 		
+			--editor-background: #faf9f2; 		
 			--hover-preview: black; 		
-			--playhead: rgba(255, 255, 255, 0.9); 		
+			--playhead: #000; 		
 			--primary-text: #231f20; 		
 			--secondary-text: #231f20; 		
 			--inverted-text: black;	 		
@@ -4825,26 +4825,27 @@ export class ColorConfig {
 			--mod-label-secondary-text: rgb(120, 87, 86); 
 			--mod-label-primary-text: gray;
 			--progress-bar: #00ff00;
+			--octave-scrollbar: #cfcab2;
 
 --pitch-secondary-channel-hue: 0;		
 --pitch-secondary-channel-hue-scale: 6.1;		
 --pitch-secondary-channel-sat: 43.3;		
 --pitch-secondary-channel-sat-scale: 0.1;		
---pitch-secondary-channel-lum: 20;		
+--pitch-secondary-channel-lum: 30;		
 --pitch-secondary-channel-lum-scale: 0.05;
 		
 --pitch-primary-channel-hue: 0;		
 --pitch-primary-channel-hue-scale: 6.1;		
 --pitch-primary-channel-sat: 60;		
 --pitch-primary-channel-sat-scale: 0.1;		
---pitch-primary-channel-lum: 47.5;		
+--pitch-primary-channel-lum: 57.5;		
 --pitch-primary-channel-lum-scale: 0.05;
 		
 --pitch-secondary-note-hue: 0;		
 --pitch-secondary-note-hue-scale: 6.1;		
 --pitch-secondary-note-sat: 43.9;		
 --pitch-secondary-note-sat-scale: 0.1;		
---pitch-secondary-note-lum: 25;		
+--pitch-secondary-note-lum: 35;		
 --pitch-secondary-note-lum-scale: 0.05;
 		
 --pitch-primary-note-hue: 0;		
@@ -4858,14 +4859,14 @@ export class ColorConfig {
 --noise-secondary-channel-hue-scale: 2;		
 --noise-secondary-channel-sat: 25;		
 --noise-secondary-channel-sat-scale: 0;		
---noise-secondary-channel-lum: 22;		
+--noise-secondary-channel-lum: 32;		
 --noise-secondary-channel-lum-scale: 0;
 		
 --noise-primary-channel-hue: 0;		
 --noise-primary-channel-hue-scale: 2;		
 --noise-primary-channel-sat: 33;		
 --noise-primary-channel-sat-scale: 0;		
---noise-primary-channel-lum: 43.5;		
+--noise-primary-channel-lum: 53.5;		
 --noise-primary-channel-lum-scale: 0;
 		
 --noise-secondary-note-hue: 0;		
@@ -4900,7 +4901,7 @@ export class ColorConfig {
 --mod-secondary-note-hue-scale: 1.5;		
 --mod-secondary-note-sat: 42;		
 --mod-secondary-note-sat-scale: 0;		
---mod-secondary-note-lum: 25;		
+--mod-secondary-note-lum: 35;		
 --mod-secondary-note-lum-scale: 0;	
 	
 --mod-primary-note-hue: 192;		
@@ -5350,12 +5351,27 @@ export class ColorConfig {
 			}
 
 			#text-content {
-    				border-image-source: url("./image_assets/xptextbg.png");
-    				border-image-slice: 11 fill; 
-   				border-image-width: 11px; 
-				border-image-repeat: stretch;
-    				background-color: transparent; 
-    				padding: 14px; 
+    			margin: auto;
+				margin-top: auto;
+				text-align: center;
+				background: var(--editor-background);
+				border-radius: 15px;
+				border: 0px solid var(--ui-widget-background) !important;
+				padding-left: 20px !important;
+				box-shadow: 6px 6px 27px 4px rgba(0, 0, 0, 0.5) !important;
+				padding-top: 58px !important;
+				padding-right: 20px !important;
+				padding-bottom: 20px !important;
+				border-image-source: url("https://choptop84.github.io/choptop84s-image-repository/xpborder.png") !important;
+				border-image-slice: 34 !important;
+				border-image-width: 50px !important;
+				border-width: unset !important;
+				image-rendering: -moz-crisp-edges !important;
+				image-rendering: -webkit-optimize-contrast !important;
+				image-rendering: -o-crisp-edges !important;
+				image-rendering: pixelated !important;
+				image-rendering: optimizeSpeed !important;
+				margin-top: 15px;
 				}
 			#beepboxEditorContainer {
     				border-image-source: url("./image_assets/xptextbg.png");
@@ -5366,21 +5382,60 @@ export class ColorConfig {
     				padding: 13px; 
 				}
 
+			.pattern-area {
+			border: #fff 1px solid;
+			border-right-color: rgb(255, 255, 255);
+			border-bottom-color: rgb(255, 255, 255);
+			padding: 2px;
+			background: #f9f8f3;
+			border-right-color: #c7c7bd;
+			border-bottom-color: #c7c7bd;
+			}
+
+			.track-area {
+			--editor-background: #edead9;
+			--ui-widget-background: #edead9;
+			}
+
+			.beepboxEditor .muteEditor {
+			background: #edead9;
+			}
+
+			.settings-area {
+			border: #fff 1px solid;
+			border-right-color: rgb(255, 255, 255);
+			border-bottom-color: rgb(255, 255, 255);
+			padding: 2px;
+			background: #f9f8f3;
+			border-right-color: #c7c7bd;
+			border-bottom-color: #c7c7bd;
+			}
+
+			.beepboxEditor {
+			background: #edead9 !important;
+			}
+
+			#octaveScrollBarContainer {
+			--tonic: #9c9781;
+			}
+
+			.barScrollBar {
+			--ui-widget-background: #9c9781;
+			--editor-background: #edead9;
+			}
+
+			.songLoopButton {
+			background: #edead9;
+			}
+
 			#firstImage {
 				background-image: url("./image_assets/xpsongeditorbg.png") !important;
 				background-repeat: no-repeat !important;
 				background-size: 100% 100% !important;
 			}
 
-			div.menu-area {
-				--ui-widget-background: #edead9; 
-			}
 			select {
-				--ui-widget-background: #edead9; 
 				cursor: url("https://choptop84.github.io/choptop84s-image-repository/xphandcursor.png"), pointer !important;
-			}
-			div.playback-bar-controls {
-				--ui-widget-background: #edead9; 
 			}
 
 			.beepboxEditor input[type="range"]::-moz-range-track
