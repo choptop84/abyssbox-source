@@ -5787,7 +5787,10 @@ export class Song {
                         if (((!fromAbyssBox&&!fromSlarmoosBox) || (fromAbyssBox && beforeThree)) && envTypeIndex == 9) {
                             isTremolo2 = true;
                             envTypeIndex--;
-                        } // 9 to remove tremolo2
+                            // 9 to remove tremolo2
+                        } else if (((!fromAbyssBox&&!fromSlarmoosBox) || (fromAbyssBox && beforeThree)) && envTypeIndex > 9) {
+                            envTypeIndex--;
+                        } 
 
                         const envelope: number = clamp(0, Config.newEnvelopes.length, envTypeIndex);
                         let pitchEnvelopeStart: number = 0;
