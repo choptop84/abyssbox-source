@@ -21,6 +21,16 @@ export class CustomThemeBases {
 			}
 
         `,
+		"Roboto": `
+            html {
+ 		   	font-family: 'B612', sans-serif !important;
+			}
+
+			div.channelBoxLabel {
+				font-family: unset !important;
+			}
+
+        `,
         "AbyssType Small": `
         @font-face {
             font-family: "CustomThemeFont";
@@ -87,6 +97,20 @@ export class CustomThemeBases {
 
 			div.channelBoxLabel {
 				font-family: 'CustomThemeFont' !important;
+			}
+        `,
+        "Tahoma": `
+			@font-face { 
+			font-family: "tahoma";
+			src: none !important;
+			}
+
+            html {
+ 		   	font-family: tahoma;
+			}
+
+			div.channelBoxLabel {
+				font-family: tahoma !important;
 			}
         `,
         "Trebuchet": `
@@ -197,6 +221,21 @@ export class CustomThemeBases {
 
 			div.channelBoxLabel {
 				font-family: sans-serif !important;
+			}
+        `,
+        "custom": `
+			@font-face {
+            font-family: "CustomThemeFont";
+            src:
+            url("${window.localStorage.getItem('customFontFile')}") format("opentype") tech(color-COLRv1),
+            }
+
+            html {
+ 		   	font-family: 'CustomThemeFont';
+			}
+
+			div.channelBoxLabel {
+				font-family: 'CustomThemeFont' !important;
 			}
         `,
     }

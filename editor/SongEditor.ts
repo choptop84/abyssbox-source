@@ -55,6 +55,7 @@ import { VisualLoopControlsPrompt } from "./VisualLoopControlsPrompt";
 import { SampleLoadingStatusPrompt } from "./SampleLoadingStatusPrompt";
 import { AddSamplesPrompt } from "./AddSamplesPrompt";
 import { ShortenerConfigPrompt } from "./ShortenerConfigPrompt";
+import { FontPrompt } from "./CustomFontPrompt";
 
 import { TutorialPrompt } from "./TutorialPrompt";
 import { SongDetailsPrompt } from "./SongDetailsPrompt";
@@ -862,6 +863,7 @@ export class SongEditor {
             option({ value: "selectionCounter" }, 'Selection Counter'),
             option({ value: "layout" }, "> Set Layout"),
             option({ value: "colorTheme" }, "> Set Theme"),
+            option({ value: "customFont" }, "> Set Font"),
             option({ value: "customTheme" }, "> Custom Theme"),
             ),
     );
@@ -2380,6 +2382,9 @@ export class SongEditor {
                 case "theme":
                     this.prompt = new ThemePrompt(this._doc);
                     break;
+                case "customFont":
+                    this.prompt = new FontPrompt(this._doc);
+                    break;
                 case "tutorial":
                     this.prompt = new TutorialPrompt(this._doc);
                     break;
@@ -3050,6 +3055,7 @@ export class SongEditor {
             (prefs.selectionCounter ? textOnIcon : textOffIcon) + "Selection Counter",
             "> Set Layout",
             "> Set Theme",
+            "> Set Font",
             "> Custom Theme",
         ];
                 // Technical dropdown
@@ -6432,6 +6438,9 @@ export class SongEditor {
                 break;
 	case "customTheme":
 		this._openPrompt("custom");
+		break;
+	case "customFont":
+		this._openPrompt("customFont");
 		break;
             case "recordingSetup":
                 this._openPrompt("recordingSetup");

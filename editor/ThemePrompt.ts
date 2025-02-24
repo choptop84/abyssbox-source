@@ -37,6 +37,7 @@ export class ThemePrompt implements Prompt {
 			option({ value: "Scratch Addons"}, "Scratch Addons"),
 			option({ value: "Windows Xp"}, "Windows Xp"),
 			option({ value: "Frutiger Aero"}, "Frutiger Aero"),
+			option({ value: "Frutiger Aero Night"}, "Frutiger Aero Night"),
 			option({ value: "Skeuomorphic"}, "Skeuomorphic/Early 2000's (LeoV)"),
 			option({ value: "corporate dark"}, "Corporate Dark"),
 			option({ value: "corporate light"}, "Corporate Light"),
@@ -215,19 +216,18 @@ export class ThemePrompt implements Prompt {
 
 	private _previewTheme = (): void => {
 		ColorConfig.setTheme(this._themeSelect.value);
+		const localFont = window.localStorage.getItem("customFontName") || "none";
+		CustomThemeBases.setFont(localFont);
 		if (this._themeSelect.value != "custom") {
-			CustomThemeBases.setFont("none");
 			CustomThemeBases.setBackground("none");
 			CustomThemeBases.setBorder("none");
 			CustomThemeBases.setIcons("none");
 			CustomThemeBases.setCursor("none");
 		} else {
-			const localFont = window.localStorage.getItem("customFontName") || "none";
 			const localBG = window.localStorage.getItem("backgroundName") || "none";
 			const localBorder = window.localStorage.getItem("customBorderName") || "none";
 			const localIcons = window.localStorage.getItem("customIconsName") || "none";
 			const localCursor = window.localStorage.getItem("customCursorName") || "none";
-			CustomThemeBases.setFont(localFont);
 			CustomThemeBases.setBackground(localBG);
 			CustomThemeBases.setBackground(localIcons);
 			CustomThemeBases.setBorder(localBorder);

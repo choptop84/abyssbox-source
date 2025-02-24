@@ -96,17 +96,17 @@ export class SongDocument {
 
 		if (this.song.setSongTheme == "none") {
 			ColorConfig.setTheme(this.prefs.colorTheme);
-	
+			CustomThemeBases.setFont(this.prefs.customFont);
 			if (window.localStorage.getItem("colorTheme") == "custom") { 
-				CustomThemeBases.setFont(this.prefs.customFont);
 				CustomThemeBases.setBackground(this.prefs.customBG);
 				CustomThemeBases.setIcons(this.prefs.customIcons); 
 				CustomThemeBases.setBorder(this.prefs.customBorder);
 				CustomThemeBases.setCursor(this.prefs.customCursor);
-				}
-			} else {
-				ColorConfig.setTheme(this.song.setSongTheme);
 			}
+		} else {
+			ColorConfig.setTheme(this.song.setSongTheme);
+			CustomThemeBases.setFont("none");
+		}
 
 		let state: HistoryState | null = this._getHistoryState();
 		if (state == null) {

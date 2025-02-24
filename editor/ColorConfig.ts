@@ -1666,6 +1666,7 @@ export class ColorConfig {
 
 			--note-flash: #ffffff;
 			--note-flash-secondary: #ffffff77;
+			--sample-failed: #bf2c78;
 
 		}
 
@@ -2054,6 +2055,527 @@ export class ColorConfig {
 			--track-editor-bg-pitch-dim: #0c2b3e; 		
 			--track-editor-bg-noise-dim: #08204f; 			
 			--track-editor-bg-mod-dim: #26145e; 
+
+		   }
+
+		   div.channelBox {
+			border-radius: 5px;
+		  }
+		  div.curChannelBox {
+			border-radius: 5px;
+		  }
+
+			`,
+	"Frutiger Aero Night": `
+			:root {		
+			--page-margin: #fff; 		
+			--editor-background: #290f37;		
+			--hover-preview: white; 		
+			--playhead: rgba(255, 255, 255, 0.9); 		
+			--primary-text: white; 		
+			--secondary-text: #d7ceff;		
+			--inverted-text: #140111;	 		
+			--text-selection: rgba(119,68,255,0.99); 		
+			--box-selection-fill: #0a091e; 		
+			--loop-accent: #ab6fe8; 		
+			--link-accent: #eba2ff; 		
+			--ui-widget-background: #c03ed2; 		
+			--ui-widget-focus: #582b76; 		
+			--pitch-background: #26032b; 		
+			--tonic: #8d46b5; 		
+			--fifth-note: #0e0297; 
+			--third-note: #bf2c78;		
+			--white-piano-key: #dbe5ec;		
+			--black-piano-key: #2f3a40;
+			--white-piano-key-text: #131200;		
+			--black-piano-key-text: #fff;					
+			--use-color-formula: true; 		
+			--track-editor-bg-pitch: linear-gradient(#2782b0,#0c2b3e); 		
+			--track-editor-bg-pitch-dim: linear-gradient(#0c2b3e70,#05151fc4); 		
+			--track-editor-bg-noise: linear-gradient(#2d4aa1,#08204f); 		
+			--track-editor-bg-noise-dim: linear-gradient(#08204f70, #031029c4); 		
+			--track-editor-bg-mod: linear-gradient(#46299e, #26145e); 		
+			--track-editor-bg-mod-dim: linear-gradient(#26145e70,#110630c4); 		
+			--multiplicative-mod-slider: #60769f; 		
+			--overwriting-mod-slider: #7d349e; 		
+			--indicator-primary: #9149b3; 		
+			--indicator-secondary: #b39dc4; 		
+			--select2-opt-group: #185f8a; 		
+			--input-box-outline: #18041a; 		
+			--mute-button-normal: #c597f9; 		
+			--mute-button-mod: #da5fff;		
+			--mod-label-primary: #6b1a7b; 		
+			--mod-label-secondary-text: rgb(86, 93, 120);
+			--mod-label-primary-text: gray; 
+			--progress-bar: #ec84f0;
+			--empty-sample-bar: #1d092f;
+
+			--pitch-secondary-channel-hue: 110; 		
+			--pitch-secondary-channel-hue-scale: 0; 		
+			--pitch-secondary-channel-sat: 63; 		
+			--pitch-secondary-channel-sat-scale: 0.1; 		
+			--pitch-secondary-channel-lum: 50; 		
+			--pitch-secondary-channel-lum-scale: 0.05; 
+		
+			--pitch-primary-channel-hue: 120; 		
+			--pitch-primary-channel-hue-scale: 6.1; 		
+			--pitch-primary-channel-sat: 75; 		
+			--pitch-primary-channel-sat-scale: 0.1; 		
+			--pitch-primary-channel-lum: 67.5; 		
+			--pitch-primary-channel-lum-scale: 0.05; 	
+	
+			--pitch-secondary-note-hue: 110; 		
+			--pitch-secondary-note-hue-scale: 6.1; 		
+			--pitch-secondary-note-sat: 63.9; 		
+			--pitch-secondary-note-sat-scale: 0.1; 		
+			--pitch-secondary-note-lum: 55; 		
+			--pitch-secondary-note-lum-scale: 0.05; 
+		
+			--pitch-primary-note-hue: 120; 		
+			--pitch-primary-note-hue-scale: 6.1; 		
+			--pitch-primary-note-sat: 100; 		
+			--pitch-primary-note-sat-scale: 0.05; 		
+			--pitch-primary-note-lum: 85.6; 		
+			--pitch-primary-note-lum-scale: 0.025; 
+		
+			--noise-secondary-channel-hue: 90; 		
+			--noise-secondary-channel-hue-scale: 2; 		
+			--noise-secondary-channel-sat: 65; 		
+			--noise-secondary-channel-sat-scale: 0; 		
+			--noise-secondary-channel-lum: 42; 		
+			--noise-secondary-channel-lum-scale: 0; 
+		
+			--noise-primary-channel-hue: 80; 		
+			--noise-primary-channel-hue-scale: 1; 		
+			--noise-primary-channel-sat: 100; 		
+			--noise-primary-channel-sat-scale: 1; 		
+			--noise-primary-channel-lum: 63.5; 		
+			--noise-primary-channel-lum-scale: 0; 
+		
+			--noise-secondary-note-hue: 90; 		
+			--noise-secondary-note-hue-scale: 2; 		
+			--noise-secondary-note-sat: 60; 		
+			--noise-secondary-note-sat-scale: 0; 		
+			--noise-secondary-note-lum: 35; 		
+			--noise-secondary-note-lum-scale: 0; 	
+	
+			--noise-primary-note-hue: 80; 		
+			--noise-primary-note-hue-scale: 2; 		
+			--noise-primary-note-sat: 100; 		
+			--noise-primary-note-sat-scale: 1; 		
+			--noise-primary-note-lum: 60; 		
+			--noise-primary-note-lum-scale: 1; 	
+	
+			--mod-secondary-channel-hue: 55; 		
+			--mod-secondary-channel-hue-scale: 1.5; 		
+			--mod-secondary-channel-sat: 100; 		
+			--mod-secondary-channel-sat-scale: 0; 		
+			--mod-secondary-channel-lum: 20; 		
+			--mod-secondary-channel-lum-scale: 0; 
+		
+			--mod-primary-channel-hue: 55; 		
+			--mod-primary-channel-hue-scale: 1.5; 		
+			--mod-primary-channel-sat: 96; 		
+			--mod-primary-channel-sat-scale: 0; 		
+			--mod-primary-channel-lum: 50; 		
+			--mod-primary-channel-lum-scale: 0; 
+		
+			--mod-secondary-note-hue: 55; 		
+			--mod-secondary-note-hue-scale: 1.5; 		
+			--mod-secondary-note-sat: 62; 		
+			--mod-secondary-note-sat-scale: 0; 		
+			--mod-secondary-note-lum: 45; 		
+			--mod-secondary-note-lum-scale: 0; 
+		
+			--mod-primary-note-hue: 55; 		
+			--mod-primary-note-hue-scale: 1.5; 		
+			--mod-primary-note-sat: 96; 		
+			--mod-primary-note-sat-scale: 0; 		
+			--mod-primary-note-lum: 85; 		
+			--mod-primary-note-lum-scale: 0; 	
+
+			--note-flash: #ffffff;
+			--note-flash-secondary: #ffffff77;
+			--sample-failed: #bf2c78;
+
+		}
+
+		* {
+		/*cursor: url("abyssbox_cursor.png"), auto !important;*/
+		--muted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/vistaSpeakerIconMuted.png");
+		--unmuted-symbol: url("https://choptop84.github.io/choptop84s-image-repository/vistaSpeakerIcon.png");
+		}
+	
+
+		/* Frutiger Aero Icons */
+
+		div.promptContainerBG {
+			background-color: var(--editor-background) !important;
+			backdrop-filter: unset !important;
+			opacity: 0 !important;
+		}
+
+		div.mute-button::before {
+			background: #fff0 !important;
+			background-image: url("https://choptop84.github.io/choptop84s-image-repository/vistaSpeakerIcon.png") !important;
+			background-size: 18px !important;
+			background-position: center !important;
+			background-repeat: no-repeat !important;
+			mask-size: 800px !important;
+			color: #fff0;
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+		}
+
+		div.mute-button.muted::before {
+			background: #fff0 !important;
+			background-image: url("https://choptop84.github.io/choptop84s-image-repository/vistaSpeakerIconMuted.png") !important;
+			background-size: 18px !important;
+			background-position: center !important;
+			background-repeat: no-repeat !important;
+			mask-size: 800px !important;
+			color: #fff0;
+
+			image-rendering: -moz-crisp-edges !important;         /* Firefox */
+			image-rendering: -webkit-optimize-contrast !important; /* Webkit (Chrome/Safari) */
+			image-rendering: -o-crisp-edges !important;            /* Opera */
+			image-rendering: pixelated !important;                 /* Future browsers */
+			image-rendering: optimizeSpeed !important;             /* IE */
+		}
+
+		#text-content > section > h1 > font {
+			display: none;
+			}
+			#text-content > section > h1 {
+			margin: auto;
+			content: url("https://choptop84.github.io/choptop84s-image-repository/AbyssBoxFrutigerAeroThemeLogo.png");
+			}
+
+		button.mobileEffectsButton.deactivated {
+		box-shadow: none !important;
+		}
+
+		button.mobileInstButton.deactivated {
+		box-shadow: none !important;
+		}
+
+		button.mobileEnvelopesButton.deactivated {
+		box-shadow: none !important;
+		}
+
+		select.trackSelectBox {
+			border-image: none !important;
+		}
+
+			@font-face {
+		   font-family: "Frutiger";
+		   src:
+ 		   url("https://choptop84.github.io/choptop84s-image-repository/FrutigerLight.ttf") format("truetype") tech(color-COLRv1),
+			}
+
+			canvas#oscilascopeAll {
+				background: #2e538c !important; 
+				border: 2px solid #84aef000 !important;
+			}
+
+			.beepboxEditor .play-pause-area div:last-child {
+				position: relative;
+				width: 144px;
+				height: 32px;
+			  }
+			  .beepboxEditor .play-pause-area div:last-child::before {
+				content: "";
+				display: block;
+				width: calc(144px + 4px);
+				height: calc(32px + 4px);
+				box-shadow: 0px -1px 1px 0px rgba(0, 0, 0, 0.5), inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
+				position: absolute;
+				z-index: 1;
+			  }
+
+			div.prompt.noSelection{
+				background: linear-gradient(#84aef080, #2a3d6a80) !important; 
+				opacity: 77;
+				backdrop-filter: blur(14px);
+			}  
+
+			svg#firstImage {
+				opacity: 50%;
+				--editor-background: #000000;
+			}
+
+			/* sets background image */
+			body {
+			background-image: url("image_assets/frutigerbg3.png") !important;
+			background-position: top;
+			background-attachment: fixed;
+			background-repeat: no-repeat;
+			background-size: 145%;
+			image-rendering: optimizeQuality !important;             /* IE */ 
+				}
+
+			#beepboxEditorContainer {
+				background: linear-gradient(#f5abfb80, #4839b380) !important;
+				border-style: solid;
+  				border-color: #050428;
+				padding-bottom: 5px;
+				--inverted-text: black;
+				backdrop-filter: blur(14px);
+				box-shadow: inset 0 0 2000px rgba(0, 0, 0, 0.5)
+			}
+			#text-content {
+				background: linear-gradient(#4839b380, #22032f80);
+				border-style: solid;
+  				border-color: #050428;
+				  backdrop-filter: blur(14px);
+				  box-shadow: inset 0 0 2000px rgba(0, 0, 0, 0.5)
+			}
+
+				div.playback-bar-controls button.playButton, 
+				div.playback-bar-controls button.pauseButton, 
+				div.playback-bar-controls button.recordButton, 
+				div.playback-bar-controls button.stopButton, 
+				div.playback-bar-controls button.prevBarButton, 
+				div.playback-bar-controls button.nextBarButton, 
+				div.selectRow button.copyButton, 
+				div.selectRow button.pasteButton, 
+				div.editor-controls button.exportInstrumentButton, 
+				div.editor-controls button.importInstrumentButton,
+				div.editor-controls div button.add-envelope,
+				div.editor-controls div button.delete-envelope, 
+				.beepboxEditor .select2-selection__rendered,
+				.beepboxEditor .instrument-bar button,
+				.beepboxEditor .eq-filter-type-bar button .deactivated,
+				.beepboxEditor .note-filter-type-bar button .deactivated,
+				.beepboxEditor select  { 
+					box-shadow: 0px 1px 3px 0px rgb(0, 0, 0), inset 0px -12px 14px 0px rgba(0, 0, 0, 0.3), inset 0px -7px 4px 0px rgba(140, 47, 202, 0.71), inset 0px -15px 0px 0px rgba(0, 0, 0, 0.2), inset 0px 1px 2px 1px #ffffff54;
+					--ui-widget-background: linear-gradient(#db7aeecc, #8f62f2cc) !important;
+				}
+
+				.beepboxEditor select:focus
+				{
+					border-image-source: none;
+					--ui-widget-background: linear-gradient(#db7aeecc, #8f62f2cc) !important;
+					box-shadow: 0px 1px 3px 0px rgb(0, 0, 0), inset 0px -12px 14px 0px rgba(0, 0, 0, 0.3), inset 0px -7px 4px 0px rgba(140, 47, 202, 0.71), inset 0px -15px 0px 0px rgba(0, 0, 0, 0.2), inset 0px 1px 2px 1px #ffffff54
+				}
+
+				.beepboxEditor button, button
+				{
+					--ui-widget-background: linear-gradient(#db7aeecc, #8f62f2cc) !important;
+					box-shadow: 0px 1px 3px 0px rgb(0, 0, 0), inset 0px -12px 14px 0px rgba(0, 0, 0, 0.3), inset 0px -7px 4px 0px rgba(140, 47, 202, 0.71), inset 0px -15px 0px 0px rgba(0, 0, 0, 0.2), inset 0px 1px 2px 1px #ffffff54
+				}
+				.beepboxEditor .select2-container--open .select2-selection__rendered,
+				.beepboxEditor button:focus,
+				button:focus,
+				.beepboxEditor .instrument-bar .selected-instrument,
+				.beepboxEditor .eq-filter-type-bar button:not(.deactivated),
+				.beepboxEditor .note-filter-type-bar button:not(.deactivated)
+				{
+					--ui-widget-background: linear-gradient(#333, #444) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+						inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor .filterEditor svg,
+				.beepboxEditor .fadeInOut svg,
+				.beepboxEditor .harmonics svg,
+				.beepboxEditor .spectrum svg
+				{
+					background: rgba(0, 0, 0, 0.3) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+						inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor input[type="range"]::-webkit-slider-thumb
+				{
+					box-shadow:
+						0px 2px 2px 1px rgba(0, 0, 0, 0.4),
+						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+						inset 0px 1px 0px 0px rgba(255, 255, 255, 1),
+						inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+						inset 0px -8px 3px rgba(0, 0, 0, 0.2)
+					;
+				}
+				 
+				.beepboxEditor input[type="range"]::-webkit-slider-runnable-track
+				{
+					background: rgba(0, 0, 0, 0.2) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+					border-radius: 4px;
+				}
+				 
+				.beepboxEditor input[type="range"]:focus::-webkit-slider-runnable-track
+				{
+					background: rgba(255, 255, 255, 0.2) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor input[type="range"]::-ms-thumb
+				{
+					box-shadow:
+						0px 2px 2px 1px rgba(0, 0, 0, 0.4),
+						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+						inset 0px 1px 0px 0px rgba(255, 255, 255, 1),
+						inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+						inset 0px -8px 3px rgba(0, 0, 0, 0.2)
+					;
+				}
+				 
+				.beepboxEditor input[type="range"]::-ms-track
+				{
+					background: rgba(0, 0, 0, 0.2) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+					border-radius: 4px;
+				}
+				 
+				.beepboxEditor input[type="range"]:focus::-ms-track
+				{
+					background: rgba(255, 255, 255, 0.2) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor input[type="range"]::-moz-range-thumb
+				{
+					height: 16px !important;
+					width: 16px !important;
+					border-radius: 40px !important;
+					box-shadow:
+						0px 2px 2px 1px rgba(0, 0, 0, 0.4),
+						0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+						inset 0px 1px 0px 0px rgba(255, 255, 255, 1),
+						inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+						inset 0px -8px 3px rgba(0, 0, 0, 0.2)
+					;
+				}
+				 
+				.beepboxEditor input[type="range"]::-moz-range-track
+				{
+					background: rgba(0, 0, 0, 0.2) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+					border-radius: 4px;
+				}
+				 
+				.beepboxEditor input[type="range"]:focus::-moz-range-track
+				{
+					background: rgba(255, 255, 255, 0.2) !important;
+					box-shadow:
+						0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor input[type="text"],
+				.beepboxEditor input[type="number"]
+				{
+					border: none !important;
+					background: rgba(0, 0, 0, 0.2) !important;
+					box-shadow:
+						0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+						inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor input[type="checkbox"]
+				{
+					appearance: none;
+					background: rgba(0, 0, 0, 0.3);
+					color: currentColor;
+					border-radius: 1px;
+					width: 1em !important;
+					height: 1em !important;
+					box-shadow:
+						inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+						inset 0px -1px 0px 0px rgba(255, 255, 255, 0.3)
+					;
+				}
+				 
+				.beepboxEditor input[type="checkbox"]:checked
+				{
+					display: flex;
+					justify-content: center;
+				}
+				 
+				.beepboxEditor input[type="checkbox"]:checked:after
+				{
+					width: 1em;
+					height: 1em;
+					text-align: center;
+					font-size: 0.8em;
+					content: "✓";
+					color: currentColor;
+					text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.5);
+				}
+
+			html {
+ 		   	font-family: 'Frutiger';
+			}
+
+			div.channelBoxLabel {
+				font-family: 'Frutiger' !important;
+			}
+
+				/* Use this code down here when you have transparent backgrounds!!! */
+
+		   div.beepboxEditor.load {
+			background: none !important;
+		   }
+
+		   div.noSelection {
+			background: none !important;
+		   }
+
+		   .beepboxEditor .loopEditor {
+			background: none !important;
+		   }
+
+		   .beepboxEditor .muteEditor {
+			background: linear-gradient(#9a76aa, #3d2448) !important;
+			border-radius: 5px;
+			box-shadow: 0px 1px 1px 0px rgb(0, 0, 0), inset 0px 3px 14px 0px rgba(0, 0, 0, 0.1), inset 0px -4px 0px 0px rgba(0, 0, 0, 0.1);
+			opacity: 65%;
+		   }
+
+		   div.muteEditor div {
+			background: none !important;
+			--track-editor-bg-pitch: #5f8fd6;
+			--track-editor-bg-noise: #5f8fd6;
+			--track-editor-bg-mod: #8a76c5;
+	
+			--track-editor-bg-pitch-dim: #2472a1; 		
+			--track-editor-bg-noise-dim: #2472a1; 			
+			--track-editor-bg-mod-dim: #4222a0; 
 
 		   }
 
@@ -4932,7 +5454,7 @@ export class ColorConfig {
 				}
 
 				html {
-				font-family: 'tahoma' !important;
+				font-family: 'tahoma';
 			   font-size: 150% !important;
 				}
 				div.channelBoxLabel {

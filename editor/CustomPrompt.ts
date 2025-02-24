@@ -462,24 +462,7 @@ export class CustomPrompt implements Prompt {
 	option({ value: "Frutiger Aero"}, "Frutiger Aero"),
 	);
 
-	public readonly _fontSelect: HTMLSelectElement = select({ style: "width: 100%; margin: 0.5em 0;", id:"fontSelect" },
-	option({ selected: true, disabled: true, hidden: false }, "Pick a font"),
-	option({ value: "none"}, "Default"),
-	option({ value: "AbyssType"}, "AbyssType"),
-	option({ value: "AbyssType Small"}, "AbyssType Small"),
-	option({ value: "AbyssType Fusion"}, "AbyssType Fusion"),
-	option({ value: "Doom 1993"}, "Doom 1993"),
-	option({ value: "Tahoma Pixel"}, "Tahoma (Windows Xp)"),
-	option({ value: "Trebuchet"}, "Trebuchet MS"),
-	option({ value: "Monospace"}, "Monospace"),
-	option({ value: "Frutiger"}, "Frutiger"),
-	option({ value: "Workbench"}, "Workbench"),
-	option({ value: "Varela"}, "Varela"),
-	option({ value: "Arial"}, "Arial"),
-	option({ value: "Comic Sans"}, "Comic Sans"),
-	);
-
-	public readonly _cursorSelect: HTMLSelectElement = select({ style: "width: 100%; margin: 1em 0;", id:"fontSelect" },
+	public readonly _cursorSelect: HTMLSelectElement = select({ style: "width: 100%; margin: 1em 0;", id:"cursorSelect" },
 	option({ selected: true, disabled: true, hidden: false }, "Pick a Cursor"),
 	option({ value: "none"}, "Default"),
 	option({ value: "My Abyss"}, "My Abyss"),
@@ -752,7 +735,6 @@ export class CustomPrompt implements Prompt {
 			this._backgroundSelect,
 			this._borderSelect,
 			this._iconSelect,
-			this._fontSelect,
 			this._cursorSelect,
 		),
 		),
@@ -839,7 +821,6 @@ export class CustomPrompt implements Prompt {
 			this._exportButton.addEventListener("click", this._exportToCSS);
 			this._importButton.addEventListener("change", this._importTheme);
 			this._baseColorSelect.addEventListener("change", this._whenBaseColorsPicked);
-			this._fontSelect.addEventListener("change", this._whenFontChange);
 			this._backgroundSelect.addEventListener("change", this._whenBackgroundChange);
 			this._iconSelect.addEventListener("change", this._whenIconsChange);
 			this._borderSelect.addEventListener("change", this._whenBorderChange);
@@ -906,12 +887,6 @@ export class CustomPrompt implements Prompt {
 
 			ColorConfig.setTheme("custom");
 			this._doc.notifier.changed();	
-		}
-
-		private _whenFontChange = (): void => {
-			CustomThemeBases.setFont(this._fontSelect.value);
-			localStorage.setItem("customFontName", this._fontSelect.value);
-			doReload = true;
 		}
 
 		private _whenBackgroundChange = (): void => {

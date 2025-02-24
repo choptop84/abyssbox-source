@@ -62,6 +62,7 @@ export class Preferences {
 	public customTheme: string | null;
 	public customTheme2: string | null;
 	public customFont: string;
+	public customFontFile: string | null;
 	public customBG: string;
 	public customIcons: string;
 	public customBorder: string;
