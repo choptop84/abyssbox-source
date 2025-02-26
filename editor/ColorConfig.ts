@@ -2090,12 +2090,12 @@ export class ColorConfig {
 			--white-piano-key-text: #131200;		
 			--black-piano-key-text: #fff;					
 			--use-color-formula: true; 		
-			--track-editor-bg-pitch: linear-gradient(#2782b0,#0c2b3e); 		
-			--track-editor-bg-pitch-dim: linear-gradient(#0c2b3e70,#05151fc4); 		
-			--track-editor-bg-noise: linear-gradient(#2d4aa1,#08204f); 		
-			--track-editor-bg-noise-dim: linear-gradient(#08204f70, #031029c4); 		
-			--track-editor-bg-mod: linear-gradient(#46299e, #26145e); 		
-			--track-editor-bg-mod-dim: linear-gradient(#26145e70,#110630c4); 		
+			--track-editor-bg-pitch: linear-gradient(#7227b0,#2c0c3e); 		
+			--track-editor-bg-pitch-dim: linear-gradient(#260c3e70,#16051fc4); 		
+			--track-editor-bg-noise: linear-gradient(#932da1,#47084f); 		
+			--track-editor-bg-noise-dim: linear-gradient(#43084f70, #260329c4); 		
+			--track-editor-bg-mod: linear-gradient(#9e2950, #5e143d); 		
+			--track-editor-bg-mod-dim: linear-gradient(#5e143f70,#300616c4); 			
 			--multiplicative-mod-slider: #60769f; 		
 			--overwriting-mod-slider: #7d349e; 		
 			--indicator-primary: #9149b3; 		

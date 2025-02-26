@@ -2004,12 +2004,12 @@ export class SongEditor {
             ? 0
             : Math.floor((e.samplesLoaded / e.totalSamples) * 100)
         );
-        if (percent > 0) sampleNum = true;
         const failedPercent: number = (
             e.totalSamples === 0
             ? 0
             : Math.floor((e.samplesFailed / e.totalSamples) * 100)
         );
+        sampleNum = Boolean(percent > 0 && failedPercent > 0);
         this._sampleLoadingBar.style.width = `${percent}%`;
         this._sampleFailedBar.style.width = `${failedPercent+Number(sampleNum)}%`;
         if (e.totalSamples != 0) {
