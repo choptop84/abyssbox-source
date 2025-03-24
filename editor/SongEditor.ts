@@ -60,6 +60,8 @@ import { FontPrompt } from "./CustomFontPrompt";
 import { TutorialPrompt } from "./TutorialPrompt";
 import { SongDetailsPrompt } from "./SongDetailsPrompt";
 
+import { UpdatePopup } from "./UpdatePopup";
+
 const { button, div, input, select, span, optgroup, option, canvas} = HTML;
 
 const beepboxEditorContainer: HTMLElement = document.getElementById("beepboxEditorContainer")!;
@@ -2483,6 +2485,8 @@ export class SongEditor {
         this._barScrollBar.changePos(offset);
     }
     
+    private updatePromptHolder = new UpdatePopup();
+
     public whenUpdated = (): void => {
         const prefs: Preferences = this._doc.prefs;
         this._muteEditor.container.style.display = prefs.enableChannelMuting ? "" : "none";
@@ -2527,6 +2531,10 @@ export class SongEditor {
                 if (window.localStorage.getItem("tutorialComplete") != "true") {
                     //this._openPrompt("tutorial");
                 }
+
+                if (window.localStorage.getItem("curVer") != "1.6") {
+                       document.body.appendChild(this.updatePromptHolder.updatePopupDiv);
+                } 
 
         if (this._doc.getFullScreen()) {
             const semitoneHeight: number = this._patternEditorRow.clientHeight / this._doc.getVisiblePitchCount();
