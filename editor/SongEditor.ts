@@ -2532,7 +2532,7 @@ export class SongEditor {
                     //this._openPrompt("tutorial");
                 }
 
-                if (window.localStorage.getItem("curVer") != "1.6") {
+                if (window.localStorage.getItem("curVer") != "1.5.1") {
                        document.body.appendChild(this.updatePromptHolder.updatePopupDiv);
                 } 
 
