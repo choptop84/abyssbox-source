@@ -224,11 +224,15 @@
             }
         }
 
-        var explosion = new Audio('../explosion.mp3');
+        var explosion = new Audio('../image_assets/explosion.mp3');
         var egg = new Audio('eg.mp3');
         var eggCrack = new Audio('eggCrack.mp3');
         var image = document.getElementById('egg');
         var text = document.getElementById('text');
+        const theme = localStorage.getItem("colorTheme");
+        if (theme == "modbox egg") {
+            image.src = ("pretty_egg.png");
+        }
         function playEggAudio() {
 
             if (clickCount == 0) {
@@ -240,9 +244,10 @@
             clickCount++;
             eggCrack.play();
 
+
             } else if (clickCount == 20) {
                 explosion.play();
-                image.src = ("../explosion.gif");
+                image.src = ("explosion.gif");
                 egg.pause();
                 clickCount++;
                 text.innerHTML = "NOOOOOOOOOOOOOOOOOOO!!!!!!!!!!!!!!";
