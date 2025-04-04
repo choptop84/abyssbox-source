@@ -3092,6 +3092,500 @@ export class ColorConfig {
 			text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.5);
 		}
 		`,				
+		"woodland": `
+		:root {
+			--page-margin: #1d1b16;
+			--editor-background: #1d1b16;
+			--hover-preview: white;
+			--playhead: rgba(255, 255, 255, 0.9);
+			--primary-text: #ffe6d1;
+			--secondary-text: #f0c4a1;
+			--inverted-text: black;
+			--text-selection: #c58f1cfc;
+			--box-selection-fill: #942d04;
+			--loop-accent: #a69186;
+			--link-accent: #c4b044;
+			--ui-widget-background: #3c3931;
+			--ui-widget-focus: #514240;
+			--pitch-background: #342e29;
+			--tonic: #514129;
+			--fifth-note: #735346;
+			--third-note: #593439;
+			--white-piano-key: #a69186;
+			--black-piano-key: #423a34;
+			--white-piano-key-text: #1f0d03;
+			--black-piano-key-text: #ffe6d1;
+			--use-color-formula: false;
+			--pitch-channel-limit: 10;
+			--track-editor-bg-pitch: linear-gradient(#644b4b, #483e3e);
+			--track-editor-bg-pitch-dim: linear-gradient(#483e3e, #302121);
+			--track-editor-bg-noise: linear-gradient(#3d3535,#161313);
+			--track-editor-bg-noise-dim: linear-gradient(#161313,#0e0c0c);
+			--track-editor-bg-mod: linear-gradient(#603e28,#1f100a);
+			--track-editor-bg-mod-dim: linear-gradient(#0f0705,#1f0d0a);
+			--multiplicative-mod-slider: #966d3f;
+			--overwriting-mod-slider: #b58650;
+			--indicator-primary: #b58650;
+			--indicator-secondary: #4f4139;
+			--select2-opt-group: #3b0000;
+			--input-box-outline: #200000;
+			--mute-button-normal: #dda85d;
+			--mute-button-mod: #adae6e;
+			--mod-label-primary: #422a0f;
+			--mod-label-secondary-text: rgb(87, 86, 120);
+			--mod-label-primary-text: white;
+			--octave-scrollbar: #281f1a;
+
+			--pitch1-secondary-channel: #bb1111;
+			--pitch1-primary-channel:   #ff5959;
+			--pitch1-secondary-note:    #7c0404;
+			--pitch1-primary-note:      #ffb6b6;
+		
+			--pitch2-secondary-channel: #bb5b11;
+			--pitch2-primary-channel:   #ffa159;
+			--pitch2-secondary-note:    #7c3804;
+			--pitch2-primary-note:      #ffd5b6;
+		
+			--pitch3-secondary-channel: #bba411;
+			--pitch3-primary-channel:   #ffe959;
+			--pitch3-secondary-note:    #7c6c04;
+			--pitch3-primary-note:      #fff5b6;
+		
+			--pitch4-secondary-channel: #88bb11;
+			--pitch4-primary-channel:   #cdff59;
+			--pitch4-secondary-note:    #587c04;
+			--pitch4-primary-note:      #e9ffb6;
+		
+			--pitch5-secondary-channel: #3ebb11;
+			--pitch5-primary-channel:   #85ff59;
+			--pitch5-secondary-note:    #247c04;
+			--pitch5-primary-note:      #c9ffb6;
+		
+			--pitch6-secondary-channel: #11bb2e;
+			--pitch6-primary-channel:   #59ff75;
+			--pitch6-secondary-note:    #047c18;
+			--pitch6-primary-note:      #b6ffc2;
+		
+			--pitch7-secondary-channel: #11bb77;
+			--pitch7-primary-channel:   #59ffbd;
+			--pitch7-secondary-note:    #047c4c;
+			--pitch7-primary-note:      #b6ffe2;
+		
+			--pitch8-secondary-channel: #11b5bb;
+			--pitch8-primary-channel:   #59f9ff;
+			--pitch8-secondary-note:    #04777c;
+			--pitch8-primary-note:      #b6fcff;
+		
+			--pitch9-secondary-channel: #116bbb;
+			--pitch9-primary-channel:   #59b1ff;
+			--pitch9-secondary-note:    #04437c;
+			--pitch9-primary-note:      #b6dcff;
+		
+			--pitch10-secondary-channel:#1826aa;
+			--pitch10-primary-channel:  #5161f6;
+			--pitch10-secondary-note:   #091370;
+			--pitch10-primary-note:     #adb4fd;
+		
+			--pitch11-secondary-channel:#4918aa;
+			--pitch11-primary-channel:  #8951f6;
+			--pitch11-secondary-note:   #2c0970;
+			--pitch11-primary-note:     #c8adfd;
+		
+			--pitch12-secondary-channel:#8818aa;
+			--pitch12-primary-channel:  #d051f6;
+			--pitch12-secondary-note:   #580970;
+			--pitch12-primary-note:     #ebadfd;
+		
+			--pitch13-secondary-channel:#aa188c;
+			--pitch13-primary-channel:  #f651d4;
+			--pitch13-secondary-note:   #70095b;
+			--pitch13-primary-note:     #fdadec;
+		
+			--pitch14-secondary-channel:#aa184d;
+			--pitch14-primary-channel:  #f6518d;
+			--pitch14-secondary-note:   #70092e;
+			--pitch14-primary-note:     #fdadca; 
+		
+			--noise1-secondary-channel: #6F6F6F;
+			--noise1-primary-channel:   #AAAAAA;
+			--noise1-secondary-note:    #A7A7A7;
+			--noise1-primary-note:      #E0E0E0;
+			--noise2-secondary-channel: #996633;
+			--noise2-primary-channel:   #DDAA77;
+			--noise2-secondary-note:    #CC9966;
+			--noise2-primary-note:      #F0D0BB;
+			--noise3-secondary-channel: #4A6D8F;
+			--noise3-primary-channel:   #77AADD;
+			--noise3-secondary-note:    #6F9FCF;
+			--noise3-primary-note:      #BBD7FF;
+			--noise4-secondary-channel: #7A4F9A;
+			--noise4-primary-channel:   #AF82D2;
+			--noise4-secondary-note:    #9E71C1;
+			--noise4-primary-note:      #D4C1EA;
+			--noise5-secondary-channel: #607837;
+			--noise5-primary-channel:   #A2BB77;
+			--noise5-secondary-note:    #91AA66;
+			--noise5-primary-note:      #C5E2B2;
+		--mod1-secondary-channel:   #339955;
+				--mod1-primary-channel:     #77fc55;
+				--mod1-secondary-note:      #77ff8a;
+				--mod1-primary-note:        #cdffee;
+				--mod2-secondary-channel:   #993355;
+				--mod2-primary-channel:     #f04960;
+				--mod2-secondary-note:      #f057a0;
+				--mod2-primary-note:        #ffb8de;
+				--mod3-secondary-channel:   #553399;
+				--mod3-primary-channel:     #8855fc;
+				--mod3-secondary-note:      #aa64ff;
+				--mod3-primary-note:	    #f8ddff;
+				--mod4-secondary-channel:   #a86436;
+				--mod4-primary-channel:     #c8a825;
+				--mod4-secondary-note:      #e8ba46;
+				--mod4-primary-note:        #fff6d3;
+			--disabled-note-primary:    #91879f;
+			--disabled-note-secondary:  #6a677a;
+		}
+		 
+		.channelBox {
+			--pitch1-primary-channel:  linear-gradient(#ff7777, #ff5959);
+			--pitch2-primary-channel:  linear-gradient(#ffaf71, #ffa159);
+			--pitch3-primary-channel:  linear-gradient(#ffee7c, #ffe959);
+			--pitch4-primary-channel:  linear-gradient(#d3fa7a, #cdff59);
+			--pitch5-primary-channel:  linear-gradient(#a4ff83, #85ff59);
+			--pitch6-primary-channel:  linear-gradient(#8aff9e, #59ff75);
+			--pitch7-primary-channel:  linear-gradient(#81ffcc, #59ffbd);
+			--pitch8-primary-channel:  linear-gradient(#59f9ff, #59f9ff);
+			--pitch9-primary-channel:  linear-gradient(#87c7ff, #59b1ff);
+			--pitch10-primary-channel: linear-gradient(#7a87ff, #5161f6);
+			--pitch11-primary-channel: linear-gradient(#a476ff, #8951f6);
+			--pitch12-primary-channel: linear-gradient(#df75ff, #d051f6);
+			--pitch13-primary-channel: linear-gradient(#ff75e3, #f651d4);
+			--pitch14-primary-channel: linear-gradient(#ff71a5, #f6518d);
+		
+			border-radius: 5px;
+			box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2), 0px 0px 1px 1px rgba(0, 0, 0, 0.7), inset 0px -10px 20px 1px rgba(0, 0, 0, 0.1), inset 0px 1px 0px 0px rgba(255, 255, 255, 0.1);
+		}
+		.channelBox {
+			border-radius: 5px;
+			box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2), 0px 0px 1px 1px rgba(0, 0, 0, 0.7), inset 0px -10px 20px 1px rgba(0, 0, 0, 0.1), inset 0px 1px 0px 0px rgba(255, 255, 255, 0.1);
+		}
+		
+		.channelBoxLabel {
+			--pitch1-primary-channel:   #ff5959;
+			--pitch2-primary-channel:   #ffa159;
+			--pitch3-primary-channel:   #ffe959;
+			--pitch4-primary-channel:   #cdff59;
+			--pitch5-primary-channel:   #85ff59;
+			--pitch6-primary-channel:   #59ff75;
+			--pitch7-primary-channel:   #59ffbd;
+			--pitch8-primary-channel:   #59f9ff;
+			--pitch9-primary-channel:   #59b1ff;
+			--pitch10-primary-channel:  #5161f6;
+			--pitch11-primary-channel:  #8951f6;
+			--pitch12-primary-channel:  #d051f6;
+			--pitch13-primary-channel:  #f651d4;
+			--pitch14-primary-channel:  #f6518d;
+		}
+		
+		body {
+			font-family: Arial, Helvetica, sans-serif;
+		}
+		
+		#beepboxEditorContainer, .track-area, .beepboxEditor, #text-content, div.noSelection {
+			background-color: #fff0 !important;
+		} 
+		
+		#pitchEditorBackground {
+			opacity: 0.5 !important;
+			filter: brightness(150%);
+		}
+		
+		#oscilascopeAll {
+			margin-left: auto;
+			margin-right: auto;
+			position: static;
+		}
+		 
+		.beepboxEditor,
+		.beepboxEditor select
+		{
+			text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.5);
+		}
+		 
+		.beepboxEditor .piano-button {
+			text-shadow: none;
+		}
+		 
+		.beepboxEditor .prompt
+		{
+			background: radial-gradient(farthest-corner at 50% 0px, #1d0700, #110400) !important;
+		}
+		 
+		#beepboxEditorContainer {
+			background-color: rgba(0, 0, 0, 0) !important;
+		}
+		 
+		.beepboxEditor .trackAndMuteContainer {
+			text-shadow: none;
+		}
+		 
+		.beepboxEditor .loopEditor
+		{
+			--editor-background: rgba(0, 0, 0, 0.0) !important;
+		}
+		 
+		.beepboxEditor .pattern-area
+		{
+			--editor-background: rgba(0, 0, 0, 1) !important;
+		}
+		 
+		.beepboxEditor .trackContainer svg
+		{
+			--editor-background: #33190a !important;
+		}
+		 
+		.beepboxEditor .muteEditor > :last-child {
+			--editor-background: rgba(0, 0, 0, 0) !important;
+		}
+		 
+		.beepboxEditor #octaveScrollBarContainer {
+			background-color: rgba(0, 0, 0, 0.3);
+		}
+		 
+		.beepboxEditor {
+			--track-editor-bg-pitch-dim: #1e1f28;
+		}
+		 
+		.beepboxEditor .muteButtonText {
+			transform: translate(0px, 1px) !important;
+			color: #777 !important;
+		}
+		 
+		.beepboxEditor .instrument-bar {
+			--text-color-lit: #eee;
+			--text-color-dim: #777;
+		}
+		 
+		.beepboxEditor .instrument-bar .selected-instrument {
+			color: rgba(255, 255, 255, 1) !important;
+			text-shadow: 0px 0px 4px var(--text-color-lit);
+		}
+		 
+		.beepboxEditor .instrument-bar .deactivated {
+			color: rgba(0, 0, 0, 1) !important;
+			text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2);
+		}
+		 
+		.beepboxEditor .instrument-bar > :not(.last-button) {
+			border-color: var(--background-color-lit) !important;
+		}
+		 
+		.beepboxEditor .instrument-bar .selected-instrument {
+			border-color: rgba(255, 255, 255, 1) !important;
+		}
+		 
+		.beepboxEditor select
+		{
+			background: #3c3931 !important;
+			box-shadow:
+				0px 2px 2px 1px rgba(0, 0, 0, 0.4),
+				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+				inset 0px -10px 20px 1px rgba(31, 11, 2, 0.4),
+				inset 0px 1px 0px 0px rgba(255, 183, 162, 0.3)
+			;
+		}
+		 
+		.beepboxEditor select:focus
+		{
+			background: #201e1b !important;
+			box-shadow:
+				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+				inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+				inset 0px 10px 20px 1px rgba(0, 0, 0, 0.4),
+				inset 0px -1px 0px 0px rgba(255, 183, 162, 0.3)
+			;
+		}
+		 
+		.beepboxEditor .select2-selection__rendered,
+		.beepboxEditor button,
+		.beepboxEditor .instrument-bar button,
+		.beepboxEditor .eq-filter-type-bar button .deactivated,
+		.beepboxEditor .note-filter-type-bar button .deactivated
+		{
+			background: linear-gradient(#3c3931, #201e1b) !important;
+			box-shadow:
+				0px 2px 2px 1px rgba(0, 0, 0, 0.4),
+				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+				inset 0px 1px 0px 0px rgba(255, 183, 162, 0.3)
+			;
+		}
+		 
+		.beepboxEditor .select2-container--open .select2-selection__rendered,
+		.beepboxEditor button:focus,
+		.beepboxEditor .instrument-bar .selected-instrument,
+		.beepboxEditor .eq-filter-type-bar button:not(.deactivated),
+		.beepboxEditor .note-filter-type-bar button:not(.deactivated)
+		{
+			background: linear-gradient(#201e1b, #3c3931) !important;
+			box-shadow:
+				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+				inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+				inset 0px -1px 0px 0px rgba(255, 183, 162, 0.3)
+			;
+		}
+		 
+		.beepboxEditor .filterEditor svg,
+		.beepboxEditor .fadeInOut svg,
+		.beepboxEditor .harmonics svg,
+		.beepboxEditor .spectrum svg
+		{
+			background: rgba(0, 0, 0, 0.3) !important;
+			box-shadow:
+				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+				inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+				inset 0px -1px 0px 0px rgba(255, 183, 162, 0.3)
+			;
+		}
+		 
+		.beepboxEditor input[type="range"]::-webkit-slider-thumb
+		{
+			box-shadow:
+				0px 2px 2px 1px rgba(0, 0, 0, 0.4),
+				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+				inset 0px 1px 0px 0px rgba(255, 183, 162, 0.3),
+				inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+				inset 0px -8px 3px rgba(0, 0, 0, 0.2)
+			;
+		}
+		 
+		.beepboxEditor input[type="range"]::-webkit-slider-runnable-track
+		{
+			background: rgba(0, 0, 0, 0.2) !important;
+			box-shadow:
+				0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+				inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
+				inset 0px -1px 0px 0px rgba(255, 183, 162, 0.3)
+			;
+			border-radius: 4px;
+		}
+		 
+		.beepboxEditor input[type="range"]:focus::-webkit-slider-runnable-track
+		{
+			background: rgba(255, 255, 255, 0.2) !important;
+			box-shadow:
+				0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+				inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
+				inset 0px -1px 0px 0px rgba(255, 183, 162, 0.3)
+			;
+		}
+		 
+		.beepboxEditor input[type="range"]::-ms-thumb
+		{
+			box-shadow:
+				0px 2px 2px 1px rgba(0, 0, 0, 0.4),
+				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+				inset 0px 1px 0px 0px rgba(255, 183, 162, 1),
+				inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+				inset 0px -8px 3px rgba(0, 0, 0, 0.2)
+			;
+		}
+		 
+		.beepboxEditor input[type="range"]::-ms-track
+		{
+			background: rgba(0, 0, 0, 0.2) !important;
+			box-shadow:
+				0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+				inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
+				inset 0px -1px 0px 0px rgba(255, 183, 162, 0.3)
+			;
+			border-radius: 4px;
+		}
+		 
+		.beepboxEditor input[type="range"]:focus::-ms-track
+		{
+			background: rgba(255, 255, 255, 0.2) !important;
+			box-shadow:
+				0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+				inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
+				inset 0px -1px 0px 0px rgba(255, 183, 162, 0.3)
+			;
+		}
+		 
+		.beepboxEditor input[type="range"]::-moz-range-thumb
+		{
+			box-shadow:
+				0px 2px 2px 1px rgba(0, 0, 0, 0.4),
+				0px 0px 1px 1px rgba(0, 0, 0, 0.7),
+				inset 0px 1px 0px 0px rgba(255, 183, 162, 1),
+				inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+				inset 0px -8px 3px rgba(0, 0, 0, 0.2)
+			;
+		}
+		 
+		.beepboxEditor input[type="range"]::-moz-range-track
+		{
+			background: rgba(0, 0, 0, 0.2) !important;
+			box-shadow:
+				0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+				inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
+				inset 0px -1px 0px 0px rgba(255, 183, 162, 0.3)
+			;
+			border-radius: 4px;
+		}
+		 
+		.beepboxEditor input[type="range"]:focus::-moz-range-track
+		{
+			background: rgba(255, 255, 255, 0.2) !important;
+			box-shadow:
+				0px 0px 1px 1px rgba(0, 0, 0, 0.2),
+				inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
+				inset 0px -1px 0px 0px rgba(255, 183, 162, 0.3)
+			;
+		}
+		 
+		.beepboxEditor input[type="text"],
+		.beepboxEditor input[type="number"]
+		{
+			border: none !important;
+			background: rgba(0, 0, 0, 0.2) !important;
+			box-shadow:
+				0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+				inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5),
+				inset 0px -1px 0px 0px rgba(255, 183, 162, 0.3)
+			;
+		}
+		 
+		.beepboxEditor input[type="checkbox"]
+		{
+			appearance: none;
+			background: rgba(0, 0, 0, 0.3);
+			color: currentColor;
+			border-radius: 1px;
+			width: 1em !important;
+			height: 1em !important;
+			box-shadow:
+				inset 0px 2px 3px 0px rgba(0, 0, 0, 0.7),
+				inset 0px -1px 0px 0px rgba(255, 183, 162, 0.3)
+			;
+		}
+		 
+		.beepboxEditor input[type="checkbox"]:checked
+		{
+			display: flex;
+			justify-content: center;
+		}
+		 
+		.beepboxEditor input[type="checkbox"]:checked:after
+		{
+			width: 1em;
+			height: 1em;
+			text-align: center;
+			font-size: 0.8em;
+			content: "✓";
+			color: currentColor;
+			text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.5);
+		}
+		`,				
       "Glyde": `
 	  :root { 
 		--page-margin: #000000; 

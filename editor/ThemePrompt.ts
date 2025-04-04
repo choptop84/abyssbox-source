@@ -39,6 +39,7 @@ export class ThemePrompt implements Prompt {
 			option({ value: "Frutiger Aero"}, "Frutiger Aero"),
 			option({ value: "Frutiger Aero Night"}, "Frutiger Aero Night"),
 			option({ value: "Skeuomorphic"}, "Skeuomorphic/Early 2000's (LeoV)"),
+			option({ value: "woodland"}, "Woodland"),
 			option({ value: "corporate dark"}, "Corporate Dark"),
 			option({ value: "corporate light"}, "Corporate Light"),
 			option({ value: "Glyde"}, "Glyde"),
