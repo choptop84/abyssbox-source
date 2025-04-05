@@ -233,6 +233,16 @@
         if (theme == "modbox egg") {
             image.src = ("pretty_egg.png");
         }
+        if ((theme == "roe light")||(theme == "roe")) {
+            image.src = ("roe.png");
+            text.innerHTML = "A plate of roe blocks your path..."
+            document.title = "Estranged Roe"
+        }
+        if ((theme == "Undertale")||(theme == "deltarune")) {
+            image.src = ("gasterEgg.png");
+            document.documentElement.style.setProperty("--page-margin", "rgb(11, 11, 11)");
+            text.innerHTML = "*(You recieved an egg)";
+        }
         function playEggAudio() {
 
             if (clickCount == 0) {
@@ -251,7 +261,11 @@
                 egg.pause();
                 clickCount++;
                 text.innerHTML = "NOOOOOOOOOOOOOOOOOOO!!!!!!!!!!!!!!";
-                document.title = "NOT THE EGG!!!"
+                if ((theme == "roe light")||(theme == "roe")) {
+                    document.title = "NOT THE ROE!!!"
+                } else {
+                    document.title = "NOT THE EGG!!!"    
+                }
 
             } else if (clickCount > 20) {
                 egg.pause();
