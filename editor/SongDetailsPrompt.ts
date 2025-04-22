@@ -16,6 +16,7 @@ export class SongDetailsPrompt implements Prompt {
 	// private readonly _songWebLink: HTMLInputElement = input({ type: "text", style: "width: 13em;", value: "https://example.com", maxlength: 30 });
 	private readonly _showSongDetailsBox: HTMLInputElement = input({style: "width: 3em; margin-left: 1em;", type: "checkbox"});
 	private readonly _computedSamplesLabel: HTMLDivElement = div({ style: "width: 10em;" }, new Text("0:00"));
+	private readonly _cantShortenLabel: HTMLDivElement = div({}, "You cannot shorten this url!");
 	
 	public readonly container: HTMLDivElement = div({class: "prompt noSelection", style: "width: 250px;"},
 		h2("Song Details"),
@@ -47,7 +48,7 @@ export class SongDetailsPrompt implements Prompt {
 		div({style:"margin-bottom: 0.5em;"},"Noise Channels: " + this._doc.song.noiseChannelCount),
 		div({},"Mod Channels: " + this._doc.song.modChannelCount),
 		br(),
-		"URL Length: " + location.href.length,
+		"URL Length: " + location.href.length, this._cantShortenLabel,
 		br(),
 		),
 		// div({ style: "display: flex; flex-direction: row; align-items: center;" },
@@ -62,6 +63,8 @@ export class SongDetailsPrompt implements Prompt {
 		
 	constructor(private _doc: SongDocument) {	
 		this._showSongDetailsBox.checked = this._doc.song.showSongDetails;
+
+		this._cantShortenLabel.style.display = location.href.length > 12233 ? "": "none";
 
 		(this._computedSamplesLabel.firstChild as Text).textContent = this._doc.samplesToTime(this._doc.synth.getTotalSamples(true, true, 0));
 
