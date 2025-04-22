@@ -64,7 +64,7 @@ export class SongDetailsPrompt implements Prompt {
 	constructor(private _doc: SongDocument) {	
 		this._showSongDetailsBox.checked = this._doc.song.showSongDetails;
 
-		this._cantShortenLabel.style.display = location.href.length > 12233 ? "": "none";
+		this._cantShortenLabel.style.display = (location.href.length > ( window.localStorage.getItem("shortenerStrategySelect") == "isgd" ? 5010 : 12233)) ? "": "none";
 
 		(this._computedSamplesLabel.firstChild as Text).textContent = this._doc.samplesToTime(this._doc.synth.getTotalSamples(true, true, 0));
 
