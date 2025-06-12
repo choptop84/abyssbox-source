@@ -152,7 +152,7 @@ export class RecordingSetupPrompt implements Prompt {
 			this._keyboardLayoutPreview.removeChild(this._keyboardLayoutPreview.firstChild);
 		}
 		const rowLengths: number[] = [12, 12, 11, 10];
-		const scale: ReadonlyArray<boolean> = Config.scales[this._doc.song.scale].flags;
+		const scale: ReadonlyArray<boolean> =  this._doc.song.scale == Config.scales.dictionary["Custom"].index ? this._doc.song.scaleCustom : Config.scales[this._doc.song.scale].flags;
 		for (let rowIndex: number = 0; rowIndex < 4; rowIndex++) {
 			const row: HTMLDivElement = div({style: "display: flex;"});
 			this._keyboardLayoutPreview.appendChild(row);

@@ -450,6 +450,9 @@ export class Layout {
 				.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar-corner {
 					background-color: ${ColorConfig.editorBackground};
 				}
+				div.track-area {
+				display: flex;
+				}
 			}
 		`,
 		"focus": `\
@@ -539,6 +542,9 @@ export class Layout {
 				}
 				.beepboxEditor .trackAndMuteContainer::-webkit-scrollbar-corner {
 					background-color: ${ColorConfig.editorBackground};
+				}
+				div.track-area {
+				display: flex;
 				}
 			}
 		`,
