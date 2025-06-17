@@ -110,6 +110,7 @@ export const enum EffectType {
     phaser,
     noteRange,
     invertWave,
+    flanger,
     length,
 }
 
@@ -1247,8 +1248,8 @@ export class Config {
 		
 	 //for modbox; voices = riffapp, spread = intervals, offset = offsets, expression = volume, and sign = signs
 	]);
-    public static readonly effectNames: ReadonlyArray<string> = ["reverb", "chorus", "panning", "distortion", "bitcrusher", "note filter", "echo", "pitch shift", "detune", "vibrato", "transition type", "chord type", "ring modulation", "phaser", "note range", "invert wave"];
-    public static readonly effectOrder: ReadonlyArray<EffectType> = [EffectType.panning, EffectType.transition, EffectType.chord, EffectType.pitchShift, EffectType.detune, EffectType.vibrato, EffectType.noteFilter, EffectType.distortion, EffectType.bitcrusher, EffectType.chorus, EffectType.echo, EffectType.reverb, EffectType.ringModulation, EffectType.phaser, EffectType.noteRange, EffectType.invertWave];
+    public static readonly effectNames: ReadonlyArray<string> = ["reverb", "chorus", "panning", "distortion", "bitcrusher", "note filter", "echo", "pitch shift", "detune", "vibrato", "transition type", "chord type", "ring modulation", "phaser", "note range", "invert wave", "flanger"];
+    public static readonly effectOrder: ReadonlyArray<EffectType> = [EffectType.panning, EffectType.transition, EffectType.chord, EffectType.pitchShift, EffectType.detune, EffectType.vibrato, EffectType.noteFilter, EffectType.distortion, EffectType.bitcrusher, EffectType.chorus, EffectType.echo, EffectType.reverb, EffectType.ringModulation, EffectType.phaser, EffectType.noteRange, EffectType.invertWave, EffectType.flanger];
     public static readonly noteSizeMax: number = 6;
 	public static readonly volumeRange: number = 50;
 	// Beepbox's old volume scale used factor -0.5 and was [0~7] had roughly value 6 = 0.125 power. This new value is chosen to have -21 be the same,
@@ -1263,6 +1264,12 @@ export class Config {
     public static readonly rmHzOffsetCenter: number = 200;
     public static readonly rmHzOffsetMax: number = 400;
     public static readonly rmHzOffsetMin: number = 0;
+    public static readonly flangerRange: number = 8;
+    public static readonly flangerPeriodSeconds: number = 2.0;
+    public static readonly flangerDelayRange: number = 0.0022;
+    public static readonly flangerDelayOffsets: ReadonlyArray<ReadonlyArray<number>> = [[0.1, 0.0, 0.0], [0.0, 0.0, 0.0]];
+    public static readonly flangerPhaseOffsets: number = 0.1;
+    public static readonly flangerMaxDelay: number = Config.flangerDelayRange * (1.0 + Config.flangerDelayOffsets[0].concat(Config.flangerDelayOffsets[1]).reduce((x, y) => Math.max(x, y)));
     public static readonly chorusPeriodSeconds: number = 2.0;
     public static readonly chorusDelayRange: number = 0.0034;
     public static readonly chorusDelayOffsets: ReadonlyArray<ReadonlyArray<number>> = [[1.51, 2.10, 3.35], [1.47, 2.15, 3.25]];
@@ -2437,6 +2444,9 @@ export function effectsIncludeNoteRange(effects: number): boolean {
 }
 export function effectsIncludeInvertWave(effects: number): boolean {
     return (effects & (1 << EffectType.invertWave)) != 0;
+}
+export function effectsIncludeFlanger(effects: number): boolean {
+    return (effects & (1 << EffectType.flanger)) != 0;
 }
 export function rawChipToIntegrated(raw: DictionaryArray<ChipWave>): DictionaryArray<ChipWave> {
     const newArray: Array<ChipWave> = new Array<ChipWave>(raw.length);
