@@ -4679,7 +4679,7 @@ export class Song {
                     const instrument = this.channels[instrumentChannelIterator].instruments[instrumentIndexIterator];
 
                     if (instrument.type == InstrumentType.noise) {
-                        instrument.chipWave = clamp(0, Config.chipWaves.length, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                        instrument.chipNoise = clamp(0, Config.chipNoiseLength, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                     } else {
                         if (fromUltraBox || fromAbyssBox || fromSlarmoosBox) {
                             if ((fromUltraBox && beforeSix)||(fromAbyssBox && beforeThree)) {
