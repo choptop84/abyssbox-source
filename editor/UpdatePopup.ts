@@ -43,7 +43,7 @@ export class UpdatePopup {
     }
 
     private _close = (): void => {
-        window.localStorage.setItem("curVer", "1.5.1");
+        window.localStorage.setItem("curVer", "1.6");
         this.updatePopupDiv.style.display = "none";
     }
 }
