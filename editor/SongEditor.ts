@@ -1128,8 +1128,7 @@ export class SongEditor {
     private readonly _harmonicsZoom: HTMLButtonElement = button({ style: "padding-left:0.2em; height:1.5em; max-width: 12px;", onclick: () => this._openPrompt("harmonicsSettings") }, "+");
     private readonly _harmonicsRow: HTMLElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("harmonics"), style: "font-size: smaller"}, "Harmonics:"), this._harmonicsZoom, this._harmonicsEditor.container);
 
-    //SongEditor.ts
-    readonly envelopeEditor: EnvelopeEditor = new EnvelopeEditor(this._doc, (id: number, submenu: number, subtype: string) => this._toggleDropdownMenu(id, submenu, subtype), (name: string) => this._openPrompt(name));
+    private readonly _envelopeEditor: EnvelopeEditor = new EnvelopeEditor(this._doc);
     private readonly _discreteEnvelopeBox: HTMLInputElement = input({ type: "checkbox", style: "width: 1em; padding: 0; margin-right: 4em;" });
     private readonly _discreteEnvelopeRow: HTMLElement = div({ class: "selectRow dropFader" }, span({ class: "tip", style: "margin-left:4px;", onclick: () => this._openPrompt("discreteEnvelope") }, "‣ Discrete:"), this._discreteEnvelopeBox);
     private readonly _envelopeSpeedDisplay: HTMLSpanElement = span({ style: `color: ${ColorConfig.secondaryText}; font-size: smaller; text-overflow: clip;` }, "x1");
@@ -1293,7 +1292,7 @@ export class SongEditor {
         ),
         div({ class:"envelopesOpDiv"},
         this._envelopeDropdownGroup,
-        this.envelopeEditor.container,
+        this._envelopeEditor.container,
         ),
     );
     private readonly _customInstrumentSettingsGroup: HTMLDivElement = div({ class: "editor-controls" },
@@ -2077,20 +2076,12 @@ export class SongEditor {
                 this._openUnisonDropdown = this._openUnisonDropdown ? false : true;
                 group = this._unisonDropdownGroup;
                 break;
-            case DropdownID.EnvelopeSettings:
-                target = this.envelopeEditor.extraSettingsDropdowns[submenu];
-                this.envelopeEditor.openExtraSettingsDropdowns[submenu] = this.envelopeEditor.openExtraSettingsDropdowns[submenu] ? false : true;
-                group = this.envelopeEditor.extraSettingsDropdownGroups[submenu];
-                break;
         }
 
         if (target.textContent == "▼") {
             let instrument: Instrument = this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()];
             target.textContent = "▲";
-            if (dropdown == DropdownID.EnvelopeSettings) {
-
-                this.envelopeEditor.rerenderExtraSettings();
-            } else if (group != this._chordDropdownGroup) {
+            if (group != this._chordDropdownGroup) {
                 group.style.display = "";
             } // Only show arpeggio dropdown if chord arpeggiates
             else if ((instrument.chord == Config.chords.dictionary["arpeggio"].index) || (instrument.chord == Config.chords.dictionary["strum"].index)) {
@@ -3661,8 +3652,7 @@ export class SongEditor {
                 else
             this._envelopeDropdownGroup.style.display = "none";
 
-            this.envelopeEditor.render();
-            this.envelopeEditor.rerenderExtraSettings();
+            this._envelopeEditor.render();
 
             for (let chordIndex: number = 0; chordIndex < Config.chords.length; chordIndex++) {
                 let hidden: boolean = (!Config.instrumentTypeHasSpecialInterval[instrument.type] && Config.chords[chordIndex].customInterval);
@@ -4162,7 +4152,6 @@ export class SongEditor {
                         }
                         if (anyInstrumentHasEnvelopes) {
                             settingList.push("envelope speed");
-                            settingList.push("individual envelope speed");
                         }
                         if (anyInstrumentRMs) {
                             settingList.push("ring modulation");
@@ -4971,16 +4960,6 @@ export class SongEditor {
                     const instrument: Instrument = this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()];
                     if (!instrument.eqFilterType && this._doc.channel < this._doc.song.pitchChannelCount + this._doc.song.noiseChannelCount)
                         this._openPrompt("customEQFilterSettings");
-                } else if (event.altKey) {
-                    //open / close all envelope dropdowns
-                    const instrument: Instrument = this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()];
-                    const isAllOpen: boolean = this.envelopeEditor.openExtraSettingsDropdowns.every((x) => { return x == true })
-                    for (let i = 0; i < instrument.envelopeCount; i++) {
-                        if (isAllOpen) this.envelopeEditor.openExtraSettingsDropdowns[i] = false;
-                        else this.envelopeEditor.openExtraSettingsDropdowns[i] = true;
-                    }
-                    this.envelopeEditor.rerenderExtraSettings();
-                    event.preventDefault();
                 } else if (needControlForShortcuts == (event.ctrlKey || event.metaKey)) {
                     this._openPrompt("generateEuclideanRhythm");
                     event.preventDefault();
@@ -5349,7 +5328,6 @@ export class SongEditor {
                     this._doc.selection.selectionUpdated();
                 } else {
                     this._doc.selection.setChannelBar((this._doc.channel - 1 + this._doc.song.getChannelCount()) % this._doc.song.getChannelCount(), this._doc.bar);
-                    this.envelopeEditor.rerenderExtraSettings();
                     this._doc.selection.resetBoxSelection();
                 }
                 event.preventDefault();
@@ -5363,7 +5341,6 @@ export class SongEditor {
                     this._doc.selection.selectionUpdated();
                 } else {
                     this._doc.selection.setChannelBar((this._doc.channel + 1) % this._doc.song.getChannelCount(), this._doc.bar);
-                    this.envelopeEditor.rerenderExtraSettings();
                     this._doc.selection.resetBoxSelection();
                 }
                 event.preventDefault();

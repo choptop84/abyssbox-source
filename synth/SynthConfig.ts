@@ -44,23 +44,20 @@ export const enum SustainType {
 }
 
 export const enum EnvelopeType {
+	noteSize,
     none,
-    noteSize,
-    pitch, //slarmoo's box 0.9
-    pseudorandom, //slarmoo's box 1.3
 	punch,
 	flare,
 	twang,
 	swell,
-    lfo, //renamed from tremolo in slarmoo's box 1.3
-    tremolo2, //deprecated as of slarmoo's box 1.3; Kept for updating integrity and drumsets
+	tremolo,
+	tremolo2,
     decay,
     wibble,
-    //hard,
+    hard,
     linear,
     rise,
-    blip,
-    fall, //slarmoo's box 1.2
+    blip
 }
 
 export const enum InstrumentType {
@@ -89,8 +86,7 @@ export const enum DropdownID {
     FM = 4,
     PulseWidth = 5,
     Unison = 6,
-    Envelope = 7,
-    EnvelopeSettings = 8,
+    Envelope = 7
 }
 
 export const enum EffectType {
@@ -158,15 +154,6 @@ export const enum BaseWaveTypes {
     steppedSaw,
     steppedTri,
     // ramp,
-    length,
-}
-
-
-export const enum RandomEnvelopeTypes {
-    time,
-    pitch,
-    note,
-    timeSmooth,
     length,
 }
 
@@ -1396,10 +1383,10 @@ export class Config {
         { name: "swell 1", type: EnvelopeType.swell, speed: 32.0 },
         { name: "swell 2", type: EnvelopeType.swell, speed: 8.0 },
         { name: "swell 3", type: EnvelopeType.swell, speed: 2.0 },
-        { name: "tremolo0", type: EnvelopeType.lfo, speed: 8.0 },
-        { name: "tremolo1", type: EnvelopeType.lfo, speed: 4.0 },
-        { name: "tremolo2", type: EnvelopeType.lfo, speed: 2.0 },
-        { name: "tremolo3", type: EnvelopeType.lfo, speed: 1.0 },
+        { name: "tremolo0", type: EnvelopeType.tremolo, speed: 8.0 },
+        { name: "tremolo1", type: EnvelopeType.tremolo, speed: 4.0 },
+        { name: "tremolo2", type: EnvelopeType.tremolo, speed: 2.0 },
+        { name: "tremolo3", type: EnvelopeType.tremolo, speed: 1.0 },
         { name: "tremolo4", type: EnvelopeType.tremolo2, speed: 4.0 },
         { name: "tremolo5", type: EnvelopeType.tremolo2, speed: 2.0 },
         { name: "tremolo6", type: EnvelopeType.tremolo2, speed: 1.0 },
@@ -1407,7 +1394,7 @@ export class Config {
         { name: "decay 1", type: EnvelopeType.decay, speed: 10.0 },
         { name: "decay 2", type: EnvelopeType.decay, speed: 7.0 },
         { name: "decay 3", type: EnvelopeType.decay, speed: 4.0 },
-        { name: "wibble-1", type: EnvelopeType.wibble, speed: 128.0 },
+        { name: "wibble-1", type: EnvelopeType.wibble, speed: 96.0 },
         { name: "wibble 1", type: EnvelopeType.wibble, speed: 24.0 },
         { name: "wibble 2", type: EnvelopeType.wibble, speed: 12.0 },
         { name: "wibble 3", type: EnvelopeType.wibble, speed: 4.0 },
@@ -1422,48 +1409,30 @@ export class Config {
         { name: "rise 2", type: EnvelopeType.rise, speed: 8.0 },
         { name: "rise 3", type: EnvelopeType.rise, speed: 2.0 },
 	    //modbox
-        { name: "flute 1", type: EnvelopeType.wibble, speed: 16.0 },
-		{ name: "flute 2", type: EnvelopeType.wibble, speed: 8.0 },
-		{ name: "flute 3", type: EnvelopeType.wibble, speed: 4.0 },
+        { name: "flute 1", type: 9, speed: 16.0 },
+		{ name: "flute 2", type: 9, speed: 8.0 },
+		{ name: "flute 3", type: 9, speed: 4.0 },
         // sandbox
-		{ name: "tripolo1", type: EnvelopeType.lfo, speed: 9.0 },
-        { name: "tripolo2", type: EnvelopeType.lfo, speed: 6.0 },
-        { name: "tripolo3", type: EnvelopeType.lfo, speed: 3.0 },
-        { name: "tripolo4", type: EnvelopeType.tremolo2, speed: 9.0 },
-        { name: "tripolo5", type: EnvelopeType.tremolo2, speed: 6.0 },
-        { name: "tripolo6", type: EnvelopeType.tremolo2, speed: 3.0 },
-        { name: "pentolo1", type: EnvelopeType.lfo, speed: 10.0 },
-        { name: "pentolo2", type: EnvelopeType.lfo, speed: 5.0 },
-        { name: "pentolo3", type: EnvelopeType.lfo, speed: 2.5 },
-        { name: "pentolo4", type: EnvelopeType.tremolo2, speed: 10.0 },
-        { name: "pentolo5", type: EnvelopeType.tremolo2, speed: 5.0 },
-        { name: "pentolo6", type: EnvelopeType.tremolo2, speed: 2.5 },	
+		{ name: "tripolo1", type: 6, speed: 9.0 },
+        { name: "tripolo2", type: 6, speed: 6.0 },
+        { name: "tripolo3", type: 6, speed: 3.0 },
+        { name: "tripolo4", type: 7, speed: 9.0 },
+        { name: "tripolo5", type: 7, speed: 6.0 },
+        { name: "tripolo6", type: 7, speed: 3.0 },
+        { name: "pentolo1", type: 6, speed: 10.0 },
+        { name: "pentolo2", type: 6, speed: 5.0 },
+        { name: "pentolo3", type: 6, speed: 2.5 },
+        { name: "pentolo4", type: 7, speed: 10.0 },
+        { name: "pentolo5", type: 7, speed: 5.0 },
+        { name: "pentolo6", type: 7, speed: 2.5 },	
         // todbox
-	    { name: "flutter 1", type: EnvelopeType.lfo, speed: 14.0 },
-        { name: "flutter 2", type: EnvelopeType.tremolo2, speed: 11.0 },
-        { name: "water-y flutter", type: EnvelopeType.lfo, speed: 9.0 },
+	    { name: "flutter 1", type: 6, speed: 14.0 },
+        { name: "flutter 2", type: 7, speed: 11.0 },
+        { name: "water-y flutter", type: 6, speed: 9.0 },
 	    // new jummbox
         { name: "blip 1", type: EnvelopeType.blip, speed: 6.0 },
         { name: "blip 2", type: EnvelopeType.blip, speed: 16.0 },
         { name: "blip 3", type: EnvelopeType.blip, speed: 32.0 },
-    ]);
-
-    public static readonly newEnvelopes: DictionaryArray<Envelope> = toNameMap([
-        { name: "none", type: EnvelopeType.none, speed: 0.0 },
-        { name: "note size", type: EnvelopeType.noteSize, speed: 0.0 },
-        { name: "pitch", type: EnvelopeType.pitch, speed: 0.0 }, 
-        { name: "random", type: EnvelopeType.pseudorandom, speed: 4.0 }, //Slarmoo's box 1.3
-        { name: "punch", type: EnvelopeType.punch, speed: 0.0 },
-        { name: "flare", type: EnvelopeType.flare, speed: 32.0 },
-        { name: "twang", type: EnvelopeType.twang, speed: 32.0 },
-        { name: "swell", type: EnvelopeType.swell, speed: 32.0 },
-        { name: "lfo", type: EnvelopeType.lfo, speed: 4.0 }, //replaced tremolo and tremolo2
-        { name: "decay", type: EnvelopeType.decay, speed: 10.0 },
-        { name: "wibble", type: EnvelopeType.wibble, speed: 24.0 },
-        { name: "linear", type: EnvelopeType.linear, speed: 32.0 },
-        { name: "rise", type: EnvelopeType.rise, speed: 32.0 },
-        { name: "blip", type: EnvelopeType.blip, speed: 6.0 },
-        { name: "fall", type: EnvelopeType.fall, speed: 2.0 }, 
     ]);
 
 	public static readonly feedbacks: DictionaryArray<Feedback> = toNameMap([
