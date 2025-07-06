@@ -714,20 +714,18 @@ import { SongPlayerLayout } from "./Layout";
 					timelineWidth = Math.max(boundingRect.width, targetBeatWidth * synth.song.barCount * synth.song.beatsPerBar);
 					if (useVertical) {
 						timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineHeight / 2}px) scaleY(-1)`; 
-						pianoContainer.style.display = "unset";
-						if (!isMobile) {
-							songPlayerContainer.style.gridTemplateRows = ""; }
-						else {
-							songPlayerContainer.style.gridTemplateRows = "78vh 0vh 7.4vh";
-						}
+						pianoContainer.style.minHeight = "140px";
+						if (isMobile) {
+							pianoContainer.style.display = "none";
+							pianoContainer.style.minHeight = "0px";
+						} 
 						timelineContainer.style.left = "0px";
 					 } else {
 						timelineContainer.style.transform = '';
-						pianoContainer.style.display = "none";
+						pianoContainer.style.minHeight = "0px";
 						songPlayerContainer.style.gridTemplateRows = "";
 					 }
 				} else {
-					pianoContainer.style.display = "none";
 					timelineWidth = boundingRect.width;
 					const targetSemitoneHeight: number = Math.max(1, timelineWidth / (synth.song.barCount * synth.song.beatsPerBar) / 6.0);
 					timelineHeight = Math.min(boundingRect.height, targetSemitoneHeight * (Config.maxPitch + 1) + 1);
@@ -735,13 +733,15 @@ import { SongPlayerLayout } from "./Layout";
 					windowPitchCount = windowOctaves * 12 + 1;
 					if (useVertical) {
 						timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineWidth / 2}px) scaleY(-1)`;
+						pianoContainer.style.height = "0";
+						pianoContainer.style.minHeight = "0";
 						if (isMobile) {
-							songPlayerContainer.style.gridTemplateRows = "78vh 0vh 7.4vh"; }
-						else {
-							songPlayerContainer.style.gridTemplateRows = "92.6vh 0vh 7.4vh";
-						}
+							pianoContainer.style.display = "none";
+							pianoContainer.style.minHeight = "0px";
+						} 
 						timelineContainer.style.left = "0px";
 					 } else {
+						pianoContainer.style.minHeight = "0px";
 						timelineContainer.style.transform = '';
 						songPlayerContainer.style.gridTemplateRows = "";
 					 }
