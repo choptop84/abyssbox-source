@@ -3935,7 +3935,8 @@ export class SongEditor {
                             allInstrumentPans:         boolean = true,
                             allInstrumentChorus:       boolean = true,
                             allInstrumentEchoes:       boolean = true,
-                            allInstrumentReverbs:      boolean = true;
+                            allInstrumentReverbs:      boolean = true,
+                            anyInstrumentInvertWave:   boolean = true;
                         let instrumentCandidates: number[] = [];
                         if (modInstrument >= channel.instruments.length) {
                             for (let i: number = 0; i < channel.instruments.length; i++) {
@@ -4028,6 +4029,12 @@ export class SongEditor {
                             }
                             else {
                                 anyInstrumentPhasers = false;
+                            }
+                            if (effectsIncludeInvertWave(channel.instruments[instrumentIndex].effects)) {
+                                anyInstrumentInvertWave = true;
+                            }
+                            else {
+                                anyInstrumentInvertWave = false;
                             }
                             if (channel.instruments[instrumentIndex].envelopes.length > 0) {
                                 anyInstrumentHasEnvelopes = true;
@@ -4162,6 +4169,9 @@ export class SongEditor {
                             settingList.push("phaser frequency");
                             settingList.push("phaser feedback");
                             settingList.push("phaser stages");
+                        }
+                        if (anyInstrumentInvertWave) {
+                            settingList.push("invert wave");
                         }
                     }
 

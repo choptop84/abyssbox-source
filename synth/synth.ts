@@ -8037,6 +8037,14 @@ class InstrumentState {
 
         this.aliases = instrument.aliases;
         this.invertWave = instrument.invertWave;
+        const usesInvertWave: boolean = effectsIncludeInvertWave(this.effects);
+
+        if (usesInvertWave) {
+            if (synth.isModActive(Config.modulators.dictionary["invert wave"].index, channelIndex, instrumentIndex)) {
+                this.invertWave = Boolean(Math.floor(synth.getModValue(Config.modulators.dictionary["invert wave"].index, channelIndex, instrumentIndex, false)));
+            }
+        }
+        
         this.volumeScale = 1.0;
 
         this.allocateNecessaryBuffers(synth, instrument, samplesPerTick);
