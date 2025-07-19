@@ -1,6 +1,6 @@
 // Copyright (c) 2012-2022 John Nesky and contributing authors, distributed under the MIT license, see accompanying the LICENSE.md file.
 
-import { Dictionary, DictionaryArray, EnvelopeType, InstrumentType, Transition, Chord, Envelope, Config } from "../synth/SynthConfig";
+import { Dictionary, DictionaryArray, EnvelopeType, InstrumentType, Transition, Chord, Envelope, Config, sampleLoadEvents, SampleLoadedEvent } from "../synth/SynthConfig";
 import { ColorConfig } from "../editor/ColorConfig";
 import { NotePin, Note, Pattern, Instrument, Channel, Synth, Song } from "../synth/synth";
 import "./style";
@@ -258,10 +258,19 @@ import { SongPlayerLayout } from "./Layout";
 		outVolumeBar,
 		outVolumeCap,
 	);
-	const timelineBarProgress: HTMLDivElement = div({ class:`timeline-bar-progress`, style: `pointer-events: none; overflow: hidden; width: 5%; height: 100%; z-index: 5;`});
+
+	const sampleLoadingBar: HTMLDivElement = div({ style: `width: 0%; height: 100%; background-color: ${ColorConfig.indicatorPrimary};` });
+    const sampleFailedBar: HTMLDivElement = div({ style: `width: 0%; height: 100%; background-color: ${ColorConfig.sampleFailed};` });
+    const sampleLoadingBarContainer: HTMLDivElement = div({ class: `sampleLoadingContainer`, style: `overflow: hidden; margin: auto; width: 90%; height: 50%; background-color: var(--empty-sample-bar, ${ColorConfig.indicatorSecondary});` }, sampleLoadingBar, sampleFailedBar);
+    const sampleLoadingStatusContainer: HTMLDivElement = div({},
+        div({ class: "selectRow", style: "overflow: hidden; margin: auto; width: 160px; height: 10px; " },
+            sampleLoadingBarContainer,
+        ),
+
+	const timelineBarProgress: HTMLDivElement = div({ class:`timeline-bar-progress`, style: `overflow: hidden; width: 5%; height: 100%; z-index: 5;`});
 	const timelineBar: HTMLDivElement = div({ style:  `overflow: hidden; margin: auto; width: 90%; height: 50%; background: var(--ui-widget-background);`},timelineBarProgress);
-	const timelineBarContainer: HTMLDivElement = div({ style: `pointer-events: none; overflow: hidden; margin: auto; width: 160px; height: 10px; `}, timelineBar);
-	const volumeBarContainerDiv: HTMLDivElement = div({class:`volBarContainer`, style:"display:flex; flex-direction:column;"}, volumeBarContainer, timelineBarContainer);
+	const timelineBarContainer: HTMLDivElement = div({ style: `overflow: hidden; margin: auto; width: 160px; height: 10px; `}, timelineBar);
+	const volumeBarContainerDiv: HTMLDivElement = div({class:`volBarContainer`, style:"display:flex; flex-direction:column;"}, volumeBarContainer, timelineBarContainer,sampleLoadingStatusContainer);
 	const promptContainer: HTMLDivElement = div({class:"promptContainer",style:"display:none; backdrop-filter: saturate(1.5) blur(4px); width: 100%; height: 100%; position: fixed; z-index: 999; display: flex; justify-content: center; align-items: center;"});
 	promptContainer.style.display = "none";
 	const songPlayerContainer: HTMLDivElement = div({class:"songPlayerContainer"});
@@ -512,6 +521,31 @@ import { SongPlayerLayout } from "./Layout";
 	function onLayoutButton(): void {
 		promptContainer.style.display = "flex";
 	}
+
+	function updateSampleLoadingBar(_e: Event): void {
+        // @TODO: Avoid this cast and type EventTarget/Event properly.
+        const e: SampleLoadedEvent = <SampleLoadedEvent>_e;
+        let sampleNum: boolean = false;
+        const percent: number = (
+            e.totalSamples === 0
+            ? 0
+            : Math.floor((e.samplesLoaded / e.totalSamples) * 100)
+        );
+        const failedPercent: number = (
+            e.totalSamples === 0
+            ? 0
+            : Math.floor((e.samplesFailed / e.totalSamples) * 100)
+        );
+        sampleNum = Boolean(percent > 0 && failedPercent > 0);
+		sampleLoadingBarContainer.title = "Total Samples: "+String(e.totalSamples)+"; Loaded Samples: "+String(e.samplesLoaded)+"; Samples Failed: "+String(e.samplesFailed)+";";
+        sampleLoadingBar.style.width = `${percent}%`;
+        sampleFailedBar.style.width = `${failedPercent+Number(sampleNum)}%`;
+        if (e.totalSamples != 0) {
+            sampleLoadingBarContainer.style.backgroundColor = "var(--indicator-secondary)"; 
+        } else {
+        sampleLoadingBarContainer.style.backgroundColor = "var(--empty-sample-bar, var(--indicator-secondary))"; 
+        }
+    }
 
 	function onExitButton(): void {
 		promptContainer.style.display = "none";
@@ -1008,6 +1042,7 @@ import { SongPlayerLayout } from "./Layout";
 	shareLink.addEventListener("click", onShareClicked);
 	window.addEventListener("hashchange", hashUpdatedExternally);
 	shortenSongLink.addEventListener("click", shortenSongPlayerUrl);
+	sampleLoadEvents.addEventListener("sampleloaded", updateSampleLoadingBar.bind(this));
 	
 	hashUpdatedExternally();
 	renderLoopIcon();
