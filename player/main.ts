@@ -266,6 +266,7 @@ import { SongPlayerLayout } from "./Layout";
         div({ class: "selectRow", style: "overflow: hidden; margin: auto; width: 160px; height: 10px; " },
             sampleLoadingBarContainer,
         ),
+	);
 
 	const timelineBarProgress: HTMLDivElement = div({ class:`timeline-bar-progress`, style: `overflow: hidden; width: 5%; height: 100%; z-index: 5;`});
 	const timelineBar: HTMLDivElement = div({ style:  `overflow: hidden; margin: auto; width: 90%; height: 50%; background: var(--ui-widget-background);`},timelineBarProgress);
