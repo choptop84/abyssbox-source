@@ -207,6 +207,7 @@ import { SongPlayerLayout } from "./Layout";
 	
 
 	let draggingPlayhead: boolean = false;
+	let draggingTimelineBar: boolean = false;
 		const playButton: HTMLButtonElement = button({style: "width: 100%; height: 100%; max-height: 50px;"});
 		const playButtonContainer: HTMLDivElement = div({class: "playButtonContainer",style: "flex-shrink: 0; display: flex; padding: 2px; width: 80px; height: 100%; box-sizing: border-box; align-items: center;"},
 		playButton,
@@ -269,14 +270,15 @@ import { SongPlayerLayout } from "./Layout";
 	);
 
 	const timelineBarProgress: HTMLDivElement = div({ class:`timeline-bar-progress`, style: `overflow: hidden; width: 5%; height: 100%; z-index: 5;`});
-	const timelineBar: HTMLDivElement = div({ style:  `overflow: hidden; margin: auto; width: 90%; height: 50%; background: var(--ui-widget-background);`},timelineBarProgress);
-	const timelineBarContainer: HTMLDivElement = div({ style: `overflow: hidden; margin: auto; width: 160px; height: 10px; `}, timelineBar);
-	const volumeBarContainerDiv: HTMLDivElement = div({class:`volBarContainer`, style:"display:flex; flex-direction:column;"}, volumeBarContainer, timelineBarContainer,sampleLoadingStatusContainer);
+	const timelineBar: HTMLDivElement = div({ style:  `overflow: hidden; height: 100%; margin: auto; background: var(--ui-widget-background);`},timelineBarProgress);
+	const timelineBarContainer: HTMLDivElement = div({ style: `overflow: hidden; height: 4px; `}, timelineBar);
+	const volumeBarContainerDiv: HTMLDivElement = div({class:`volBarContainer`, style:"display:flex; flex-direction:column;"}, volumeBarContainer, sampleLoadingStatusContainer);
 	const promptContainer: HTMLDivElement = div({class:"promptContainer",style:"display:none; backdrop-filter: saturate(1.5) blur(4px); width: 100%; height: 100%; position: fixed; z-index: 999; display: flex; justify-content: center; align-items: center;"});
 	promptContainer.style.display = "none";
 	const songPlayerContainer: HTMLDivElement = div({class:"songPlayerContainer"});
 	songPlayerContainer.appendChild(visualizationContainer);
 	songPlayerContainer.appendChild(pianoContainer);
+	songPlayerContainer.appendChild(timelineBarContainer);
 	songPlayerContainer.appendChild(
 			div({class: "control-center",id: "control-center",style: `flex-shrink: 0; height: 20vh; min-height: 22px; max-height: 70px; display: flex; align-items: center; grid-area: control-center;`},
 				div({class: "control-center row",id:"row1",style: `display: flex; align-items: center;`},
@@ -585,18 +587,28 @@ import { SongPlayerLayout } from "./Layout";
 		draggingPlayhead = true;
 		onTimelineMouseMove(event);
 	}
+
+	function onTimelineBarMouseDown(event: MouseEvent): void {
+		draggingPlayhead = true;
+		draggingTimelineBar = true;
+		onTimelineMouseMove(event);
+	}
 	
 	function onTimelineMouseMove(event: MouseEvent): void {
 		if (!draggingPlayhead) return;
 		event.preventDefault();
 		const useVertical = ((<any> _form.elements)["spLayout"].value == "vertical") || (window.localStorage.getItem("spLayout") == "vertical");
 		if (useVertical) {
-		onTimelineCursorMove(event.clientY || event.pageY); 
+			if (!draggingTimelineBar) {
+				onTimelineCursorMove(event.clientY || event.pageY); 
+			} else {
+				onTimelineCursorMove(event.clientX || event.pageX);	
+			}
 		} else {
 		onTimelineCursorMove(event.clientX || event.pageX);	
 		}
 	}
-	
+
 	function onTimelineTouchDown(event: TouchEvent): void {
 		draggingPlayhead = true;
 		onTimelineTouchMove(event);
@@ -619,7 +631,11 @@ import { SongPlayerLayout } from "./Layout";
 			if (!useVertical && !useBoxBeep) {
 				synth.playhead = synth.song.barCount * (mouseX - boundingRect.left) / (boundingRect.right - boundingRect.left); 
 			} else if (useVertical) {
-				synth.playhead = synth.song.barCount * (mouseX - boundingRect.bottom) / (boundingRect.top - boundingRect.bottom);	
+				if (!draggingTimelineBar) {
+					synth.playhead = synth.song.barCount * (mouseX - boundingRect.bottom) / (boundingRect.top - boundingRect.bottom);	
+				} else {
+					synth.playhead = synth.song.barCount * (mouseX - boundingRect.left) / (boundingRect.right - boundingRect.left); 
+				}
 			} else if (useBoxBeep) {
 				synth.playhead = synth.song.barCount * (mouseX - boundingRect.right) / (boundingRect.left - boundingRect.right);	
 			}
@@ -630,6 +646,7 @@ import { SongPlayerLayout } from "./Layout";
 	
 	function onTimelineCursorUp(): void {
 		draggingPlayhead = false;
+		draggingTimelineBar = false;
 	}
 	
 	function setSynthVolume(): void {
@@ -644,7 +661,7 @@ import { SongPlayerLayout } from "./Layout";
 			if (synth.song != null) {
 				let pos: number = synth.playhead / synth.song.barCount;
 
-				timelineBarProgress.style.width = Math.round((maxPer*pos/maxPer)*100)+"%";
+				timelineBarProgress.style.width = Math.round((maxPer*pos/maxPer)*1000)/10+"%";
 
 				const usePiano = ((<any> _form.elements)["spLayout"].value == "piano") || (window.localStorage.getItem("spLayout") == "piano");
 				const useMiddle = ((<any> _form.elements)["spLayout"].value == "middle") || (window.localStorage.getItem("spLayout") == "middle");
@@ -1014,12 +1031,19 @@ import { SongPlayerLayout } from "./Layout";
 	window.addEventListener("keydown", onKeyPressed);
 	
 	timeline.addEventListener("mousedown", onTimelineMouseDown);
+	timelineBar.addEventListener("mousedown", onTimelineBarMouseDown);
 	window.addEventListener("mousemove", onTimelineMouseMove);
 	window.addEventListener("mouseup", onTimelineCursorUp);
 	timeline.addEventListener("touchstart", onTimelineTouchDown);
 	timeline.addEventListener("touchmove", onTimelineTouchMove);
 	timeline.addEventListener("touchend", onTimelineCursorUp);
 	timeline.addEventListener("touchcancel", onTimelineCursorUp);
+
+	timelineBar.addEventListener("touchstart", onTimelineTouchDown);
+	timelineBar.addEventListener("touchmove", onTimelineTouchMove);
+	timelineBar.addEventListener("touchend", onTimelineCursorUp);
+	timelineBar.addEventListener("touchcancel", onTimelineCursorUp);
+
 
 	document.addEventListener('visibilitychange', e=>{
 		if (document.visibilityState === 'visible') {
