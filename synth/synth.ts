@@ -5651,10 +5651,12 @@ export class Song {
             case SongTagCode.patterns: {
                 let bitStringLength: number = 0;
                 let channelIndex: number;
+                // Somewhat relevant to this, I think I need to make a variant of this for AbyssBox as well.
                 let largerChords: boolean = !((beforeFour && fromJummBox) || fromBeepBox);
                 let recentPitchBitLength: number = (largerChords ? 4 : 3);
                 let recentPitchLength: number = (largerChords ? 16 : 8);
-                if (beforeThree && fromBeepBox) {
+                // Patterns in relation to channels. (i.e. the pattern number on the individual channels.)
+                if (beforeThree && fromBeepBox) { 
                     channelIndex = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
 
                     // The old format used the next character to represent the number of patterns in the channel, which is usually eight, the default. 
@@ -5696,7 +5698,7 @@ export class Song {
                     const neededInstrumentIndexBits: number = Song.getNeededBits(channel.instruments.length - 1);
 
                     // Some info about modulator settings immediately follows in mod channels.
-                    if (isModChannel) {
+                    if (isModChannel) { // All this can be ignored for the chord limits.
                         let jumfive: boolean = (beforeFive && fromJummBox) || (beforeFour && fromGoldBox)
 
                         // 2 more indices for 'all' and 'active'
@@ -5867,10 +5869,10 @@ export class Song {
                                 if (useOldShape) {
                                     shape = recentShapes[shapeIndex];
                                     recentShapes.splice(shapeIndex, 1);
-                                } else {
+                                } else { // Everything related to chord limits should be here.
                                     shape = {};
 
-                                    if (!largerChords) {
+                                    if (!largerChords) { // Basically for BeepBox and JummBox v3 or less
                                         // Old format: X 1's followed by a 0 => X+1 pitches, up to 4
                                         shape.pitchCount = 1;
                                         while (shape.pitchCount < 4 && bits.read(1) == 1) shape.pitchCount++;
@@ -5879,6 +5881,8 @@ export class Song {
                                         // New format is:
                                         //      0: 1 pitch
                                         // 1[XXX]: 3 bits of binary signifying 2+ pitches
+
+                                        // me when math (´• ‸ •`)
                                         if (bits.read(1) == 1) {
                                             shape.pitchCount = bits.read(3) + 2;
                                         }
