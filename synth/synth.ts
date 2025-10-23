@@ -13198,7 +13198,6 @@ export class Synth {
 
             if (usesGranular) {
                 effectsSource += `
-                let sample = tempMonoInstrumentSampleBuffer[sampleIndex];
                 let granularOutput = 0;
                 for (let grainIndex = 0; grainIndex < granularGrainCount; grainIndex++) {
                     const grain = granularGrains[grainIndex];
@@ -13270,12 +13269,8 @@ export class Synth {
                 granularDelayLine[granularDelayLineIndex] = sample;
                 granularDelayLineIndex = (granularDelayLineIndex + 1) & granularDelayLineMask;
                 sample = sample * granularDry + granularOutput * granularWet;
-                tempMonoInstrumentSampleBuffer[sampleIndex] = 0.0;
                 `
-            } else {
-                effectsSource += `let sample = tempMonoInstrumentSampleBuffer[sampleIndex];
-                tempMonoInstrumentSampleBuffer[sampleIndex] = 0.0;`
-            }  
+            } 
 
             if (usesDistortion) {
                 effectsSource += `
