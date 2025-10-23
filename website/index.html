@@ -167,6 +167,21 @@
             pointer-events: none;
         }
 
+        .GRANULAR-JUMPSCARE {
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            background-color: rgba(0,0,0, 0);
+            overflow-x: hidden;
+            pointer-events: none;
+            justify-content: center;
+            display: flex;
+            opacity: 0;
+        }
+
         .centerDiv {
 			margin: 0px auto;
 		}
@@ -253,6 +268,10 @@
 <body id="secondImage">
 
     <div id="overlay" class="overlay">
+    </div>
+
+    <div id="GRANULAR-JUMPSCARE" class="GRANULAR-JUMPSCARE">
+        <img style="height: 100%;" src="image_assets/GRANULAR.png">
     </div>
 
     <script> 
@@ -656,7 +675,9 @@
         "  rainbow!",
         "  half-life 3 when?",
         "  skipped the 3rd entry",
-        "  Oh god not the update prompt..."
+        "  Oh god not the update prompt...",
+        "  GRANULAR",
+        "  whatsapp horse",
         ];
 
         const curPlant = Math.floor(Math.random() * plants.length);
@@ -831,7 +852,25 @@
             } else if (document.getElementById("plant").innerHTML == "  Amen break 145bpm be like") {
                 var amen = new Audio('image_assets/amen-break-145.mp3');
                 amen.play();
-            } else if (document.getElementById("plant").innerHTML == "  Try Minecraft!") {
+            } else if (document.getElementById("plant").innerHTML == "  GRANULAR") {
+
+                var amen = new Audio('image_assets/ＧＲＡＮＵＬＡＲ.wav');
+                amen.play();
+
+                    const fade = [
+                        { opacity: "100%" },
+                        { opacity: "0%" }
+                    ];
+
+                    const fadeTiming = {
+                        duration: 2000,
+                        iterations: 1,
+                    };
+
+                let GRANULAR = document.getElementById("GRANULAR-JUMPSCARE");
+                GRANULAR.animate(fade, fadeTiming);
+            }
+            else if (document.getElementById("plant").innerHTML == "  Try Minecraft!") {
                 window.open("https://classic.minecraft.net", "_blank");
             } else if (document.getElementById("plant").innerHTML == "  How do you feel?") {
                 document.getElementById("plant").innerHTML = "  I hope you're doing well."
