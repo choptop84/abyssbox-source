@@ -1610,10 +1610,10 @@ export class Instrument {
 	public stringSustain: number = 10;
 	public stringSustainType: SustainType = SustainType.acoustic;
     public distortion: number = 0;
-    public ringModulation: number = 0;
-    public ringModulationHz: number = 0;
+    public ringModulation: number = Config.ringModRange >> 1;
+    public ringModulationHz: number = Config.ringModHzRange >> 1;
     public rmWaveformIndex: number = 0;
-    public rmPulseWidth: number = 0;
+    public rmPulseWidth: number = Config.pwmOperatorWaves.length >> 1;
     public rmHzOffset: number = 200;
     public bitcrusherFreq: number = 0;
     public bitcrusherQuantization: number = 0;
@@ -1741,8 +1741,8 @@ export class Instrument {
         this.bitcrusherFreq = Math.floor((Config.bitcrusherFreqRange - 1) * 0.5)
         this.bitcrusherQuantization = Math.floor((Config.bitcrusherQuantizationRange - 1) * 0.5);
 
-        this.ringModulation = 0;
-        this.ringModulationHz = 0;
+        this.ringModulation = Config.ringModRange >> 1;
+        this.ringModulationHz = Config.ringModHzRange >> 1;
         this.rmPulseWidth = 0;
         this.rmWaveformIndex = 0;
         this.rmHzOffset = 200;
