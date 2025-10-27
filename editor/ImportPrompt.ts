@@ -76,9 +76,18 @@ export class ImportPrompt implements Prompt {
 		this._cancelButton.addEventListener("click", this._close);
 		this._importButton.addEventListener("click", this._importCategoryButton);
 		this._exportButton.addEventListener("click", this._exportCategoryButton);
-		if (this._doc.prompt == "export") {
+		if (this._doc.prompt == "export" || this._doc.prompt == "quickExport") {
 			this._exportCategoryButton();
 		}
+		window.addEventListener("dragover", (event: any) => { event.preventDefault();});
+		window.addEventListener("dragenter", (event: any) => { event.preventDefault();});
+		window.addEventListener("dragleave", (event: any) => { event.preventDefault();});
+		window.addEventListener("drop",(event: any) => { 
+			event.preventDefault();
+			this.handleDrop(event);
+		});
+
+
 	}
 		
 	public _importCategoryButton = (): void => {
@@ -116,6 +125,13 @@ export class ImportPrompt implements Prompt {
 		public cleanUp = (): void => { 
 		this._fileInput.removeEventListener("change", this._whenFileSelected);
 		this._cancelButton.removeEventListener("click", this._close);
+		window.removeEventListener("dragover", (event: any) => { event.preventDefault();});
+		window.removeEventListener("dragenter", (event: any) => { event.preventDefault();});
+		window.removeEventListener("dragleave", (event: any) => { event.preventDefault();});
+		window.removeEventListener("drop",(event: any) => { 
+			event.preventDefault();
+			this.handleDrop(event);
+		})
 	}
 		
 	private _whenFileSelected = (): void => {
@@ -141,10 +157,19 @@ export class ImportPrompt implements Prompt {
 			reader.readAsArrayBuffer(file);
 		} else {
 			console.error("Unrecognized file extension.");
-			this._close();
+			return;
 		}
 	}
-		
+
+
+	private handleDrop = (e:any): void => {
+			const files = e.dataTransfer.files;
+			if (!files) return;
+			if (files.length > 1) return;
+			this._fileInput.files = files;
+			this._whenFileSelected();
+	}
+
 	private _parseMidiFile(buffer: ArrayBuffer): void {
 			
 		// First, split the file into separate buffer readers for each chunk. There should be one header chunk and one or more track chunks.

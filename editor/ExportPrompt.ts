@@ -203,6 +203,10 @@ export class ExportPrompt implements Prompt {
         ExportPrompt._validateFileName(null, this._fileName);
 
         (this._computedSamplesLabel.firstChild as Text).textContent = this._doc.samplesToTime(this._doc.synth.getTotalSamples(this._enableIntro.checked, this._enableOutro.checked, +this._loopDropDown.value - 1));
+    
+        if (this._doc.prompt == "quickExport") {
+            this._export();
+        }
     }
 
     private _close = (): void => {

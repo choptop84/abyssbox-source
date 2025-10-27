@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>AbyssBox Manual</title>
+	<link rel="icon" href="favicon.ico" type="image/x-icon" />
+	<meta name="description" content="The user manual for NepBox." />
+	<meta name="keywords" content="chiptune, music, melody, composition, tool, square wave, NES, NSF, BeepBox, beepbox" />
+	<meta name="viewport" content="width=700">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="mobile-web-app-capable" content="yes" />
+	<meta name="format-detection" content="telephone=no">
+	<style type="text/css">
+		html {
+            background-color: #1e0915;
+            scrollbar-color: #581b3e #1e0915;
+        }
+        
+        div {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			font-family: sans-serif;
+			font-size: 16px;
+			color: var(--primary-text, #e4c0c0);	
+		}
+
+		h1 {
+			font-size: 30px;
+			text-align: center;
+		}
+
+		h2 {
+			font-size: 15px;
+			text-align: center;
+		}
+
+		.centerDiv {
+			margin: 0px auto;
+		}
+		h3 {
+			font-size: 15px;
+			text-align: left;
+		}
+
+		.centerDiv {
+			margin: 0px auto;
+		}
+
+		a {
+			color: #ff668c;
+		}
+
+        .toc {
+            color:#ff66a6;
+            cursor: pointer;
+        }
+        .toc.selected {
+            color:#ffafe4;
+            font-style: italic;
+
+        }
+        .article {
+            display: none;
+            flex-direction: column; 
+            gap: 16px; 
+            text-align: left; 
+            font-size: 16px; 
+            overflow-y: scroll;
+        }
+        .article.active {
+            display: flex;;
+        }
+
+        ul {
+            margin: 0px;
+        }
+	</style>
+</head>
+
+<body style="display: flex; justify-content: center;">
+    <div style="border:3px #581b3e solid; max-width: 862px; display: flex; flex-direction: column; padding: 2em;">
+        <h1 class="modTitle">
+            AbyssBox User Manual
+        </h1>
+        <div style="display: flex;gap: 10px;">
+            <div style="border-right: 2px #581b3e solid;padding-right: 1em;width: 100px; display: flex; flex-direction: column;">
+                <div id="introTOC" class="toc selected" onclick="setTOC('intro')">Introduction</div>
+                <div id="bindTOC" class="toc" onclick="setTOC('bind')">Keybinds</div>
+            </div>
+            <div class="articles">
+                <div id="introArticle" class="article active"> 
+                    <div style="font-size: 1.5em">
+                        <div>Introduction</div>
+                    </div>
+                    <div>This is a specialized manual explaining the basics of using AbyssBox.</div>
+                    <div>On the left you can find tabs explaining different parts of the webside. 
+                        As of now, this page exists to showcase the various keybinds that can be found in AbyssBox. Later updates will add more articles for the manual. 
+                    </div>
+                </div>
+                <div id="bindArticle" class="article"> 
+                    <div style="font-size: 1.5em">
+                        <div>Keybinds</div>
+                    </div>
+                    <div>When AbyssBox has focus (click on its interface), you can use these keyboard shortcuts:</div>
+                        <div style="font-size: 1.3em">
+                            <div>Playback</div>
+                        </div>
+                    <ul>
+                        <li>Spacebar: Pause or Resume</li>
+                        <li>Shift+Spacebar: Resume from cursor position</li>
+                        <li>Ctrl+Spacebar Or Ctrl+P: Start Note Recording</li>
+                        <li>F: Move playbar to the start of the song</li>
+                        <li>Shift+F: Move playbar to the start of the loop bar</li>
+                        <li>H: Move playbar to the selected pattern</li>
+                        <li>[: Move playbar left</li>
+                        <li>]: Move playbar right</li>
+
+                    </ul>
+                        <div style="font-size: 1.3em">
+                            <div>Actions</div>
+                        </div>
+                    <ul>
+
+                        <li>Z: Undo</li>
+                        <li>Y or Shift+Z: Redo</li>
+                        <li>X: Cut selected patterns</li>
+                        <li>C: Copy selected patterns</li>
+                        <li>V: Paste selected patterns</li>
+                        <li>Ctrl+Shift+V: Paste selected Numbers</li>
+                        <li>D: Duplicate selected patterns</li>
+                        <li>N: New unused pattern</li>
+
+                        <li>Shift+C: Copy selected Instrument</li>
+                        <li>Shift+V: Paste selected Instrument</li>
+
+                        <p></p>
+                        <li>A: Select All</li>
+                        <li>Shift+A: Select Channel</li>
+                        <li>Shift+Click+Drag: Select bars/patterns</li>
+                        <li>Esc: Deselect bars/patterns</li>
+                        <li>Shift+Up/Down/Left/Right: Move selection bounds</li>
+
+                        <p></p>
+                        <li>Enter: Add selected number of Bars</li>
+                        <li>Shift+Enter: Add selected number of Bars behind selection</li>
+                        <li>Ctrl+Enter: Add selected number of Channels</li>
+                        <li>Backspace: Remove selected number of Bars</li>
+                        <li>Ctrl+Backspace: Remove selected number of Channels</li>
+                        <li>Ctrl+Up: Move selected channels up</li>
+                        <li>Ctrl+Down: Move selected channels down</li>
+                        <li>1/2/3/4/5/6/7/8/9/0: Set selected pattern number</li>
+                        <li>Delete: Set selected pattern number to 0</li>
+
+                        <p></p>
+                        <li>M or Shift+S: Mute selected Channels</li>
+                        <li>Shift+M: Mute all Channels</li>
+                        <li>Alt+M: Invert selected/all muted channels</li>
+                        <li>S: Solo selected Channels</li>
+
+                        <p></p>
+                        <li>=: Move selected notes up a semitone</li>
+                        <li>Shift+=: Move selected notes up an octave</li>
+                        <li>-: Move selected notes down a semitone</li>
+                        <li>Shift+-: Move selected notes down an octave</li>
+
+                        <p></p>
+                        <li>Shift+B: Loop only selected patterns</li>
+                        <li>Shift+~: New song</li>
+                        <li>Shift+P: Enter song player</li>
+                        <li>R: Random Preset</li>
+                        <li>Shift+R: Random Generated Instrument</li>
+                    </ul>
+                        <div style="font-size: 1.3em">
+                            <div>Prompts</div>
+                        </div>
+                    <ul>
+                        <div style="font-size: 1.1em">
+                            <div>File:</div>
+                        </div>
+                        <li>Ctrl+O: Open Song Import Prompt</li>
+                        <li>Ctrl+S: Open Song Export Prompt</li>
+                        <li>Ctrl+Shift+S: Quick Export Song</li>
+                        <li>Shift+D: Open Song Details Prompt</li>
+                        <li>~: Open Song Recovery Prompt</li>
+                        <p></p>
+                        <div style="font-size: 1.1em">
+                            <div>Edit:</div>
+                        </div>
+                        <li>W: Open Move all notes sideways Prompt</li>
+                        <li>E: Open Generate Euclidean Rhythm Prompt</li>
+                        <li>Shift+E: Open EQ Filter Editor Prompt</li>
+                        <li>B: Open Change Beats per Bar Prompt</li>
+                        <li>L: Open Change Song Length Prompt</li>
+                        <li>Q: Open Channel Settings Prompt</li>
+                        <li>Shift+L: Open Limiter Settings Prompt</li>
+                        <li>Shift+Q: Open Custom Samples Prompt</li>
+                    </ul>
+                    <div style="font-size: 1.3em">
+                        <div>Extras</div>
+                    </div>
+                    <ul>
+                        <li>Ctrl+Alt+Shift+J: Change all preferences to what Jummbus would prefer.</li>
+                        <li>Shift+I: Copy Instrument Code.</li>
+                        <li>Caps Lock: Enable midi keyboard inputs.</li>
+                    </ul>
+                </div>
+            </div>
+    </div>
+        
+    </div>
+
+    <script> 
+        let introTOC = document.getElementById("introTOC");
+        let instTOC = document.getElementById("instTOC");
+        let bindTOC = document.getElementById("bindTOC");
+        let aboutTOC = document.getElementById("aboutTOC");
+
+        let introArticle = document.getElementById("introArticle");
+        let instArticle = document.getElementById("instArticle");
+        let bindArticle = document.getElementById("bindArticle");
+        let aboutArticle = document.getElementById("aboutArticle");
+
+        function setTOC(tocID) {
+            introTOC.setAttribute("class", "toc"); 
+            bindTOC.setAttribute("class", "toc");
+
+            introArticle.setAttribute("class", "article");
+            bindArticle.setAttribute("class", "article");
+
+            document.getElementById(tocID+"TOC").setAttribute("class", "toc selected"); 
+            document.getElementById(tocID+"Article").setAttribute("class", "article active"); 
+        }
+    </script>
+
+</body>
+
+</html>

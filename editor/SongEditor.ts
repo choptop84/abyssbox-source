@@ -365,7 +365,6 @@ class CustomChipCanvas {
 
 }
 
-
 class CustomAlgorythmCanvas {
     private mouseDown: boolean;
     //private continuousEdit: boolean;
@@ -790,7 +789,7 @@ export class SongEditor {
     private readonly _fileMenu: HTMLSelectElement = select({ style: "width: 100%;" },
         option({ selected: true, disabled: true, hidden: false }, "File"), // todo: "hidden" should be true but looks wrong on mac chrome, adds checkmark next to first visible option even though it's not selected. :(
         option({ value: "new" }, "+ New Blank Song"),
-        option({ value: "import" }, "↑ > Import/Export Song (" + EditorConfig.ctrlSymbol + "S)"),
+        option({ value: "import" }, "↑ > Import/Export Song (" + EditorConfig.ctrlSymbol + "S/" + EditorConfig.ctrlSymbol + "O)"),
         option({ value: "copyUrl" }, "⎘ Copy Song URL"),
         option({ value: "shareUrl" }, "⤳ Share Song URL"),
         option({ value: "shortenUrl" }, "… Shorten Song URL"),
@@ -798,7 +797,7 @@ export class SongEditor {
         option({ value: "viewPlayer" }, "▶ View in Song Player"),
         option({ value: "copyEmbed" }, "⎘ Copy HTML Embed Code"),
         option({ value: "songRecovery" }, "⚠ > Recover Recent Song"),
-        //option({ value: "openTutorial"}, "✎ > Open Tutorial"),
+        option({ value: "openManual"}, "🕮 > Open Manual"),
     );
 
 
@@ -1840,6 +1839,8 @@ export class SongEditor {
         this._patternArea.addEventListener("mousedown", this._refocusStageNotEditing);
         this._trackArea.addEventListener("mousedown", this.refocusStage);
 
+        this._patternArea.addEventListener('dragover', this._dropHandler);
+
         // The song volume slider is styled slightly different than the class' default.
         this._volumeSlider.container.style.setProperty("flex-grow", "1");
         this._volumeSlider.container.style.setProperty("display", "flex");
@@ -2356,6 +2357,9 @@ export class SongEditor {
                 case "export":
                     this.prompt = new ImportPrompt(this._doc);
                     break;
+                case "quickExport":
+                    this.prompt = new ImportPrompt(this._doc);
+                    break;
                 case "import":
                     this.prompt = new ImportPrompt(this._doc);
                     break;
@@ -2482,6 +2486,10 @@ export class SongEditor {
 
     public refocusStage = (): void => {
         this.mainLayer.focus({ preventScroll: true });
+    }
+
+    public _dropHandler = (): void => {
+        this._openPrompt("import");
     }
 
     private _onFocusIn = (event: Event): void => {
@@ -5255,7 +5263,11 @@ export class SongEditor {
             case 83: // s
                 if (canPlayNotes) break;
                 if (event.ctrlKey || event.metaKey) {
-                    this._openPrompt("export");
+                    if (!event.shiftKey) {
+                        this._openPrompt("export");    
+                    } else {
+                        this._openPrompt("quickExport");
+                    }
                     event.preventDefault();
                 } else {
                     if (this._doc.prefs.enableChannelMuting) {
@@ -6337,8 +6349,8 @@ export class SongEditor {
             case "songRecovery":
                 this._openPrompt("songRecovery");
                 break;
-            case "openTutorial":
-                this._openPrompt("tutorial");
+            case "openManual":
+                window.open("./manual.html");
                 break;
             case "openUpdate":
                 break;
