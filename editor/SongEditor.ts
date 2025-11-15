@@ -60,8 +60,6 @@ import { FontPrompt } from "./CustomFontPrompt";
 import { TutorialPrompt } from "./TutorialPrompt";
 import { SongDetailsPrompt } from "./SongDetailsPrompt";
 
-import { UpdatePopup } from "./UpdatePopup";
-
 const { button, div, input, select, span, optgroup, option, canvas} = HTML;
 
 const beepboxEditorContainer: HTMLElement = document.getElementById("beepboxEditorContainer")!;
@@ -736,10 +734,10 @@ export class SongEditor {
     private _instSettingMode: number = 1;
 
      // comment for ctrl+f mobile stuffs
-    private readonly _mobilePatternButton: HTMLButtonElement = button({class: "mobilePatternButton", type:"button", style:"display:none; width: 33vw; height: 75%; left: 0; position: absolute; bottom: 0px;"});
-    private readonly _mobileTrackButton: HTMLButtonElement = button({class: "mobileTrackButton", type:"button", style:"display:none; width: 34vw; height: 60%; right: 33vw; position: absolute; bottom: 0px;"});
-    private readonly _mobileSettingsButton: HTMLButtonElement = button({class: "mobileSettingsButton", type:"button", style:"display:none; width: 33vw; height: 60%; right: 0; position: absolute; bottom: 0px;"});
-    public _mobileMenu: HTMLDivElement = div({class:"mobileMenu", style:"position: fixed; bottom: 0px; height: 20vh; width: 100vw; display:none; background: var(--editor-background); z-index: 5;"});
+    private readonly _mobilePatternButton: HTMLButtonElement = button({class: "mobilePatternButton", type:"button", style:"display:none; width: 33vw; height: 75%;"});
+    private readonly _mobileTrackButton: HTMLButtonElement = button({class: "mobileTrackButton", type:"button", style:"display:none; width: 34vw; height: 60%;"});
+    private readonly _mobileSettingsButton: HTMLButtonElement = button({class: "mobileSettingsButton", type:"button", style:"display:none; width: 33vw; height: 60%;"});
+    public mobileMenu: HTMLDivElement = div({class:"mobileMenu", style:"position: fixed; bottom: 0px; height: 20vh; width: 100vw; display:none; background: var(--editor-background); z-index: 5;"});
     private readonly _mobileEditMenuIcon: HTMLDivElement = div({class:"mobileEditMenuIcon"});
     private readonly _mobileTrackMenuIcon: HTMLDivElement = div({class:"mobileTrackMenuIcon"});
     private readonly _mobileSettingsMenuIcon: HTMLDivElement = div({class:"mobileSettingsMenuIcon"});
@@ -2510,7 +2508,134 @@ export class SongEditor {
         this._barScrollBar.changePos(offset);
     }
     
-    private updatePromptHolder = new UpdatePopup();
+    public static readonly mobileUI: { [name: string]: string } = {
+        "landscape": `
+            .mobileMenu {
+                right: 0 !important;
+                left: unset !important;
+                height: 100vh !important;
+                width: 15vw !important;
+
+                display: flex;
+                flex-direction: column;
+            }
+
+            .pattern-area {
+                width: 74vw !important;
+                height: 100vh !important;
+                max-height: 100vh !important;
+            }
+
+            #beepboxEditorContainer {
+                max-width: 100vw !important;
+            }
+
+            .play-pause-area2 {
+                height: 100vh !important;
+                width: 4vw !important;
+                bottom: 0 !important;
+                right: 16vw !important;
+                left: unset !important;
+            }
+
+            .playback-bar-controls2 {
+                flex-direction: column !important;
+            }
+            
+            .mobilePlayButton, .mobilePauseButton, .mobilePrevBarButton, .mobileNextBarButton {
+                width: 100% !important;
+                flex: 1;
+            }
+
+            .settings-area {
+                grid-template-columns: 33% 34% 33% !important;
+                grid-template-rows: min-content min-content min-content min-content 1fr !important;
+                grid-template-areas: "version-area version-area version-area" "play-pause-area menu-area instrument-settings-area" "play-pause-area menu-area instrument-settings-area" "song-settings-area song-settings-area instrument-settings-area" "song-settings-area song-settings-area instrument-settings-area" !important;
+                width: 78vw !important;
+            }
+
+            .track-area {
+                width: 78vw !important;
+            }
+
+            .mobilePatternButton, .mobileTrackButton, .mobileSettingsButton {
+                align-self: end;
+                flex: 1;
+            }
+
+        `,
+        "portrait": `
+
+            .play-pause-area2 {
+                height: unset !important;
+                width: 100% !important
+                bottom: 16vh !important;
+                right: unset !important;
+                left: 0 !important;
+            }
+
+            .mobileMenu {
+                right: unset !important;
+                left: unset !important;
+                height: 15vh !important;
+                width: 100vw !important;
+                bottom: 0 !important;
+
+                display: flex;
+                flex-direction: row;
+            }
+
+            .pattern-area {
+                width: 91vw !important;
+                height: 70vh !important;
+                max-height: 75vh;
+            }
+
+            #beepboxEditorContainer {
+                max-width: 710px !important;
+            }
+
+            .playback-bar-controls2 {
+                flex-direction: row !important;
+                height: 3vh;
+            }
+            
+            .mobilePlayButton, .mobilePauseButton, .mobilePrevBarButton, .mobileNextBarButton {
+                height: 100% !important;
+                flex: 1;
+            }
+
+            .settings-area {
+                grid-template-columns: 50% 50% !important;
+                grid-template-rows: min-content min-content min-content min-content 1fr !important;
+                grid-template-areas: "version-area version-area" "play-pause-area instrument-settings-area" "play-pause-area instrument-settings-area" "menu-area instrument-settings-area" "song-settings-area instrument-settings-area" !important;
+                width: 96vw !important;
+            }
+
+            .track-area {
+                width: 98vw !important;
+            }
+
+            .mobilePatternButton, .mobileTrackButton, .mobileSettingsButton {
+                align-self: end;
+                flex: 1;
+            }
+
+        `
+    }
+
+    // for custom fonts
+    private static readonly _mobileUIStyleElement: HTMLStyleElement = document.head.appendChild(HTML.style({ type: "text/css" }));
+
+    public static setMobileUi(name: string): void {
+        let mobileUI: string = this.mobileUI[name];
+            if (mobileUI == undefined) mobileUI = this.mobileUI["horizontal"];
+            this._mobileUIStyleElement.textContent = mobileUI;
+        }
+
+        public static getMobileUi(): string {
+            return this._mobileUIStyleElement.textContent as string;
+        } 
 
     public whenUpdated = (): void => {
         const prefs: Preferences = this._doc.prefs;
@@ -2557,9 +2682,6 @@ export class SongEditor {
                     //this._openPrompt("tutorial");
                 }
 
-                if (window.localStorage.getItem("curVer") != "1.6") {
-                       document.body.appendChild(this.updatePromptHolder.updatePopupDiv);
-                } 
 
         if (this._doc.getFullScreen()) {
             const semitoneHeight: number = this._patternEditorRow.clientHeight / this._doc.getVisiblePitchCount();
@@ -2690,9 +2812,7 @@ export class SongEditor {
          // comment for ctrl+f mobile stuffs
 
 
-        // notes for future me and anyone else that's crazy enough to try and add this to their mod. If you are the latter then hello, I am choptop84, and I am mentally exausted of this.
-        // I have been working on this all day for 2 days and I've now been working on this from around 9:00 AM to 2:47 PM just trying to fix the shit I was trying to do yesterday. 
-        // Please don't mind the mess, I stopped caring about it being nice and tidy when I got to adding the landscape view.
+        // hi, choptop84 of 11/14/2025, Decided to go back and fix everything up so then its not so ass. Thank you for your patience :)
 
         this.selectedPatternDiv.style.display = "none";
 
@@ -2712,262 +2832,38 @@ export class SongEditor {
             this.mainLayer.style.display = "unset";
 
         if (window.innerWidth > window.innerHeight) { // landscape view
-            this._mobileMenu.style.right = "0px";
-            this._mobileMenu.style.left = "";
-            this._mobileMenu.style.height = "100vh";
-            this._mobileMenu.style.width = "15vw";
+            if (SongEditor.getMobileUi() != 'landscape') {
+                SongEditor.setMobileUi("landscape"); 
+            }
 
-            this._patternArea.style.width = "75vw";
-            this._patternArea.style.height = "100vh";
-            this._patternArea.style.maxHeight = "100vh"; 
+            // Originally I had all of this in a bunch of if statements but I changed it to this god I was so bad at coding when I was doing this :sob:
+            // I should move everything above this to a style element so then it doesn't have to render all of this all the time.
+            this._patternArea.style.display = this._menuMode == 1 ? "": "none";
+            this._trackArea.style.display = this._menuMode == 2 ? "": "none";
+            this._settingsArea.style.display = this._menuMode == 3 ? "": "none";
 
-            beepboxEditorContainer.style.maxWidth = "100vw";
+            this._mobilePatternButton.style.width = this._menuMode == 1 ? "100%": "80%";
+            this._mobileTrackButton.style.width = this._menuMode == 2 ? "100%": "80%";
+            this._mobileSettingsButton.style.width = this._menuMode == 3 ? "100%": "80%";
 
-            this._playPauseAreaMobile.style.height = "100vh";
-            this._playPauseAreaMobile.style.width = "4vw";
-            this._playPauseAreaMobile.style.right = "16vw";
-            this._playPauseAreaMobile.style.bottom = "0";
-            this._playPauseAreaMobile.style.left = "";
-
-            this._playbackMobileDiv.style.flexDirection = "column";
-
-            this._mobilePlayButton.style.width = "100%";
-            this._mobilePauseButton.style.width = "100%";
-            this._mobileNextBarButton.style.width = "100%";
-            this._mobilePrevBarButton.style.width = "100%";
-
-            this._mobilePlayButton.style.height = "33vh";
-            this._mobilePauseButton.style.height = "33vh";
-            this._mobileNextBarButton.style.height = "34vh";
-            this._mobilePrevBarButton.style.height = "33vh";
-
-            this._settingsArea.style.gridTemplateColumns = "33% 34% 33%";
-            this._settingsArea.style.gridTemplateRows = "min-content min-content min-content min-content 1fr";
-
-
-            this._mobilePatternButton.style.right = "0";
-            this._mobilePatternButton.style.bottom = "";
-            this._mobileTrackButton.style.right = "0";
-            this._mobileTrackButton.style.bottom = "";
-            this._mobileSettingsButton.style.right = "0";
-            this._mobileSettingsButton.style.bottom = "";
-
-            this._settingsArea.style.gridTemplateAreas = '"version-area version-area version-area" "play-pause-area menu-area instrument-settings-area" "play-pause-area menu-area instrument-settings-area" "song-settings-area song-settings-area instrument-settings-area" "song-settings-area song-settings-area instrument-settings-area"';
-            this._settingsArea.style.width = "78vw";
-            this._trackArea.style.width = "78vw";
-
-            if (this._menuMode == 1) {
-                        this._patternArea.style.display = "";
-                        this._trackArea.style.display = "none";
-                        this._settingsArea.style.display = "none";
-
-                        this._mobilePatternButton.style.width = "100%";
-                        this._mobileTrackButton.style.width = "80%";
-                        this._mobileSettingsButton.style.width = "80%";
-    
-                        this._mobilePatternButton.style.height = "33vh";
-                        this._mobileTrackButton.style.height = "34vh";
-                        this._mobileSettingsButton.style.height = "33vh";
-    
-                        this._mobilePatternButton.style.left = "";
-                        this._mobileTrackButton.style.left = "";
-    
-                        this._mobilePatternButton.style.top = "0";
-                        this._mobileTrackButton.style.top = "33vh";
-                        this._mobileSettingsButton.style.bottom = "0";
-    
-                        this._mobileMenu.style.width = "15vw";
-                        this._mobileMenu.style.height = "100vh";
-                        this._mobileMenu.style.right = "0";
-                        this._playPauseAreaMobile.style.display = "flex";
-                } 
-                if (this._menuMode == 2) {
-
-                        this._patternArea.style.display = "none";
-                        this._trackArea.style.display = "";
-                        this._settingsArea.style.display = "none";
-                        this._mobilePatternButton.style.width = "80%";
-                        this._mobileTrackButton.style.width = "100%";
-                        this._mobileSettingsButton.style.width = "80%";
-            
-                                this._mobilePatternButton.style.height = "33vh";
-                                this._mobileTrackButton.style.height = "34vh";
-                                this._mobileSettingsButton.style.height = "33vh";
-            
-                        this._mobilePatternButton.style.top = "0";
-                        this._mobileTrackButton.style.top = "33vh";
-                        this._mobileSettingsButton.style.bottom = "0";
-                        
-                        this._mobileTrackButton.style.left = "";
-                        this._mobilePatternButton.style.left = "";
-            
-                        this._mobileMenu.style.width = "15vw";
-                        this._mobileMenu.style.height = "100vh";
-            
-                        this._mobileMenu.style.right = "0";
-                        this._playPauseAreaMobile.style.display = "none";
-
-                } 
-                if (this._menuMode == 3) {
-                    this._patternArea.style.display = "none";
-                    this._trackArea.style.display = "none";
-                    this._settingsArea.style.display = "";
-                    this._mobilePatternButton.style.width = "80%";
-                    this._mobileTrackButton.style.width = "80%";
-                    this._mobileSettingsButton.style.width = "100%";
-        
-                    this._mobilePatternButton.style.height = "33vh";
-                    this._mobileTrackButton.style.height = "34vh";
-                    this._mobileSettingsButton.style.height = "33vh";
-        
-                    this._mobilePatternButton.style.top = "0";
-                    this._mobileTrackButton.style.top = "33vh";
-                    this._mobileSettingsButton.style.bottom = "0";
-                    this._mobileTrackButton.style.left = "";
-        
-                    this._mobilePatternButton.style.left = "";
-        
-                    this._mobileMenu.style.width = "15vw";
-                    this._mobileMenu.style.height = "100vh";
-        
-                    this._mobileMenu.style.right = "0";
-                    this._playPauseAreaMobile.style.display = "none";
-                }
+            this._playPauseAreaMobile.style.display = this._menuMode == 1 ? "flex" : "none";
 
         } else if (window.innerWidth < window.innerHeight) { // portrait view
-
-            this._playPauseAreaMobile.style.height = "";
-            this._playPauseAreaMobile.style.width = "100vw";
-            this._playPauseAreaMobile.style.bottom = "16vh";
-            this._playPauseAreaMobile.style.left = "0";
-
-            this._playbackMobileDiv.style.flexDirection = "row";
-
-            this._mobilePlayButton.style.height = "";
-            this._mobilePauseButton.style.height = "";
-            this._mobileNextBarButton.style.height = "";
-            this._mobilePrevBarButton.style.height = "";
-
-            this._mobilePlayButton.style.width = "33vh";
-            this._mobilePauseButton.style.width = "33vh";
-            this._mobileNextBarButton.style.width = "34vh";
-            this._mobilePrevBarButton.style.width = "33vh";
-
-            beepboxEditorContainer.style.maxWidth = "710px";
-
-            this._settingsArea.style.gridTemplateRows = "min-content min-content min-content min-content 1fr";
-            this._settingsArea.style.gridTemplateAreas = '"version-area version-area" "play-pause-area instrument-settings-area" "play-pause-area instrument-settings-area" "menu-area instrument-settings-area" "song-settings-area instrument-settings-area"';
-
-            this._mobileMenu.style.bottom = "0px";
-            this._mobileMenu.style.width = "100vw";
-            this._mobileMenu.style.height = "20vh";
-            this._settingsArea.style.width = "98vw";
-            this._patternArea.style.width = "91vw";
-            this._trackArea.style.width = "98vw";
+            if (SongEditor.getMobileUi() != 'portrait') {
+                SongEditor.setMobileUi("portrait"); 
+            }
             
-            this._mobileMenu.style.right = "";
-            this._mobileMenu.style.left = "";
-            this._mobileMenu.style.height = "100vh";
-            this._mobileMenu.style.width = "15vw";
+            // Divider
 
-            beepboxEditorContainer.style.maxWidth = "100vw";
+            this._patternArea.style.display = this._menuMode == 1 ? "" : "none";
+            this._trackArea.style.display = this._menuMode == 2 ? "" : "none";
+            this._settingsArea.style.display = this._menuMode == 3 ? "" : "none";
 
-            this._settingsArea.style.gridTemplateColumns = "50% 50%";
+            this._mobilePatternButton.style.height = this._menuMode == 1 ? "100%" : "80%";
+            this._mobileTrackButton.style.height = this._menuMode == 2 ? "100%" : "80%";
+            this._mobileSettingsButton.style.height = this._menuMode == 3 ? "100%" : "80%";
 
-            this._mobilePatternButton.style.bottom = "0";
-            this._mobileTrackButton.style.bottom = "0";
-            this._mobileSettingsButton.style.bottom = "0";
-        
-
-            if (this._menuMode == 1) {
-                this._patternArea.style.width = "91vw";
-                this._patternArea.style.display = "";
-                this._trackArea.style.display = "none";
-                this._settingsArea.style.display = "none";
-                this._mobilePatternButton.style.height = "100%";
-                this._mobileTrackButton.style.height = "80%";
-                this._mobileSettingsButton.style.height = "80%";
-
-                this._mobilePatternButton.style.width = "33vw";
-                this._mobileTrackButton.style.width = "34vw";
-                this._mobileSettingsButton.style.width = "33vw";
-
-                this._mobilePatternButton.style.top = "";
-
-                this._mobilePatternButton.style.left = "0";
-                this._mobileTrackButton.style.left = "33vw";
-                this._mobileSettingsButton.style.right = "0";
-                this._mobilePatternButton.style.bottom = "0";
-                this._mobileTrackButton.style.bottom = "0";
-                this._mobileTrackButton.style.top = "";
-                this._mobileTrackButton.style.right = "";
-                this._mobileSettingsButton.style.bottom = "0";
-
-                this._mobileMenu.style.height = "15vh";
-                this._mobileMenu.style.width = "100vw"
-                this._mobileMenu.style.right = "";
-
-                this._playPauseAreaMobile.style.display = "flex";
-
-                } else if (this._menuMode == 2) {
-                    this._trackArea.style.width = "100vw";
-                    this._patternArea.style.display = "none";
-                    this._trackArea.style.display = "";
-                    this._settingsArea.style.display = "none";
-                    this._mobilePatternButton.style.height = "80%";
-                    this._mobileTrackButton.style.height = "100%";
-                    this._mobileSettingsButton.style.height = "80%";
-        
-                    this._mobilePatternButton.style.width = "33vw";
-                    this._mobileTrackButton.style.width = "34vw";
-                    this._mobileSettingsButton.style.width = "33vw";
-        
-                    this._mobilePatternButton.style.top = "";
-        
-                    this._mobilePatternButton.style.left = "0";
-                    this._mobileTrackButton.style.left = "33vw";
-                    this._mobileSettingsButton.style.right = "0";
-                    this._mobilePatternButton.style.bottom = "0";
-                    this._mobileTrackButton.style.bottom = "0";
-                    this._mobileTrackButton.style.top = "";
-                    this._mobileTrackButton.style.right = "";
-                    this._mobileSettingsButton.style.bottom = "0";
-        
-                    this._mobileMenu.style.height = "15vh";
-                    this._mobileMenu.style.width = "100vw";
-                    this._playPauseAreaMobile.style.display = "none";
-
-                } else if (this._menuMode == 3) {
-                    this._settingsArea.style.width = "96vw";
-                    this._patternArea.style.display = "none";
-                    this._trackArea.style.display = "none";
-                    this._settingsArea.style.display = "";
-                    this._mobilePatternButton.style.height = "80%";
-                    this._mobileTrackButton.style.height = "80%";
-                    this._mobileSettingsButton.style.height = "100%";
-        
-                    this._mobilePatternButton.style.width = "33vw";
-                    this._mobileTrackButton.style.width = "34vw";
-                    this._mobileSettingsButton.style.width = "33vw";
-        
-                    this._mobilePatternButton.style.top = "";
-        
-                    this._mobilePatternButton.style.left = "0";
-                    this._mobileTrackButton.style.left = "33vw";
-                    this._mobileSettingsButton.style.right = "0";
-                    this._mobilePatternButton.style.bottom = "0";
-                    this._mobileTrackButton.style.bottom = "0";
-                    this._mobileTrackButton.style.top = "";
-                    this._mobileTrackButton.style.right = "";
-                    this._mobileSettingsButton.style.bottom = "0";
-        
-                    this._mobileMenu.style.height = "15vh";
-                    this._mobileMenu.style.width = "100vw";
-                    this._playPauseAreaMobile.style.display = "none";
-                }
-
-                this._patternArea.style.maxHeight = "75vh";
-                this._patternArea.style.height = "70vh";
+            this._playPauseAreaMobile.style.display = this._menuMode == 1 ? "flex" : "none";
         }
 
         this.mainLayer.style.minHeight = "80vh";
@@ -2976,7 +2872,7 @@ export class SongEditor {
         this._mobilePatternButton.style.display = "";
         this._mobileTrackButton.style.display = "";
         this._mobileSettingsButton.style.display = "";
-        this._mobileMenu.style.display = "";
+        this.mobileMenu.style.display = "";
         this._instOptionsDiv.style.display = "";
     
         //beepboxEditorContainer.style.minHeight = "60vh"; 
@@ -2993,10 +2889,10 @@ export class SongEditor {
 
         }
 
-        document.body.appendChild(this._mobileMenu);
-        this._mobileMenu.appendChild(this._mobilePatternButton);
-        this._mobileMenu.appendChild(this._mobileTrackButton);
-        this._mobileMenu.appendChild(this._mobileSettingsButton );
+        document.body.appendChild(this.mobileMenu);
+        this.mobileMenu.appendChild(this._mobilePatternButton);
+        this.mobileMenu.appendChild(this._mobileTrackButton);
+        this.mobileMenu.appendChild(this._mobileSettingsButton );
         this._mobilePatternButton.appendChild(this._mobileEditMenuIcon);
         this._mobileTrackButton.appendChild(this._mobileTrackMenuIcon);
         this._mobileSettingsButton.appendChild(this._mobileSettingsMenuIcon);
@@ -5616,181 +5512,17 @@ export class SongEditor {
 
     private _displayPatternEditor = (): void => {
         this._menuMode = 1;
-
-        if (this._menuMode == 1) {
-            this._patternArea.style.display = "";
-            this._trackArea.style.display = "none";
-            this._settingsArea.style.display = "none";
-            this.whenUpdated();
-                if (window.innerWidth < window.innerHeight) { //portrait (w)
-                    this._mobilePatternButton.style.height = "100%";
-                    this._mobileTrackButton.style.height = "80%";
-                    this._mobileSettingsButton.style.height = "80%";
-
-                    this._mobilePatternButton.style.width = "33vw";
-                    this._mobileTrackButton.style.width = "34vw";
-                    this._mobileSettingsButton.style.width = "33vw";
-
-                    this._mobilePatternButton.style.top = "";
-
-                    this._mobilePatternButton.style.left = "0";
-                    this._mobileTrackButton.style.left = "33vw";
-                    this._mobileSettingsButton.style.right = "0";
-                    this._mobilePatternButton.style.bottom = "0";
-                    this._mobileTrackButton.style.bottom = "0";
-                    this._mobileTrackButton.style.top = "";
-                    this._mobileTrackButton.style.right = "33vw";
-                    this._mobileSettingsButton.style.bottom = "0";
-
-                    this._mobileMenu.style.height = "15vh";
-                    this._mobileMenu.style.width = "100vw"
-                    this._mobileMenu.style.right = "";
-
-                    this._patternArea.style.width = "98vw";
-
-                    this._playPauseAreaMobile.style.display = "flex";
- 
-                } else if (window.innerWidth > window.innerHeight) { //landscape (h)
-                    this._mobilePatternButton.style.width = "100%";
-                    this._mobileTrackButton.style.width = "80%";
-                    this._mobileSettingsButton.style.width = "80%";
-
-                    this._mobilePatternButton.style.height = "33vh";
-                    this._mobileTrackButton.style.height = "34vh";
-                    this._mobileSettingsButton.style.height = "33vh";
-
-                    this._mobilePatternButton.style.left = "";
-                    this._mobileTrackButton.style.left = "";
-
-                    this._mobilePatternButton.style.top = "0";
-                    this._mobileTrackButton.style.top = "33vh";
-                    this._mobileSettingsButton.style.bottom = "0";
-
-                    this._mobileMenu.style.width = "15vw";
-                    this._mobileMenu.style.height = "100vh";
-                    this._mobileMenu.style.right = "0";
-                    this._playPauseAreaMobile.style.display = "flex";
-                }
-            } 
+        this.whenUpdated(); 
     }
 
     private _displayTrackEditor = (): void => {
         this._menuMode = 2;
-
-        if (this._menuMode == 2) { 
-            this._patternArea.style.display = "none";
-            this._trackArea.style.display = "";
-            this._settingsArea.style.display = "none";
-            this.whenUpdated();
-            if (window.innerWidth < window.innerHeight) {//portrait (w)
-
-            this._mobilePatternButton.style.height = "80%";
-            this._mobileTrackButton.style.height = "100%";
-            this._mobileSettingsButton.style.height = "80%";
-
-            this._mobilePatternButton.style.width = "33vw";
-            this._mobileTrackButton.style.width = "34vw";
-            this._mobileSettingsButton.style.width = "33vw";
-
-            this._mobilePatternButton.style.top = "";
-
-            this._mobilePatternButton.style.left = "0";
-            this._mobileTrackButton.style.left = "33vw";
-            this._mobileSettingsButton.style.right = "0";
-            this._mobilePatternButton.style.bottom = "0";
-            this._mobileTrackButton.style.left = "";
-            this._mobileTrackButton.style.top = "";
-            this._mobileTrackButton.style.right = "33vw";
-            this._mobileTrackButton.style.bottom = "0";
-            this._mobileSettingsButton.style.bottom = "0";
-
-            this._patternArea.style.width = "98vw";
-
-            this._mobileMenu.style.height = "15vh";
-            this._mobileMenu.style.width = "100vw";
-            this._playPauseAreaMobile.style.display = "none";
-        } else if (window.innerWidth > window.innerHeight) {//landscape (h)
-            this._mobilePatternButton.style.width = "80%";
-            this._mobileTrackButton.style.width = "100%";
-            this._mobileSettingsButton.style.width = "80%";
-
-                    this._mobilePatternButton.style.height = "33vh";
-                    this._mobileTrackButton.style.height = "34vh";
-                    this._mobileSettingsButton.style.height = "33vh";
-
-            this._mobilePatternButton.style.top = "0";
-            this._mobileTrackButton.style.top = "33vh";
-            this._mobileSettingsButton.style.bottom = "0";
-            
-            this._mobileTrackButton.style.left = "";
-            this._mobilePatternButton.style.left = "";
-
-            this._mobileMenu.style.width = "15vw";
-            this._mobileMenu.style.height = "100vh";
-
-            this._mobileMenu.style.right = "0";
-            this._playPauseAreaMobile.style.display = "none";
-        }
-           }
+        this.whenUpdated();
     }
 
     private _displaySettingsEditor = (): void => {
         this._menuMode = 3;
-        if (this._menuMode == 3) { 
-            this._patternArea.style.display = "none";
-            this._trackArea.style.display = "none";
-            this._settingsArea.style.display = "";
-            this.whenUpdated();
-            this._instrumentDiv.style.display = (this._instSettingMode == 1) ?  "" : "none";
-            this._effectDiv.style.display = (this._instSettingMode == 2) ? "" : "none";
-            this._envelopeDiv.style.display = (this._instSettingMode == 3) ? "" : "none";
-            if (window.innerWidth < window.innerHeight) {//portrait (w)
-                this._mobilePatternButton.style.height = "80%";
-                this._mobileTrackButton.style.height = "80%";
-                this._mobileSettingsButton.style.height = "100%";
-
-                this._mobilePatternButton.style.width = "33vw";
-                this._mobileTrackButton.style.width = "34vw";
-                this._mobileSettingsButton.style.width = "33vw";
-
-                this._mobilePatternButton.style.top = "";
-
-                this._mobilePatternButton.style.left = "0";
-                this._mobileSettingsButton.style.right = "0";
-                this._mobilePatternButton.style.bottom = "0";
-                this._mobileTrackButton.style.top = "";
-                this._mobileTrackButton.style.right = "33vw";
-                this._mobileTrackButton.style.bottom = "0";
-                this._mobileSettingsButton.style.bottom = "0";
-
-                this._patternArea.style.width = "98vw";
-
-                this._mobileMenu.style.height = "15vh";
-                this._mobileMenu.style.width = "100vw";
-                this._playPauseAreaMobile.style.display = "none";
-            } else if (window.innerWidth > window.innerHeight) {//landscape (h)
-                this._mobilePatternButton.style.width = "80%";
-                this._mobileTrackButton.style.width = "80%";
-                this._mobileSettingsButton.style.width = "100%";
-
-                this._mobilePatternButton.style.height = "33vh";
-                this._mobileTrackButton.style.height = "34vh";
-                this._mobileSettingsButton.style.height = "33vh";
-
-                this._mobilePatternButton.style.top = "0";
-                this._mobileTrackButton.style.top = "33vh";
-                this._mobileSettingsButton.style.bottom = "0";
-                this._mobileTrackButton.style.left = "";
-
-                this._mobilePatternButton.style.left = "";
-
-                this._mobileMenu.style.width = "15vw";
-                this._mobileMenu.style.height = "100vh";
-
-                this._mobileMenu.style.right = "0";
-                this._playPauseAreaMobile.style.display = "none";
-            }
-        }
+        this.whenUpdated();
     }
 
 
