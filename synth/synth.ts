@@ -6236,6 +6236,7 @@ export class Song {
         let urlSliced: string = url;
 
         let customSampleRate: number = 44100;
+        let sampleName: string = "";
         let isCustomPercussive: boolean = false;
         let customRootKey: number = 60;
         let presetIsUsingAdvancedLoopControls: boolean = false;
@@ -6257,6 +6258,8 @@ export class Song {
                     const optionData: string = rawOption.slice(1, rawOption.length);
                     if (optionCode === "s") {
                         customSampleRate = clamp(8000, 96000 + 1, parseFloatWithDefault(optionData, 44100));
+                    } else if (optionCode === "n") {
+                        sampleName = optionData;
                     } else if (optionCode === "r") {
                         customRootKey = parseFloatWithDefault(optionData, 60);
                     } else if (optionCode === "p") {
@@ -6369,6 +6372,7 @@ export class Song {
             let urlWithNamedOptions = urlSliced;
             const namedOptions: string[] = [];
             if (customSampleRate !== 44100) namedOptions.push("s" + customSampleRate);
+            if ((sampleName != "") && (sampleName != null)) namedOptions.push("n" + sampleName);
             if (customRootKey !== 60) namedOptions.push("r" + customRootKey);
             if (isCustomPercussive) namedOptions.push("p");
             if (presetIsUsingAdvancedLoopControls) {
@@ -6383,19 +6387,20 @@ export class Song {
             }
             customSampleUrls[customSampleUrlIndex] = urlWithNamedOptions;
 
-            // @TODO: Could also remove known extensions, but it
-            // would probably be much better to be able to specify
-            // a custom name.
             // @TODO: If for whatever inexplicable reason someone
             // uses an url like `https://example.com`, this will
             // result in an empty name here.
             let name: string;
-            if (OFFLINE) {
-                //@ts-ignore
-                name = decodeURIComponent(parsedUrl.replace(/^([^\/]*\/)+/, ""));
+            if (sampleName != "") {
+                name = decodeURIComponent(sampleName);
             } else {
-                //@ts-ignore
-                name = decodeURIComponent(parsedUrl.pathname.replace(/^([^\/]*\/)+/, ""));
+                if (OFFLINE) {
+                    //@ts-ignore
+                    name = decodeURIComponent(parsedUrl.replace(/^([^\/]*\/)+/, ""));
+                } else {
+                    //@ts-ignore
+                    name = decodeURIComponent(parsedUrl.pathname.replace(/^([^\/]*\/)+/, ""));
+                }
             }
             // @TODO: What to do about samples with the same name?
             // The problem with using the url is that the name is
@@ -12479,8 +12484,8 @@ export class Synth {
                     } else {
                         inputSample += waveB;
                     }
-                }
-                else {
+                    }
+                    else {
                     const phaseAInt = Math.floor(phaseA);
                     const phaseBInt = Math.floor(phaseB);
                     const indexA = Synth.wrap(phaseAInt, waveLength);

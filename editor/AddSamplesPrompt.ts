@@ -9,6 +9,7 @@ const { div, input, button, a, code, textarea, details, summary, span, ul, li, s
 
 interface SampleEntry {
     url: string;
+    sampleName: string;
     sampleRate: number;
     rootKey: number;
     percussion: boolean;
@@ -189,18 +190,25 @@ export class AddSamplesPrompt {
     }
 
     private _saveChanges = (): void => {
-        const urlData: string = this._generateURLData();
-        EditorConfig.customSamples = urlData.split("|").filter(x => x !== "");
-        Config.willReloadForCustomSamples = true;
-        window.location.hash = this._doc.song.toBase64String();
-        // The prompt seems to get stuck if reloading is done too quickly.
-        setTimeout(() => { location.reload(); }, 50);
+        // max url length is ~512000 on chromium. firefox refuses to load pages somewhere in the millions
+        // @TODO: make the max length a config value
+        if (window.location.href.length + this._generateURLData().length < 180000) {
+            const urlData: string = this._generateURLData();
+            EditorConfig.customSamples = urlData.split("|").filter(x => x !== "");
+            Config.willReloadForCustomSamples = true;
+            window.location.hash = this._doc.song.toBase64String();
+            // The prompt seems to get stuck if reloading is done too quickly.
+            setTimeout(() => { location.reload(); }, 50);
+        } else {
+            alert("You have surpassed the 180k character limit for URLs! Your url is " + (window.location.href.length + this._generateURLData().length) + " characters long!\n\nPlease compress or remove samples until you're below the limit.");
+        }
     }
 
     private _whenAddSampleClicked = (event: Event): void => {
         const entryIndex: number = this._entries.length;
         this._entries.push({
             url: "",
+            sampleName: "",
             sampleRate: 44100,
             rootKey: 60,
             percussion: false,
@@ -273,6 +281,47 @@ export class AddSamplesPrompt {
         }
     }
 
+    private _whenFileSelected = (event: Event): void => {
+        const element: HTMLInputElement = <HTMLInputElement>event.target;
+        const entryIndex: number = +(element.dataset.index!);
+
+        const file: File = element.files![0];
+        if (!file) return;
+
+        const reader: FileReader = new FileReader();
+
+        reader.addEventListener("load", () => {
+            console.log("FILE: " + reader.result);
+
+            this._entries[entryIndex].url = String(reader.result);
+            this._entries[entryIndex].sampleName = file.name;
+
+            const sampleNameElement: HTMLDivElement | null | undefined = element.parentNode?.parentNode?.querySelector(".add-sample-prompt-sample-name");
+            if (sampleNameElement != null) {
+                // const sampleName: string = this._getSampleName(this._entries[entryIndex]);
+                const sampleName: string = file.name;
+                sampleNameElement.innerText = sampleName;
+                sampleNameElement.title = sampleName;
+            }
+
+            const sampleNameInputElement: HTMLInputElement | null | undefined = element.parentNode?.parentNode?.querySelector(".add-sample-prompt-name-input-box");
+            if (sampleNameInputElement != null) {
+                sampleNameInputElement.value = file.name;
+            }
+
+            const urlInputElement: HTMLInputElement | null | undefined = element.parentNode?.parentNode?.querySelector(".add-sample-prompt-url-input-box");
+            if (urlInputElement != null) {
+                // const sampleName: string = this._getSampleName(this._entries[entryIndex]);
+                const urlText: string = String(reader.result);
+                urlInputElement.value = urlText;
+                // urlInputElement.title = urlText;
+            }
+        });
+
+
+        reader.readAsDataURL(file);
+    }
+
     private _whenURLChanges = (event: Event): void => {
         const element: HTMLInputElement = <HTMLInputElement>event.target;
         const entryIndex: number = +(element.dataset.index!);
@@ -284,6 +333,18 @@ export class AddSamplesPrompt {
             sampleNameElement.title = sampleName;
         }
         this._doReload = true;
+    }
+
+    private _whenNameChanges = (event: Event): void => {
+        const element: HTMLInputElement = <HTMLInputElement>event.target;
+        const entryIndex: number = +(element.dataset.index!);
+        this._entries[entryIndex].sampleName = element.value;
+        const sampleNameElement: HTMLDivElement | null | undefined = element.parentNode?.parentNode?.parentNode?.querySelector(".add-sample-prompt-sample-name");
+        if (sampleNameElement != null) {
+            const sampleName: string = this._getSampleName(this._entries[entryIndex]);
+            sampleNameElement.innerText = sampleName;
+            sampleNameElement.title = sampleName;
+        }
     }
 
     private _whenSampleRateChanges = (event: Event): void => {
@@ -454,6 +515,7 @@ export class AddSamplesPrompt {
                 if (!useLegacySamples) {
                     parsedEntries.push({
                         url: "legacySamples",
+                        sampleName: "",
                         sampleRate: 44100,
                         rootKey: 60,
                         percussion: false,
@@ -469,6 +531,7 @@ export class AddSamplesPrompt {
                 if (!useNintariboxSamples) {
                     parsedEntries.push({
                         url: "nintariboxSamples",
+                        sampleName: "",
                         sampleRate: 44100,
                         rootKey: 60,
                         percussion: false,
@@ -484,6 +547,7 @@ export class AddSamplesPrompt {
                 if (!useMarioPaintboxSamples) {
                     parsedEntries.push({
                         url: "marioPaintboxSamples",
+                        sampleName: "",
                         sampleRate: 44100,
                         rootKey: 60,
                         percussion: false,
@@ -498,6 +562,7 @@ export class AddSamplesPrompt {
             } 
             else {
                 let urlSliced: string = url;
+                let sampleName: string = "";
                 let sampleRate: number = 44100;
                 let rootKey: number = 60;
                 let percussion: boolean = false;
@@ -518,6 +583,8 @@ export class AddSamplesPrompt {
                             const optionData: string = rawOption.slice(1, rawOption.length);
                             if (optionCode === "s") {
                                 sampleRate = clamp(8000, 96000 + 1, parseFloatWithDefault(optionData, 44100));
+                            } else if (optionCode === "n") {
+                                sampleName = optionData;
                             } else if (optionCode === "r") {
                                 rootKey = parseFloatWithDefault(optionData, 60);
                             } else if (optionCode === "p") {
@@ -572,6 +639,7 @@ export class AddSamplesPrompt {
                 }
                 parsedEntries.push({
                     url: urlSliced,
+                    sampleName: sampleName,
                     sampleRate: sampleRate,
                     rootKey: rootKey,
                     percussion: percussion,
@@ -589,6 +657,8 @@ export class AddSamplesPrompt {
     private _generateURLDataForEntry = (entry: SampleEntry): string => {
         const url: string = entry.url.trim();
         const sampleRate: number = entry.sampleRate;
+        // @TODO: fixing this here is messy
+        const sampleName: string = entry.sampleName.replaceAll("!", "%21");
         const rootKey: number = entry.rootKey;
         const percussion: boolean = entry.percussion;
         const chipWaveLoopStart: number | null = entry.chipWaveLoopStart;
@@ -604,6 +674,7 @@ export class AddSamplesPrompt {
         );
         const options: string[] = [];
         if (sampleRate !== 44100) options.push("s" + sampleRate);
+        if (sampleName) options.push("n" + sampleName);
         if (rootKey !== 60) options.push("r" + rootKey);
         if (percussion) options.push("p");
         if (chipWaveLoopStart != null) options.push("a" + chipWaveLoopStart);
@@ -629,11 +700,15 @@ export class AddSamplesPrompt {
     }
 
     private _getSampleName = (entry: SampleEntry): string => {
-        try {
-            const parsedUrl: URL = new URL(entry.url);
-            return decodeURIComponent(parsedUrl.pathname.replace(/^([^\/]*\/)+/, ""));
-        } catch (error) {
-            return entry.url;
+        if (entry.sampleName != "") {
+            return entry.sampleName;
+        } else {
+            try {
+                const parsedUrl: URL = new URL(entry.url);
+                return decodeURIComponent(parsedUrl.pathname.replace(/^([^\/]*\/)+/, ""));
+            } catch (error) {
+                return entry.url;
+            }
         }
     }
 
@@ -672,7 +747,9 @@ export class AddSamplesPrompt {
             const canMoveDown: boolean = this._entries.length >= 2 && entryIndex < this._entries.length - 1;
             const entry: SampleEntry = this._entries[entryIndex];
             const optionsVisible: boolean = Boolean(this._entryOptionsDisplayStates[entryIndex]);
-            const urlInput: HTMLInputElement = input({ style: "flex-grow: 1; margin-left: 1em; width: 100%;", value: entry.url });
+            const urlInput: HTMLInputElement = input({ class: "add-sample-prompt-url-input-box", style: "flex-grow: 1; margin-left: 1em; width: 100%;", value: entry.url });
+            const fileInput: HTMLInputElement = input({ type: "file", accept: "audio,video" });
+            const nameInput: HTMLInputElement = input({ class: "add-sample-prompt-name-input-box", style: "flex-grow: 1; margin-left: 1em; width: 100%;", value: entry.sampleName});
             const sampleRateStepper: HTMLInputElement = input({ style: "flex-grow: 1; margin-left: 1em; width: 100%;", type: "number", value: "" + entry.sampleRate, min: "8000", max: "96000", step: "1" });
             const rootKeyStepper: HTMLInputElement = input({ style: "flex-grow: 1; margin-left: 1em; width: 100%;", type: "number", value: "" + entry.rootKey, min: "0", max: Config.maxPitch + Config.pitchesPerOctave, step: "1" });
             const rootKeyDisplay: HTMLSpanElement = span({ class: "add-sample-prompt-root-key-display", style: "margin-left: 0.4em; width: 3em; text-align: left; text-overflow: ellipsis; overflow: hidden; flex-shrink: 0;" }, `(${this._noteNameFromPitchNumber(entry.rootKey)})`);
@@ -701,6 +778,10 @@ export class AddSamplesPrompt {
             const optionsContainer: HTMLDetailsElement = details(
                 { open: optionsVisible, style: "margin-bottom: 2em; margin-top: 1em;" },
                 summary({ style: "margin-bottom: 1em;" }, "Options"),
+                div({ style: "display: flex; flex-direction: row; align-items: center; justify-content: flex-end; margin-bottom: 0.5em;" },
+                    div({ style: `flex-shrink: 0; :text-align: right; color: ${ColorConfig.primaryText};` }, span({ title: "What your sample is named" }, "Name")),
+                    nameInput
+                ),
                 div({ style: "display: flex; flex-direction: row; align-items: center; justify-content: flex-end; margin-bottom: 0.5em;" },
                     div({ style: `flex-shrink: 0; :text-align: right; color: ${ColorConfig.primaryText};` }, span({ title: "What rate to resample to" }, "Sample rate")),
                     sampleRateStepper
@@ -735,7 +816,9 @@ export class AddSamplesPrompt {
                     chipWavePlayBackwardsBox
                 ),
             );
+            fileInput.dataset.index = "" + entryIndex;
             urlInput.dataset.index = "" + entryIndex;
+            nameInput.dataset.index = "" + entryIndex;
             sampleRateStepper.dataset.index = "" + entryIndex;
             rootKeyStepper.dataset.index = "" + entryIndex;
             percussionBox.dataset.index = "" + entryIndex;
@@ -768,11 +851,17 @@ export class AddSamplesPrompt {
                     div({ style: `text-align: right; color: ${ColorConfig.primaryText};` }, "URL"),
                     urlInput
                 ),
+                div({ style: "display: flex; flex-direction: row; align-items: center; justify-content: flex-end; margin-bottom: 0.5em;" },
+                    div({ style: `text-align: center; color: ${ColorConfig.primaryText};` }, "File Upload"),
+                    fileInput
+                ),
                 optionsContainer,
                 bottomButtons
             );
             optionsContainer.addEventListener("toggle", this._whenOptionsAreToggled);
+            fileInput.addEventListener("change", this._whenFileSelected);
             urlInput.addEventListener("change", this._whenURLChanges);
+            nameInput.addEventListener("change", this._whenNameChanges);
             sampleRateStepper.addEventListener("change", this._whenSampleRateChanges);
             rootKeyStepper.addEventListener("change", this._whenRootKeyChanges);
             percussionBox.addEventListener("change", this._whenPercussionChanges);
