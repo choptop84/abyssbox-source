@@ -3802,6 +3802,13 @@ export class Song {
                     buffer.push(base64IntToCharCode[instrument.reverb]);
                 }
 
+                if (effectsIncludeGranular(instrument.effects)) {
+                    buffer.push(base64IntToCharCode[instrument.granular]);
+                    buffer.push(base64IntToCharCode[instrument.grainSize]);
+                    buffer.push(base64IntToCharCode[instrument.grainAmounts]);
+                    buffer.push(base64IntToCharCode[instrument.grainRange]);
+                }
+
                 if (effectsIncludeNoteRange(instrument.effects)) {
                     buffer.push(base64IntToCharCode[instrument.upperNoteLimit >> 6], base64IntToCharCode[instrument.upperNoteLimit & 0x3f]);
                     buffer.push(base64IntToCharCode[instrument.lowerNoteLimit >> 6], base64IntToCharCode[instrument.lowerNoteLimit & 0x3f]);
@@ -5384,7 +5391,7 @@ export class Song {
                     instrument.convertLegacySettings(legacySettings, forceSimpleFilter);
                 } else {
                     // BeepBox currently uses two base64 characters at 6 bits each for a bitfield representing all the enabled effects.
-                    if (EffectType.length > 16) throw new Error();
+                    if (EffectType.length > 17) throw new Error();
                         if ((fromAbyssBox && !beforeTwo||fromAbyssBox && !beforeThree)||(fromUltraBox && !beforeSix))  {
                                 instrument.effects = (
                                     (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << (6 * 5))
@@ -5559,6 +5566,12 @@ export class Song {
                         } else {
                             instrument.reverb = clamp(0, Config.reverbRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
                         }
+                    }
+                    if (effectsIncludeGranular(instrument.effects)) {
+                        instrument.granular = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
+                        instrument.grainSize = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
+                        instrument.grainAmounts = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
+                        instrument.grainRange = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
                     }
                     if (effectsIncludeNoteRange(instrument.effects)) {
                         instrument.upperNoteLimit = (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << 6) + base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
