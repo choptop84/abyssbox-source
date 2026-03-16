@@ -245,7 +245,7 @@ export class ThemePrompt implements Prompt {
 			if (this.lastTheme != null) {
 				ColorConfig.setTheme(this.lastTheme);
 			} else {
-				ColorConfig.setTheme("AbyssBox Classic");
+				ColorConfig.setTheme("AbyssBox 0.8");
 			}
 			this._doc.undo();
 		

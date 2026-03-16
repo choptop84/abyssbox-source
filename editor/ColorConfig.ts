@@ -15,7 +15,7 @@ export class ColorConfig {
     public static colorLookup: Map<number, ChannelColors> = new Map<number, ChannelColors>();
 	public static usesColorFormula: boolean = false;
 	public static usesPianoScheme: boolean = false;
-	public static currentSetTheme: string = "AbyssBox Classic";
+	public static currentSetTheme: string = "AbyssBox 0.8";
     public static readonly themes: { [name: string]: string } = {
       "AbyssBox Classic": `
 			:root {		

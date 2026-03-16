@@ -47,7 +47,7 @@ import { ThemePrompt } from "./ThemePrompt";
 import { CustomPrompt } from "./CustomPrompt";
 import { PresetPrompt, /*setPresets*/ } from "./PresetPrompt";
 import { TipPrompt } from "./TipPrompt";
-import { ChangeTempo, ChangeKeyOctave, ChangeChorus, ChangeEchoDelay, ChangeEchoSustain, ChangeReverb, ChangeVolume, ChangePan, ChangePatternSelection, ChangePatternsPerChannel, ChangePatternNumbers, ChangeSupersawDynamism, ChangeSupersawSpread, ChangeSupersawShape, ChangePulseWidth, ChangeFeedbackAmplitude, ChangeOperatorAmplitude, ChangeOperatorFrequency, ChangeDrumsetEnvelope, ChangePasteInstrument, ChangePreset, pickRandomPresetValue, ChangeRandomGeneratedInstrument, ChangeEQFilterType, ChangeNoteFilterType, ChangeEQFilterSimpleCut, ChangeEQFilterSimplePeak, ChangeNoteFilterSimpleCut, ChangeNoteFilterSimplePeak, ChangeScale, ChangeDetectKey, ChangeKey, ChangeRhythm, ChangeFeedbackType, ChangeAlgorithm, ChangeChipWave, ChangeRMChipWave, ChangeNoiseWave, ChangeTransition, ChangeToggleEffects, ChangeVibrato, ChangeUnison, ChangeChord, ChangeSong, ChangePitchShift, ChangeDetune, ChangeDistortion, ChangeStringSustain, ChangeBitcrusherFreq, ChangeBitcrusherQuantization, ChangeAddEnvelope, ChangeEnvelopeSpeed, ChangeDiscreteEnvelope, ChangeAddChannelInstrument, ChangeRemoveChannelInstrument, ChangeCustomWave, ChangeOperatorWaveform, ChangeOperatorPulseWidth, ChangeSongTitle, ChangeVibratoDepth, ChangeVibratoSpeed, ChangeVibratoDelay, ChangeVibratoType, ChangePanDelay, ChangeArpeggioSpeed, ChangeFastTwoNoteArp, ChangeClicklessTransition, ChangeAliasing, ChangeSetPatternInstruments, ChangeHoldingModRecording, ChangeChipWavePlayBackwards, ChangeChipWaveStartOffset, ChangeChipWaveLoopEnd, ChangeChipWaveLoopStart, ChangeChipWaveLoopMode, ChangeChipWaveUseAdvancedLoopControls, ChangeDecimalOffset, ChangeUnisonVoices, ChangeUnisonSpread, ChangeUnisonOffset, ChangeUnisonExpression, ChangeUnisonSign, ChangeUnisonBuzzing, Change6OpFeedbackType, Change6OpAlgorithm, ChangeCustomAlgorythmorFeedback, ChangeRingMod, ChangeRingModHz, ChangeRingModPulseWidth, ChangePhaserMix, ChangePhaserFreq, ChangePhaserFeedback, ChangePhaserStages, ChangeUpperLimit, ChangeLowerLimit, ChangeSlideSpeed, ChangeStrumSpeed, ChangeRmHzOffset, ChangeInvertWave, ChangeGranular, ChangeGrainSize, ChangeGrainAmounts, ChangeGrainRange, ChangeInstrumentsFlags, } from "./changes";
+import { ChangeTempo, ChangeKeyOctave, ChangeChorus, ChangeEchoDelay, ChangeEchoSustain, ChangeReverb, ChangeVolume, ChangePan, ChangePatternSelection, ChangePatternsPerChannel, ChangePatternNumbers, ChangeSupersawDynamism, ChangeSupersawSpread, ChangeSupersawShape, ChangePulseWidth, ChangeFeedbackAmplitude, ChangeOperatorAmplitude, ChangeOperatorFrequency, ChangeDrumsetEnvelope, ChangePasteInstrument, ChangePreset, pickRandomPresetValue, ChangeRandomGeneratedInstrument, ChangeEQFilterType, ChangeNoteFilterType, ChangeEQFilterSimpleCut, ChangeEQFilterSimplePeak, ChangeNoteFilterSimpleCut, ChangeNoteFilterSimplePeak, ChangeScale, ChangeDetectKey, ChangeKey, ChangeRhythm, ChangeFeedbackType, ChangeAlgorithm, ChangeChipWave, ChangeRMChipWave, ChangeNoiseWave, ChangeTransition, ChangeToggleEffects, ChangeVibrato, ChangeUnison, ChangeChord, ChangeSong, ChangePitchShift, ChangeDetune, ChangeDistortion, ChangeStringSustain, ChangeBitcrusherFreq, ChangeBitcrusherQuantization, ChangeAddEnvelope, ChangeEnvelopeSpeed, ChangeDiscreteEnvelope, ChangeAddChannelInstrument, ChangeRemoveChannelInstrument, ChangeCustomWave, ChangeOperatorWaveform, ChangeOperatorPulseWidth, ChangeSongTitle, ChangeVibratoDepth, ChangeVibratoSpeed, ChangeVibratoDelay, ChangeVibratoType, ChangePanDelay, ChangeArpeggioSpeed, ChangeFastTwoNoteArp, ChangeClicklessTransition, ChangeAliasing, ChangeSetPatternInstruments, ChangeHoldingModRecording, ChangeChipWavePlayBackwards, ChangeChipWaveStartOffset, ChangeChipWaveLoopEnd, ChangeChipWaveLoopStart, ChangeChipWaveLoopMode, ChangeChipWaveUseAdvancedLoopControls, ChangeDecimalOffset, ChangeUnisonVoices, ChangeUnisonSpread, ChangeUnisonOffset, ChangeUnisonExpression, ChangeUnisonSign, ChangeUnisonBuzzing, Change6OpFeedbackType, Change6OpAlgorithm, ChangeCustomAlgorythmorFeedback, ChangeRingMod, ChangeRingModHz, ChangeRingModPulseWidth, ChangePhaserMix, ChangePhaserFreq, ChangePhaserFeedback, ChangePhaserStages, ChangeUpperLimit, ChangeLowerLimit, ChangeSlideSpeed, ChangeStrumSpeed, ChangeRmHzOffset, ChangeInvertWave, ChangeGranular, ChangeGrainSize, ChangeGrainAmounts, ChangeGrainRange, ChangeInstrumentsFlags } from "./changes";
 
 import { TrackEditor } from "./TrackEditor";
 import {oscilascopeCanvas} from "../global/Oscilascope";
@@ -362,6 +362,7 @@ class CustomChipCanvas {
     };
 
 }
+
 
 class CustomAlgorythmCanvas {
     private mouseDown: boolean;
@@ -734,10 +735,10 @@ export class SongEditor {
     private _instSettingMode: number = 1;
 
      // comment for ctrl+f mobile stuffs
-    private readonly _mobilePatternButton: HTMLButtonElement = button({class: "mobilePatternButton", type:"button", style:"display:none; width: 33vw; height: 75%;"});
-    private readonly _mobileTrackButton: HTMLButtonElement = button({class: "mobileTrackButton", type:"button", style:"display:none; width: 34vw; height: 60%;"});
-    private readonly _mobileSettingsButton: HTMLButtonElement = button({class: "mobileSettingsButton", type:"button", style:"display:none; width: 33vw; height: 60%;"});
-    public mobileMenu: HTMLDivElement = div({class:"mobileMenu", style:"position: fixed; bottom: 0px; height: 20vh; width: 100vw; display:none; background: var(--editor-background); z-index: 5;"});
+    private readonly _mobilePatternButton: HTMLButtonElement = button({class: "mobilePatternButton", type:"button", style:"display:none; width: 33vw; height: 75%; left: 0; position: absolute; bottom: 0px;"});
+    private readonly _mobileTrackButton: HTMLButtonElement = button({class: "mobileTrackButton", type:"button", style:"display:none; width: 34vw; height: 60%; right: 33vw; position: absolute; bottom: 0px;"});
+    private readonly _mobileSettingsButton: HTMLButtonElement = button({class: "mobileSettingsButton", type:"button", style:"display:none; width: 33vw; height: 60%; right: 0; position: absolute; bottom: 0px;"});
+    public _mobileMenu: HTMLDivElement = div({class:"mobileMenu", style:"position: fixed; bottom: 0px; height: 20vh; width: 100vw; display:none; background: var(--editor-background); z-index: 5;"});
     private readonly _mobileEditMenuIcon: HTMLDivElement = div({class:"mobileEditMenuIcon"});
     private readonly _mobileTrackMenuIcon: HTMLDivElement = div({class:"mobileTrackMenuIcon"});
     private readonly _mobileSettingsMenuIcon: HTMLDivElement = div({class:"mobileSettingsMenuIcon"});
@@ -787,7 +788,7 @@ export class SongEditor {
     private readonly _fileMenu: HTMLSelectElement = select({ style: "width: 100%;" },
         option({ selected: true, disabled: true, hidden: false }, "File"), // todo: "hidden" should be true but looks wrong on mac chrome, adds checkmark next to first visible option even though it's not selected. :(
         option({ value: "new" }, "+ New Blank Song"),
-        option({ value: "import" }, "↑ > Import/Export Song (" + EditorConfig.ctrlSymbol + "S/" + EditorConfig.ctrlSymbol + "O)"),
+        option({ value: "import" }, "↑ > Import/Export Song (" + EditorConfig.ctrlSymbol + "S)"),
         option({ value: "copyUrl" }, "⎘ Copy Song URL"),
         option({ value: "shareUrl" }, "⤳ Share Song URL"),
         option({ value: "shortenUrl" }, "… Shorten Song URL"),
@@ -795,7 +796,7 @@ export class SongEditor {
         option({ value: "viewPlayer" }, "▶ View in Song Player"),
         option({ value: "copyEmbed" }, "⎘ Copy HTML Embed Code"),
         option({ value: "songRecovery" }, "⚠ > Recover Recent Song"),
-        option({ value: "openManual"}, "🕮 > Open Manual"),
+        //option({ value: "openTutorial"}, "✎ > Open Tutorial"),
     );
 
 
@@ -1148,7 +1149,8 @@ export class SongEditor {
     private readonly _harmonicsZoom: HTMLButtonElement = button({ style: "padding-left:0.2em; height:1.5em; max-width: 12px;", onclick: () => this._openPrompt("harmonicsSettings") }, "+");
     private readonly _harmonicsRow: HTMLElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("harmonics"), style: "font-size: smaller"}, "Harmonics:"), this._harmonicsZoom, this._harmonicsEditor.container);
 
-    private readonly _envelopeEditor: EnvelopeEditor = new EnvelopeEditor(this._doc);
+    //SongEditor.ts
+    readonly envelopeEditor: EnvelopeEditor = new EnvelopeEditor(this._doc, (id: number, submenu: number, subtype: string) => this._toggleDropdownMenu(id, submenu, subtype), (name: string) => this._openPrompt(name));
     private readonly _discreteEnvelopeBox: HTMLInputElement = input({ type: "checkbox", style: "width: 1em; padding: 0; margin-right: 4em;" });
     private readonly _discreteEnvelopeRow: HTMLElement = div({ class: "selectRow dropFader" }, span({ class: "tip", style: "margin-left:4px;", onclick: () => this._openPrompt("discreteEnvelope") }, "‣ Discrete:"), this._discreteEnvelopeBox);
     private readonly _envelopeSpeedDisplay: HTMLSpanElement = span({ style: `color: ${ColorConfig.secondaryText}; font-size: smaller; text-overflow: clip;` }, "x1");
@@ -1302,7 +1304,6 @@ export class SongEditor {
             this._upperNoteLimitRow,
             this._lowerNoteLimitRow,
             this._invertWaveRow,
-            this._granularContainerRow,
         ),
     );
     private readonly _envelopeDiv: HTMLDivElement = div({ id:"envelopesDiv"},
@@ -1313,7 +1314,7 @@ export class SongEditor {
         ),
         div({ class:"envelopesOpDiv"},
         this._envelopeDropdownGroup,
-        this._envelopeEditor.container,
+        this.envelopeEditor.container,
         ),
     );
     private readonly _customInstrumentSettingsGroup: HTMLDivElement = div({ class: "editor-controls" },
@@ -1837,8 +1838,6 @@ export class SongEditor {
         this._patternArea.addEventListener("mousedown", this._refocusStageNotEditing);
         this._trackArea.addEventListener("mousedown", this.refocusStage);
 
-        this._patternArea.addEventListener('dragover', this._dropHandler);
-
         // The song volume slider is styled slightly different than the class' default.
         this._volumeSlider.container.style.setProperty("flex-grow", "1");
         this._volumeSlider.container.style.setProperty("display", "flex");
@@ -2099,12 +2098,20 @@ export class SongEditor {
                 this._openUnisonDropdown = this._openUnisonDropdown ? false : true;
                 group = this._unisonDropdownGroup;
                 break;
+            case DropdownID.EnvelopeSettings:
+                target = this.envelopeEditor.extraSettingsDropdowns[submenu];
+                this.envelopeEditor.openExtraSettingsDropdowns[submenu] = this.envelopeEditor.openExtraSettingsDropdowns[submenu] ? false : true;
+                group = this.envelopeEditor.extraSettingsDropdownGroups[submenu];
+                break;
         }
 
         if (target.textContent == "▼") {
             let instrument: Instrument = this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()];
             target.textContent = "▲";
-            if (group != this._chordDropdownGroup) {
+            if (dropdown == DropdownID.EnvelopeSettings) {
+
+                this.envelopeEditor.rerenderExtraSettings();
+            } else if (group != this._chordDropdownGroup) {
                 group.style.display = "";
             } // Only show arpeggio dropdown if chord arpeggiates
             else if ((instrument.chord == Config.chords.dictionary["arpeggio"].index) || (instrument.chord == Config.chords.dictionary["strum"].index)) {
@@ -2682,7 +2689,6 @@ export class SongEditor {
                     //this._openPrompt("tutorial");
                 }
 
-
         if (this._doc.getFullScreen()) {
             const semitoneHeight: number = this._patternEditorRow.clientHeight / this._doc.getVisiblePitchCount();
             const targetBeatWidth: number = semitoneHeight * 5;
@@ -2832,11 +2838,11 @@ export class SongEditor {
             this.mainLayer.style.display = "unset";
 
         if (window.innerWidth > window.innerHeight) { // landscape view
-            if (SongEditor.getMobileUi() != 'landscape') {
+             if (SongEditor.getMobileUi() != 'landscape') {
                 SongEditor.setMobileUi("landscape"); 
             }
 
-            // Originally I had all of this in a bunch of if statements but I changed it to this god I was so bad at coding when I was doing this :sob:
+             // Originally I had all of this in a bunch of if statements but I changed it to this god I was so bad at coding when I was doing this :sob:
             // I should move everything above this to a style element so then it doesn't have to render all of this all the time.
             this._patternArea.style.display = this._menuMode == 1 ? "": "none";
             this._trackArea.style.display = this._menuMode == 2 ? "": "none";
@@ -2849,11 +2855,12 @@ export class SongEditor {
             this._playPauseAreaMobile.style.display = this._menuMode == 1 ? "flex" : "none";
 
         } else if (window.innerWidth < window.innerHeight) { // portrait view
+
             if (SongEditor.getMobileUi() != 'portrait') {
                 SongEditor.setMobileUi("portrait"); 
             }
             
-            // Divider
+             // Divider
 
             this._patternArea.style.display = this._menuMode == 1 ? "" : "none";
             this._trackArea.style.display = this._menuMode == 2 ? "" : "none";
@@ -2872,7 +2879,7 @@ export class SongEditor {
         this._mobilePatternButton.style.display = "";
         this._mobileTrackButton.style.display = "";
         this._mobileSettingsButton.style.display = "";
-        this.mobileMenu.style.display = "";
+        this._mobileMenu.style.display = "";
         this._instOptionsDiv.style.display = "";
     
         //beepboxEditorContainer.style.minHeight = "60vh"; 
@@ -2889,10 +2896,10 @@ export class SongEditor {
 
         }
 
-        document.body.appendChild(this.mobileMenu);
-        this.mobileMenu.appendChild(this._mobilePatternButton);
-        this.mobileMenu.appendChild(this._mobileTrackButton);
-        this.mobileMenu.appendChild(this._mobileSettingsButton );
+        document.body.appendChild(this._mobileMenu);
+        this._mobileMenu.appendChild(this._mobilePatternButton);
+        this._mobileMenu.appendChild(this._mobileTrackButton);
+        this._mobileMenu.appendChild(this._mobileSettingsButton );
         this._mobilePatternButton.appendChild(this._mobileEditMenuIcon);
         this._mobileTrackButton.appendChild(this._mobileTrackMenuIcon);
         this._mobileSettingsButton.appendChild(this._mobileSettingsMenuIcon);
@@ -3592,7 +3599,8 @@ export class SongEditor {
                 else
             this._envelopeDropdownGroup.style.display = "none";
 
-            this._envelopeEditor.render();
+            this.envelopeEditor.render();
+            this.envelopeEditor.rerenderExtraSettings();
 
             for (let chordIndex: number = 0; chordIndex < Config.chords.length; chordIndex++) {
                 let hidden: boolean = (!Config.instrumentTypeHasSpecialInterval[instrument.type] && Config.chords[chordIndex].customInterval);
@@ -4107,6 +4115,7 @@ export class SongEditor {
                         }
                         if (anyInstrumentHasEnvelopes) {
                             settingList.push("envelope speed");
+                            settingList.push("individual envelope speed");
                         }
                         if (anyInstrumentRMs) {
                             settingList.push("ring modulation");
@@ -4946,6 +4955,16 @@ export class SongEditor {
                     const instrument: Instrument = this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()];
                     if (!instrument.eqFilterType && this._doc.channel < this._doc.song.pitchChannelCount + this._doc.song.noiseChannelCount)
                         this._openPrompt("customEQFilterSettings");
+                } else if (event.altKey) {
+                    //open / close all envelope dropdowns
+                    const instrument: Instrument = this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()];
+                    const isAllOpen: boolean = this.envelopeEditor.openExtraSettingsDropdowns.every((x) => { return x == true })
+                    for (let i = 0; i < instrument.envelopeCount; i++) {
+                        if (isAllOpen) this.envelopeEditor.openExtraSettingsDropdowns[i] = false;
+                        else this.envelopeEditor.openExtraSettingsDropdowns[i] = true;
+                    }
+                    this.envelopeEditor.rerenderExtraSettings();
+                    event.preventDefault();
                 } else if (needControlForShortcuts == (event.ctrlKey || event.metaKey)) {
                     this._openPrompt("generateEuclideanRhythm");
                     event.preventDefault();
@@ -5318,6 +5337,7 @@ export class SongEditor {
                     this._doc.selection.selectionUpdated();
                 } else {
                     this._doc.selection.setChannelBar((this._doc.channel - 1 + this._doc.song.getChannelCount()) % this._doc.song.getChannelCount(), this._doc.bar);
+                    this.envelopeEditor.rerenderExtraSettings();
                     this._doc.selection.resetBoxSelection();
                 }
                 event.preventDefault();
@@ -5331,6 +5351,7 @@ export class SongEditor {
                     this._doc.selection.selectionUpdated();
                 } else {
                     this._doc.selection.setChannelBar((this._doc.channel + 1) % this._doc.song.getChannelCount(), this._doc.bar);
+                    this.envelopeEditor.rerenderExtraSettings();
                     this._doc.selection.resetBoxSelection();
                 }
                 event.preventDefault();
