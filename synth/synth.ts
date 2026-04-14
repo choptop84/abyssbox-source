@@ -375,7 +375,7 @@ class BitFieldReader {
     }
 
     /**
-     * Reads a number of bits and returns a number.
+     * Reads a number of bits in binary and returns a number.
      * @param bitCount The number of bits to read
      */
     public read(bitCount: number): number {
@@ -385,6 +385,22 @@ class BitFieldReader {
             result += this._bits[this._readIndex++];
             bitCount--;
         }
+        return result;
+    }
+
+    /**
+     * Reads a number of bits in binary and returns a number. Unlike read()
+     * @param bitCount The number of bits to read
+     */
+    public readSilent(bitCount: number): number {
+        let result: number = 0;
+        let startingBitCount: number = bitCount;
+        while (bitCount > 0) {
+            result = result << 1;
+            result += this._bits[this._readIndex++];
+            bitCount--;
+        }
+        this._readIndex -= startingBitCount;
         return result;
     }
 
@@ -3119,7 +3135,7 @@ export class Song {
     private static readonly _oldestUltraBoxVersion: number = 1;
     private static readonly _latestUltraBoxVersion: number = 6;
     private static readonly _oldestAbyssBoxVersion: number = 1;
-    private static readonly _latestAbyssBoxVersion: number = 3;
+    private static readonly _latestAbyssBoxVersion: number = 4;
     // One-character variant detection at the start of URL to distinguish variants such as JummBox, Or Goldbox. "j" and "g" respectively
 	//also "u" is ultrabox lol
     private static readonly _variant = 0x61; //"a" ~ abyssbox
@@ -3898,7 +3914,7 @@ export class Song {
                             shapeBits.write(1, 0);
                         } else {
                             shapeBits.write(1, 1);
-                            shapeBits.write(3, note.pitches.length - 2);
+                            shapeBits.write(7, note.pitches.length - 2); // chord max
                         }
 
                         shapeBits.writePinCount(note.pins.length - 1);
@@ -5765,9 +5781,9 @@ export class Song {
                 let bitStringLength: number = 0;
                 let channelIndex: number;
                 // Somewhat relevant to this, I think I need to make a variant of this for AbyssBox as well.
-                let largerChords: boolean = !((beforeFour && fromJummBox) || fromBeepBox);
-                let recentPitchBitLength: number = (largerChords ? 4 : 3);
-                let recentPitchLength: number = (largerChords ? 16 : 8);
+                let preJB4Chords: boolean = !((beforeFour && fromJummBox) || fromBeepBox);
+                let recentPitchBitLength: number = (preJB4Chords ? 4 : 3);
+                let recentPitchLength: number = (preJB4Chords ? 16 : 8);
                 // Patterns in relation to channels. (i.e. the pattern number on the individual channels.)
                 if (beforeThree && fromBeepBox) { 
                     channelIndex = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
@@ -5948,8 +5964,9 @@ export class Song {
                         const newNotes: Note[] = newPattern.notes;
                         let noteCount: number = 0;
                         // Due to arbitrary note positioning, mod channels don't end the count until curPart actually exceeds the max
+                        // Example of the below while " curPart < 8 * 24 + (0 or 1)"
                         while (curPart < this.beatsPerBar * Config.partsPerBeat + (+isModChannel)) {
-
+                            //console.log(bits.readSilent(1));
                             const useOldShape: boolean = bits.read(1) == 1;
                             let newNote: boolean = false;
                             let shapeIndex: number = 0;
@@ -5985,7 +6002,7 @@ export class Song {
                                 } else { // Everything related to chord limits should be here.
                                     shape = {};
 
-                                    if (!largerChords) { // Basically for BeepBox and JummBox v3 or less
+                                    if (!preJB4Chords) { // Basically for BeepBox and JummBox v3 or less
                                         // Old format: X 1's followed by a 0 => X+1 pitches, up to 4
                                         shape.pitchCount = 1;
                                         while (shape.pitchCount < 4 && bits.read(1) == 1) shape.pitchCount++;
@@ -5994,10 +6011,15 @@ export class Song {
                                         // New format is:
                                         //      0: 1 pitch
                                         // 1[XXX]: 3 bits of binary signifying 2+ pitches
+                                        // AKA when there is a chord with more than 1 note it'll read bits like so.
 
                                         // me when math (´• ‸ •`)
                                         if (bits.read(1) == 1) {
-                                            shape.pitchCount = bits.read(3) + 2;
+                                            if (!fromAbyssBox || (fromAbyssBox && beforeFour)) {
+                                                shape.pitchCount = bits.read(3) + 2; 
+                                            } else {
+                                                shape.pitchCount = bits.read(7) + 2; // chord max
+                                            }
                                         }
                                         else {
                                             shape.pitchCount = 1;
