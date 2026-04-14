@@ -3984,11 +3984,12 @@ export class Song {
                                 bits.writePitchInterval(interval);
                             } else {
                                 bits.write(1, 1);
-                                bits.write(4, pitchIndex);
+                                bits.write(7, pitchIndex);
                                 recentPitches.splice(pitchIndex, 1);
                             }
                             recentPitches.unshift(pitch);
-                            if (recentPitches.length > 16) recentPitches.pop();
+                            
+                            if (recentPitches.length > 97) recentPitches.pop();
 
                             if (i == note.pitches.length - 1) {
                                 lastPitch = note.pitches[0];
@@ -5781,9 +5782,11 @@ export class Song {
                 let bitStringLength: number = 0;
                 let channelIndex: number;
                 // Somewhat relevant to this, I think I need to make a variant of this for AbyssBox as well.
-                let preJB4Chords: boolean = !((beforeFour && fromJummBox) || fromBeepBox);
-                let recentPitchBitLength: number = (preJB4Chords ? 4 : 3);
-                let recentPitchLength: number = (preJB4Chords ? 16 : 8);
+                let postJB4Chords: boolean = !((beforeFour && fromJummBox) || fromBeepBox);
+                let postAB4Chords: boolean = !beforeFour && fromAbyssBox;
+                let recentPitchBitLength: number = postAB4Chords ? 7 : (postJB4Chords ? 4 : 3);
+                let recentPitchLength: number = postAB4Chords ? 97 : (postJB4Chords ? 16 : 8);
+                console.log(postAB4Chords);
                 // Patterns in relation to channels. (i.e. the pattern number on the individual channels.)
                 if (beforeThree && fromBeepBox) { 
                     channelIndex = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
@@ -6002,7 +6005,7 @@ export class Song {
                                 } else { // Everything related to chord limits should be here.
                                     shape = {};
 
-                                    if (!preJB4Chords) { // Basically for BeepBox and JummBox v3 or less
+                                    if (!postJB4Chords) { // Basically for BeepBox and JummBox v3 or less
                                         // Old format: X 1's followed by a 0 => X+1 pitches, up to 4
                                         shape.pitchCount = 1;
                                         while (shape.pitchCount < 4 && bits.read(1) == 1) shape.pitchCount++;
@@ -6018,7 +6021,7 @@ export class Song {
                                             if (!fromAbyssBox || (fromAbyssBox && beforeFour)) {
                                                 shape.pitchCount = bits.read(3) + 2; 
                                             } else {
-                                                shape.pitchCount = bits.read(7) + 2; // chord max
+                                                shape.pitchCount = bits.read(7) + 2; 
                                             }
                                         }
                                         else {
