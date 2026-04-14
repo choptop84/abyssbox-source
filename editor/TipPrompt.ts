@@ -678,6 +678,31 @@ export class TipPrompt implements Prompt {
 					p("Defines the lower limit in which notes will play, useful for advanced instruments."),
 				);
 			} break;
+			case "granular": {
+				message = div(
+					h2("Granular Synthesis"),
+					p(`This effect is based on granular synthesis! It takes random points from a wave and rearranges them to form "sonic clouds".`),
+					p(`This particular slider controls the wet/dry mix of the granulation.`)
+				);
+			} break;
+			case "grainSize": {
+				message = div(
+					h2("Grain Size"),
+					p(`This setting controls the size of the grain.`),
+				);
+			} break;
+			case "grainAmount": {
+				message = div(
+					h2("Grain Freq"),
+					p(`This setting controls about how often a grain (a group of audio samples) is added to the output, from rarely to multiple at once.`),
+				);
+			} break;
+			case "grainRange": {
+				message = div(
+					h2("Grain Range"),
+					p(`This setting controls the range of randomization for grain sizes. `),
+				);
+			} break;
 
 			default:
 				// Check for modSetinfo#

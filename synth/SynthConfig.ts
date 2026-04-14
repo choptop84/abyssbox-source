@@ -60,6 +60,13 @@ export const enum EnvelopeType {
     blip
 }
 
+export const enum GranularEnvelopeType {
+    parabolic,
+    raisedCosineBell,
+    // trapezoid,
+    length
+}
+
 export const enum InstrumentType {
     chip,
     fm,
@@ -106,6 +113,7 @@ export const enum EffectType {
     phaser,
     noteRange,
     invertWave,
+    granular,
     length,
 }
 
@@ -134,6 +142,10 @@ export const enum EnvelopeComputeIndex {
     ringModulation,
     ringModulationHz,
     invertWave,
+    granular,
+    grainAmount,
+    grainSize,
+    grainRange,
     distortion,
     bitcrusherQuantization,
     bitcrusherFrequency,
@@ -1004,6 +1016,7 @@ export class Config {
     public static readonly pickedStringBaseExpression: number = 0.025; // Same as harmonics.
     public static readonly distortionBaseVolume: number = 0.011; // Distortion is not affected by pitchDamping, which otherwise approximately halves expression for notes around the middle of the range.
     public static readonly bitcrusherBaseVolume: number = 0.010; // Also not affected by pitchDamping, used when bit crushing is maxed out (aka "1-bit" output).
+    public static readonly granularOutputLoudnessCompensation: number = 0.5; //compensate for multiple grains playing at once
 	public static rawChipWaves: DictionaryArray<ChipWave> = toNameMap([
         { name: "rounded", expression: 0.94, samples: centerWave([0.0, 0.2, 0.4, 0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6, 0.5, 0.4, 0.2, 0.0, -0.2, -0.4, -0.5, -0.6, -0.7, -0.8, -0.85, -0.9, -0.95, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -0.95, -0.9, -0.85, -0.8, -0.7, -0.6, -0.5, -0.4, -0.2]) },
         { name: "triangle", expression: 1.0, samples: centerWave([1.0 / 15.0, 3.0 / 15.0, 5.0 / 15.0, 7.0 / 15.0, 9.0 / 15.0, 11.0 / 15.0, 13.0 / 15.0, 15.0 / 15.0, 15.0 / 15.0, 13.0 / 15.0, 11.0 / 15.0, 9.0 / 15.0, 7.0 / 15.0, 5.0 / 15.0, 3.0 / 15.0, 1.0 / 15.0, -1.0 / 15.0, -3.0 / 15.0, -5.0 / 15.0, -7.0 / 15.0, -9.0 / 15.0, -11.0 / 15.0, -13.0 / 15.0, -15.0 / 15.0, -15.0 / 15.0, -13.0 / 15.0, -11.0 / 15.0, -9.0 / 15.0, -7.0 / 15.0, -5.0 / 15.0, -3.0 / 15.0, -1.0 / 15.0]) },
@@ -1234,28 +1247,40 @@ export class Config {
 		
 	 //for modbox; voices = riffapp, spread = intervals, offset = offsets, expression = volume, and sign = signs
 	]);
-    public static readonly effectNames: ReadonlyArray<string> = ["reverb", "chorus", "panning", "distortion", "bitcrusher", "note filter", "echo", "pitch shift", "detune", "vibrato", "transition type", "chord type", "ring modulation", "phaser", "note range", "invert wave"];
-    public static readonly effectOrder: ReadonlyArray<EffectType> = [EffectType.panning, EffectType.transition, EffectType.chord, EffectType.pitchShift, EffectType.detune, EffectType.vibrato, EffectType.noteFilter, EffectType.distortion, EffectType.bitcrusher, EffectType.chorus, EffectType.echo, EffectType.reverb, EffectType.ringModulation, EffectType.phaser, EffectType.noteRange, EffectType.invertWave];
+    public static readonly effectNames: ReadonlyArray<string> = ["reverb", "chorus", "panning", "distortion", "bitcrusher", "note filter", "echo", "pitch shift", "detune", "vibrato", "transition type", "chord type", "ring modulation", "phaser", "note range", "invert wave", "granular"];
+    public static readonly effectOrder: ReadonlyArray<EffectType> = [EffectType.panning, EffectType.transition, EffectType.chord, EffectType.pitchShift, EffectType.detune, EffectType.vibrato, EffectType.noteFilter, EffectType.distortion, EffectType.bitcrusher, EffectType.chorus, EffectType.echo, EffectType.reverb, EffectType.ringModulation, EffectType.phaser, EffectType.noteRange, EffectType.invertWave, EffectType.granular];
     public static readonly noteSizeMax: number = 6;
 	public static readonly volumeRange: number = 50;
 	// Beepbox's old volume scale used factor -0.5 and was [0~7] had roughly value 6 = 0.125 power. This new value is chosen to have -21 be the same,
 	// given that the new scale is [-25~25]. This is such that conversion between the scales is roughly equivalent by satisfying (0.5*6 = 0.1428*21)
 	public static readonly volumeLogScale: number = 0.1428;
-	public static readonly panCenter: number = 50;
+	
+    public static readonly panCenter: number = 50;
 	public static readonly panMax: number = Config.panCenter * 2;
 	public static readonly panDelaySecondsMax: number = 0.001;
+    
     public static readonly chorusRange: number = 8;
-    public static readonly ringModRange: number = 8;
-    public static readonly ringModHzRange: number = 64;
-    public static readonly rmHzOffsetCenter: number = 200;
-    public static readonly rmHzOffsetMax: number = 400;
-    public static readonly rmHzOffsetMin: number = 0;
     public static readonly chorusPeriodSeconds: number = 2.0;
     public static readonly chorusDelayRange: number = 0.0034;
     public static readonly chorusDelayOffsets: ReadonlyArray<ReadonlyArray<number>> = [[1.51, 2.10, 3.35], [1.47, 2.15, 3.25]];
     public static readonly chorusPhaseOffsets: ReadonlyArray<ReadonlyArray<number>> = [[0.0, 2.1, 4.2], [3.2, 5.3, 1.0]];
     public static readonly chorusMaxDelay: number = Config.chorusDelayRange * (1.0 + Config.chorusDelayOffsets[0].concat(Config.chorusDelayOffsets[1]).reduce((x, y) => Math.max(x, y)));
-	public static readonly chords: DictionaryArray<Chord> = toNameMap([
+	
+    public static readonly ringModRange: number = 8;
+    public static readonly ringModHzRange: number = 64;
+    public static readonly rmHzOffsetCenter: number = 200;
+    public static readonly rmHzOffsetMax: number = 400;
+    public static readonly rmHzOffsetMin: number = 0;
+
+    public static readonly granularRange: number = 10;
+    public static readonly grainSizeMin: number = 40;
+    public static readonly grainSizeMax: number = 2000;
+    public static readonly grainSizeStep: number = 40;
+    public static readonly grainRangeMax: number = 1600;
+    public static readonly grainAmountsMax: number = 10; //2^grainAmountsMax is what is actually used
+    public static readonly granularEnvelopeType: number = GranularEnvelopeType.parabolic; //here you can change which envelope implementation is used for grains (RaisedCosineBell still needs work)
+    
+    public static readonly chords: DictionaryArray<Chord> = toNameMap([
         { name: "simultaneous", customInterval: false, arpeggiates: false, strumParts: 0, singleTone: false },
         { name: "strum", customInterval: false, arpeggiates: false, strumParts: 1, singleTone: false },
         { name: "arpeggio", customInterval: false, arpeggiates: true, strumParts: 0, singleTone: true },
@@ -1667,13 +1692,17 @@ export class Config {
         { name: "ringModulation",         computeIndex: EnvelopeComputeIndex.ringModulation,            displayName: "ring mod",            interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.ringModulation,  compatibleInstruments: null },
         { name: "ringModulationHz",       computeIndex: EnvelopeComputeIndex.ringModulationHz,          displayName: "ring mod hz",         interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.ringModulation,  compatibleInstruments: null },
         { name: "distortion",             computeIndex: EnvelopeComputeIndex.distortion,                displayName: "distortion",          interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.distortion,      compatibleInstruments: null },
-        { name: "bitcrusherQuantization", computeIndex: EnvelopeComputeIndex.bitcrusherQuantization,    displayName: "bitcrush",            interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.bitcrusher,      compatibleInstruments: null},
-        { name: "bitcrusherFrequency",    computeIndex: EnvelopeComputeIndex.bitcrusherFrequency,       displayName: "freq crush",          interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.bitcrusher,      compatibleInstruments: null},
-        { name: "chorus",                 computeIndex: EnvelopeComputeIndex.chorus,                    displayName: "chorus",              interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.chorus,          compatibleInstruments: null},
-        { name: "echoSustain",            computeIndex: EnvelopeComputeIndex.echoSustain,               displayName: "echo sustain",        interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.echo,            compatibleInstruments: null},
-        { name: "reverb",                 computeIndex: EnvelopeComputeIndex.reverb,                    displayName: "reverb",              interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.reverb,          compatibleInstruments: null},
-        { name: "panning",                computeIndex: EnvelopeComputeIndex.panning,                   displayName: "panning",             interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.panning,         compatibleInstruments: null},
+        { name: "bitcrusherQuantization", computeIndex: EnvelopeComputeIndex.bitcrusherQuantization,    displayName: "bitcrush",            interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.bitcrusher,      compatibleInstruments: null },
+        { name: "bitcrusherFrequency",    computeIndex: EnvelopeComputeIndex.bitcrusherFrequency,       displayName: "freq crush",          interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.bitcrusher,      compatibleInstruments: null },
+        { name: "chorus",                 computeIndex: EnvelopeComputeIndex.chorus,                    displayName: "chorus",              interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.chorus,          compatibleInstruments: null },
+        { name: "echoSustain",            computeIndex: EnvelopeComputeIndex.echoSustain,               displayName: "echo sustain",        interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.echo,            compatibleInstruments: null },
+        { name: "reverb",                 computeIndex: EnvelopeComputeIndex.reverb,                    displayName: "reverb",              interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.reverb,          compatibleInstruments: null },
+        { name: "panning",                computeIndex: EnvelopeComputeIndex.panning,                   displayName: "panning",             interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.panning,         compatibleInstruments: null },
         { name: "arpeggioSpeed",          computeIndex: EnvelopeComputeIndex.arpeggioSpeed,             displayName: "arpeggio speed",      interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.chord,           compatibleInstruments: null },
+        { name: "granular",               computeIndex: EnvelopeComputeIndex.granular,                  displayName: "granular",            interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.granular,        compatibleInstruments: null },
+        { name: "grainFreq",              computeIndex: EnvelopeComputeIndex.grainAmount,               displayName: "grain freq",          interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.granular,        compatibleInstruments: null },
+        { name: "grainSize",              computeIndex: EnvelopeComputeIndex.grainSize,                 displayName: "grain size",          interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.granular,        compatibleInstruments: null },
+        { name: "grainRange",             computeIndex: EnvelopeComputeIndex.grainRange,                displayName: "grain range",         interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.granular,        compatibleInstruments: null },
         // Controlling filter gain is less obvious and intuitive than controlling filter freq, so to avoid confusion I've disabled it for now...
         //{name: "noteFilterGain",         computeIndex:       EnvelopeComputeIndex.noteFilterGain0,        displayName: "n. filter # vol",  /*perNote:  true,*/ interleave: false, isFilter:  true, range: Config.filterGainRange,             maxCount: Config.filterMaxPoints, effect: EffectType.noteFilter, compatibleInstruments: null},
         /*
@@ -2014,7 +2043,25 @@ export class Config {
             maxRawVol: 1, newNoteVol: 1, forSong: false, convertRealFactor: 0, associatedEffect: EffectType.invertWave,
             promptName: "Invert Wave", 
             promptDesc: [ "Allows you to toggle the Invert Wave effect on instruments. Value must be exactly 1 for this to take effect.", "[$LO - $HI]" ] },
-        
+        { name: "granular", 
+            pianoName: "Granular", 
+            maxRawVol: Config.granularRange, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: EffectType.granular,
+            promptName: "Granular", 
+            promptDesc: [ "This setting controls the granular effect in your instrument.", "[OVERWRITING] [$LO - $HI]" ] },
+        { name: "grain freq", 
+            pianoName: "Grain #", 
+            maxRawVol: Config.grainAmountsMax, newNoteVol: 8, forSong: false, convertRealFactor: 0, associatedEffect: EffectType.granular, 
+            promptName: "Grain Count", 
+            promptDesc: [ "This setting controls the density of grains for the granular effect on your instrument." ,"[OVERWRITING] [$LO - $HI]" ] },
+        { name: "grain size", 
+            pianoName: "Grain Size", 
+            maxRawVol: Config.grainSizeMax/Config.grainSizeStep, newNoteVol: Config.grainSizeMin/Config.grainSizeStep, forSong: false, convertRealFactor: 0, associatedEffect: EffectType.granular,
+            promptName: "Grain Size", promptDesc: [ "This setting controls the grain size of the granular effect in your instrument.", "The number shown in the mod channel is multiplied by " + Config.grainSizeStep + " to get the actual grain size." ,"[OVERWRITING] [$LO - $HI]" ] },
+        { name: "grain range", 
+            pianoName: "Grain Range", 
+            maxRawVol: Config.grainRangeMax/Config.grainSizeStep, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: EffectType.granular, 
+            promptName: "Grain Range", 
+            promptDesc: [ "This setting controls the range of values for your grain size of the granular effect in your instrument, from no variation to a lot", "The number shown in the mod channel is multiplied by " + Config.grainSizeStep + " to get the actual grain size." ,"[OVERWRITING] [$LO - $HI]" ] },
         ]);
 }
 
@@ -2412,6 +2459,9 @@ export function effectsIncludeNoteRange(effects: number): boolean {
 }
 export function effectsIncludeInvertWave(effects: number): boolean {
     return (effects & (1 << EffectType.invertWave)) != 0;
+}
+export function effectsIncludeGranular(effects: number): boolean {
+    return (effects & (1 << EffectType.granular)) != 0;
 }
 export function rawChipToIntegrated(raw: DictionaryArray<ChipWave>): DictionaryArray<ChipWave> {
     const newArray: Array<ChipWave> = new Array<ChipWave>(raw.length);

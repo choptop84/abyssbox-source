@@ -12707,17 +12707,43 @@ export class ColorConfig {
 	`,
 	"ultrabox dark": `
 		:root {
-		/*--mod-title: #CCCCCC;*/
+		--page-margin: black;
+		--editor-background: black;
+		--secondary-text: #999;
+		--inverted-text: black;
+		--text-selection: rgba(119,68,255,0.99);
+		--box-selection-fill: rgba(255,255,255,0.2);
+		--ui-widget-background: #444;
+		--ui-widget-focus: #777;
+		--pitch-background: #444;
+		--tonic: #864;
+		--fifth-note: #468;
+		--third-note: #486;
+		--use-color-formula: false;
+		--track-editor-bg-pitch: #444;
+		--track-editor-bg-pitch-dim: #333;
+		--track-editor-bg-noise: #444;
+		--track-editor-bg-noise-dim: #333;
+		--track-editor-bg-mod: #234;
+		--track-editor-bg-mod-dim: #123;
+		--multiplicative-mod-slider: #456;
+		--overwriting-mod-slider: #654;
+		--indicator-primary: #74f;
+		--indicator-secondary: #444;
+		--select2-opt-group: #585858;
+		--input-box-outline: #333;
+		--mute-button-normal: #ffa033;
+		--mute-button-mod: #9a6bff;
+        --mod-title: #CCCCCC;
 		--loop-accent: #CCCCCC;
 		--playhead: #CCCCCC;
-		/*--primary-text: #CCCCCC;
-		--hover-preview: #CCCCCC;*/
+		--primary-text: #CCCCCC;
+		--hover-preview: #CCCCCC;
 		--link-accent: #FF8EC5;
 		--indicator-primary: #FF8EC5;
-		/*--indicator-primary: #CCCCCC;*/
-		/*--indicator-secondary: #E856B2;*/
+		--indicator-secondary: #E856B2;
 		--white-piano-key: #CCCCCC;
-		/*--black-piano-key: #444;*/
+		--black-piano-key: #444;
 		--text-selection: #932253;
 		--oscilloscope-line-L: #CCCCCC;
 		--oscilloscope-line-R: #932253;
@@ -12754,6 +12780,47 @@ export class ColorConfig {
 		--pitch8-primary-channel:   #FF60A5;
 		--pitch8-secondary-note:    #8E1C4E;
 		--pitch8-primary-note:      #FF8EC5;
+        --noise1-secondary-channel: #6F6F6F;
+		--noise1-primary-channel:   #AAAAAA;
+		--noise1-secondary-note:    #A7A7A7;
+		--noise1-primary-note:      #E0E0E0;
+		--noise2-secondary-channel: #996633;
+		--noise2-primary-channel:   #DDAA77;
+		--noise2-secondary-note:    #CC9966;
+		--noise2-primary-note:      #F0D0BB;
+		--noise3-secondary-channel: #4A6D8F;
+		--noise3-primary-channel:   #77AADD;
+		--noise3-secondary-note:    #6F9FCF;
+		--noise3-primary-note:      #BBD7FF;
+		--noise4-secondary-channel: #7A4F9A;
+		--noise4-primary-channel:   #AF82D2;
+		--noise4-secondary-note:    #9E71C1;
+		--noise4-primary-note:      #D4C1EA;
+		--noise5-secondary-channel: #607837;
+		--noise5-primary-channel:   #A2BB77;
+		--noise5-secondary-note:    #91AA66;
+		--noise5-primary-note:      #C5E2B2;
+        --mod1-secondary-channel:   #339955;
+		--mod1-primary-channel:     #77fc55;
+		--mod1-secondary-note:      #77ff8a;
+		--mod1-primary-note:        #cdffee;
+		--mod2-secondary-channel:   #993355;
+		--mod2-primary-channel:     #f04960;
+		--mod2-secondary-note:      #f057a0;
+		--mod2-primary-note:        #ffb8de;
+		--mod3-secondary-channel:   #553399;
+		--mod3-primary-channel:     #8855fc;
+		--mod3-secondary-note:      #aa64ff;
+		--mod3-primary-note:	    #f8ddff;
+		--mod4-secondary-channel:   #a86436;
+		--mod4-primary-channel:     #c8a825;
+		--mod4-secondary-note:      #e8ba46;
+		--mod4-primary-note:        #fff6d3;
+		--mod-label-primary:        #999;
+		--mod-label-secondary-text: #333;
+		--mod-label-primary-text:   black;
+		--disabled-note-primary:    #999;
+		--disabled-note-secondary:  #666;
 		}`,
 		"modbox classic": `
 			:root {
@@ -19128,6 +19195,263 @@ export class ColorConfig {
 					
 				}
 			`,
+				"lemmbox dark": `
+					:root {
+					--page-margin: #020009;
+					--editor-background: #020009;
+					--hover-preview: white;
+					--playhead: white;
+					--primary-text: white;
+					--secondary-text: white;
+					--inverted-text: black;
+					--text-selection: #c2a855;
+					--box-selection-fill: rgba(255, 255, 255, 0.2);
+					--loop-accent: #fff570;
+					--link-accent: #fff570;
+					--ui-widget-background: #191721;
+					--ui-widget-focus: #2d293b;
+					--pitch-background: #443d4a;
+					--tonic: #c2a855;
+					--fifth-note: #a0cd7c;
+					--third-note: #486;
+					--white-piano-key: #bbb;
+					--black-piano-key: #444;
+					--white-piano-key-text: #131200;
+					--black-piano-key-text: #fff;
+					--use-color-formula: false;
+					--pitch-channel-limit: 10;
+					--track-editor-bg-pitch: #444;
+					--track-editor-bg-pitch-dim: #333;
+					--track-editor-bg-noise: #444;
+					--track-editor-bg-noise-dim: #333;
+					--track-editor-bg-mod: #234;
+					--track-editor-bg-mod-dim: #123;
+					--multiplicative-mod-slider: #456;
+					--overwriting-mod-slider: #654;
+					--indicator-primary: #6a38ff;
+					--indicator-secondary: #444;
+					--select2-opt-group: #585858;
+					--input-box-outline: #403b4f;
+					--mute-button-normal: #ffa033;
+					--mute-button-mod: #8066cc;
+
+					--pitch1-secondary-channel: #e64951;
+					--pitch1-primary-channel: #f0565e;
+					--pitch1-secondary-note: #f34149;
+					--pitch1-primary-note: #f99ca9;
+
+					--pitch2-secondary-channel: #de6f2f;
+					--pitch2-primary-channel: #f18e55;
+					--pitch2-secondary-note: #ef7d3b;
+					--pitch2-primary-note: #f6ad92;
+
+					--pitch3-secondary-channel: #e1d30e;
+					--pitch3-primary-channel: #faec29;
+					--pitch3-secondary-note: #d9cd23;
+					--pitch3-primary-note: #fff570;
+
+					--pitch4-secondary-channel: #78c25a;
+					--pitch4-primary-channel: #85d947;
+					--pitch4-secondary-note: #8de02d;
+					--pitch4-primary-note: #bdff70;
+
+					--pitch5-secondary-channel: #2190eb;
+					--pitch5-primary-channel: #45a5f5;
+					--pitch5-secondary-note: #399bea;
+					--pitch5-primary-note: #70bfff;
+
+					--pitch6-secondary-channel: #7e3af2;
+					--pitch6-primary-channel: #8b4df7;
+					--pitch6-secondary-note: #752fed;
+					--pitch6-primary-note: #965cfa;
+
+					--pitch7-secondary-channel: #7e05f7;
+					--pitch7-primary-channel: #922df7;
+					--pitch7-secondary-note: #7c29cf;
+					--pitch7-primary-note: #9443e6;
+
+					--pitch8-secondary-channel: #94249e;
+					--pitch8-primary-channel: #cf2cde;
+					--pitch8-secondary-note: #b326bf;
+					--pitch8-primary-note: #c53fd1;
+
+					--pitch9-secondary-channel: #c42f6b;
+					--pitch9-primary-channel: #fc5d9d;
+					--pitch9-secondary-note: #cf3b77;   
+					--pitch9-primary-note: #e36f9e;
+
+					--pitch10-secondary-channel: #d53c5e;
+					--pitch10-primary-channel: #f65a7e;
+					--pitch10-secondary-note: #e13e60;
+					--pitch10-primary-note: #ed8090;
+
+					--noise1-secondary-channel: #6F6F6F;
+					--noise1-primary-channel: #AAAAAA;
+					--noise1-secondary-note: #A7A7A7;
+					--noise1-primary-note: #E0E0E0;
+
+					--noise2-secondary-channel: #996633;
+					--noise2-primary-channel: #DDAA77;
+					--noise2-secondary-note: #CC9966;
+					--noise2-primary-note: #F0D0BB;
+
+					--noise3-secondary-channel: #4A6D8F;
+					--noise3-primary-channel: #77AADD;
+					--noise3-secondary-note: #6F9FCF;
+					--noise3-primary-note: #BBD7FF;
+
+					--noise4-secondary-channel: #7A4F9A;
+					--noise4-primary-channel: #AF82D2;
+					--noise4-secondary-note: #9E71C1;
+					--noise4-primary-note: #D4C1EA;
+
+					--noise5-secondary-channel: #607837;
+					--noise5-primary-channel: #A2BB77;
+					--noise5-secondary-note: #91AA66;
+					--noise5-primary-note: #C5E2B2;
+
+					--mod1-secondary-channel: #339955;
+					--mod1-primary-channel: #77fc55;
+					--mod1-secondary-note: #77ff8a;
+					--mod1-primary-note: #cdffee;
+
+					--mod2-secondary-channel: #993355;
+					--mod2-primary-channel: #f04960;
+					--mod2-secondary-note: #f057a0;
+					--mod2-primary-note: #ffb8de;
+
+					--mod3-secondary-channel: #553399;
+					--mod3-primary-channel: #8855fc;
+					--mod3-secondary-note: #aa64ff;
+					--mod3-primary-note: #f8ddff;
+
+					--mod4-secondary-channel: #a86436;
+					--mod4-primary-channel: #c8a825;
+					--mod4-secondary-note: #e8ba46;
+					--mod4-primary-note: #fff6d3;
+
+					--mod-label-primary: #999;
+					--mod-label-secondary-text: #333;
+					--mod-label-primary-text: black;
+					--disabled-note-primary: #999;
+					--disabled-note-secondary: #666;
+					
+					--pitch1-background: #777;
+				}
+				`,
+	"slarmoosbox": `
+		:root {
+			--page-margin: #14051a;
+			--editor-background: #14051a;
+			--playhead: rgba(255, 255, 255, 0.9);
+			--primary-text: #71eee5;
+			--secondary-text: #3abbb2;
+			--inverted-text: #13695e;
+			--box-selection-fill: #36c71c;
+			--loop-accent: #36c71c;
+			--link-accent: white;
+			--ui-widget-background: #183d05;
+			--ui-widget-focus: #247d0d;
+			--pitch-background: #2e0e51;
+			--tonic: #247d0d;
+			--fifth-note: #3abbb2;
+			--white-piano-key: #ffffff;
+			--black-piano-key: #061705;
+			--white-piano-key-text: #061705;
+			--use-color-formula: true;
+			--track-editor-bg-pitch: #09382b;
+			--track-editor-bg-pitch-dim: #14051a;
+			--track-editor-bg-noise: #40400b;
+			--track-editor-bg-noise-dim: #14051a;
+			--track-editor-bg-mod: #0a2c08;
+			--track-editor-bg-mod-dim: #14051a;
+			--multiplicative-mod-slider: #3abb22;
+			--overwriting-mod-slider: #71eee5;
+			--indicator-primary: #a773e5;
+			--indicator-secondary: #4c1c89;
+			--select2-opt-group: #183d05;
+			--input-box-outline: #18040a;
+			--mute-button-normal: #36c71c;
+			--mute-button-mod: #a773e5;
+			--mod-label-primary: #a773e5;
+			--mod-label-secondary-text: #6b29bf;
+			--mod-label-primary-text: #14051a;
+			--mod-title: #247d1d;
+			--pitch-secondary-channel-hue: 100;
+			--pitch-secondary-channel-hue-scale: 6.1;
+			--pitch-secondary-channel-sat: 100.0;
+			--pitch-secondary-channel-sat-scale: 0.15;
+			--pitch-secondary-channel-lum: 60.0;
+			--pitch-secondary-channel-lum-scale: 0.05;
+			--pitch-primary-channel-hue: 100;
+			--pitch-primary-channel-hue-scale: 6.1;
+			--pitch-primary-channel-sat: 100;
+			--pitch-primary-channel-sat-scale: 0.15;
+			--pitch-primary-channel-lum: 75.0;
+			--pitch-primary-channel-lum-scale: 0.05;
+			--pitch-secondary-note-hue: 100;
+			--pitch-secondary-note-hue-scale: 6.1;
+			--pitch-secondary-note-sat: 95.0;
+			--pitch-secondary-note-sat-scale: 0.15;
+			--pitch-secondary-note-lum: 40;
+			--pitch-secondary-note-lum-scale: 0.05;
+			--pitch-primary-note-hue: 100;
+			--pitch-primary-note-hue-scale: 6.1;
+			--pitch-primary-note-sat: 100;
+			--pitch-primary-note-sat-scale: 0.15;
+			--pitch-primary-note-lum: 85.6;
+			--pitch-primary-note-lum-scale: 0.025;
+			--noise-secondary-channel-hue: 65;
+			--noise-secondary-channel-hue-scale: 2;
+			--noise-secondary-channel-sat: 55;
+			--noise-secondary-channel-sat-scale: 0;
+			--noise-secondary-channel-lum: 42;
+			--noise-secondary-channel-lum-scale: 0;
+			--noise-primary-channel-hue: 65;
+			--noise-primary-channel-hue-scale: 2;
+			--noise-primary-channel-sat: 66;
+			--noise-primary-channel-sat-scale: 0;
+			--noise-primary-channel-lum: 63.5;
+			--noise-primary-channel-lum-scale: 0;
+			--noise-secondary-note-hue: 65;
+			--noise-secondary-note-hue-scale: 2;
+			--noise-secondary-note-sat: 66;
+			--noise-secondary-note-sat-scale: 0;
+			--noise-secondary-note-lum: 55;
+			--noise-secondary-note-lum-scale: 0;
+			--noise-primary-note-hue: 65;
+			--noise-primary-note-hue-scale: 2;
+			--noise-primary-note-sat: 70;
+			--noise-primary-note-sat-scale: 0;
+			--noise-primary-note-lum: 74;
+			--noise-primary-note-lum-scale: 0;
+			--mod-secondary-channel-hue: 192;
+			--mod-secondary-channel-hue-scale: 1.5;
+			--mod-secondary-channel-sat: 88;
+			--mod-secondary-channel-sat-scale: 0;
+			--mod-secondary-channel-lum: 50;
+			--mod-secondary-channel-lum-scale: 0;
+			--mod-primary-channel-hue: 192;
+			--mod-primary-channel-hue-scale: 1.5;
+			--mod-primary-channel-sat: 96;
+			--mod-primary-channel-sat-scale: 0;
+			--mod-primary-channel-lum: 80;
+			--mod-primary-channel-lum-scale: 0;
+			--mod-secondary-note-hue: 192;
+			--mod-secondary-note-hue-scale: 1.5;
+			--mod-secondary-note-sat: 92;
+			--mod-secondary-note-sat-scale: 0;
+			--mod-secondary-note-lum: 45;
+			--mod-secondary-note-lum-scale: 0;
+			--mod-primary-note-hue: 192;
+			--mod-primary-note-hue-scale: 1.5;
+			--mod-primary-note-sat: 96;
+			--mod-primary-note-sat-scale: 0;
+			--mod-primary-note-lum: 85;
+			--mod-primary-note-lum-scale: 0;
+			--oscilloscope-line-R: white;
+			--oscilloscope-line-L: var(--secondary-text);
+		}`,
 			 "wackybox": `
 			:root {
 				--page-margin: black;
