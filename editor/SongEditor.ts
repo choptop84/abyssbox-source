@@ -734,14 +734,13 @@ export class SongEditor {
     private _instSettingMode: number = 1;
 
      // comment for ctrl+f mobile stuffs
-    private readonly _mobilePatternButton: HTMLButtonElement = button({class: "mobilePatternButton", type:"button", style:"display:none; width: 33vw; height: 75%;"});
-    private readonly _mobileTrackButton: HTMLButtonElement = button({class: "mobileTrackButton", type:"button", style:"display:none; width: 34vw; height: 60%;"});
-    private readonly _mobileSettingsButton: HTMLButtonElement = button({class: "mobileSettingsButton", type:"button", style:"display:none; width: 33vw; height: 60%;"});
-    public mobileMenu: HTMLDivElement = div({class:"mobileMenu", style:"position: fixed; bottom: 0px; height: 20vh; width: 100vw; display:none; background: var(--editor-background); z-index: 5;"});
+    private readonly _mobilePatternButton: HTMLButtonElement = button({class: "mobilePatternButton", type:"button", style:"display:none; width: 100%; height: 100%;"});
+    private readonly _mobileTrackButton: HTMLButtonElement = button({class: "mobileTrackButton", type:"button", style:"display:none; width: 100%; height: 100%;"});
+    private readonly _mobileSettingsButton: HTMLButtonElement = button({class: "mobileSettingsButton", type:"button", style:"display:none; width: 100%; height: 100%;"});
+    public mobileMenu: HTMLDivElement = div({class:"mobileMenu"});
     private readonly _mobileEditMenuIcon: HTMLDivElement = div({class:"mobileEditMenuIcon"});
     private readonly _mobileTrackMenuIcon: HTMLDivElement = div({class:"mobileTrackMenuIcon"});
     private readonly _mobileSettingsMenuIcon: HTMLDivElement = div({class:"mobileSettingsMenuIcon"});
-
 
     private readonly _keyboardLayout: KeyboardLayout = new KeyboardLayout(this._doc);
     private readonly _patternEditorPrev: PatternEditor = new PatternEditor(this._doc, false, -1);
@@ -1513,16 +1512,16 @@ export class SongEditor {
         this._instrumentSettingsGroup,
         this._modulatorGroup);
         // comment for ctrl+f mobile stuffs
-    public readonly _playbackMobileDiv: HTMLDivElement = div({ class: "playback-bar-controls2", id: 'playback-bar-controls2', style:'width: 100%; display: flex; background: var(--editor-background); z-index: 6;' },
+    public readonly _playbackMobileDiv: HTMLDivElement = div({ class: "playback-bar-controls2", id: 'playback-bar-controls2' },
         this._mobilePlayButton,
         this._mobilePauseButton,
         this._mobilePrevBarButton,
         this._mobileNextBarButton,
     )    
-    public readonly _playPauseAreaMobile: HTMLDivElement = div({class: "play-pause-area2", id: "play-pause-area2", style:'flex-direction:row; position: absolute; width: 100%; display: flex; bottom: 16vh;'},
+    public readonly _playPauseAreaMobile: HTMLDivElement = div({class: "play-pause-area2", id: "play-pause-area2"},
         this._playbackMobileDiv
     );
-    public readonly _settingsArea: HTMLDivElement = div({ class: "settings-area noSelection" },
+    public readonly _settingsArea: HTMLDivElement = div({ class: "settings-area noSelection", style:"display: grid" },
         div({ class: "version-area" },
             div({ style: `text-align: center; margin: 3px 0; color: ${ColorConfig.secondaryText}; display:flex;` },
                 this._songTitleInputBox.input, this._songDetailsButton
@@ -1549,11 +1548,17 @@ export class SongEditor {
         this._instrumentSettingsArea,
     );
 
+    public readonly _mobileButtonContainer: HTMLDivElement = div({class:"mobileButtonContainer"},
+        this._playPauseAreaMobile,
+        this.mobileMenu,  
+    );
+
     public readonly mainLayer: HTMLDivElement = div({ class: "beepboxEditor", tabIndex: "0" },
         this._patternArea,
         this._trackArea,
         this._settingsArea,
         this._promptContainer,
+        this._mobileButtonContainer
     );
 
     private _wasPlaying: boolean = false;
@@ -2510,24 +2515,51 @@ export class SongEditor {
     
     public static readonly mobileUI: { [name: string]: string } = {
         "landscape": `
+
+            #beepboxEditorContainer {
+            padding: 0 !important;
+            min-height: unset;
+            }
+
+            .mobileButtonContainer {
+                flex-direction: row;
+            }
+
+            .beepboxEditor {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .instrument-settings-area {
+            height: 100%
+            }
+
+            .settings-area {
+            flex: 1;
+            overflow-y: scroll;
+            display: flex;
+            flex-direction: column;
+            }
+
+            .beepboxEditor .song-settings-area {
+                overflow-y: unset;
+            }
+
+            .beepboxEditor .instrument-settings-area {
+                overflow-y: unset;
+            }
+
             .mobileMenu {
-                right: 0 !important;
-                left: unset !important;
                 height: 100vh !important;
-                width: 15vw !important;
+                width: 64px !important;
 
                 display: flex;
                 flex-direction: column;
             }
 
             .pattern-area {
-                width: 74vw !important;
                 height: 100vh !important;
                 max-height: 100vh !important;
-            }
-
-            #beepboxEditorContainer {
-                max-width: 100vw !important;
             }
 
             .play-pause-area2 {
@@ -2547,13 +2579,6 @@ export class SongEditor {
                 flex: 1;
             }
 
-            .settings-area {
-                grid-template-columns: 33% 34% 33% !important;
-                grid-template-rows: min-content min-content min-content min-content 1fr !important;
-                grid-template-areas: "version-area version-area version-area" "play-pause-area menu-area instrument-settings-area" "play-pause-area menu-area instrument-settings-area" "song-settings-area song-settings-area instrument-settings-area" "song-settings-area song-settings-area instrument-settings-area" !important;
-                width: 78vw !important;
-            }
-
             .track-area {
                 width: 78vw !important;
             }
@@ -2563,8 +2588,29 @@ export class SongEditor {
                 flex: 1;
             }
 
+            .focused {
+                background: var(--ui-widget-focus) !important;
+            }
+
         `,
         "portrait": `
+
+            .beepboxEditor button, button,
+            .beepboxEditor select, select {
+                border-image-source: unset !important;
+            }
+
+            #beepboxEditorContainer {
+                max-height: unset !important;
+            }
+
+            .beepboxEditor {
+                display: flex !important;
+                height: 100vh;
+                flex-direction: column;
+                justify-content: space-between;
+                gap: 5px;
+            }
 
             .play-pause-area2 {
                 height: unset !important;
@@ -2574,25 +2620,37 @@ export class SongEditor {
                 left: 0 !important;
             }
 
-            .mobileMenu {
-                right: unset !important;
-                left: unset !important;
-                height: 15vh !important;
-                width: 100vw !important;
-                bottom: 0 !important;
+            .mobileButtonContainer {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
 
+            .mobileMenu {
                 display: flex;
                 flex-direction: row;
+                height: 64px;
+                width: 100vw
             }
-
+            
             .pattern-area {
-                width: 91vw !important;
-                height: 70vh !important;
-                max-height: 75vh;
+                height: 0 !important;
+                flex-grow: 1;
+                max-height: unset !important;
             }
 
-            #beepboxEditorContainer {
-                max-width: 710px !important;
+            .focused {
+                background: var(--ui-widget-focus) !important;
+            }
+
+            .settings-area {
+                display: flex;
+                flex-direction: column;
+                height: 0 !important;
+                flex-grow: 1;
+                max-height: unset !important;
+                overflow-y: scroll;
+                width: unset !important;
             }
 
             .playback-bar-controls2 {
@@ -2603,13 +2661,6 @@ export class SongEditor {
             .mobilePlayButton, .mobilePauseButton, .mobilePrevBarButton, .mobileNextBarButton {
                 height: 100% !important;
                 flex: 1;
-            }
-
-            .settings-area {
-                grid-template-columns: 50% 50% !important;
-                grid-template-rows: min-content min-content min-content min-content 1fr !important;
-                grid-template-areas: "version-area version-area" "play-pause-area instrument-settings-area" "play-pause-area instrument-settings-area" "menu-area instrument-settings-area" "song-settings-area instrument-settings-area" !important;
-                width: 96vw !important;
             }
 
             .track-area {
@@ -2817,8 +2868,7 @@ export class SongEditor {
         this.selectedPatternDiv.style.display = "none";
 
         if (this._doc.prefs.oldMobileLayout != true) {
-
-            this._promptContainer.style.left = "50vw";
+            //this._promptContainer.style.left = "50vw";
 
             this._instSettingMode == 1 ? this._instrumentDiv.style.display = "" : this._instrumentDiv.style.display = "none";
             this._instSettingMode == 2 ? this._effectDiv.style.display = "" : this._effectDiv.style.display = "none";
@@ -2829,22 +2879,17 @@ export class SongEditor {
             this._settingsArea.style.display = "none";
             this._trackArea.style.display = "none";
             this._patternArea.style.display = "";
-            this.mainLayer.style.display = "unset";
+            //this.mainLayer.style.display = "unset";
 
         if (window.innerWidth > window.innerHeight) { // landscape view
             if (SongEditor.getMobileUi() != 'landscape') {
                 SongEditor.setMobileUi("landscape"); 
             }
-
             // Originally I had all of this in a bunch of if statements but I changed it to this god I was so bad at coding when I was doing this :sob:
             // I should move everything above this to a style element so then it doesn't have to render all of this all the time.
             this._patternArea.style.display = this._menuMode == 1 ? "": "none";
             this._trackArea.style.display = this._menuMode == 2 ? "": "none";
             this._settingsArea.style.display = this._menuMode == 3 ? "": "none";
-
-            this._mobilePatternButton.style.width = this._menuMode == 1 ? "100%": "80%";
-            this._mobileTrackButton.style.width = this._menuMode == 2 ? "100%": "80%";
-            this._mobileSettingsButton.style.width = this._menuMode == 3 ? "100%": "80%";
 
             this._playPauseAreaMobile.style.display = this._menuMode == 1 ? "flex" : "none";
 
@@ -2859,15 +2904,15 @@ export class SongEditor {
             this._trackArea.style.display = this._menuMode == 2 ? "" : "none";
             this._settingsArea.style.display = this._menuMode == 3 ? "" : "none";
 
-            this._mobilePatternButton.style.height = this._menuMode == 1 ? "100%" : "80%";
-            this._mobileTrackButton.style.height = this._menuMode == 2 ? "100%" : "80%";
-            this._mobileSettingsButton.style.height = this._menuMode == 3 ? "100%" : "80%";
-
             this._playPauseAreaMobile.style.display = this._menuMode == 1 ? "flex" : "none";
         }
 
         this.mainLayer.style.minHeight = "80vh";
         beepboxEditorContainer.style.maxHeight = "80vh";
+
+        this._mobilePatternButton.setAttribute("class", this._menuMode == 1 ? "mobilePatternButton focused" : "mobilePatternButton");
+        this._mobileTrackButton.setAttribute("class", this._menuMode == 2 ? "mobileTrackButton focused" : "mobileTrackButton");
+        this._mobileSettingsButton.setAttribute("class", this._menuMode == 3 ? "mobileSettingsButton focused" : "mobileSettingsButton");
 
         this._mobilePatternButton.style.display = "";
         this._mobileTrackButton.style.display = "";
@@ -2876,8 +2921,6 @@ export class SongEditor {
         this._instOptionsDiv.style.display = "";
     
         //beepboxEditorContainer.style.minHeight = "60vh"; 
-
-        beepboxEditorContainer!.appendChild(this._playPauseAreaMobile)
 
         const playPauseArea = document.getElementById('play-pause-area');
         const textContentMobile = document.getElementById('text-content');
@@ -2889,7 +2932,6 @@ export class SongEditor {
 
         }
 
-        document.body.appendChild(this.mobileMenu);
         this.mobileMenu.appendChild(this._mobilePatternButton);
         this.mobileMenu.appendChild(this._mobileTrackButton);
         this.mobileMenu.appendChild(this._mobileSettingsButton );
@@ -3455,10 +3497,12 @@ export class SongEditor {
                 this._loopBarButton.style.display = prefs.displayShortcutButtons ? "" : "none"; 
                 this._instOptionsDiv.style.display = "";
             } else {
-                this._instrumentDiv.style.display = "";
-                this._effectDiv.style.display = "";
-                this._envelopeDiv.style.display = "";
-                this._instOptionsDiv.style.display = "none";
+                if (!isMobile) {
+                    this._instrumentDiv.style.display = "";
+                    this._effectDiv.style.display = "";
+                    this._envelopeDiv.style.display = "";
+                    this._instOptionsDiv.style.display = "none";
+                }
             }
 
             if (effectsIncludeDistortion(instrument.effects)) {

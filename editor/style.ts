@@ -333,7 +333,6 @@ content: "";
 
 .beepboxEditor .settings-area {
 	grid-area: settings-area;
-	display: grid;
     grid-template-columns: auto;
     grid-template-rows: min-content min-content min-content min-content min-content;
     grid-template-areas: "version-area" "play-pause-area" "menu-area" "song-settings-area" "instrument-settings-area";
@@ -2201,4 +2200,29 @@ li.select2-results__option[role=group] > strong:hover {
 	}
 }
 
+	/* Mobile UI */
+
+	.mobileButtonContainer {
+		display: flex;
+		gap: 5px;
+	}
+
+	.play-pause-area2 {
+		flex-direction:row; 
+		width: 100%; 
+		display: flex; 
+	}
+
+	.playback-bar-controls2 {
+		width: 100%; 
+		display: flex; 
+		background: var(--editor-background); 
+		z-index: 6;
+	}
+
+	.mobileMenu {
+		display:none; 
+		background: var(--editor-background); 
+		z-index: 5;
+	}	
 `));
