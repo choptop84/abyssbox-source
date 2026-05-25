@@ -2624,6 +2624,41 @@ export class ChangeNoteFilterSimplePeak extends ChangeInstrumentSlider {
     }
 }
 
+export class ChangeSongFilterAddPoint extends UndoableChange {
+    private _doc: SongDocument;
+    private _filterSettings: FilterSettings;
+    private _point: FilterControlPoint;
+    private _index: number;
+    constructor(doc: SongDocument, filterSettings: FilterSettings, point: FilterControlPoint, index: number, deletion: boolean = false) {
+        super(deletion);
+        this._doc = doc;
+        this._filterSettings = filterSettings;
+        this._point = point;
+        this._index = index;
+
+        this._didSomething();
+        this.redo();
+    }
+
+    protected _doForwards(): void {
+        this._filterSettings.controlPoints.splice(this._index, 0, this._point);
+        this._filterSettings.controlPointCount++;
+        this._filterSettings.controlPoints.length = this._filterSettings.controlPointCount;
+        this._doc.song.tmpEqFilterStart = this._doc.song.eqFilter;
+        this._doc.song.tmpEqFilterEnd = null;
+        this._doc.notifier.changed();
+    }
+
+    protected _doBackwards(): void {
+        this._filterSettings.controlPoints.splice(this._index, 1);
+        this._filterSettings.controlPointCount--;
+        this._filterSettings.controlPoints.length = this._filterSettings.controlPointCount;
+        this._doc.song.tmpEqFilterStart = this._doc.song.eqFilter;
+        this._doc.song.tmpEqFilterEnd = null;
+        this._doc.notifier.changed();
+    }
+}
+
 export class ChangeFilterAddPoint extends UndoableChange {
     private _doc: SongDocument;
     private _instrument: Instrument;
@@ -2725,6 +2760,50 @@ export class FilterMoveData {
     }
 }
 
+export class ChangeSongFilterMovePoint extends UndoableChange {
+    private _doc: SongDocument;
+    private _point: FilterControlPoint;
+    private _oldFreq: number;
+    private _newFreq: number;
+    private _oldGain: number;
+    private _newGain: number;
+    public pointIndex: number;
+    public pointType: FilterType;
+    constructor(doc: SongDocument, point: FilterControlPoint, oldFreq: number, newFreq: number, oldGain: number, newGain: number, pointIndex: number) {
+        super(false);
+        this._doc = doc;
+        this._point = point;
+        this._oldFreq = oldFreq;
+        this._newFreq = newFreq;
+        this._oldGain = oldGain;
+        this._newGain = newGain;
+        this.pointIndex = pointIndex;
+        this.pointType = point.type;
+        this._didSomething();
+        this.redo();
+    }
+
+    public getMoveData(beforeChange: boolean): FilterMoveData {
+        if (beforeChange) {
+            return new FilterMoveData(this._point, this._oldFreq, this._oldGain);
+        }
+        return new FilterMoveData(this._point, this._newFreq, this._newGain);
+    }
+
+    protected _doForwards(): void {
+        this._point.freq = this._newFreq;
+        this._point.gain = this._newGain;
+        this._doc.notifier.changed();
+    }
+
+    protected _doBackwards(): void {
+        this._point.freq = this._oldFreq;
+        this._point.gain = this._oldGain;
+        this._doc.notifier.changed();
+    }
+}
+
+
 export class ChangeFilterMovePoint extends UndoableChange {
     private _doc: SongDocument;
     private _instrument: Instrument;
@@ -2774,6 +2853,45 @@ export class ChangeFilterMovePoint extends UndoableChange {
         this._point.freq = this._oldFreq;
         this._point.gain = this._oldGain;
         this._instrument.preset = this._instrumentPrevPreset;
+        this._doc.notifier.changed();
+    }
+}
+
+export class ChangeSongFilterSettings extends UndoableChange {
+    private _doc: SongDocument;
+    private _filterSettings: FilterSettings;
+    private _subFilters: (FilterSettings | null)[];
+    private _oldSubFilters: (FilterSettings | null)[];
+    private _oldSettings: FilterSettings;
+    constructor(doc: SongDocument, settings: FilterSettings, oldSettings: FilterSettings, subFilters: (FilterSettings | null)[] | null = null, oldSubFilters: (FilterSettings | null)[] | null = null) {
+        super(false);
+        this._doc = doc;
+        this._oldSettings = oldSettings;
+        this._filterSettings = settings;
+        if (subFilters != null && oldSubFilters != null) {
+            this._subFilters = subFilters;
+            this._oldSubFilters = oldSubFilters;
+        }
+        this._didSomething();
+        this.redo();
+    }
+
+    protected _doForwards(): void {
+        this._doc.song.eqFilter = this._filterSettings;
+        if (this._subFilters != null)
+            this._doc.song.eqSubFilters = this._subFilters;
+        this._doc.song.tmpEqFilterStart = this._doc.song.eqFilter;
+        this._doc.song.tmpEqFilterEnd = null;
+
+        this._doc.notifier.changed();
+    }
+
+    protected _doBackwards(): void {
+        this._doc.song.eqFilter = this._oldSettings;
+        if (this._oldSubFilters != null)
+            this._doc.song.eqSubFilters = this._oldSubFilters;
+        this._doc.song.tmpEqFilterStart = this._doc.song.eqFilter;
+        this._doc.song.tmpEqFilterEnd = null;
         this._doc.notifier.changed();
     }
 }
