@@ -2030,7 +2030,7 @@ export class Config {
             promptDesc: [ "This setting controls the number of phaser stages in your insturment, just like the phaser stages slider.", "At $LO, your instrument will have no phaser stages. At $HI, it will be at maximum.", "[OVERWRITING] [$LO - $HI]"] },                       
         { name: "song pitch shift", 
             pianoName: "Song Pitch Shift", 
-            maxRawVol: (Config.pitchShiftRange*2)-2, newNoteVol: Config.pitchShiftRange, forSong: true, convertRealFactor: -Config.pitchShiftRange+1, associatedEffect: EffectType.pitchShift,
+            maxRawVol: (Config.pitchShiftRange*2)-2, newNoteVol: Config.pitchShiftRange - 1, forSong: true, convertRealFactor: -Config.pitchShiftRange+1, associatedEffect: EffectType.pitchShift,
             promptName: "Songwide Pitch Shift", 
             promptDesc: ["This setting controls the pitch offset of all instruments regardless of whether or not the instrument has the effect itself, just like the pitch shift slider.", "At $MID your instrument will have no pitch shift. This increases as you decrease toward $LO pitches (half-steps) at the low end, or increases towards +$HI pitches at the high end.", "[ADDITIVE] [$LO - $HI] [pitch]"] },
         { name: "individual envelope speed", 

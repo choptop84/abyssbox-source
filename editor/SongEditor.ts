@@ -3414,7 +3414,7 @@ export class SongEditor {
                 this._pitchShiftSlider.updateValue(instrument.pitchShift);
                 this._pitchShiftSlider.input.title = (instrument.pitchShift - Config.pitchShiftCenter) + " semitone(s)";
                 for (const marker of this._pitchShiftFifthMarkers) {
-                    marker.style.display = prefs.showFifth ? "" : "none";
+                    marker.style.display = prefs.showFifth || prefs.advancedColorScheme ? "" : "none";
                 }
             } else {
                 this._pitchShiftRow.style.display = "none";

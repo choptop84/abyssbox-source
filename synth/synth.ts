@@ -144,6 +144,7 @@ function decode32BitNumber(compressed: string, charIndex: number): number {
  * @param o Unison Offset
  * @param e Unison Expression
  * @param i Unison Sign
+ * @param b Unison Buzzing
  */
 function encodeUnisonSettings(buffer: number[], v: number, s: number, o: number, e: number, i: number, b: boolean): void {
     buffer.push(base64IntToCharCode[v]);
@@ -2150,7 +2151,7 @@ export class Instrument {
             }
         }
 
-        if (this.type == InstrumentType.chip || this.type == InstrumentType.pwm || this.type == InstrumentType.customChipWave || this.type == InstrumentType.noise || this.type == InstrumentType.harmonics || this.type == InstrumentType.pickedString || this.type == InstrumentType.spectrum) {
+        if (this.type != InstrumentType.fm && this.type != InstrumentType.fm6op && this.type != InstrumentType.supersaw) {
             instrumentObject["unison"] = this.unison == Config.unisons.length ? "custom" : Config.unisons[this.unison].name;
             // only push these if custom unisons are being used
             if (this.unison == Config.unisons.length) {
@@ -11809,8 +11810,8 @@ export class Synth {
                 let pulseWidthModStart: number = basePulseWidth;
                 let pulseWidthModEnd: number = basePulseWidth;
                 if (this.isModActive(Config.modulators.dictionary["pulse width"].index, channelIndex, tone.instrumentIndex)) {
-                    pulseWidthModStart = (this.getModValue(Config.modulators.dictionary["pulse width"].index, channelIndex, tone.instrumentIndex, false)) / (Config.pulseWidthRange * 2);
-                    pulseWidthModEnd = (this.getModValue(Config.modulators.dictionary["pulse width"].index, channelIndex, tone.instrumentIndex, true)) / (Config.pulseWidthRange * 2);
+                    pulseWidthModStart = (this.getModValue(Config.modulators.dictionary["pulse width"].index, channelIndex, tone.instrumentIndex, false)) / (Config.pulseWidthRange);
+                    pulseWidthModEnd = (this.getModValue(Config.modulators.dictionary["pulse width"].index, channelIndex, tone.instrumentIndex, true)) / (Config.pulseWidthRange);
                 }
 
                 const pulseWidthStart: number = pulseWidthModStart * envelopeStarts[EnvelopeComputeIndex.pulseWidth];
@@ -12016,8 +12017,8 @@ export class Synth {
                 let pulseWidthModStart: number = basePulseWidth;
                 let pulseWidthModEnd: number = basePulseWidth;
                 if (this.isModActive(Config.modulators.dictionary["pulse width"].index, channelIndex, tone.instrumentIndex)) {
-                    pulseWidthModStart = (this.getModValue(Config.modulators.dictionary["pulse width"].index, channelIndex, tone.instrumentIndex, false)) / (Config.pulseWidthRange * 2);
-                    pulseWidthModEnd = (this.getModValue(Config.modulators.dictionary["pulse width"].index, channelIndex, tone.instrumentIndex, true)) / (Config.pulseWidthRange * 2);
+                    pulseWidthModStart = (this.getModValue(Config.modulators.dictionary["pulse width"].index, channelIndex, tone.instrumentIndex, false)) / (Config.pulseWidthRange);
+                    pulseWidthModEnd = (this.getModValue(Config.modulators.dictionary["pulse width"].index, channelIndex, tone.instrumentIndex, true)) / (Config.pulseWidthRange);
                 }
 
                 let pulseWidthStart: number = pulseWidthModStart * envelopeStarts[EnvelopeComputeIndex.pulseWidth];
