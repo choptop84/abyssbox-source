@@ -132,10 +132,13 @@ document.head.appendChild(HTML.style({type: "text/css"}, `
 		background: ${ColorConfig.songPlayerMargin};
 	}
 	.songPlayerContainer {
-		display:grid; 
-		grid-template-areas: 'visualizer visualizer' 'control-center control-center'; 
-		grid-template-rows: 92.6vh 20vh; 
-		grid-template-columns: minmax(0px,0px);
+		display:flex; 
+		flex-direction: column;
+		height: 100%;
+	}
+	.piano {
+	display: none;
+	min-height = 0px;
 	}
 	.layout-option {
 		width: 25%;

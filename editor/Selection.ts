@@ -122,20 +122,29 @@ export class Selection {
 
     public nextDigit(digit: string, forInstrument: boolean, forRhythms: boolean): void {
         if (forRhythms) {
-            if (digit == "3") {
+            if (digit == "1") {
                 this._doc.record(new ChangeRhythm(this._doc, 0));
             }
-            else if (digit == "4") {
+            if (digit == "2") {
                 this._doc.record(new ChangeRhythm(this._doc, 1));
             }
-            else if (digit == "6") {
+            if (digit == "3") {
                 this._doc.record(new ChangeRhythm(this._doc, 2));
             }
-            else if (digit == "8") {
+            else if (digit == "4") {
                 this._doc.record(new ChangeRhythm(this._doc, 3));
             }
-            else if (digit == "0" || digit == "1") {
+            else if (digit == "6") {
                 this._doc.record(new ChangeRhythm(this._doc, 4));
+            }
+            else if (digit == "8") {
+                this._doc.record(new ChangeRhythm(this._doc, 5));
+            }
+            else if (digit == "9") {
+                this._doc.record(new ChangeRhythm(this._doc, 6));
+            }
+            else if (digit == "0") {
+                this._doc.record(new ChangeRhythm(this._doc, 7));
             }
         } else if (forInstrument) {
             // Treat "0" as meaning instrument 10

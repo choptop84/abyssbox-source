@@ -1,6 +1,6 @@
 // Copyright (c) 2012-2022 John Nesky and contributing authors, distributed under the MIT license, see accompanying the LICENSE.md file.
 
-import { Dictionary, DictionaryArray, EnvelopeType, InstrumentType, Transition, Chord, Envelope, Config } from "../synth/SynthConfig";
+import { Dictionary, DictionaryArray, EnvelopeType, InstrumentType, Transition, Chord, Envelope, Config, sampleLoadEvents, SampleLoadedEvent } from "../synth/SynthConfig";
 import { ColorConfig } from "../editor/ColorConfig";
 import { NotePin, Note, Pattern, Instrument, Channel, Synth, Song } from "../synth/synth";
 import "./style";
@@ -207,6 +207,7 @@ import { SongPlayerLayout } from "./Layout";
 	
 
 	let draggingPlayhead: boolean = false;
+	let draggingTimelineBar: boolean = false;
 		const playButton: HTMLButtonElement = button({style: "width: 100%; height: 100%; max-height: 50px;"});
 		const playButtonContainer: HTMLDivElement = div({class: "playButtonContainer",style: "flex-shrink: 0; display: flex; padding: 2px; width: 80px; height: 100%; box-sizing: border-box; align-items: center;"},
 		playButton,
@@ -258,15 +259,26 @@ import { SongPlayerLayout } from "./Layout";
 		outVolumeBar,
 		outVolumeCap,
 	);
-	const timelineBarProgress: HTMLDivElement = div({ class:`timeline-bar-progress`, style: `pointer-events: none; overflow: hidden; width: 5%; height: 100%; z-index: 5;`});
-	const timelineBar: HTMLDivElement = div({ style:  `overflow: hidden; margin: auto; width: 90%; height: 50%; background: var(--ui-widget-background);`},timelineBarProgress);
-	const timelineBarContainer: HTMLDivElement = div({ style: `pointer-events: none; overflow: hidden; margin: auto; width: 160px; height: 10px; `}, timelineBar);
-	const volumeBarContainerDiv: HTMLDivElement = div({class:`volBarContainer`, style:"display:flex; flex-direction:column;"}, volumeBarContainer, timelineBarContainer);
+
+	const sampleLoadingBar: HTMLDivElement = div({ style: `width: 0%; height: 100%; background-color: ${ColorConfig.indicatorPrimary};` });
+    const sampleFailedBar: HTMLDivElement = div({ style: `width: 0%; height: 100%; background-color: ${ColorConfig.sampleFailed};` });
+    const sampleLoadingBarContainer: HTMLDivElement = div({ class: `sampleLoadingContainer`, style: `overflow: hidden; margin: auto; width: 90%; height: 50%; background-color: var(--empty-sample-bar, ${ColorConfig.indicatorSecondary});` }, sampleLoadingBar, sampleFailedBar);
+    const sampleLoadingStatusContainer: HTMLDivElement = div({},
+        div({ class: "selectRow", style: "overflow: hidden; margin: auto; width: 160px; height: 10px; " },
+            sampleLoadingBarContainer,
+        ),
+	);
+
+	const timelineBarProgress: HTMLDivElement = div({ class:`timeline-bar-progress`, style: `overflow: hidden; width: 5%; height: 100%; z-index: 5;`});
+	const timelineBar: HTMLDivElement = div({ style:  `overflow: hidden; height: 100%; margin: auto; background: var(--ui-widget-background);`},timelineBarProgress);
+	const timelineBarContainer: HTMLDivElement = div({ style: `overflow: hidden; height: 4px; `}, timelineBar);
+	const volumeBarContainerDiv: HTMLDivElement = div({class:`volBarContainer`, style:"display:flex; flex-direction:column;"}, volumeBarContainer, sampleLoadingStatusContainer);
 	const promptContainer: HTMLDivElement = div({class:"promptContainer",style:"display:none; backdrop-filter: saturate(1.5) blur(4px); width: 100%; height: 100%; position: fixed; z-index: 999; display: flex; justify-content: center; align-items: center;"});
 	promptContainer.style.display = "none";
 	const songPlayerContainer: HTMLDivElement = div({class:"songPlayerContainer"});
 	songPlayerContainer.appendChild(visualizationContainer);
 	songPlayerContainer.appendChild(pianoContainer);
+	songPlayerContainer.appendChild(timelineBarContainer);
 	songPlayerContainer.appendChild(
 			div({class: "control-center",id: "control-center",style: `flex-shrink: 0; height: 20vh; min-height: 22px; max-height: 70px; display: flex; align-items: center; grid-area: control-center;`},
 				div({class: "control-center row",id:"row1",style: `display: flex; align-items: center;`},
@@ -513,6 +525,31 @@ import { SongPlayerLayout } from "./Layout";
 		promptContainer.style.display = "flex";
 	}
 
+	function updateSampleLoadingBar(_e: Event): void {
+        // @TODO: Avoid this cast and type EventTarget/Event properly.
+        const e: SampleLoadedEvent = <SampleLoadedEvent>_e;
+        let sampleNum: boolean = false;
+        const percent: number = (
+            e.totalSamples === 0
+            ? 0
+            : Math.floor((e.samplesLoaded / e.totalSamples) * 100)
+        );
+        const failedPercent: number = (
+            e.totalSamples === 0
+            ? 0
+            : Math.floor((e.samplesFailed / e.totalSamples) * 100)
+        );
+        sampleNum = Boolean(percent > 0 && failedPercent > 0);
+		sampleLoadingBarContainer.title = "Total Samples: "+String(e.totalSamples)+"; Loaded Samples: "+String(e.samplesLoaded)+"; Samples Failed: "+String(e.samplesFailed)+";";
+        sampleLoadingBar.style.width = `${percent}%`;
+        sampleFailedBar.style.width = `${failedPercent+Number(sampleNum)}%`;
+        if (e.totalSamples != 0) {
+            sampleLoadingBarContainer.style.backgroundColor = "var(--indicator-secondary)"; 
+        } else {
+        sampleLoadingBarContainer.style.backgroundColor = "var(--empty-sample-bar, var(--indicator-secondary))"; 
+        }
+    }
+
 	function onExitButton(): void {
 		promptContainer.style.display = "none";
 	}
@@ -550,18 +587,28 @@ import { SongPlayerLayout } from "./Layout";
 		draggingPlayhead = true;
 		onTimelineMouseMove(event);
 	}
+
+	function onTimelineBarMouseDown(event: MouseEvent): void {
+		draggingPlayhead = true;
+		draggingTimelineBar = true;
+		onTimelineMouseMove(event);
+	}
 	
 	function onTimelineMouseMove(event: MouseEvent): void {
 		if (!draggingPlayhead) return;
 		event.preventDefault();
 		const useVertical = ((<any> _form.elements)["spLayout"].value == "vertical") || (window.localStorage.getItem("spLayout") == "vertical");
 		if (useVertical) {
-		onTimelineCursorMove(event.clientY || event.pageY); 
+			if (!draggingTimelineBar) {
+				onTimelineCursorMove(event.clientY || event.pageY); 
+			} else {
+				onTimelineCursorMove(event.clientX || event.pageX);	
+			}
 		} else {
 		onTimelineCursorMove(event.clientX || event.pageX);	
 		}
 	}
-	
+
 	function onTimelineTouchDown(event: TouchEvent): void {
 		draggingPlayhead = true;
 		onTimelineTouchMove(event);
@@ -584,7 +631,11 @@ import { SongPlayerLayout } from "./Layout";
 			if (!useVertical && !useBoxBeep) {
 				synth.playhead = synth.song.barCount * (mouseX - boundingRect.left) / (boundingRect.right - boundingRect.left); 
 			} else if (useVertical) {
-				synth.playhead = synth.song.barCount * (mouseX - boundingRect.bottom) / (boundingRect.top - boundingRect.bottom);	
+				if (!draggingTimelineBar) {
+					synth.playhead = synth.song.barCount * (mouseX - boundingRect.bottom) / (boundingRect.top - boundingRect.bottom);	
+				} else {
+					synth.playhead = synth.song.barCount * (mouseX - boundingRect.left) / (boundingRect.right - boundingRect.left); 
+				}
 			} else if (useBoxBeep) {
 				synth.playhead = synth.song.barCount * (mouseX - boundingRect.right) / (boundingRect.left - boundingRect.right);	
 			}
@@ -595,6 +646,7 @@ import { SongPlayerLayout } from "./Layout";
 	
 	function onTimelineCursorUp(): void {
 		draggingPlayhead = false;
+		draggingTimelineBar = false;
 	}
 	
 	function setSynthVolume(): void {
@@ -609,7 +661,7 @@ import { SongPlayerLayout } from "./Layout";
 			if (synth.song != null) {
 				let pos: number = synth.playhead / synth.song.barCount;
 
-				timelineBarProgress.style.width = Math.round((maxPer*pos/maxPer)*100)+"%";
+				timelineBarProgress.style.width = Math.round((maxPer*pos/maxPer)*1000)/10+"%";
 
 				const usePiano = ((<any> _form.elements)["spLayout"].value == "piano") || (window.localStorage.getItem("spLayout") == "piano");
 				const useMiddle = ((<any> _form.elements)["spLayout"].value == "middle") || (window.localStorage.getItem("spLayout") == "middle");
@@ -714,20 +766,17 @@ import { SongPlayerLayout } from "./Layout";
 					timelineWidth = Math.max(boundingRect.width, targetBeatWidth * synth.song.barCount * synth.song.beatsPerBar);
 					if (useVertical) {
 						timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineHeight / 2}px) scaleY(-1)`; 
-						pianoContainer.style.display = "unset";
-						if (!isMobile) {
-							songPlayerContainer.style.gridTemplateRows = ""; }
-						else {
-							songPlayerContainer.style.gridTemplateRows = "78vh 0vh 7.4vh";
-						}
+						pianoContainer.style.minHeight = "140px";
+						if (isMobile) {
+							pianoContainer.style.display = "none";
+							pianoContainer.style.minHeight = "0px";
+						} 
 						timelineContainer.style.left = "0px";
 					 } else {
 						timelineContainer.style.transform = '';
-						pianoContainer.style.display = "none";
-						songPlayerContainer.style.gridTemplateRows = "";
+						pianoContainer.style.minHeight = "0px";
 					 }
 				} else {
-					pianoContainer.style.display = "none";
 					timelineWidth = boundingRect.width;
 					const targetSemitoneHeight: number = Math.max(1, timelineWidth / (synth.song.barCount * synth.song.beatsPerBar) / 6.0);
 					timelineHeight = Math.min(boundingRect.height, targetSemitoneHeight * (Config.maxPitch + 1) + 1);
@@ -735,15 +784,16 @@ import { SongPlayerLayout } from "./Layout";
 					windowPitchCount = windowOctaves * 12 + 1;
 					if (useVertical) {
 						timelineContainer.style.transform = `translateX(-${timelineWidth / 2}px) rotate(-90deg) translateX(${timelineWidth / 2}px) translateY(${timelineWidth / 2}px) scaleY(-1)`;
+						pianoContainer.style.height = "0";
+						pianoContainer.style.minHeight = "0";
 						if (isMobile) {
-							songPlayerContainer.style.gridTemplateRows = "78vh 0vh 7.4vh"; }
-						else {
-							songPlayerContainer.style.gridTemplateRows = "92.6vh 0vh 7.4vh";
-						}
+							pianoContainer.style.display = "none";
+							pianoContainer.style.minHeight = "0px";
+						} 
 						timelineContainer.style.left = "0px";
 					 } else {
+						pianoContainer.style.minHeight = "0px";
 						timelineContainer.style.transform = '';
-						songPlayerContainer.style.gridTemplateRows = "";
 					 }
 					
 				}
@@ -829,24 +879,6 @@ import { SongPlayerLayout } from "./Layout";
 						}
 					}
 				}
-
-				const useClassic = ((<any> _form.elements)["spLayout"].value == "classic") || (window.localStorage.getItem("spLayout") == "classic");
-				const useTop = ((<any> _form.elements)["spLayout"].value == "top") || (window.localStorage.getItem("spLayout") == "top");
-				const useShitbox4 = ((<any> _form.elements)["spLayout"].value == "shitbox4") || (window.localStorage.getItem("spLayout") == "shitbox4");
-				const useBoxBeep = ((<any> _form.elements)["spLayout"].value == "boxbeep") || (window.localStorage.getItem("spLayout") == "boxbeep");
-				const useMusicbox = ((<any> _form.elements)["spLayout"].value == "piano") || (window.localStorage.getItem("spLayout") == "piano");
-				const useVertical = ((<any> _form.elements)["spLayout"].value == "vertical") || (window.localStorage.getItem("spLayout") == "vertical");
-				const useMiddle = ((<any> _form.elements)["spLayout"].value == "middle") || (window.localStorage.getItem("spLayout") == "middle");
-			
-				if (isMobile) { 
-					if (useClassic || useBoxBeep || useShitbox4 || useMusicbox || useMiddle) {
-						songPlayerContainer.style.gridTemplateRows = "78vh 7.4vh";
-					} else if (useTop) {
-						songPlayerContainer.style.gridTemplateRows = "7.4vh 78vh";
-					} else if (!useClassic && !useBoxBeep && !useShitbox4 && !useMusicbox && !useMiddle && !useVertical) {
-						songPlayerContainer.style.gridTemplateRows = "78vh 7.4vh";
-					} 
-				} 
 
 	}
 	
@@ -999,12 +1031,19 @@ import { SongPlayerLayout } from "./Layout";
 	window.addEventListener("keydown", onKeyPressed);
 	
 	timeline.addEventListener("mousedown", onTimelineMouseDown);
+	timelineBar.addEventListener("mousedown", onTimelineBarMouseDown);
 	window.addEventListener("mousemove", onTimelineMouseMove);
 	window.addEventListener("mouseup", onTimelineCursorUp);
 	timeline.addEventListener("touchstart", onTimelineTouchDown);
 	timeline.addEventListener("touchmove", onTimelineTouchMove);
 	timeline.addEventListener("touchend", onTimelineCursorUp);
 	timeline.addEventListener("touchcancel", onTimelineCursorUp);
+
+	timelineBar.addEventListener("touchstart", onTimelineTouchDown);
+	timelineBar.addEventListener("touchmove", onTimelineTouchMove);
+	timelineBar.addEventListener("touchend", onTimelineCursorUp);
+	timelineBar.addEventListener("touchcancel", onTimelineCursorUp);
+
 
 	document.addEventListener('visibilitychange', e=>{
 		if (document.visibilityState === 'visible') {
@@ -1028,6 +1067,7 @@ import { SongPlayerLayout } from "./Layout";
 	shareLink.addEventListener("click", onShareClicked);
 	window.addEventListener("hashchange", hashUpdatedExternally);
 	shortenSongLink.addEventListener("click", shortenSongPlayerUrl);
+	sampleLoadEvents.addEventListener("sampleloaded", updateSampleLoadingBar.bind(this));
 	
 	hashUpdatedExternally();
 	renderLoopIcon();

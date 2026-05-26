@@ -5,12 +5,14 @@ export class SongPlayerLayout {
     private static readonly _spLayoutMap: {[K: string]: string} = { 
         "classic": `
         .songPlayerContainer {
-            display:grid; 
-            grid-template-areas: 'visualizer visualizer' 'control-center control-center'; 
-            grid-template-rows: 92.6vh 7.4vh; 
-            grid-template-columns: minmax(0px,0px);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
-        
+        .piano {
+        height: 0;
+        display: none;
+        }
         div.visualizer {
             transform: scale(1);
             }
@@ -20,10 +22,13 @@ export class SongPlayerLayout {
         `,
         "top": `
         .songPlayerContainer {
-            display:grid; 
-            grid-template-areas: 'control-center control-center' 'visualizer visualizer'; 
-            grid-template-rows: 7.4vh 92.6vh; 
-            grid-template-columns: minmax(0px,0px);
+            display: flex;
+            flex-direction: column-reverse;
+            height: 100%;
+        }
+        .piano {
+        height: 0;
+        display: none;
         }
         div.visualizer {
             transform: scale(1);
@@ -34,10 +39,13 @@ export class SongPlayerLayout {
         `,
         "shitbox4": `
         .songPlayerContainer {
-            display:grid; 
-            grid-template-areas: 'visualizer visualizer' 'control-center control-center'; 
-            grid-template-rows: 92.6vh 7.4vh; 
-            grid-template-columns: minmax(0px,0px);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .piano {
+        height: 0;
+        display: none;
         }
         div.visualizer {
             transform: skew(30deg,20deg) scale(0.5);
@@ -48,10 +56,13 @@ export class SongPlayerLayout {
         `,
         "boxbeep": `
         .songPlayerContainer {
-            display:grid; 
-            grid-template-areas: 'visualizer visualizer' 'control-center control-center'; 
-            grid-template-rows: 92.6vh 7.4vh; 
-            grid-template-columns: minmax(0px,0px);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .piano {
+        height: 0;
+        display: none;
         }
         div.visualizer {
             transform: scale(-1);
@@ -62,10 +73,9 @@ export class SongPlayerLayout {
         `,
         "piano": `
         .songPlayerContainer {
-            display:grid; 
-            grid-template-areas: 'visualizer visualizer' 'control-center control-center'; 
-            grid-template-rows: 92.6vh 7.4vh; 
-            grid-template-columns: minmax(0px,0px);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
         div.visualizer {
             transform: scale(1);
@@ -76,10 +86,13 @@ export class SongPlayerLayout {
         `,
         "vertical": `
         .songPlayerContainer {
-            display:grid; 
-            grid-template-areas: 'visualizer visualizer' 'piano piano' 'control-center control-center'; 
-            grid-template-rows: 82.6vh 10vh 7.4vh; 
-            grid-template-columns: minmax(0px,0px);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .piano {
+        min-height: 140px;
+        display: flex;
         }
         div.visualizer {
             transform: scale(1);
@@ -90,10 +103,13 @@ export class SongPlayerLayout {
         `,
         "middle": `
         .songPlayerContainer {
-            display:grid; 
-            grid-template-areas: 'visualizer visualizer' 'control-center control-center'; 
-            grid-template-rows: 92.6vh 7.4vh; 
-            grid-template-columns: minmax(0px,0px);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .piano {
+        height: 0;
+        display: none;
         }
         div.visualizer {
             transform: scale(1);

@@ -15,6 +15,7 @@ import { alwanEvent } from 'alwan/dist/js/types/src/types';
 
 //namespace beepbox {
 const { button, div, h2, input, p, option, select} = HTML;
+const opacityValue = "1";
 
 const longText = `:root {
 	--page-margin: black;
@@ -395,6 +396,11 @@ export class CustomPrompt implements Prompt {
 		option({ value: "nepbox" }, "Nepbox"),
 		option({ value: "BoxBeep Dark" }, "BoxBeep Dark"),
 		option({ value: "BoxBeep light"}, "BoxBeep Light"),
+		option({ value: "birdbox dark" }, "BirdBox Dark"),
+		option({ value: "birdbox light"}, "BirdBox Light"),
+		option({ value: "ultrabox dark"}, "UltraBox"),
+		option({ value: "slarmoosbox"}, "Slarmoo's Box"),
+		option({ value: "lemmbox dark"}, "LemmBox Dark"),
 		option({ value: "Deuteranopia"}, "Deuteranopia"),
 		option({ value: "Protanopia"}, "Protanopia"),
 		option({ value: "Tritanopia"}, "Tritanopia"),
@@ -1098,7 +1104,7 @@ export class CustomPrompt implements Prompt {
 
 		private _whenFileSelected = (): void => {
 			const file: File = this._fileInput.files![0];
-			const opacityValue = "0.2";
+			
 			if (!file) return;
 			const reader: FileReader = new FileReader();
 			reader.addEventListener("load", (event: Event): void => {

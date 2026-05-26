@@ -1,7 +1,7 @@
 // Copyright (c) 2012-2022 John Nesky and contributing authors, distributed under the MIT license, see accompanying the LICENSE.md file.
 
 //import {Layout} from "./Layout";
-import { sampleLoadEvents, SampleLoadedEvent, InstrumentType, EffectType, Config, effectsIncludeTransition, effectsIncludeChord, effectsIncludePitchShift, effectsIncludeDetune, effectsIncludeVibrato, effectsIncludeNoteFilter, effectsIncludeDistortion, effectsIncludeBitcrusher, effectsIncludePanning, effectsIncludeChorus, effectsIncludeEcho, effectsIncludeReverb, effectsIncludeRM, effectsIncludePhaser, effectsIncludeNoteRange, DropdownID, effectsIncludeInvertWave, effectsIncludeFlanger } from "../synth/SynthConfig";
+import { sampleLoadEvents, SampleLoadedEvent, InstrumentType, EffectType, Config, effectsIncludeTransition, effectsIncludeChord, effectsIncludePitchShift, effectsIncludeDetune, effectsIncludeVibrato, effectsIncludeNoteFilter, effectsIncludeDistortion, effectsIncludeBitcrusher, effectsIncludePanning, effectsIncludeChorus, effectsIncludeEcho, effectsIncludeReverb, effectsIncludeRM, effectsIncludePhaser, effectsIncludeNoteRange, DropdownID, effectsIncludeInvertWave, effectsIncludeGranular, effectsIncludeFlanger } from "../synth/SynthConfig";
 import { BarScrollBar } from "./BarScrollBar";
 import { BeatsPerBarPrompt } from "./BeatsPerBarPrompt";
 import { Change, ChangeGroup } from "./Change";
@@ -47,7 +47,7 @@ import { ThemePrompt } from "./ThemePrompt";
 import { CustomPrompt } from "./CustomPrompt";
 import { PresetPrompt, /*setPresets*/ } from "./PresetPrompt";
 import { TipPrompt } from "./TipPrompt";
-import { ChangeTempo, ChangeKeyOctave, ChangeChorus, ChangeEchoDelay, ChangeEchoSustain, ChangeReverb, ChangeVolume, ChangePan, ChangePatternSelection, ChangePatternsPerChannel, ChangePatternNumbers, ChangeSupersawDynamism, ChangeSupersawSpread, ChangeSupersawShape, ChangePulseWidth, ChangeFeedbackAmplitude, ChangeOperatorAmplitude, ChangeOperatorFrequency, ChangeDrumsetEnvelope, ChangePasteInstrument, ChangePreset, pickRandomPresetValue, ChangeRandomGeneratedInstrument, ChangeEQFilterType, ChangeNoteFilterType, ChangeEQFilterSimpleCut, ChangeEQFilterSimplePeak, ChangeNoteFilterSimpleCut, ChangeNoteFilterSimplePeak, ChangeScale, ChangeDetectKey, ChangeKey, ChangeRhythm, ChangeFeedbackType, ChangeAlgorithm, ChangeChipWave, ChangeRMChipWave, ChangeNoiseWave, ChangeTransition, ChangeToggleEffects, ChangeVibrato, ChangeUnison, ChangeChord, ChangeSong, ChangePitchShift, ChangeDetune, ChangeDistortion, ChangeStringSustain, ChangeBitcrusherFreq, ChangeBitcrusherQuantization, ChangeAddEnvelope, ChangeEnvelopeSpeed, ChangeDiscreteEnvelope, ChangeAddChannelInstrument, ChangeRemoveChannelInstrument, ChangeCustomWave, ChangeOperatorWaveform, ChangeOperatorPulseWidth, ChangeSongTitle, ChangeVibratoDepth, ChangeVibratoSpeed, ChangeVibratoDelay, ChangeVibratoType, ChangePanDelay, ChangeArpeggioSpeed, ChangeFastTwoNoteArp, ChangeClicklessTransition, ChangeAliasing, ChangeSetPatternInstruments, ChangeHoldingModRecording, ChangeChipWavePlayBackwards, ChangeChipWaveStartOffset, ChangeChipWaveLoopEnd, ChangeChipWaveLoopStart, ChangeChipWaveLoopMode, ChangeChipWaveUseAdvancedLoopControls, ChangeDecimalOffset, ChangeUnisonVoices, ChangeUnisonSpread, ChangeUnisonOffset, ChangeUnisonExpression, ChangeUnisonSign, ChangeUnisonBuzzing, Change6OpFeedbackType, Change6OpAlgorithm, ChangeCustomAlgorythmorFeedback, ChangeRingMod, ChangeRingModHz, ChangeRingModPulseWidth, ChangePhaserMix, ChangePhaserFreq, ChangePhaserFeedback, ChangePhaserStages, ChangeUpperLimit, ChangeLowerLimit, ChangeSlideSpeed, ChangeStrumSpeed, ChangeRmHzOffset, ChangeInvertWave, ChangeFlanger } from "./changes";
+import { ChangeTempo, ChangeKeyOctave, ChangeChorus, ChangeEchoDelay, ChangeEchoSustain, ChangeReverb, ChangeVolume, ChangePan, ChangePatternSelection, ChangePatternsPerChannel, ChangePatternNumbers, ChangeSupersawDynamism, ChangeSupersawSpread, ChangeSupersawShape, ChangePulseWidth, ChangeFeedbackAmplitude, ChangeOperatorAmplitude, ChangeOperatorFrequency, ChangeDrumsetEnvelope, ChangePasteInstrument, ChangePreset, pickRandomPresetValue, ChangeRandomGeneratedInstrument, ChangeEQFilterType, ChangeNoteFilterType, ChangeEQFilterSimpleCut, ChangeEQFilterSimplePeak, ChangeNoteFilterSimpleCut, ChangeNoteFilterSimplePeak, ChangeScale, ChangeDetectKey, ChangeKey, ChangeRhythm, ChangeFeedbackType, ChangeAlgorithm, ChangeChipWave, ChangeRMChipWave, ChangeNoiseWave, ChangeTransition, ChangeToggleEffects, ChangeVibrato, ChangeUnison, ChangeChord, ChangeSong, ChangePitchShift, ChangeDetune, ChangeDistortion, ChangeStringSustain, ChangeBitcrusherFreq, ChangeBitcrusherQuantization, ChangeAddEnvelope, ChangeEnvelopeSpeed, ChangeDiscreteEnvelope, ChangeAddChannelInstrument, ChangeRemoveChannelInstrument, ChangeCustomWave, ChangeOperatorWaveform, ChangeOperatorPulseWidth, ChangeSongTitle, ChangeVibratoDepth, ChangeVibratoSpeed, ChangeVibratoDelay, ChangeVibratoType, ChangePanDelay, ChangeArpeggioSpeed, ChangeFastTwoNoteArp, ChangeClicklessTransition, ChangeAliasing, ChangeSetPatternInstruments, ChangeHoldingModRecording, ChangeChipWavePlayBackwards, ChangeChipWaveStartOffset, ChangeChipWaveLoopEnd, ChangeChipWaveLoopStart, ChangeChipWaveLoopMode, ChangeChipWaveUseAdvancedLoopControls, ChangeDecimalOffset, ChangeUnisonVoices, ChangeUnisonSpread, ChangeUnisonOffset, ChangeUnisonExpression, ChangeUnisonSign, ChangeUnisonBuzzing, Change6OpFeedbackType, Change6OpAlgorithm, ChangeCustomAlgorythmorFeedback, ChangeRingMod, ChangeRingModHz, ChangeRingModPulseWidth, ChangePhaserMix, ChangePhaserFreq, ChangePhaserFeedback, ChangePhaserStages, ChangeUpperLimit, ChangeLowerLimit, ChangeSlideSpeed, ChangeStrumSpeed, ChangeRmHzOffset, ChangeInvertWave, ChangeGranular, ChangeGrainSize, ChangeGrainAmounts, ChangeGrainRange, ChangeInstrumentsFlags, ChangeFlanger } from "./changes";
 
 import { TrackEditor } from "./TrackEditor";
 import {oscilascopeCanvas} from "../global/Oscilascope";
@@ -59,8 +59,6 @@ import { FontPrompt } from "./CustomFontPrompt";
 
 import { TutorialPrompt } from "./TutorialPrompt";
 import { SongDetailsPrompt } from "./SongDetailsPrompt";
-
-import { UpdatePopup } from "./UpdatePopup";
 
 const { button, div, input, select, span, optgroup, option, canvas} = HTML;
 
@@ -364,7 +362,6 @@ class CustomChipCanvas {
     };
 
 }
-
 
 class CustomAlgorythmCanvas {
     private mouseDown: boolean;
@@ -737,10 +734,10 @@ export class SongEditor {
     private _instSettingMode: number = 1;
 
      // comment for ctrl+f mobile stuffs
-    private readonly _mobilePatternButton: HTMLButtonElement = button({class: "mobilePatternButton", type:"button", style:"display:none; width: 33vw; height: 75%; left: 0; position: absolute; bottom: 0px;"});
-    private readonly _mobileTrackButton: HTMLButtonElement = button({class: "mobileTrackButton", type:"button", style:"display:none; width: 34vw; height: 60%; right: 33vw; position: absolute; bottom: 0px;"});
-    private readonly _mobileSettingsButton: HTMLButtonElement = button({class: "mobileSettingsButton", type:"button", style:"display:none; width: 33vw; height: 60%; right: 0; position: absolute; bottom: 0px;"});
-    public _mobileMenu: HTMLDivElement = div({class:"mobileMenu", style:"position: fixed; bottom: 0px; height: 20vh; width: 100vw; display:none; background: var(--editor-background); z-index: 5;"});
+    private readonly _mobilePatternButton: HTMLButtonElement = button({class: "mobilePatternButton", type:"button", style:"display:none; width: 33vw; height: 75%;"});
+    private readonly _mobileTrackButton: HTMLButtonElement = button({class: "mobileTrackButton", type:"button", style:"display:none; width: 34vw; height: 60%;"});
+    private readonly _mobileSettingsButton: HTMLButtonElement = button({class: "mobileSettingsButton", type:"button", style:"display:none; width: 33vw; height: 60%;"});
+    public mobileMenu: HTMLDivElement = div({class:"mobileMenu", style:"position: fixed; bottom: 0px; height: 20vh; width: 100vw; display:none; background: var(--editor-background); z-index: 5;"});
     private readonly _mobileEditMenuIcon: HTMLDivElement = div({class:"mobileEditMenuIcon"});
     private readonly _mobileTrackMenuIcon: HTMLDivElement = div({class:"mobileTrackMenuIcon"});
     private readonly _mobileSettingsMenuIcon: HTMLDivElement = div({class:"mobileSettingsMenuIcon"});
@@ -790,7 +787,7 @@ export class SongEditor {
     private readonly _fileMenu: HTMLSelectElement = select({ style: "width: 100%;" },
         option({ selected: true, disabled: true, hidden: false }, "File"), // todo: "hidden" should be true but looks wrong on mac chrome, adds checkmark next to first visible option even though it's not selected. :(
         option({ value: "new" }, "+ New Blank Song"),
-        option({ value: "import" }, "↑ > Import/Export Song (" + EditorConfig.ctrlSymbol + "S)"),
+        option({ value: "import" }, "↑ > Import/Export Song (" + EditorConfig.ctrlSymbol + "S/" + EditorConfig.ctrlSymbol + "O)"),
         option({ value: "copyUrl" }, "⎘ Copy Song URL"),
         option({ value: "shareUrl" }, "⤳ Share Song URL"),
         option({ value: "shortenUrl" }, "… Shorten Song URL"),
@@ -798,7 +795,7 @@ export class SongEditor {
         option({ value: "viewPlayer" }, "▶ View in Song Player"),
         option({ value: "copyEmbed" }, "⎘ Copy HTML Embed Code"),
         option({ value: "songRecovery" }, "⚠ > Recover Recent Song"),
-        //option({ value: "openTutorial"}, "✎ > Open Tutorial"),
+        option({ value: "openManual"}, "🕮 > Open Manual"),
     );
 
 
@@ -913,6 +910,29 @@ export class SongEditor {
         this._ringModHzSliderRow,
         this._rmOffsetHzSliderRow,
         this._ringModWaveSelectRow);
+
+    private readonly _granularSlider: Slider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.granularRange, value: "0", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeGranular(this._doc, oldValue, newValue), false);
+    private readonly _granularRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("granular") }, "Granular:"), this._granularSlider.container);
+    private readonly _grainSizeSlider: Slider = new Slider(input({ style: "margin: 0;", type: "range", min: Config.grainSizeMin / Config.grainSizeStep, max: Config.grainSizeMax / Config.grainSizeStep, value: Config.grainSizeMin / Config.grainSizeStep, step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeGrainSize(this._doc, oldValue, newValue), false);
+    public readonly grainSizeNum: HTMLParagraphElement = div({ style: "font-size: 80%; ", id: "grainSizeNum" });
+    private readonly _grainSizeSliderRow: HTMLDivElement = div({ class: "selectRow", style: "width:100%;" }, div({ style: "display:flex; flex-direction:column; align-items:center;" },
+        span({ class: "tip", style: "font-size: smaller;", onclick: () => this._openPrompt("grainSize") }, "Grain: "),
+        div({ style: `color: ${ColorConfig.secondaryText}; ` }, this.grainSizeNum),
+    ), this._grainSizeSlider.container);
+    private readonly _grainAmountsSlider: Slider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.grainAmountsMax, value: 8, step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeGrainAmounts(this._doc, oldValue, newValue), false);
+    private readonly _grainAmountsRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("grainAmount") }, "Grain Freq:"), this._grainAmountsSlider.container);
+    private readonly _grainRangeSlider: Slider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.grainRangeMax / Config.grainSizeStep, value: "0", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeGrainRange(this._doc, oldValue, newValue), false);
+    public readonly grainRangeNum: HTMLParagraphElement = div({ style: "font-size: 80%; ", id: "grainRangeNum" });
+    private readonly _grainRangeSliderRow: HTMLDivElement = div({ class: "selectRow", style: "width:100%;" }, div({ style: "display:flex; flex-direction:column; align-items:center;" },
+        span({ class: "tip", style: "font-size: smaller;", onclick: () => this._openPrompt("grainRange") }, "Range: "),
+        div({ style: `color: ${ColorConfig.secondaryText}; ` }, this.grainRangeNum),
+    ), this._grainRangeSlider.container);
+    private readonly _granularContainerRow: HTMLDivElement = div({ class: "", style: "display:flex; flex-direction:column;" },
+        this._granularRow,
+        this._grainAmountsRow,
+        this._grainSizeSliderRow,
+        this._grainRangeSliderRow
+    );
 
     private readonly _reverbSlider: Slider = new Slider(input({ style: "margin: 0; position: sticky,", type: "range", min: "0", max: Config.reverbRange - 1, value: "0", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeReverb(this._doc, oldValue, newValue), false);
     private readonly _reverbRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("reverb") }, "Reverb:"), this._reverbSlider.container);
@@ -1131,8 +1151,7 @@ export class SongEditor {
     private readonly _harmonicsZoom: HTMLButtonElement = button({ style: "padding-left:0.2em; height:1.5em; max-width: 12px;", onclick: () => this._openPrompt("harmonicsSettings") }, "+");
     private readonly _harmonicsRow: HTMLElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("harmonics"), style: "font-size: smaller"}, "Harmonics:"), this._harmonicsZoom, this._harmonicsEditor.container);
 
-    //SongEditor.ts
-    readonly envelopeEditor: EnvelopeEditor = new EnvelopeEditor(this._doc, (id: number, submenu: number, subtype: string) => this._toggleDropdownMenu(id, submenu, subtype), (name: string) => this._openPrompt(name));
+    private readonly _envelopeEditor: EnvelopeEditor = new EnvelopeEditor(this._doc);
     private readonly _discreteEnvelopeBox: HTMLInputElement = input({ type: "checkbox", style: "width: 1em; padding: 0; margin-right: 4em;" });
     private readonly _discreteEnvelopeRow: HTMLElement = div({ class: "selectRow dropFader" }, span({ class: "tip", style: "margin-left:4px;", onclick: () => this._openPrompt("discreteEnvelope") }, "‣ Discrete:"), this._discreteEnvelopeBox);
     private readonly _envelopeSpeedDisplay: HTMLSpanElement = span({ style: `color: ${ColorConfig.secondaryText}; font-size: smaller; text-overflow: clip;` }, "x1");
@@ -1286,6 +1305,7 @@ export class SongEditor {
             this._upperNoteLimitRow,
             this._lowerNoteLimitRow,
             this._invertWaveRow,
+            this._granularContainerRow,
             this._flangerRow,
         ),
     );
@@ -1297,7 +1317,7 @@ export class SongEditor {
         ),
         div({ class:"envelopesOpDiv"},
         this._envelopeDropdownGroup,
-        this.envelopeEditor.container,
+        this._envelopeEditor.container,
         ),
     );
     private readonly _customInstrumentSettingsGroup: HTMLDivElement = div({ class: "editor-controls" },
@@ -1821,6 +1841,8 @@ export class SongEditor {
         this._patternArea.addEventListener("mousedown", this._refocusStageNotEditing);
         this._trackArea.addEventListener("mousedown", this.refocusStage);
 
+        this._patternArea.addEventListener('dragover', this._dropHandler);
+
         // The song volume slider is styled slightly different than the class' default.
         this._volumeSlider.container.style.setProperty("flex-grow", "1");
         this._volumeSlider.container.style.setProperty("display", "flex");
@@ -2081,20 +2103,12 @@ export class SongEditor {
                 this._openUnisonDropdown = this._openUnisonDropdown ? false : true;
                 group = this._unisonDropdownGroup;
                 break;
-            case DropdownID.EnvelopeSettings:
-                target = this.envelopeEditor.extraSettingsDropdowns[submenu];
-                this.envelopeEditor.openExtraSettingsDropdowns[submenu] = this.envelopeEditor.openExtraSettingsDropdowns[submenu] ? false : true;
-                group = this.envelopeEditor.extraSettingsDropdownGroups[submenu];
-                break;
         }
 
         if (target.textContent == "▼") {
             let instrument: Instrument = this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()];
             target.textContent = "▲";
-            if (dropdown == DropdownID.EnvelopeSettings) {
-
-                this.envelopeEditor.rerenderExtraSettings();
-            } else if (group != this._chordDropdownGroup) {
+            if (group != this._chordDropdownGroup) {
                 group.style.display = "";
             } // Only show arpeggio dropdown if chord arpeggiates
             else if ((instrument.chord == Config.chords.dictionary["arpeggio"].index) || (instrument.chord == Config.chords.dictionary["strum"].index)) {
@@ -2309,6 +2323,8 @@ export class SongEditor {
                 return this._phaserFeedbackSlider;    
             case Config.modulators.dictionary["phaser stages"].index:
                 return this._phaserStagesSlider;      
+            case Config.modulators.dictionary["granular"].index:
+                return this._granularSlider;
             default:
                 return null;
         }
@@ -2341,6 +2357,9 @@ export class SongEditor {
         if (promptName) {
             switch (promptName) {
                 case "export":
+                    this.prompt = new ImportPrompt(this._doc);
+                    break;
+                case "quickExport":
                     this.prompt = new ImportPrompt(this._doc);
                     break;
                 case "import":
@@ -2471,6 +2490,10 @@ export class SongEditor {
         this.mainLayer.focus({ preventScroll: true });
     }
 
+    public _dropHandler = (): void => {
+        this._openPrompt("import");
+    }
+
     private _onFocusIn = (event: Event): void => {
         if (this._doc.synth.recording && event.target != this.mainLayer && event.target != this._stopButton && event.target != this._volumeSlider.input) {
             // Don't allow using tab to focus on the song settings while recording,
@@ -2489,7 +2512,134 @@ export class SongEditor {
         this._barScrollBar.changePos(offset);
     }
     
-    private updatePromptHolder = new UpdatePopup();
+    public static readonly mobileUI: { [name: string]: string } = {
+        "landscape": `
+            .mobileMenu {
+                right: 0 !important;
+                left: unset !important;
+                height: 100vh !important;
+                width: 15vw !important;
+
+                display: flex;
+                flex-direction: column;
+            }
+
+            .pattern-area {
+                width: 74vw !important;
+                height: 100vh !important;
+                max-height: 100vh !important;
+            }
+
+            #beepboxEditorContainer {
+                max-width: 100vw !important;
+            }
+
+            .play-pause-area2 {
+                height: 100vh !important;
+                width: 4vw !important;
+                bottom: 0 !important;
+                right: 16vw !important;
+                left: unset !important;
+            }
+
+            .playback-bar-controls2 {
+                flex-direction: column !important;
+            }
+            
+            .mobilePlayButton, .mobilePauseButton, .mobilePrevBarButton, .mobileNextBarButton {
+                width: 100% !important;
+                flex: 1;
+            }
+
+            .settings-area {
+                grid-template-columns: 33% 34% 33% !important;
+                grid-template-rows: min-content min-content min-content min-content 1fr !important;
+                grid-template-areas: "version-area version-area version-area" "play-pause-area menu-area instrument-settings-area" "play-pause-area menu-area instrument-settings-area" "song-settings-area song-settings-area instrument-settings-area" "song-settings-area song-settings-area instrument-settings-area" !important;
+                width: 78vw !important;
+            }
+
+            .track-area {
+                width: 78vw !important;
+            }
+
+            .mobilePatternButton, .mobileTrackButton, .mobileSettingsButton {
+                align-self: end;
+                flex: 1;
+            }
+
+        `,
+        "portrait": `
+
+            .play-pause-area2 {
+                height: unset !important;
+                width: 100% !important
+                bottom: 16vh !important;
+                right: unset !important;
+                left: 0 !important;
+            }
+
+            .mobileMenu {
+                right: unset !important;
+                left: unset !important;
+                height: 15vh !important;
+                width: 100vw !important;
+                bottom: 0 !important;
+
+                display: flex;
+                flex-direction: row;
+            }
+
+            .pattern-area {
+                width: 91vw !important;
+                height: 70vh !important;
+                max-height: 75vh;
+            }
+
+            #beepboxEditorContainer {
+                max-width: 710px !important;
+            }
+
+            .playback-bar-controls2 {
+                flex-direction: row !important;
+                height: 3vh;
+            }
+            
+            .mobilePlayButton, .mobilePauseButton, .mobilePrevBarButton, .mobileNextBarButton {
+                height: 100% !important;
+                flex: 1;
+            }
+
+            .settings-area {
+                grid-template-columns: 50% 50% !important;
+                grid-template-rows: min-content min-content min-content min-content 1fr !important;
+                grid-template-areas: "version-area version-area" "play-pause-area instrument-settings-area" "play-pause-area instrument-settings-area" "menu-area instrument-settings-area" "song-settings-area instrument-settings-area" !important;
+                width: 96vw !important;
+            }
+
+            .track-area {
+                width: 98vw !important;
+            }
+
+            .mobilePatternButton, .mobileTrackButton, .mobileSettingsButton {
+                align-self: end;
+                flex: 1;
+            }
+
+        `
+    }
+
+    // for custom fonts
+    private static readonly _mobileUIStyleElement: HTMLStyleElement = document.head.appendChild(HTML.style({ type: "text/css" }));
+
+    public static setMobileUi(name: string): void {
+        let mobileUI: string = this.mobileUI[name];
+            if (mobileUI == undefined) mobileUI = this.mobileUI["horizontal"];
+            this._mobileUIStyleElement.textContent = mobileUI;
+        }
+
+        public static getMobileUi(): string {
+            return this._mobileUIStyleElement.textContent as string;
+        } 
 
     public whenUpdated = (): void => {
         const prefs: Preferences = this._doc.prefs;
@@ -2536,9 +2686,6 @@ export class SongEditor {
                     //this._openPrompt("tutorial");
                 }
 
-                if (window.localStorage.getItem("curVer") != "1.5.1") {
-                       document.body.appendChild(this.updatePromptHolder.updatePopupDiv);
-                } 
 
         if (this._doc.getFullScreen()) {
             const semitoneHeight: number = this._patternEditorRow.clientHeight / this._doc.getVisiblePitchCount();
@@ -2669,9 +2816,7 @@ export class SongEditor {
          // comment for ctrl+f mobile stuffs
 
 
-        // notes for future me and anyone else that's crazy enough to try and add this to their mod. If you are the latter then hello, I am choptop84, and I am mentally exausted of this.
-        // I have been working on this all day for 2 days and I've now been working on this from around 9:00 AM to 2:47 PM just trying to fix the shit I was trying to do yesterday. 
-        // Please don't mind the mess, I stopped caring about it being nice and tidy when I got to adding the landscape view.
+        // hi, choptop84 of 11/14/2025, Decided to go back and fix everything up so then its not so ass. Thank you for your patience :)
 
         this.selectedPatternDiv.style.display = "none";
 
@@ -2691,262 +2836,38 @@ export class SongEditor {
             this.mainLayer.style.display = "unset";
 
         if (window.innerWidth > window.innerHeight) { // landscape view
-            this._mobileMenu.style.right = "0px";
-            this._mobileMenu.style.left = "";
-            this._mobileMenu.style.height = "100vh";
-            this._mobileMenu.style.width = "15vw";
+            if (SongEditor.getMobileUi() != 'landscape') {
+                SongEditor.setMobileUi("landscape"); 
+            }
 
-            this._patternArea.style.width = "75vw";
-            this._patternArea.style.height = "100vh";
-            this._patternArea.style.maxHeight = "100vh"; 
+            // Originally I had all of this in a bunch of if statements but I changed it to this god I was so bad at coding when I was doing this :sob:
+            // I should move everything above this to a style element so then it doesn't have to render all of this all the time.
+            this._patternArea.style.display = this._menuMode == 1 ? "": "none";
+            this._trackArea.style.display = this._menuMode == 2 ? "": "none";
+            this._settingsArea.style.display = this._menuMode == 3 ? "": "none";
 
-            beepboxEditorContainer.style.maxWidth = "100vw";
+            this._mobilePatternButton.style.width = this._menuMode == 1 ? "100%": "80%";
+            this._mobileTrackButton.style.width = this._menuMode == 2 ? "100%": "80%";
+            this._mobileSettingsButton.style.width = this._menuMode == 3 ? "100%": "80%";
 
-            this._playPauseAreaMobile.style.height = "100vh";
-            this._playPauseAreaMobile.style.width = "4vw";
-            this._playPauseAreaMobile.style.right = "16vw";
-            this._playPauseAreaMobile.style.bottom = "0";
-            this._playPauseAreaMobile.style.left = "";
-
-            this._playbackMobileDiv.style.flexDirection = "column";
-
-            this._mobilePlayButton.style.width = "100%";
-            this._mobilePauseButton.style.width = "100%";
-            this._mobileNextBarButton.style.width = "100%";
-            this._mobilePrevBarButton.style.width = "100%";
-
-            this._mobilePlayButton.style.height = "33vh";
-            this._mobilePauseButton.style.height = "33vh";
-            this._mobileNextBarButton.style.height = "34vh";
-            this._mobilePrevBarButton.style.height = "33vh";
-
-            this._settingsArea.style.gridTemplateColumns = "33% 34% 33%";
-            this._settingsArea.style.gridTemplateRows = "min-content min-content min-content min-content 1fr";
-
-
-            this._mobilePatternButton.style.right = "0";
-            this._mobilePatternButton.style.bottom = "";
-            this._mobileTrackButton.style.right = "0";
-            this._mobileTrackButton.style.bottom = "";
-            this._mobileSettingsButton.style.right = "0";
-            this._mobileSettingsButton.style.bottom = "";
-
-            this._settingsArea.style.gridTemplateAreas = '"version-area version-area version-area" "play-pause-area menu-area instrument-settings-area" "play-pause-area menu-area instrument-settings-area" "song-settings-area song-settings-area instrument-settings-area" "song-settings-area song-settings-area instrument-settings-area"';
-            this._settingsArea.style.width = "78vw";
-            this._trackArea.style.width = "78vw";
-
-            if (this._menuMode == 1) {
-                        this._patternArea.style.display = "";
-                        this._trackArea.style.display = "none";
-                        this._settingsArea.style.display = "none";
-
-                        this._mobilePatternButton.style.width = "100%";
-                        this._mobileTrackButton.style.width = "80%";
-                        this._mobileSettingsButton.style.width = "80%";
-    
-                        this._mobilePatternButton.style.height = "33vh";
-                        this._mobileTrackButton.style.height = "34vh";
-                        this._mobileSettingsButton.style.height = "33vh";
-    
-                        this._mobilePatternButton.style.left = "";
-                        this._mobileTrackButton.style.left = "";
-    
-                        this._mobilePatternButton.style.top = "0";
-                        this._mobileTrackButton.style.top = "33vh";
-                        this._mobileSettingsButton.style.bottom = "0";
-    
-                        this._mobileMenu.style.width = "15vw";
-                        this._mobileMenu.style.height = "100vh";
-                        this._mobileMenu.style.right = "0";
-                        this._playPauseAreaMobile.style.display = "flex";
-                } 
-                if (this._menuMode == 2) {
-
-                        this._patternArea.style.display = "none";
-                        this._trackArea.style.display = "";
-                        this._settingsArea.style.display = "none";
-                        this._mobilePatternButton.style.width = "80%";
-                        this._mobileTrackButton.style.width = "100%";
-                        this._mobileSettingsButton.style.width = "80%";
-            
-                                this._mobilePatternButton.style.height = "33vh";
-                                this._mobileTrackButton.style.height = "34vh";
-                                this._mobileSettingsButton.style.height = "33vh";
-            
-                        this._mobilePatternButton.style.top = "0";
-                        this._mobileTrackButton.style.top = "33vh";
-                        this._mobileSettingsButton.style.bottom = "0";
-                        
-                        this._mobileTrackButton.style.left = "";
-                        this._mobilePatternButton.style.left = "";
-            
-                        this._mobileMenu.style.width = "15vw";
-                        this._mobileMenu.style.height = "100vh";
-            
-                        this._mobileMenu.style.right = "0";
-                        this._playPauseAreaMobile.style.display = "none";
-
-                } 
-                if (this._menuMode == 3) {
-                    this._patternArea.style.display = "none";
-                    this._trackArea.style.display = "none";
-                    this._settingsArea.style.display = "";
-                    this._mobilePatternButton.style.width = "80%";
-                    this._mobileTrackButton.style.width = "80%";
-                    this._mobileSettingsButton.style.width = "100%";
-        
-                    this._mobilePatternButton.style.height = "33vh";
-                    this._mobileTrackButton.style.height = "34vh";
-                    this._mobileSettingsButton.style.height = "33vh";
-        
-                    this._mobilePatternButton.style.top = "0";
-                    this._mobileTrackButton.style.top = "33vh";
-                    this._mobileSettingsButton.style.bottom = "0";
-                    this._mobileTrackButton.style.left = "";
-        
-                    this._mobilePatternButton.style.left = "";
-        
-                    this._mobileMenu.style.width = "15vw";
-                    this._mobileMenu.style.height = "100vh";
-        
-                    this._mobileMenu.style.right = "0";
-                    this._playPauseAreaMobile.style.display = "none";
-                }
+            this._playPauseAreaMobile.style.display = this._menuMode == 1 ? "flex" : "none";
 
         } else if (window.innerWidth < window.innerHeight) { // portrait view
-
-            this._playPauseAreaMobile.style.height = "";
-            this._playPauseAreaMobile.style.width = "100vw";
-            this._playPauseAreaMobile.style.bottom = "16vh";
-            this._playPauseAreaMobile.style.left = "0";
-
-            this._playbackMobileDiv.style.flexDirection = "row";
-
-            this._mobilePlayButton.style.height = "";
-            this._mobilePauseButton.style.height = "";
-            this._mobileNextBarButton.style.height = "";
-            this._mobilePrevBarButton.style.height = "";
-
-            this._mobilePlayButton.style.width = "33vh";
-            this._mobilePauseButton.style.width = "33vh";
-            this._mobileNextBarButton.style.width = "34vh";
-            this._mobilePrevBarButton.style.width = "33vh";
-
-            beepboxEditorContainer.style.maxWidth = "710px";
-
-            this._settingsArea.style.gridTemplateRows = "min-content min-content min-content min-content 1fr";
-            this._settingsArea.style.gridTemplateAreas = '"version-area version-area" "play-pause-area instrument-settings-area" "play-pause-area instrument-settings-area" "menu-area instrument-settings-area" "song-settings-area instrument-settings-area"';
-
-            this._mobileMenu.style.bottom = "0px";
-            this._mobileMenu.style.width = "100vw";
-            this._mobileMenu.style.height = "20vh";
-            this._settingsArea.style.width = "98vw";
-            this._patternArea.style.width = "91vw";
-            this._trackArea.style.width = "98vw";
+            if (SongEditor.getMobileUi() != 'portrait') {
+                SongEditor.setMobileUi("portrait"); 
+            }
             
-            this._mobileMenu.style.right = "";
-            this._mobileMenu.style.left = "";
-            this._mobileMenu.style.height = "100vh";
-            this._mobileMenu.style.width = "15vw";
+            // Divider
 
-            beepboxEditorContainer.style.maxWidth = "100vw";
+            this._patternArea.style.display = this._menuMode == 1 ? "" : "none";
+            this._trackArea.style.display = this._menuMode == 2 ? "" : "none";
+            this._settingsArea.style.display = this._menuMode == 3 ? "" : "none";
 
-            this._settingsArea.style.gridTemplateColumns = "50% 50%";
+            this._mobilePatternButton.style.height = this._menuMode == 1 ? "100%" : "80%";
+            this._mobileTrackButton.style.height = this._menuMode == 2 ? "100%" : "80%";
+            this._mobileSettingsButton.style.height = this._menuMode == 3 ? "100%" : "80%";
 
-            this._mobilePatternButton.style.bottom = "0";
-            this._mobileTrackButton.style.bottom = "0";
-            this._mobileSettingsButton.style.bottom = "0";
-        
-
-            if (this._menuMode == 1) {
-                this._patternArea.style.width = "91vw";
-                this._patternArea.style.display = "";
-                this._trackArea.style.display = "none";
-                this._settingsArea.style.display = "none";
-                this._mobilePatternButton.style.height = "100%";
-                this._mobileTrackButton.style.height = "80%";
-                this._mobileSettingsButton.style.height = "80%";
-
-                this._mobilePatternButton.style.width = "33vw";
-                this._mobileTrackButton.style.width = "34vw";
-                this._mobileSettingsButton.style.width = "33vw";
-
-                this._mobilePatternButton.style.top = "";
-
-                this._mobilePatternButton.style.left = "0";
-                this._mobileTrackButton.style.left = "33vw";
-                this._mobileSettingsButton.style.right = "0";
-                this._mobilePatternButton.style.bottom = "0";
-                this._mobileTrackButton.style.bottom = "0";
-                this._mobileTrackButton.style.top = "";
-                this._mobileTrackButton.style.right = "";
-                this._mobileSettingsButton.style.bottom = "0";
-
-                this._mobileMenu.style.height = "15vh";
-                this._mobileMenu.style.width = "100vw"
-                this._mobileMenu.style.right = "";
-
-                this._playPauseAreaMobile.style.display = "flex";
-
-                } else if (this._menuMode == 2) {
-                    this._trackArea.style.width = "100vw";
-                    this._patternArea.style.display = "none";
-                    this._trackArea.style.display = "";
-                    this._settingsArea.style.display = "none";
-                    this._mobilePatternButton.style.height = "80%";
-                    this._mobileTrackButton.style.height = "100%";
-                    this._mobileSettingsButton.style.height = "80%";
-        
-                    this._mobilePatternButton.style.width = "33vw";
-                    this._mobileTrackButton.style.width = "34vw";
-                    this._mobileSettingsButton.style.width = "33vw";
-        
-                    this._mobilePatternButton.style.top = "";
-        
-                    this._mobilePatternButton.style.left = "0";
-                    this._mobileTrackButton.style.left = "33vw";
-                    this._mobileSettingsButton.style.right = "0";
-                    this._mobilePatternButton.style.bottom = "0";
-                    this._mobileTrackButton.style.bottom = "0";
-                    this._mobileTrackButton.style.top = "";
-                    this._mobileTrackButton.style.right = "";
-                    this._mobileSettingsButton.style.bottom = "0";
-        
-                    this._mobileMenu.style.height = "15vh";
-                    this._mobileMenu.style.width = "100vw";
-                    this._playPauseAreaMobile.style.display = "none";
-
-                } else if (this._menuMode == 3) {
-                    this._settingsArea.style.width = "96vw";
-                    this._patternArea.style.display = "none";
-                    this._trackArea.style.display = "none";
-                    this._settingsArea.style.display = "";
-                    this._mobilePatternButton.style.height = "80%";
-                    this._mobileTrackButton.style.height = "80%";
-                    this._mobileSettingsButton.style.height = "100%";
-        
-                    this._mobilePatternButton.style.width = "33vw";
-                    this._mobileTrackButton.style.width = "34vw";
-                    this._mobileSettingsButton.style.width = "33vw";
-        
-                    this._mobilePatternButton.style.top = "";
-        
-                    this._mobilePatternButton.style.left = "0";
-                    this._mobileTrackButton.style.left = "33vw";
-                    this._mobileSettingsButton.style.right = "0";
-                    this._mobilePatternButton.style.bottom = "0";
-                    this._mobileTrackButton.style.bottom = "0";
-                    this._mobileTrackButton.style.top = "";
-                    this._mobileTrackButton.style.right = "";
-                    this._mobileSettingsButton.style.bottom = "0";
-        
-                    this._mobileMenu.style.height = "15vh";
-                    this._mobileMenu.style.width = "100vw";
-                    this._playPauseAreaMobile.style.display = "none";
-                }
-
-                this._patternArea.style.maxHeight = "75vh";
-                this._patternArea.style.height = "70vh";
+            this._playPauseAreaMobile.style.display = this._menuMode == 1 ? "flex" : "none";
         }
 
         this.mainLayer.style.minHeight = "80vh";
@@ -2955,7 +2876,7 @@ export class SongEditor {
         this._mobilePatternButton.style.display = "";
         this._mobileTrackButton.style.display = "";
         this._mobileSettingsButton.style.display = "";
-        this._mobileMenu.style.display = "";
+        this.mobileMenu.style.display = "";
         this._instOptionsDiv.style.display = "";
     
         //beepboxEditorContainer.style.minHeight = "60vh"; 
@@ -2972,10 +2893,10 @@ export class SongEditor {
 
         }
 
-        document.body.appendChild(this._mobileMenu);
-        this._mobileMenu.appendChild(this._mobilePatternButton);
-        this._mobileMenu.appendChild(this._mobileTrackButton);
-        this._mobileMenu.appendChild(this._mobileSettingsButton );
+        document.body.appendChild(this.mobileMenu);
+        this.mobileMenu.appendChild(this._mobilePatternButton);
+        this.mobileMenu.appendChild(this._mobileTrackButton);
+        this.mobileMenu.appendChild(this._mobileSettingsButton );
         this._mobilePatternButton.appendChild(this._mobileEditMenuIcon);
         this._mobileTrackButton.appendChild(this._mobileTrackMenuIcon);
         this._mobileSettingsButton.appendChild(this._mobileSettingsMenuIcon);
@@ -3652,6 +3573,16 @@ export class SongEditor {
                     this._lowerNoteLimitRow.style.display = "none";
                 }
 
+                if (effectsIncludeGranular(instrument.effects)) {
+                    this._granularContainerRow.style.display = "";
+                    this._granularSlider.updateValue(instrument.granular);
+                    this._grainSizeSlider.updateValue(instrument.grainSize);
+                    this._grainAmountsSlider.updateValue(instrument.grainAmounts);
+                    this._grainRangeSlider.updateValue(instrument.grainRange);
+                } else {
+                    this._granularContainerRow.style.display = "none";
+                }
+
             if (instrument.type == InstrumentType.chip || instrument.type == InstrumentType.customChipWave || instrument.type == InstrumentType.harmonics || instrument.type == InstrumentType.pickedString || instrument.type == InstrumentType.spectrum || instrument.type == InstrumentType.pwm || instrument.type == InstrumentType.noise) {
                 this._unisonSelectRow.style.display = "";
                 setSelectedValue(this._unisonSelect, instrument.unison);
@@ -3673,8 +3604,7 @@ export class SongEditor {
                 else
             this._envelopeDropdownGroup.style.display = "none";
 
-            this.envelopeEditor.render();
-            this.envelopeEditor.rerenderExtraSettings();
+            this._envelopeEditor.render();
 
             for (let chordIndex: number = 0; chordIndex < Config.chords.length; chordIndex++) {
                 let hidden: boolean = (!Config.instrumentTypeHasSpecialInterval[instrument.type] && Config.chords[chordIndex].customInterval);
@@ -3947,6 +3877,7 @@ export class SongEditor {
                             anyInstrumentReverbs:      boolean = false,
                             anyInstrumentRMs:          boolean = false,
                             anyInstrumentPhasers:          boolean = false,
+                            anyInstrumentGranulars: boolean = false,
                             anyInstrumentHasEnvelopes:   boolean = false;
                         let allInstrumentPitchShifts:  boolean = true,
                             allInstrumentNoteFilters:  boolean = true,
@@ -3957,7 +3888,9 @@ export class SongEditor {
                             allInstrumentPans:         boolean = true,
                             allInstrumentChorus:       boolean = true,
                             allInstrumentEchoes:       boolean = true,
-                            allInstrumentReverbs:      boolean = true;
+                            allInstrumentReverbs:      boolean = true,
+                            anyInstrumentInvertWave:   boolean = true,
+                            allInstrumentGranulars:    boolean = true;
                         let instrumentCandidates: number[] = [];
                         if (modInstrument >= channel.instruments.length) {
                             for (let i: number = 0; i < channel.instruments.length; i++) {
@@ -4050,6 +3983,18 @@ export class SongEditor {
                             }
                             else {
                                 anyInstrumentPhasers = false;
+                            }
+                            if (effectsIncludeInvertWave(channel.instruments[instrumentIndex].effects)) {
+                                anyInstrumentInvertWave = true;
+                            }
+                            else {
+                                anyInstrumentInvertWave = false;
+                            }
+                            if (effectsIncludeGranular(channel.instruments[instrumentIndex].effects)) {
+                                anyInstrumentGranulars = true;
+                            }
+                            else {
+                                allInstrumentGranulars = false;
                             }
                             if (channel.instruments[instrumentIndex].envelopes.length > 0) {
                                 anyInstrumentHasEnvelopes = true;
@@ -4174,7 +4119,6 @@ export class SongEditor {
                         }
                         if (anyInstrumentHasEnvelopes) {
                             settingList.push("envelope speed");
-                            settingList.push("individual envelope speed");
                         }
                         if (anyInstrumentRMs) {
                             settingList.push("ring modulation");
@@ -4185,6 +4129,21 @@ export class SongEditor {
                             settingList.push("phaser frequency");
                             settingList.push("phaser feedback");
                             settingList.push("phaser stages");
+                        }
+                        if (anyInstrumentInvertWave) {
+                            settingList.push("invert wave");
+                        }
+                        if (anyInstrumentGranulars) {
+                            settingList.push("granular");
+                            settingList.push("grain freq");
+                            settingList.push("grain size");
+                            settingList.push("grain range");
+                        }
+                        if (!allInstrumentGranulars) {
+                            unusedSettingList.push("+ granular");
+                            unusedSettingList.push("+ grain freq");
+                            unusedSettingList.push("+ grain size");
+                            unusedSettingList.push("+ grain range");
                         }
                     }
 
@@ -4940,6 +4899,14 @@ export class SongEditor {
                     this._doc.selection.insertBars();
                 } else if ((event.ctrlKey || event.metaKey) && !event.shiftKey) {
                     this._doc.selection.insertChannel();
+                } else if (event.altKey) {
+                    const channelIndex: number = this._doc.channel;
+                    if (this._doc.song.channels[channelIndex].instruments.length < this._doc.song.getMaxInstrumentsPerChannel()) {
+                    if (!this._doc.song.layeredInstruments && !this._doc.song.patternInstruments) {
+                        this._doc.record(new ChangeInstrumentsFlags(this._doc, true, this._doc.song.patternInstruments))
+                    }
+                    this._doc.record(new ChangeAddChannelInstrument(this._doc));
+                    }
                 } else {
                     this._doc.selection.insertBars();
                 }
@@ -4951,6 +4918,14 @@ export class SongEditor {
             this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
                 if (event.ctrlKey || event.metaKey) {
                     this._doc.selection.deleteChannel();
+                } else if (event.altKey) {
+                    const channelIndex: number = this._doc.channel;
+                    if (this._doc.song.channels[channelIndex].instruments.length > 1) {
+                    if (!this._doc.song.layeredInstruments && !this._doc.song.patternInstruments) {
+                        this._doc.record(new ChangeInstrumentsFlags(this._doc, true, this._doc.song.patternInstruments))
+                    }
+                    this._doc.record(new ChangeRemoveChannelInstrument(this._doc));
+                    }
                 } else {
                     this._doc.selection.deleteBars();
                 }
@@ -4983,16 +4958,6 @@ export class SongEditor {
                     const instrument: Instrument = this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()];
                     if (!instrument.eqFilterType && this._doc.channel < this._doc.song.pitchChannelCount + this._doc.song.noiseChannelCount)
                         this._openPrompt("customEQFilterSettings");
-                } else if (event.altKey) {
-                    //open / close all envelope dropdowns
-                    const instrument: Instrument = this._doc.song.channels[this._doc.channel].instruments[this._doc.getCurrentInstrument()];
-                    const isAllOpen: boolean = this.envelopeEditor.openExtraSettingsDropdowns.every((x) => { return x == true })
-                    for (let i = 0; i < instrument.envelopeCount; i++) {
-                        if (isAllOpen) this.envelopeEditor.openExtraSettingsDropdowns[i] = false;
-                        else this.envelopeEditor.openExtraSettingsDropdowns[i] = true;
-                    }
-                    this.envelopeEditor.rerenderExtraSettings();
-                    event.preventDefault();
                 } else if (needControlForShortcuts == (event.ctrlKey || event.metaKey)) {
                     this._openPrompt("generateEuclideanRhythm");
                     event.preventDefault();
@@ -5222,7 +5187,11 @@ export class SongEditor {
             case 83: // s
                 if (canPlayNotes) break;
                 if (event.ctrlKey || event.metaKey) {
-                    this._openPrompt("export");
+                    if (!event.shiftKey) {
+                        this._openPrompt("export");    
+                    } else {
+                        this._openPrompt("quickExport");
+                    }
                     event.preventDefault();
                 } else {
                     if (this._doc.prefs.enableChannelMuting) {
@@ -5361,7 +5330,6 @@ export class SongEditor {
                     this._doc.selection.selectionUpdated();
                 } else {
                     this._doc.selection.setChannelBar((this._doc.channel - 1 + this._doc.song.getChannelCount()) % this._doc.song.getChannelCount(), this._doc.bar);
-                    this.envelopeEditor.rerenderExtraSettings();
                     this._doc.selection.resetBoxSelection();
                 }
                 event.preventDefault();
@@ -5375,7 +5343,6 @@ export class SongEditor {
                     this._doc.selection.selectionUpdated();
                 } else {
                     this._doc.selection.setChannelBar((this._doc.channel + 1) % this._doc.song.getChannelCount(), this._doc.bar);
-                    this.envelopeEditor.rerenderExtraSettings();
                     this._doc.selection.resetBoxSelection();
                 }
                 event.preventDefault();
@@ -5557,181 +5524,17 @@ export class SongEditor {
 
     private _displayPatternEditor = (): void => {
         this._menuMode = 1;
-
-        if (this._menuMode == 1) {
-            this._patternArea.style.display = "";
-            this._trackArea.style.display = "none";
-            this._settingsArea.style.display = "none";
-            this.whenUpdated();
-                if (window.innerWidth < window.innerHeight) { //portrait (w)
-                    this._mobilePatternButton.style.height = "100%";
-                    this._mobileTrackButton.style.height = "80%";
-                    this._mobileSettingsButton.style.height = "80%";
-
-                    this._mobilePatternButton.style.width = "33vw";
-                    this._mobileTrackButton.style.width = "34vw";
-                    this._mobileSettingsButton.style.width = "33vw";
-
-                    this._mobilePatternButton.style.top = "";
-
-                    this._mobilePatternButton.style.left = "0";
-                    this._mobileTrackButton.style.left = "33vw";
-                    this._mobileSettingsButton.style.right = "0";
-                    this._mobilePatternButton.style.bottom = "0";
-                    this._mobileTrackButton.style.bottom = "0";
-                    this._mobileTrackButton.style.top = "";
-                    this._mobileTrackButton.style.right = "33vw";
-                    this._mobileSettingsButton.style.bottom = "0";
-
-                    this._mobileMenu.style.height = "15vh";
-                    this._mobileMenu.style.width = "100vw"
-                    this._mobileMenu.style.right = "";
-
-                    this._patternArea.style.width = "98vw";
-
-                    this._playPauseAreaMobile.style.display = "flex";
- 
-                } else if (window.innerWidth > window.innerHeight) { //landscape (h)
-                    this._mobilePatternButton.style.width = "100%";
-                    this._mobileTrackButton.style.width = "80%";
-                    this._mobileSettingsButton.style.width = "80%";
-
-                    this._mobilePatternButton.style.height = "33vh";
-                    this._mobileTrackButton.style.height = "34vh";
-                    this._mobileSettingsButton.style.height = "33vh";
-
-                    this._mobilePatternButton.style.left = "";
-                    this._mobileTrackButton.style.left = "";
-
-                    this._mobilePatternButton.style.top = "0";
-                    this._mobileTrackButton.style.top = "33vh";
-                    this._mobileSettingsButton.style.bottom = "0";
-
-                    this._mobileMenu.style.width = "15vw";
-                    this._mobileMenu.style.height = "100vh";
-                    this._mobileMenu.style.right = "0";
-                    this._playPauseAreaMobile.style.display = "flex";
-                }
-            } 
+        this.whenUpdated(); 
     }
 
     private _displayTrackEditor = (): void => {
         this._menuMode = 2;
-
-        if (this._menuMode == 2) { 
-            this._patternArea.style.display = "none";
-            this._trackArea.style.display = "";
-            this._settingsArea.style.display = "none";
-            this.whenUpdated();
-            if (window.innerWidth < window.innerHeight) {//portrait (w)
-
-            this._mobilePatternButton.style.height = "80%";
-            this._mobileTrackButton.style.height = "100%";
-            this._mobileSettingsButton.style.height = "80%";
-
-            this._mobilePatternButton.style.width = "33vw";
-            this._mobileTrackButton.style.width = "34vw";
-            this._mobileSettingsButton.style.width = "33vw";
-
-            this._mobilePatternButton.style.top = "";
-
-            this._mobilePatternButton.style.left = "0";
-            this._mobileTrackButton.style.left = "33vw";
-            this._mobileSettingsButton.style.right = "0";
-            this._mobilePatternButton.style.bottom = "0";
-            this._mobileTrackButton.style.left = "";
-            this._mobileTrackButton.style.top = "";
-            this._mobileTrackButton.style.right = "33vw";
-            this._mobileTrackButton.style.bottom = "0";
-            this._mobileSettingsButton.style.bottom = "0";
-
-            this._patternArea.style.width = "98vw";
-
-            this._mobileMenu.style.height = "15vh";
-            this._mobileMenu.style.width = "100vw";
-            this._playPauseAreaMobile.style.display = "none";
-        } else if (window.innerWidth > window.innerHeight) {//landscape (h)
-            this._mobilePatternButton.style.width = "80%";
-            this._mobileTrackButton.style.width = "100%";
-            this._mobileSettingsButton.style.width = "80%";
-
-                    this._mobilePatternButton.style.height = "33vh";
-                    this._mobileTrackButton.style.height = "34vh";
-                    this._mobileSettingsButton.style.height = "33vh";
-
-            this._mobilePatternButton.style.top = "0";
-            this._mobileTrackButton.style.top = "33vh";
-            this._mobileSettingsButton.style.bottom = "0";
-            
-            this._mobileTrackButton.style.left = "";
-            this._mobilePatternButton.style.left = "";
-
-            this._mobileMenu.style.width = "15vw";
-            this._mobileMenu.style.height = "100vh";
-
-            this._mobileMenu.style.right = "0";
-            this._playPauseAreaMobile.style.display = "none";
-        }
-           }
+        this.whenUpdated();
     }
 
     private _displaySettingsEditor = (): void => {
         this._menuMode = 3;
-        if (this._menuMode == 3) { 
-            this._patternArea.style.display = "none";
-            this._trackArea.style.display = "none";
-            this._settingsArea.style.display = "";
-            this.whenUpdated();
-            this._instrumentDiv.style.display = (this._instSettingMode == 1) ?  "" : "none";
-            this._effectDiv.style.display = (this._instSettingMode == 2) ? "" : "none";
-            this._envelopeDiv.style.display = (this._instSettingMode == 3) ? "" : "none";
-            if (window.innerWidth < window.innerHeight) {//portrait (w)
-                this._mobilePatternButton.style.height = "80%";
-                this._mobileTrackButton.style.height = "80%";
-                this._mobileSettingsButton.style.height = "100%";
-
-                this._mobilePatternButton.style.width = "33vw";
-                this._mobileTrackButton.style.width = "34vw";
-                this._mobileSettingsButton.style.width = "33vw";
-
-                this._mobilePatternButton.style.top = "";
-
-                this._mobilePatternButton.style.left = "0";
-                this._mobileSettingsButton.style.right = "0";
-                this._mobilePatternButton.style.bottom = "0";
-                this._mobileTrackButton.style.top = "";
-                this._mobileTrackButton.style.right = "33vw";
-                this._mobileTrackButton.style.bottom = "0";
-                this._mobileSettingsButton.style.bottom = "0";
-
-                this._patternArea.style.width = "98vw";
-
-                this._mobileMenu.style.height = "15vh";
-                this._mobileMenu.style.width = "100vw";
-                this._playPauseAreaMobile.style.display = "none";
-            } else if (window.innerWidth > window.innerHeight) {//landscape (h)
-                this._mobilePatternButton.style.width = "80%";
-                this._mobileTrackButton.style.width = "80%";
-                this._mobileSettingsButton.style.width = "100%";
-
-                this._mobilePatternButton.style.height = "33vh";
-                this._mobileTrackButton.style.height = "34vh";
-                this._mobileSettingsButton.style.height = "33vh";
-
-                this._mobilePatternButton.style.top = "0";
-                this._mobileTrackButton.style.top = "33vh";
-                this._mobileSettingsButton.style.bottom = "0";
-                this._mobileTrackButton.style.left = "";
-
-                this._mobilePatternButton.style.left = "";
-
-                this._mobileMenu.style.width = "15vw";
-                this._mobileMenu.style.height = "100vh";
-
-                this._mobileMenu.style.right = "0";
-                this._playPauseAreaMobile.style.display = "none";
-            }
-        }
+        this.whenUpdated();
     }
 
 
@@ -6306,8 +6109,8 @@ export class SongEditor {
             case "songRecovery":
                 this._openPrompt("songRecovery");
                 break;
-            case "openTutorial":
-                this._openPrompt("tutorial");
+            case "openManual":
+                window.open("./manual.html");
                 break;
             case "openUpdate":
                 break;
