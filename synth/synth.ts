@@ -5254,7 +5254,7 @@ export class Song {
                     instrument.convertLegacySettings(legacySettings, forceSimpleFilter);
                 } else {
                     // BeepBox currently uses two base64 characters at 6 bits each for a bitfield representing all the enabled effects.
-                    if (EffectType.length > 17) throw new Error();
+                    if (EffectType.length > Config.maxEffectCount) throw new Error();
                         if ((fromAbyssBox && !beforeTwo||fromAbyssBox && !beforeThree)||(fromUltraBox && !beforeSix))  {
                                 instrument.effects = (
                                     (base64CharCodeToInt[compressed.charCodeAt(charIndex++)] << (6 * 5))
