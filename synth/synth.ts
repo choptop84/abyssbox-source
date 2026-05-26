@@ -14566,6 +14566,52 @@ export class Synth {
             else if (setting == Config.modulators.dictionary["next bar"].index) {
                 synth.wantToSkip = true;
             }
+            // do song eq filter first
+            else if (setting == Config.modulators.dictionary["song eq"].index) {
+                const tgtSong = synth.song
+
+                let dotTarget = instrument.modFilterTypes[mod] | 0;
+
+                if (dotTarget == 0) { // Morph. Figure out the target filter's X/Y coords for this point. If no point exists with this index, or point types don't match, do lerp-out for this point and lerp-in of a new point
+
+                    let pinIdx: number = 0;
+                    const currentPart: number = synth.getTicksIntoBar() / Config.ticksPerPart;
+                    while (tone.note!.start + tone.note!.pins[pinIdx].time <= currentPart) pinIdx++;
+                    // 0 to 1 based on distance to next morph
+                    //let lerpStartRatio: number = (currentPart - tone.note!.pins[pinIdx - 1].time) / (tone.note!.pins[pinIdx].time - tone.note!.pins[pinIdx - 1].time);
+                    let lerpEndRatio: number = ((currentPart - tone.note!.start + (roundedSamplesPerTick / (synth.getSamplesPerTick() * Config.ticksPerPart)) * Config.ticksPerPart) - tone.note!.pins[pinIdx - 1].time) / (tone.note!.pins[pinIdx].time - tone.note!.pins[pinIdx - 1].time);
+
+                    // Compute the new settings to go to.
+                    if (tgtSong.eqSubFilters[tone.note!.pins[pinIdx - 1].size] != null || tgtSong.eqSubFilters[tone.note!.pins[pinIdx].size] != null) {
+                        tgtSong.tmpEqFilterEnd = FilterSettings.lerpFilters(tgtSong.eqSubFilters[tone.note!.pins[pinIdx - 1].size]!, tgtSong.eqSubFilters[tone.note!.pins[pinIdx].size]!, lerpEndRatio);
+                    } else {
+                        // No mutation will occur to the filter object so we can safely return it without copying
+                        tgtSong.tmpEqFilterEnd = tgtSong.eqFilter;
+                    }
+
+                } // Target (1 is dot 1 X, 2 is dot 1 Y, etc.)
+                else {
+                    // Since we are directly manipulating the filter, make sure it is a new one and not an actual one of the instrument's filters
+                    for (let i: number = 0; i < Config.filterMorphCount; i++) {
+                        if (tgtSong.tmpEqFilterEnd == tgtSong.eqSubFilters[i] && tgtSong.tmpEqFilterEnd != null) {
+                            tgtSong.tmpEqFilterEnd = new FilterSettings();
+                            tgtSong.tmpEqFilterEnd.fromJsonObject(tgtSong.eqSubFilters[i]!.toJsonObject());
+                        }
+                    }
+                    if (tgtSong.tmpEqFilterEnd == null) {
+                        tgtSong.tmpEqFilterEnd = new FilterSettings();
+                        tgtSong.tmpEqFilterEnd.fromJsonObject(tgtSong.eqFilter.toJsonObject());
+                    }
+
+                    if (tgtSong.tmpEqFilterEnd.controlPointCount > Math.floor((dotTarget - 1) / 2)) {
+                        if (dotTarget % 2) { // X
+                            tgtSong.tmpEqFilterEnd.controlPoints[Math.floor((dotTarget - 1) / 2)].freq = tone.expression + tone.expressionDelta;
+                        } else { // Y
+                            tgtSong.tmpEqFilterEnd.controlPoints[Math.floor((dotTarget - 1) / 2)].gain = tone.expression + tone.expressionDelta;
+                        }
+                    }
+                }
+            }
             // Extra info for eq filter target needs to be set as well
             else if (setting == Config.modulators.dictionary["eq filter"].index) {
                 const tgtInstrument = synth.song.channels[instrument.modChannels[mod]].instruments[usedInstruments[instrumentIndex]];
