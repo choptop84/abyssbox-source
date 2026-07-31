@@ -16,9 +16,8 @@ const {button, div, h2, option, select, optgroup} = HTML;
 export class ThemePrompt implements Prompt {
 
 
-
-
-
+public readonly _themeSelect: HTMLSelectElement = select({ style: "width: 100%;", id:"themeSelect" });
+/*
 // theme option format:
 //		option({value:"the theme name from ColorConfig.ts"}, "Whatever you want it to be called"),
 		public readonly _themeSelect: HTMLSelectElement = select({ style: "width: 100%;", id:"themeSelect" },
@@ -26,8 +25,11 @@ export class ThemePrompt implements Prompt {
 			option({ value: "AbyssBox Classic"}, "AbyssBox Classic"),
 			option({ value: "AbyssBox Competitive"}, "AbyssBox Competitive"),
 			option({ value: "AbyssBox Light"}, "AbyssBox Light"),
-			option({ value: "AbyssBox 0.8"}, "AbyssBox 0.8"),
 			option({ value: "AbyssBox Piano"}, "AbyssBox Piano [!]"),
+			option({ value: "AbyssBox 0.8"}, "AbyssBox 0.8"),
+			option({ value: "AbyssBoxSimpleLight"}, "AbyssBox Light (Simple)"),
+			option({ value: "AbyssBoxSimpleCompetitive"}, "AbyssBox Competitive (Simple)"),
+			option({ value: "AbyssBoxSimplePiano"}, "AbyssBox Piano (Simple) [!]"),
 			option({ value: "Half-Life"}, "Half-Life"),
 			option({ value: "Half-Life: Source"}, "Half-Life: Source"),
 			option({ value: "Doom 1993"}, "Doom 1993"),
@@ -162,7 +164,7 @@ export class ThemePrompt implements Prompt {
 		option({ value: "custom" }, "Custom")
 		),
 );
-
+*/
 	private readonly _cancelButton: HTMLButtonElement = button({ class: "cancelButton" });
 	private readonly _okayButton: HTMLButtonElement = button({ class: "okayButton", style: "width:45%;" }, "Okay");
 
@@ -191,10 +193,39 @@ export class ThemePrompt implements Prompt {
 		this.container.addEventListener("keydown", this._whenKeyPressed);
 		this._themeSelect.addEventListener("change", this._previewTheme);
 		//this._useColorFomula.addEventListener("change", this._whenColorFormula);
+		this.generateThemeList();
 	}
 
+	private async getThemeJson() {
+		const url = await fetch("./theme-data/themes.json");
+        try {
+			const result = await url.json();
+			return result;
+		} catch (error) {
+			console.error(error.message);
+		}
+    }
 
-
+	private async generateThemeList() {
+		const themeJson = await this.getThemeJson();
+		let optList:Array<String> = [];
+		for(var i = 0; i < Object.keys(themeJson).length; i++) { // Get the optGroups
+			let curVar = themeJson[Object.keys(themeJson)[i]];
+			if (!optList.includes(curVar[1])) {
+				optList.push(curVar[1]);
+				
+			}
+		}
+		for (var i = 0; i < optList.length; i++) { // Append said optGroups
+			this._themeSelect.appendChild(optgroup({ label: optList[i], id: optList[i] }));
+		}
+		for(var i = 0; i < Object.keys(themeJson).length; i++) { // Get the optGroups
+			let curVar = themeJson[Object.keys(themeJson)[i]];
+			var optGroup = document.getElementById(curVar[1]);
+			if (optGroup == null) return;
+			optGroup.appendChild(option({ value: Object.keys(themeJson)[i] }, Object.keys(themeJson)[i]))
+		}
+	}
 
 	/*private _close = (): void => { // theme events begin
 		if (this.lastTheme != null) {

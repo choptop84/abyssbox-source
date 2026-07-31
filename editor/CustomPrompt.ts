@@ -870,7 +870,7 @@ export class CustomPrompt implements Prompt {
 					window.localStorage.setItem("customColors", content);	
 					this._colorInput.value = content;
 					console.log('done');
-					ColorConfig.themes["custom"] = content;
+					//ColorConfig.themes["custom"] = content;
 					ColorConfig.setTheme("custom");
 					this._doc.notifier.changed();	
 				}); 
@@ -881,7 +881,7 @@ export class CustomPrompt implements Prompt {
 		private _whenFullThemeChange = (): void => {
 			ColorConfig.setTheme(this._fullThemeSelect.value);
 			const allThemeColors = ColorConfig.getFullTheme();
-			ColorConfig.themes["custom"] = allThemeColors;
+			//ColorConfig.themes["custom"] = allThemeColors;
 			window.localStorage.setItem("customColors", allThemeColors);	
 
 			CustomThemeBases.setBackground("none");
@@ -961,10 +961,10 @@ export class CustomPrompt implements Prompt {
 
 			if (this._baseColorSelect.value != "custom") {
 				window.localStorage.setItem("customColors", themeString);
-				ColorConfig.themes["custom"] = themeString;
+				//ColorConfig.themes["custom"] = themeString;
 			} else {
 				window.localStorage.setItem("customColors", customThemeString);	
-				ColorConfig.themes["custom"] = customThemeString;
+				//ColorConfig.themes["custom"] = customThemeString;
 			}
 			ColorConfig.setTheme("custom");
 			this._doc.notifier.changed();	
