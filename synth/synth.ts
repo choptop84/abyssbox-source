@@ -5893,7 +5893,7 @@ export class Song {
                 const shouldCorrectTempoMods: boolean = fromJummBox;
                 const jummboxTempoMin: number = 30;
 
-                const shouldCorrectPulseWidth: boolean = (fromAbyssBox && beforeFour); //&& !(fromAbyssBox && beforeThree);
+                const shouldCorrectPulseWidth: boolean = (fromAbyssBox && beforeFour && !beforeThree);
 
                 while (true) {
                     const channel: Channel = this.channels[channelIndex];
@@ -6198,12 +6198,6 @@ export class Song {
                                     tempoOffset = jummboxTempoMin - Config.tempoMin; // convertRealFactor will add back Config.tempoMin as necessary
                                     note.pins[0].size += tempoOffset;
                                 }
-
-                                const noteIsForPWMod: boolean = isModChannel && channel.instruments[newPattern.instruments[0]].modulators[Config.modCount - 1 - note.pitches[0]] === Config.modulators.dictionary["pulse width"].index;
-                                if (shouldCorrectPulseWidth && noteIsForPWMod) {
-                                    note.pins[0].size -= Math.floor(note.pins[0].size/2);
-                                }
-
                                 if (isModChannel) {
                                     note.pins[0].size *= detuneScaleNotes[newPattern.instruments[0]][note.pitches[0]];
                                 }
@@ -6241,6 +6235,11 @@ export class Song {
                                             note.continuesLastPattern = channel.instruments[newPattern.instruments[0]].legacyTieOver;
                                         }
                                     }
+                                }
+
+                                const noteIsForPWMod: boolean = isModChannel && channel.instruments[newPattern.instruments[0]].modulators[Config.modCount - 1 - note.pitches[0]] === Config.modulators.dictionary["pulse width"].index;
+                                if (shouldCorrectPulseWidth && noteIsForPWMod) {
+                                    for (const pin of note.pins) pin.size = pin.size >> 1;
                                 }
 
                                 curPart = validateRange(0, this.beatsPerBar * Config.partsPerBeat, note.end);
