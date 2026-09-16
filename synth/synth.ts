@@ -772,6 +772,7 @@ export class Pattern {
                 } else {
                     note.continuesLastPattern = false;
                 }
+                
 
                 if ((format != "ultrabox"&& format != "abyssbox") && instrument.modulators[mod] == Config.modulators.dictionary["tempo"].index) {
                     for (const pin of note.pins) {
@@ -5852,7 +5853,7 @@ export class Song {
                 }
                 charIndex += subStringLength;
             } break;
-            case SongTagCode.patterns: {
+            case SongTagCode.patterns: { // awa
                 let bitStringLength: number = 0;
                 let channelIndex: number;
                 // Somewhat relevant to this, I think I need to make a variant of this for AbyssBox as well.
@@ -5860,7 +5861,6 @@ export class Song {
                 let postAB4Chords: boolean = !beforeFour && fromAbyssBox;
                 let recentPitchBitLength: number = postAB4Chords ? 7 : (postJB4Chords ? 4 : 3);
                 let recentPitchLength: number = postAB4Chords ? 97 : (postJB4Chords ? 16 : 8);
-                console.log(postAB4Chords);
                 // Patterns in relation to channels. (i.e. the pattern number on the individual channels.)
                 if (beforeThree && fromBeepBox) { 
                     channelIndex = base64CharCodeToInt[compressed.charCodeAt(charIndex++)];
@@ -5892,6 +5892,8 @@ export class Song {
                 // @TODO: Include GoldBox here.
                 const shouldCorrectTempoMods: boolean = fromJummBox;
                 const jummboxTempoMin: number = 30;
+
+                const shouldCorrectPulseWidth: boolean = (fromAbyssBox && beforeFour); //&& !(fromAbyssBox && beforeThree);
 
                 while (true) {
                     const channel: Channel = this.channels[channelIndex];
@@ -6193,9 +6195,15 @@ export class Song {
                                 const noteIsForTempoMod: boolean = isModChannel && channel.instruments[newPattern.instruments[0]].modulators[Config.modCount - 1 - note.pitches[0]] === Config.modulators.dictionary["tempo"].index;
                                 let tempoOffset: number = 0;
                                 if (shouldCorrectTempoMods && noteIsForTempoMod) {
-                                    note.pins[0].size += tempoOffset;
                                     tempoOffset = jummboxTempoMin - Config.tempoMin; // convertRealFactor will add back Config.tempoMin as necessary
+                                    note.pins[0].size += tempoOffset;
                                 }
+
+                                const noteIsForPWMod: boolean = isModChannel && channel.instruments[newPattern.instruments[0]].modulators[Config.modCount - 1 - note.pitches[0]] === Config.modulators.dictionary["pulse width"].index;
+                                if (shouldCorrectPulseWidth && noteIsForPWMod) {
+                                    note.pins[0].size -= Math.floor(note.pins[0].size/2);
+                                }
+
                                 if (isModChannel) {
                                     note.pins[0].size *= detuneScaleNotes[newPattern.instruments[0]][note.pitches[0]];
                                 }
