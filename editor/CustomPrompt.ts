@@ -681,6 +681,22 @@ export class CustomPrompt implements Prompt {
 */
 		); 
 
+	/*private readonly _mainColors: Array<[String, String]> = [
+		["--page-margin", "Page margin"],
+		["--editor-background", "Editor background"],
+		["--primary-text", "Primary text"],
+		["--secondary-text", "Secondary text"],
+		["--inverted-text", "Inverted text"],
+		["--loop-accent", "Loop accent"],
+		["--link-accent", "Link accent"],
+		["--ui-widget-background", "UI widget background"],
+		["--ui-widget-focus", "Ui widget focus"],
+		["--white-piano-key", "White piano key"],
+		["--black-piano-key", "Black piano key"],
+		["--white-piano-key-text", "White piano key text"],
+		["--black-piano-key-text", "Black piano key text"],
+	];*/
+
 		private readonly _colorInput: HTMLInputElement = input({ type: "text", value: localStorage.getItem("customColors") || longText});
 
 		private readonly _fileNameInput: HTMLInputElement = input({ type: "text", value: "Your Theme"});
