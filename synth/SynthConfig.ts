@@ -152,6 +152,8 @@ export const enum EnvelopeComputeIndex {
     chorus,
     echoSustain,
     reverb,
+    reverbWet,
+    reverbDry,
     panning,
     arpeggioSpeed,
     length,
@@ -972,6 +974,8 @@ export class Config {
     public static readonly reverbShelfHz:               number = 8000.0; // The cutoff freq of the shelf filter that is used to decay reverb.
     public static readonly reverbShelfGain:             number = Math.pow(2.0, -1.5);
 	public static readonly reverbRange:                 number = 32;
+	public static readonly reverbWetRange:                 number = 32;
+	public static readonly reverbDryRange:                 number = 32;
     public static readonly reverbDelayBufferSize:       number = 16384; // TODO: Compute a buffer size based on sample rate.
     public static readonly reverbDelayBufferMask:       number = Config.reverbDelayBufferSize - 1; // TODO: Compute a buffer size based on sample rate.
     public static readonly phaserMixRange:              number = 32; 
@@ -1698,6 +1702,8 @@ export class Config {
         { name: "chorus",                 computeIndex: EnvelopeComputeIndex.chorus,                    displayName: "chorus",              interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.chorus,          compatibleInstruments: null },
         { name: "echoSustain",            computeIndex: EnvelopeComputeIndex.echoSustain,               displayName: "echo sustain",        interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.echo,            compatibleInstruments: null },
         { name: "reverb",                 computeIndex: EnvelopeComputeIndex.reverb,                    displayName: "reverb",              interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.reverb,          compatibleInstruments: null },
+        { name: "reverbWet",              computeIndex: EnvelopeComputeIndex.reverbWet,                 displayName: "reverb wet mix",      interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.reverb,          compatibleInstruments: null },
+        { name: "reverbDry",              computeIndex: EnvelopeComputeIndex.reverbDry,                 displayName: "reverb dry mix",      interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.reverb,          compatibleInstruments: null },
         { name: "panning",                computeIndex: EnvelopeComputeIndex.panning,                   displayName: "panning",             interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.panning,         compatibleInstruments: null },
         { name: "arpeggioSpeed",          computeIndex: EnvelopeComputeIndex.arpeggioSpeed,             displayName: "arpeggio speed",      interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.chord,           compatibleInstruments: null },
         { name: "granular",               computeIndex: EnvelopeComputeIndex.granular,                  displayName: "granular",            interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.granular,        compatibleInstruments: null },

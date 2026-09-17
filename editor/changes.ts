@@ -4325,6 +4325,26 @@ export class ChangeReverb extends ChangeInstrumentSlider {
     }
 }
 
+export class ChangeReverbWet extends ChangeInstrumentSlider {
+    constructor(doc: SongDocument, oldValue: number, newValue: number) {
+        super(doc);
+        this._instrument.reverbWet = newValue;
+        doc.synth.unsetMod(Config.modulators.dictionary["reverb wet"].index, doc.channel, doc.getCurrentInstrument());
+        doc.notifier.changed();
+        if (oldValue != newValue) this._didSomething();
+    }
+}
+
+export class ChangeReverbDry extends ChangeInstrumentSlider {
+    constructor(doc: SongDocument, oldValue: number, newValue: number) {
+        super(doc);
+        this._instrument.reverbDry = newValue;
+        doc.synth.unsetMod(Config.modulators.dictionary["reverb dry"].index, doc.channel, doc.getCurrentInstrument());
+        doc.notifier.changed();
+        if (oldValue != newValue) this._didSomething();
+    }
+}
+
 export class ChangeRingMod extends ChangeInstrumentSlider {
     constructor(doc: SongDocument, oldValue: number, newValue: number) {
         super(doc);

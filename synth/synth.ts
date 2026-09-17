@@ -1641,6 +1641,8 @@ export class Instrument {
     public grainRange: number = 40;
     public chorus: number = 0;
     public reverb: number = 0;
+    public reverbWet: number = Config.reverbWetRange - 1;
+    public reverbDry: number = Config.reverbDryRange - 1;
     public echoSustain: number = 0;
     public echoDelay: number = 0;
     public phaserFreq: number = 0;
@@ -1741,6 +1743,8 @@ export class Instrument {
         this.effects = (1 << EffectType.panning); // Panning enabled by default in JB.
         this.chorus = Config.chorusRange - 1;
         this.reverb = 0;
+        this.reverbWet = Config.reverbWetRange - 1;
+        this.reverbDry = Config.reverbDryRange - 1;
         this.echoSustain = Math.floor((Config.echoSustainRange - 1) * 0.5);
         this.echoDelay = Math.floor((Config.echoDelayRange - 1) * 0.5);
         this.eqFilter.reset();
@@ -2134,6 +2138,8 @@ export class Instrument {
         }
         if (effectsIncludeReverb(this.effects)) {
             instrumentObject["reverb"] = Math.round(100 * this.reverb / (Config.reverbRange - 1));
+            instrumentObject["reverbDry"] = Math.round(100 * this.reverbDry / (Config.reverbRange - 1));
+            instrumentObject["reverbWet"] = Math.round(100 * this.reverbWet / (Config.reverbRange - 1));
         }
         if (effectsIncludeNoteRange(this.effects)) {
             instrumentObject["upperNoteLimit"] = this.upperNoteLimit;
@@ -2588,6 +2594,15 @@ export class Instrument {
         } else {
             this.reverb = legacyGlobalReverb;
         }
+
+        if (instrumentObject["reverbDry"] != undefined) {
+            this.reverbDry = clamp(0, Config.reverbRange, Math.round((Config.reverbRange - 1) * (instrumentObject["reverbDry"] | 0) / 100));
+        } 
+
+        if (instrumentObject["reverbWet"] != undefined) {
+            this.reverbWet = clamp(0, Config.reverbRange, Math.round((Config.reverbRange - 1) * (instrumentObject["reverbWet"] | 0) / 100));
+        } 
+
         if (instrumentObject["upperNoteLimit"] != undefined) {
             this.upperNoteLimit = instrumentObject["upperNoteLimit"]
         }
@@ -3658,6 +3673,8 @@ export class Song {
                 }
                 if (effectsIncludeReverb(instrument.effects)) {
                     buffer.push(base64IntToCharCode[instrument.reverb]);
+                    buffer.push(base64IntToCharCode[instrument.reverbWet]);
+                    buffer.push(base64IntToCharCode[instrument.reverbDry]);
                 }
 
                 if (effectsIncludeGranular(instrument.effects)) {
@@ -5429,6 +5446,10 @@ export class Song {
                             instrument.reverb = clamp(0, Config.reverbRange, Math.round(base64CharCodeToInt[compressed.charCodeAt(charIndex++)] * Config.reverbRange / 3.0));
                         } else {
                             instrument.reverb = clamp(0, Config.reverbRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                            if (fromAbyssBox && !beforeFour) {
+                            instrument.reverbWet = clamp(0, Config.reverbRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                            instrument.reverbDry = clamp(0, Config.reverbRange, base64CharCodeToInt[compressed.charCodeAt(charIndex++)]);
+                            }
                         }
                     }
                     if (effectsIncludeGranular(instrument.effects)) {
@@ -8120,6 +8141,10 @@ class InstrumentState {
     public reverbDelayPos: number = 0;
     public reverbMult: number = 0.0;
     public reverbMultDelta: number = 0.0;
+    public reverbWetMult: number = 0.0;
+    public reverbWetMultDelta: number = 0.0;
+    public reverbDryMult: number = 0.0;
+    public reverbDryMultDelta: number = 0.0;
     public reverbShelfA1: number = 0.0;
     public reverbShelfB0: number = 0.0;
     public reverbShelfB1: number = 0.0;
@@ -8900,6 +8925,26 @@ class InstrumentState {
 
             this.reverbMult = reverbStart;
             this.reverbMultDelta = (reverbEnd - reverbStart) / roundedSamplesPerTick;
+
+            let reverbDrySettingStart: number = instrument.reverbDry;
+            let reverbDrySettingEnd: number = instrument.reverbDry;
+            let reverbWetSettingStart: number = instrument.reverbWet;
+            let reverbWetSettingEnd: number = instrument.reverbWet;
+
+            const reverbDryEnvelopeStart: number = envelopeStarts[EnvelopeComputeIndex.reverbDry];
+            const reverbDryEnvelopeEnd: number = envelopeEnds[EnvelopeComputeIndex.reverbDry];
+            const reverbDryStart: number = ((reverbDrySettingStart * reverbDryEnvelopeStart)) / Config.reverbDryRange;
+            const reverbDryEnd: number = ((reverbDrySettingEnd * reverbDryEnvelopeEnd)) / Config.reverbDryRange;
+            const reverbWetEnvelopeStart: number = envelopeStarts[EnvelopeComputeIndex.reverbWet];
+            const reverbWetEnvelopeEnd: number = envelopeEnds[EnvelopeComputeIndex.reverbWet];
+            const reverbWetStart: number = ((reverbWetSettingStart * reverbWetEnvelopeStart)) / Config.reverbWetRange;
+            const reverbWetEnd: number = ((reverbWetSettingEnd * reverbWetEnvelopeEnd)) / Config.reverbWetRange;
+
+            this.reverbWetMult = reverbWetStart;
+            this.reverbWetMultDelta = (reverbWetEnd - reverbWetStart) / roundedSamplesPerTick;
+            this.reverbDryMult = reverbDryStart;
+            this.reverbDryMultDelta = (reverbDryEnd - reverbDryStart) / roundedSamplesPerTick;
+
             maxReverbMult = Math.max(reverbStart, reverbEnd);
 
             const shelfRadians: number = 2.0 * Math.PI * Config.reverbShelfHz / synth.samplesPerSecond;
@@ -13506,6 +13551,10 @@ export class Synth {
 				
 				let reverb = +instrumentState.reverbMult;
 				const reverbDelta = +instrumentState.reverbMultDelta;
+                let reverbWet = +instrumentState.reverbWetMult;
+                const reverbWetDelta = +instrumentState.reverbWetMultDelta;
+                let reverbDry = +instrumentState.reverbDryMult;
+                const reverbDryDelta = +instrumentState.reverbDryMultDelta;
 				
 				const reverbShelfA1 = +instrumentState.reverbShelfA1;
 				const reverbShelfB0 = +instrumentState.reverbShelfB0;
@@ -13813,34 +13862,59 @@ export class Synth {
 					const reverbDelayPos1 = (reverbDelayPos +  3041) & reverbMask;
 					const reverbDelayPos2 = (reverbDelayPos +  6426) & reverbMask;
 					const reverbDelayPos3 = (reverbDelayPos + 10907) & reverbMask;
+
+                    let drySampleL = sampleL;
+                    let drySampleR = sampleR;
+
+                    let originalSampleL = sampleL;
+                    let originalSampleR = sampleR;
+
 					const reverbSample0 = (reverbDelayLine[reverbDelayPos]);
 					const reverbSample1 = reverbDelayLine[reverbDelayPos1];
 					const reverbSample2 = reverbDelayLine[reverbDelayPos2];
 					const reverbSample3 = reverbDelayLine[reverbDelayPos3];
+
 					const reverbTemp0 = -(reverbSample0 + sampleL) + reverbSample1;
 					const reverbTemp1 = -(reverbSample0 + sampleR) - reverbSample1;
+
 					const reverbTemp2 = -reverbSample2 + reverbSample3;
 					const reverbTemp3 = -reverbSample2 - reverbSample3;
+
 					const reverbShelfInput0 = (reverbTemp0 + reverbTemp2) * reverb;
 					const reverbShelfInput1 = (reverbTemp1 + reverbTemp3) * reverb;
 					const reverbShelfInput2 = (reverbTemp0 - reverbTemp2) * reverb;
 					const reverbShelfInput3 = (reverbTemp1 - reverbTemp3) * reverb;
+
 					reverbShelfSample0 = reverbShelfB0 * reverbShelfInput0 + reverbShelfB1 * reverbShelfPrevInput0 - reverbShelfA1 * reverbShelfSample0;
 					reverbShelfSample1 = reverbShelfB0 * reverbShelfInput1 + reverbShelfB1 * reverbShelfPrevInput1 - reverbShelfA1 * reverbShelfSample1;
 					reverbShelfSample2 = reverbShelfB0 * reverbShelfInput2 + reverbShelfB1 * reverbShelfPrevInput2 - reverbShelfA1 * reverbShelfSample2;
 					reverbShelfSample3 = reverbShelfB0 * reverbShelfInput3 + reverbShelfB1 * reverbShelfPrevInput3 - reverbShelfA1 * reverbShelfSample3;
+
 					reverbShelfPrevInput0 = reverbShelfInput0;
 					reverbShelfPrevInput1 = reverbShelfInput1;
 					reverbShelfPrevInput2 = reverbShelfInput2;
 					reverbShelfPrevInput3 = reverbShelfInput3;
+
 					reverbDelayLine[reverbDelayPos1] = reverbShelfSample0 * delayInputMult;
 					reverbDelayLine[reverbDelayPos2] = reverbShelfSample1 * delayInputMult;
 					reverbDelayLine[reverbDelayPos3] = reverbShelfSample2 * delayInputMult;
 					reverbDelayLine[reverbDelayPos ] = reverbShelfSample3 * delayInputMult;
+
+                    let wetSampleL = (sampleL + (reverbSample1 + reverbSample2 + reverbSample3)) - drySampleL;
+                    let wetSampleR = (sampleR + (reverbSample0 + reverbSample2 - reverbSample3)) - drySampleR;
+
+                    wetSampleL *= reverbWet;
+                    wetSampleR *= reverbWet;
+                    drySampleL *= reverbDry;
+                    drySampleR *= reverbDry;
+
 					reverbDelayPos = (reverbDelayPos + 1) & reverbMask;
-					sampleL += reverbSample1 + reverbSample2 + reverbSample3;
-					sampleR += reverbSample0 + reverbSample2 - reverbSample3;
-					reverb += reverbDelta;`
+					sampleL = (drySampleL + wetSampleL);
+					sampleR = (drySampleR + wetSampleR);
+					reverb += reverbDelta;
+                    reverbWet += reverbWetDelta;
+                    reverbDry += reverbDryDelta;
+                    `
             }
 
             effectsSource += `
@@ -14003,6 +14077,8 @@ export class Synth {
 				Synth.sanitizeDelayLine(reverbDelayLine, reverbDelayPos + 10907, reverbMask);
 				instrumentState.reverbDelayPos = reverbDelayPos;
 				instrumentState.reverbMult = reverb;
+                instrumentState.reverbWetMult = reverbWet;
+                instrumentState.reverbDryMult = reverbDry;
 				
 				if (!Number.isFinite(reverbShelfSample0) || Math.abs(reverbShelfSample0) < epsilon) reverbShelfSample0 = 0.0;
 				if (!Number.isFinite(reverbShelfSample1) || Math.abs(reverbShelfSample1) < epsilon) reverbShelfSample1 = 0.0;
