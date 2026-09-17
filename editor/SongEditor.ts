@@ -2273,6 +2273,10 @@ export class SongEditor {
                 return this._decimalOffsetSlider;
             case Config.modulators.dictionary["reverb"].index:
                 return this._reverbSlider;
+            case Config.modulators.dictionary["reverb wet"].index:
+                return this._reverbWetSlider;
+            case Config.modulators.dictionary["reverb dry"].index:
+                return this._reverbDrySlider;
             case Config.modulators.dictionary["distortion"].index:
                 return this._distortionSlider;
              case Config.modulators.dictionary["ring modulation"].index:
@@ -4182,6 +4186,8 @@ export class SongEditor {
                         }
                         if (anyInstrumentReverbs) {
                             settingList.push("reverb");
+                            settingList.push("reverb wet");
+                            settingList.push("reverb dry");
                         }
                         if (!allInstrumentReverbs) {
                             unusedSettingList.push("+ reverb");

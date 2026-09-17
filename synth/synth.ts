@@ -8931,6 +8931,16 @@ class InstrumentState {
             let reverbWetSettingStart: number = instrument.reverbWet;
             let reverbWetSettingEnd: number = instrument.reverbWet;
 
+            if (synth.isModActive(Config.modulators.dictionary["reverb wet"].index, channelIndex, instrumentIndex)) {
+                reverbWetSettingStart = synth.getModValue(Config.modulators.dictionary["reverb wet"].index, channelIndex, instrumentIndex, false);
+                reverbWetSettingEnd = synth.getModValue(Config.modulators.dictionary["reverb wet"].index, channelIndex, instrumentIndex, true);
+            }
+            
+            if (synth.isModActive(Config.modulators.dictionary["reverb dry"].index, channelIndex, instrumentIndex)) {
+                reverbDrySettingStart = synth.getModValue(Config.modulators.dictionary["reverb dry"].index, channelIndex, instrumentIndex, false);
+                reverbDrySettingEnd = synth.getModValue(Config.modulators.dictionary["reverb dry"].index, channelIndex, instrumentIndex, true);
+            }
+
             const reverbDryEnvelopeStart: number = envelopeStarts[EnvelopeComputeIndex.reverbDry];
             const reverbDryEnvelopeEnd: number = envelopeEnds[EnvelopeComputeIndex.reverbDry];
             const reverbDryStart: number = ((reverbDrySettingStart * reverbDryEnvelopeStart)) / Config.reverbDryRange;
@@ -8939,6 +8949,7 @@ class InstrumentState {
             const reverbWetEnvelopeEnd: number = envelopeEnds[EnvelopeComputeIndex.reverbWet];
             const reverbWetStart: number = ((reverbWetSettingStart * reverbWetEnvelopeStart)) / Config.reverbWetRange;
             const reverbWetEnd: number = ((reverbWetSettingEnd * reverbWetEnvelopeEnd)) / Config.reverbWetRange;
+
 
             this.reverbWetMult = reverbWetStart;
             this.reverbWetMultDelta = (reverbWetEnd - reverbWetStart) / roundedSamplesPerTick;
