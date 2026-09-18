@@ -49,6 +49,12 @@ export class TipPrompt implements Prompt {
 					p("Reverb is like a continuous echo effect. A little bit helps instruments sound more natural. Adding a lot of reverb can add sense of depth or mystery, but too much reverb can kinda \"smear\" sounds so that it's harder to distinguish notes or instruments, especially for lower \"bass\" notes."),
 				);
 			} break;
+			case "reverbWetDry": {
+				message = div(
+					h2("Reverb Wet/Dry"),
+					p("These sliders let you directly affect the volumes of the wet and dry samples in the effect. Wet samples are the samples that play after the reverb effect has been processed, and dry samples are the samples before the effect has been processed. If you want the original sound that reverb had, set both of these sliders to max."),
+				);
+			} break;
 			case "rhythm": {
 				message = div(
 					h2("Rhythm"),
@@ -609,6 +615,14 @@ export class TipPrompt implements Prompt {
 					h2("Random Envelope Type"),
 					p("Random Envelopes can switch between being determined by the time in the song, the pitch of the note, or per note trigger."),
 				);
+			} break;
+			case "songeq": {
+				message = div(
+					h2("Song Eq Filter"),
+					p("Filters are a way of emphasizing or diminishing different parts of a sound. Musical notes have a fundamental (base) frequency, but the sound of a musical note also has parts at higher frequencies and filters can adjust the volume of each of these parts based on their frequency."),
+					p("Click in the filter editor to insert, delete, or drag a filter control point. The horizontal position of the point determines which frequencies it affects, and the vertical position determines how the volume is affected at that frequency."),
+					p("Insert a new point on the left side of the filter editor to add a \"high-pass\" filter point, which additionally reduces the volume of lower frequencies, or insert a new point on the right side to add a \"low-pass\" filter point which reduces the volume of higher frequencies."),
+					p("The Song Eq Filter applies to all instruments. This can be handy for getting the sound of a certain genre or fading in and out in combination with modulation"),				);
 			} break;
 			case "ringMod": {
 				message = div(

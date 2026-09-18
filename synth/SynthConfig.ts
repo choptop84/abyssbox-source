@@ -153,6 +153,8 @@ export const enum EnvelopeComputeIndex {
     chorus,
     echoSustain,
     reverb,
+    reverbWet,
+    reverbDry,
     panning,
     arpeggioSpeed,
     length,
@@ -899,6 +901,7 @@ export class Config {
     public static willReloadForCustomSamples: boolean = false;
 
     public static jsonFormat: string = "AbyssBox";
+    public static maxEffectCount: number = 17;
     // public static thurmboxImportUrl: string = "https://file.garden/ZMQ0Om5nmTe-x2hq/PandoraArchive%20Samples/";
 
     public static readonly scales: DictionaryArray<Scale> = toNameMap([
@@ -972,6 +975,8 @@ export class Config {
     public static readonly reverbShelfHz:               number = 8000.0; // The cutoff freq of the shelf filter that is used to decay reverb.
     public static readonly reverbShelfGain:             number = Math.pow(2.0, -1.5);
 	public static readonly reverbRange:                 number = 32;
+	public static readonly reverbWetRange:                 number = 32;
+	public static readonly reverbDryRange:                 number = 32;
     public static readonly reverbDelayBufferSize:       number = 16384; // TODO: Compute a buffer size based on sample rate.
     public static readonly reverbDelayBufferMask:       number = Config.reverbDelayBufferSize - 1; // TODO: Compute a buffer size based on sample rate.
     public static readonly phaserMixRange:              number = 32; 
@@ -1248,8 +1253,8 @@ export class Config {
 		
 	 //for modbox; voices = riffapp, spread = intervals, offset = offsets, expression = volume, and sign = signs
 	]);
-    public static readonly effectNames: ReadonlyArray<string> = ["reverb", "chorus", "panning", "distortion", "bitcrusher", "note filter", "echo", "pitch shift", "detune", "vibrato", "transition type", "chord type", "ring modulation", "phaser", "note range", "invert wave", "granular", "flanger"];
-    public static readonly effectOrder: ReadonlyArray<EffectType> = [EffectType.panning, EffectType.transition, EffectType.chord, EffectType.pitchShift, EffectType.detune, EffectType.vibrato, EffectType.noteFilter, EffectType.distortion, EffectType.bitcrusher, EffectType.chorus, EffectType.echo, EffectType.reverb, EffectType.ringModulation, EffectType.phaser, EffectType.noteRange, EffectType.invertWave, EffectType.granular, EffectType.flanger];
+    public static readonly effectNames: ReadonlyArray<string> = ["reverb", "chorus", "panning", "distortion", "bitcrusher", "note filter", "echo", "pitch shift", "detune", "vibrato", "transition type", "chord type", "ring modulation", "phaser", "note range", "invert wave", "flanger"];
+    public static readonly effectOrder: ReadonlyArray<EffectType> = [EffectType.panning, EffectType.transition, EffectType.chord, EffectType.pitchShift, EffectType.detune, EffectType.vibrato, EffectType.noteFilter, EffectType.distortion, EffectType.bitcrusher, EffectType.chorus, EffectType.echo, EffectType.reverb, EffectType.ringModulation, EffectType.phaser, EffectType.noteRange, EffectType.invertWave];
     public static readonly noteSizeMax: number = 6;
 	public static readonly volumeRange: number = 50;
 	// Beepbox's old volume scale used factor -0.5 and was [0~7] had roughly value 6 = 0.125 power. This new value is chosen to have -21 be the same,
@@ -1295,7 +1300,7 @@ export class Config {
         { name: "arpeggio", customInterval: false, arpeggiates: true, strumParts: 0, singleTone: true },
         { name: "custom interval", customInterval: true, arpeggiates: false, strumParts: 0, singleTone: true },
     ]);
-    public static readonly maxChordSize: number = 9;
+    public static readonly maxChordSize: number = 97;
     public static readonly operatorCount: number = 4;
 	public static readonly maxPitchOrOperatorCount: number = Math.max(Config.maxChordSize, Config.operatorCount+2);
     public static readonly algorithms: DictionaryArray<Algorithm> = toNameMap([
@@ -1706,6 +1711,8 @@ export class Config {
         { name: "chorus",                 computeIndex: EnvelopeComputeIndex.chorus,                    displayName: "chorus",              interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.chorus,          compatibleInstruments: null },
         { name: "echoSustain",            computeIndex: EnvelopeComputeIndex.echoSustain,               displayName: "echo sustain",        interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.echo,            compatibleInstruments: null },
         { name: "reverb",                 computeIndex: EnvelopeComputeIndex.reverb,                    displayName: "reverb",              interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.reverb,          compatibleInstruments: null },
+        { name: "reverbWet",              computeIndex: EnvelopeComputeIndex.reverbWet,                 displayName: "reverb wet mix",      interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.reverb,          compatibleInstruments: null },
+        { name: "reverbDry",              computeIndex: EnvelopeComputeIndex.reverbDry,                 displayName: "reverb dry mix",      interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.reverb,          compatibleInstruments: null },
         { name: "panning",                computeIndex: EnvelopeComputeIndex.panning,                   displayName: "panning",             interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.panning,         compatibleInstruments: null },
         { name: "arpeggioSpeed",          computeIndex: EnvelopeComputeIndex.arpeggioSpeed,             displayName: "arpeggio speed",      interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.chord,           compatibleInstruments: null },
         { name: "granular",               computeIndex: EnvelopeComputeIndex.granular,                  displayName: "granular",            interleave: false,  isFilter: false,    maxCount: 1,                        effect: EffectType.granular,        compatibleInstruments: null },
@@ -2039,7 +2046,7 @@ export class Config {
             promptDesc: [ "This setting controls the number of phaser stages in your insturment, just like the phaser stages slider.", "At $LO, your instrument will have no phaser stages. At $HI, it will be at maximum.", "[OVERWRITING] [$LO - $HI]"] },                       
         { name: "song pitch shift", 
             pianoName: "Song Pitch Shift", 
-            maxRawVol: (Config.pitchShiftRange*2)-2, newNoteVol: Config.pitchShiftRange, forSong: true, convertRealFactor: -Config.pitchShiftRange+1, associatedEffect: EffectType.pitchShift,
+            maxRawVol: (Config.pitchShiftRange*2)-2, newNoteVol: Config.pitchShiftRange - 1, forSong: true, convertRealFactor: -Config.pitchShiftRange+1, associatedEffect: EffectType.pitchShift,
             promptName: "Songwide Pitch Shift", 
             promptDesc: ["This setting controls the pitch offset of all instruments regardless of whether or not the instrument has the effect itself, just like the pitch shift slider.", "At $MID your instrument will have no pitch shift. This increases as you decrease toward $LO pitches (half-steps) at the low end, or increases towards +$HI pitches at the high end.", "[ADDITIVE] [$LO - $HI] [pitch]"] },
         { name: "individual envelope speed", 
@@ -2071,6 +2078,21 @@ export class Config {
             maxRawVol: Config.grainRangeMax/Config.grainSizeStep, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: EffectType.granular, 
             promptName: "Grain Range", 
             promptDesc: [ "This setting controls the range of values for your grain size of the granular effect in your instrument, from no variation to a lot", "The number shown in the mod channel is multiplied by " + Config.grainSizeStep + " to get the actual grain size." ,"[OVERWRITING] [$LO - $HI]" ] },
+        { name: "song eq", 
+            pianoName: "Song EQ", 
+            maxRawVol: 10, newNoteVol: 0, forSong: true, convertRealFactor: 0, associatedEffect: EffectType.length,
+            promptName: "Song EQ Filter", 
+            promptDesc: ["This setting overwrites every instrument's eq filter. You can do this in a few separate ways, similar to the per instrument eq filter modulator.", "When the option 'morph' is selected, your modulator values will indicate a sub-filter index of your EQ filter to 'morph' to over time. For example, a change from 0 to 1 means your main filter (default) will morph to sub-filter 1 over the specified duration. You can shape the main filter and sub-filters in the large filter editor ('+' button). If your two filters' number, type, and order of filter dots all match up, the morph will happen smoothly and you'll be able to hear them changing. If they do not match up, the filters will simply jump between each other.", "Note that filters will morph based on endpoints in the pattern editor. So, if you specify a morph from sub-filter 1 to 4 but do not specifically drag in new endpoints for 2 and 3, it will morph directly between 1 and 4 without going through the others.", "If you target Dot X or Dot Y, you can finely tune the coordinates of a single dot for your filter. The number of available dots to choose is dependent on your main filter's dot count.", "[OVERWRITING] [$LO - $HI]"]},
+        { name: "reverb wet", 
+            pianoName: "Reverb Wet Volume", 
+            maxRawVol: Config.reverbWetRange, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: EffectType.reverb,
+            promptName: "Reverb Wet Volume", 
+            promptDesc: [ "This setting controls the volume of the wet samples in your reverb, just like the reverb (Wet) slider.", "At $LO, your instrument will have no wetness. At $HI, it will be at maximum.", "[OVERWRITING] [$LO - $HI]"] },
+        { name: "reverb dry", 
+            pianoName: "Reverb Dry Volume", 
+            maxRawVol: Config.reverbDryRange, newNoteVol: 0, forSong: false, convertRealFactor: 0, associatedEffect: EffectType.reverb,
+            promptName: "Reverb Dry Volume", 
+            promptDesc: [ "This setting controls the volume of the dry samples in your reverb, just like the reverb (Dry) slider.", "At $LO, your instrument will have no wetness. At $HI, it will be at maximum.", "[OVERWRITING] [$LO - $HI]"] },
         ]);
 }
 

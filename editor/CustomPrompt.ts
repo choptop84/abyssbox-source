@@ -186,8 +186,11 @@ export class CustomPrompt implements Prompt {
 	option({ value: "AbyssBox Classic"}, "AbyssBox Classic"),
 	option({ value: "AbyssBox Competitive"}, "AbyssBox Competitive"),
 	option({ value: "AbyssBox Light"}, "AbyssBox Light"),
+	option({ value: "AbyssBox Piano"}, "AbyssBox Piano [!]"),
 	option({ value: "AbyssBox 0.8"}, "AbyssBox 0.8"),
-	option({ value: "AbyssBox Piano"}, "AbyssBox Piano"),
+	option({ value: "AbyssBox Comp simple"}, "AbyssBox Competitive (simple)"),
+	option({ value: "AbyssBox Light simple"}, "AbyssBox Light (simple)"),
+	option({ value: "AbyssBox Piano simple"}, "AbyssBox Piano (simple) [!]"),
 	option({ value: "Half-Life"}, "Half-Life"),
 	option({ value: "Half-Life: Source"}, "Half-Life: Source"),
 	option({ value: "Doom 1993"}, "Doom 1993"),
@@ -677,6 +680,22 @@ export class CustomPrompt implements Prompt {
 			option({ value: "--mod4-secondary-channel" }, "Mod 4 Secondary Color (Channel)"),	
 */
 		); 
+
+	/*private readonly _mainColors: Array<[String, String]> = [
+		["--page-margin", "Page margin"],
+		["--editor-background", "Editor background"],
+		["--primary-text", "Primary text"],
+		["--secondary-text", "Secondary text"],
+		["--inverted-text", "Inverted text"],
+		["--loop-accent", "Loop accent"],
+		["--link-accent", "Link accent"],
+		["--ui-widget-background", "UI widget background"],
+		["--ui-widget-focus", "Ui widget focus"],
+		["--white-piano-key", "White piano key"],
+		["--black-piano-key", "Black piano key"],
+		["--white-piano-key-text", "White piano key text"],
+		["--black-piano-key-text", "Black piano key text"],
+	];*/
 
 		private readonly _colorInput: HTMLInputElement = input({ type: "text", value: localStorage.getItem("customColors") || longText});
 

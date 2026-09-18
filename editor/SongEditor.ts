@@ -47,7 +47,7 @@ import { ThemePrompt } from "./ThemePrompt";
 import { CustomPrompt } from "./CustomPrompt";
 import { PresetPrompt, /*setPresets*/ } from "./PresetPrompt";
 import { TipPrompt } from "./TipPrompt";
-import { ChangeTempo, ChangeKeyOctave, ChangeChorus, ChangeEchoDelay, ChangeEchoSustain, ChangeReverb, ChangeVolume, ChangePan, ChangePatternSelection, ChangePatternsPerChannel, ChangePatternNumbers, ChangeSupersawDynamism, ChangeSupersawSpread, ChangeSupersawShape, ChangePulseWidth, ChangeFeedbackAmplitude, ChangeOperatorAmplitude, ChangeOperatorFrequency, ChangeDrumsetEnvelope, ChangePasteInstrument, ChangePreset, pickRandomPresetValue, ChangeRandomGeneratedInstrument, ChangeEQFilterType, ChangeNoteFilterType, ChangeEQFilterSimpleCut, ChangeEQFilterSimplePeak, ChangeNoteFilterSimpleCut, ChangeNoteFilterSimplePeak, ChangeScale, ChangeDetectKey, ChangeKey, ChangeRhythm, ChangeFeedbackType, ChangeAlgorithm, ChangeChipWave, ChangeRMChipWave, ChangeNoiseWave, ChangeTransition, ChangeToggleEffects, ChangeVibrato, ChangeUnison, ChangeChord, ChangeSong, ChangePitchShift, ChangeDetune, ChangeDistortion, ChangeStringSustain, ChangeBitcrusherFreq, ChangeBitcrusherQuantization, ChangeAddEnvelope, ChangeEnvelopeSpeed, ChangeDiscreteEnvelope, ChangeAddChannelInstrument, ChangeRemoveChannelInstrument, ChangeCustomWave, ChangeOperatorWaveform, ChangeOperatorPulseWidth, ChangeSongTitle, ChangeVibratoDepth, ChangeVibratoSpeed, ChangeVibratoDelay, ChangeVibratoType, ChangePanDelay, ChangeArpeggioSpeed, ChangeFastTwoNoteArp, ChangeClicklessTransition, ChangeAliasing, ChangeSetPatternInstruments, ChangeHoldingModRecording, ChangeChipWavePlayBackwards, ChangeChipWaveStartOffset, ChangeChipWaveLoopEnd, ChangeChipWaveLoopStart, ChangeChipWaveLoopMode, ChangeChipWaveUseAdvancedLoopControls, ChangeDecimalOffset, ChangeUnisonVoices, ChangeUnisonSpread, ChangeUnisonOffset, ChangeUnisonExpression, ChangeUnisonSign, ChangeUnisonBuzzing, Change6OpFeedbackType, Change6OpAlgorithm, ChangeCustomAlgorythmorFeedback, ChangeRingMod, ChangeRingModHz, ChangeRingModPulseWidth, ChangePhaserMix, ChangePhaserFreq, ChangePhaserFeedback, ChangePhaserStages, ChangeUpperLimit, ChangeLowerLimit, ChangeSlideSpeed, ChangeStrumSpeed, ChangeRmHzOffset, ChangeInvertWave, ChangeGranular, ChangeGrainSize, ChangeGrainAmounts, ChangeGrainRange, ChangeInstrumentsFlags, ChangeFlanger } from "./changes";
+import { ChangeTempo, ChangeKeyOctave, ChangeChorus, ChangeEchoDelay, ChangeEchoSustain, ChangeReverb, ChangeVolume, ChangePan, ChangePatternSelection, ChangePatternsPerChannel, ChangePatternNumbers, ChangeSupersawDynamism, ChangeSupersawSpread, ChangeSupersawShape, ChangePulseWidth, ChangeFeedbackAmplitude, ChangeOperatorAmplitude, ChangeOperatorFrequency, ChangeDrumsetEnvelope, ChangePasteInstrument, ChangePreset, pickRandomPresetValue, ChangeRandomGeneratedInstrument, ChangeEQFilterType, ChangeNoteFilterType, ChangeEQFilterSimpleCut, ChangeEQFilterSimplePeak, ChangeNoteFilterSimpleCut, ChangeNoteFilterSimplePeak, ChangeScale, ChangeDetectKey, ChangeKey, ChangeRhythm, ChangeFeedbackType, ChangeAlgorithm, ChangeChipWave, ChangeRMChipWave, ChangeNoiseWave, ChangeTransition, ChangeToggleEffects, ChangeVibrato, ChangeUnison, ChangeChord, ChangeSong, ChangePitchShift, ChangeDetune, ChangeDistortion, ChangeStringSustain, ChangeBitcrusherFreq, ChangeBitcrusherQuantization, ChangeAddEnvelope, ChangeEnvelopeSpeed, ChangeDiscreteEnvelope, ChangeAddChannelInstrument, ChangeRemoveChannelInstrument, ChangeCustomWave, ChangeOperatorWaveform, ChangeOperatorPulseWidth, ChangeSongTitle, ChangeVibratoDepth, ChangeVibratoSpeed, ChangeVibratoDelay, ChangeVibratoType, ChangePanDelay, ChangeArpeggioSpeed, ChangeFastTwoNoteArp, ChangeClicklessTransition, ChangeAliasing, ChangeSetPatternInstruments, ChangeHoldingModRecording, ChangeChipWavePlayBackwards, ChangeChipWaveStartOffset, ChangeChipWaveLoopEnd, ChangeChipWaveLoopStart, ChangeChipWaveLoopMode, ChangeChipWaveUseAdvancedLoopControls, ChangeDecimalOffset, ChangeUnisonVoices, ChangeUnisonSpread, ChangeUnisonOffset, ChangeUnisonExpression, ChangeUnisonSign, ChangeUnisonBuzzing, Change6OpFeedbackType, Change6OpAlgorithm, ChangeCustomAlgorythmorFeedback, ChangeRingMod, ChangeRingModHz, ChangeRingModPulseWidth, ChangePhaserMix, ChangePhaserFreq, ChangePhaserFeedback, ChangePhaserStages, ChangeUpperLimit, ChangeLowerLimit, ChangeSlideSpeed, ChangeStrumSpeed, ChangeRmHzOffset, ChangeInvertWave, ChangeGranular, ChangeGrainSize, ChangeGrainAmounts, ChangeGrainRange, ChangeInstrumentsFlags, ChangeFlanger, ChangeReverbDry, ChangeReverbWet } from "./changes";
 
 import { TrackEditor } from "./TrackEditor";
 import {oscilascopeCanvas} from "../global/Oscilascope";
@@ -734,14 +734,13 @@ export class SongEditor {
     private _instSettingMode: number = 1;
 
      // comment for ctrl+f mobile stuffs
-    private readonly _mobilePatternButton: HTMLButtonElement = button({class: "mobilePatternButton", type:"button", style:"display:none; width: 33vw; height: 75%;"});
-    private readonly _mobileTrackButton: HTMLButtonElement = button({class: "mobileTrackButton", type:"button", style:"display:none; width: 34vw; height: 60%;"});
-    private readonly _mobileSettingsButton: HTMLButtonElement = button({class: "mobileSettingsButton", type:"button", style:"display:none; width: 33vw; height: 60%;"});
-    public mobileMenu: HTMLDivElement = div({class:"mobileMenu", style:"position: fixed; bottom: 0px; height: 20vh; width: 100vw; display:none; background: var(--editor-background); z-index: 5;"});
+    private readonly _mobilePatternButton: HTMLButtonElement = button({class: "mobilePatternButton", type:"button", style:"display:none; width: 100%; height: 100%;"});
+    private readonly _mobileTrackButton: HTMLButtonElement = button({class: "mobileTrackButton", type:"button", style:"display:none; width: 100%; height: 100%;"});
+    private readonly _mobileSettingsButton: HTMLButtonElement = button({class: "mobileSettingsButton", type:"button", style:"display:none; width: 100%; height: 100%;"});
+    public mobileMenu: HTMLDivElement = div({class:"mobileMenu"});
     private readonly _mobileEditMenuIcon: HTMLDivElement = div({class:"mobileEditMenuIcon"});
     private readonly _mobileTrackMenuIcon: HTMLDivElement = div({class:"mobileTrackMenuIcon"});
     private readonly _mobileSettingsMenuIcon: HTMLDivElement = div({class:"mobileSettingsMenuIcon"});
-
 
     private readonly _keyboardLayout: KeyboardLayout = new KeyboardLayout(this._doc);
     private readonly _patternEditorPrev: PatternEditor = new PatternEditor(this._doc, false, -1);
@@ -874,6 +873,8 @@ export class SongEditor {
     private readonly _octaveStepper: HTMLInputElement = input({ style: "width: 59.5%;", type: "number", min: Config.octaveMin, max: Config.octaveMax, value: "0" });
     private readonly _tempoSlider: Slider = new Slider(input({ style: "margin: 0; vertical-align: middle;", type: "range", min: "1", max: "500", value: "160", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeTempo(this._doc, oldValue, newValue), false);
     private readonly _tempoStepper: HTMLInputElement = input({ style: "width: 4em; font-size: 80%; margin-left: 0.4em; vertical-align: middle;", type: "number", step: "1" });
+    private readonly _songEqFilterEditor: FilterEditor = new FilterEditor(this._doc, false, false, true);
+    private readonly _songEqFilterZoom: HTMLButtonElement = button({ style: "margin-left:0em; padding-left:0.2em; height:1.5em; max-width: 12px;", onclick: () => this._openPrompt("customSongEQFilterSettings") }, "+");
     private readonly _chorusSlider: Slider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.chorusRange - 1, value: "0", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeChorus(this._doc, oldValue, newValue), false);
     private readonly _chorusRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("chorus") }, "Chorus:"), this._chorusSlider.container);
     
@@ -935,7 +936,18 @@ export class SongEditor {
     );
 
     private readonly _reverbSlider: Slider = new Slider(input({ style: "margin: 0; position: sticky,", type: "range", min: "0", max: Config.reverbRange - 1, value: "0", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeReverb(this._doc, oldValue, newValue), false);
-    private readonly _reverbRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("reverb") }, "Reverb:"), this._reverbSlider.container);
+    private readonly _reverbWetSlider: Slider = new Slider(input({ style: "margin: 0; position: sticky,", type: "range", min: "0", max: Config.reverbWetRange - 1, value: "0", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeReverbWet(this._doc, oldValue, newValue), false);
+    private readonly _reverbDrySlider: Slider = new Slider(input({ style: "margin: 0; position: sticky,", type: "range", min: "0", max: Config.reverbDryRange - 1, value: "0", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeReverbDry(this._doc, oldValue, newValue), false);
+    private readonly _reverbRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("reverb") }, "Reverb:"), this._reverbSlider.container,);
+    private readonly _reverbWetRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("reverbWetDry") }, "Wet:"), this._reverbWetSlider.container,);
+    private readonly _reverbDryRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("reverbWetDry") }, "Dry:"), this._reverbDrySlider.container,);
+    
+    private readonly _reverbContainerRow: HTMLDivElement = div({ class: "", style: "display:flex; flex-direction:column;" },
+        this._reverbRow,
+        this._reverbWetRow,
+        this._reverbDryRow,
+    );
+    
     private readonly _echoSustainSlider: Slider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.echoSustainRange - 1, value: "0", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeEchoSustain(this._doc, oldValue, newValue), false);
     private readonly _echoSustainRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("echoSustain") }, "Echo:"), this._echoSustainSlider.container);
     private readonly _echoDelaySlider: Slider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.echoDelayRange - 1, value: "0", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeEchoDelay(this._doc, oldValue, newValue), false);
@@ -1296,7 +1308,7 @@ export class SongEditor {
             this._chorusRow,
             this._echoSustainRow,
             this._echoDelayRow,
-            this._reverbRow,
+            this._reverbContainerRow,
             this._ringModContainerRow,
             this._phaserMixRow,
             this._phaserFreqRow,
@@ -1507,6 +1519,11 @@ export class SongEditor {
                 span({ class: "tip", onclick: () => this._openPrompt("rhythm") }, "Rhythm: "),
                 div({ class: "selectContainer" }, this._rhythmSelect),
             ),
+            div({ class: "selectRow" },
+                span({ class: "tip", onclick: () => this._openPrompt("songeq") }, span("Song EQ:")),
+                this._songEqFilterZoom,
+                this._songEqFilterEditor.container,
+            ),
             this._sampleLoadingStatusContainer,
         ),
     );
@@ -1517,16 +1534,16 @@ export class SongEditor {
         this._instrumentSettingsGroup,
         this._modulatorGroup);
         // comment for ctrl+f mobile stuffs
-    public readonly _playbackMobileDiv: HTMLDivElement = div({ class: "playback-bar-controls2", id: 'playback-bar-controls2', style:'width: 100%; display: flex; background: var(--editor-background); z-index: 6;' },
+    public readonly _playbackMobileDiv: HTMLDivElement = div({ class: "playback-bar-controls2", id: 'playback-bar-controls2' },
         this._mobilePlayButton,
         this._mobilePauseButton,
         this._mobilePrevBarButton,
         this._mobileNextBarButton,
     )    
-    public readonly _playPauseAreaMobile: HTMLDivElement = div({class: "play-pause-area2", id: "play-pause-area2", style:'flex-direction:row; position: absolute; width: 100%; display: flex; bottom: 16vh;'},
+    public readonly _playPauseAreaMobile: HTMLDivElement = div({class: "play-pause-area2", id: "play-pause-area2"},
         this._playbackMobileDiv
     );
-    public readonly _settingsArea: HTMLDivElement = div({ class: "settings-area noSelection" },
+    public readonly _settingsArea: HTMLDivElement = div({ class: "settings-area noSelection", style:"display: grid" },
         div({ class: "version-area" },
             div({ style: `text-align: center; margin: 3px 0; color: ${ColorConfig.secondaryText}; display:flex;` },
                 this._songTitleInputBox.input, this._songDetailsButton
@@ -1553,11 +1570,17 @@ export class SongEditor {
         this._instrumentSettingsArea,
     );
 
+    public readonly _mobileButtonContainer: HTMLDivElement = div({class:"mobileButtonContainer"},
+        this._playPauseAreaMobile,
+        this.mobileMenu,  
+    );
+
     public readonly mainLayer: HTMLDivElement = div({ class: "beepboxEditor", tabIndex: "0" },
         this._patternArea,
         this._trackArea,
         this._settingsArea,
         this._promptContainer,
+        this._mobileButtonContainer
     );
 
     private _wasPlaying: boolean = false;
@@ -1878,6 +1901,7 @@ export class SongEditor {
         this._spectrumEditor.container.addEventListener("mousedown", this.refocusStage);
         this._eqFilterEditor.container.addEventListener("mousedown", this.refocusStage);
         this._noteFilterEditor.container.addEventListener("mousedown", this.refocusStage);
+        this._songEqFilterEditor.container.addEventListener("mousedown", this.refocusStage);
         this._harmonicsEditor.container.addEventListener("mousedown", this.refocusStage);
         this._tempoStepper.addEventListener("keydown", this._tempoStepperCaptureNumberKeys, false);
         this._addEnvelopeButton.addEventListener("click", this._addNewEnvelope);
@@ -2137,6 +2161,8 @@ export class SongEditor {
         if (!this._doc.synth.playing) {
             this._hasActiveModSliders = false;
 
+            this._songEqFilterEditor.render();
+
             for (let setting: number = 0; setting < Config.modulators.length; setting++) {
                 if (this._showModSliders[setting] == true) {
                     this._showModSliders[setting] = false;
@@ -2251,6 +2277,10 @@ export class SongEditor {
                 return this._decimalOffsetSlider;
             case Config.modulators.dictionary["reverb"].index:
                 return this._reverbSlider;
+            case Config.modulators.dictionary["reverb wet"].index:
+                return this._reverbWetSlider;
+            case Config.modulators.dictionary["reverb dry"].index:
+                return this._reverbDrySlider;
             case Config.modulators.dictionary["distortion"].index:
                 return this._distortionSlider;
              case Config.modulators.dictionary["ring modulation"].index:
@@ -2395,6 +2425,9 @@ export class SongEditor {
                 case "customNoteFilterSettings":
                     this.prompt = new CustomFilterPrompt(this._doc, this, true);
                     break;
+                case "customSongEQFilterSettings":
+                    this.prompt = new CustomFilterPrompt(this._doc, this, false, true);
+                    break;
                 case "harmonicsSettings":
                     this.prompt = new HarmonicsEditorPrompt(this._doc, this);
                     break;
@@ -2514,24 +2547,51 @@ export class SongEditor {
     
     public static readonly mobileUI: { [name: string]: string } = {
         "landscape": `
+
+            #beepboxEditorContainer {
+            padding: 0 !important;
+            min-height: unset;
+            }
+
+            .mobileButtonContainer {
+                flex-direction: row;
+            }
+
+            .beepboxEditor {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .instrument-settings-area {
+            height: 100%
+            }
+
+            .settings-area {
+            flex: 1;
+            overflow-y: scroll;
+            display: flex;
+            flex-direction: column;
+            }
+
+            .beepboxEditor .song-settings-area {
+                overflow-y: unset;
+            }
+
+            .beepboxEditor .instrument-settings-area {
+                overflow-y: unset;
+            }
+
             .mobileMenu {
-                right: 0 !important;
-                left: unset !important;
                 height: 100vh !important;
-                width: 15vw !important;
+                width: 64px !important;
 
                 display: flex;
                 flex-direction: column;
             }
 
             .pattern-area {
-                width: 74vw !important;
                 height: 100vh !important;
                 max-height: 100vh !important;
-            }
-
-            #beepboxEditorContainer {
-                max-width: 100vw !important;
             }
 
             .play-pause-area2 {
@@ -2551,13 +2611,6 @@ export class SongEditor {
                 flex: 1;
             }
 
-            .settings-area {
-                grid-template-columns: 33% 34% 33% !important;
-                grid-template-rows: min-content min-content min-content min-content 1fr !important;
-                grid-template-areas: "version-area version-area version-area" "play-pause-area menu-area instrument-settings-area" "play-pause-area menu-area instrument-settings-area" "song-settings-area song-settings-area instrument-settings-area" "song-settings-area song-settings-area instrument-settings-area" !important;
-                width: 78vw !important;
-            }
-
             .track-area {
                 width: 78vw !important;
             }
@@ -2567,8 +2620,29 @@ export class SongEditor {
                 flex: 1;
             }
 
+            .focused {
+                background: var(--ui-widget-focus) !important;
+            }
+
         `,
         "portrait": `
+
+            .beepboxEditor button, button,
+            .beepboxEditor select, select {
+                border-image-source: unset !important;
+            }
+
+            #beepboxEditorContainer {
+                max-height: unset !important;
+            }
+
+            .beepboxEditor {
+                display: flex !important;
+                height: 100vh;
+                flex-direction: column;
+                justify-content: space-between;
+                gap: 5px;
+            }
 
             .play-pause-area2 {
                 height: unset !important;
@@ -2578,25 +2652,37 @@ export class SongEditor {
                 left: 0 !important;
             }
 
-            .mobileMenu {
-                right: unset !important;
-                left: unset !important;
-                height: 15vh !important;
-                width: 100vw !important;
-                bottom: 0 !important;
+            .mobileButtonContainer {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
 
+            .mobileMenu {
                 display: flex;
                 flex-direction: row;
+                height: 64px;
+                width: 100vw
             }
-
+            
             .pattern-area {
-                width: 91vw !important;
-                height: 70vh !important;
-                max-height: 75vh;
+                height: 0 !important;
+                flex-grow: 1;
+                max-height: unset !important;
             }
 
-            #beepboxEditorContainer {
-                max-width: 710px !important;
+            .focused {
+                background: var(--ui-widget-focus) !important;
+            }
+
+            .settings-area {
+                display: flex;
+                flex-direction: column;
+                height: 0 !important;
+                flex-grow: 1;
+                max-height: unset !important;
+                overflow-y: scroll;
+                width: unset !important;
             }
 
             .playback-bar-controls2 {
@@ -2607,13 +2693,6 @@ export class SongEditor {
             .mobilePlayButton, .mobilePauseButton, .mobilePrevBarButton, .mobileNextBarButton {
                 height: 100% !important;
                 flex: 1;
-            }
-
-            .settings-area {
-                grid-template-columns: 50% 50% !important;
-                grid-template-rows: min-content min-content min-content min-content 1fr !important;
-                grid-template-areas: "version-area version-area" "play-pause-area instrument-settings-area" "play-pause-area instrument-settings-area" "menu-area instrument-settings-area" "song-settings-area instrument-settings-area" !important;
-                width: 96vw !important;
             }
 
             .track-area {
@@ -2821,8 +2900,7 @@ export class SongEditor {
         this.selectedPatternDiv.style.display = "none";
 
         if (this._doc.prefs.oldMobileLayout != true) {
-
-            this._promptContainer.style.left = "50vw";
+            //this._promptContainer.style.left = "50vw";
 
             this._instSettingMode == 1 ? this._instrumentDiv.style.display = "" : this._instrumentDiv.style.display = "none";
             this._instSettingMode == 2 ? this._effectDiv.style.display = "" : this._effectDiv.style.display = "none";
@@ -2833,22 +2911,17 @@ export class SongEditor {
             this._settingsArea.style.display = "none";
             this._trackArea.style.display = "none";
             this._patternArea.style.display = "";
-            this.mainLayer.style.display = "unset";
+            //this.mainLayer.style.display = "unset";
 
         if (window.innerWidth > window.innerHeight) { // landscape view
             if (SongEditor.getMobileUi() != 'landscape') {
                 SongEditor.setMobileUi("landscape"); 
             }
-
             // Originally I had all of this in a bunch of if statements but I changed it to this god I was so bad at coding when I was doing this :sob:
             // I should move everything above this to a style element so then it doesn't have to render all of this all the time.
             this._patternArea.style.display = this._menuMode == 1 ? "": "none";
             this._trackArea.style.display = this._menuMode == 2 ? "": "none";
             this._settingsArea.style.display = this._menuMode == 3 ? "": "none";
-
-            this._mobilePatternButton.style.width = this._menuMode == 1 ? "100%": "80%";
-            this._mobileTrackButton.style.width = this._menuMode == 2 ? "100%": "80%";
-            this._mobileSettingsButton.style.width = this._menuMode == 3 ? "100%": "80%";
 
             this._playPauseAreaMobile.style.display = this._menuMode == 1 ? "flex" : "none";
 
@@ -2863,15 +2936,15 @@ export class SongEditor {
             this._trackArea.style.display = this._menuMode == 2 ? "" : "none";
             this._settingsArea.style.display = this._menuMode == 3 ? "" : "none";
 
-            this._mobilePatternButton.style.height = this._menuMode == 1 ? "100%" : "80%";
-            this._mobileTrackButton.style.height = this._menuMode == 2 ? "100%" : "80%";
-            this._mobileSettingsButton.style.height = this._menuMode == 3 ? "100%" : "80%";
-
             this._playPauseAreaMobile.style.display = this._menuMode == 1 ? "flex" : "none";
         }
 
         this.mainLayer.style.minHeight = "80vh";
         beepboxEditorContainer.style.maxHeight = "80vh";
+
+        this._mobilePatternButton.setAttribute("class", this._menuMode == 1 ? "mobilePatternButton focused" : "mobilePatternButton");
+        this._mobileTrackButton.setAttribute("class", this._menuMode == 2 ? "mobileTrackButton focused" : "mobileTrackButton");
+        this._mobileSettingsButton.setAttribute("class", this._menuMode == 3 ? "mobileSettingsButton focused" : "mobileSettingsButton");
 
         this._mobilePatternButton.style.display = "";
         this._mobileTrackButton.style.display = "";
@@ -2880,8 +2953,6 @@ export class SongEditor {
         this._instOptionsDiv.style.display = "";
     
         //beepboxEditorContainer.style.minHeight = "60vh"; 
-
-        beepboxEditorContainer!.appendChild(this._playPauseAreaMobile)
 
         const playPauseArea = document.getElementById('play-pause-area');
         const textContentMobile = document.getElementById('text-content');
@@ -2893,7 +2964,6 @@ export class SongEditor {
 
         }
 
-        document.body.appendChild(this.mobileMenu);
         this.mobileMenu.appendChild(this._mobilePatternButton);
         this.mobileMenu.appendChild(this._mobileTrackButton);
         this.mobileMenu.appendChild(this._mobileSettingsButton );
@@ -3035,6 +3105,11 @@ export class SongEditor {
         this._tempoSlider.updateValue(Math.max(0, Math.round(this._doc.song.tempo)));
         this._tempoStepper.value = Math.round(this._doc.song.tempo).toString();
         this._songTitleInputBox.updateValue(this._doc.song.title);
+        if (this._doc.synth.isFilterModActive(false, 0, 0, true)) {
+            this._songEqFilterEditor.render(true, this._ctrlHeld || this._shiftHeld);
+        } else {
+            this._songEqFilterEditor.render();
+        }
 
         this._eqFilterTypeRow.style.setProperty("--text-color-lit", colors.primaryNote);
         this._eqFilterTypeRow.style.setProperty("--text-color-dim", colors.secondaryNote);
@@ -3376,7 +3451,7 @@ export class SongEditor {
                 this._pitchShiftSlider.updateValue(instrument.pitchShift);
                 this._pitchShiftSlider.input.title = (instrument.pitchShift - Config.pitchShiftCenter) + " semitone(s)";
                 for (const marker of this._pitchShiftFifthMarkers) {
-                    marker.style.display = prefs.showFifth ? "" : "none";
+                    marker.style.display = prefs.showFifth || prefs.advancedColorScheme ? "" : "none";
                 }
             } else {
                 this._pitchShiftRow.style.display = "none";
@@ -3459,10 +3534,12 @@ export class SongEditor {
                 this._loopBarButton.style.display = prefs.displayShortcutButtons ? "" : "none"; 
                 this._instOptionsDiv.style.display = "";
             } else {
-                this._instrumentDiv.style.display = "";
-                this._effectDiv.style.display = "";
-                this._envelopeDiv.style.display = "";
-                this._instOptionsDiv.style.display = "none";
+                if (!isMobile) {
+                    this._instrumentDiv.style.display = "";
+                    this._effectDiv.style.display = "";
+                    this._envelopeDiv.style.display = "";
+                    this._instOptionsDiv.style.display = "none";
+                }
             }
 
             if (effectsIncludeDistortion(instrument.effects)) {
@@ -3530,10 +3607,12 @@ export class SongEditor {
             }
 
             if (effectsIncludeReverb(instrument.effects)) {
-                this._reverbRow.style.display = "";
+                this._reverbContainerRow.style.display = "";
                 this._reverbSlider.updateValue(instrument.reverb);
+                this._reverbWetSlider.updateValue(instrument.reverbWet);
+                this._reverbDrySlider.updateValue(instrument.reverbDry);
             } else {
-                this._reverbRow.style.display = "none";
+                this._reverbContainerRow.style.display = "none";
             }
 
             if (effectsIncludeRM(instrument.effects)) {
@@ -3629,6 +3708,11 @@ export class SongEditor {
             this._detuneSliderInputBox.value = (instrument.detune - Config.detuneCenter) + "";
             this._rmHzOffsetSliderInputBox.value = (instrument.rmHzOffset - Config.rmHzOffsetCenter) + "";
             this._ringModHzNum.innerHTML = (clamp(1,4600,Math.floor(20 * Math.pow(4400 / 20,Math.min(1.0, instrument.ringModulationHz / (Config.ringModHzRange - 1))))+(instrument.rmHzOffset-Config.rmHzOffsetCenter))) + " ("+ (Math.floor(20 * Math.pow(4400 / 20,Math.min(1.0, instrument.ringModulationHz / (Config.ringModHzRange - 1))))) + ")";
+            if (this._doc.synth.isFilterModActive(false, 0, 0, true)) {
+                this._songEqFilterEditor.render(true, this._ctrlHeld || this._shiftHeld);
+            } else {
+                this._songEqFilterEditor.render();
+            }
             this._instrumentVolumeSlider.updateValue(instrument.volume);
             this._instrumentVolumeSliderInputBox.value = "" + (instrument.volume);
             this._vibratoDepthSlider.updateValue(Math.round(instrument.vibratoDepth * 25));
@@ -3850,6 +3934,7 @@ export class SongEditor {
                         settingList.push("song distortion");
                         settingList.push("song ring modulation");
                         settingList.push("song pitch shift");
+                        settingList.push("song eq");
                     }
                     // Populate mod setting options for instrument scope.
                     else {
@@ -4113,6 +4198,8 @@ export class SongEditor {
                         }
                         if (anyInstrumentReverbs) {
                             settingList.push("reverb");
+                            settingList.push("reverb wet");
+                            settingList.push("reverb dry");
                         }
                         if (!allInstrumentReverbs) {
                             unusedSettingList.push("+ reverb");
@@ -4204,6 +4291,8 @@ export class SongEditor {
                 }
 
                 let filterType: string = Config.modulators[instrument.modulators[mod]].name;
+                let useSongEq: boolean = filterType == "song eq";
+                if (useSongEq) filterType = "eq filter";
                 if (filterType == "eq filter" || filterType == "note filter") {
                     $("#modFilterText" + mod).get(0).style.display = "";
                     $("#modSettingText" + mod).get(0).style.setProperty("margin-bottom", "2px");
@@ -4233,11 +4322,23 @@ export class SongEditor {
                         ? channel.instruments[useInstrument].getLargestControlPointCount(false)
                         : channel.instruments[useInstrument].getLargestControlPointCount(true);
 
-                    const isSimple: boolean = (filterType == "eq filter" ? channel.instruments[useInstrument].eqFilterType : channel.instruments[useInstrument].noteFilterType);
+                    const isSimple: boolean = useSongEq ? false : (filterType == "eq filter" ? channel.instruments[useInstrument].eqFilterType : channel.instruments[useInstrument].noteFilterType);
                     if (isSimple)
                         dotCount = 0;
 
-                    if (isSimple || this._modFilterBoxes[mod].children.length != 1 + dotCount * 2) {
+                    if (useSongEq) {
+                        dotCount = this._doc.song.eqFilter.controlPointCount;
+                        if(this._modFilterBoxes[mod].children.length != 1 + dotCount * 2) {
+                            while (this._modFilterBoxes[mod].firstChild) this._modFilterBoxes[mod].remove(0);
+                            const dotList: string[] = [];
+                            dotList.push("morph");
+                            for (let i: number = 0; i < dotCount; i++) {
+                                dotList.push("dot " + (i + 1) + " x");
+                                dotList.push("dot " + (i + 1) + " y");
+                            }
+                            buildOptions(this._modFilterBoxes[mod], dotList);
+                        }
+                    } else if (isSimple || this._modFilterBoxes[mod].children.length != 1 + dotCount * 2) {
                         while (this._modFilterBoxes[mod].firstChild) this._modFilterBoxes[mod].remove(0);
                         const dotList: string[] = [];
                         if (!isSimple)
@@ -4312,6 +4413,11 @@ export class SongEditor {
         }
         else {
             this._eqFilterEditor.render();
+        }
+        if (this._doc.synth.isFilterModActive(false, 0, 0, true)) {
+            this._songEqFilterEditor.render(true, this._ctrlHeld || this._shiftHeld);
+        } else {
+            this._songEqFilterEditor.render();
         }
         this._instrumentVolumeSlider.updateValue(instrument.volume);
         this._detuneSlider.updateValue(instrument.detune - Config.detuneCenter);
@@ -4963,7 +5069,9 @@ export class SongEditor {
                     event.preventDefault();
                     break;
                     //EUCLEDIAN RHYTHM SHORTCUT (E)
-			    }
+			    } else if (needControlForShortcuts == (event.ctrlKey || event.metaKey)) {
+                    this._openPrompt("customSongEQFilterSettings");
+                }
                 break;
                 case 70: // f (+shift: Set playerhead to loop start)
                 if (canPlayNotes) break;
@@ -5554,7 +5662,9 @@ export class SongEditor {
         if (this._doc.synth.isFilterModActive(true, this._doc.channel, this._doc.getCurrentInstrument())) {
             this._noteFilterEditor.render(true, this._ctrlHeld || this._shiftHeld);
         }
-
+        if (this._doc.synth.isFilterModActive(false, 0, 0, true)) {
+            this._songEqFilterEditor.render(true, this._ctrlHeld || this._shiftHeld);
+        }
 
         window.requestAnimationFrame(this._animate);
     }
