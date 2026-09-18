@@ -901,7 +901,7 @@ export class Config {
     public static willReloadForCustomSamples: boolean = false;
 
     public static jsonFormat: string = "AbyssBox";
-    public static maxEffectCount: number = 17;
+    public static maxEffectCount: number = 18;
     // public static thurmboxImportUrl: string = "https://file.garden/ZMQ0Om5nmTe-x2hq/PandoraArchive%20Samples/";
 
     public static readonly scales: DictionaryArray<Scale> = toNameMap([
@@ -1289,8 +1289,8 @@ export class Config {
     public static readonly granularEnvelopeType: number = GranularEnvelopeType.parabolic; //here you can change which envelope implementation is used for grains (RaisedCosineBell still needs work)
     
     public static readonly flangerPeriodSeconds: number = 2.0;
-    public static readonly flangerDelayRange: number = 0.0022;
-    public static readonly flangerDelayOffsets: ReadonlyArray<ReadonlyArray<number>> = [[0.1, 0.0, 0.0], [0.0, 0.0, 0.0]];
+    public static readonly flangerDelayRange: number = 0.0122;
+    public static readonly flangerDelayOffsets: ReadonlyArray<ReadonlyArray<number>> = [[2.2, 1.5, 1.0], [2.3, 1.4, 1.1]];
     public static readonly flangerPhaseOffsets: number = 0.1;
     public static readonly flangerMaxDelay: number = Config.flangerDelayRange * (1.0 + Config.flangerDelayOffsets[0].concat(Config.flangerDelayOffsets[1]).reduce((x, y) => Math.max(x, y)));
 
