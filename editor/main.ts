@@ -10,6 +10,7 @@ import {SongDocument} from "./SongDocument";
 import {ExportPrompt} from "./ExportPrompt";
 import {ChangePreset} from "./changes";
 import {setPresets,totalPresets} from "./PresetPrompt"
+import 'select2';
 
 
 //namespace beepbox {

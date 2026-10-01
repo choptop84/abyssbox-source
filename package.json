@@ -24,8 +24,8 @@
 		"typescript": "^4.9.5"
 	},
 	"dependencies": {
-		"@types/jquery": "^3.5.5",
-		"@types/select2": "^4.0.53",
+		"@types/jquery": "^3.5.34",
+		"@types/select2": "^4.0.63",
 		"alwan": "^2.0.2",
 		"imperative-html": "^0.1.0",
 		"js-xxhash": "^4.0.0",

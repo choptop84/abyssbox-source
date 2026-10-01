@@ -5,6 +5,8 @@
 		"outDir": "build",
 		"target": "es6",
 		"moduleResolution": "node",
+		"ignoreDeprecations": "6.0",
+		"types": ["jquery"],
 		"sourceMap": true,
 		"removeComments": true,
 		"noImplicitAny": true,
