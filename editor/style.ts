@@ -1388,6 +1388,31 @@ content: "";
 	font-weight: inherit;
 	cursor: pointer;
 }
+
+.beepboxEditor input[type="checkbox"] {
+  background-color: ${ColorConfig.editorBackground};
+  appearance: none;
+  border: 1px ${ColorConfig.uiWidgetBackground} solid;
+  height: 1em;
+  border-radius: 5px;
+}
+
+.beepboxEditor input[type="checkbox"]:checked {
+  display: flex;
+  justify-content: center;
+  background-color: ${ColorConfig.uiWidgetBackground};
+}
+
+.beepboxEditor input[type="checkbox"]:checked::after {
+  text-align: center;
+  font-size: 0.6em;
+  content: "✓";
+  color: currentColor;
+  width: 1em;
+  height: 1em;
+  font-weight: bold;
+}
+
 .mobileEditMenuIcon {
   content: "";
   pointer-events: none;
