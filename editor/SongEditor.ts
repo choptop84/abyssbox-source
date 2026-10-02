@@ -2640,6 +2640,8 @@ export class SongEditor {
             .beepboxEditor {
                 display: flex;
                 justify-content: space-between;
+                max-height: 100dvh;
+                overflow-y: hidden;
             }
 
             .instrument-settings-area {
@@ -2672,6 +2674,9 @@ export class SongEditor {
             .pattern-area {
                 height: 100dvh !important;
                 max-height: 100dvh !important;
+                width: 0 !important;
+                flex-grow: 1;
+                max-height: unset !important;
             }
 
             .play-pause-area2 {
