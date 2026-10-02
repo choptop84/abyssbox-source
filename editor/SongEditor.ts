@@ -2662,7 +2662,7 @@ export class SongEditor {
             }
 
             .mobileMenu {
-                height: 100vh !important;
+                height: 100dvh !important;
                 width: 64px !important;
 
                 display: flex;
@@ -2670,15 +2670,15 @@ export class SongEditor {
             }
 
             .pattern-area {
-                height: 100vh !important;
-                max-height: 100vh !important;
+                height: 100dvh !important;
+                max-height: 100dvh !important;
             }
 
             .play-pause-area2 {
-                height: 100vh !important;
+                height: 100dvh !important;
                 width: 4vw !important;
                 bottom: 0 !important;
-                right: 16vw !important;
+                right: 16dvw !important;
                 left: unset !important;
             }
 
@@ -2692,7 +2692,7 @@ export class SongEditor {
             }
 
             .track-area {
-                width: 78vw !important;
+                width: 78dvw !important;
             }
 
             .mobilePatternButton, .mobileTrackButton, .mobileSettingsButton {
@@ -2718,7 +2718,7 @@ export class SongEditor {
 
             .beepboxEditor {
                 display: flex !important;
-                height: 100vh;
+                height: 100dvh;
                 flex-direction: column;
                 justify-content: space-between;
                 gap: 5px;
@@ -2727,7 +2727,7 @@ export class SongEditor {
             .play-pause-area2 {
                 height: unset !important;
                 width: 100% !important
-                bottom: 16vh !important;
+                bottom: 16dvh !important;
                 right: unset !important;
                 left: 0 !important;
             }
@@ -2742,7 +2742,7 @@ export class SongEditor {
                 display: flex;
                 flex-direction: row;
                 height: 64px;
-                width: 100vw
+                width: 100dvw
             }
             
             .pattern-area {
@@ -2767,7 +2767,7 @@ export class SongEditor {
 
             .playback-bar-controls2 {
                 flex-direction: row !important;
-                height: 3vh;
+                height: 3dvh;
             }
             
             .mobilePlayButton, .mobilePauseButton, .mobilePrevBarButton, .mobileNextBarButton {
@@ -2776,7 +2776,7 @@ export class SongEditor {
             }
 
             .track-area {
-                width: 98vw !important;
+                width: 98dvw !important;
             }
 
             .mobilePatternButton, .mobileTrackButton, .mobileSettingsButton {
@@ -3019,8 +3019,8 @@ export class SongEditor {
             this._playPauseAreaMobile.style.display = this._menuMode == 1 ? "flex" : "none";
         }
 
-        this.mainLayer.style.minHeight = "80vh";
-        beepboxEditorContainer.style.maxHeight = "80vh";
+        this.mainLayer.style.minHeight = "80dvh";
+        beepboxEditorContainer.style.maxHeight = "80dvh";
 
         this._mobilePatternButton.setAttribute("class", this._menuMode == 1 ? "mobilePatternButton focused" : "mobilePatternButton");
         this._mobileTrackButton.setAttribute("class", this._menuMode == 2 ? "mobileTrackButton focused" : "mobileTrackButton");
@@ -3038,7 +3038,7 @@ export class SongEditor {
         const textContentMobile = document.getElementById('text-content');
         textContentMobile!.style.display = "none";
 
-        this._trackAndMuteContainer.style.maxHeight = "85vh";
+        this._trackAndMuteContainer.style.maxHeight = "85dvh";
         playPauseArea!.style.display = "flex";
         playPauseArea!.style.flexDirection = "column";
 
