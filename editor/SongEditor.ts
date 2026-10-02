@@ -3498,7 +3498,7 @@ export class SongEditor {
             this._pulseWidthSlider.input.title = prettyNumber(instrument.pulseWidth) + "%";
 
             if (effectsIncludeTransition(instrument.effects)) {
-                this._transitionRow.style.display = "";
+                this._transitionContainerRow.style.display = "";
                 if (this._openTransitionDropdown)
                     this._transitionDropdownGroup.style.display = "";
                 setSelectedValue(this._transitionSelect, instrument.transition);
@@ -3509,11 +3509,11 @@ export class SongEditor {
                 this._slideSpeedSlider.updateValue(instrument.slideTicks);
             } else {
                 this._transitionDropdownGroup.style.display = "none";
-                this._transitionRow.style.display = "none";
+                this._transitionContainerRow.style.display = "none";
             }
 
             if (effectsIncludeChord(instrument.effects)) {
-                this._chordSelectRow.style.display = "";
+                this._chordContainerRow.style.display = "";
                 this._chordDropdown.style.display = (instrument.chord == Config.chords.dictionary["arpeggio"].index) || (instrument.chord == Config.chords.dictionary["strum"].index) ? "" : "none";
                 this._chordDropdownGroup.style.display = (((instrument.chord == Config.chords.dictionary["arpeggio"].index) || (instrument.chord == Config.chords.dictionary["strum"].index)) && this._openChordDropdown) ? "" : "none";
                 setSelectedValue(this._chordSelect, instrument.chord);
@@ -3521,41 +3521,43 @@ export class SongEditor {
                 this._arpeggioSpeedRow.style.display = instrument.chord == Config.chords.dictionary["arpeggio"].index ? "" : "none";
                 this._strumSpeedRow.style.display = instrument.chord == Config.chords.dictionary["strum"].index ? "" : "none";
             } else {
-                this._chordSelectRow.style.display = "none";
+                this._chordContainerRow.style.display = "none";
                 this._chordDropdown.style.display = "none";
                 this._chordDropdownGroup.style.display = "none";
             }
 
             if (effectsIncludePitchShift(instrument.effects)) {
-                this._pitchShiftRow.style.display = "";
+                this._pitchShiftContainerRow.style.display = "";
                 this._pitchShiftSlider.updateValue(instrument.pitchShift);
                 this._pitchShiftSlider.input.title = (instrument.pitchShift - Config.pitchShiftCenter) + " semitone(s)";
                 for (const marker of this._pitchShiftFifthMarkers) {
                     marker.style.display = prefs.showFifth || prefs.advancedColorScheme ? "" : "none";
                 }
             } else {
-                this._pitchShiftRow.style.display = "none";
+                this._pitchShiftContainerRow.style.display = "none";
             }
 
             if (effectsIncludeDetune(instrument.effects)) {
-                this._detuneSliderRow.style.display = "";
+                this._detuneContainerRow.style.display = "";
                 this._detuneSlider.updateValue(instrument.detune - Config.detuneCenter);
                 this._detuneSlider.input.title = (Synth.detuneToCents(instrument.detune)) + " cent(s)";
             } else {
-                this._detuneSliderRow.style.display = "none";
+                this._detuneContainerRow.style.display = "none";
             }
 
             if (effectsIncludeVibrato(instrument.effects)) {
-                this._vibratoSelectRow.style.display = "";
+                this._vibratoContainerRow.style.display = "";
                 if (this._openVibratoDropdown)
                     this._vibratoDropdownGroup.style.display = "";
                 setSelectedValue(this._vibratoSelect, instrument.vibrato);
             } else {
                 this._vibratoDropdownGroup.style.display = "none";
-                this._vibratoSelectRow.style.display = "none";
+                this._vibratoContainerRow.style.display = "none";
             }
 
             if (effectsIncludeNoteFilter(instrument.effects)) {
+
+                this._noteFilterContainerRow.style.display = "";
 
                 this._noteFilterTypeRow.style.setProperty("--text-color-lit", colors.primaryNote);
                 this._noteFilterTypeRow.style.setProperty("--text-color-dim", colors.secondaryNote);
@@ -3588,6 +3590,7 @@ export class SongEditor {
                 this._noteFilterSimpleCutRow.style.display = "none";
                 this._noteFilterSimplePeakRow.style.display = "none";
                 this._noteFilterTypeRow.style.display = "none";
+                this._noteFilterContainerRow.style.display = "none";
             }
 
             if (this._doc.prefs.instrumentSettingsSimplifier) {
@@ -3623,31 +3626,29 @@ export class SongEditor {
             }
 
             if (effectsIncludeDistortion(instrument.effects)) {
-                this._distortionRow.style.display = "";
+                this._distortionContainerRow.style.display = "";
                 if (instrument.type == InstrumentType.chip || instrument.type == InstrumentType.customChipWave || instrument.type == InstrumentType.pwm || instrument.type == InstrumentType.supersaw)
                     this._aliasingRow.style.display = "";
                 else
                     this._aliasingRow.style.display = "none";
                 this._distortionSlider.updateValue(instrument.distortion);
             } else {
-                this._distortionRow.style.display = "none";
+                this._distortionContainerRow.style.display = "none";
                 this._aliasingRow.style.display = "none";
             }
 
             if (effectsIncludeInvertWave(instrument.effects)) {
-                this._invertWaveRow.style.display = "";
+                this._invertWaveContainerRow.style.display = "";
             } else {
-                this._invertWaveRow.style.display = "none";
+                this._invertWaveContainerRow.style.display = "none";
             }
 
             if (effectsIncludeBitcrusher(instrument.effects)) {
-                this._bitcrusherQuantizationRow.style.display = "";
-                this._bitcrusherFreqRow.style.display = "";
+                this._bitcrusherContainerRow.style.display = "";
                 this._bitcrusherQuantizationSlider.updateValue(instrument.bitcrusherQuantization);
                 this._bitcrusherFreqSlider.updateValue(instrument.bitcrusherFreq);
             } else {
-                this._bitcrusherQuantizationRow.style.display = "none";
-                this._bitcrusherFreqRow.style.display = "none";
+                this._bitcrusherContainerRow.style.display = "none";
             }
 
             if (effectsIncludePanning(instrument.effects)) {
@@ -3661,21 +3662,19 @@ export class SongEditor {
             }
 
             if (effectsIncludeChorus(instrument.effects)) {
-                this._chorusRow.style.display = "";
+                this._chorusContainerRow.style.display = "";
                 this._chorusSlider.updateValue(instrument.chorus);
             } else {
-                this._chorusRow.style.display = "none";
+                this._chorusContainerRow.style.display = "none";
             }
 
             if (effectsIncludeEcho(instrument.effects)) {
-                this._echoSustainRow.style.display = "";
+                this._echoContainerRow.style.display = "";
                 this._echoSustainSlider.updateValue(instrument.echoSustain);
-                this._echoDelayRow.style.display = "";
                 this._echoDelaySlider.updateValue(instrument.echoDelay);
                 this._echoDelaySlider.input.title = (Math.round((instrument.echoDelay + 1) * Config.echoDelayStepTicks / (Config.ticksPerPart * Config.partsPerBeat) * 1000) / 1000) + " beat(s)";
             } else {
-                this._echoSustainRow.style.display = "none";
-                this._echoDelayRow.style.display = "none";
+                this._echoContainerRow.style.display = "none";
             }
 
             if (effectsIncludeReverb(instrument.effects)) {
@@ -3699,29 +3698,21 @@ export class SongEditor {
             }
 
             if (effectsIncludePhaser(instrument.effects)) {
-                    this._phaserMixRow.style.display = "";
+                    this._phaserContainerRow.style.display = "";
                     this._phaserMixSlider.updateValue(instrument.phaserMix);
-                    this._phaserFreqRow.style.display = "";
                     this._phaserFreqSlider.updateValue(instrument.phaserFreq);
-                    this._phaserFeedbackRow.style.display = "";
                     this._phaserFeedbackSlider.updateValue(instrument.phaserFeedback);
-                    this._phaserStagesRow.style.display = "";
                     this._phaserStagesSlider.updateValue(instrument.phaserStages);
                 } else {
-                    this._phaserMixRow.style.display = "none";
-                    this._phaserFreqRow.style.display = "none";
-                    this._phaserFeedbackRow.style.display = "none";
-                    this._phaserStagesRow.style.display = "none";
+                    this._phaserContainerRow.style.display = "none";
                 }
 
                 if (effectsIncludeNoteRange(instrument.effects)) {
-                    this._upperNoteLimitRow.style.display = "";
-                    this._lowerNoteLimitRow.style.display = "";
+                    this._noteRangeContainerRow.style.display = "";
                     this._upperNoteLimitInputBox.value = String(instrument.upperNoteLimit);
                     this._lowerNoteLimitInputBox.value = String(instrument.lowerNoteLimit);
                 } else {
-                    this._upperNoteLimitRow.style.display = "none";
-                    this._lowerNoteLimitRow.style.display = "none";
+                    this._noteRangeContainerRow.style.display = "none";
                 }
 
                 if (effectsIncludeGranular(instrument.effects)) {
