@@ -3593,7 +3593,7 @@ export class SongEditor {
                 this._noteFilterContainerRow.style.display = "none";
             }
 
-            if (this._doc.prefs.instrumentSettingsSimplifier) {
+            if (this._doc.prefs.instrumentSettingsSimplifier || isMobile) {
                 const colors: ChannelColors = ColorConfig.getChannelColor(this._doc.song, this._doc.channel);
                 this._instOptionsDiv.style.setProperty("--text-color-lit", colors.primaryNote);
                 this._instOptionsDiv.style.setProperty("--text-color-dim", colors.secondaryNote);
