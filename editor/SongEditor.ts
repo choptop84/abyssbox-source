@@ -1024,12 +1024,12 @@ export class SongEditor {
     private readonly _reverbWetSlider: Slider = new Slider(input({ style: "margin: 0; position: sticky,", type: "range", min: "0", max: Config.reverbWetRange - 1, value: "0", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeReverbWet(this._doc, oldValue, newValue), false);
     private readonly _reverbDrySlider: Slider = new Slider(input({ style: "margin: 0; position: sticky,", type: "range", min: "0", max: Config.reverbDryRange - 1, value: "0", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeReverbDry(this._doc, oldValue, newValue), false);
     private readonly _reverbRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("reverb") }, "Reverb:"), this._reverbSlider.container,);
-    // private readonly _reverbWetRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("reverbWetDry") }, "Wet:"), this._reverbWetSlider.container,);
+    private readonly _reverbWetRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("reverbWetDry") }, "Wet:"), this._reverbWetSlider.container,);
     private readonly _reverbDryRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("reverbWetDry") }, "Dry:"), this._reverbDrySlider.container,);
     
     private readonly _reverbContainerRow: HTMLDivElement = div({ class: "effectRow", style: "display:flex; flex-direction:column;" },
         this._reverbRow,
-        //this._reverbWetRow,
+        this._reverbWetRow,
         this._reverbDryRow,
     );
 
