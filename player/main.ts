@@ -212,9 +212,13 @@ import { SongPlayerLayout } from "./Layout";
 		const playButtonContainer: HTMLDivElement = div({class: "playButtonContainer",style: "flex-shrink: 0; display: flex; padding: 2px; width: 80px; height: 100%; box-sizing: border-box; align-items: center;"},
 		playButton,
 	);
-		const loopIcon: SVGPathElement = path({d: "M 4 2 L 4 0 L 7 3 L 4 6 L 4 4 Q 2 4 2 6 Q 2 8 4 8 L 4 10 Q 0 10 0 6 Q 0 2 4 2 M 8 10 L 8 12 L 5 9 L 8 6 L 8 8 Q 10 8 10 6 Q 10 4 8 4 L 8 2 Q 12 2 12 6 Q 12 10 8 10 z"});
+		const loopIcon: SVGPathElement = path({d: "M4 2V4Q2 4 2 6T4 8v2Q0 10 0 6T4 2V4H8q2 0 2 2T8 8H4v2H8q4 0 4-4T8 2z", fill:ColorConfig.linkAccent});
+		const loopWholeSongIcon: SVGPathElement = path({d: "M 4 2 L 4 0 L 7 3 L 4 6 L 4 4 Q 2 4 2 6 Q 2 8 4 8 L 4 10 Q 0 10 0 6 Q 0 2 4 2 M 8 10 L 8 12 L 5 9 L 8 6 L 8 8 Q 10 8 10 6 Q 10 4 8 4 L 8 2 Q 12 2 12 6 Q 12 10 8 10 z", fill:ColorConfig.linkAccent});
+		const noLoopIcon: SVGPathElement = path({ d: "M0 9v2H9v2l3-3L9 7V9ZM0 2V4H9V6l3-3L9 0V2", fill:ColorConfig.uiWidgetBackground});
 		const loopButton: HTMLButtonElement = button({title: "loop", class:"spIcon loopIcon", style: "background: none; flex: 0 0 12px; margin: 0 3px; width: 12px; height: 12px; display: flex;"}, svg({width: 12, height: 12, viewBox: "0 0 12 12"},
 		loopIcon,
+		loopWholeSongIcon,
+		noLoopIcon
 	));
 	
 
@@ -423,9 +427,12 @@ import { SongPlayerLayout } from "./Layout";
 					//	titleText.textContent = decodeURIComponent(value);
 					//	break;
 					case "loop":
-						synth.loopRepeatCount = (value != "1") ? 0 : -1;
+						if (synth.song?.loopType != undefined) {
+						synth.loopRepeatCount = (synth.song.loopType == 3) ? 0 : -1;
 						renderLoopIcon();
-						break;
+						}
+					break;
+						
 				}
 			} else {
 				loadSong(myHash, false);
@@ -564,11 +571,15 @@ import { SongPlayerLayout } from "./Layout";
 		// The end of the layout event code.
 
 	function onToggleLoop(): void {
-		if (synth.loopRepeatCount == -1) {
-			synth.loopRepeatCount = 0;
-		} else {
-			synth.loopRepeatCount = -1;
+		if (synth.song?.loopType != undefined) {
+			if (synth.song.loopType < 3) {
+				synth.song.loopType++;
+			} else {
+				synth.song.loopType = 1;
+				synth.loopRepeatCount = -1;
+			}
 		}
+
 		renderLoopIcon();
 	}
 	
@@ -947,7 +958,12 @@ import { SongPlayerLayout } from "./Layout";
 	}
 	
 	function renderLoopIcon(): void {
-		loopIcon.setAttribute("fill", (synth.loopRepeatCount == -1) ? ColorConfig.linkAccent : ColorConfig.uiWidgetBackground);
+		if (synth.song?.loopType != undefined) {
+			loopIcon.setAttribute("display", (synth.song.loopType == 1) ? "" : "none");
+			loopWholeSongIcon.setAttribute("display", (synth.song.loopType == 2) ? "" : "none");
+			noLoopIcon.setAttribute("display", (synth.song.loopType == 3) ? "" : "none");
+			if (synth.song.loopType == 3) synth.loopRepeatCount = 0;
+		}
 	}
 	
 	function renderZoomIcon(): void {

@@ -3,9 +3,9 @@ import { SongDocument } from "./SongDocument";
 import { Prompt } from "./Prompt";
 // import { Config } from "../synth/SynthConfig";
 import { ChangeGroup } from "./Change";
-import { ChangeSongAuthor, ChangeSongTitle, ChangeSongDescription, ChangeShowSongDetails } from "./changes";
+import { ChangeSongAuthor, ChangeSongTitle, ChangeSongDescription, ChangeShowSongDetails, ChangeLoopType } from "./changes";
 
-const {button, div, h2, input, br, textarea} = HTML;
+const {button, div, h2, input, br, textarea, select, option} = HTML;
 
 export class SongDetailsPrompt implements Prompt {
 	private readonly _cancelButton: HTMLButtonElement = button({class: "cancelButton"});
@@ -14,10 +14,20 @@ export class SongDetailsPrompt implements Prompt {
 	private readonly _songAuthor: HTMLInputElement = input({ placeholder:"Enter Name Here", type: "text", style: "width: 100%;", value: this._doc.song.author, maxlength: 30 });
 	private readonly _songDescription: HTMLTextAreaElement = textarea({ placeholder:"Enter Description Here", style: "width: 100%; resize: none; background: var(--editor-background); color: white; height: 64px; border: 0.5px solid var(--input-box-outline); font-size: 14px;", maxlength: 1200 }, this._doc.song.description);
 	// private readonly _songWebLink: HTMLInputElement = input({ type: "text", style: "width: 13em;", value: "https://example.com", maxlength: 30 });
-	private readonly _showSongDetailsBox: HTMLInputElement = input({style: "width: 3em; margin-left: 1em;", type: "checkbox"});
+	private readonly _showSongDetailsBox: HTMLInputElement = input({style: "width: 1em; margin-left: 1em;", type: "checkbox"});
 	private readonly _computedSamplesLabel: HTMLDivElement = div({ style: "width: 10em;" }, new Text("0:00"));
 	private readonly _cantShortenLabel: HTMLDivElement = div({}, "You cannot shorten this url!");
-	
+	private readonly _songLoopTypeSelector: HTMLSelectElement = select({},		
+		option({ value: 0}, "Loop within bar"),
+		option({ value: 1}, "Loop entire song"),
+		option({ value: 2}, "Disable looping"),
+	);
+		
+	private readonly _songLoopTypeContainer: HTMLDivElement = div({id: "selectContainer"},
+		this._songLoopTypeSelector
+	);
+
+
 	public readonly container: HTMLDivElement = div({class: "prompt noSelection", style: "width: 250px;"},
 		h2("Song Details"),
 		// justify-content: start;
@@ -36,6 +46,10 @@ export class SongDetailsPrompt implements Prompt {
 		div({style: "vertical-align: middle; align-items: center; justify-content: space-between;"},
 			"Show info on load: ",
 			this._showSongDetailsBox,
+		),
+		div({style: "vertical-align: middle; align-items: center; justify-content: space-between; display: flex;"},
+			"Song looping type: ",
+			this._songLoopTypeContainer,
 		),
 		div({ style: "display: flex; flex-direction: column; align-items: baseline;" },
 			"Song Theme: ",
@@ -67,6 +81,8 @@ export class SongDetailsPrompt implements Prompt {
 		this._cantShortenLabel.style.display = (location.href.length > ( window.localStorage.getItem("shortenerStrategySelect") == "isgd" ? 5010 : 12233)) ? "": "none";
 
 		(this._computedSamplesLabel.firstChild as Text).textContent = this._doc.samplesToTime(this._doc.synth.getTotalSamples(true, true, 0));
+		
+		this._songLoopTypeSelector.value = String(this._doc.song.loopType - 1);
 
 		this._okayButton.addEventListener("click", this._saveChanges);
 		this._cancelButton.addEventListener("click", this._close);
@@ -93,6 +109,7 @@ export class SongDetailsPrompt implements Prompt {
 		group.append(new ChangeSongAuthor(this._doc, this._doc.song.author, this._songAuthor.value));
 		group.append(new ChangeSongDescription(this._doc, this._doc.song.description, this._songDescription.value));
 		group.append(new ChangeShowSongDetails(this._doc, this._doc.song.showSongDetails, this._showSongDetailsBox.checked));
+		group.append(new ChangeLoopType(this._doc, this._doc.song.loopType, Number(this._songLoopTypeSelector.value)));
 		this._doc.prompt = null;
 		this._doc.record(group, true);
 	}
