@@ -93,7 +93,8 @@ export const enum DropdownID {
     FM = 4,
     PulseWidth = 5,
     Unison = 6,
-    Envelope = 7
+    Envelope = 7,
+    Reverb = 8
 }
 
 export const enum EffectType {

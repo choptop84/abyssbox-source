@@ -1023,14 +1023,18 @@ export class SongEditor {
     private readonly _reverbSlider: Slider = new Slider(input({ style: "margin: 0; position: sticky,", type: "range", min: "0", max: Config.reverbRange - 1, value: "0", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeReverb(this._doc, oldValue, newValue), false);
     private readonly _reverbWetSlider: Slider = new Slider(input({ style: "margin: 0; position: sticky,", type: "range", min: "0", max: Config.reverbWetRange - 1, value: "0", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeReverbWet(this._doc, oldValue, newValue), false);
     private readonly _reverbDrySlider: Slider = new Slider(input({ style: "margin: 0; position: sticky,", type: "range", min: "0", max: Config.reverbDryRange - 1, value: "0", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeReverbDry(this._doc, oldValue, newValue), false);
-    private readonly _reverbRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("reverb") }, "Reverb:"), this._reverbSlider.container,);
+    private readonly _reverbDropdown: HTMLButtonElement = button({ style: "margin-left:0em; height:1.5em; width: 10px; padding: 0px; font-size: 8px;", onclick: () => this._toggleDropdownMenu(DropdownID.Reverb) }, "▼");
+    private readonly _reverbRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("reverb") }, "Reverb:"), this._reverbDropdown, this._reverbSlider.container,);
     private readonly _reverbWetRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("reverbWetDry") }, "Wet:"), this._reverbWetSlider.container,);
     private readonly _reverbDryRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("reverbWetDry") }, "Dry:"), this._reverbDrySlider.container,);
     
+    
+
+    private readonly _reverbDropdownGroup: HTMLElement = div({ class: "editor-controls", style: `display: none;` }, this._reverbWetRow, this._reverbDryRow);
+
     private readonly _reverbContainerRow: HTMLDivElement = div({ class: "effectRow", style: "display:flex; flex-direction:column;" },
         this._reverbRow,
-        this._reverbWetRow,
-        this._reverbDryRow,
+        this._reverbDropdownGroup,
     );
 
 
@@ -1698,6 +1702,7 @@ export class SongEditor {
     private _openOperatorDropdowns: boolean[] = [];
     private _openPulseWidthDropdown: boolean = false;
     private _openUnisonDropdown: boolean = false;
+    private _openReverbDropdown: boolean = false;
 
     private outVolumeHistoricTimer: number = 0;
     private outVolumeHistoricCap: number = 0;
@@ -2206,6 +2211,11 @@ export class SongEditor {
                 target = this._unisonDropdown;
                 this._openUnisonDropdown = this._openUnisonDropdown ? false : true;
                 group = this._unisonDropdownGroup;
+                break;
+            case DropdownID.Reverb:
+                target = this._reverbDropdown;
+                this._openReverbDropdown = this._openReverbDropdown ? false : true;
+                group = this._reverbDropdownGroup;
                 break;
         }
 
@@ -3504,8 +3514,7 @@ export class SongEditor {
 
             if (effectsIncludeTransition(instrument.effects)) {
                 this._transitionContainerRow.style.display = "";
-                if (this._openTransitionDropdown)
-                    this._transitionDropdownGroup.style.display = "";
+                if (this._openTransitionDropdown) this._transitionDropdownGroup.style.display = "";
                 setSelectedValue(this._transitionSelect, instrument.transition);
                 this._slideSpeedRow.style.display = (Config.transitions[instrument.transition].slides == true) ? "" : "none";
                 this._slideSpeedSlider.input.title = "x" + prettyNumber(49 - instrument.slideTicks);
@@ -3687,6 +3696,7 @@ export class SongEditor {
                 this._reverbSlider.updateValue(instrument.reverb);
                 this._reverbWetSlider.updateValue(instrument.reverbWet);
                 this._reverbDrySlider.updateValue(instrument.reverbDry);
+                if (this._openReverbDropdown) this._reverbDropdownGroup.style.display = "";
             } else {
                 this._reverbContainerRow.style.display = "none";
             }
