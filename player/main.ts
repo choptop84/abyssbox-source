@@ -11,11 +11,13 @@ import { SongPlayerLayout } from "./Layout";
 	const {a, button, div, h1, input, canvas, form, label,h2} = HTML;
 	const {svg, circle, rect, path} = SVG;
 
+	const isInRecovery = window.self != window.top;
+
 	const isMobile: boolean = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|android|ipad|playbook|silk/i.test(navigator.userAgent);
 
 	const colorTheme: string | null = getLocalStorage("colorTheme");
 	const setSpLayout: string | null = getLocalStorage("spLayout");
-	SongPlayerLayout.setLayout(setSpLayout === null ? "classic" : setSpLayout);
+	if (!isInRecovery) SongPlayerLayout.setLayout(setSpLayout === null ? "classic" : setSpLayout);
 
 	let prevHash: string | null = null;
 	let id: string = ((Math.random() * 0xffffffff) >>> 0).toString(16);
@@ -306,6 +308,18 @@ import { SongPlayerLayout } from "./Layout";
 					),
 			),
 	);
+
+	const elementsToHide = [loopButton, volumeIcon, volumeSlider, zoomButton, volumeBarContainerDiv, oscilascope.canvas, titleText, layoutStuffs, copyLink]
+
+	let hasHidden = false;
+
+	if (isInRecovery && !hasHidden) {
+		for (let i = 0; i < elementsToHide.length; i++) {
+			elementsToHide[i].style.display = "none";
+		}
+		hasHidden = true;
+	}
+
 	document.body.appendChild(songPlayerContainer);
 	songPlayerContainer.appendChild(promptContainer);
 	promptContainer.appendChild(layoutContainer);
@@ -414,11 +428,11 @@ import { SongPlayerLayout } from "./Layout";
 							if (synth.song != null) {
 								if (synth.song.setSongTheme != null) {
 								if (synth.song?.setSongTheme == "none") {
-									ColorConfig.setTheme(colorTheme === null ? "AbyssBox Classic" : colorTheme); } else {
+									ColorConfig.setTheme(colorTheme === null ? "AbyssBox 0.8" : colorTheme); } else {
 									ColorConfig.setTheme(synth.song.setSongTheme);
 									}
 								} else {
-									ColorConfig.setTheme(colorTheme === null ? "AbyssBox Classic" : colorTheme); 
+									ColorConfig.setTheme(colorTheme === null ? "AbyssBox 0.8" : colorTheme); 
 								}
 							}
 						}
