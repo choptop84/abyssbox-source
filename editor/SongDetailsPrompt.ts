@@ -7,6 +7,23 @@ import { ChangeSongAuthor, ChangeSongTitle, ChangeSongDescription, ChangeShowSon
 
 const {button, div, h2, input, br, textarea, select, option} = HTML;
 
+const localShortenerStrategy: string | null = window.localStorage.getItem("shortenerStrategySelect");
+const shorteners = {
+    "wackybox": {
+        maxLength: 128000,
+        altName: "wackybox.org",
+        encode: encodeURIComponent,
+        shortenerStrategy: "https://wackybox.org/api-create.php?url="
+    },
+    "isgd": {
+        maxLength: 5000,
+        altName: "is.gd",
+        encode: encodeURIComponent,
+        shortenerStrategy: "https://is.gd/create.php?format=simple&url="
+    }
+}
+const shortener = shorteners[(localShortenerStrategy as keyof typeof shorteners) || "wackybox"];
+
 export class SongDetailsPrompt implements Prompt {
 	private readonly _cancelButton: HTMLButtonElement = button({class: "cancelButton"});
 	private readonly _okayButton: HTMLButtonElement = button({class: "okayButton", style: "width:45%;"}, "Okay");
@@ -78,7 +95,7 @@ export class SongDetailsPrompt implements Prompt {
 	constructor(private _doc: SongDocument) {	
 		this._showSongDetailsBox.checked = this._doc.song.showSongDetails;
 
-		this._cantShortenLabel.style.display = (location.href.length > ( window.localStorage.getItem("shortenerStrategySelect") == "isgd" ? 5010 : 12233)) ? "": "none";
+		this._cantShortenLabel.style.display = (location.href.length > shortener.maxLength) ? "": "none";
 
 		(this._computedSamplesLabel.firstChild as Text).textContent = this._doc.samplesToTime(this._doc.synth.getTotalSamples(true, true, 0));
 		
