@@ -6319,7 +6319,8 @@ export class SongEditor {
                     this._openPrompt("configureShortener");
                 break;
             case "viewPlayer":
-                location.href = "player/#song=" + this._doc.song.toBase64String();
+                const isIndexHmtl = location.pathname.includes("index.html") ? "index.html" : "";
+                location.href =  `player/${isIndexHmtl}#song=` + this._doc.song.toBase64String();
                 break;
             case "copyEmbed":
                 this._copyTextToClipboard(`<iframe width="384" height="60" style="border: none;" src="${new URL("player/#song=" + this._doc.song.toBase64String(), location.href).href}"></iframe>`);

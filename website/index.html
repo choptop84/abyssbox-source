@@ -270,10 +270,111 @@
             position: absolute; 
             pointer-events: none;
         }
+
+        #warningheader {
+            background:var(--ui-widget-focus, var(--link-accent)); 
+            width:15vw; 
+            z-index: 10;
+            cursor: move;
+            padding-top: 20px;
+            padding: 5px;
+            border: solid var(--ui-widget-background) 3px;
+            border-radius: 15px;
+            padding-top: 24px;
+        }
+
+        #warning {
+            -moz-user-select: -moz-none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            position: absolute;
+            z-index: 10;
+        }
+
+        #closeWarning {
+            height: 24px;
+            width: 24px;
+            background: var(--ui-widget-background);
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            border-radius: 10px;
+            text-align: center;
+            align-content: center;
+        }
+
+        #closeWarning:hover {
+            filter: brightness(110%);
+        }
+        
     </style>
 </head>
 	 <!--WIP, DO NOT USE-->
 	 <!--<center>THIS URL IS MEANT FOR TESTING THE CHANGES MADE IN ULTRABOX 2.0. THIS URL WILL BE DELETED WHEN ULTRABOX 2.0 RELEASES, AND ANY SONGS YOU MAKE HERE MAY BE UNRECOVERABLE. YOU'VE BEEN WARNED.</center>-->
+
+    <div id="warning" style="right:50px; top:50px;">
+        <div id="warningheader">
+            Warning! This is an Experimental build of AbyssBox, at any time your song could become completely corrupted later, so saving here is not recommended! You've been warned! 
+        </div>
+        <div id="closeWarning" onclick="hideWarning()">
+            X
+        </div>
+    </div>
+
+     <script>
+        //Make the DIV element draggagle:
+        dragElement(document.getElementById("warning"));
+        
+        if (!location.pathname.includes("/abyssbox-experimental/")) hideWarning();
+
+        function dragElement(elmnt) {
+            var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            if (document.getElementById(elmnt.id + "header")) {
+                /* if present, the header is where you move the DIV from:*/
+                document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+            } else {
+                /* otherwise, move the DIV from anywhere inside the DIV:*/
+                elmnt.onmousedown = dragMouseDown;
+            }
+            
+            function dragMouseDown(e) {
+                e = e || window.event;
+                e.preventDefault();
+                // get the mouse cursor position at startup:
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                // call a function whenever the cursor moves:
+                document.onmousemove = elementDrag;
+            }
+            
+            function elementDrag(e) {
+                e = e || window.event;
+                e.preventDefault();
+                // calculate the new cursor position:
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                // set the element's new position:
+                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+            }
+            
+            function closeDragElement() {
+                /* stop moving when mouse button is released:*/
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        }
+        function hideWarning() {
+            let element = document.getElementById("warning");
+            element.style.display = "none";
+        }
+        </script>
+
 <body id="secondImage">
     <img id="icon" src="icon_32.png" width="32" height="32"/>   
     <div id="overlay" class="overlay">
@@ -285,11 +386,9 @@
 
     <script> 
 
-        if (location.pathname.startsWith("/abyssbox-source/website/")) {
+        if (location.pathname.includes("/abyssbox-source/website/") && !location.pathname.includes("index.html")) {
             location.pathname = "/abyssbox-testing/" + location.pathname.slice("/abyssbox-source/website/".length);
-        } else if (location.pathname.startsWith("/abyssbox-source/website/index.html")) {
-            console.log("Welcome to AbyssBox Source (The HTML File)");
-        }
+        } 
 
     </script>
 
@@ -339,30 +438,43 @@
                 managable!
             </p>
 
-            <div class="bsky-embed" style="justify-content: center; display: flex; cursor: pointer;">
+            <div id="abyssboxAppEmbed" class="bsky-embed" style="justify-content: center; display: flex; cursor: pointer; ">
+                <div onclick="window.open('https:\/\/choptop84.github.io/abyssbox-app', '_blank')" style="height: 80px; background: #421422; width: 450px; border-radius: 20px; border: solid 1px #8d2b50; display: flex; flex-direction: row; align-items: center;">
+                    <div style="height: 100%;width: 80px;border-right: 1px solid #8d2b50;display: flex;align-content: center;justify-content: center;">
+                        <div style="background-image: url(./icon_windows_150.png);background-size: 100%;background-repeat: no-repeat;background-position: center;height: 90%;border-radius: 15px;width: 90%;align-self: center;"></div>
+                    </div>
+                    <div style="flex: 1;text-align: center;font-size: 21px;text-decoration: underline;color: #ff668c;">AbyssBox (Main)</div>
+                </div>
+            </div>
+
+            <div id="abyssboxAltEmbed" class="bsky-embed" style="justify-content: center; display: flex; cursor: pointer; ">
+                <div onclick="window.open('https:\/\/choptop84.github.io/abyssbox-alt', '_blank')" style="height: 80px; background: #421422; width: 450px; border-radius: 20px; border: solid 1px #8d2b50; display: flex; flex-direction: row; align-items: center;">
+                    <div style="height: 100%;width: 80px;border-right: 1px solid #8d2b50;display: flex;align-content: center;justify-content: center;">
+                        <div style="background-image: url(./icon_windows_150.png);background-size: 100%;background-repeat: no-repeat;background-position: center;height: 90%;border-radius: 15px;width: 90%;align-self: center;"></div>
+                    </div>
+                    <div style="flex: 1;text-align: center;font-size: 21px;text-decoration: underline;color: #ff668c;">AbyssBox (Alternative)</div>
+                </div>
+            </div>
+
+            <div class="bsky-embed" style="justify-content: center; display: flex; cursor: pointer; margin-top: 10px;">
                 <div onclick="window.open('./bluesky', '_blank')" style="height: 80px; background: black; width: 450px; border-radius: 20px; border: solid 1px #444; display: flex; flex-direction: row; align-items: center;">
                     <div style="height: 100%;width: 80px;border-right: 1px solid #444;/*! border-radius: 10px; */background-image: url(./image_assets/bsky.png);background-size: 90%;background-repeat: no-repeat;background-position: center;"></div>
                     <div style="flex: 1;text-align: center;font-size: 21px;text-decoration: underline;color: #1185fe;">Check out what's new on Bluesky!</div>
                 </div>
             </div>
+
             <div class="bsky-embed" style="justify-content: center; display: flex; cursor: pointer; margin-top: 10px;">
                 <div onclick="window.open('./manual.html', '_blank')" style="height: 80px; background: #421422; width: 450px; border-radius: 20px; border: solid 1px #8d2b50; display: flex; flex-direction: row; align-items: center;">
                     <div style="height: 100%;width: 80px;border-right: 1px solid #8d2b50;/*! border-radius: 10px; */background-image: url(./image_assets/manual.png);background-size: 90%;background-repeat: no-repeat;background-position: center;"></div>
                     <div style="flex: 1;text-align: center;font-size: 21px;text-decoration: underline;color: #ff668c;">Find the AbyssBox User Manual here!</div>
                 </div>
             </div>
-            <!--
-    <div class="donation">
-        BeepBox is a passion project, and will always be free to use. If you find it valuable and have the means, any gratuity via
-        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-            <input type="hidden" name="cmd" value="_donations" />
-            <input type="hidden" name="business" value="QZJTX9GRYEV9N" />
-            <input type="hidden" name="currency_code" value="USD" />
-            <input type="submit" name="submit" value="Paypal"/>
-        </form>
-        would be appreciated!
-    </div>
-    -->
+
+            <script>
+                if (!location.pathname.includes("/abyssbox-app/")) document.getElementById("abyssboxAltEmbed").style.display = "none";
+                if (!location.pathname.includes("/abyssbox-alt/") && !location.pathname.includes("/abyssbox-experimental/")) document.getElementById("abyssboxAppEmbed").style.display = "none";
+            </script>
+
         </section>
 
         <div class="column-container" >

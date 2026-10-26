@@ -448,8 +448,37 @@ import { SongPlayerLayout } from "./Layout";
 	}
 
 	function shortenSongPlayerUrl(): void {
-		let shortenerStrategy: string = "https://tinyurl.com/api-create.php?url=";
-		window.open(shortenerStrategy + encodeURIComponent(new URL("#song=" + synth.song!.toBase64String(), location.href).href));
+		let localShortenerStrategy: string | null = window.localStorage.getItem("shortenerStrategySelect");
+
+                if (localShortenerStrategy == "tinyurl") {
+                    window.localStorage.setItem("shortenerStrategySelect", "wackybox");
+                    localShortenerStrategy = "wackybox";
+                } 
+
+                const shorteners = {
+                    "wackybox": {
+                        maxLength: 128000,
+                        altName: "wackybox.org",
+                        encode: encodeURIComponent,
+                        shortenerStrategy: "https://wackybox.org/api-create.php?url="
+                    },
+                    "isgd": {
+                        maxLength: 5000,
+                        altName: "is.gd",
+                        encode: encodeURIComponent,
+                        shortenerStrategy: "https://is.gd/create.php?format=simple&url="
+                    }
+                }
+
+                const shortener = shorteners[(localShortenerStrategy as keyof typeof shorteners) || "wackybox"]
+
+				if (synth.song == null) return;
+                const uri: string = shortener.encode(new URL("#" + synth.song.toBase64String(), location.href).href);
+                const uriLength: number = uri.length;
+
+				if (uriLength > shortener.maxLength) return;
+
+                window.open(shortener.shortenerStrategy + uri);
 	}
 	
 	let pauseIfAnotherPlayerStartsHandle: ReturnType<typeof setInterval> | null = null;
