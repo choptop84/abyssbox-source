@@ -6304,7 +6304,7 @@ export class SongEditor {
 
                 const shortener = shorteners[(localShortenerStrategy as keyof typeof shorteners) || "wackybox"]
 
-                const uri: string = shortener.encode(new URL("#" + this._doc.song.toBase64String(), OFFLINE ? "https://box.slarmoo.com/website/" : location.href).href);
+                const uri: string = shortener.encode(new URL("#" + this._doc.song.toBase64String(), location.href).href);
                 const uriLength: number = uri.length;
 
                 if (uriLength > shortener.maxLength) {
