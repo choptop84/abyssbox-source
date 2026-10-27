@@ -660,12 +660,12 @@ export function loadBuiltInSamples(set: number): void {
 	    sampleLoadingState.urlTable[chipWaveIndex] = "legacySamples";
 	}
 
-	loadScript("samples.js")
-	.then(() => loadScript("samples2.js"))
-	.then(() => loadScript("samples3.js"))
-	.then(() => loadScript("drumsamples.js"))
-	.then(() => loadScript("wario_samples.js"))
-	.then(() => loadScript("kirby_samples.js"))
+	loadScript(`${ location.pathname.includes("player") ? "." : ""}./samples/samples.js`)
+	.then(() => loadScript(`${ location.pathname.includes("player") ? "." : ""}./samples/samples2.js`))
+	.then(() => loadScript(`${ location.pathname.includes("player") ? "." : ""}./samples/samples3.js`))
+	.then(() => loadScript(`${ location.pathname.includes("player") ? "." : ""}./samples/drumsamples.js`))
+	.then(() => loadScript(`${ location.pathname.includes("player") ? "." : ""}./samples/wario_samples.js`))
+	.then(() => loadScript(`${ location.pathname.includes("player") ? "." : ""}./samples/kirby_samples.js`))
 	.then(() => {
 	    // Now put the right sounds in there after everything
 	    // got loaded.
@@ -788,7 +788,7 @@ export function loadBuiltInSamples(set: number): void {
 	    sampleLoadingState.urlTable[chipWaveIndex] = "nintariboxSamples";
 	}
 
-	loadScript("nintaribox_samples.js")
+	loadScript(`${ location.pathname.includes("player") ? "." : ""}./samples/nintaribox_samples.js`)
 	.then(() => {
 	    // Now put the right sounds in there after everything
 	    // got loaded.
@@ -851,7 +851,7 @@ export function loadBuiltInSamples(set: number): void {
 	    sampleLoadingState.urlTable[chipWaveIndex] = "marioPaintboxSamples";
 	}
 
-	loadScript("mario_paintbox_samples.js")
+	loadScript(`${ location.pathname.includes("player") ? "." : ""}./samples/mario_paintbox_samples.js`)
 	.then(() => {
 	    // Now put the right sounds in there after everything
 	    // got loaded.
