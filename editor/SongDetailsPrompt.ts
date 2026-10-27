@@ -7,7 +7,6 @@ import { ChangeSongAuthor, ChangeSongTitle, ChangeSongDescription, ChangeShowSon
 
 const {button, div, h2, input, br, textarea, select, option} = HTML;
 
-const localShortenerStrategy: string | null = window.localStorage.getItem("shortenerStrategySelect");
 const shorteners = {
     "wackybox": {
         maxLength: 128000,
@@ -22,7 +21,7 @@ const shorteners = {
         shortenerStrategy: "https://is.gd/create.php?format=simple&url="
     }
 }
-const shortener = shorteners[(localShortenerStrategy as keyof typeof shorteners) || "wackybox"];
+
 
 export class SongDetailsPrompt implements Prompt {
 	private readonly _cancelButton: HTMLButtonElement = button({class: "cancelButton"});
@@ -95,6 +94,7 @@ export class SongDetailsPrompt implements Prompt {
 	constructor(private _doc: SongDocument) {	
 		this._showSongDetailsBox.checked = this._doc.song.showSongDetails;
 
+		const shortener = shorteners[(this._doc.prefs.shortenerStrategySelect as keyof typeof shorteners) || "wackybox"];
 		this._cantShortenLabel.style.display = (location.href.length > shortener.maxLength) ? "": "none";
 
 		(this._computedSamplesLabel.firstChild as Text).textContent = this._doc.samplesToTime(this._doc.synth.getTotalSamples(true, true, 0));

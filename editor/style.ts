@@ -1917,6 +1917,28 @@ button.mobilePauseButton::before {
 	justify-content: space-between;
 }
 
+.beepboxEditor .effectExt {
+	border-top: ${ColorConfig.uiWidgetBackground} 1px solid;
+}
+
+.beepboxEditor .effectRow .effectLabel {
+	display: none;
+}
+
+.beepboxEditor .effectExt .effectLabel {
+	display: unset;
+	align-self: center;
+	cursor: pointer;
+}
+
+.effectExt > .effectLabel.hidden {
+	color: ${ColorConfig.uiWidgetBackground};
+}
+
+.effectExt > .effectGroup.hidden {
+	display: none;
+}
+
 .beepboxEditor .selectRow > :last-child {
 	width: 62.5%;
 	flex-shrink: 0;

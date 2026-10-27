@@ -20,7 +20,6 @@ export class Preferences {
 	public oldMobileLayout: boolean;
 	public instrumentSettingsSimplifier: boolean;
 	public promptSongDetails: boolean;
-
 	
 	// Appearance
 	public showThird: boolean;
@@ -37,6 +36,7 @@ export class Preferences {
 	public frostedGlassBackground: boolean;
 	public displayShortcutButtons: boolean;
 	public oldModNotes: boolean;
+	public newEffectMenu: boolean;
 	public selectionCounter: boolean;
 	public layout: string;
 	public colorTheme: string;
@@ -70,6 +70,7 @@ export class Preferences {
 	
 	// stuff I'm not using
 	public showInstrumentScrollbars: boolean;
+	public shortenerStrategySelect: string | null;
 
 	constructor() {
 		this.reload();
@@ -113,6 +114,7 @@ export class Preferences {
 		this.oldModNotes = window.localStorage.getItem("oldModNotes") == "true";
 		this.selectionCounter = window.localStorage.getItem("selectionCounter") != "false";
 		this.promptSongDetails = window.localStorage.getItem("promptSongDetails") != "false";
+		this.newEffectMenu = window.localStorage.getItem("newEffectMenu") == "true";
 
 		// other stuff
 		this.keyboardLayout = window.localStorage.getItem("keyboardLayout") || "wickiHayden";
@@ -121,6 +123,14 @@ export class Preferences {
 		this.colorTheme = window.localStorage.getItem("colorTheme") || "AbyssBox Classic";
 		this.customTheme = window.localStorage.getItem("customTheme");
                 this.customTheme2 = window.localStorage.getItem("customTheme2");
+
+		this.shortenerStrategySelect = window.localStorage.getItem("shortenerStrategySelect") || "wackybox";
+		
+		if (this.shortenerStrategySelect == "tinyurl") {
+			window.localStorage.setItem("shortenerStrategySelect", "wackybox");
+			this.shortenerStrategySelect = "wackybox";
+		}
+
 		this.visibleOctaves = ((<any>window.localStorage.getItem("visibleOctaves")) >>> 0) || Preferences.defaultVisibleOctaves;
 		
 		const defaultScale: Scale | undefined = Config.scales.dictionary[window.localStorage.getItem("defaultScale")!];
@@ -175,6 +185,7 @@ export class Preferences {
 		window.localStorage.setItem("notesFlashWhenPlayed", this.notesFlashWhenPlayed ? "true" : "false");
 		window.localStorage.setItem("selectionCounter", this.selectionCounter ? "true": "false");
 		window.localStorage.setItem("promptSongDetails", this.promptSongDetails ? "true" : "false");
+		window.localStorage.setItem("newEffectMenu", this.newEffectMenu ? "true" : "false");
 		window.localStorage.setItem("keyboardLayout", this.keyboardLayout);
 		window.localStorage.setItem("bassOffset", String(this.bassOffset));
 		window.localStorage.setItem("layout", this.layout);
@@ -189,6 +200,8 @@ export class Preferences {
 		window.localStorage.setItem("volume", String(this.volume));
 		window.localStorage.setItem("visibleOctaves", String(this.visibleOctaves));
 		window.localStorage.setItem("closePromptByClickoff", this.closePromptByClickoff ? "true" : "false");
+
+		window.localStorage.setItem("shortenerStrategySelect", this.shortenerStrategySelect);
 
 		window.localStorage.setItem("frostedGlassBackground", this.frostedGlassBackground ? "true" : "false");
 		window.localStorage.setItem("displayShortcutButtons", this.displayShortcutButtons ? "true" : "false");

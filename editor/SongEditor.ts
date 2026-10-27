@@ -64,6 +64,8 @@ const { button, div, input, select, span, optgroup, option, canvas} = HTML;
 
 const beepboxEditorContainer: HTMLElement = document.getElementById("beepboxEditorContainer")!;
 
+let hiddenEffects: Array<string> = [];
+
 function buildOptions(menu: HTMLSelectElement, items: ReadonlyArray<string | number>): HTMLSelectElement {
     for (let index: number = 0; index < items.length; index++) {
         menu.appendChild(option({ value: index }, items[index]));
@@ -858,6 +860,7 @@ export class SongEditor {
             option({ value: "frostedGlassBackground" }, "Use Frosted Glass Prompt Backdrops"),
             option({ value: "displayShortcutButtons" }, "Display Mobile Shortcut Buttons"),
             option({ value: "oldModNotes" }, 'Use Old Mod Notes'),
+            option({ value: "newEffectMenu" }, "Collapsable Effects"),
             option({ value: "selectionCounter" }, 'Selection Counter'),
             option({ value: "layout" }, "> Set Layout"),
             option({ value: "colorTheme" }, "> Set Theme"),
@@ -876,6 +879,22 @@ export class SongEditor {
     private readonly _songEqFilterEditor: FilterEditor = new FilterEditor(this._doc, false, false, true);
     private readonly _songEqFilterZoom: HTMLButtonElement = button({ style: "margin-left:0em; padding-left:0.2em; height:1.5em; max-width: 12px;", onclick: () => this._openPrompt("customSongEQFilterSettings") }, "+");
     
+    _setEffectVisible(effectName: string): void {
+        let effectVar = document.getElementById(effectName);
+        let effectLabel = document.getElementById(effectName+"Label");
+
+        if (hiddenEffects.includes(effectName)) { 
+            hiddenEffects.splice(hiddenEffects.indexOf(effectName), 1);
+        } else {
+            hiddenEffects.push(effectName);
+        };
+
+        console.log(hiddenEffects);
+
+        effectVar.setAttribute("class", hiddenEffects.includes(effectName) ? "effectGroup hidden" : "effectGroup");
+        effectLabel.setAttribute("class", hiddenEffects.includes(effectName) ? "effectLabel hidden" : "effectLabel");
+    }
+
     // MARK: Effect Rows
     // Transition
     private readonly _transitionDropdown: HTMLButtonElement = button({ style: "margin-left:0em; height:1.5em; width: 10px; padding: 0px; font-size: 8px;", onclick: () => this._toggleDropdownMenu(DropdownID.Transition) }, "▼");
@@ -890,9 +909,14 @@ export class SongEditor {
     private readonly _slideSpeedRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", style: "margin-left:4px;", onclick: () => this._openPrompt("slideSpeedSlider") }, "‣ Spd:"), this._slideSpeedDisplay, this._slideSpeedSlider.container);
     private readonly _transitionDropdownGroup: HTMLElement = div({ class: "editor-controls", style: "display: none;" }, this._slideSpeedRow, this._clicklessTransitionRow);
 
+    private readonly _transitionLabel: HTMLDivElement = div({ class: "effectLabel", onclick: () => this._setEffectVisible("transition"), id:"transitionLabel" }, "Transition type");
+
     private readonly _transitionContainerRow: HTMLDivElement = div({ class: "effectRow", style: "display:flex; flex-direction:column;" },
+        this._transitionLabel,
+        div({ class: "effectGroup", id:"transition"},
         this._transitionRow,
         this._transitionDropdownGroup
+        )
     );
 
     // Chord Type
@@ -911,9 +935,14 @@ export class SongEditor {
 
     private readonly _chordDropdownGroup: HTMLElement = div({ class: "editor-controls", style: "display: none;" }, this._strumSpeedRow, this._arpeggioSpeedRow, this._twoNoteArpRow);
 
+    private readonly _chordLabel: HTMLDivElement = div({ class: "effectLabel", onclick: () => this._setEffectVisible("chordType"), id:"chordTypeLabel" }, "Chord type");
+
     private readonly _chordContainerRow: HTMLDivElement = div({ class: "effectRow", style: "display:flex; flex-direction:column;" },
+        this._chordLabel,
+        div({ class: "effectGroup", id:"chordType"},
         this._chordSelectRow,
         this._chordDropdownGroup
+        )
     );
 
     // Pitch Shift
@@ -923,8 +952,13 @@ export class SongEditor {
     private readonly _pitchShiftMarkerContainer: HTMLDivElement = div({ style: "display: flex; position: relative;" }, this._pitchShiftSlider.container, div({ class: "pitchShiftMarkerContainer" }, this._pitchShiftTonicMarkers, this._pitchShiftFifthMarkers));
     private readonly _pitchShiftRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("pitchShift") }, "Pitch Shift:"), this._pitchShiftMarkerContainer);
  
+    private readonly _pitchShiftLabel: HTMLDivElement = div({ class: "effectLabel", onclick: () => this._setEffectVisible("pitchShift"), id:"pitchShiftLabel" }, "Pitch shift");
+
     private readonly _pitchShiftContainerRow: HTMLDivElement = div({ class: "effectRow", style: "display:flex; flex-direction:column;" },
+        this._pitchShiftLabel,
+        div({ class: "effectGroup", id:"pitchShift"},
         this._pitchShiftRow
+        )
     );
 
     // Detune 
@@ -935,8 +969,13 @@ export class SongEditor {
         div({ style: `color: ${ColorConfig.secondaryText}; margin-top: -3px;` }, this._detuneSliderInputBox),
     ), this._detuneSlider.container);
 
+    private readonly _detuneLabel: HTMLDivElement = div({ class: "effectLabel", onclick: () => this._setEffectVisible("detune"), id:"detuneLabel" }, "Detune");
+
     private readonly _detuneContainerRow: HTMLDivElement = div({ class: "effectRow", style: "display:flex; flex-direction:column;" },
+        this._detuneLabel,
+        div({ class: "effectGroup", id:"detune"},
         this._detuneSliderRow
+        )
     );
 
     // Vibrato
@@ -954,9 +993,14 @@ export class SongEditor {
     private readonly _vibratoTypeSelectRow: HTMLElement = div({ class: "selectRow dropFader" }, span({ class: "tip", style: "margin-left:4px;", onclick: () => this._openPrompt("vibratoType") }, "‣ Type:"), div({ class: "selectContainer", style: "width: 61.5%;" }, this._vibratoTypeSelect));
     private readonly _vibratoDropdownGroup: HTMLElement = div({ class: "editor-controls", style: `display: none;` }, this._vibratoDepthRow, this._vibratoSpeedRow, this._vibratoDelayRow, this._vibratoTypeSelectRow);
 
+    private readonly _vibratoLabel: HTMLDivElement = div({ class: "effectLabel", onclick: () => this._setEffectVisible("vibrato"), id:"vibratoLabel" }, "Vibrato");
+
     private readonly _vibratoContainerRow: HTMLDivElement = div({ class: "effectRow", style: "display:flex; flex-direction:column;" },
+        this._vibratoLabel,
+        div({ class: "effectGroup", id:"vibrato"},
         this._vibratoSelectRow,
         this._vibratoDropdownGroup
+        )
     );
 
     // Note Filter
@@ -971,11 +1015,16 @@ export class SongEditor {
     private readonly _noteFilterSimplePeakSlider: Slider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.filterSimplePeakRange - 1, value: "6", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeNoteFilterSimplePeak(this._doc, oldValue, newValue), false);
     private _noteFilterSimplePeakRow: HTMLDivElement = div({ class: "selectRow", title: "Low-pass Filter Peak Resonance" }, span({ class: "tip", onclick: () => this._openPrompt("filterResonance") }, "Filter Peak:"), this._noteFilterSimplePeakSlider.container);
 
+    private readonly _noteFilterLabel: HTMLDivElement = div({ class: "effectLabel", onclick: () => this._setEffectVisible("noteFilter"), id:"noteFilterLabel" }, "Note Filter");
+    
     private readonly _noteFilterContainerRow: HTMLDivElement = div({ class: "effectRow", style: "display:flex; flex-direction:column;" },
+        this._noteFilterLabel,
+        div({ class: "effectGroup", id:"noteFilter"},
         this._noteFilterTypeRow,
         this._noteFilterRow,
         this._noteFilterSimpleCutRow,
         this._noteFilterSimplePeakRow
+        )
     );
 
     // Distortion
@@ -984,9 +1033,14 @@ export class SongEditor {
     private readonly _aliasingBox: HTMLInputElement = input({ type: "checkbox", style: "width: 1em; padding: 0; margin-right: 4em;" });
     private readonly _aliasingRow: HTMLElement = div({ class: "selectRow" }, span({ class: "tip", style: "margin-left:10px;", onclick: () => this._openPrompt("aliases") }, "Aliasing:"), this._aliasingBox);
     
+    private readonly _distortionLabel: HTMLDivElement = div({ class: "effectLabel", onclick: () => this._setEffectVisible("distortion"), id:"distortionLabel" }, "Distortion");
+
     private readonly _distortionContainerRow: HTMLDivElement = div({ class: "effectRow", style: "display:flex; flex-direction:column;" },
+        this._distortionLabel,
+        div({ class: "effectGroup", id:"distortion"},
         this._distortionRow,
         this._aliasingRow
+        )
     );
 
     // Bitcrusher
@@ -995,17 +1049,27 @@ export class SongEditor {
     private readonly _bitcrusherFreqSlider: Slider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.bitcrusherFreqRange - 1, value: "0", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeBitcrusherFreq(this._doc, oldValue, newValue), false);
     private readonly _bitcrusherFreqRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("bitcrusherFreq") }, "Freq Crush:"), this._bitcrusherFreqSlider.container);
 
+    private readonly _bitcrusherLabel: HTMLDivElement = div({ class: "effectLabel", onclick: () => this._setEffectVisible("bitcrusher"), id:"bitcrusherLabel" }, "Bitcrusher");
+
     private readonly _bitcrusherContainerRow: HTMLDivElement = div({ class: "effectRow", style: "display:flex; flex-direction:column;" },
+        this._bitcrusherLabel,
+        div({ class: "effectGroup", id:"bitcrusher"},
         this._bitcrusherQuantizationRow,
         this._bitcrusherFreqRow,
+        )
     );
 
     // Chorus
     private readonly _chorusSlider: Slider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.chorusRange - 1, value: "0", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeChorus(this._doc, oldValue, newValue), false);
     private readonly _chorusRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("chorus") }, "Chorus:"), this._chorusSlider.container);
 
+    private readonly _chorusLabel: HTMLDivElement = div({ class: "effectLabel", onclick: () => this._setEffectVisible("chorus"), id:"chorusLabel" }, "Chorus");
+
     private readonly _chorusContainerRow: HTMLDivElement = div({ class: "effectRow", style: "display:flex; flex-direction:column;" },
+        this._chorusLabel,
+        div({ class: "effectGroup", id:"chorus"},
         this._chorusRow,
+        )
     );
 
     // Echo
@@ -1014,9 +1078,14 @@ export class SongEditor {
     private readonly _echoDelaySlider: Slider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.echoDelayRange - 1, value: "0", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangeEchoDelay(this._doc, oldValue, newValue), false);
     private readonly _echoDelayRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("echoDelay") }, "Echo Delay:"), this._echoDelaySlider.container);
 
+    private readonly _echoLabel: HTMLDivElement = div({ class: "effectLabel", onclick: () => this._setEffectVisible("echo"), id:"echoLabel" }, "Echo");
+
     private readonly _echoContainerRow: HTMLDivElement = div({ class: "effectRow", style: "display:flex; flex-direction:column;" },
+        this._echoLabel,
+        div({ class: "effectGroup", id:"echo"},
         this._echoSustainRow,
         this._echoDelayRow,
+        )
     );
 
     // Reverb
@@ -1032,9 +1101,14 @@ export class SongEditor {
 
     private readonly _reverbDropdownGroup: HTMLElement = div({ class: "editor-controls", style: `display: none;` }, this._reverbWetRow, this._reverbDryRow);
 
+    private readonly _reverbLabel: HTMLDivElement = div({ class: "effectLabel", onclick: () => this._setEffectVisible("reverb"), id:"reverbLabel" }, "Reverb");
+
     private readonly _reverbContainerRow: HTMLDivElement = div({ class: "effectRow", style: "display:flex; flex-direction:column;" },
+        this._reverbLabel,
+        div({ class: "effectGroup", id:"reverb"},
         this._reverbRow,
         this._reverbDropdownGroup,
+        )
     );
 
 
@@ -1061,13 +1135,19 @@ export class SongEditor {
 
     private readonly _ringModPulsewidthSlider: Slider = new Slider(input({ style: "margin-left: 10px; width: 85%;", type: "range", min: "0", max: Config.pwmOperatorWaves.length - 1, value: "0", step: "1", title: "Pulse Width" }), this._doc, (oldValue: number, newValue: number) => new ChangeRingModPulseWidth(this._doc, oldValue, newValue), true);
 
+    private readonly _ringModLabel: HTMLDivElement = div({ class: "effectLabel", onclick: () => this._setEffectVisible("ringMod"), id:"ringModLabel" }, "Ring Modulation");
+
     private readonly _ringModWaveText: HTMLSpanElement = span({ class: "tip", onclick: () => this._openPrompt("chipWave") }, "Wave: ")
     private readonly _ringModWaveSelectRow: HTMLDivElement = div({ class: "selectRow", style:"width: 100%;" }, this._ringModWaveText, this._ringModPulsewidthSlider.container, div({ class: "selectContainer", style:"width:40%;" },  this._ringModWaveSelect));
     private readonly _ringModContainerRow: HTMLDivElement = div({ class: "effectRow", style: "display:flex; flex-direction:column;" }, 
+        this._ringModLabel,
+        div({ class: "effectGroup", id:"ringMod"},
         this._ringModRow, 
         this._ringModHzSliderRow,
         this._rmOffsetHzSliderRow,
-        this._ringModWaveSelectRow);
+        this._ringModWaveSelectRow
+        )
+    );
 
     // Phaser
     private readonly _phaserMixSlider: Slider = new Slider(input({ style: "margin: 0;", type: "range", min: "0", max: Config.phaserMixRange - 1, value: "0", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangePhaserMix(this._doc, oldValue, newValue), false);
@@ -1079,11 +1159,16 @@ export class SongEditor {
     private readonly _phaserStagesSlider: Slider = new Slider(input({ style: "margin: 0;", type: "range", min: Config.phaserMinStages, max: Config.phaserMaxStages, value: "0", step: "1" }), this._doc, (oldValue: number, newValue: number) => new ChangePhaserStages(this._doc, oldValue, newValue), false);
     private readonly _phaserStagesRow: HTMLDivElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("phaserStages") }, span(" Stages:")), this._phaserStagesSlider.container);
 
+    private readonly _phaserLabel: HTMLDivElement = div({ class: "effectLabel", onclick: () => this._setEffectVisible("phaser"), id:"phaserLabel" }, "Phaser");
+
     private readonly _phaserContainerRow: HTMLDivElement = div({ class: "effectRow", style: "display:flex; flex-direction:column;" },
+        this._phaserLabel,
+        div({ class: "effectGroup", id:"phaser"},
         this._phaserMixRow,
         this._phaserFreqRow,
         this._phaserFeedbackRow,
         this._phaserStagesRow,
+        )
     );
 
     // Note Range
@@ -1092,17 +1177,27 @@ export class SongEditor {
     private readonly _lowerNoteLimitInputBox: HTMLInputElement = input({ style: "width: 4em; font-size: 80%; ", id: "lowerNoteLimitInputBox", type: "number", step: "1", min: 0, max: Config.maxPitch, value: 60 });
     private readonly _lowerNoteLimitRow: HTMLElement = div({ class: "selectRow" }, span({ class: "tip", onclick: () => this._openPrompt("lowerNoteLimit") }, "Lower Note Limit:"), this._lowerNoteLimitInputBox);
     
+    private readonly _noteRangeLabel: HTMLDivElement = div({ class: "effectLabel", onclick: () => this._setEffectVisible("noteRange"), id:"noteRangeLabel" }, "Note Range");
+
     private readonly _noteRangeContainerRow: HTMLDivElement = div({ class: "effectRow", style: "display:flex; flex-direction:column;" },
-        this._upperNoteLimitRow,
-        this._lowerNoteLimitRow,
+        this._noteRangeLabel,
+        div({ class: "effectGroup", id:"noteRange"},
+            this._upperNoteLimitRow,
+            this._lowerNoteLimitRow,
+        )
     );
 
     // Invert Wave
     private readonly _invertWaveBox: HTMLInputElement = input({ type: "checkbox", style: "width: 1em; padding: 0; margin-right: 4em;" });
     private readonly _invertWaveRow: HTMLElement = div({ class: "selectRow" }, span({ class: "tip", style: "margin-left:10px;", onclick: () => this._openPrompt("invertWave") }, "Invert Wave:"), this._invertWaveBox);
 
+    private readonly _invertWaveLabel: HTMLDivElement = div({ class: "effectLabel", onclick: () => this._setEffectVisible("invertWave"), id:"invertWaveLabel" }, "Invert Wave");
+
     private readonly _invertWaveContainerRow: HTMLDivElement = div({ class: "effectRow", style: "display:flex; flex-direction:column;" },
+        this._invertWaveLabel,
+        div({ class: "effectGroup", id:"invertWave"},
         this._invertWaveRow,
+        )
     );
 
     // Granular
@@ -1122,11 +1217,17 @@ export class SongEditor {
         span({ class: "tip", style: "font-size: smaller;", onclick: () => this._openPrompt("grainRange") }, "Range: "),
         div({ style: `color: ${ColorConfig.secondaryText}; ` }, this.grainRangeNum),
     ), this._grainRangeSlider.container);
+
+    private readonly _granularLabel: HTMLDivElement = div({ class: "effectLabel", onclick: () => this._setEffectVisible("granular"), id:"granularLabel" }, "Granular");
+
     private readonly _granularContainerRow: HTMLDivElement = div({ class: "effectRow", style: "display:flex; flex-direction:column;" },
-        this._granularRow,
-        this._grainAmountsRow,
-        this._grainSizeSliderRow,
-        this._grainRangeSliderRow
+        this._granularLabel,
+        div({ class: "effectGroup", id:"granular"},
+            this._granularRow,
+            this._grainAmountsRow,
+            this._grainSizeSliderRow,
+            this._grainRangeSliderRow
+        )
     );
 
     private readonly _rhythmSelect: HTMLSelectElement = buildOptions(select(), Config.rhythms.map(rhythm => rhythm.name));
@@ -2637,7 +2738,7 @@ export class SongEditor {
     public changeBarScrollPos(offset: number) {
         this._barScrollBar.changePos(offset);
     }
-    
+
     public static readonly mobileUI: { [name: string]: string } = {
         "landscape": `
 
@@ -2834,6 +2935,8 @@ export class SongEditor {
         this._barScrollBar.render();
         this._trackEditor.render();
         this._muteEditor.render();
+
+        this.effectRowsDisplay();
 
         this._trackAndMuteContainer.scrollLeft = this._doc.barScrollPos * this._doc.getBarWidth();
 		this._trackAndMuteContainer.scrollTop = this._doc.channelScrollPos * ChannelRow.patternHeight;
@@ -3153,6 +3256,7 @@ export class SongEditor {
             (prefs.frostedGlassBackground ? textOnIcon : textOffIcon) + "Use Frosted Glass Prompt Backdrop",
             (prefs.displayShortcutButtons ? textOnIcon : textOffIcon) + "Display Mobile Shortcut Buttons",
             (prefs.oldModNotes ? textOnIcon : textOffIcon) + "Use Old Mod Notes",
+            (prefs.newEffectMenu ? textOnIcon : textOffIcon) + "Collapsable Effects",
             (prefs.selectionCounter ? textOnIcon : textOffIcon) + "Selection Counter",
             "> Set Layout",
             "> Set Theme",
@@ -3516,7 +3620,7 @@ export class SongEditor {
             this._pulseWidthSlider.input.title = prettyNumber(instrument.pulseWidth) + "%";
 
             if (effectsIncludeTransition(instrument.effects)) {
-                this._transitionContainerRow.style.display = "";
+                this._transitionContainerRow.style.display = "flex";
                 if (this._openTransitionDropdown) this._transitionDropdownGroup.style.display = "";
                 setSelectedValue(this._transitionSelect, instrument.transition);
                 this._slideSpeedRow.style.display = (Config.transitions[instrument.transition].slides == true) ? "" : "none";
@@ -3530,7 +3634,7 @@ export class SongEditor {
             }
 
             if (effectsIncludeChord(instrument.effects)) {
-                this._chordContainerRow.style.display = "";
+                this._chordContainerRow.style.display = "flex";
                 this._chordDropdown.style.display = (instrument.chord == Config.chords.dictionary["arpeggio"].index) || (instrument.chord == Config.chords.dictionary["strum"].index) ? "" : "none";
                 this._chordDropdownGroup.style.display = (((instrument.chord == Config.chords.dictionary["arpeggio"].index) || (instrument.chord == Config.chords.dictionary["strum"].index)) && this._openChordDropdown) ? "" : "none";
                 setSelectedValue(this._chordSelect, instrument.chord);
@@ -3544,7 +3648,7 @@ export class SongEditor {
             }
 
             if (effectsIncludePitchShift(instrument.effects)) {
-                this._pitchShiftContainerRow.style.display = "";
+                this._pitchShiftContainerRow.style.display = "flex";
                 this._pitchShiftSlider.updateValue(instrument.pitchShift);
                 this._pitchShiftSlider.input.title = (instrument.pitchShift - Config.pitchShiftCenter) + " semitone(s)";
                 for (const marker of this._pitchShiftFifthMarkers) {
@@ -3555,7 +3659,7 @@ export class SongEditor {
             }
 
             if (effectsIncludeDetune(instrument.effects)) {
-                this._detuneContainerRow.style.display = "";
+                this._detuneContainerRow.style.display = "flex";
                 this._detuneSlider.updateValue(instrument.detune - Config.detuneCenter);
                 this._detuneSlider.input.title = (Synth.detuneToCents(instrument.detune)) + " cent(s)";
             } else {
@@ -3563,7 +3667,7 @@ export class SongEditor {
             }
 
             if (effectsIncludeVibrato(instrument.effects)) {
-                this._vibratoContainerRow.style.display = "";
+                this._vibratoContainerRow.style.display = "flex";
                 if (this._openVibratoDropdown)
                     this._vibratoDropdownGroup.style.display = "";
                 setSelectedValue(this._vibratoSelect, instrument.vibrato);
@@ -3574,7 +3678,7 @@ export class SongEditor {
 
             if (effectsIncludeNoteFilter(instrument.effects)) {
 
-                this._noteFilterContainerRow.style.display = "";
+                this._noteFilterContainerRow.style.display = "flex";
 
                 this._noteFilterTypeRow.style.setProperty("--text-color-lit", colors.primaryNote);
                 this._noteFilterTypeRow.style.setProperty("--text-color-dim", colors.secondaryNote);
@@ -3643,7 +3747,7 @@ export class SongEditor {
             }
 
             if (effectsIncludeDistortion(instrument.effects)) {
-                this._distortionContainerRow.style.display = "";
+                this._distortionContainerRow.style.display = "flex";
                 if (instrument.type == InstrumentType.chip || instrument.type == InstrumentType.customChipWave || instrument.type == InstrumentType.pwm || instrument.type == InstrumentType.supersaw)
                     this._aliasingRow.style.display = "";
                 else
@@ -3655,13 +3759,13 @@ export class SongEditor {
             }
 
             if (effectsIncludeInvertWave(instrument.effects)) {
-                this._invertWaveContainerRow.style.display = "";
+                this._invertWaveContainerRow.style.display = "flex";
             } else {
                 this._invertWaveContainerRow.style.display = "none";
             }
 
             if (effectsIncludeBitcrusher(instrument.effects)) {
-                this._bitcrusherContainerRow.style.display = "";
+                this._bitcrusherContainerRow.style.display = "flex";
                 this._bitcrusherQuantizationSlider.updateValue(instrument.bitcrusherQuantization);
                 this._bitcrusherFreqSlider.updateValue(instrument.bitcrusherFreq);
             } else {
@@ -3679,14 +3783,14 @@ export class SongEditor {
             }
 
             if (effectsIncludeChorus(instrument.effects)) {
-                this._chorusContainerRow.style.display = "";
+                this._chorusContainerRow.style.display = "flex";
                 this._chorusSlider.updateValue(instrument.chorus);
             } else {
                 this._chorusContainerRow.style.display = "none";
             }
 
             if (effectsIncludeEcho(instrument.effects)) {
-                this._echoContainerRow.style.display = "";
+                this._echoContainerRow.style.display = "flex";
                 this._echoSustainSlider.updateValue(instrument.echoSustain);
                 this._echoDelaySlider.updateValue(instrument.echoDelay);
                 this._echoDelaySlider.input.title = (Math.round((instrument.echoDelay + 1) * Config.echoDelayStepTicks / (Config.ticksPerPart * Config.partsPerBeat) * 1000) / 1000) + " beat(s)";
@@ -3695,7 +3799,7 @@ export class SongEditor {
             }
 
             if (effectsIncludeReverb(instrument.effects)) {
-                this._reverbContainerRow.style.display = "";
+                this._reverbContainerRow.style.display = "flex";
                 this._reverbSlider.updateValue(instrument.reverb);
                 this._reverbWetSlider.updateValue(instrument.reverbWet);
                 this._reverbDrySlider.updateValue(instrument.reverbDry);
@@ -3705,7 +3809,7 @@ export class SongEditor {
             }
 
             if (effectsIncludeRM(instrument.effects)) {
-                this._ringModContainerRow.style.display = "";
+                this._ringModContainerRow.style.display = "flex";
                 this._ringModSlider.updateValue(instrument.ringModulation);
                 this._ringModHzSlider.updateValue(instrument.ringModulationHz);
                 this._rmHzOffsetSlider.updateValue(instrument.rmHzOffset-Config.rmHzOffsetCenter);
@@ -3716,7 +3820,7 @@ export class SongEditor {
             }
 
             if (effectsIncludePhaser(instrument.effects)) {
-                    this._phaserContainerRow.style.display = "";
+                    this._phaserContainerRow.style.display = "flex";
                     this._phaserMixSlider.updateValue(instrument.phaserMix);
                     this._phaserFreqSlider.updateValue(instrument.phaserFreq);
                     this._phaserFeedbackSlider.updateValue(instrument.phaserFeedback);
@@ -3726,7 +3830,7 @@ export class SongEditor {
                 }
 
                 if (effectsIncludeNoteRange(instrument.effects)) {
-                    this._noteRangeContainerRow.style.display = "";
+                    this._noteRangeContainerRow.style.display = "flex";
                     this._upperNoteLimitInputBox.value = String(instrument.upperNoteLimit);
                     this._lowerNoteLimitInputBox.value = String(instrument.lowerNoteLimit);
                 } else {
@@ -3734,7 +3838,7 @@ export class SongEditor {
                 }
 
                 if (effectsIncludeGranular(instrument.effects)) {
-                    this._granularContainerRow.style.display = "";
+                    this._granularContainerRow.style.display = "flex";
                     this._granularSlider.updateValue(instrument.granular);
                     this._grainSizeSlider.updateValue(instrument.grainSize);
                     this._grainAmountsSlider.updateValue(instrument.grainAmounts);
@@ -5396,6 +5500,29 @@ export class SongEditor {
                     }
                 }
                 break;
+            case 84: // t
+                if (!this._doc.prefs.newEffectMenu) break;
+                if (event.altKey) {
+                    if (hiddenEffects.length > 0) {
+                        for (let i = 0; i < hiddenEffects.length; i++) {
+                            const element = document.getElementById(hiddenEffects[i]);
+                            const elementLabel = document.getElementById(hiddenEffects[i] + "Label");
+                            element.setAttribute("class", "effectGroup");
+                            elementLabel.setAttribute("class", "effectLabel");
+                        }
+                        hiddenEffects.splice(0);
+                    } else {
+                        const effectGroupVisible = document.getElementsByClassName("effectGroup");
+                        const effectLabelVisible = document.getElementsByClassName("effectLabel");
+                        for (let i = 0; i < effectGroupVisible.length; i++) {
+                            effectGroupVisible[i].className = "effectGroup hidden";
+                            effectLabelVisible[i].className = "effectLabel hidden";
+                            hiddenEffects.push(effectGroupVisible[i].id);
+                        }
+                    }
+                } 
+                event.preventDefault();
+                break;
             case 79: // o
                 if (canPlayNotes) break;
                 if (event.ctrlKey || event.metaKey) {
@@ -6280,12 +6407,6 @@ export class SongEditor {
                 (<any>navigator).share({ url: new URL("#" + this._doc.song.toBase64String(), location.href).href });
                 break;
             case "shortenUrl":
-                let localShortenerStrategy: string | null = window.localStorage.getItem("shortenerStrategySelect");
-
-                if (localShortenerStrategy == "tinyurl") {
-                    window.localStorage.setItem("shortenerStrategySelect", "wackybox");
-                    localShortenerStrategy = "wackybox";
-                } 
 
                 const shorteners = {
                     "wackybox": {
@@ -6302,7 +6423,7 @@ export class SongEditor {
                     }
                 }
 
-                const shortener = shorteners[(localShortenerStrategy as keyof typeof shorteners) || "wackybox"]
+                const shortener = shorteners[(this._doc.prefs.shortenerStrategySelect as keyof typeof shorteners) || "wackybox"]
 
                 const uri: string = shortener.encode(new URL("#" + this._doc.song.toBase64String(), location.href).href);
                 const uriLength: number = uri.length;
@@ -6469,6 +6590,11 @@ export class SongEditor {
             case "oldModNotes":
                 this._doc.prefs.oldModNotes = !this._doc.prefs.oldModNotes;
                 break;
+            case "newEffectMenu":
+                this._doc.prefs.newEffectMenu = !this._doc.prefs.newEffectMenu;
+
+                //this.effectRowsDisplay();
+                break;
             case "selectionCounter":
                 this._doc.prefs.selectionCounter = !this._doc.prefs.selectionCounter;
                 break;    
@@ -6537,6 +6663,14 @@ export class SongEditor {
 
     public closeNotif() {
         this._notifierPopup.classList.remove("show");
+    }
+
+    effectRowsDisplay() {
+        const effectRows = document.getElementsByClassName("effectRow");
+
+        for (let i = 0; i < effectRows.length; i++) {
+            effectRows[i].className = this._doc.prefs.newEffectMenu ? "effectRow effectExt" : "effectRow";
+        }
     }
 
     private _customWavePresetHandler = (event: Event): void => {
