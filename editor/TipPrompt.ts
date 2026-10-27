@@ -668,6 +668,12 @@ export class TipPrompt implements Prompt {
 					p("This setting controls whether or not there's a buzzing noise when there's only 1 unison voice, and the spread is set to something other than 0."),
 				);
 			} break;
+			case "invertWave": {
+				message = div(
+					h2("Invert Wave"),
+					p("This effect multiplies the wave of the instrument by -1. If two identical instruments play at the same time while one is inverted, the noise will cancel out."),
+				);
+			} break;
 			case "slideSpeedSlider": {
 				message = div(
 					h2("Slide Speed"),
