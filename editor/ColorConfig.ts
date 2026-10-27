@@ -2647,6 +2647,16 @@ export class ColorConfig {
 			opacity: 0 !important;
 		}
 
+		.beepboxEditor .effectExt {
+			margin-top: 8px;
+			margin-bottom: 8px;
+			background: linear-gradient(#8a598054, #332749a6);
+			padding: 4px;
+			border-radius: 7px;
+			box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.2), 0px 1px 4px 1px rgba(0, 0, 0, 0.3), inset 0px 1px 0px 0px rgba(255, 255, 255, 0.3);
+			border-top: none !important;
+		}
+
 		div.mute-button::before {
 			background: #fff0 !important;
 			background-image: url("https://choptop84.github.io/choptop84s-image-repository/vistaSpeakerIcon.png") !important;
@@ -2730,7 +2740,7 @@ export class ColorConfig {
 			  }
 
 			div.prompt.noSelection{
-				background: linear-gradient(#84aef080, #2a3d6a80) !important; 
+				background: linear-gradient(#e384f080, #682a6a80) !important; 
 				opacity: 77;
 				backdrop-filter: blur(14px);
 			}  
@@ -3750,7 +3760,7 @@ export class ColorConfig {
 		 
 		.beepboxEditor .prompt
 		{
-			background: radial-gradient(farthest-corner at 50% 0px, #1d0700, #110400) !important;
+			background: radial-gradient(farthest-corner at 50% 0px, #27241e, #13120f) !important
 		}
 		 
 		#beepboxEditorContainer {
@@ -7155,6 +7165,15 @@ export class ColorConfig {
 			--mod-title: #1D1C1D;
 			}
 
+			.beepboxEditor .effectExt {
+				margin-top: 8px;
+				margin-bottom: 8px;
+				background: #151516;
+				padding: 4px;
+				border-radius: 7px;
+				border-top: none !important;
+			}
+
 			.channelBox {
 			border-radius: 25px;
 			}
@@ -7295,6 +7314,15 @@ export class ColorConfig {
 			--disabled-note-primary:    #999;
 			--disabled-note-secondary:  #666;
 			--mod-title: #1D1C1D;
+			}
+
+			.beepboxEditor .effectExt {
+				margin-top: 8px;
+				margin-bottom: 8px;
+				background: #E3E1DE;
+				padding: 4px;
+				border-radius: 7px;
+				border-top: none !important;
 			}
 
 			.channelBox {
