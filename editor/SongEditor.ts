@@ -3340,6 +3340,9 @@ export class SongEditor {
             this._panSliderRow.style.display = "";
             this._panDropdownGroup.style.display = (this._openPanDropdown ? "" : "none");
             this._detuneSliderRow.style.display = "";
+            this._transitionRow.style.display = "";
+            this._chordSelectRow.style.display = "";
+            this._vibratoSelectRow.style.display = "";
             this._instrumentVolumeSliderRow.style.display = "";
             this._instrumentTypeSelectRow.style.setProperty("display", "");
             this._instrumentSettingsGroup.insertBefore(this._instrumentExportGroup, this._instrumentSettingsGroup.firstChild);
