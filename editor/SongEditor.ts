@@ -869,8 +869,6 @@ export class SongEditor {
             ),
     );
 
-    public isMobileFullscreen?: boolean;
-    
     private readonly _scaleSelect: HTMLSelectElement = buildOptions(select(), Config.scales.map(scale => scale.name));
     private readonly _keySelect: HTMLSelectElement = buildOptions(select(), Config.keys.map(key => key.name).reverse());
     private readonly _octaveStepper: HTMLInputElement = input({ style: "width: 59.5%;", type: "number", min: Config.octaveMin, max: Config.octaveMax, value: "0" });
@@ -1597,7 +1595,6 @@ export class SongEditor {
     private readonly _notesUpButton: HTMLButtonElement = button({ class: "notesUpButton", type: "button", title: "Move Notes Up" });
     private readonly _notesDownButton: HTMLButtonElement = button({ class: "notesDownButton", type: "button", title: "Move Notes Down" });
     private readonly _loopBarButton: HTMLButtonElement = button({ class: "loopBarButton", type: "button", title: "Loop only on the Currently Selected Bar" });
-    private readonly _fullscreenButton: HTMLButtonElement = button({ class: "fullscreenButton", type: "button", title: "Make the screen fit fully in your browser (Mobile Only)" });
     private readonly _patternEditorRow: HTMLDivElement = div({ style: "flex: 1; height: 100%; display: flex; overflow: hidden; justify-content: center;" },
         this._patternEditorPrev.container,
         this._patternEditor.container,
@@ -1620,7 +1617,6 @@ export class SongEditor {
         this._notesUpButton,
         this._notesDownButton,
         this._loopBarButton,
-        this._fullscreenButton,
         this.selectedPatternDiv,
     );
     private readonly _trackContainer: HTMLDivElement = div({ class: "trackContainer" },
@@ -2047,7 +2043,6 @@ export class SongEditor {
         this._notesUpButton.addEventListener("click", this._notesUp);
         this._notesDownButton.addEventListener("click", this._notesDown);
         this._loopBarButton.addEventListener("click", this._tempLoopBar);
-        this._fullscreenButton.addEventListener("click", this._goFullscreen);
         this._patternArea.addEventListener("mousedown", this._refocusStageNotEditing);
         this._trackArea.addEventListener("mousedown", this.refocusStage);
 
@@ -3031,8 +3026,7 @@ export class SongEditor {
             this._duplicateButton.style.left = prefs.showLetters ? "70px" : "40px";   
             this._notesUpButton.style.left = prefs.showLetters ? "40px" : "10px";
             this._notesDownButton.style.left = prefs.showLetters ? "70px" : "40px";
-            this._loopBarButton.style.left = prefs.showLetters ? "40px" : "10px";  
-            this._fullscreenButton.style.display = "none";       
+            this._loopBarButton.style.left = prefs.showLetters ? "40px" : "10px";      
             const secondImage = document.getElementById("secondImage");
             if (secondImage != null) {
             secondImage!.style.minHeight = "100vh"; }
@@ -3081,7 +3075,6 @@ export class SongEditor {
             this._notesUpButton.style.left = "-80px";
             this._notesDownButton.style.left = "-50px"; 
             this._loopBarButton.style.left = "-50px";
-            this._fullscreenButton.style.display = "none";
             beepboxEditorContainer.style.paddingBottom = "";
             beepboxEditorContainer.style.borderStyle = "";
             const secondImage = document.getElementById("secondImage");
@@ -3209,7 +3202,6 @@ export class SongEditor {
             this._notesDownButton.style.left = prefs.showScrollBar ? "2px" : "2px";
             this._loopBarButton.style.top = prefs.showScrollBar ? "300px" : "300px";
             this._loopBarButton.style.left = prefs.showScrollBar ? "2px" : "2px";
-            this._fullscreenButton.style.display = "none";
             this._zoomInButton.style.display = "none";
             this._zoomOutButton.style.display = "none";
             this._patternArea.style.paddingLeft = prefs.showScrollBar ? "32px" : "32px" ;
@@ -6377,11 +6369,6 @@ export class SongEditor {
                             }
                         }
                         this._loopEditor.setLoopAt(this._doc.synth.loopBarStart, this._doc.synth.loopBarEnd);
-    }
-
-    private _goFullscreen = (): void => {
-        this.isMobileFullscreen = ! this.isMobileFullscreen;
-        this._doc.notifier.changed();
     }
 
     private _fileMenuHandler = (event: Event): void => {
