@@ -889,8 +889,6 @@ export class SongEditor {
             hiddenEffects.push(effectName);
         };
 
-        console.log(hiddenEffects);
-
         effectVar.setAttribute("class", hiddenEffects.includes(effectName) ? "effectGroup hidden" : "effectGroup");
         effectLabel.setAttribute("class", hiddenEffects.includes(effectName) ? "effectLabel hidden" : "effectLabel");
     }
