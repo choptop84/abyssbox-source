@@ -2130,7 +2130,7 @@ export class ColorConfig {
 			padding: 4px;
 			border-radius: 7px;
 			box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.2), 0px 1px 4px 1px rgba(0, 0, 0, 0.3), inset 0px 1px 0px 0px rgba(255, 255, 255, 0.3);
-			border-top: none;
+			border-top: none !important;
 		}
 		
 		div.mute-button.muted::before {
