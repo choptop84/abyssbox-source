@@ -2123,6 +2123,16 @@ export class ColorConfig {
 			image-rendering: optimizeSpeed !important;             /* IE */
 		}
 
+		.beepboxEditor .effectExt {
+			margin-top: 8px;
+			margin-bottom: 8px;
+			background: linear-gradient(#596c8a54, #273449a6);
+			padding: 4px;
+			border-radius: 7px;
+			box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.2), 0px 1px 4px 1px rgba(0, 0, 0, 0.3), inset 0px 1px 0px 0px rgba(255, 255, 255, 0.3);
+			border-top: none;
+		}
+		
 		div.mute-button.muted::before {
 			background: #fff0 !important;
 			background-image: url("https://choptop84.github.io/choptop84s-image-repository/vistaSpeakerIconMuted.png") !important;
