@@ -181,8 +181,6 @@ content: "";
   height: var(--button-size);
   left: 3px;
   top: 0;
-  mask-image: var(--loop-within-bar-symbol);
-  -webkit-mask-image: var(--loop-within-bar-symbol);
   pointer-events: none;
   background: currentColor;
   mask-repeat: no-repeat;
@@ -194,6 +192,21 @@ content: "";
   image-rendering: -o-crisp-edges !important;
   image-rendering: pixelated !important;
   image-rendering: optimizeSpeed !important;
+}
+
+.songLoopButton.a1::before {
+      mask-image: var(--loop-within-bar-symbol);
+      -webkit-mask-image: var(--loop-within-bar-symbol);
+}
+
+.songLoopButton.a2::before {
+    mask-image: var(--loop-full-song-symbol);
+    -webkit-mask-image: var(--loop-full-song-symbol);
+}
+
+.songLoopButton.a3::before {
+    mask-image: var(--dont-loop-symbol);
+    -webkit-mask-image: var(--dont-loop-symbol);
 }
 
 .beepboxEditor {
@@ -1394,6 +1407,7 @@ content: "";
   appearance: none;
   border: 1px ${ColorConfig.uiWidgetBackground} solid;
   height: 1em;
+  width: 1em;
   border-radius: 5px;
 }
 
@@ -2252,6 +2266,7 @@ li.select2-results__option[role=group] > strong:hover {
 	.mobileButtonContainer {
 		display: flex;
 		gap: 5px;
+		display: none;
 	}
 
 	.play-pause-area2 {
