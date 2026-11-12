@@ -6,9 +6,9 @@ default_expiration: "1h"
 
 handlers:
 
-- url: /favicon\.ico
+- url: icons/favicon\.ico
   static_files: favicon.ico
-  upload: favicon\.ico
+  upload: icons/favicon\.ico
 
 - url: /robots\.txt
   static_files: robots.txt
