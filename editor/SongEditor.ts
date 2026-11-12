@@ -3267,7 +3267,7 @@ export class SongEditor {
 
             // Chip
             this._chipWaveSelectRow.style.display = getInstType == InstrumentType.chip ? "" : "none";
-            this._useChipWaveAdvancedLoopControlsRow.style.display = advLoopingEnabled ? "" : "none";
+            this._useChipWaveAdvancedLoopControlsRow.style.display = getInstType == InstrumentType.chip ? "" : "none";
             this._chipWaveLoopModeSelectRow.style.display = advLoopingEnabled ? "" : "none";
             this._chipWaveLoopStartRow.style.display = advLoopingEnabled ? "" : "none";
             this._chipWaveLoopEndRow.style.display = advLoopingEnabled ? "" : "none";
